@@ -14,6 +14,7 @@
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
+#include <map>
 
 
 using networking::Server;
@@ -97,16 +98,21 @@ processMessages(Server &server,
 std::deque<Message>
 buildOutgoing(std::deque<MessageResult>& log) {
   std::deque<Message> outgoing;
+  std::map<unsigned long int, std::ostringstream> clientMessages;
 
-  for (auto& entry : log) {
+  for (auto entry : log) {
     if (entry.isLocal()) {
-      outgoing.push_back({entry.getClientId(), entry.getMessage()});
+      clientMessages[entry.getClientId()] << entry.getMessage();
 
     } else {
       for (auto client : clients) {
-        outgoing.push_back({client, entry.getMessage()});
+        clientMessages[client.id] << entry.getMessage();
       }
     }
+  }
+
+  for (auto const& [clientId, message] : clientMessages) {
+    outgoing.push_back({clientId, message.str()});
   }
 
   return outgoing;
