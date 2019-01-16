@@ -5,8 +5,6 @@
 #ifndef WEBSOCKETNETWORKING_MESSAGERESULT_H
 #define WEBSOCKETNETWORKING_MESSAGERESULT_H
 
-#include <boost/beast/core/string.hpp>
-
 class MessageResult {
 private:
     unsigned long int clientId;

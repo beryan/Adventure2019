@@ -46,19 +46,19 @@ onDisconnect(Connection c) {
 }
 
 
-MessageResult
+std::deque<MessageResult>
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit) {
-  MessageResult result = MessageResult();
-  std::ostringstream tempMessage;
-  std::string action;
-  std::string param;
+  std::deque<MessageResult> results;
 
   for (auto& message : incoming) {
+    auto result = MessageResult();
     result.setClientId(message.connection.id);
-    action = lowercase(message.text.substr(0, message.text.find(' ')));
-    param = message.text.substr(message.text.find(action) + action.size());
+
+    std::ostringstream tempMessage;
+    std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
+    std::string param = message.text.substr(message.text.find(action) + action.size());
 
     if (action == "quit") {
       server.disconnect(message.connection);
@@ -85,24 +85,27 @@ processMessages(Server &server,
     } else {
       tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
     }
+
+    result.setMessage(tempMessage.str());
+    results.push_back(result);
   }
 
-  result.setMessage(tempMessage.str());
-
-  return result;
+  return results;
 }
 
 
 std::deque<Message>
-buildOutgoing(MessageResult& log) {
+buildOutgoing(std::deque<MessageResult>& log) {
   std::deque<Message> outgoing;
 
-  if (log.isLocal()) {
-    outgoing.push_back({log.getClientId(), log.getMessage()});
+  for (auto& entry : log) {
+    if (entry.isLocal()) {
+      outgoing.push_back({entry.getClientId(), entry.getMessage()});
 
-  } else {
-    for (auto client : clients) {
-      outgoing.push_back({client, log.getMessage()});
+    } else {
+      for (auto client : clients) {
+        outgoing.push_back({client, entry.getMessage()});
+      }
     }
   }
 
