@@ -7,6 +7,7 @@
 
 
 #include "Server.h"
+#include "MessageResult.h"
 
 #include <experimental/filesystem>
 #include <fstream>
@@ -21,6 +22,13 @@ using networking::Message;
 
 
 std::vector<Connection> clients;
+
+
+std::string
+lowercase(std::string string) {
+  std::transform(string.begin(), string.end(), string.begin(), ::tolower);
+  return string;
+}
 
 
 void
@@ -38,31 +46,66 @@ onDisconnect(Connection c) {
 }
 
 
-std::string
+MessageResult
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit) {
-  std::ostringstream result;
+  MessageResult result = MessageResult();
+  std::ostringstream tempMessage;
+  std::string action;
+  std::string param;
+
   for (auto& message : incoming) {
-    if (message.text == "quit") {
+    result.setClientId(message.connection.id);
+    action = lowercase(message.text.substr(0, message.text.find(' ')));
+    param = message.text.substr(message.text.find(action) + action.size());
+
+    if (action == "quit") {
       server.disconnect(message.connection);
-    } else if (message.text == "shutdown") {
+
+    } else if (action == "shutdown") {
       std::cout << "Shutting down.\n";
       quit = true;
+
+    } else if (action == "say") {
+      result.setPublic();
+      tempMessage << message.connection.id << "> " << param << "\n";
+
+    } else if (action == "help") {
+      tempMessage << "********\n";
+      tempMessage << "* HELP *\n";
+      tempMessage << "********\n";
+      tempMessage << "\n";
+      tempMessage << "ACTIONS:\n";
+      tempMessage << "  - help (shows this help interface)\n";
+      tempMessage << "  - say [message] (sends [message] to other players in the game)\n";
+      tempMessage << "  - quit (disconnects you from the game server)\n";
+      tempMessage << "  - shutdown (shuts down the game server)\n";
+
     } else {
-      result << message.connection.id << "> " << message.text << "\n";
+      tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
     }
   }
-  return result.str();
+
+  result.setMessage(tempMessage.str());
+
+  return result;
 }
 
 
 std::deque<Message>
-buildOutgoing(const std::string& log) {
+buildOutgoing(MessageResult& log) {
   std::deque<Message> outgoing;
-  for (auto client : clients) {
-    outgoing.push_back({client, log});
+
+  if (log.isLocal()) {
+    outgoing.push_back({log.getClientId(), log.getMessage()});
+
+  } else {
+    for (auto client : clients) {
+      outgoing.push_back({client, log.getMessage()});
+    }
   }
+
   return outgoing;
 }
 
