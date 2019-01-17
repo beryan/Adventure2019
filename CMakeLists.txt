@@ -1,6 +1,9 @@
 cmake_minimum_required(VERSION 3.12)
 project(WebSocketNetworking)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(PACKAGE_NAME WebSocketNetworking)
 set(PACKAGE_VERSION 0.1)
 set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
