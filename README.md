@@ -82,12 +82,23 @@ To get started, first install Vagrant at https://www.vagrantup.com/downloads.htm
 
 Then download and install VirtualBox at https://www.virtualbox.org/wiki/Downloads or the Ubuntu Software app if available.
 
-You should then be able to use the ```vagrant up``` command within the project directory to begin initializing a virtual machine (VM). This process will take a few minutes.
+You should then be able to use the ```vagrant up``` command within the project directory to begin initializing a virtual machine (VM).
 
-Once the provisioning has completed, use ```vagrant ssh``` to access the VM's command line interface. Enter ```exit``` to disconnect from the VM.
+This will first install the xenial64 box. This process will take some time to complete.
+
+Afterwards, the machine will then provision the VM with the commands found in ```/cookbooks/baseconfig/recipes/default.rb```.
+
+Once the provisioning has completed, use ```vagrant ssh``` to access the VM's command line interface.
+
+The project built with cmake and make is found at ```/home/vagrant/build``` or ```~/build```.
+
+You can run the chatserver with ```./bin/chatserver 3000 ../adventure2019/webchat.html``` and access the server (localhost:3000) with your browser.
+**Note: Vagrant is configured to forward ports 3000 and 4000 to your computer, so be sure to only use these ports or reconfigure the VagrantFile and run ```vagrant reload```.**
+
+Use the command ```exit``` to disconnect from the VM.
 
 Other commands for Vagrant include:
-  - ```vagrant provision``` - Runs the entire provisioning process (Chef cookbook recipe) again
+  - ```vagrant provision``` - Runs the entire provisioning process (Chef Solo cookbook recipe) again
   - ```vagrant halt``` - Shuts down the VM
-  - ```vagrant up``` - Starts the VM and provisions if the VM did not previously exist
+  - ```vagrant up``` - Starts the VM and provisions if the VM does not exist
   - ```vagrant destroy``` - Deletes the VM
