@@ -8,19 +8,43 @@
 #include <string>
 
 namespace model {
-    enum Role {Admin, Builder, Default};
+    enum class Role {Admin, Builder, Default};
 
+    /*
+     * Must use the automatic lifetime constructors instead of assigning to the heap
+     * Using the User userVar{"name", 123}; for example.
+     */
     class User {
     public:
         User(std::string username, int password);
+
         User(std::string username, int password, Role role);
-        ~User();
+
+        std::string getUsername();
+
+        void setUsername();
+
+        int getPassword();
+
+        void setPassword();
+
+        Role getRole();
+
+        void setRole();
+
+        double getHealth();
+
+        void setHealth();
     private:
         std::string username;
+
         int password;
+
         Role role;
+
         double health;
     };
 }
 
 #endif //WEBSOCKETNETWORKING_USER_H
+
