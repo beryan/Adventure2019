@@ -7,12 +7,14 @@
 
 
 #include "Server.h"
+#include "MessageResult.h"
 
 #include <experimental/filesystem>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
+#include <map>
 
 
 using networking::Server;
@@ -21,6 +23,13 @@ using networking::Message;
 
 
 std::vector<Connection> clients;
+
+
+std::string
+lowercase(std::string string) {
+  std::transform(string.begin(), string.end(), string.begin(), ::tolower);
+  return string;
+}
 
 
 void
@@ -38,31 +47,74 @@ onDisconnect(Connection c) {
 }
 
 
-std::string
+std::deque<MessageResult>
 processMessages(Server &server,
                 const std::deque<Message> &incoming,
                 bool &quit) {
-  std::ostringstream result;
+  std::deque<MessageResult> results;
+
   for (auto& message : incoming) {
-    if (message.text == "quit") {
+    auto result = MessageResult();
+    result.setClientId(message.connection.id);
+
+    std::ostringstream tempMessage;
+    std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
+    std::string param = message.text.substr(message.text.find(action) + action.size());
+
+    if (action == "quit") {
       server.disconnect(message.connection);
-    } else if (message.text == "shutdown") {
+
+    } else if (action == "shutdown") {
       std::cout << "Shutting down.\n";
       quit = true;
+
+    } else if (action == "say") {
+      result.setPublic();
+      tempMessage << message.connection.id << "> " << param << "\n";
+
+    } else if (action == "help") {
+      tempMessage << "********\n";
+      tempMessage << "* HELP *\n";
+      tempMessage << "********\n";
+      tempMessage << "\n";
+      tempMessage << "ACTIONS:\n";
+      tempMessage << "  - help (shows this help interface)\n";
+      tempMessage << "  - say [message] (sends [message] to other players in the game)\n";
+      tempMessage << "  - quit (disconnects you from the game server)\n";
+      tempMessage << "  - shutdown (shuts down the game server)\n";
+
     } else {
-      result << message.connection.id << "> " << message.text << "\n";
+      tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
     }
+
+    result.setMessage(tempMessage.str());
+    results.push_back(result);
   }
-  return result.str();
+
+  return results;
 }
 
 
 std::deque<Message>
-buildOutgoing(const std::string& log) {
+buildOutgoing(std::deque<MessageResult>& log) {
   std::deque<Message> outgoing;
-  for (auto client : clients) {
-    outgoing.push_back({client, log});
+  std::map<unsigned long int, std::ostringstream> clientMessages;
+
+  for (auto entry : log) {
+    if (entry.isLocal()) {
+      clientMessages[entry.getClientId()] << entry.getMessage();
+
+    } else {
+      for (auto client : clients) {
+        clientMessages[client.id] << entry.getMessage();
+      }
+    }
   }
+
+  for (auto const& [clientId, message] : clientMessages) {
+    outgoing.push_back({clientId, message.str()});
+  }
+
   return outgoing;
 }
 
