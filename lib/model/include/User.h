@@ -7,42 +7,36 @@
 
 #include <string>
 
-namespace model {
-    enum class Role {Admin, Builder, Default};
+#define STARTING_HEALTH 100.00
 
-    /*
-     * Must use the automatic lifetime constructors instead of assigning to the heap
-     * Using the User userVar{"name", 123}; for example.
-     */
+namespace model {
+    //TODO: Change values to more appropriate values
+    enum class Race {Human, Weeb, Furries};
+
     class User {
     public:
-        User(std::string username, int password);
+        User(int id) : id(id), race(Race::Human), health(STARTING_HEALTH), description("") {}
 
-        User(std::string username, int password, Role role);
+        int getId() {return id;};
+        void setId(int id) {this->id = id;};
 
-        std::string getUsername();
+        Race getRace() {return race;};
+        void setRace(Race race) {this->race = race;};
 
-        void setUsername();
+        double getHealth() {return health;};
+        void setHealth(double health) {this->health = health;};
 
-        int getPassword();
+        std::string getDescription() {return description;};
+        void setDescription(std::string description) {this->description = description;};
 
-        void setPassword();
-
-        Role getRole();
-
-        void setRole();
-
-        double getHealth();
-
-        void setHealth();
     private:
-        std::string username;
+        int id;
 
-        int password;
-
-        Role role;
+        Race race;
 
         double health;
+
+        std::string description;
     };
 }
 
