@@ -45,6 +45,10 @@ cmake-build-*/
 # IntelliJ
 out/
 
+# Vagrant machines and log files
+.vagrant/
+*.log
+
 # mpeltonen/sbt-idea plugin
 .idea_modules/
 
