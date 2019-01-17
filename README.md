@@ -21,10 +21,10 @@ Here are some required things you need to get started:
 
 Here are some recommended tools that you can use to make your life easier
 
-```
-1. [SouceTree](https://www.sourcetreeapp.com/) (Source control)
+
+1. [SouceTree](https://www.sourcetreeapp.com) (Source control)
 2. [CLion](https://www.jetbrains.com/student/) (C++ IDE & Free for University students)
-```
+
 
 ### Installing
 For `Mac` users, follow [this](https://coursys.sfu.ca/2019sp-cmpt-373-d1/discussion/topic/guideline-for-mac-users/) guideline provided by the instructor.
