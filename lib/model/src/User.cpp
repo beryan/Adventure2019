@@ -9,6 +9,7 @@ using model::Role;
 
 namespace model {
     User::User(std::string username, int password) : username(username), password(password) {}
+
     User::User(std::string username, int password, Role role) : username(username), password(password), role(role){}
 
 
