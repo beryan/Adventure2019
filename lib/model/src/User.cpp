@@ -16,7 +16,7 @@ namespace model {
 
         std::string getUsername() {return username;};
 
-        void setUsername(std::string username) {username.assign(username);};
+        void setUsername(std::string username) {this->username.assign(username);};
 
         int getPassword() {return password;};
 
