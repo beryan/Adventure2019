@@ -9,33 +9,33 @@ using model::Object;
 
 namespace model {
 
-    void
-    model::Object::setId(int id){
-        this->id = id;
-    }
-
     int
-    model::Object::getId() {
+    Object::getId() {
         return this->id;
     }
 
     void
-    model::Object::setName(std::string name){
-        this->name = name;
+    Object::setId(int id){
+        this->id = id;
     }
 
     std::string
-    model::Object::getName(){
+    Object::getName(){
         return this->name;
     }
 
     void
-    model::Object::setDescription(std::string description) {
-        this->description = description;
+    Object::setName(std::string name){
+        this->name = std::move(name);
     }
 
     std::string
-    model::Object::getDescription(){
+    Object::getDescription(){
         return this->description;
+    }
+
+    void
+    Object::setDescription(std::string description) {
+        this->description = std::move(description);
     }
 }

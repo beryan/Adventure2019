@@ -21,17 +21,22 @@ namespace model {
 
     class Object {
     public:
-        inline int getId();
+        Object(int id, std::string name, std::string description)
+            : id(id),
+              name(std::move(name)),
+              description(std::move(description)) {}
 
-        inline void setId(int id);
+        int getId();
 
-        inline std::string getName();
+        void setId(int id);
 
-        inline void setName(std::string name);
+        std::string getName();
 
-        inline std::string getDescription();
+        void setName(std::string name);
 
-        inline void setDescription(std::string description);
+        std::string getDescription();
+
+        void setDescription(std::string description);
 
     private:
         int id;
