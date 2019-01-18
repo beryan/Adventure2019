@@ -6,44 +6,54 @@
 #define WEBSOCKETNETWORKING_USER_H
 
 #include <string>
+#include <vector>
+#include <utility>
+
+static const double STARTING_HEALTH = 100.00;
+static const double MAX_HEALTH = 100.00;
+static const int MAX_KEYWORDS = 8;
 
 namespace model {
-    enum class Role {Admin, Builder, Default};
+    //TODO: Change values to more appropriate values
+    enum class Race {Human, Weeb, Furries};
 
-    /*
-     * Must use the automatic lifetime constructors instead of assigning to the heap
-     * Using the User userVar{"name", 123}; for example.
-     */
     class User {
     public:
-        User(std::string username, int password);
+        inline User(int id) : id(id), health(STARTING_HEALTH), description({}) {}
 
-        User(std::string username, int password, Role role);
+        inline User(int id, std::vector<std::string> keys, std::vector<std::string> desc) :
+            id(id), keywords(keys), description(desc) {}
 
-        std::string getUsername();
+        inline int getId() {return id;};
 
-        void setUsername();
+        inline void setId(int id) {this->id = id;};
 
-        int getPassword();
+        inline void addKeyword(std::string key) {keywords.push_back(std::move(key));};
 
-        void setPassword();
+        inline void removeKeyword(int index) {keywords.erase(keywords.begin() + index);};
 
-        Role getRole();
+        inline std::vector<std::string> getKeywords() {return keywords;};
 
-        void setRole();
+        inline double getHealth() {return health;};
 
-        double getHealth();
+        inline void setHealth(double health) {this->health = health;};
 
-        void setHealth();
+        inline std::vector<std::string> getDescription() {return this->description;};
+
+        inline void setDescription(std::string desc) {description.push_back(std::move(desc));};
+
     private:
-        std::string username;
+        int id;
 
-        int password;
-
-        Role role;
+        std::vector<std::string> keywords;
 
         double health;
+
+        std::vector<std::string> description;
     };
+
+    inline double getMaxHealth() {return MAX_HEALTH;};
+    inline double getStartingHealth() {return STARTING_HEALTH;};
 }
 
 #endif //WEBSOCKETNETWORKING_USER_H

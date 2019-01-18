@@ -57,11 +57,29 @@ sudo apt-get install libboost-all-dev
 
 After that, just make sure that you have all the correct versions and you are good to go!
 
+### Building
+
+For this project, we will be utilizing the `Out-of-source' building method.
+
+To build your project using bash:
+
+```
+1. `cd` out of the project's root directory.
+2. `mkdir` a 'adventureBuild' directory
+3. `cd` into the 'adventureBuild' directory
+4. call `cmake ../adventure2019`
+5. call `make`
+```
+
+After that, you're all set. Your executable files should be in the `adventureBuild/bin` directory.
+
+`NEVER` build from the adventure2019 directory.
+
 ### Running
 First run the chat server on an unused port of the server machine. The server also takes an HTML file that it will server to standard http requests for `index.html`.
 
 ```
-bin/chatserver 4000 ../web-socket-networking/webchat.html
+bin/chatserver 4000 ../adventure2019/webchat.html
 ```
 
 In separate terminals, run multiple instances of the chat client using:
