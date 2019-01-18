@@ -22,10 +22,10 @@ namespace model {
 
     enum class Slot {Head, Body, Legs, Arm, Weapon};
 
-    class Item: public Object {
+    class Item {
     public:
         Item(int id, std::string name, std::string description, bool canEquip, Slot slot)
-            : Object(id, std::move(name), std::move(description)),
+            : object(id, std::move(name), std::move(description)),
               canEquip(canEquip),
               slot(slot) {}
 
@@ -38,6 +38,8 @@ namespace model {
         void setCanEquip(bool canEquip);
 
     private:
+        Object object;
+
         bool canEquip;
 
         Slot slot;
