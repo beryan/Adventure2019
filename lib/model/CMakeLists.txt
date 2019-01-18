@@ -1,7 +1,7 @@
 add_library(model
         src/User.cpp
         src/UserCollection.cpp
-        )
+        src/Object.cpp)
 
 target_include_directories(model
         PUBLIC
@@ -20,4 +20,3 @@ set_target_properties(model
 install(TARGETS model
         ARCHIVE DESTINATION lib
         )
-
