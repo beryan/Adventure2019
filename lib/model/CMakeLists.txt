@@ -5,7 +5,9 @@ add_library(model
         src/Object.cpp
         src/Item.cpp
         src/Door.cpp
-        src/Room.cpp)
+        src/Room.cpp
+        src/World.cpp
+        )
 
 target_include_directories(model
         PUBLIC
