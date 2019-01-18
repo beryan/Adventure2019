@@ -6,6 +6,7 @@
 #define WEBSOCKETNETWORKING_USER_H
 
 #include <string>
+#include <array>
 
 const double STARTING_HEALTH = 100.00;
 const double MAX_HEALTH = 100.00;
@@ -38,6 +39,8 @@ namespace model {
         double health;
 
         std::string description;
+
+        
     };
 
     inline double getMaxHealth() {return MAX_HEALTH;};
