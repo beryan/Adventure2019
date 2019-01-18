@@ -5,14 +5,18 @@
 #ifndef WEBSOCKETNETWORKING_WORLD_H
 #define WEBSOCKETNETWORKING_WORLD_H
 
+#include <map>
+#include "User.h"
+
 namespace model{
  class World{
  public:
      World();
 
  private:
-     std::vector<Area> areas;
-     std::vector<User> users;
+     std::map<int, User> usersMap;
+     //std::map<int, Area> areasMap;
+
  };
 }
 
