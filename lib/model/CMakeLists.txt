@@ -7,6 +7,7 @@ add_library(model
         src/Door.cpp
         src/Room.cpp
         src/World.cpp
+        src/WorldHandler.cpp
         )
 
 target_include_directories(model
