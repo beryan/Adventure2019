@@ -16,6 +16,11 @@
 #include <map>
 
 
+static const char *const COMMAND_SHUTDOWN = "shutdown";
+static const char *const COMMAND_QUIT = "quit";
+static const char *const COMMAND_SAY = "say";
+static const char *const COMMAND_HELP = "help";
+static const char *const COMMAND_LOGOUT = "logout";
 using networking::Server;
 using networking::Connection;
 using networking::Message;
@@ -60,27 +65,29 @@ processMessages(Server &server,
     std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
     std::string param = message.text.substr(message.text.find(action) + action.size());
 
-    if (action == "quit") {
+    if (action == COMMAND_QUIT) {
       server.disconnect(message.connection);
 
-    } else if (action == "shutdown") {
+    } else if (action == COMMAND_SHUTDOWN) {
       std::cout << "Shutting down.\n";
       quit = true;
 
-    } else if (action == "say") {
+    } else if (action == COMMAND_SAY) {
       result.setPublic();
       tempMessage << message.connection.id << "> " << param << "\n";
-
-    } else if (action == "help") {
+    } else if (action == COMMAND_LOGOUT) {
+      tempMessage << "Logout not yet implemented\n";
+    } else if (action == COMMAND_HELP) {
       tempMessage << "********\n";
       tempMessage << "* HELP *\n";
       tempMessage << "********\n";
       tempMessage << "\n";
       tempMessage << "ACTIONS:\n";
-      tempMessage << "  - help (shows this help interface)\n";
-      tempMessage << "  - say [message] (sends [message] to other players in the game)\n";
-      tempMessage << "  - quit (disconnects you from the game server)\n";
-      tempMessage << "  - shutdown (shuts down the game server)\n";
+      tempMessage << "  - " << COMMAND_HELP << " (shows this help interface)\n";
+      tempMessage << "  - " << COMMAND_SAY << " [message] (sends [message] to other players in the game)\n";
+      tempMessage << "  - " << COMMAND_LOGOUT << " (logs you out of the server)\n";
+      tempMessage << "  - " << COMMAND_QUIT <<" (disconnects you from the game server)\n";
+      tempMessage << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n";
 
     } else {
       tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
