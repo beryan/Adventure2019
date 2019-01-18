@@ -5,7 +5,6 @@
 #include "User.h"
 
 using model::User;
-using model::Race;
 
 namespace model {
     //TODO: Change values in the future to accommodate for different roles
@@ -13,7 +12,7 @@ namespace model {
 
     class Player : public User {
     public:
-        Player(int id, std::string username, int password) : User(id), username(username), password(password), Role(Role::Default){}
+        Player(int id, std::string username, int password) : User(id), username(username), password(password), role(Role::Default){}
 
         std::string getUsername() {return username;};
         void setUsername(std::string username) {this->username = username;};
@@ -22,7 +21,7 @@ namespace model {
         void setPassword(int password) {this->password = password;};
 
         Role getRole() {return role;};
-        void setRace(Role role) {this->role = role;};
+        void setRole(Role role) {this->role = role;};
 
     private:
         std::string username;
@@ -46,7 +45,7 @@ namespace model {
     private:
         std::string short_description;
 
-        std::long_description;
+        std::string long_description;
 
     };
 }

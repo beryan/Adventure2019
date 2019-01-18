@@ -39,8 +39,6 @@ namespace model {
         double health;
 
         std::string description;
-
-        
     };
 
     inline double getMaxHealth() {return MAX_HEALTH;};
