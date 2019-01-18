@@ -33,19 +33,22 @@ namespace model {
 
     class NPC : public User {
     public:
-        NPC(int id) : User(id), shortdescr(""), longdesc("") {}
+        NPC(int id) : User(id), shortdesc({}), longdesc({}) {}
 
-        std::string getShortDescription() {return this->short_description;};
+        NPC(int id, std::vector<std::string> keys, std::vector<std::string> desc, std::string shdesc, std::vector<std::string> lngdesc) :
+            User(id, keys, desc), shortdesc(shdesc), longdesc(lngdesc) {}
 
-        void setShortDescription(std::string desc) {this->short_description = desc;};
+        std::string getShortDescription() {return this->shortdesc;};
 
-        std::string getLongDescription() {return this->long_description;};
+        void setShortDescription(std::string desc) {shortdesc.assign(desc);};
 
-        void setLongDescription(std::string desc) {this->long_description = desc;};
+        std::vector<std::string> getLongDescription() {return this->longdesc;};
+
+        void addLongDescription(std::string desc) {longdesc.push_back(std::move(desc));};
     private:
         std::string shortdesc;
 
-        std::string longdesc;
+        std::vector<std::string> longdesc;
 
     };
 }
