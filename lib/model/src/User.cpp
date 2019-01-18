@@ -33,7 +33,7 @@ namespace model {
 
     class NPC : public User {
     public:
-        NPC(int id) : User(id), short_description(""), long_description("") {}
+        NPC(int id) : User(id), shortdescr(""), longdesc("") {}
 
         std::string getShortDescription() {return this->short_description;};
 
@@ -43,9 +43,9 @@ namespace model {
 
         void setLongDescription(std::string desc) {this->long_description = desc;};
     private:
-        std::string short_description;
+        std::string shortdesc;
 
-        std::string long_description;
+        std::string longdesc;
 
     };
 }

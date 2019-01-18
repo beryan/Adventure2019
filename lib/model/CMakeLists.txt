@@ -1,5 +1,6 @@
 add_library(model
         src/User.cpp
+        src/UserCollection.cpp
         )
 
 target_include_directories(model

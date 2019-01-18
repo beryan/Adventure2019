@@ -6,10 +6,11 @@
 #define WEBSOCKETNETWORKING_USER_H
 
 #include <string>
-#include <array>
+#include <list>
 
 static const double STARTING_HEALTH = 100.00;
 static const double MAX_HEALTH = 100.00;
+static const int MAX_KEYWORDS = 8;
 
 namespace model {
     //TODO: Change values to more appropriate values
@@ -22,8 +23,14 @@ namespace model {
         inline int getId() {return id;};
         inline void setId(int id) {this->id = id;};
 
-        inline Race getRace() {return race;};
-        inline void setRace(Race race) {this->race = race;};
+        inline int addKeyword(std::string key) {
+            if (this->keywords.size() < MAX_KEYWORDS) {keywords.push_back(key);}
+        };
+        inline void removeKeyword(std::string key) {
+            keywords.remove_if([](std::string i) {return i.compare(key)} == 0);
+        }
+
+        inline std::list getKeywords() {return keywords;};
 
         inline double getHealth() {return health;};
         inline void setHealth(double health) {this->health = health;};
@@ -34,7 +41,7 @@ namespace model {
     private:
         int id;
 
-        Race race;
+        std::list<std::string> keywords;
 
         double health;
 
