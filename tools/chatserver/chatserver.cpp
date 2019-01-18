@@ -14,6 +14,7 @@
 #include <sstream>
 #include <unistd.h>
 #include <map>
+#include <vector>
 
 
 using networking::Server;
