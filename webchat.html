@@ -2,20 +2,76 @@
 <html>
 <head>
   <meta charset="utf-8" />
-  <title>Web Chat</title>
+  <title>Adventure 2019</title>
+
+  <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
 
   <style>
     body, input, select, textarea {
+      font-family: 'VT323', monospace;
       background: #031e11;
       color: #10fd60;
+      font-size: 32px;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      white-space: -moz-pre-wrap;
+      word-wrap: break-word;
+    }
+
+    #title {
+      font-size: 64px;
+      margin: 0;
+    }
+
+    #server-input {
+      display: none;
+    }
+
+    #terminal {
+      border: solid 1px #cccccc;
+      width: fit-content;
+      margin: 15px auto 15px auto;
+      cursor: text;
     }
 
     #messages {
-      width: 80em;
-      height: 40em;
-      border: solid 1px #cccccc;
-      margin-bottom: 5px;
+      font-family: 'VT323', monospace;
+      font-size: 32px;
+      max-width: 1000px;
+      width: 100%;
+      height: 70vh;
+      margin: 0 3px;
       overflow-y: hidden;
+    }
+
+    #sendMessage {
+      display: flex;
+    }
+
+    #input {
+      flex-grow: 1;
+      font-family: 'VT323', monospace;
+      font-size: 32px;
+      margin-right: 3px;
+      display: inline-block;
+      border: none;
+      outline: none;
+    }
+
+    .center{
+      text-align: center;
+    }
+
+    .btn {
+      font-family: 'VT323', monospace;
+      color: #10fd60;
+      border: none;
+      background-color: inherit;
+      padding: 16px 28px;
+      font-size: 24px;
+      cursor: pointer;
     }
   </style>
 
@@ -53,16 +109,14 @@
         ws.close();
       });
 
-      $('#send').click(function () {
-        ws.send(sendMessage.value);
-        sendMessage.value = "";
+      $('#sendMessage').submit(function(e) {
+        e.preventDefault();
+        ws.send(input.value);
+        input.value = "";
       });
 
-      $('#sendMessage').keyup(function(e) {
-        e.preventDefault();
-        if (e.keyCode === 13) {
-          $('#send').click();
-        }
+      $('#terminal').click(function() {
+        $('#input').focus();
       });
     });
   </script>
@@ -70,19 +124,26 @@
 
 <body>
 
-  <h1>Web Chat</h1>
+  <h1 id="title" class="center">ADVENTURE 2019</h1>
 
-  Chat Server: <input id="uri" size="40">
-  <button id="connect">Connect</button>
-  <button id="disconnect">Disconnect</button><br />
-
-  <pre id="messages"></pre>
-
-  <div style="margin-bottom: 5px;">
-    Enter Message:<br />
-    <input id="sendMessage" size="80" value="" />
-    <button id="send">Send</button>
+  <div id="server-input">
+    Game Server: <input id="uri" size="40">
   </div>
+
+  <div class="center">
+    <button id="connect" class="btn">Connect</button>
+    <button id="disconnect" class="btn">Disconnect</button><br />
+  </div>
+
+  <div id="terminal">
+    <pre id="messages"></pre>
+
+    <form id="sendMessage">
+      <span style="margin-left: 3px">></span>
+      <input id="input" size="80" value="" autocomplete="off"/>
+    </form >
+  </div>
+
 
 </body>
 </html>
