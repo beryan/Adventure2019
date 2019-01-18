@@ -8,8 +8,8 @@
 #include <string>
 #include <array>
 
-const double STARTING_HEALTH = 100.00;
-const double MAX_HEALTH = 100.00;
+static const double STARTING_HEALTH = 100.00;
+static const double MAX_HEALTH = 100.00;
 
 namespace model {
     //TODO: Change values to more appropriate values
