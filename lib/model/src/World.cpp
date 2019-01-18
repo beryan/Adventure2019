@@ -3,9 +3,19 @@
 //
 
 #include "World.h"
+#include "User.h"
 
-using model:World;
+using model::World;
 
-class World{
+namespace model {
+
     World::World(){}
+
+    std::map<int, User> World::getUserMap(){
+        return this->usersMap;
+    }
+
+//    std::map<int, Area> World::getAreaMap(){
+//        return this->areasMap;
+//    }
 };

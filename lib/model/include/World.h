@@ -13,6 +13,9 @@ namespace model{
  public:
      World();
 
+     std::map<int, User> getUserMap();
+//     std::map<int, User> getAreaMap();
+
  private:
      std::map<int, User> usersMap;
      //std::map<int, Area> areasMap;
