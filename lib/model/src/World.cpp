@@ -7,24 +7,5 @@
 using model:World;
 
 class World{
-    World::World(){
-        World::LoadAreas();
-        World::LoadUsers();
-    }
-
-    void World::LoadAreas(){
-
-    }
-
-    void World::LoadUsers(){
-
-    }
-
-    void World::ParseAreas(){
-
-    }
-
-    void World::ParseUsers(){
-
-    }
+    World::World(){}
 };

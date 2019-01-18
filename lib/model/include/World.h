@@ -10,17 +10,6 @@ namespace model{
  public:
      World();
 
-     //
-     void LoadAreas();
-
-     void LoadUsers();
-
-     // given a json file, create Areas
-     void ParseAreas();
-
-     // given a json file, create Users
-     void ParseUsers();
-
  private:
      std::vector<Area> areas;
      std::vector<User> users;
