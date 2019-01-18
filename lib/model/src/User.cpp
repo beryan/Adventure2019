@@ -15,12 +15,15 @@ namespace model {
         Player(int id, std::string username, int password) : User(id), username(username), password(password), role(Role::Default){}
 
         std::string getUsername() {return username;};
-        void setUsername(std::string username) {this->username = username;};
+
+        void setUsername(std::string usrname) {username.assign(usrname);};
 
         int getPassword() {return password;};
+
         void setPassword(int password) {this->password = password;};
 
         Role getRole() {return role;};
+
         void setRole(Role role) {this->role = role;};
 
     private:
