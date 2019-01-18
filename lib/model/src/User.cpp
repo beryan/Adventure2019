@@ -13,7 +13,7 @@ namespace model {
 
     class Player : public User {
     public:
-        Player(int id, std::string username, int password) : User(id), username(username), password(password){}
+        Player(int id, std::string username, int password) : User(id), username(username), password(password), Role(Role::Default){}
 
         std::string getUsername() {return username;};
         void setUsername(std::string username) {this->username = username;};
@@ -33,6 +33,20 @@ namespace model {
     };
 
     class NPC : public User {
+    public:
+        NPC(int id) : User(id), short_description(""), long_description("") {}
+
+        std::string getShortDescription() {return this->short_description;};
+
+        void setShortDescription(std::string desc) {this->short_description = desc;};
+
+        std::string getLongDescription() {return this->long_description;};
+
+        void setLongDescription(std::string desc) {this->long_description = desc;};
+    private:
+        std::string short_description;
+
+        std::long_description;
 
     };
 }
