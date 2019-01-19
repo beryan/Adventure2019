@@ -8,6 +8,7 @@
 
 #include "Server.h"
 #include "MessageResult.h"
+#include "Door.h"
 
 #include <fstream>
 #include <iostream>
@@ -86,7 +87,13 @@ processMessages(Server &server,
       tempMessage << "  - say [message] (sends [message] to other players in the game)\n";
       tempMessage << "  - quit (disconnects you from the game server)\n";
       tempMessage << "  - shutdown (shuts down the game server)\n";
+      tempMessage << "  - door (displays door information)\n";
 
+    } else if (action == "door") {
+      model::Door stubDoor1 = model::Door("north", 8801);
+      model::Door stubDoor2 = model::Door("south", {"The door is old", "You can hear it creak"}, {"old","creak"}, 8855);
+      tempMessage << stubDoor1 << std::endl;
+      tempMessage << stubDoor2 << std::endl;
     } else {
       tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
     }
@@ -168,4 +175,3 @@ main(int argc, char* argv[]) {
 
   return 0;
 }
-
