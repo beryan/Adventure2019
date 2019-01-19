@@ -8,6 +8,8 @@
 
 #include <Server.h>
 #include "ActionResult.h"
+#include "ActionHandler.h"
+
 
 namespace model {
     class Game {
@@ -15,6 +17,13 @@ namespace model {
         networking::Server *server;
         std::vector<networking::Connection> *clients;
         bool *quit;
+        model::ActionHandler *actionHandler;
+
+        void setActionHandler(model::ActionHandler actionHandler);
+
+        void disconnect(networking::Connection action);
+
+        void shutdown();
 
         std::deque<model::ActionResult> receive();
 

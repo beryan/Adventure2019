@@ -7,7 +7,6 @@
 
 
 #include "Server.h"
-#include "Door.h"
 
 #include <fstream>
 #include <iostream>

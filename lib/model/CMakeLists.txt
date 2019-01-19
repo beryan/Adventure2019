@@ -6,7 +6,7 @@ add_library(model
         src/Item.cpp
         src/Door.cpp
         src/Game.cpp
-        src/ActionResult.cpp)
+        src/ActionResult.cpp include/ActionHandler.h src/ActionHandler.cpp)
 
 target_include_directories(model
         PUBLIC
