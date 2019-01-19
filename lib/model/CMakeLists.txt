@@ -3,6 +3,7 @@ add_library(model
         src/UserCollection.cpp
         src/Object.cpp
         src/Item.cpp
+        src/Door.cpp
         )
 
 target_include_directories(model

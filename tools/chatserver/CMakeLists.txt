@@ -14,6 +14,7 @@ find_package(Threads REQUIRED)
 
 target_link_libraries(chatserver
   networking
+  model
   ${CMAKE_THREAD_LIBS_INIT}
 )
 
@@ -25,4 +26,3 @@ target_include_directories(chatserver PUBLIC
 install(TARGETS chatserver
   RUNTIME DESTINATION bin
 )
-
