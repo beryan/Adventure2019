@@ -18,11 +18,11 @@
 #include <vector>
 
 
-static const char *const COMMAND_SHUTDOWN = "shutdown";
-static const char *const COMMAND_QUIT = "quit";
-static const char *const COMMAND_SAY = "say";
-static const char *const COMMAND_HELP = "help";
-static const char *const COMMAND_LOGOUT = "logout";
+static const char* const COMMAND_SHUTDOWN = "shutdown";
+static const char* const COMMAND_QUIT = "quit";
+static const char* const COMMAND_SAY = "say";
+static const char* const COMMAND_HELP = "help";
+static const char* const COMMAND_LOGOUT = "logout";
 using networking::Server;
 using networking::Connection;
 using networking::Message;
@@ -64,9 +64,9 @@ onDisconnect(Connection c) {
 
 
 std::deque<MessageResult>
-processMessages(Server &server,
-                const std::deque<Message> &incoming,
-                bool &quit) {
+processMessages(Server& server,
+                const std::deque<Message>& incoming,
+                bool& quit) {
   std::deque<MessageResult> results;
 
   for (auto& message : incoming) {
@@ -105,7 +105,7 @@ processMessages(Server &server,
       tempMessage << "  - " << COMMAND_HELP << " (shows this help interface)\n";
       tempMessage << "  - " << COMMAND_SAY << " [message] (sends [message] to other players in the game)\n";
       tempMessage << "  - " << COMMAND_LOGOUT << " (logs you out of the server)\n";
-      tempMessage << "  - " << COMMAND_QUIT <<" (disconnects you from the game server)\n";
+      tempMessage << "  - " << COMMAND_QUIT << " (disconnects you from the game server)\n";
       tempMessage << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n";
 
     } else {
@@ -136,7 +136,7 @@ buildOutgoing(std::deque<MessageResult>& log) {
     }
   }
 
-  for (auto const& [clientId, message] : clientMessages) {
+  for (auto const&[clientId, message] : clientMessages) {
     outgoing.push_back({clientId, message.str()});
   }
 
@@ -146,7 +146,7 @@ buildOutgoing(std::deque<MessageResult>& log) {
 
 std::string
 getHTTPMessage(const char* htmlLocation) {
-  if (access(htmlLocation, R_OK ) != -1) {
+  if (access(htmlLocation, R_OK) != -1) {
     std::ifstream infile{htmlLocation};
     return std::string{std::istreambuf_iterator<char>(infile),
                        std::istreambuf_iterator<char>()};
@@ -181,7 +181,7 @@ main(int argc, char* argv[]) {
     }
 
     auto incoming = server.receive();
-    auto log      = processMessages(server, incoming, done);
+    auto log = processMessages(server, incoming, done);
     auto outgoing = buildOutgoing(log);
     server.send(outgoing);
     sleep(1);
