@@ -23,17 +23,19 @@ static const char* const COMMAND_QUIT = "quit";
 static const char* const COMMAND_SAY = "say";
 static const char* const COMMAND_HELP = "help";
 static const char* const COMMAND_LOGOUT = "logout";
+static const char* const COMMAND_REGISTER = "register";
 using networking::Server;
 using networking::Connection;
 using networking::Message;
+using model::Player;
 
 
 std::vector<Connection> clients;
-std::map<networking::Connection, model::Player> logins;
+std::map<Connection, Player> logins;
 
-std::optional<model::Player>
+std::optional<Player>
 getPlayer(const Message& message) {
-  std::optional<model::Player> player;
+  std::optional<Player> player;
   auto iterator = logins.find(message.connection);
   if (iterator != logins.end()) {
     player = iterator->second;
@@ -96,6 +98,8 @@ processMessages(Server& server,
       tempMessage << connectionID << "> " << param << "\n";
     } else if (action == COMMAND_LOGOUT) {
       tempMessage << "Logout not yet implemented\n";
+    } else if (action == COMMAND_REGISTER) {
+      tempMessage << "Registering not yet implemented\n";
     } else if (action == COMMAND_HELP) {
       tempMessage << "********\n";
       tempMessage << "* HELP *\n";
@@ -104,6 +108,8 @@ processMessages(Server& server,
       tempMessage << "ACTIONS:\n";
       tempMessage << "  - " << COMMAND_HELP << " (shows this help interface)\n";
       tempMessage << "  - " << COMMAND_SAY << " [message] (sends [message] to other players in the game)\n";
+      tempMessage << "  - " << COMMAND_REGISTER
+                  << " [email password](registers user [email] with password [password])\n";
       tempMessage << "  - " << COMMAND_LOGOUT << " (logs you out of the server)\n";
       tempMessage << "  - " << COMMAND_QUIT << " (disconnects you from the game server)\n";
       tempMessage << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n";
