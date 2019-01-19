@@ -39,6 +39,8 @@ namespace model {
 
         inline void setDescription(std::string desc) { description.push_back(std::move(desc)); };
 
+        bool operator==(const User&);
+
     private:
         int id;
 
@@ -49,7 +51,7 @@ namespace model {
         std::vector<std::string> description;
     };
 
-    inline double getMaxHealth() { return MAX_HEALTH; };
+  inline double getMaxHealth() { return MAX_HEALTH; };
 
     inline double getStartingHealth() { return STARTING_HEALTH; };
 }

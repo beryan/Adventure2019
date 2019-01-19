@@ -4,7 +4,7 @@ add_library(model
         src/UserCollection.cpp
         src/Object.cpp
         src/Item.cpp
-    include/Role.h)
+    include/Role.h src/User.cpp)
 
 target_include_directories(model
         PUBLIC
