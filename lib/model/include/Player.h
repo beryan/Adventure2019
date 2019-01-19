@@ -6,12 +6,9 @@
 #define WEBSOCKETNETWORKING_PLAYER_H
 
 #include "User.h"
+#include "Role.h"
 
 namespace model {
-    enum class Role {
-        Admin, Builder, Default
-    };
-
     class Player : User {
     public:
         inline Player(int id, std::string username, int password) :
