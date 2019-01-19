@@ -5,7 +5,7 @@ add_library(model
         src/Object.cpp
         src/Item.cpp
         src/Door.cpp
-        include/Role.h)
+        src/Room.cpp)
 
 target_include_directories(model
         PUBLIC
