@@ -71,19 +71,13 @@ namespace model {
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Door& rhs) {
-    	os << "Direction: " + rhs.dir << std::endl;
+    	os << "Direction: " << rhs.dir << std::endl;
 
-    	os << "Description: \n";
-    	for (std::string s : rhs.desc) {
-    		os << s << std::endl;
-    	}
-
-    	os << "Keywords: \n";
-    	for (std::string s : rhs.keywords) {
-    		os << s << std::endl;
-    	}
-
-    	os << "Connects to room: " << rhs.to << std::endl;
+      if (rhs.desc.size() != 0) {
+      	for (std::string s : rhs.desc) {
+      		os << s << std::endl;
+      	}
+      }
 
     	return os;
     }

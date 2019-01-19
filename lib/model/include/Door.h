@@ -7,8 +7,8 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_USER_H
-#define WEBSOCKETNETWORKING_USER_H
+#ifndef WEBSOCKETNETWORKING_DOOR_H
+#define WEBSOCKETNETWORKING_DOOR_H
 
 #include <string>
 #include <vector>
