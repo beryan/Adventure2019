@@ -8,7 +8,7 @@
 
 #include "Server.h"
 #include "MessageResult.h"
-#include "User.h"
+#include "Player.h"
 
 #include <fstream>
 #include <iostream>
@@ -29,7 +29,7 @@ using networking::Message;
 
 
 std::vector<Connection> clients;
-std::map<networking::Connection, model::User> logins;
+std::map<networking::Connection, model::Player> logins;
 
 std::string
 lowercase(std::string string) {
@@ -64,9 +64,9 @@ processMessages(Server &server,
     auto connectionID = message.connection.id;
 
     auto iterator = logins.find(message.connection);
-    model::User user = NULL;
+    std::optional<model::Player> player;
     if (iterator != logins.end()) {
-      user = iterator->second;
+      player = iterator->second;
     } else {
       // not logged in
     }
