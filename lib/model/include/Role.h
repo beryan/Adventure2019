@@ -4,7 +4,9 @@
 
 #ifndef WEBSOCKETNETWORKING_ROLE_H
 #define WEBSOCKETNETWORKING_ROLE_H
-enum class Role {
-  Admin, Builder, Default
-};
+namespace model {
+  enum class Role {
+    Admin, Builder, Default
+  };
+}
 #endif //WEBSOCKETNETWORKING_ROLE_H
