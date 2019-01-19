@@ -6,18 +6,22 @@
 #define WEBSOCKETNETWORKING_WORLD_H
 
 #include <map>
-#include "User.h"
+#include "Player.h"
 
 namespace model{
  class World{
  public:
      World();
 
-     std::map<int, User> getUserMap();
+     std::map<int, Player> getUserMap();
 //     std::map<int, User> getAreaMap();
 
+    void insertUser(Player player);
+
+     void printUsers();
+
  private:
-     std::map<int, User> usersMap;
+     std::map<int, Player> usersMap;
      //std::map<int, Area> areasMap;
 
  };

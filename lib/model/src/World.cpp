@@ -11,7 +11,7 @@ namespace model {
 
     World::World(){}
 
-    std::map<int, User> World::getUserMap(){
+    std::map<int, Player> World::getUserMap(){
         return this->usersMap;
     }
 
