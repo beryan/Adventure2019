@@ -8,6 +8,7 @@
 
 #include "Server.h"
 #include "MessageResult.h"
+#include "User.h"
 
 #include <fstream>
 #include <iostream>
@@ -27,7 +28,7 @@ using networking::Message;
 
 
 std::vector<Connection> clients;
-
+std::map<uintptr_t, model::User> logins;
 
 std::string
 lowercase(std::string string) {
@@ -59,7 +60,17 @@ processMessages(Server &server,
 
   for (auto& message : incoming) {
     auto result = MessageResult();
-    result.setClientId(message.connection.id);
+    auto connectionID = message.connection.id;
+
+    auto iterator = logins.find(connectionID);
+    model::User user = NULL;
+    if (iterator != logins.end()) {
+      user = iterator->second;
+    } else {
+      // not logged in
+    }
+
+    result.setClientId(connectionID);
 
     std::ostringstream tempMessage;
     std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
@@ -74,7 +85,7 @@ processMessages(Server &server,
 
     } else if (action == COMMAND_SAY) {
       result.setPublic();
-      tempMessage << message.connection.id << "> " << param << "\n";
+      tempMessage << connectionID << "> " << param << "\n";
     } else if (action == COMMAND_LOGOUT) {
       tempMessage << "Logout not yet implemented\n";
     } else if (action == COMMAND_HELP) {
