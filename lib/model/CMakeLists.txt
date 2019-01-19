@@ -5,7 +5,8 @@ add_library(model
         src/Object.cpp
         src/Item.cpp
         src/Door.cpp
-        include/Role.h)
+        src/Game.cpp
+        src/ActionResult.cpp)
 
 target_include_directories(model
         PUBLIC
@@ -14,6 +15,8 @@ target_include_directories(model
         PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
+
+target_link_libraries(model PUBLIC networking)
 
 set_target_properties(model
         PROPERTIES
