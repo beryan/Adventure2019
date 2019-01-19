@@ -15,6 +15,7 @@
 #include <sstream>
 #include <unistd.h>
 #include <map>
+#include <vector>
 
 
 static const char *const COMMAND_SHUTDOWN = "shutdown";
@@ -74,7 +75,11 @@ processMessages(Server &server,
 
     std::ostringstream tempMessage;
     std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
-    std::string param = message.text.substr(message.text.find(action) + action.size());
+    std::string param;
+
+    if (message.text.find(" ") != std::string::npos) {
+      param = message.text.substr(message.text.find(" ") + 1);
+    }
 
     if (action == COMMAND_QUIT) {
       server.disconnect(message.connection);

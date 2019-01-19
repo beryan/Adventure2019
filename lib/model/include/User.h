@@ -6,10 +6,12 @@
 #define WEBSOCKETNETWORKING_USER_H
 
 #include <string>
-#include <array>
+#include <vector>
+#include <utility>
 
-const double STARTING_HEALTH = 100.00;
-const double MAX_HEALTH = 100.00;
+static const double STARTING_HEALTH = 100.00;
+static const double MAX_HEALTH = 100.00;
+static const int MAX_KEYWORDS = 8;
 
 namespace model {
     //TODO: Change values to more appropriate values
@@ -17,30 +19,37 @@ namespace model {
 
     class User {
     public:
-        inline User(int id) : id(id), race(Race::Human), health(STARTING_HEALTH), description("") {}
+        inline User(int id) : id(id), health(STARTING_HEALTH), description({}) {}
+
+        inline User(int id, std::vector<std::string> keys, std::vector<std::string> desc) :
+            id(id), keywords(keys), description(desc) {}
 
         inline int getId() {return id;};
+
         inline void setId(int id) {this->id = id;};
 
-        inline Race getRace() {return race;};
-        inline void setRace(Race race) {this->race = race;};
+        inline void addKeyword(std::string key) {keywords.push_back(std::move(key));};
+
+        inline void removeKeyword(int index) {keywords.erase(keywords.begin() + index);};
+
+        inline std::vector<std::string> getKeywords() {return keywords;};
 
         inline double getHealth() {return health;};
+
         inline void setHealth(double health) {this->health = health;};
 
-        inline std::string getDescription() {return description;};
-        inline void setDescription(std::string description) {this->description = description;};
+        inline std::vector<std::string> getDescription() {return this->description;};
+
+        inline void setDescription(std::string desc) {description.push_back(std::move(desc));};
 
     private:
         int id;
 
-        Race race;
+        std::vector<std::string> keywords;
 
         double health;
 
-        std::string description;
-
-        
+        std::vector<std::string> description;
     };
 
     inline double getMaxHealth() {return MAX_HEALTH;};
