@@ -28,7 +28,7 @@ using networking::Message;
 
 
 std::vector<Connection> clients;
-std::map<uintptr_t, model::User> logins;
+std::map<networking::Connection, model::User> logins;
 
 std::string
 lowercase(std::string string) {
@@ -62,7 +62,7 @@ processMessages(Server &server,
     auto result = MessageResult();
     auto connectionID = message.connection.id;
 
-    auto iterator = logins.find(connectionID);
+    auto iterator = logins.find(message.connection);
     model::User user = NULL;
     if (iterator != logins.end()) {
       user = iterator->second;
