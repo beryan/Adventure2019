@@ -31,6 +31,16 @@ using networking::Message;
 std::vector<Connection> clients;
 std::map<networking::Connection, model::Player> logins;
 
+std::optional<model::Player>
+getPlayer(const Message& message) {
+  std::optional<model::Player> player;
+  auto iterator = logins.find(message.connection);
+  if (iterator != logins.end()) {
+    player = iterator->second;
+  }
+  return player;
+}
+
 std::string
 lowercase(std::string string) {
   std::transform(string.begin(), string.end(), string.begin(), ::tolower);
@@ -62,14 +72,7 @@ processMessages(Server &server,
   for (auto& message : incoming) {
     auto result = MessageResult();
     auto connectionID = message.connection.id;
-
-    auto iterator = logins.find(message.connection);
-    std::optional<model::Player> player;
-    if (iterator != logins.end()) {
-      player = iterator->second;
-    } else {
-      // not logged in
-    }
+    auto player = getPlayer(message);
 
     result.setClientId(connectionID);
 
