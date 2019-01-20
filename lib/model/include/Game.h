@@ -5,33 +5,38 @@
 #ifndef WEBSOCKETNETWORKING_GAME_H
 #define WEBSOCKETNETWORKING_GAME_H
 
-
-#include <Server.h>
 #include "ActionResult.h"
 #include "ActionHandler.h"
 
-
 namespace model {
+/**
+ * @class
+ *
+ * @brief A class for containing the game's logic
+ *
+ * This class manages the components necessary to gather, process, and output
+ * information that is to be exchanged between the server and clients.
+ *
+ */
     class Game {
     private:
-        networking::Server *server;
-        std::vector<networking::Connection> *clients;
-        bool *quit;
-        model::ActionHandler *actionHandler;
+        std::vector<Connection> *clients;
+        ActionHandler *actionHandler;
 
-        void setActionHandler(model::ActionHandler actionHandler);
+        std::deque<ActionResult>
+        receive(std::deque<Message> incoming);
 
-        void disconnect(networking::Connection action);
-
-        void shutdown();
-
-        std::deque<model::ActionResult> receive();
-
-        void send(std::deque<model::ActionResult> results);
+        std::deque<Message>
+        send(std::deque<ActionResult> outgoing);
 
     public:
-        Game(networking::Server &server, std::vector<networking::Connection> &clients, bool &quit);
-        void processCycle();
+        explicit Game(std::vector<Connection> &clients);
+
+        void
+        setActionHandler(ActionHandler &actionHandler);
+
+        std::deque<Message>
+        processCycle(std::deque<Message>);
     };
 }
 

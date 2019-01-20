@@ -2,49 +2,31 @@
 // Created by louis on 19/01/19.
 //
 
-#include <Game.h>
-#include <iostream>
-#include <deque>
-#include <sstream>
+#include "Game.h"
+
 #include <map>
-#include <Server.h>
+#include <sstream>
 
 using model::Game;
-using model::ActionHandler;
-using model::ActionResult;
 
 namespace model {
-    Game::Game(networking::Server &server, std::vector<networking::Connection> &clients, bool &quit) {
-        this->server = &server;
+    Game::Game(std::vector<Connection> &clients) {
         this->clients = &clients;
-        this->quit = &quit;
-
-        std::function<void(networking::Connection)> disconnect = [&server](networking::Connection connection) {
-           server.disconnect(connection);
-        };
-
-        std::function<void()> shutdown = [&quit]() {
-            quit = true;
-        };
-
-        this->setActionHandler(model::ActionHandler(disconnect, shutdown));
     }
 
     void
-    Game::setActionHandler(model::ActionHandler actionHandler) {
+    Game::setActionHandler(ActionHandler &actionHandler) {
         this->actionHandler = &actionHandler;
     }
 
-    std::deque<model::ActionResult>
-    Game::receive() {
-        std::deque<model::ActionResult> results = this->actionHandler->processActions(this->server->receive());
-
-        return results;
+    std::deque<ActionResult>
+    Game::receive(std::deque<Message> incoming) {
+        return this->actionHandler->processActions(incoming);
     }
 
-    void
-    Game::send(std::deque<model::ActionResult> results) {
-        std::deque<networking::Message> outgoing;
+    std::deque<Message>
+    Game::send(std::deque<ActionResult> results) {
+        std::deque<Message> outgoing;
         std::map<unsigned long int, std::ostringstream> clientMessages;
 
         for (auto entry : results) {
@@ -62,12 +44,12 @@ namespace model {
             outgoing.push_back({clientId, message.str()});
         }
 
-        this->server->send(outgoing);
+        return outgoing;
     }
 
-    void
-    Game::processCycle() {
-        std::deque<model::ActionResult> results = this->receive();
-        this->send(results);
+    std::deque<Message>
+    Game::processCycle(std::deque<Message> incoming) {
+        std::deque<ActionResult> results = this->receive(incoming);
+        return this->send(results);
     }
 }

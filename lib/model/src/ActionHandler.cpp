@@ -2,12 +2,15 @@
 // Created by louis on 19/01/19.
 //
 
+#include "Door.h"
+#include "Server.h"
+#include "ActionHandler.h"
+
 #include <sstream>
 #include <iostream>
-#include "ActionHandler.h"
-#include <Door.h>
 
 using model::ActionHandler;
+using model::ActionResult;
 
 std::string
 lowercase(std::string string) {
@@ -16,17 +19,17 @@ lowercase(std::string string) {
 }
 
 namespace model {
-    ActionHandler::ActionHandler(std::function<void(networking::Connection)> &disconnect, std::function<void()> &shutdown) {
+    ActionHandler::ActionHandler(std::function<void(Connection)> &disconnect, std::function<void()> &shutdown) {
         this->disconnect = disconnect;
         this->shutdown = shutdown;
     }
 
-    std::deque<model::ActionResult>
-    ActionHandler::processActions(std::deque<networking::Message> incoming) {
-        std::deque<model::ActionResult> results;
+    std::deque<ActionResult>
+    ActionHandler::processActions(std::deque<Message> incoming) {
+        std::deque<ActionResult> results;
 
         for (auto& action : incoming) {
-            auto result = model::ActionResult();
+            auto result = ActionResult();
             result.setClientId(action.connection.id);
 
             std::ostringstream tempMessage;
@@ -49,22 +52,22 @@ namespace model {
                 tempMessage << action.connection.id << "> " << param << "\n";
 
             } else if (command == "help") {
-                tempMessage << "********\n";
-                tempMessage << "* HELP *\n";
-                tempMessage << "********\n";
-                tempMessage << "\n";
-                tempMessage << "COMMANDS:\n";
-                tempMessage << "  - help (shows this help interface)\n";
-                tempMessage << "  - say [message] (sends [message] to other players in the game)\n";
-                tempMessage << "  - quit (disconnects you from the game server)\n";
-                tempMessage << "  - shutdown (shuts down the game server)\n";
-                tempMessage << "  - door (displays door information)\n";
+                tempMessage << "********\n"
+                            << "* HELP *\n"
+                            << "********\n"
+                            << "\n"
+                            << "COMMANDS:\n"
+                            << "  - help (shows this help interface)\n"
+                            << "  - say [message] (sends [message] to other players in the game)\n"
+                            << "  - quit (disconnects you from the game server)\n"
+                            << "  - shutdown (shuts down the game server)\n"
+                            << "  - door (displays door information)\n";
 
             } else if (command == "door") {
                 model::Door stubDoor1 = model::Door("north", 8801);
                 model::Door stubDoor2 = model::Door("south", {"The door is old", "You can hear it creak"}, {"old","creak"}, 8855);
-                tempMessage << stubDoor1 << std::endl;
-                tempMessage << stubDoor2 << std::endl;
+                tempMessage << stubDoor1 << std::endl
+                            << stubDoor2 << std::endl;
             } else {
                 tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
             }

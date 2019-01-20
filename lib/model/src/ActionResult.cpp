@@ -2,12 +2,15 @@
 // Created by louis on 19/01/19.
 //
 
-#include <ActionResult.h>
-#include <string>
+#include "ActionResult.h"
 
 using model::ActionResult;
 
 namespace model {
+    ActionResult::ActionResult() {
+        this->local = true;
+    }
+
     unsigned long int ActionResult::getClientId() {
         return this->clientId;
     };
