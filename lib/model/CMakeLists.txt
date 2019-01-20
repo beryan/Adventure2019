@@ -24,6 +24,8 @@ set_target_properties(model
         CXX_STANDARD 17
         )
 
+target_link_libraries(model json)
+
 install(TARGETS model
         ARCHIVE DESTINATION lib
         )

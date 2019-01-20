@@ -1,2 +1,3 @@
 add_subdirectory(networking)
 add_subdirectory(model)
+add_subdirectory(nlohmann)
