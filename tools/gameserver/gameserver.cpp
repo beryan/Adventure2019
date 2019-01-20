@@ -19,6 +19,8 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
+using model::Game;
+using model::ActionHandler;
 
 
 std::vector<Connection> clients;
@@ -66,7 +68,7 @@ main(int argc, char* argv[]) {
   unsigned short port = std::stoi(argv[1]);
   Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
-  std::function<void(networking::Connection)> disconnect = [&server](networking::Connection connection) {
+  std::function<void(Connection)> disconnect = [&server](Connection connection) {
       server.disconnect(connection);
   };
 
@@ -74,8 +76,8 @@ main(int argc, char* argv[]) {
       done = true;
   };
 
-  model::Game game(clients);
-  model::ActionHandler actionHandler = model::ActionHandler(disconnect, shutdown);
+  Game game(clients);
+  ActionHandler actionHandler = ActionHandler(disconnect, shutdown);
   game.setActionHandler(actionHandler);
 
   while (!done) {

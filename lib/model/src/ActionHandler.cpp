@@ -62,8 +62,8 @@ namespace model {
                             << "  - say [message] (sends [message] to other players in the game)\n"
                             << "  - quit (disconnects you from the game server)\n"
                             << "  - shutdown (shuts down the game server)\n"
-                            << "  - door (displays door information)\n"
-                            << "  - info (displays current location information)\n";
+                            << "  - info (displays current location information)\n"
+                            << "\n";
 
             } else if (command == "info") {
                 model::Room stubRoom = model::Room();
