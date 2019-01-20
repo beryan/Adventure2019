@@ -5,7 +5,10 @@ add_library(model
         src/Object.cpp
         src/Item.cpp
         src/Door.cpp
-        src/Room.cpp)
+        src/Room.cpp
+        src/World.cpp
+        src/WorldHandler.cpp
+        )
 
 target_include_directories(model
         PUBLIC
@@ -20,6 +23,8 @@ set_target_properties(model
         LINKER_LANGUAGE CXX
         CXX_STANDARD 17
         )
+
+target_link_libraries(model json)
 
 install(TARGETS model
         ARCHIVE DESTINATION lib
