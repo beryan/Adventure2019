@@ -97,7 +97,7 @@
           appendText("Disconnected!\n");
         };
         ws.onmessage = function(ev) {
-          appendText(ev.data + "\n");
+          appendText(ev.data);
         };
         ws.onerror = function(ev) {
           appendText("[error]\n");
