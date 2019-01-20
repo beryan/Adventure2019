@@ -11,7 +11,7 @@ namespace model {
     class NPC : public User {
     public:
         NPC(int id) :
-            User(id),
+            User(std::move(id)),
             shortdesc({}),
             longdesc({}) {}
 
