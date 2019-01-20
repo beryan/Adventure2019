@@ -2,9 +2,16 @@
 // Created by arehal on 1/18/19.
 //
 
+#include <fstream>
+#include <iostream>
+#include <string>
+
 #include "WorldHandler.h"
 
+
 using model::WorldHandler;
+
+using json = nlohmann::json;
 
 namespace model {
 
@@ -29,4 +36,31 @@ namespace model {
 //    void WorldHandler::removeArea(Area area){
 //        this->world.getAreaMap().erase(area.getId());
 //    }
+
+    void WorldHandler::parseJSON() {
+        std::ifstream ifs("users.json");
+//        std::ifstream input("users.json");
+        json t = json::parse(ifs);
+
+        json users;
+
+        for (json::iterator it = t.begin(); it != t.end(); ++it) {
+            if(it.key() == "USERS"){
+                users = it.value();
+            }
+        }
+
+        createUsersFromJSON(users);
+        world.printUsers();
+    }
+
+    void WorldHandler::createUsersFromJSON(json users){
+        for (json::iterator it = users.begin(); it != users.end(); ++it) {
+//            std::cout << it.value().at("password") << std::endl;
+            model::Player p (it.value().at("id"), it.value().at("username"), 1232442);
+            addUser(p);
+        }
+    }
+
+
 }

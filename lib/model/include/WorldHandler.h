@@ -7,6 +7,10 @@
 
 #include "Player.h"
 #include "World.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
+
 namespace model{
     class WorldHandler{
     public:
@@ -17,6 +21,13 @@ namespace model{
 
 //        void addArea(Area area);
 //        void removeArea(Area area);
+
+        void parseJSON();
+
+        void createUsersFromJSON(json user);
+
+    private:
+        World world;
     };
 }
 
