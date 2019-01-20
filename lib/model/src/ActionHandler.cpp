@@ -2,9 +2,10 @@
 // Created by louis on 19/01/19.
 //
 
-#include "Door.h"
 #include "Server.h"
 #include "ActionHandler.h"
+#include "Door.h"
+#include "Room.h"
 
 #include <sstream>
 #include <iostream>
@@ -61,13 +62,14 @@ namespace model {
                             << "  - say [message] (sends [message] to other players in the game)\n"
                             << "  - quit (disconnects you from the game server)\n"
                             << "  - shutdown (shuts down the game server)\n"
-                            << "  - door (displays door information)\n";
+                            << "  - door (displays door information)\n"
+                            << "  - info (displays current location information)\n";
 
-            } else if (command == "door") {
-                model::Door stubDoor1 = model::Door("north", 8801);
-                model::Door stubDoor2 = model::Door("south", {"The door is old", "You can hear it creak"}, {"old","creak"}, 8855);
-                tempMessage << stubDoor1 << std::endl
-                            << stubDoor2 << std::endl;
+            } else if (command == "info") {
+                model::Room stubRoom = model::Room();
+                stubRoom.createStub();
+                tempMessage << stubRoom;
+
             } else {
                 tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
             }

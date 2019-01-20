@@ -7,8 +7,8 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_USER_H
-#define WEBSOCKETNETWORKING_USER_H
+#ifndef WEBSOCKETNETWORKING_DOOR_H
+#define WEBSOCKETNETWORKING_DOOR_H
 
 #include <string>
 #include <vector>
@@ -28,18 +28,18 @@ namespace model {
     public:
       	//constructors
       	Door();
-      	Door(std::string direction, int to);
-      	Door(std::string direction, std::vector<std::string> description, std::vector<std::string> keywords, int to);
+      	Door(std::string dir, int to);
+      	Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, int to);
 
       	//getters and setters
       	std::string getDir();
       	std::vector<std::string> getDesc();
       	std::vector<std::string> getKeywords();
       	int getTo();
-      	void setDir(std::string d);
-      	void setDesc(std::vector<std::string> d);
-      	void setKeywords(std::vector<std::string> k);
-      	void setTo(int t);
+      	void setDir(std::string dir);
+      	void setDesc(std::vector<std::string> desc);
+      	void setKeywords(std::vector<std::string> keywords);
+      	void setTo(int to);
 
     };
 }
