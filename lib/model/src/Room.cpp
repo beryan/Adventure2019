@@ -15,19 +15,19 @@ using model::Room;
 namespace model {
 
     //constructors
-    Room::Room() {
-      id = -1;
-      name = "";
-      desc = {};
-      doors = {};
-    }
+    Room::Room()
+      : id(-1),
+        name(""),
+        desc({}),
+        doors({})
+        { }
 
-    Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors) {
-      this->id = id;
-      this->name = name;
-      this->desc = desc;
-      this->doors = doors;
-    }
+    Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors)
+      : id(id),
+        name(std::move(name)),
+        desc(std::move(desc)),
+        doors(std::move(doors))
+        { }
 
     //getters and setters
     int Room::getId() {
@@ -51,15 +51,15 @@ namespace model {
     }
 
     void Room::setName(std::string name) {
-      this->name = name;
+      this->name = std::move(name);
     }
 
     void Room::setDesc(std::vector<std::string> desc) {
-      this->desc = desc;
+      this->desc = std::move(desc);
     }
 
     void Room::setDoors(std::vector<Door> doors) {
-      this->doors = doors;
+      this->doors = std::move(doors);
     }
 
     //create temporary room to showcase functionality based on provided mirkwood file

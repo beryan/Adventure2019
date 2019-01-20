@@ -15,26 +15,26 @@ using model::Door;
 namespace model {
 
     //constructors
-    Door::Door() {
-    	dir = "";
-    	desc = {};
-    	keywords = {};
-    	to = -1;
-    }
+    Door::Door()
+      : dir(""),
+        desc({}),
+        keywords({}),
+        to(-1)
+        { }
 
-    Door::Door(std::string d, int t) {
-    	dir = d;
-    	desc = {};
-    	keywords = {};
-    	to = t;
-    }
+    Door::Door(std::string dir, int to)
+    	: dir(std::move(dir)),
+        desc({}),
+        keywords({}),
+        to(to)
+        { }
 
-    Door::Door(std::string direction, std::vector<std::string> description, std::vector<std::string> k, int t) {
-    	dir = direction;
-    	desc = description;
-    	keywords = k;
-    	to = t;
-    }
+    Door::Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, int to)
+      : dir(std::move(dir)),
+        desc(std::move(desc)),
+        keywords(std::move(keywords)),
+        to(to)
+        { }
 
     //getters and setters
     std::string Door::getDir() {
@@ -53,20 +53,20 @@ namespace model {
     	return to;
     }
 
-    void Door::setDir(std::string d) {
-    	dir = d;
+    void Door::setDir(std::string dir) {
+    	this->dir = std::move(dir);
     }
 
-    void Door::setDesc(std::vector<std::string> d) {
-    	desc = d;
+    void Door::setDesc(std::vector<std::string> desc) {
+    	this->desc = std::move(desc);
     }
 
-    void Door::setKeywords(std::vector<std::string> k) {
-    	keywords = k;
+    void Door::setKeywords(std::vector<std::string> keywords) {
+    	this->keywords = std::move(keywords);
     }
 
-    void Door::setTo(int t) {
-    	to = t;
+    void Door::setTo(int to) {
+    	this->to = to;
     }
 
     //print object
