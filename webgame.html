@@ -30,7 +30,7 @@
     }
 
     #terminal {
-      border: solid 1px #cccccc;
+      border: solid 1px #10fd60;
       max-width: 1000px;
       margin: 15px auto 15px auto;
       cursor: text;
@@ -69,7 +69,7 @@
       color: #10fd60;
       border: none;
       background-color: inherit;
-      padding: 16px 28px;
+      padding: 16px 24px;
       font-size: 24px;
       cursor: pointer;
     }
@@ -86,27 +86,49 @@
       var ws = null;
       var uriPieces = window.location.href.split('/');
       var wsLocation = 'ws://' + uriPieces[2];
+      var connected = false;
+      var locked = false;
+
       $('#uri:text').val(wsLocation);
 
-      $('#connect').click(function() {
+      $('#toggle_connection').click(function() {
+        if (!locked) {
+          locked = true;
+          setTimeout(function() {
+            locked = false
+          }, 1000);
+
+        } else {
+          return;
+        }
+
+        if (connected) {
+          ws.close();
+          return;
+        }
+
         ws = new WebSocket(uri.value);
+
         ws.onopen = function(ev) {
+          connected = true;
+          $('#toggle_text').html("Disconnect");
           appendText("Connected!\n");
         };
+
         ws.onclose = function(ev) {
+          connected = false;
+          $('#toggle_text').html("Connect");
           appendText("Disconnected!\n");
         };
+
         ws.onmessage = function(ev) {
           appendText(ev.data);
         };
+
         ws.onerror = function(ev) {
           appendText("[error]\n");
           console.log(ev);
         };
-      });
-
-      $('#disconnect').click(function () {
-        ws.close();
       });
 
       $('#sendMessage').submit(function(e) {
@@ -131,8 +153,9 @@
   </div>
 
   <div class="center">
-    <button id="connect" class="btn">Connect</button>
-    <button id="disconnect" class="btn">Disconnect</button><br />
+    <button id="toggle_connection" class="btn">
+      <span id="toggle_text">Connect</span>
+    </button>
   </div>
 
   <div id="terminal">
