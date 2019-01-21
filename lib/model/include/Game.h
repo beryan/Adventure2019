@@ -6,7 +6,13 @@
 #define WEBSOCKETNETWORKING_GAME_H
 
 #include "ActionResult.h"
-#include "ActionHandler.h"
+#include "Server.h"
+
+#include <functional>
+#include <deque>
+
+using networking::Connection;
+using networking::Message;
 
 namespace model {
 /**
@@ -21,22 +27,23 @@ namespace model {
     class Game {
     private:
         std::vector<Connection> *clients;
-        ActionHandler *actionHandler;
+        std::function<void(Connection action)> disconnect;
+        std::function<void()> shutdown;
 
         std::deque<ActionResult>
-        receive(std::deque<Message> incoming);
-
-        std::deque<Message>
-        send(std::deque<ActionResult> outgoing);
-
-    public:
-        explicit Game(std::vector<Connection> &clients);
+        handleIncoming(std::deque<Message> incoming);
 
         void
-        setActionHandler(ActionHandler &actionHandler);
+        handleEvents(std::deque<ActionResult> &results);
 
         std::deque<Message>
-        processCycle(std::deque<Message>);
+        handleOutgoing(std::deque<ActionResult> outgoing);
+
+    public:
+        Game(std::vector<Connection> &clients, std::function<void(Connection)> &disconnect, std::function<void()> &shutdown);
+
+        std::deque<Message>
+        processCycle(std::deque<Message> &incoming);
     };
 }
 

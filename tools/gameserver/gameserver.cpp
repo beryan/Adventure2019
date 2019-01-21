@@ -20,8 +20,6 @@ using networking::Server;
 using networking::Connection;
 using networking::Message;
 using model::Game;
-using model::ActionHandler;
-
 
 std::vector<Connection> clients;
 
@@ -76,9 +74,7 @@ main(int argc, char* argv[]) {
       done = true;
   };
 
-  Game game(clients);
-  ActionHandler actionHandler = ActionHandler(disconnect, shutdown);
-  game.setActionHandler(actionHandler);
+  Game game(clients, disconnect, shutdown);
 
   while (!done) {
     try {

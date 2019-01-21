@@ -7,7 +7,6 @@ add_library(model
         src/Door.cpp
         src/Game.cpp
         src/ActionResult.cpp
-        src/ActionHandler.cpp
         src/Room.cpp
         src/World.cpp
         src/WorldHandler.cpp
