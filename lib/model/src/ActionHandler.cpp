@@ -9,9 +9,11 @@
 
 #include <sstream>
 #include <iostream>
+#include <WorldHandler.h>
 
 using model::ActionHandler;
 using model::ActionResult;
+using model::WorldHandler;
 
 std::string
 lowercase(std::string string) {
@@ -47,6 +49,9 @@ namespace model {
             } else if (command == "shutdown") {
                 std::cout << "Shutting down.\n";
                 this->shutdown();
+
+            } else if (command == "start") {
+                WorldHandler wh;
 
             } else if (command == "say") {
                 result.setPublic();

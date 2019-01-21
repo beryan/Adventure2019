@@ -8,7 +8,10 @@ add_library(model
         src/Game.cpp
         src/ActionResult.cpp
         src/ActionHandler.cpp
-        src/Room.cpp)
+        src/Room.cpp
+        src/World.cpp
+        src/WorldHandler.cpp
+        )
 
 target_include_directories(model
         PUBLIC
@@ -18,7 +21,7 @@ target_include_directories(model
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(model PUBLIC networking)
+target_link_libraries(model networking json)
 
 set_target_properties(model
         PROPERTIES
