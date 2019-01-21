@@ -25,5 +25,5 @@ set(CMAKE_TEMP_LIBRARY_PATH "${PROJECT_BINARY_DIR}/lib")
 add_subdirectory(lib)
 add_subdirectory(tools)
 
-configure_file(testdata/users.json ${CMAKE_CURRENT_BINARY_DIR}/users.json COPYONLY)
+
 

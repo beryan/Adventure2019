@@ -1,0 +1,1 @@
+configure_file(users.json ${PROJECT_SOURCE_DIR}/users.json COPYONLY)
