@@ -8,6 +8,8 @@ add_library(model
         src/Game.cpp
         src/GameResponse.cpp
         src/Room.cpp
+        src/Area.cpp
+        src/Reset.cpp
         src/World.cpp
         src/WorldHandler.cpp
         src/Greeter.cpp
