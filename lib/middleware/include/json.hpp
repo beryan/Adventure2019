@@ -46,7 +46,7 @@ SOFTWARE.
 #include <string> // string, stoi, to_string
 #include <utility> // declval, forward, move, pair, swap
 
-// #include <nlohmann/json_fwd.hpp>
+// #include <middleware/json_fwd.hpp>
 #ifndef NLOHMANN_JSON_FWD_HPP
 #define NLOHMANN_JSON_FWD_HPP
 
@@ -108,11 +108,11 @@ uses the standard template types.
 @since version 1.0.0
 */
 using json = basic_json<>;
-}  // namespace nlohmann
+}  // namespace middleware
 
 #endif
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
 
 // This file contains all internal macro definitions
@@ -122,11 +122,11 @@ using json = basic_json<>;
 #if !defined(JSON_SKIP_UNSUPPORTED_COMPILER_CHECK)
     #if defined(__clang__)
         #if (__clang_major__ * 10000 + __clang_minor__ * 100 + __clang_patchlevel__) < 30400
-            #error "unsupported Clang version - see https://github.com/nlohmann/json#supported-compilers"
+            #error "unsupported Clang version - see https://github.com/middleware/json#supported-compilers"
         #endif
     #elif defined(__GNUC__) && !(defined(__ICC) || defined(__INTEL_COMPILER))
         #if (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__) < 40800
-            #error "unsupported GCC version - see https://github.com/nlohmann/json#supported-compilers"
+            #error "unsupported GCC version - see https://github.com/middleware/json#supported-compilers"
         #endif
     #endif
 #endif
@@ -249,7 +249,7 @@ using json = basic_json<>;
     NumberIntegerType, NumberUnsignedType, NumberFloatType,                \
     AllocatorType, JSONSerializer>
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
 
 #include <ciso646> // not
@@ -312,9 +312,9 @@ struct static_const
 template<typename T>
 constexpr T static_const<T>::value;
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
 
 #include <ciso646> // not
@@ -322,14 +322,14 @@ constexpr T static_const<T>::value;
 #include <type_traits> // false_type, is_constructible, is_integral, is_same, true_type
 #include <utility> // declval
 
-// #include <nlohmann/json_fwd.hpp>
+// #include <middleware/json_fwd.hpp>
 
-// #include <nlohmann/detail/iterators/iterator_traits.hpp>
+// #include <middleware/detail/iterators/iterator_traits.hpp>
 
 
 #include <iterator> // random_access_iterator_tag
 
-// #include <nlohmann/detail/meta/void_t.hpp>
+// #include <middleware/detail/meta/void_t.hpp>
 
 
 namespace nlohmann
@@ -342,9 +342,9 @@ template <typename ...Ts> struct make_void
 };
 template <typename ...Ts> using void_t = typename make_void<Ts...>::type;
 } // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
 
 namespace nlohmann
@@ -392,14 +392,14 @@ struct iterator_traits<T*, enable_if_t<std::is_object<T>::value>>
 }
 }
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
-// #include <nlohmann/detail/meta/detected.hpp>
+// #include <middleware/detail/meta/detected.hpp>
 
 
 #include <type_traits>
 
-// #include <nlohmann/detail/meta/void_t.hpp>
+// #include <middleware/detail/meta/void_t.hpp>
 
 
 // http://en.cppreference.com/w/cpp/experimental/is_detected
@@ -451,9 +451,9 @@ template <class To, template <class...> class Op, class... Args>
 using is_detected_convertible =
     std::is_convertible<detected_t<Op, Args...>, To>;
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
 
 namespace nlohmann
@@ -790,16 +790,16 @@ template <typename BasicJsonType, typename CompatibleType>
 struct is_compatible_type
     : is_compatible_type_impl<BasicJsonType, CompatibleType> {};
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
 
 #include <exception> // exception
 #include <stdexcept> // runtime_error
 #include <string> // to_string
 
-// #include <nlohmann/detail/input/position_t.hpp>
+// #include <middleware/detail/input/position_t.hpp>
 
 
 #include <cstddef> // size_t
@@ -1169,9 +1169,9 @@ class other_error : public exception
     other_error(int id_, const char* what_arg) : exception(id_, what_arg) {}
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 #include <array> // array
@@ -1247,9 +1247,9 @@ inline bool operator<(const value_t lhs, const value_t rhs) noexcept
     return l_index < order.size() and r_index < order.size() and order[l_index] < order[r_index];
 }
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/conversions/from_json.hpp>
+// #include <middleware/detail/conversions/from_json.hpp>
 
 
 #include <algorithm> // transform
@@ -1265,15 +1265,15 @@ inline bool operator<(const value_t lhs, const value_t rhs) noexcept
 #include <utility> // pair, declval
 #include <valarray> // valarray
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -1624,9 +1624,9 @@ namespace
 {
 constexpr const auto& from_json = detail::static_const<detail::from_json_fn>::value;
 } // namespace
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/conversions/to_json.hpp>
+// #include <middleware/detail/conversions/to_json.hpp>
 
 
 #include <ciso646> // or, and, not
@@ -1637,13 +1637,13 @@ constexpr const auto& from_json = detail::static_const<detail::from_json_fn>::va
 #include <valarray> // valarray
 #include <vector> // vector
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
-// #include <nlohmann/detail/iterators/iteration_proxy.hpp>
+// #include <middleware/detail/iterators/iteration_proxy.hpp>
 
 
 #include <cstddef> // size_t
@@ -1651,9 +1651,9 @@ constexpr const auto& from_json = detail::static_const<detail::from_json_fn>::va
 #include <iterator> // input_iterator_tag
 #include <tuple> // tuple_size, get, tuple_element
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
 
 namespace nlohmann
@@ -1787,7 +1787,7 @@ auto get(const nlohmann::detail::iteration_proxy_value<IteratorType>& i) -> decl
     return i.value();
 }
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
 // The Addition to the STD Namespace is required to add
 // Structured Bindings Support to the iteration_proxy_value class
@@ -2135,9 +2135,9 @@ namespace
 {
 constexpr const auto& to_json = detail::static_const<detail::to_json_fn>::value;
 } // namespace
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/input_adapters.hpp>
+// #include <middleware/detail/input/input_adapters.hpp>
 
 
 #include <cassert> // assert
@@ -2152,7 +2152,7 @@ constexpr const auto& to_json = detail::static_const<detail::to_json_fn>::value;
 #include <utility> // pair, declval
 #include <cstdio> //FILE *
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
 
 namespace nlohmann
@@ -2559,9 +2559,9 @@ class input_adapter
     input_adapter_t ia = nullptr;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/lexer.hpp>
+// #include <middleware/detail/input/lexer.hpp>
 
 
 #include <clocale> // localeconv
@@ -2572,11 +2572,11 @@ class input_adapter
 #include <string> // char_traits, string
 #include <vector> // vector
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/input/input_adapters.hpp>
+// #include <middleware/detail/input/input_adapters.hpp>
 
-// #include <nlohmann/detail/input/position_t.hpp>
+// #include <middleware/detail/input/position_t.hpp>
 
 
 namespace nlohmann
@@ -4070,9 +4070,9 @@ scan_number_done:
     const char decimal_point_char = '.';
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/parser.hpp>
+// #include <middleware/detail/input/parser.hpp>
 
 
 #include <cassert> // assert
@@ -4082,19 +4082,19 @@ scan_number_done:
 #include <string> // string
 #include <utility> // move
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/meta/is_sax.hpp>
+// #include <middleware/detail/meta/is_sax.hpp>
 
 
 #include <cstdint> // size_t
 #include <utility> // declval
 
-// #include <nlohmann/detail/meta/detected.hpp>
+// #include <middleware/detail/meta/detected.hpp>
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
 
 namespace nlohmann
@@ -4229,20 +4229,20 @@ struct is_sax_static_asserts
         "std::string&, const exception&)");
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/input_adapters.hpp>
+// #include <middleware/detail/input/input_adapters.hpp>
 
-// #include <nlohmann/detail/input/json_sax.hpp>
+// #include <middleware/detail/input/json_sax.hpp>
 
 
 #include <cstddef>
 #include <string>
 #include <vector>
 
-// #include <nlohmann/detail/input/parser.hpp>
+// #include <middleware/detail/input/parser.hpp>
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
 
 namespace nlohmann
@@ -4936,11 +4936,11 @@ class json_sax_acceptor
 };
 }  // namespace detail
 
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/lexer.hpp>
+// #include <middleware/detail/input/lexer.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -5429,9 +5429,9 @@ class parser
     const bool allow_exceptions = true;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/iterators/primitive_iterator.hpp>
+// #include <middleware/detail/iterators/primitive_iterator.hpp>
 
 
 #include <cstddef> // ptrdiff_t
@@ -5551,12 +5551,12 @@ class primitive_iterator_t
     }
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/iterators/internal_iterator.hpp>
+// #include <middleware/detail/iterators/internal_iterator.hpp>
 
 
-// #include <nlohmann/detail/iterators/primitive_iterator.hpp>
+// #include <middleware/detail/iterators/primitive_iterator.hpp>
 
 
 namespace nlohmann
@@ -5579,26 +5579,26 @@ template<typename BasicJsonType> struct internal_iterator
     primitive_iterator_t primitive_iterator {};
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/iterators/iter_impl.hpp>
+// #include <middleware/detail/iterators/iter_impl.hpp>
 
 
 #include <ciso646> // not
 #include <iterator> // iterator, random_access_iterator_tag, bidirectional_iterator_tag, advance, next
 #include <type_traits> // conditional, is_const, remove_const
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/iterators/internal_iterator.hpp>
+// #include <middleware/detail/iterators/internal_iterator.hpp>
 
-// #include <nlohmann/detail/iterators/primitive_iterator.hpp>
+// #include <middleware/detail/iterators/primitive_iterator.hpp>
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -6199,10 +6199,10 @@ class iter_impl
     internal_iterator<typename std::remove_const<BasicJsonType>::type> m_it;
 };
 }  // namespace detail
-} // namespace nlohmann
-// #include <nlohmann/detail/iterators/iteration_proxy.hpp>
+} // namespace middleware
+// #include <middleware/detail/iterators/iteration_proxy.hpp>
 
-// #include <nlohmann/detail/iterators/json_reverse_iterator.hpp>
+// #include <middleware/detail/iterators/json_reverse_iterator.hpp>
 
 
 #include <cstddef> // ptrdiff_t
@@ -6321,9 +6321,9 @@ class json_reverse_iterator : public std::reverse_iterator<Base>
     }
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/output/output_adapters.hpp>
+// #include <middleware/detail/output/output_adapters.hpp>
 
 
 #include <algorithm> // copy
@@ -6442,9 +6442,9 @@ class output_adapter
     output_adapter_t<CharType> oa = nullptr;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/input/binary_reader.hpp>
+// #include <middleware/detail/input/binary_reader.hpp>
 
 
 #include <algorithm> // generate_n
@@ -6460,17 +6460,17 @@ class output_adapter
 #include <string> // char_traits, string
 #include <utility> // make_pair, move
 
-// #include <nlohmann/detail/input/input_adapters.hpp>
+// #include <middleware/detail/input/input_adapters.hpp>
 
-// #include <nlohmann/detail/input/json_sax.hpp>
+// #include <middleware/detail/input/json_sax.hpp>
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/meta/is_sax.hpp>
+// #include <middleware/detail/meta/is_sax.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -8434,9 +8434,9 @@ class binary_reader
     json_sax_t* sax = nullptr;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/output/binary_writer.hpp>
+// #include <middleware/detail/output/binary_writer.hpp>
 
 
 #include <algorithm> // reverse
@@ -8445,9 +8445,9 @@ class binary_reader
 #include <cstring> // memcpy
 #include <limits> // numeric_limits
 
-// #include <nlohmann/detail/input/binary_reader.hpp>
+// #include <middleware/detail/input/binary_reader.hpp>
 
-// #include <nlohmann/detail/output/output_adapters.hpp>
+// #include <middleware/detail/output/output_adapters.hpp>
 
 
 namespace nlohmann
@@ -9777,9 +9777,9 @@ class binary_writer
     output_adapter_t<CharType> oa = nullptr;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/output/serializer.hpp>
+// #include <middleware/detail/output/serializer.hpp>
 
 
 #include <algorithm> // reverse, remove, fill, find, none_of
@@ -9795,9 +9795,9 @@ class binary_writer
 #include <string> // string
 #include <type_traits> // is_same
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/conversions/to_chars.hpp>
+// #include <middleware/detail/conversions/to_chars.hpp>
 
 
 #include <cassert> // assert
@@ -10891,17 +10891,17 @@ char* to_chars(char* first, const char* last, FloatType value)
 }
 
 } // namespace detail
-} // namespace nlohmann
+} // namespace middleware
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/meta/cpp_future.hpp>
+// #include <middleware/detail/meta/cpp_future.hpp>
 
-// #include <nlohmann/detail/output/binary_writer.hpp>
+// #include <middleware/detail/output/binary_writer.hpp>
 
-// #include <nlohmann/detail/output/output_adapters.hpp>
+// #include <middleware/detail/output/output_adapters.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -11621,15 +11621,15 @@ class serializer
     const error_handler_t error_handler;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/json_ref.hpp>
+// #include <middleware/detail/json_ref.hpp>
 
 
 #include <initializer_list>
 #include <utility>
 
-// #include <nlohmann/detail/meta/type_traits.hpp>
+// #include <middleware/detail/meta/type_traits.hpp>
 
 
 namespace nlohmann
@@ -11693,9 +11693,9 @@ class json_ref
     const bool is_rvalue;
 };
 }  // namespace detail
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/detail/json_pointer.hpp>
+// #include <middleware/detail/json_pointer.hpp>
 
 
 #include <cassert> // assert
@@ -11703,11 +11703,11 @@ class json_ref
 #include <string> // string
 #include <vector> // vector
 
-// #include <nlohmann/detail/macro_scope.hpp>
+// #include <middleware/detail/macro_scope.hpp>
 
-// #include <nlohmann/detail/exceptions.hpp>
+// #include <middleware/detail/exceptions.hpp>
 
-// #include <nlohmann/detail/value_t.hpp>
+// #include <middleware/detail/value_t.hpp>
 
 
 namespace nlohmann
@@ -12394,16 +12394,16 @@ class json_pointer
     /// the reference tokens
     std::vector<std::string> reference_tokens;
 };
-}  // namespace nlohmann
+}  // namespace middleware
 
-// #include <nlohmann/adl_serializer.hpp>
+// #include <middleware/adl_serializer.hpp>
 
 
 #include <utility>
 
-// #include <nlohmann/detail/conversions/from_json.hpp>
+// #include <middleware/detail/conversions/from_json.hpp>
 
-// #include <nlohmann/detail/conversions/to_json.hpp>
+// #include <middleware/detail/conversions/to_json.hpp>
 
 
 namespace nlohmann
@@ -12447,7 +12447,7 @@ struct adl_serializer
     }
 };
 
-}  // namespace nlohmann
+}  // namespace middleware
 
 
 /*!
@@ -12703,7 +12703,7 @@ class basic_json
 
         result["copyright"] = "(C) 2013-2017 Niels Lohmann";
         result["name"] = "JSON for Modern C++";
-        result["url"] = "https://github.com/nlohmann/json";
+        result["url"] = "https://github.com/middleware/json";
         result["version"]["string"] =
             std::to_string(NLOHMANN_JSON_VERSION_MAJOR) + "." +
             std::to_string(NLOHMANN_JSON_VERSION_MINOR) + "." +
@@ -20282,7 +20282,7 @@ class basic_json
 
     /// @}
 };
-} // namespace nlohmann
+} // namespace middleware
 
 ///////////////////////
 // nonmember support //
@@ -20378,7 +20378,7 @@ inline nlohmann::json::json_pointer operator "" _json_pointer(const char* s, std
     return nlohmann::json::json_pointer(std::string(s, n));
 }
 
-// #include <nlohmann/detail/macro_unscope.hpp>
+// #include <middleware/detail/macro_unscope.hpp>
 
 
 // restore GCC/clang diagnostic settings
