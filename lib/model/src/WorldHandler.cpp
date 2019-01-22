@@ -8,6 +8,7 @@
 
 #include "WorldHandler.h"
 
+const std::string USER_JSON_PATH = "lib/data/users.json";
 
 using model::WorldHandler;
 
@@ -38,8 +39,8 @@ namespace model {
 //    }
 
     void WorldHandler::parseJSON() {
-        std::ifstream ifs("users.json");
-//        std::ifstream input("users.json");
+        std::ifstream ifs(USER_JSON_PATH);
+
         json t = json::parse(ifs);
 
         json users;
