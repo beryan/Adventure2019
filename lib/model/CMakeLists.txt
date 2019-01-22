@@ -6,10 +6,11 @@ add_library(model
         src/Item.cpp
         src/Door.cpp
         src/Game.cpp
-        src/ActionResult.cpp
+        src/GameResponse.cpp
         src/Room.cpp
         src/World.cpp
         src/WorldHandler.cpp
+        src/Greeter.cpp
         )
 
 target_include_directories(model

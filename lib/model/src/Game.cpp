@@ -21,18 +21,27 @@ lowercase(std::string string) {
 }
 
 namespace model {
-    Game::Game(std::vector<Connection> &clients, std::function<void(Connection)> &disconnect, std::function<void()> &shutdown) {
+    Game::Game(std::vector<Connection> &clients,
+               std::vector<unsigned long int> &newClientIds,
+               std::vector<unsigned long int> &disconnectedClientIds,
+               std::function<void(Connection)> &disconnect,
+               std::function<void()> &shutdown
+               ) {
         this->clients = &clients;
+        this->newClientIds = &newClientIds;
+        this->disconnectedClientIds = &disconnectedClientIds;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
+
+        this->greeter = std::make_unique<Greeter>();
     }
 
-    std::deque<ActionResult>
-    Game::handleIncoming(std::deque<Message> incoming) {
-        std::deque<ActionResult> results;
+    std::deque<GameResponse>
+    Game::handleIncoming(const std::deque<Message> &incoming) {
+        std::deque<GameResponse> results;
 
         for (auto& action : incoming) {
-            auto result = ActionResult();
+            auto result = GameResponse();
             result.setClientId(action.connection.id);
 
             std::ostringstream tempMessage;
@@ -87,24 +96,12 @@ namespace model {
     }
 
     void
-    Game::handleEvents(std::deque<model::ActionResult> &results) {
-        /*
-         *  Event calls go here (events are not dependent on user input for sending responses)
-         *
-         *  e.g.
-         *  ExampleHandler.processCycle(results)
-         *
-         *  where the handler's processCycle() performs:
-         *    ActionResult result = ActionResult()
-         *    result.setClientId(id)
-         *    result.setMessage(message)
-         *
-         *    results.push_back(result)
-         */
+    Game::handleEvents(std::deque<model::GameResponse> &results) {
+        this->greeter->processEvents(results);
     }
 
     std::deque<Message>
-    Game::handleOutgoing(std::deque<ActionResult> results) {
+    Game::handleOutgoing(std::deque<GameResponse> &results) {
         std::deque<Message> outgoing;
         std::map<unsigned long int, std::ostringstream> clientMessages;
 
@@ -126,9 +123,37 @@ namespace model {
         return outgoing;
     }
 
+    void
+    Game::handleConnects() {
+        while (!this->newClientIds->empty()) {
+            auto clientId = this->newClientIds->back();
+
+            this->greeter->addClient(clientId);
+
+            this->newClientIds->pop_back();
+        }
+    }
+
+    void
+    Game::handleDisconnects() {
+        while (!this->disconnectedClientIds->empty()) {
+            auto clientId = this->disconnectedClientIds->back();
+
+            /*
+             * call handler methods here
+             */
+
+            this->disconnectedClientIds->pop_back();
+        }
+    }
+
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        std::deque<ActionResult> results = this->handleIncoming(incoming);
+        this->handleConnects();
+
+        this->handleDisconnects();
+
+        std::deque<GameResponse> results = this->handleIncoming(incoming);
 
         this->handleEvents(results);
 
