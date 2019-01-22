@@ -14,7 +14,7 @@ namespace model {
 
     int Player::getPassword() {return password;};
 
-    void Player::setPassword(int password) {this->password = std::move(password);};
+    void Player::setPassword(int password) {this->password = password;};
 
     Role Player::getRole() {return role;};
 
