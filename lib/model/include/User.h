@@ -9,49 +9,43 @@
 #include <vector>
 #include <utility>
 
-static const double STARTING_HEALTH = 100.00;
-static const double MAX_HEALTH = 100.00;
-static const int MAX_KEYWORDS = 8;
+const double STARTING_HEALTH = 100.00;
+const double MAX_HEALTH = 100.00;
+const int MAX_KEYWORDS = 8;
 
 namespace model {
     class User {
     public:
-        inline User(int id) :
-            id(id),
-            health(STARTING_HEALTH),
-            description({}) {}
+        User(int id);
 
-        inline User(int id, std::vector<std::string> keys, std::vector<std::string> desc) :
-            id(id),
-            keywords(std::move(keys)),
-            description(std::move(desc)) {}
+        User(int id, std::vector<std::string> keys, std::vector<std::string> desc);
 
-        inline int getId() { return id; };
+        int getId();
 
-        inline void setId(int id) { this->id = id; };
+        void setId(int id);
 
-        inline void addKeyword(std::string key) { keywords.push_back(std::move(key)); };
+        void addKeyword(std::string key);
 
-        inline void removeKeyword(int index) { keywords.erase(keywords.begin() + index); };
+        void removeKeyword(int index);
 
-        inline std::vector<std::string> getKeywords() { return keywords; };
+        std::vector<std::string> getKeywords();
 
-        inline double getHealth() { return health; };
+        double getHealth();
 
-        inline void setHealth(double health) { this->health = health; };
+        void setHealth(double health);
 
-        inline std::vector<std::string> getDescription() { return this->description; };
+        std::vector<std::string> getDescription();
 
-        inline void setDescription(std::string desc) { description.push_back(std::move(desc)); };
+        void setDescription(std::string desc);
 
     private:
         int id;
 
         std::vector<std::string> keywords;
 
-        double health;
-
         std::vector<std::string> description;
+
+        double health;
     };
 
     inline double getMaxHealth() { return MAX_HEALTH; };

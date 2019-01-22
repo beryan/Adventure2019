@@ -10,15 +10,9 @@
 namespace model {
     class NPC : public User {
     public:
-        NPC(int id) :
-            User(id),
-            shortdesc({}),
-            longdesc({}) {}
+        NPC(int id);
 
-        NPC(int id, std::vector<std::string> keys, std::vector<std::string> desc, std::string shdesc, std::vector<std::string> lngdesc) :
-                User(id,std::move(keys), std::move(desc)),
-                shortdesc(std::move(shdesc)),
-                longdesc(std::move(lngdesc)) {}
+        NPC(int id, std::vector<std::string> keys, std::vector<std::string> desc, std::string shdesc, std::vector<std::string> lngdesc);
 
         std::string getShortDescription();
 

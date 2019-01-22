@@ -7,11 +7,32 @@
 using model::NPC;
 
 namespace model {
-    std::string NPC::getShortDescription() {return this->shortdesc;};
+    NPC::NPC(int id) :
+            User(id),
+            shortdesc({}),
+            longdesc({})
+            {}
 
-    void NPC::setShortDescription(std::string desc) {shortdesc.assign(desc);};
+    NPC::NPC(int id, std::vector<std::string> keys, std::vector<std::string> desc, std::string shdesc, std::vector<std::string> lngdesc) :
+            User(id, std::move(keys), std::move(desc)),
+            shortdesc(std::move(shdesc)),
+            longdesc(std::move(lngdesc))
+            {}
 
-    std::vector<std::string> NPC::getLongDescription() {return this->longdesc;};
 
-    void NPC::addLongDescription(std::string desc) {longdesc.push_back(std::move(desc));};
+    std::string NPC::getShortDescription() {
+        return shortdesc;
+    }
+
+    void NPC::setShortDescription(std::string desc) {
+        shortdesc.assign(desc);
+    }
+
+    std::vector<std::string> NPC::getLongDescription() {
+        return longdesc;
+    }
+
+    void NPC::addLongDescription(std::string desc) {
+        longdesc.push_back(std::move(desc));
+    }
 }

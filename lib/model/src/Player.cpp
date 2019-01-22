@@ -8,15 +8,34 @@ using model::Player;
 using model::Role;
 
 namespace model {
-    std::string Player::getUsername() {return username;};
+    Player::Player(int id, std::string username, int password) :
+        User(id),
+        username(std::move(username)),
+        password(password),
+        role(Role::Default)
+        {}
 
-    void Player::setUsername(std::string username) {this->username.assign(username);};
+    std::string Player::getUsername() {
+        return username;
+    }
 
-    int Player::getPassword() {return password;};
+    void Player::setUsername(std::string username) {
+        this->username.assign(username);
+    }
 
-    void Player::setPassword(int password) {this->password = password;};
+    int Player::getPassword() {
+        return password;
+    }
 
-    Role Player::getRole() {return role;};
+    void Player::setPassword(int password) {
+        this->password = password;
+    }
 
-    void Player::setRole(Role role) {this->role = std::move(role);};
+    Role Player::getRole() {
+        return role;
+    }
+
+    void Player::setRole(Role role) {
+        this->role = role;
+    }
 }
