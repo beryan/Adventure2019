@@ -32,8 +32,9 @@ static const char* const COMMAND_SAY = "say";
 static const char* const COMMAND_HELP = "help";
 static const char* const COMMAND_LOGOUT = "logout";
 static const char* const COMMAND_REGISTER = "register";
+static const char* const COMMAND_INFO = "info";
+static const char* const COMMAND_START = "start";
 
-static const char *const COMMAND_INFO = "info";
 std::vector<Connection> clients;
 std::map<Connection, Player> logins;
 
@@ -92,11 +93,9 @@ processMessages(Server& server,
 
     if (action == COMMAND_QUIT) {
       server.disconnect(message.connection);
-
     } else if (action == COMMAND_SHUTDOWN) {
       std::cout << "Shutting down.\n";
       quit = true;
-
     } else if (action == COMMAND_SAY) {
       result.setPublic();
       tempMessage << connectionID << "> " << param << "\n";
@@ -104,8 +103,8 @@ processMessages(Server& server,
       tempMessage << "Logout not yet implemented\n";
     } else if (action == COMMAND_REGISTER) {
       tempMessage << "Registering not yet implemented\n";
-    } else if (action == "start") {
-        WorldHandler wh;
+    } else if (action == COMMAND_START) {
+      WorldHandler wh;
     } else if (action == COMMAND_HELP) {
       tempMessage << "********\n";
       tempMessage << "* HELP *\n";
