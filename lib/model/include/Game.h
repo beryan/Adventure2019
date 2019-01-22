@@ -16,7 +16,7 @@ using networking::Message;
 
 namespace model {
 /**
- * @class
+ * @class Game
  *
  * @brief A class for containing the game's logic
  *
@@ -26,7 +26,7 @@ namespace model {
  */
     class Game {
     private:
-        std::vector<Connection> *clients;
+        std::vector<Connection> clients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 

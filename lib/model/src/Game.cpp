@@ -22,7 +22,7 @@ lowercase(std::string string) {
 
 namespace model {
     Game::Game(std::vector<Connection> &clients, std::function<void(Connection)> &disconnect, std::function<void()> &shutdown) {
-        this->clients = &clients;
+        this->clients = clients;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
     }
@@ -89,7 +89,7 @@ namespace model {
     void
     Game::handleEvents(std::deque<model::ActionResult> &results) {
         /*
-         *  Event calls go here (events are not dependent on user input for sending responses);
+         *  Event calls go here (events are not dependent on user input for sending responses)
          *
          *  e.g.
          *  ExampleHandler.processCycle(results)
@@ -113,7 +113,7 @@ namespace model {
                 clientMessages[entry.getClientId()] << entry.getMessage();
 
             } else {
-                for (auto client : *this->clients) {
+                for (auto client : this->clients) {
                     clientMessages[client.id] << entry.getMessage();
                 }
             }
