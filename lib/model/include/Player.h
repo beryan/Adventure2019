@@ -11,11 +11,7 @@
 namespace model {
     class Player : public User {
     public:
-        inline Player(int id, std::string username, int password) :
-            User(std::move(id)),
-            username(std::move(username)),
-            password(std::move(password)),
-            role(std::move(Role::Default)){}
+        Player(int id, std::string username, int password);
 
         std::string getUsername();
 
