@@ -25,35 +25,51 @@ namespace model {
                std::vector<unsigned long int> &newClientIds,
                std::vector<unsigned long int> &disconnectedClientIds,
                std::function<void(Connection)> &disconnect,
-               std::function<void()> &shutdown
-               ) {
+               std::function<void()> &shutdown) {
         this->clients = &clients;
         this->newClientIds = &newClientIds;
         this->disconnectedClientIds = &disconnectedClientIds;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
-
-        this->greeter = std::make_unique<Greeter>();
     }
 
-    std::deque<GameResponse>
-    Game::handleIncoming(const std::deque<Message> &incoming) {
-        std::deque<GameResponse> results;
+    void
+    Game::handleConnects(std::deque<GameResponse> &results) {
+        while (!this->newClientIds->empty()) {
+            auto clientId = this->newClientIds->back();
 
-        for (auto& action : incoming) {
-            auto result = GameResponse();
-            result.setClientId(action.connection.id);
+            std::cout << clientId << " has connected to the game.\n";
+            results.emplace_back(GameResponse(clientId, "Welcome to Adventure 2019!\n"));
 
+            this->newClientIds->pop_back();
+        }
+    }
+
+    void
+    Game::handleDisconnects(std::deque<GameResponse> &results) {
+        while (!this->disconnectedClientIds->empty()) {
+            auto clientId = this->disconnectedClientIds->back();
+
+            std::cout << clientId << " has disconnected from the game.\n";
+
+            this->disconnectedClientIds->pop_back();
+        }
+    }
+
+    void
+    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<GameResponse> &results) {
+        for (auto& input : incoming) {
             std::ostringstream tempMessage;
-            std::string command = lowercase(action.text.substr(0, action.text.find(' ')));
+            std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
             std::string param;
+            bool isLocal = true;
 
-            if (action.text.find(' ') != std::string::npos) {
-                param = action.text.substr(action.text.find(' ') + 1);
+            if (input.text.find(' ') != std::string::npos) {
+                param = input.text.substr(input.text.find(' ') + 1);
             }
 
             if (command == "quit") {
-                this->disconnect(action.connection);
+                this->disconnect(input.connection);
 
             } else if (command == "shutdown") {
                 std::cout << "Shutting down.\n";
@@ -63,8 +79,8 @@ namespace model {
                 WorldHandler wh;
 
             } else if (command == "say") {
-                result.setPublic();
-                tempMessage << action.connection.id << "> " << param << "\n";
+                isLocal = false;
+                tempMessage << input.connection.id << "> " << param << "\n";
 
             } else if (command == "help") {
                 tempMessage << "********\n"
@@ -88,20 +104,19 @@ namespace model {
                 tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
             }
 
-            result.setMessage(tempMessage.str());
-            results.push_back(result);
+            results.emplace_back(GameResponse(input.connection.id, tempMessage.str(), isLocal));
         }
-
-        return results;
     }
 
     void
-    Game::handleEvents(std::deque<model::GameResponse> &results) {
-        this->greeter->processEvents(results);
+    Game::handleOutgoing(std::deque<model::GameResponse> &results) {
+        /*
+         * Call handler methods that push GameResponses without requiring user input here
+         */
     }
 
     std::deque<Message>
-    Game::handleOutgoing(std::deque<GameResponse> &results) {
+    Game::formMessages(std::deque<GameResponse> &results) {
         std::deque<Message> outgoing;
         std::map<unsigned long int, std::ostringstream> clientMessages;
 
@@ -123,40 +138,18 @@ namespace model {
         return outgoing;
     }
 
-    void
-    Game::handleConnects() {
-        while (!this->newClientIds->empty()) {
-            auto clientId = this->newClientIds->back();
-
-            this->greeter->addClient(clientId);
-
-            this->newClientIds->pop_back();
-        }
-    }
-
-    void
-    Game::handleDisconnects() {
-        while (!this->disconnectedClientIds->empty()) {
-            auto clientId = this->disconnectedClientIds->back();
-
-            /*
-             * call handler methods here
-             */
-
-            this->disconnectedClientIds->pop_back();
-        }
-    }
-
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        this->handleConnects();
+        std::deque<GameResponse> results;
 
-        this->handleDisconnects();
+        this->handleConnects(results);
 
-        std::deque<GameResponse> results = this->handleIncoming(incoming);
+        this->handleDisconnects(results);
 
-        this->handleEvents(results);
+        this->handleIncoming(incoming, results);
 
-        return this->handleOutgoing(results);
+        this->handleOutgoing(results);
+
+        return this->formMessages(results);
     }
 }

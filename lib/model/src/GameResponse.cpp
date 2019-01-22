@@ -10,6 +10,18 @@ namespace model {
     GameResponse::GameResponse() {
         this->local = true;
     }
+
+    GameResponse::GameResponse(unsigned long int clientId, std::string message) {
+        this->clientId = clientId;
+        this->message = std::move(message);
+        this->local = true;
+    }
+    
+    GameResponse::GameResponse(unsigned long int clientId, std::string message, bool isLocal) {
+        this->clientId = clientId;
+        this->message = std::move(message);
+        this->local = isLocal;
+    }
 ;
     unsigned long int
     GameResponse::getClientId() {

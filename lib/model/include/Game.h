@@ -7,12 +7,10 @@
 
 #include "GameResponse.h"
 #include "Server.h"
-#include "Greeter.h"
 
 #include <functional>
 #include <deque>
 
-using model::Greeter;
 using networking::Connection;
 using networking::Message;
 
@@ -22,7 +20,7 @@ namespace model {
      *
      * @brief A class for containing the game's logic
      *
-     * This class manages the componentsts necessary to gather, process, and output
+     * This class manages the components necessary to gather, process, and output
      * information that is to be exchanged between the server and clients.
      */
     class Game {
@@ -32,27 +30,39 @@ namespace model {
         std::vector<long unsigned int>* disconnectedClientIds;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
-        std::unique_ptr<Greeter> greeter;
+
+        /**
+         * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
+         * vector on completion.
+         */
+        void
+        handleConnects(std::deque<GameResponse> &results);
+
+        /**
+         * Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
+         * associated vector on completion.
+         */
+        void
+        handleDisconnects(std::deque<GameResponse> &results);
 
         /**
          * Processes client input, calling class methods based on client input and formulating appropriate responses in
-         * the form of ActionResult objects stored in a deque. This returns a deque of ActionResult objects.
-         */
-        std::deque<GameResponse>
-        handleIncoming(const std::deque<Message> &incoming);
-
-        /**
-         * Calls handler class methods that are not dependent on user input for sending responses.
+         * the form of GameResponse objects.
          */
         void
-        handleEvents(std::deque<GameResponse> &results);
+        handleIncoming(const std::deque<Message> &incoming, std::deque<GameResponse> &results);
 
         /**
-         * Converts ActionResult objects into Message objects to be sent to the appropriate client(s). This returns
-         * a deque of Message objects to be sent by the game server.
+         * Calls handler class methods that return responses and are not dependent on user input.
+         */
+        void
+        handleOutgoing(std::deque<GameResponse> &results);
+
+        /**
+         * Converts a GameResponse deque into a Message deque.
          */
         std::deque<Message>
-        handleOutgoing(std::deque<GameResponse> &outgoing);
+        formMessages(std::deque<GameResponse> &results);
 
     public:
         /**
@@ -67,22 +77,8 @@ namespace model {
              std::function<void()> &shutdown);
 
         /**
-         * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
-         * vector on completion.
-         */
-        void
-        handleConnects();
-
-        /**
-         * Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
-         * associated vector on completion.
-         */
-        void
-        handleDisconnects();
-
-        /**
-         * Runs a game cycle. Performs handleConnects()handleIncoming(), handleEvents(), and handleOutgoing() in respective order.
-         * This Returns a deque of Message objects to be sent by the game server.
+         * Runs a game cycle. Performs handleConnects(), handleDisconnects(), handleIncoming(), handleOutgoing(),
+         * and finally formMessages(). This Returns a deque of Message objects to be sent by the game server.
          */
         std::deque<Message>
         processCycle(std::deque<Message> &incoming);

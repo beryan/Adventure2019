@@ -26,6 +26,10 @@ namespace model {
     public:
         GameResponse();
 
+        GameResponse(unsigned long int clientId, std::string message);
+
+        GameResponse(unsigned long int clientId, std::string message, bool isLocal);
+
         unsigned long int
         getClientId();
 
