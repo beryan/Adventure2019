@@ -8,6 +8,8 @@
 
 #include "Server.h"
 #include "MessageResult.h"
+#include "Door.h"
+#include "Room.h"
 #include "Player.h"
 
 #include <fstream>
@@ -16,7 +18,13 @@
 #include <unistd.h>
 #include <map>
 #include <vector>
+#include <WorldHandler.h>
 
+using model::WorldHandler;
+using networking::Server;
+using networking::Connection;
+using networking::Message;
+using model::Player;
 
 static const char* const COMMAND_SHUTDOWN = "shutdown";
 static const char* const COMMAND_QUIT = "quit";
@@ -24,12 +32,8 @@ static const char* const COMMAND_SAY = "say";
 static const char* const COMMAND_HELP = "help";
 static const char* const COMMAND_LOGOUT = "logout";
 static const char* const COMMAND_REGISTER = "register";
-using networking::Server;
-using networking::Connection;
-using networking::Message;
-using model::Player;
 
-
+static const char *const COMMAND_INFO = "info";
 std::vector<Connection> clients;
 std::map<Connection, Player> logins;
 
@@ -82,8 +86,8 @@ processMessages(Server& server,
     std::string action = lowercase(message.text.substr(0, message.text.find(' ')));
     std::string param;
 
-    if (message.text.find(" ") != std::string::npos) {
-      param = message.text.substr(message.text.find(" ") + 1);
+    if (message.text.find(' ') != std::string::npos) {
+      param = message.text.substr(message.text.find(' ') + 1);
     }
 
     if (action == COMMAND_QUIT) {
@@ -100,6 +104,8 @@ processMessages(Server& server,
       tempMessage << "Logout not yet implemented\n";
     } else if (action == COMMAND_REGISTER) {
       tempMessage << "Registering not yet implemented\n";
+    } else if (action == "start") {
+        WorldHandler wh;
     } else if (action == COMMAND_HELP) {
       tempMessage << "********\n";
       tempMessage << "* HELP *\n";
@@ -113,7 +119,11 @@ processMessages(Server& server,
       tempMessage << "  - " << COMMAND_LOGOUT << " (logs you out of the server)\n";
       tempMessage << "  - " << COMMAND_QUIT << " (disconnects you from the game server)\n";
       tempMessage << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n";
-
+      tempMessage << "  - " << COMMAND_INFO << " (displays current location information)\n";
+    } else if (action == COMMAND_INFO) {
+      model::Room stubRoom = model::Room();
+      stubRoom.createStub();
+      tempMessage << stubRoom;
     } else {
       tempMessage << "The word \"" << action << "\" is not a valid action. Enter \"help\" for a list of commands.\n";
     }
@@ -195,4 +205,3 @@ main(int argc, char* argv[]) {
 
   return 0;
 }
-

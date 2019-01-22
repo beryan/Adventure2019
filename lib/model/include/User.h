@@ -16,14 +16,19 @@ static const int MAX_KEYWORDS = 8;
 namespace model {
     class User {
     public:
-        inline User(int id) : id(id), health(STARTING_HEALTH), description({}) {}
+        inline User(int id) :
+            id(std::move(id)),
+            health(STARTING_HEALTH),
+            description({}) {}
 
         inline User(int id, std::vector<std::string> keys, std::vector<std::string> desc) :
-                id(id), keywords(keys), description(desc) {}
+            id(std::move(id)),
+            keywords(std::move(keys)),
+            description(std::move(desc)) {}
 
         inline int getId() { return id; };
 
-        inline void setId(int id) { this->id = id; };
+        inline void setId(int id) { this->id = std::move(id); };
 
         inline void addKeyword(std::string key) { keywords.push_back(std::move(key)); };
 
@@ -33,7 +38,7 @@ namespace model {
 
         inline double getHealth() { return health; };
 
-        inline void setHealth(double health) { this->health = health; };
+        inline void setHealth(double health) { this->health = std::move(health); };
 
         inline std::vector<std::string> getDescription() { return this->description; };
 

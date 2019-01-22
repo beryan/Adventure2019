@@ -26,4 +26,3 @@ target_include_directories(chatserver PUBLIC
 install(TARGETS chatserver
   RUNTIME DESTINATION bin
 )
-

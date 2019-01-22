@@ -4,7 +4,13 @@ add_library(model
         src/UserCollection.cpp
         src/Object.cpp
         src/Item.cpp
-    include/Role.h src/User.cpp)
+        include/Role.h
+        src/User.cpp
+        src/Door.cpp
+        src/Room.cpp
+        src/World.cpp
+        src/WorldHandler.cpp
+        )
 
 target_include_directories(model
         PUBLIC
@@ -19,6 +25,8 @@ set_target_properties(model
         LINKER_LANGUAGE CXX
         CXX_STANDARD 17
         )
+
+target_link_libraries(model json)
 
 install(TARGETS model
         ARCHIVE DESTINATION lib

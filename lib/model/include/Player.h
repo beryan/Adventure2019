@@ -9,13 +9,13 @@
 #include "Role.h"
 
 namespace model {
-    class Player : User {
+    class Player : public User {
     public:
         inline Player(int id, std::string username, int password) :
-            User(id),
-            username(username),
-            password(password),
-            role(Role::Default){}
+            User(std::move(id)),
+            username(std::move(username)),
+            password(std::move(password)),
+            role(std::move(Role::Default)){}
 
         std::string getUsername();
 
