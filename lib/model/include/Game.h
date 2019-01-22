@@ -26,7 +26,7 @@ namespace model {
  */
     class Game {
     private:
-        std::vector<Connection> clients;
+        std::vector<Connection>* clients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 

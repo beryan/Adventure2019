@@ -22,7 +22,7 @@ lowercase(std::string string) {
 
 namespace model {
     Game::Game(std::vector<Connection> &clients, std::function<void(Connection)> &disconnect, std::function<void()> &shutdown) {
-        this->clients = clients;
+        this->clients = &clients;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
     }
@@ -113,7 +113,7 @@ namespace model {
                 clientMessages[entry.getClientId()] << entry.getMessage();
 
             } else {
-                for (auto client : this->clients) {
+                for (auto client : *this->clients) {
                     clientMessages[client.id] << entry.getMessage();
                 }
             }
