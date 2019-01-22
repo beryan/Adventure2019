@@ -1,0 +1,1 @@
+configure_file(users.json ${CMAKE_CURRENT_BINARY_DIR}/users.json COPYONLY)

@@ -17,8 +17,9 @@
 #include <unistd.h>
 #include <map>
 #include <vector>
+#include <WorldHandler.h>
 
-
+using model::WorldHandler;
 using networking::Server;
 using networking::Connection;
 using networking::Message;
@@ -78,6 +79,8 @@ processMessages(Server &server,
       result.setPublic();
       tempMessage << message.connection.id << "> " << param << "\n";
 
+    } else if(action == "start"){
+        WorldHandler wh;
     } else if (action == "help") {
       tempMessage << "********\n";
       tempMessage << "* HELP *\n";
