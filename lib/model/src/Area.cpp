@@ -1,5 +1,5 @@
 /*
-* Area.h
+* Area.cpp
 *
 * Class Description: A class designed to represent an area.
 *
@@ -37,48 +37,48 @@ namespace model {
         { }
 
     //getters and setters
-    std::string getName() {
+    std::string Area::getName() {
       return name;
     }
 
-    std::vector<NPC> getNpcs() {
+    std::vector<NPC> Area::getNpcs() {
       return npcs;
     }
 
-    std::vector<Object> getObjects() {
+    std::vector<Object> Area::getObjects() {
       return objects;
     }
 
-    std::vector<Room> getRooms() {
+    std::vector<Room> Area::getRooms() {
       return rooms;
     }
 
-    void setName(std::string name) {
+    void Area::setName(std::string name) {
       this->name = std::move(name);
     }
 
-    void setNpcs(std::vector<NPC> npcs) {
+    void Area::setNpcs(std::vector<NPC> npcs) {
       this->npcs = std::move(npcs);
     }
 
-    void setObjects(std::vector<Object> objects) {
+    void Area::setObjects(std::vector<Object> objects) {
       this->objects = std::move(objects);
     }
 
-    void setRooms(std::vector<Room> rooms) {
+    void Area::setRooms(std::vector<Room> rooms) {
       this->rooms = std::move(rooms);
     }
 
-    void addNPC(NPC npc) {
+    void Area::addNPC(NPC npc) {
       npcs.push_back(std::move(npc));
     }
 
-    void addObject(Object object) {
+    void Area::addObject(Object object) {
       objects.push_back(std::move(object));
     }
 
-    void addRoom(Room room) {
-      room.push_back(std::move(room));
+    void Area::addRoom(Room room) {
+      rooms.push_back(std::move(room));
     }
 
     //print object
