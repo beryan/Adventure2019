@@ -38,6 +38,8 @@ namespace model {
 
         void setDescription(std::string description);
 
+        bool operator==(const Object& rhs) const;
+
     private:
         int id;
 
