@@ -13,7 +13,7 @@ add_library(model
         src/Reset.cpp
         src/World.cpp
         src/WorldHandler.cpp
-        )
+        src/UserHandler.cpp)
 
 target_include_directories(model
         PUBLIC
