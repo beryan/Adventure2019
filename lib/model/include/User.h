@@ -43,6 +43,7 @@ namespace model {
 
         void setDescription(std::string desc);
 
+
         std::array<Item*, Slot::Count> getEquipments();
 
         void equipItem(Item *item);
@@ -50,6 +51,9 @@ namespace model {
         std::vector<Item> getInventory();
 
         void addItem(Item item);
+
+        bool operator==(const User&);
+
     private:
         int id;
 
@@ -64,7 +68,7 @@ namespace model {
         double health;
     };
 
-    inline double getMaxHealth() { return MAX_HEALTH; };
+  inline double getMaxHealth() { return MAX_HEALTH; };
 
     inline double getStartingHealth() { return STARTING_HEALTH; };
 }

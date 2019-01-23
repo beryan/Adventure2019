@@ -1,5 +1,5 @@
 //
-// Created by jnhkm on 2019-01-22.
+// Created by Stephen Wanhella on 2019-01-19.
 //
 
 #include "User.h"
@@ -66,39 +66,43 @@ namespace model {
         {}
 
     int User::getId() {
-        return id;
+      return id;
     }
 
     void User::setId(int id) {
-        this->id = id;
+      this->id = id;
     }
 
     void User::addKeyword(std::string key) {
-        keywords.push_back(std::move(key));
+      keywords.push_back(std::move(key));
     }
 
     void User::removeKeyword(int index) {
-        keywords.erase(keywords.begin() + index);
+      keywords.erase(keywords.begin() + index);
     }
 
     std::vector<std::string> User::getKeywords() {
-        return keywords;
+      return keywords;
     }
 
     double User::getHealth() {
-        return health;
+      return health;
     }
 
     void User::setHealth(double health) {
-        this->health = health;
+      this->health = health;
     }
 
     std::vector<std::string> User::getDescription() {
-        return description;
+      return description;
     }
 
     void User::setDescription(std::string desc) {
-        description.push_back(std::move(desc));
+      description.push_back(std::move(desc));
+    }
+
+    bool User::operator==(const User& user) {
+      return id == user.id;
     }
 
     std::array<Item*, Slot::Count> User::getEquipments() {
