@@ -38,4 +38,9 @@ namespace model {
     Object::setDescription(std::string description) {
         this->description = std::move(description);
     }
+
+    bool
+    Object::operator==(const Object& rhs) const {
+        return id == rhs.id;
+    }
 }

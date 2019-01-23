@@ -1,0 +1,8778 @@
+{
+  "AREA": {
+    "name": "Town Of Solace"
+  },
+  "NPCS": [
+    {
+      "id": 10500,
+      "keywords": [
+        "bat"
+      ],
+      "shortdesc": "bat",
+      "longdesc": [
+        "There is a large bat here."
+      ],
+      "description": []
+    },
+    {
+      "id": 10501,
+      "keywords": [
+        "old",
+        "lady"
+      ],
+      "shortdesc": "old lady",
+      "longdesc": [
+        "There is an old lady here."
+      ],
+      "description": []
+    },
+    {
+      "id": 10502,
+      "keywords": [
+        "tired",
+        "adventurer"
+      ],
+      "shortdesc": "tired adventurer",
+      "longdesc": [
+        "There is a tired adventurer resting here."
+      ],
+      "description": []
+    },
+    {
+      "id": 10503,
+      "keywords": [
+        "Magnus",
+        "wizard"
+      ],
+      "shortdesc": "Magnus wizard",
+      "longdesc": [
+        "Magnus the wizard is resting here from his long journeys."
+      ],
+      "description": []
+    },
+    {
+      "id": 10504,
+      "keywords": [
+        "Lord",
+        "doom",
+        "warrior"
+      ],
+      "shortdesc": "Lord Doom",
+      "longdesc": [
+        "Lord Doom is resting here from his long journeys."
+      ],
+      "description": []
+    },
+    {
+      "id": 10505,
+      "keywords": [
+        "foreign",
+        "trade",
+        "representative"
+      ],
+      "shortdesc": "Foreign Trade Representative",
+      "longdesc": [
+        "A foreign trade representative is waiting here to meet with the Captain of the Guard."
+      ],
+      "description": []
+    },
+    {
+      "id": 10506,
+      "keywords": [
+        "bodyguard"
+      ],
+      "shortdesc": "bodyguard",
+      "longdesc": [
+        "There is a bodyguard here."
+      ],
+      "description": []
+    },
+    {
+      "id": 10507,
+      "keywords": [
+        "Secretary",
+        "captain"
+      ],
+      "shortdesc": "Secretary",
+      "longdesc": [
+        "The Captain of the Guard's Secretary is here."
+      ],
+      "description": [
+        "She looks very busy.",
+        "The Secretary says 'Sorry, but the Captain is extremely busy today'.",
+        "The Secretary says 'Please sit down and have a seat in the meantime'."
+      ]
+    },
+    {
+      "id": 10508,
+      "keywords": [
+        "Secretary",
+        "Lieutenant"
+      ],
+      "shortdesc": "Secretary",
+      "longdesc": [
+        "The Lieutenant Commander's Secretary is here."
+      ],
+      "description": [
+        "She looks very busy.",
+        "The Secretary says 'Sorry, but the Lieutenant is extremely busy today'.",
+        "The Secretary says 'Please sit down and have a seat in the meantime'."
+      ]
+    },
+    {
+      "id": 10509,
+      "keywords": [
+        "Secretary",
+        "Sergeant"
+      ],
+      "shortdesc": "Secretary",
+      "longdesc": [
+        "The Sergeant at Arm's Secretary is here."
+      ],
+      "description": [
+        "She looks very busy.",
+        "The Secretary says 'Sorry, but the Sergeant is extremely busy today'.",
+        "The Secretary says 'Please sit down and have a seat in the meantime'."
+      ]
+    },
+    {
+      "id": 10510,
+      "keywords": [
+        "Macaw"
+      ],
+      "shortdesc": "the macaw",
+      "longdesc": [
+        "A large macaw is here."
+      ],
+      "description": [
+        "The macaw looks like a strong, fearless fighter. It is a beautiful bird."
+      ]
+    },
+    {
+      "id": 10511,
+      "keywords": [
+        "Raven"
+      ],
+      "shortdesc": "the raven",
+      "longdesc": [
+        "A large, black raven is here."
+      ],
+      "description": [
+        "The raven looks like a strong, fearless fighter."
+      ]
+    },
+    {
+      "id": 10512,
+      "keywords": [
+        "hunting",
+        "hawk"
+      ],
+      "shortdesc": "the hunting hawk",
+      "longdesc": [
+        "A large, hunting hawk is here."
+      ],
+      "description": [
+        "The hawk looks like a strong, fearless fighter. It has been trained for",
+        "hunting game."
+      ]
+    },
+    {
+      "id": 10513,
+      "keywords": [
+        "Battle",
+        "falcon"
+      ],
+      "shortdesc": "the battle falcon",
+      "longdesc": [
+        "A giant, falcon is here."
+      ],
+      "description": [
+        "The battle falcon looks like a strong, fearless fighter. This giant breed has",
+        "been trained especially for combat."
+      ]
+    },
+    {
+      "id": 10514,
+      "keywords": [
+        "captain",
+        "guard"
+      ],
+      "shortdesc": "Captain of the Guard",
+      "longdesc": [
+        "The Captain of the Guard is here."
+      ],
+      "description": [
+        "The Captain of the Guard is an older but very powerful man. His obsidian",
+        "armor seems to glow faintly. The crest of the town of Solace is displayed",
+        "with pride on his chestplate. The gold crest of two coins seems to match",
+        "the wealth of this town."
+      ]
+    },
+    {
+      "id": 10515,
+      "keywords": [
+        "lieutenant",
+        "commander"
+      ],
+      "shortdesc": "Lieutenant Commander",
+      "longdesc": [
+        "The Lieutenant Commander is here."
+      ],
+      "description": [
+        "The Lieutenant seems like a happy fellow. Although he seems to have",
+        "the brain of a 7 year old. His steel armor is covered with finger paint.",
+        "Dispite his mental problems he is quite a challenge. If you would like",
+        "to test his abilities go right ahead. He looks as if he is quite an easy",
+        "fight."
+      ]
+    },
+    {
+      "id": 10516,
+      "keywords": [
+        "Sergeant",
+        "Arms"
+      ],
+      "shortdesc": "Sergeant at Arms",
+      "longdesc": [
+        "The Sergeant at Arms is here polishing his hammer."
+      ],
+      "description": [
+        "This is the tough and burly Sergeant at Arms. He wears the red armor of",
+        "war. He is a middle age man with graying hair that pokes out from under",
+        "his helmet. He is always waiting for a fight."
+      ]
+    },
+    {
+      "id": 10517,
+      "keywords": [
+        "townguard",
+        "guard"
+      ],
+      "shortdesc": "Townguard",
+      "longdesc": [
+        "A townguard stands here."
+      ],
+      "description": [
+        "A big strong townguard of Solace."
+      ]
+    },
+    {
+      "id": 10518,
+      "keywords": [
+        "townguard",
+        "guard",
+        "agg"
+      ],
+      "shortdesc": "Townguard",
+      "longdesc": [
+        "A townguard stands here."
+      ],
+      "description": [
+        "A big strong townguard of Solace."
+      ]
+    },
+    {
+      "id": 10519,
+      "keywords": [
+        "citizen",
+        "solace"
+      ],
+      "shortdesc": "Citizen of Solace",
+      "longdesc": [
+        "A citizen of Solace stands here."
+      ],
+      "description": [
+        "He is one of the wealthy citizens of Solace."
+      ]
+    },
+    {
+      "id": 10520,
+      "keywords": [
+        "woman"
+      ],
+      "shortdesc": "woman",
+      "longdesc": [
+        "A woman is here."
+      ],
+      "description": [
+        "She is a beautiful woman."
+      ]
+    },
+    {
+      "id": 10521,
+      "keywords": [
+        "matt",
+        "brewmaster"
+      ],
+      "shortdesc": "Matt the brewmaster",
+      "longdesc": [
+        "Matt the brewmaster is here looking for something to drink."
+      ],
+      "description": []
+    },
+    {
+      "id": 10522,
+      "keywords": [
+        "Mcbaker"
+      ],
+      "shortdesc": "the Mcbaker",
+      "longdesc": [
+        "The Mcbaker looks at you calmly, wiping flour from his face with one hand."
+      ],
+      "description": [
+        "A fat, nice looking baker. But you can see that he has many scars on his",
+        "body."
+      ]
+    },
+    {
+      "id": 10523,
+      "keywords": [
+        "cookie's",
+        "helper"
+      ],
+      "shortdesc": "Cookie's Helper",
+      "longdesc": [
+        "Cookie's Helper is here offering you a free cookie sample."
+      ],
+      "description": [
+        "A young neighborhood girl helps out cookie when she is not around."
+      ]
+    },
+    {
+      "id": 10524,
+      "keywords": [
+        "marilyn"
+      ],
+      "shortdesc": "Marilyn",
+      "longdesc": [
+        "Marilyn is here selling birds."
+      ],
+      "description": [
+        "She is a very pretty and loves her birds. Her black hair hangs behind her",
+        "tied in a pony tail."
+      ]
+    },
+    {
+      "id": 10525,
+      "keywords": [
+        "ghost",
+        "jander"
+      ],
+      "shortdesc": "Ghost of Jander",
+      "longdesc": [
+        "The Ghost of Jander is here."
+      ],
+      "description": [
+        "The ghost of Jander is as he was in life. A rather large man with flaming",
+        "red hair. His clothes seems dirty and tattered. His bushy beard obscures",
+        "his stone face."
+      ]
+    },
+    {
+      "id": 10526,
+      "keywords": [
+        "ghost",
+        "waiter"
+      ],
+      "shortdesc": "ghost of waiter",
+      "longdesc": [
+        "A ghost of a waiter is here waiting to serve you."
+      ],
+      "description": [
+        "This is the ghost of a long dead waiter. Probably one of the many that",
+        "Jander killed for spilling a drink or something."
+      ]
+    },
+    {
+      "id": 10527,
+      "keywords": [
+        "ghost",
+        "barkeep"
+      ],
+      "shortdesc": "ghost of a barkeeper",
+      "longdesc": [
+        "A ghost of a barkeeper is here waiting an eternity to take your order."
+      ],
+      "description": [
+        "This is probably another of Jander's victims. Probably got caught with",
+        "his hand in the cash or something."
+      ]
+    },
+    {
+      "id": 10528,
+      "keywords": [
+        "townguard",
+        "guard"
+      ],
+      "shortdesc": "Townguard",
+      "longdesc": [
+        "A townguard is on patrol."
+      ],
+      "description": [
+        "A big strong townguard of Solace."
+      ]
+    },
+    {
+      "id": 10529,
+      "keywords": [
+        "field",
+        "rat"
+      ],
+      "shortdesc": "field rat",
+      "longdesc": [
+        "A field rat is here looking for food."
+      ],
+      "description": [
+        "A dirty nasty field rat . Obviously  looking for food in the town."
+      ]
+    },
+    {
+      "id": 10530,
+      "keywords": [
+        "town",
+        "clerk"
+      ],
+      "shortdesc": "Town Clerk",
+      "longdesc": [
+        "The Town Clerk is here impatiently waiting for you to pay taxes."
+      ],
+      "description": [
+        "A stringy rat like individual. He beams at you through his spectacles",
+        "as if he can see the money in your pockets."
+      ]
+    },
+    {
+      "id": 10531,
+      "keywords": [
+        "treasury",
+        "guards"
+      ],
+      "shortdesc": "Treasury Guards",
+      "longdesc": [
+        "The Treasury Guards are here guarding the town's money."
+      ],
+      "description": [
+        "These are like the biggest and meanest men you've every seen.",
+        "They look more like trolls or ogres than men."
+      ]
+    },
+    {
+      "id": 10532,
+      "keywords": [
+        "Jhen"
+      ],
+      "shortdesc": "Jhen the farmer",
+      "longdesc": [
+        "Jhen the farmer is here."
+      ],
+      "description": [
+        "A rather tall man who works hard for his money."
+      ]
+    },
+    {
+      "id": 10533,
+      "keywords": [
+        "Krista"
+      ],
+      "shortdesc": "Krista the fruit peddler",
+      "longdesc": [
+        "Krista the fruit peddler is here."
+      ],
+      "description": [
+        "A pretty woman who works hard for her money. Travelling every year",
+        "to the market to sell her fruits."
+      ]
+    },
+    {
+      "id": 10534,
+      "keywords": [
+        "Janni"
+      ],
+      "shortdesc": "Janni",
+      "longdesc": [
+        "Janni is here."
+      ],
+      "description": [
+        "Janni has spent his whole life making trinkets for people to enjoy."
+      ]
+    },
+    {
+      "id": 10535,
+      "keywords": [
+        "Nisi"
+      ],
+      "shortdesc": "Nisi the grocer",
+      "longdesc": [
+        "Nisi is here."
+      ],
+      "description": [
+        "Nisi is a very interesting person. It shows in the wares she sells"
+      ]
+    },
+    {
+      "id": 10536,
+      "keywords": [
+        "Molin"
+      ],
+      "shortdesc": "Molin the brewer",
+      "longdesc": [
+        "Molin the brewer is here."
+      ],
+      "description": [
+        "Molin is a grey old man with hair down to his toes."
+      ]
+    },
+    {
+      "id": 10537,
+      "keywords": [
+        "Rashan"
+      ],
+      "shortdesc": "Rashan the farmer",
+      "longdesc": [
+        "Rashan the farmer is here."
+      ],
+      "description": [
+        "Rashan is a middle aged man who grows his rutabagas by candlelight."
+      ]
+    },
+    {
+      "id": 10538,
+      "keywords": [
+        "Lexie"
+      ],
+      "shortdesc": "Lexie",
+      "longdesc": [
+        "Lexie is here."
+      ],
+      "description": [
+        "Lexie is an accomplish diver. But he seems to have problems keeping",
+        "students."
+      ]
+    },
+    {
+      "id": 10539,
+      "keywords": [
+        "Croben"
+      ],
+      "shortdesc": "Croben",
+      "longdesc": [
+        "Croben is here."
+      ],
+      "description": [
+        "Croben is a young man who learned the art of container making from his",
+        "grandfather."
+      ]
+    },
+    {
+      "id": 10540,
+      "keywords": [
+        "otik",
+        "sandath",
+        "bartender"
+      ],
+      "shortdesc": "Otik Sandath",
+      "longdesc": [
+        "Otik sandath is here tending the bar"
+      ],
+      "description": [
+        "Otik is an older man with a gift for cooking.",
+        "",
+        "Otik whispers, \"A magical staff! I bet it was forged by demons from the",
+        "terrible Darken Wood. There are terrible mysteries in that place, there are.\""
+      ]
+    },
+    {
+      "id": 10541,
+      "keywords": [
+        "tika",
+        "barmaid"
+      ],
+      "shortdesc": "Tika the barmaid",
+      "longdesc": [
+        "Tika the barmaid is here delivering drinks and food."
+      ],
+      "description": [
+        "Curly auburn hair tumbles around Tika's lightly freckled face. Her striking",
+        "green eyes match her low-cut blouse. She is a brash young barmaid who",
+        "looks older than her 19 years. Rough living has hardened her and she",
+        "presents a tough image as protection against her sense of vulnerablility."
+      ]
+    },
+    {
+      "id": 10542,
+      "keywords": [
+        "thief",
+        "cloaked",
+        "figure"
+      ],
+      "shortdesc": "Thief",
+      "longdesc": [
+        "A cloaked figure sits here."
+      ],
+      "description": [
+        "A thin, cloaked figure sits alone at a table near the door, an untouched",
+        "glass of ale before him."
+      ]
+    },
+    {
+      "id": 10543,
+      "keywords": [
+        "old",
+        "man"
+      ],
+      "shortdesc": "old man",
+      "longdesc": [
+        "An old man is here."
+      ],
+      "description": [
+        "He looks like an old man....go figure.."
+      ]
+    },
+    {
+      "id": 10544,
+      "keywords": [
+        "boy"
+      ],
+      "shortdesc": "boy",
+      "longdesc": [
+        "A small boy is here."
+      ],
+      "description": [
+        "He is a small boy lost in his own daydreams.",
+        "",
+        "boy says, \"I saw the white stag up near Prayers Eye Peak just a few days",
+        "ago! If only I could catch it. He who walks the paths of the white stag is",
+        "blessed, I hear tell.\""
+      ]
+    },
+    {
+      "id": 10545,
+      "keywords": [
+        "brat",
+        "boy"
+      ],
+      "shortdesc": "bratty boy",
+      "longdesc": [
+        "A brat is here."
+      ],
+      "description": [
+        "He looks like a pain in the ass."
+      ]
+    },
+    {
+      "id": 10546,
+      "keywords": [
+        "Mage"
+      ],
+      "shortdesc": "mage",
+      "longdesc": [
+        "A mage is here."
+      ],
+      "description": [
+        "He is the typical adventurer. He looks as if he has travelled far."
+      ]
+    },
+    {
+      "id": 10547,
+      "keywords": [
+        "Thief"
+      ],
+      "shortdesc": "Thief",
+      "longdesc": [
+        "A thief is here."
+      ],
+      "description": [
+        "He is the typical adventurer. He looks as if he has travelled far."
+      ]
+    },
+    {
+      "id": 10548,
+      "keywords": [
+        "Warrior"
+      ],
+      "shortdesc": "Warrior",
+      "longdesc": [
+        "A warrior is here."
+      ],
+      "description": [
+        "He is the typical adventurer. He looks as if he has travelled far."
+      ]
+    },
+    {
+      "id": 10549,
+      "keywords": [
+        "Cleric"
+      ],
+      "shortdesc": "Cleric",
+      "longdesc": [
+        "A cleric is here."
+      ],
+      "description": [
+        "He is the typical adventurer. He looks as if he has travelled far."
+      ]
+    },
+    {
+      "id": 10550,
+      "keywords": [
+        "ghost",
+        "gambler"
+      ],
+      "shortdesc": "Ghost of gambler",
+      "longdesc": [
+        "A ghost of a gambler is floating here looking for something to bet on."
+      ],
+      "description": [
+        "Even in death this sad spirit is looking to gamble."
+      ]
+    },
+    {
+      "id": 10551,
+      "keywords": [
+        "child"
+      ],
+      "shortdesc": "child",
+      "longdesc": [
+        "A child is here eating bugs off the ground."
+      ],
+      "description": []
+    },
+    {
+      "id": 10552,
+      "keywords": [
+        "rat"
+      ],
+      "shortdesc": "rat",
+      "longdesc": [
+        "There is a large rat here."
+      ],
+      "description": []
+    }
+  ],
+  "OBJECTS": [
+    {
+      "id": 10500,
+      "keywords": [
+        "chamorro",
+        "ringmail"
+      ],
+      "shortdesc": "chamorro ringmail",
+      "longdesc": [
+        "A bunch of rings sewn together with taotamoa bark is on the ground."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "ringmail"
+          ],
+          "desc": [
+            "This armor is imported from the island of Guam."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10501,
+      "keywords": [
+        "Mcbread"
+      ],
+      "shortdesc": "mcbread",
+      "longdesc": [
+        "A Mcloaf of Mcbread has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10502,
+      "keywords": [
+        "Mcdonut"
+      ],
+      "shortdesc": "mcdonut",
+      "longdesc": [
+        "A chocolate Mcdonut has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10503,
+      "keywords": [
+        "mcbagel"
+      ],
+      "shortdesc": "mcbagel",
+      "longdesc": [
+        "A Mcbagel has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10504,
+      "keywords": [
+        "mcpastry"
+      ],
+      "shortdesc": "mcpastry",
+      "longdesc": [
+        "A Mcpastry has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10505,
+      "keywords": [
+        "chocolate",
+        "chip",
+        "cookie"
+      ],
+      "shortdesc": "chocolate chip cookie",
+      "longdesc": [
+        "A chocoalte chip cookie has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10506,
+      "keywords": [
+        "peanut",
+        "butter",
+        "cookie"
+      ],
+      "shortdesc": "peanut butter cookie",
+      "longdesc": [
+        "A peanut butter cookie has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10507,
+      "keywords": [
+        "oatmeal",
+        "cookie"
+      ],
+      "shortdesc": "oatmeal  cookie",
+      "longdesc": [
+        "A oatmeal cookie has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10508,
+      "keywords": [
+        "sugar",
+        "cookie"
+      ],
+      "shortdesc": "sugar cookie",
+      "longdesc": [
+        "A sugar cookie has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10509,
+      "keywords": [
+        "taxes",
+        "fines"
+      ],
+      "shortdesc": "taxes and fines",
+      "longdesc": [
+        "A bunch of taxes and fines are here waiting to take your money."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10510,
+      "keywords": [
+        "enchanted",
+        "two-handed",
+        "sword"
+      ],
+      "shortdesc": "enchanted two-handed sword",
+      "longdesc": [
+        "A large two-handed sword with runes etched in it is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10511,
+      "keywords": [
+        "carrot"
+      ],
+      "shortdesc": "carrot",
+      "longdesc": [
+        "A carrot has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10512,
+      "keywords": [
+        "cauliflower"
+      ],
+      "shortdesc": "cauliflower",
+      "longdesc": [
+        "A cauliflower has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10513,
+      "keywords": [
+        "bell",
+        "pepper"
+      ],
+      "shortdesc": "bell pepper",
+      "longdesc": [
+        "A bell pepper has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10514,
+      "keywords": [
+        "celery",
+        "stick"
+      ],
+      "shortdesc": "celery stick",
+      "longdesc": [
+        "A celery stick has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10515,
+      "keywords": [
+        "glass",
+        "ice",
+        "tea"
+      ],
+      "shortdesc": "a glass of ice tea",
+      "longdesc": [
+        "A glass of ice tea has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10516,
+      "keywords": [
+        "glass",
+        "water"
+      ],
+      "shortdesc": "a glass of water",
+      "longdesc": [
+        "A glass of water has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10517,
+      "keywords": [
+        "glass",
+        "koca",
+        "colah"
+      ],
+      "shortdesc": "a glass of koca colah",
+      "longdesc": [
+        "A glass of koca colah has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10518,
+      "keywords": [
+        "bottle",
+        "Snapple",
+        "ice",
+        "tea"
+      ],
+      "shortdesc": "a bottle of Snapple ice tea",
+      "longdesc": [
+        "A bottle of Snapple has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10519,
+      "keywords": [
+        "apple"
+      ],
+      "shortdesc": "apple",
+      "longdesc": [
+        "An apple has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10520,
+      "keywords": [
+        "grape"
+      ],
+      "shortdesc": "a grape",
+      "longdesc": [
+        "A grape has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10521,
+      "keywords": [
+        "orange"
+      ],
+      "shortdesc": "a orange",
+      "longdesc": [
+        "An orange has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10522,
+      "keywords": [
+        "pear"
+      ],
+      "shortdesc": "a pear",
+      "longdesc": [
+        "A pear has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10523,
+      "keywords": [
+        "charm",
+        "solace"
+      ],
+      "shortdesc": "the charm of Solace.",
+      "longdesc": [
+        "A shiny black charm with a gold symbol is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10524,
+      "keywords": [
+        "ring",
+        "solace"
+      ],
+      "shortdesc": "the ring of Solace.",
+      "longdesc": [
+        "A shiny black ring with a gold symbol is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10525,
+      "keywords": [
+        "earrings",
+        "solace"
+      ],
+      "shortdesc": "the earrings of Solace.",
+      "longdesc": [
+        "A pair of shiny black earrings with a gold symbols is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10526,
+      "keywords": [
+        "frozen",
+        "pizza",
+        "crust"
+      ],
+      "shortdesc": "a frozen pizza crust",
+      "longdesc": [
+        "A large, frozen pizza crust is on the ground melting."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10527,
+      "keywords": [
+        "frozen",
+        "pumpkin"
+      ],
+      "shortdesc": "a frozen pumpkin",
+      "longdesc": [
+        "A large, frozen pumpkin is on the ground melting."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10528,
+      "keywords": [
+        "frozen",
+        "side",
+        "beef"
+      ],
+      "shortdesc": "a frozen side of beef",
+      "longdesc": [
+        "A large, frozen side of beef is on the ground melting."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10529,
+      "keywords": [
+        "frozen",
+        "asparagus",
+        "spear"
+      ],
+      "shortdesc": "a frozen asparagus spear",
+      "longdesc": [
+        "A frozen asparagus spear is on the ground melting."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10530,
+      "keywords": [
+        "mulburry",
+        "extract"
+      ],
+      "shortdesc": "mulburry extract",
+      "longdesc": [
+        "A small jar of mulburry extract has carelessly been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10531,
+      "keywords": [
+        "rutabaga"
+      ],
+      "shortdesc": "rutabaga",
+      "longdesc": [
+        "A small rutabaga is lying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10532,
+      "keywords": [
+        "rutabaga"
+      ],
+      "shortdesc": "rutabaga",
+      "longdesc": [
+        "A small rutabaga is lying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10533,
+      "keywords": [
+        "rutabaga"
+      ],
+      "shortdesc": "rutabaga",
+      "longdesc": [
+        "A small rutabaga is lying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10534,
+      "keywords": [
+        "rutabaga"
+      ],
+      "shortdesc": "rutabaga",
+      "longdesc": [
+        "A small rutabaga is lying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10535,
+      "keywords": [
+        "Scuba",
+        "tank"
+      ],
+      "shortdesc": "scuba tank",
+      "longdesc": [
+        "A scuba tank is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10536,
+      "keywords": [
+        "Scuba",
+        "flippers"
+      ],
+      "shortdesc": "scuba flippers",
+      "longdesc": [
+        "A pair of flippers are here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10537,
+      "keywords": [
+        "scuba",
+        "snorkle"
+      ],
+      "shortdesc": "scuba snorkle",
+      "longdesc": [
+        "A scuba snorkle is on the ground."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10538,
+      "keywords": [
+        "dive",
+        "belt"
+      ],
+      "shortdesc": "dive belt",
+      "longdesc": [
+        "A scuba dive belt is on the ground drying out."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10539,
+      "keywords": [
+        "belt",
+        "pouch"
+      ],
+      "shortdesc": "belt pouch",
+      "longdesc": [
+        "A belt pouch is laying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10540,
+      "keywords": [
+        "cloak",
+        "storage"
+      ],
+      "shortdesc": "cloak of storage",
+      "longdesc": [
+        "A cloak is on the ground in a pile."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10541,
+      "keywords": [
+        "ring",
+        "holding"
+      ],
+      "shortdesc": "ring of holding",
+      "longdesc": [
+        "A small ring with a hinge is here collecting dust."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10542,
+      "keywords": [
+        "travellers",
+        "robe"
+      ],
+      "shortdesc": "travellers robe",
+      "longdesc": [
+        "A pile of cloth is on the ground here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10543,
+      "keywords": [
+        "travellers",
+        "dagger"
+      ],
+      "shortdesc": "travellers dagger",
+      "longdesc": [
+        "A small dagger is here. It looks like the kind alot of travellers carry."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10544,
+      "keywords": [
+        "travellers",
+        "spellbook"
+      ],
+      "shortdesc": "travellers spellbook",
+      "longdesc": [
+        "A leather bound book with an arcane symbol is laying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10545,
+      "keywords": [
+        "travellers",
+        "holy",
+        "symbol"
+      ],
+      "shortdesc": "travellers holy symbol",
+      "longdesc": [
+        "A cheap holy symbol is laying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10546,
+      "keywords": [
+        "travellers",
+        "vest"
+      ],
+      "shortdesc": "a travellers vest",
+      "longdesc": [
+        "You see a travellers vest here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10547,
+      "keywords": [
+        "travellers",
+        "cloak"
+      ],
+      "shortdesc": "a travellers cloak",
+      "longdesc": [
+        "You see a travellers cloak here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10548,
+      "keywords": [
+        "travellers",
+        "sword"
+      ],
+      "shortdesc": "a travellers sword",
+      "longdesc": [
+        "You see a travellers sword here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10549,
+      "keywords": [
+        "travellers",
+        "scalemail"
+      ],
+      "shortdesc": "a travellers scalemail",
+      "longdesc": [
+        "You see a travellers scalemail here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10550,
+      "keywords": [
+        "travellers",
+        "shield"
+      ],
+      "shortdesc": "a travellers shield",
+      "longdesc": [
+        "You see a travellers shield here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10551,
+      "keywords": [
+        "travellers",
+        "hammer"
+      ],
+      "shortdesc": "a travellers hammer",
+      "longdesc": [
+        "You see a travellers hammer here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10552,
+      "keywords": [
+        "Magnus's",
+        "spellbook"
+      ],
+      "shortdesc": "magnus's spellbook",
+      "longdesc": [
+        "A leather bound book with an arcane symbol is laying here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10553,
+      "keywords": [
+        "robe",
+        "magi"
+      ],
+      "shortdesc": "robe of the magi",
+      "longdesc": [
+        "A pile of cloth is on the ground. The cloth is covered with arcane symbols."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10554,
+      "keywords": [
+        "crystal",
+        "plate",
+        "armor"
+      ],
+      "shortdesc": "crystal plate armor",
+      "longdesc": [
+        "A finely crafted suit of crystal plate armor is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10555,
+      "keywords": [
+        "scythe",
+        "grim",
+        "reaper"
+      ],
+      "shortdesc": "scythe of the Grim Reaper",
+      "longdesc": [
+        "A huge bloody scythe is here floating above the ground"
+      ],
+      "extra": []
+    },
+    {
+      "id": 10556,
+      "keywords": [
+        "crystal",
+        "shield"
+      ],
+      "shortdesc": "crystal shield",
+      "longdesc": [
+        "A finely crafted crystal shield is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10557,
+      "keywords": [
+        "crystal",
+        "longsword"
+      ],
+      "shortdesc": "crystal longsword",
+      "longdesc": [
+        "A finely crafted crystal longsword is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10558,
+      "keywords": [
+        "obsidian",
+        "plate",
+        "armor"
+      ],
+      "shortdesc": "a suit of obsidian plate armor",
+      "longdesc": [
+        "A suit of obsiadian plate armor is here on the ground."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10559,
+      "keywords": [
+        "steel",
+        "plate",
+        "armor"
+      ],
+      "shortdesc": "a suit of steel plate armor",
+      "longdesc": [
+        "A suit of steel plate armor is here on the ground."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10560,
+      "keywords": [
+        "red",
+        "plate",
+        "armor"
+      ],
+      "shortdesc": "a suit of red plate armor",
+      "longdesc": [
+        "A suit of red plate armor is here on the ground."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10561,
+      "keywords": [
+        "enchanted",
+        "bow"
+      ],
+      "shortdesc": "enchanted bow",
+      "longdesc": [
+        "A bow with runes etched in it is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10562,
+      "keywords": [
+        "safe",
+        "deposit",
+        "box"
+      ],
+      "shortdesc": "safe deposit box",
+      "longdesc": [
+        "A strong metal box is embedded in the wall."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "safe",
+            "deposit",
+            "box"
+          ],
+          "desc": [
+            "You see a strong metal box used to keep the town deposits in."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10563,
+      "keywords": [
+        "gold",
+        "coins"
+      ],
+      "shortdesc": "alot of gold coins.",
+      "longdesc": [
+        "A lot of gold is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10564,
+      "keywords": [
+        "fountain",
+        "water"
+      ],
+      "shortdesc": "a fountain",
+      "longdesc": [
+        "A large marble fountain gushes forth here."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "fountain"
+          ],
+          "desc": [
+            "It is very nice.  Made from fine white marble."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10565,
+      "keywords": [
+        "depository",
+        "key"
+      ],
+      "shortdesc": "a depository key",
+      "longdesc": [
+        "A shiny depository key is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10566,
+      "keywords": [
+        "city",
+        "key",
+        "gold",
+        "solace"
+      ],
+      "shortdesc": "key to the City of Solace.",
+      "longdesc": [
+        "A shiny gold city key is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10567,
+      "keywords": [
+        "flaming",
+        "homer"
+      ],
+      "shortdesc": "a drink called, \"a Flaming homer\"",
+      "longdesc": [
+        "A drink called, \"a Flaming homer\" is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10568,
+      "keywords": [
+        "jello",
+        "shot"
+      ],
+      "shortdesc": "a jello shot.",
+      "longdesc": [
+        "A jello shot is wiggling here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10569,
+      "keywords": [
+        "bloody",
+        "heads"
+      ],
+      "shortdesc": "a drink called, \"bloody heads\"",
+      "longdesc": [
+        "A drink called, \"bloody heads\" is sitting here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10570,
+      "keywords": [
+        "skull",
+        "chair"
+      ],
+      "shortdesc": "a giant skull throne",
+      "longdesc": [
+        "A giant skullthrone with a snake crawling through the eyes and nose is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10571,
+      "keywords": [
+        "helmet",
+        "obsidian"
+      ],
+      "shortdesc": "the obsidian helmet",
+      "longdesc": [
+        "A black helmet is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10572,
+      "keywords": [
+        "sleeves",
+        "obsidian"
+      ],
+      "shortdesc": "obsidian sleeves",
+      "longdesc": [
+        "A pair of black sleeves are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10573,
+      "keywords": [
+        "leggings",
+        "obsidian"
+      ],
+      "shortdesc": "obsidian leggings",
+      "longdesc": [
+        "Some black leggings are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10574,
+      "keywords": [
+        "gauntlets",
+        "obsidian"
+      ],
+      "shortdesc": "obsidian gauntlets",
+      "longdesc": [
+        "A pair of black gauntlets are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10575,
+      "keywords": [
+        "boots",
+        "obsidian"
+      ],
+      "shortdesc": "obsidian boots",
+      "longdesc": [
+        "Some black boots are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10576,
+      "keywords": [
+        "cloak",
+        "obsidian"
+      ],
+      "shortdesc": "obsidian cloak",
+      "longdesc": [
+        "A black cloak lies on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10577,
+      "keywords": [
+        "girth",
+        "obsidian"
+      ],
+      "shortdesc": "the obsidian girth",
+      "longdesc": [
+        "A black girth is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10578,
+      "keywords": [
+        "shield",
+        "large",
+        "obsidian"
+      ],
+      "shortdesc": "the large obsidian shield",
+      "longdesc": [
+        "A large, black shield is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10579,
+      "keywords": [
+        "amulet",
+        "solace"
+      ],
+      "shortdesc": "the amulet of Solace.",
+      "longdesc": [
+        "A shiny black amulet with a gold symbol is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10580,
+      "keywords": [
+        "obsidian",
+        "key"
+      ],
+      "shortdesc": "a obsidian key",
+      "longdesc": [
+        "A shiny black key is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10581,
+      "keywords": [
+        "sword",
+        "doomgiver"
+      ],
+      "shortdesc": "a black hilted sword called, \"Doomgiver\"",
+      "longdesc": [
+        "A black hilted sword with engravings on the blade lie here."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "sword"
+          ],
+          "desc": [
+            "The blade of the sword is a full meter long, and straight as an arrow, with",
+            "lightly fluted sides. Both edges keened down to perfect lines, invisibly",
+            "sharp. Perfection like this could of only been forged by a god. The black",
+            "hilt is contrasted only by the faint symbol of the Scales of Justice.",
+            "Apon the blade is engraved a poem:",
+            "",
+            "                      The Sword of Justice balances the pans",
+            "                      Of right and wrong, and foul and fair",
+            "                      Eye for an eye, Doomgiver scans",
+            "                      The fate of all folk everywhere.",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10582,
+      "keywords": [
+        "signet",
+        "ring"
+      ],
+      "shortdesc": "an Solace signet ring",
+      "longdesc": [
+        "A shiny ring of obsidian is in the dirt."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10583,
+      "keywords": [
+        "bracer"
+      ],
+      "shortdesc": "an obsidian bracer",
+      "longdesc": [
+        "You see an obsidian bracer here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10584,
+      "keywords": [
+        "weapons",
+        "cabinet"
+      ],
+      "shortdesc": "a weapons cabinet",
+      "longdesc": [
+        "You see a weapons cabinet."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "cabinet"
+          ],
+          "desc": [
+            "This is a finely crafted reinforced weapons cabinet. It looks very sturdy.",
+            "The cabinet doors are made of smoked glass. Something seems to be",
+            "calling you from within."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10585,
+      "keywords": [
+        "sword",
+        "dragonslicer"
+      ],
+      "shortdesc": "a black hilted sword called, \"Dragonslicer\"",
+      "longdesc": [
+        "A black hilted sword with engravings on the blade lie here."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "sword"
+          ],
+          "desc": [
+            "The blade of the sword is a full meter long, and straight as an arrow, with",
+            "lightly fluted sides. Both edges keened down to perfect lines, invisibly",
+            "sharp. Perfection like this could have only been forged by a god. The black",
+            "hilt is contrasted only by the faint symbol of a dragon head.",
+            "Apon the blade is engraved a poem:",
+            "",
+            "                      Dragonslicer, Dragonslicer, how d'you slay?",
+            "                      Reaching for the heart in behind the scales.",
+            "                      Dragonslicer, Dragonslicer, where do you stay?",
+            "                      In the belly of the giant that my blade impales.",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10586,
+      "keywords": [
+        "helmet",
+        "steel"
+      ],
+      "shortdesc": "the steel helmet",
+      "longdesc": [
+        "A steel helmet is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10587,
+      "keywords": [
+        "sleeves",
+        "steel"
+      ],
+      "shortdesc": "steel sleeves",
+      "longdesc": [
+        "A pair of steel sleeves are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10588,
+      "keywords": [
+        "leggings",
+        "steel"
+      ],
+      "shortdesc": "steel leggings",
+      "longdesc": [
+        "Some steel leggings are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10589,
+      "keywords": [
+        "gauntlets",
+        "steel"
+      ],
+      "shortdesc": "steel gauntlets",
+      "longdesc": [
+        "A pair of steel gauntlets are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10590,
+      "keywords": [
+        "boots",
+        "steel"
+      ],
+      "shortdesc": "steel boots",
+      "longdesc": [
+        "Some steel boots are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10591,
+      "keywords": [
+        "cloak",
+        "lieutenant"
+      ],
+      "shortdesc": "the lieutenant's cloak",
+      "longdesc": [
+        "A lieutenant's cloak lies on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10592,
+      "keywords": [
+        "girth",
+        "steel"
+      ],
+      "shortdesc": "the steel girth",
+      "longdesc": [
+        "A steel girth is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10593,
+      "keywords": [
+        "shield",
+        "large",
+        "steel"
+      ],
+      "shortdesc": "the large steel shield",
+      "longdesc": [
+        "A large, steel shield is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10594,
+      "keywords": [
+        "bracer",
+        "steel"
+      ],
+      "shortdesc": "a steel bracer",
+      "longdesc": [
+        "You see a steel bracer here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10595,
+      "keywords": [
+        "sword",
+        "shieldbreaker"
+      ],
+      "shortdesc": "black hilted sword called, \"Shieldbreaker\"",
+      "longdesc": [
+        "A black hilted sword with engravings on the blade lie here."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "sword"
+          ],
+          "desc": [
+            "The blade of the sword is a full meter long, and straight as an arrow, with",
+            "lightly fluted sides. Both edges keened down to perfect lines, invisibly",
+            "sharp. Perfection like this could of only been forged by a god. The black",
+            "hilt is contrasted only by the faint symbol of a broken shield.",
+            "Apon the blade is engraved a poem:",
+            "",
+            "                      I shatter Swords and splinter spears;",
+            "                      None stands to Shieldbreaker.",
+            "                      My point's the fount of orphan's tears",
+            "                      My edge the widowmaker.",
+            ""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10596,
+      "keywords": [
+        "helmet",
+        "red"
+      ],
+      "shortdesc": "the red helmet",
+      "longdesc": [
+        "A red helmet is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10597,
+      "keywords": [
+        "sleeves",
+        "red",
+        "scalemail"
+      ],
+      "shortdesc": "red scalemail sleeves",
+      "longdesc": [
+        "A pair of red scalemail sleeves are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10598,
+      "keywords": [
+        "leggings",
+        "red",
+        "scalemail"
+      ],
+      "shortdesc": "red scalemail leggings",
+      "longdesc": [
+        "Some red scalemail leggings are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10599,
+      "keywords": [
+        "gauntlets",
+        "red",
+        "scalemail"
+      ],
+      "shortdesc": "red scalemail gauntlets",
+      "longdesc": [
+        "A pair of red scalemail gauntlets are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10600,
+      "keywords": [
+        "boots",
+        "red",
+        "scalemail"
+      ],
+      "shortdesc": "red scalemail boots",
+      "longdesc": [
+        "Some red scalemail boots are on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10601,
+      "keywords": [
+        "cloak",
+        "red",
+        "sergeant"
+      ],
+      "shortdesc": "the red sergeant's cloak",
+      "longdesc": [
+        "A red sergeant's cloak lies on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10602,
+      "keywords": [
+        "girth",
+        "red",
+        "scalemail"
+      ],
+      "shortdesc": "the red scalemail girth",
+      "longdesc": [
+        "A red scalemail girth is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10603,
+      "keywords": [
+        "shield",
+        "large",
+        "red"
+      ],
+      "shortdesc": "the large red shield",
+      "longdesc": [
+        "A large, red shield is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10604,
+      "keywords": [
+        "bracer",
+        "red"
+      ],
+      "shortdesc": "a red bracer",
+      "longdesc": [
+        "You see a red bracer here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10605,
+      "keywords": [
+        "warhammer",
+        "mage",
+        "masher"
+      ],
+      "shortdesc": "a red steel warhammer called, \"Mage Masher\"",
+      "longdesc": [
+        "A red steel warhammer with engravings on the head lies here."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "hammer",
+            "warhammer"
+          ],
+          "desc": [
+            "This hammer has the words, \"MAGE MASHER\" engraved into it's head.",
+            "It seems to glow and pulse when pointed at a magic user. It seems to just",
+            "glow when pointed at clerics though."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10606,
+      "keywords": [
+        "plate",
+        "black",
+        "platemail"
+      ],
+      "shortdesc": "black platemail",
+      "longdesc": [
+        "A suit of black platemail is sitting on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10607,
+      "keywords": [
+        "enchanted",
+        "longsword"
+      ],
+      "shortdesc": "enchanted longsword",
+      "longdesc": [
+        "A blade with runes etched in it is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10608,
+      "keywords": [
+        "enchanted",
+        "hammer"
+      ],
+      "shortdesc": "enchanted hammer",
+      "longdesc": [
+        "A hammer with runes etched in it is on the floor."
+      ],
+      "extra": []
+    },
+    {
+      "id": 10609,
+      "keywords": [
+        "enchanted",
+        "pike",
+        "polearm"
+      ],
+      "shortdesc": "enchanted pike",
+      "longdesc": [
+        "A polearm with runes etched in it is on the floor."
+      ],
+      "extra": []
+    }
+  ],
+  "ROOMS": [
+    {
+      "id": 10500,
+      "name": "Lexie's Scuba Shop",
+      "desc": [
+        "This is one shop that seems to be ahead of its time.",
+        "But who doesn't like scuba diving. If you don't already have",
+        "a diving license you can buy one. Lexie can also train you too. Not  in",
+        "scuba though. Something about a revoked teaching credential due to too",
+        "many students dying or something. This does seem to be an odd place to have",
+        "a scuba shop considering the sea is miles away. But I guess you could",
+        "always go diving in the lake. But why?....",
+        "There is a small sign here."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10608
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10501,
+      "name": "Croben's Containers.",
+      "desc": [
+        "This is the catch all, hold all, container shop. Croben sell all sorts.",
+        "Just take your pick. And no he doesn't know how much each one holds.",
+        "What...you think he has nothing better to do than fill each container",
+        "just to see how much it holds? Get a life....",
+        "There is a small sign here."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10607
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10502,
+      "name": "Matt's Brewery.",
+      "desc": [
+        "Matt could never find enough to drink. So to solve this he started his own",
+        "brewery. \"You can never drink enough\" is Matt's logo and offers plenty",
+        "to drink.",
+        "There is a small sign here."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10602
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10503,
+      "name": "a House.",
+      "desc": [
+        "This is a small house off of West Gullen Way. It is not your house and you",
+        "were not invited. Why are you here?"
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10603
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10504,
+      "name": "a House.",
+      "desc": [
+        "This is a small house off of West Gullen Way. It is sparsely furnished and",
+        "very tidy. a small fire burns warmly in the fireplace. The sweet smell of",
+        "flowers is present. Ahhh....what a nice home."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10604
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10505,
+      "name": "Cookie's Cookie Cookery.",
+      "desc": [
+        "This is the cookie shop of who else...Cookie. She's not in right now",
+        "but there are many delicious cookies to munch on if you want to wait till",
+        "she returns."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the Main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10580
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10510
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10506,
+      "name": "a House.",
+      "desc": [
+        "This is a small house off of the main street. It is well furnished and",
+        "very tidy. a small fire burns warmly in the fireplace. The sweet smell of",
+        "flowers is present. Ahhh....what a nice home."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the Main road of Solace."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10579
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10507,
+      "name": "Old Gambling Parlor.",
+      "desc": [
+        "This used to be a very popular and busy gambling parlor. But the Captain",
+        "of the Guard lost big here once and thereafter declared gambling illegal.",
+        "It has been closed for many years. It is dusty and full of cobwebs."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10595
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10508,
+      "name": "The McBakery",
+      "desc": [
+        "You are standing inside the small bakery.  A sweet scent of McDanish",
+        "and fine McBread fills the room.  The McBread and McDanish are arranged",
+        "in fine order on the McShelves, and seem to be of the finest McQuality. You",
+        "remember seeing a place like this somewhere before. Maybe its a McChain?",
+        "A small McSign is on the McCounter."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [
+            "You see Harvest road."
+          ],
+          "keywords": [],
+          "to": 10598
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "Free instructions provided by the store:",
+            "",
+            "   Buy  - Will buy you some McBread or McPastry.",
+            "   List - The McBaker will kindly tell you the price and sort of the McBread in",
+            "          his McBakery."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10509,
+      "name": "a House.",
+      "desc": [
+        "This is a small house off of the main street. It is well furnished and",
+        "very tidy. a small fire burns warmly in the fireplace. The sweet smell of",
+        "flowers is present. Ahhh....what a nice home."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [
+            "You see Harvest road."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10599
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10510,
+      "name": "Cookie's Relaxing Room.",
+      "desc": [
+        "This is where Cookie comes to unwind. She comes here sometimes to just",
+        "munch on cookies and talk to her friends."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the front of the store."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10505
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10511,
+      "name": "a House.",
+      "desc": [
+        "This is a small house off of West Gullen Way. It is not your house and you",
+        "were not invited. Why are you here?"
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10583
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10512,
+      "name": "The Marilyn's Bird Factory.",
+      "desc": [
+        "This is Marilyn's Bird Factory. There are a wide variety of birds here.",
+        "Buy a pet. Take it home. A loving companion to keep you company."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10584
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10513,
+      "name": "Pet Storage",
+      "desc": [
+        "This is where Marilyn keeps her birds. It is important that this room be",
+        "right after the bird factory."
+      ],
+      "doors": [],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10514,
+      "name": "Storage Building",
+      "desc": [
+        "This is an abandon storage building. Its empty walls used to house large",
+        "amounts of surplus equipment for the market and various vendors. Sales",
+        "have been good lately and all surplus has been sold. It seems supply has",
+        "yet to catch up to demand."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10588
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10515,
+      "name": "Jander's",
+      "desc": [
+        "Jander's bar used to be a very popular bar in Solace. For some reason or",
+        "another it is now empty. Dust and cobwebs cover everything. It looks as if",
+        "nobody has tread here in years. The bar is hidden beneath broken bottles",
+        "and shattered glasses. Tables and chairs are scattered all over the floor.",
+        "There is a sign on the wall.",
+        "There is a door to Ketra Road to the east."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10589
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the poolhall."
+          ],
+          "keywords": [],
+          "to": 10516
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "Welcome to Jander's!",
+            "",
+            "Drink and be Merry!!!!",
+            "",
+            "But Remember don't Marry after you drink....",
+            "",
+            "-Jander-"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10516,
+      "name": "Jander's Poolhall",
+      "desc": [
+        "Jander's bar used to be a very popular bar in Solace. For some reason or",
+        "another it is now empty. Dust and cobwebs cover everything. It looks as if",
+        "nobody has tread here in years. The bar is to the east. The pooltables are",
+        "broken in half and lie in a heap on the floor.",
+        "There is a sign on the door to Jander's office.",
+        "A backdoor to the alley is to the south."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Jander's office door."
+          ],
+          "keywords": [
+            "office",
+            "door"
+          ],
+          "to": 10519
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the bar."
+          ],
+          "keywords": [],
+          "to": 10515
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a backdoor to the alley."
+          ],
+          "keywords": [
+            "door",
+            "backdoor"
+          ],
+          "to": 10592
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the restaurant."
+          ],
+          "keywords": [],
+          "to": 10517
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "*Jander's Office*",
+            "",
+            "Read this sign!",
+            "",
+            "And then GO AWAY!!",
+            "",
+            "-Jander-"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10517,
+      "name": "Jander's Restaurant",
+      "desc": [
+        "Jander's bar and restaurant used to be a very popular bar in Solace.",
+        "For some reason or another it is now empty. Dust and cobwebs cover",
+        "everything. It looks as if nobody has tread here in years.",
+        "The poolhall and bar are to the east.",
+        "A door to the main road is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the poolhall."
+          ],
+          "keywords": [],
+          "to": 10516
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10579
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10518,
+      "name": "Death's Chambers",
+      "desc": [
+        "This is the Chamber of Death. If you are lucky, he isn't here right now.",
+        "The walls are covered with twisted faces of a countless tortured",
+        "souls crying out in agony. The floor is made of black marble as is the",
+        "ceiling. The air smells of brimstone and makes your lungs burn with",
+        "every breath.",
+        "There is a sign floating in front of you."
+      ],
+      "doors": [],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "Please sit and wait.",
+            "",
+            "Death will be with you shortly.",
+            "",
+            "\"Those who wait for death are indeed lost souls...\""
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10519,
+      "name": "Jander's Office",
+      "desc": [
+        "This is Jander's Office and obviously you didn't read the sign before",
+        "coming in.The office is dusty and abandon like the rest of the bar, but is",
+        "otherwise in the same condition as when it was occupied. An oak desk",
+        "sits in the middle of the room. A bookcase rests against the wall. Various",
+        "chairs are set in front of the desk. An employee that was called into Jander's",
+        "office was not likely to leave. Jander was rarely if ever seen. He mostly",
+        "stayed in his office and did office stuff. He was never in a good mood.",
+        "The office door is to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see the poolhall."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10516
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10520,
+      "name": "Inside Southeast Watchtower.",
+      "desc": [
+        "You are inside the Southeast Watchtower.",
+        "From up here you can see above the trees and most of the valley.",
+        "There is a beautiful view of Crystalmir lake.",
+        "Well actually the Southwest watchtower is blocking some of your view.",
+        "You are however not suppose to be up here. If the guards catch you up",
+        "here you are likely to be in BIG trouble..."
+      ],
+      "doors": [
+        {
+          "dir": "down",
+          "desc": [
+            "You see stairs leading down to the guardpost."
+          ],
+          "keywords": [],
+          "to": 10590
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10521,
+      "name": "Inside Southwest Watchtower.",
+      "desc": [
+        "You are inside the Southwest Watchtower.",
+        "From up here you can see above the trees and most of the valley.",
+        "There is a beautiful view of Crystalmir lake.",
+        "You are however not suppose to be up here. If the guards catch you up",
+        "here you are likely to be in BIG trouble..."
+      ],
+      "doors": [
+        {
+          "dir": "down",
+          "desc": [
+            "You see stairs leading down to the guardpost."
+          ],
+          "keywords": [],
+          "to": 10597
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10522,
+      "name": "Dusty road.",
+      "desc": [
+        "This dusty road looks well traveled. To the East you see the Townguard",
+        "Administration Building."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the Townguard Administration Building."
+          ],
+          "keywords": [],
+          "to": 10523
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the end of Main road."
+          ],
+          "keywords": [],
+          "to": 10606
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10523,
+      "name": "Townguard Administration Building.",
+      "desc": [
+        "Before you stands the Townguard Administration Building. This is a large",
+        "building with various statues and other artwork decorating the building.",
+        "There is a door the east."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see entrance hall."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10524
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a dusty road."
+          ],
+          "keywords": [],
+          "to": 10522
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10524,
+      "name": "Entrance Hall.",
+      "desc": [
+        "The entrance hall is made entirely of marble and granite. It seems sort of",
+        "extravagant for a townguard administration building. The 30 foot high",
+        "ceiling seems to dwarf everything in the hallway. The Seal of the Town",
+        "of Solace lies embedded in the center of the floor.",
+        "A pair of heavy double doors lies to the east.",
+        "The entrance door is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a pair of heavy double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10530
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a marble corridor."
+          ],
+          "keywords": [],
+          "to": 10525
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the entrance to the building."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10523
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10525,
+      "name": "Marble Corridor.",
+      "desc": [
+        "This corridor is also decorated with paintings and sculptures. Marble",
+        "columns line the walls. Crystal chandeliers hang from the ceiling.",
+        "A door to the Town Clerk's office is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the entrance hallway."
+          ],
+          "keywords": [],
+          "to": 10524
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see marble corridor."
+          ],
+          "keywords": [],
+          "to": 10528
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the door to the Town Clerk's Office."
+          ],
+          "keywords": [
+            "door",
+            "officedoor"
+          ],
+          "to": 10526
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10526,
+      "name": "Town Clerk.",
+      "desc": [
+        "This is where you pay your fines and taxes.",
+        "The Town Clerk's desk sits in front of you. There are chairs and a",
+        "few tables along the walls. There is a metal door on the west wall",
+        "behind the clerk's desk.",
+        "The hallway is to the east.",
+        "A heavy metal depository door is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a marble corridor."
+          ],
+          "keywords": [],
+          "to": 10525
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a heavy metal door."
+          ],
+          "keywords": [
+            "safe"
+          ],
+          "to": 10527
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10527,
+      "name": "Deposits Room.",
+      "desc": [
+        "This is a large safe like room. All payments for taxes and fines are deposited",
+        "here by the clerk. The walls are made of white marble and have gold deposit",
+        "boxes set into them.",
+        "The safe door is to the east."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see Town Clerks Office."
+          ],
+          "keywords": [
+            "safe"
+          ],
+          "to": 10526
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10528,
+      "name": "Marble Corridor.",
+      "desc": [
+        "This corridor is also decorated with paintings and sculptures. Marble",
+        "columns line the walls. Crystal chandeliers hang from the ceiling.",
+        "A pair of heavy double doors lie to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a pair of heavy double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10530
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a fountain."
+          ],
+          "keywords": [],
+          "to": 10529
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a marble corridor."
+          ],
+          "keywords": [],
+          "to": 10525
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10529,
+      "name": "Water Fountain.",
+      "desc": [
+        "There is a very large water fountain here. Large marble lion heads spout",
+        "water from their mouths and stone fish spit water from the base of the",
+        "fountain."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [
+            "You see marble corridor."
+          ],
+          "keywords": [],
+          "to": 10528
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10530,
+      "name": "Hallway Intersection.",
+      "desc": [
+        "This is the intersection of four large hallways. Light streams in from the",
+        "stainglass skylight above. Large double doors close off each hallway.",
+        "The doors are made of oak and encrusted with gold patterns.",
+        "A pair of double doors are in each direction."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a pair of double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10536
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a pair of double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10531
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a pair of double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10528
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a pair of double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10524
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10531,
+      "name": "End of Long Hall",
+      "desc": [
+        "This is the end of a long and lavish hallway. exquisite paintings and",
+        "statues line the walls. The ceilings are covered with colorful mosaics.",
+        "A pair of double doors lie to the west."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a long hallway."
+          ],
+          "keywords": [],
+          "to": 10537
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a pair of double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10530
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10532,
+      "name": "Cobblestone Path",
+      "desc": [
+        "You are walking on a cobblestone path. It leads to a large building to the",
+        "north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a large building ahead."
+          ],
+          "keywords": [],
+          "to": 10542
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the end of Main road."
+          ],
+          "keywords": [],
+          "to": 10606
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10533,
+      "name": "Sergeant's Reception Room",
+      "desc": [
+        "This room is decorated with various swords and other ornamental artifacts",
+        "of combat. Pictures of bloody battles adorn the walls. If you have an",
+        "appointment to see the Sergeant at Arms this is where you'd come to wait.",
+        "But who knows how long you'll have to wait...",
+        "The door to the Sergeant's office is to the north.",
+        "The door to the hallway is on the east wall."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see an Iron bound door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10543
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10534
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10534,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace.",
+        "The Sergeant's waiting room is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10544
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10535
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a reception area."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10533
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10535,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace.",
+        "There is an oak door to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see an oak door."
+          ],
+          "keywords": [
+            "oak",
+            "door"
+          ],
+          "to": 10545
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10536
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10534
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10536,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace.",
+        "A pair of double doors are south of you."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10546
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see double doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10530
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10535
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10537,
+      "name": "Long Hallway",
+      "desc": [
+        "This hallway is sparse compared to some of the others. It seems to go",
+        "on and on. The marble floors are barren of any type of decorations.",
+        "The walls are rough stone bound by large wooden beams. This is maybe",
+        "the only hallway that doesn't have large amounts of gold and other artifacts."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a long hallway."
+          ],
+          "keywords": [],
+          "to": 10547
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the end of the hallway."
+          ],
+          "keywords": [],
+          "to": 10531
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10538,
+      "name": "West end of Common Room",
+      "desc": [
+        "You are standing in the West end of a very large room. It is where",
+        "adventurers rest their weary feet if they don't have enough gold to",
+        "pay for a private room. The room continues to the East."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see more of a very large room."
+          ],
+          "keywords": [],
+          "to": 10539
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10539,
+      "name": "East end of Common Room",
+      "desc": [
+        "You are standing in the East end of a very large room. It is where",
+        "adventurers rest their weary feet if they don't have enough gold to",
+        "pay for a private room. The room continues to the west.",
+        "A door to the hallway is to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a large hallway."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10549
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see more of a very large room."
+          ],
+          "keywords": [],
+          "to": 10538
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10540,
+      "name": "West end of Bar.",
+      "desc": [
+        "You are standing of the west end of the bar. This is a darker corner where",
+        "less seems to occur. Maybe a beer and a nap would be nice."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see main bar."
+          ],
+          "keywords": [],
+          "to": 10541
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10541,
+      "name": "Inn of the Last Home.",
+      "desc": [
+        "The Inn of the Last Home never changes. The polished wooden bar curves",
+        "around several living branches. An old man weaves stories in the corner and",
+        "delights the crowd gathered about him. The delicate windows of stained",
+        "glass behind the bar are being polished by Otik Sandath, the barkeeper.",
+        "The carved door to the Inn is to the east."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see north end of the bar."
+          ],
+          "keywords": [],
+          "to": 10551
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a carved door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10542
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the west end of the bar."
+          ],
+          "keywords": [],
+          "to": 10540
+        },
+        {
+          "dir": "up",
+          "desc": [
+            "You see a wooden staircase."
+          ],
+          "keywords": [],
+          "to": 10550
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10542,
+      "name": "Outside the Inn of the Last Home.",
+      "desc": [
+        "The Inn of the Last Home rests within the trunk of a huge vallenwood tree.",
+        "Warm laughter tumbles from the inn. The worn steps wind around the heavy",
+        "trunk up to the familiar, carved door."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see trees"
+          ],
+          "keywords": [
+            "tree"
+          ],
+          "to": 10552
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a cobblestone path."
+          ],
+          "keywords": [],
+          "to": 10532
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a carved door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10541
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10543,
+      "name": "Sergeant's Office",
+      "desc": [
+        "This is the office of the Sergeant at Arms. He is in charge of all minor",
+        "complaints. His office is richly decorated with ornamental weapons and",
+        "pictures of war. A large desk sits in the middle of the room.",
+        "You see an Iron bound door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see an Iron bound door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10533
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10544,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10554
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10534
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10545,
+      "name": "Guards Room.",
+      "desc": [
+        "There are many barrels and chests of food in here. All of it looks spoiled.",
+        "This is where the town guards hang out when not on duty.",
+        "You see an oak door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see an oak door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10535
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10546,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10556
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10536
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10547,
+      "name": "Long Hallway",
+      "desc": [
+        "This hallway is sparse compared to some of the others. It seems to go",
+        "on and on. The marble floors are barren of any type of decorations.",
+        "The walls are rough stone bound by large wooden beams. This is maybe",
+        "the only hallway that doesn't have large amounts of gold and other artifacts."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a long hallway."
+          ],
+          "keywords": [],
+          "to": 10557
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a long hallway."
+          ],
+          "keywords": [],
+          "to": 10537
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10548,
+      "name": "Hallway",
+      "desc": [
+        "You are standing in an old vallenwood hallway."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10558
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10549
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10549,
+      "name": "Outside Common Room",
+      "desc": [
+        "You are standing in an old vallenwood hallway. Laughter and the murmur",
+        "of conversation comes from the south.",
+        "The door to the common room lies to the south."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10550
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the common room."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10539
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10548
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10550,
+      "name": "Second Floor of the Inn.",
+      "desc": [
+        "You are at the top of a wooden staircase. Downstairs is the bar.",
+        "To the west you can hear laughter and the low murmur of voices."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10549
+        },
+        {
+          "dir": "down",
+          "desc": [
+            "You see a wooden staircase."
+          ],
+          "keywords": [],
+          "to": 10541
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10551,
+      "name": "North End of Bar.",
+      "desc": [
+        "A smoky fire struggles in the blackened stove, feebly challenging",
+        "the gloom in the town. In sharp contrast to the usual lively crowd,",
+        "the few patrons present are lost in their own thoughts. No one",
+        "smiles, nor does anyone seem interested in the arrival of a few",
+        "more customers."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see main bar."
+          ],
+          "keywords": [],
+          "to": 10541
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10552,
+      "name": "Captain's Office.",
+      "desc": [
+        "This is the office of the Captain of the Guard. Leather couches",
+        "and a solid marble desk sit against the far wall. A weapons",
+        "cabinet stands against the west wall. The Captain has a large",
+        "portrait of himself on the wall behind his desk.",
+        "A pair of heavy metal doors with the emblem of the townguard",
+        "is on the north wall."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a set of Heavy Metal Doors with the emblem of the townguard."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10562
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "A wall."
+          ],
+          "keywords": [
+            "wall"
+          ],
+          "to": 10542
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10553,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10563
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10554
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10554,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a reception area."
+          ],
+          "keywords": [],
+          "to": 10555
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10544
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10553
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10555,
+      "name": "Lieutenant's Reception Area.",
+      "desc": [
+        "This is the waiting room for meetings with the Lieutenant Commander.",
+        "The furniture is made of vallenwood and the walls are covered with",
+        "finger paintings. Various crayon drawings are framed behind the",
+        "secretary 's desk.",
+        "A glass door with the townguard emblem is to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a glass door with the townguard emblem."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10565
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10554
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10556,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10566
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10546
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10557,
+      "name": "Long Hallway",
+      "desc": [
+        "This hallway is sparse compared to some of the others. It seems to go",
+        "on and on. The marble floors are barren of any type of decorations.",
+        "The walls are rough stone bound by large wooden beams. This is maybe",
+        "the only hallway that doesn't have large amounts of gold and other artifacts."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10567
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10547
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10558,
+      "name": "Hallway",
+      "desc": [
+        "You are standing in an old vallenwood hallway."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see reading room."
+          ],
+          "keywords": [],
+          "to": 10568
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10548
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10559,
+      "name": "Private Room",
+      "desc": [
+        "This is a private room. Those with some money can rent these rooms instead",
+        "of staying in the common room. It is well furnished with a large bed and",
+        "other bedroom stuff.",
+        "There is a door to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10569
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10560,
+      "name": "Private Room",
+      "desc": [
+        "This is a private room. Those with some money can rent these rooms instead",
+        "of staying in the common room. It is well furnished with a large bed and",
+        "other bedroom stuff.",
+        "There is a door to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10570
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10561,
+      "name": "Private Room",
+      "desc": [
+        "This is a private room. Those with some money can rent these rooms instead",
+        "of staying in the common room. It is well furnished with a large bed and",
+        "other bedroom stuff.",
+        "There is a door to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10571
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10562,
+      "name": "Captain's Meeting room.",
+      "desc": [
+        "You are standing in the meeting room of the Captain of the Guard. This",
+        "is where he holds his administrative meetings and other official functions.",
+        "A large meeting tables sits in the middle of the room.",
+        "There is a pair of glass double doors to the north.",
+        "There is a pair of heavy metal doors with the emblem of the",
+        "townguard to the south."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Glass Double Doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10572
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a set of Heavy Metal Doors with the emblem of the townguard."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10552
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10563,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10573
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10553
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10564,
+      "name": "Guards Room.",
+      "desc": [
+        "There are many barrels and chests of food in here. All of it looks spoiled.",
+        "This is where the town guards hang out when not on duty.",
+        "There is an oak door to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a oak door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10574
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10565,
+      "name": "Lieutenant's Office.",
+      "desc": [
+        "This is the Office of the Lieutenant Commander. He basicially does",
+        "nothing all day. Hence the fingerpainting tacked to all the walls.",
+        "The furniture is more fitting to a 7 year old than that of a commander.",
+        "Small plastic furniture and plastic flowers adorn the office.",
+        "You see a glass door with the townguard emblem to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see a glass door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10555
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10566,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10576
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10556
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10567,
+      "name": "Long Hallway",
+      "desc": [
+        "This hallway is sparse compared to some of the others. It seems to go",
+        "on and on. The marble floors are barren of any type of decorations.",
+        "The walls are rough stone bound by large wooden beams. This is maybe",
+        "the only hallway that doesn't have large amounts of gold and other artifacts."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the end of a long hallway."
+          ],
+          "keywords": [],
+          "to": 10577
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10557
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10568,
+      "name": "Reading Room.",
+      "desc": [
+        "This is an afternoon reading room. Its especially nice on sunny days when",
+        "the afternoon sun shines through the large picture window. Many books",
+        "line the walls. All look pretty boring and seem to be more for show than",
+        "for reading."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10569
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10558
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10569,
+      "name": "Hallway",
+      "desc": [
+        "You are standing in an old vallenwood hallway.",
+        "This corridor is lined with the more expensive private rooms.",
+        "There is a door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10570
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10559
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a reading room."
+          ],
+          "keywords": [],
+          "to": 10568
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10570,
+      "name": "Hallway",
+      "desc": [
+        "You are standing in an old vallenwood hallway.",
+        "This corridor is lined with the more expensive private rooms.",
+        "There is a door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10571
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10560
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10569
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10571,
+      "name": "Hallway",
+      "desc": [
+        "You are standing in an old vallenwood hallway.",
+        "This corridor is lined with the more expensive private rooms.",
+        "There is a door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see a door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10561
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10570
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10572,
+      "name": "Captain's Waiting Room.",
+      "desc": [
+        "This is the Reception area for the the Captain of the Guard. A large portrait",
+        "of the Captain is on the north wall. With the amount of extravagance and",
+        "expensive items that decorate this room you wonder how he gets away with",
+        "it. The title Sultan would be more appropriate than Captain of the Guard.",
+        "You see an oak door to the east.",
+        "There are a pair of glass double doors to the south."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a oak door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10573
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Glass Double Doors."
+          ],
+          "keywords": [
+            "doors"
+          ],
+          "to": 10562
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10573,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace.",
+        "The Captain of the Guard's waiting room is to the west."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10574
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10563
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see Captain's waiting room door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10572
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10574,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace.",
+        "There is an oak door to the south."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10575
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a oak door."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10564
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10573
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10575,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10576
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10574
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10576,
+      "name": "Administration Hallway",
+      "desc": [
+        "The hallway is just as extravagant as all the others in this building.",
+        "Gem mosaics cover the walls, and intricate patterns are carved in the",
+        "gold laden floors. This doesn't look like an admistration building,",
+        "more like a palace."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the end of a long hallway."
+          ],
+          "keywords": [],
+          "to": 10577
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10566
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10575
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10577,
+      "name": "End of Long Hall",
+      "desc": [
+        "This is the end of a long and lavish hallway. exquisite paintings and",
+        "statues line the walls. The ceilings are covered with colorful mosaics."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10567
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a hallway."
+          ],
+          "keywords": [],
+          "to": 10576
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10578,
+      "name": "Gateway to Solace",
+      "desc": [
+        "This is the gateway to the town of Solace. It keeps the monsters out and",
+        "the people in. This is a quiet farming town on the shores of Crytalmir",
+        "Lake.",
+        "There is a sign nailed to a nearby tree.",
+        "There is a plaque embedded in the road.",
+        "There is a Gate to the south."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the Main road in Solace."
+          ],
+          "keywords": [],
+          "to": 10579
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10593
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the Gateway of Solace."
+          ],
+          "keywords": [
+            "gate"
+          ],
+          "to": 10003
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10594
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "**WELCOME TO SOLACE**",
+            "",
+            "Welcome to Solace Traveler.",
+            "Rest your weary feet and enjoy our small town.",
+            "",
+            "Please don't feed the animals.",
+            "",
+            "And please behave yourself.",
+            "",
+            "Gates will be closed and lock at night to keep the town safe.",
+            "",
+            "-Captain of the Guard-"
+          ]
+        },
+        {
+          "keywords": [
+            "plaque"
+          ],
+          "desc": [
+            "*************",
+            "Town of Solace",
+            "*************",
+            "",
+            "Brought to you by Strahd"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10579,
+      "name": "Main Road",
+      "desc": [
+        "This is the main road in Solace. Down the street you can see various",
+        "shops and houses."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10580
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see Jander's Bar & Restaurant."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10517
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the town gateway."
+          ],
+          "keywords": [],
+          "to": 10578
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a house."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10506
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10580,
+      "name": "Main Road",
+      "desc": [
+        "This is the main road in Solace. Down the street you can see various",
+        "shops and houses."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10581
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10579
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see Cookie's Cookie Cookery."
+          ],
+          "keywords": [],
+          "to": 10505
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10581,
+      "name": "Main Road",
+      "desc": [
+        "This is the main road in Solace. Down the street you can see various",
+        "shops and houses."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10582
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10580
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10582,
+      "name": "Intersection at Main Road.",
+      "desc": [
+        "Here there is an intersection at the main road.",
+        "You see to the east and west, smaller houses and some more shops.",
+        "To the road continues to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10605
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see East Gullen Way"
+          ],
+          "keywords": [],
+          "to": 10583
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the main road of Solace."
+          ],
+          "keywords": [],
+          "to": 10581
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10604
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10583,
+      "name": "East Gullen Way",
+      "desc": [
+        "This is the road called East Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10584
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a house."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10511
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Intersection of Gullen Way and the main road."
+          ],
+          "keywords": [],
+          "to": 10582
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10584,
+      "name": "East Gullen Way",
+      "desc": [
+        "This is the road called East Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10585
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Marilyn's Bird Factory."
+          ],
+          "keywords": [],
+          "to": 10512
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10583
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10585,
+      "name": "East Gullen Way",
+      "desc": [
+        "This is the road called East Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the Corner Of East Gullen and Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10586
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see East Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10584
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10586,
+      "name": "Corner of East Gullen and Ketra Road.",
+      "desc": [
+        "This is the Corner of East Gullen Way and Ketra Road.",
+        "Everything is amazingly clean here.",
+        "But this doesn't look like the wealthier part of town.",
+        "This whole town seems to be one big trading post."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10587
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see East Gullen way."
+          ],
+          "keywords": [],
+          "to": 10585
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10587,
+      "name": "Ketra Road.",
+      "desc": [
+        "It is one of the sidestreets of Solace. But even here there are shops.",
+        "Most of it is run down houses and shacks.",
+        "Even though this looks like the poorer part of town, it is amazingly clean."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see The corner of East Gullen and Ketra."
+          ],
+          "keywords": [],
+          "to": 10586
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10588
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10588,
+      "name": "Ketra Road.",
+      "desc": [
+        "It is one of the sidestreets of Solace. But even here there are shops.",
+        "Most of it is run down houses and shacks.",
+        "Even though this looks like the poorer part of town, it is amazingly clean."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10587
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10589
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a Storage Building."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10514
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10589,
+      "name": "Ketra Road.",
+      "desc": [
+        "It is one of the sidestreets of Solace. But even here there are shops.",
+        "Most of it is run down houses and shacks.",
+        "Even though this looks like the poorer part of town, it is amazingly clean."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10588
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see one of the towns watchtowers."
+          ],
+          "keywords": [],
+          "to": 10590
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see Jander's Bar."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10515
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10590,
+      "name": "Southeast Guardpost and Watchtower.",
+      "desc": [
+        "This is the Southeast guardpost and guardpost of Solace.",
+        "It is used as a watch station and coffee break area for the town guards.",
+        "There are some stairs in the corner leading up to the watchtower.",
+        "There is a sign above the stairway."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Ketra Road."
+          ],
+          "keywords": [],
+          "to": 10589
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10591
+        },
+        {
+          "dir": "up",
+          "desc": [
+            "You see stairs leading up to the watchtower."
+          ],
+          "keywords": [],
+          "to": 10520
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "** WARNING **",
+            "",
+            "This area is RESTRICTED.",
+            "",
+            "Authorized Personnel Only!",
+            "Violators will be jailed or killed.",
+            "",
+            "-Captain of the Guard-"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10591,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the Southeast Guardpost."
+          ],
+          "keywords": [],
+          "to": 10590
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10592
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10592,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a poolhall."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10516
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10591
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10593
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10593,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10592
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the gateway to the town."
+          ],
+          "keywords": [],
+          "to": 10578
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10594,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the gateway to the town."
+          ],
+          "keywords": [],
+          "to": 10578
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10595
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10595,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see an old boarded up building."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10507
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10594
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10596
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10596,
+      "name": "Small Alleyway.",
+      "desc": [
+        "You are walking down a small alleyway along the north wall of the town."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10595
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Southwest Guardpost."
+          ],
+          "keywords": [],
+          "to": 10597
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10597,
+      "name": "Southwest Guardpost and Watchtower.",
+      "desc": [
+        "This is the Southwest guardpost and guardpost of Solace.",
+        "It is used as a watch station and coffee break area for the town guards.",
+        "There are some stairs in the corner leading up to the watchtower.",
+        "There is a sign above the stairway."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10598
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a small alleyway."
+          ],
+          "keywords": [],
+          "to": 10596
+        },
+        {
+          "dir": "up",
+          "desc": [
+            "You see stairs leading up to the watchtower."
+          ],
+          "keywords": [],
+          "to": 10521
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "** WARNING **",
+            "",
+            "This area is RESTRICTED.",
+            "",
+            "Authorized Personnel Only!",
+            "Violators will be jailed or killed.",
+            "",
+            "-Captain of the Guard-"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10598,
+      "name": "Harvest Road.",
+      "desc": [
+        "You are walking down Harvest Road.",
+        "It is quiet and peacefull here. The smell of baked goods and other foods",
+        "fill the air."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10599
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the McBakery."
+          ],
+          "keywords": [],
+          "to": 10508
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the Southwest Guardpost."
+          ],
+          "keywords": [],
+          "to": 10597
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10599,
+      "name": "Harvest Road.",
+      "desc": [
+        "You are walking down Harvest Road.",
+        "It is quiet and peacefull here. The smell of baked goods and other foods",
+        "fill the air."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10600
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a house."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10509
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10598
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10600,
+      "name": "Harvest Road.",
+      "desc": [
+        "You are walking down Harvest Road.",
+        "It is quiet and peacefull here. The smell of baked goods and other foods",
+        "fill the air."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the corner of West Gullen Way and Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10601
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10599
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10601,
+      "name": "Corner of West Gullen Way and Harvest Road.",
+      "desc": [
+        "This is the corner of West Gullen and Harvest road.",
+        "To the south you can smell baked goods and other food.",
+        "To the east are various small shops and houses."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10602
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Harvest Road."
+          ],
+          "keywords": [],
+          "to": 10600
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10602,
+      "name": "West Gullen Way",
+      "desc": [
+        "This is the road called West Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10603
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the entrance to Matt's Brewery."
+          ],
+          "keywords": [],
+          "to": 10502
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the corner of West Gullen and Harvest."
+          ],
+          "keywords": [],
+          "to": 10601
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10603,
+      "name": "West Gullen Way",
+      "desc": [
+        "This is the road called West Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10604
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a house"
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10503
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10602
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10604,
+      "name": "West Gullen Way",
+      "desc": [
+        "This is the road called West Gullen Way. It is lined with small houses and",
+        "shops."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "You see the intersection of West Gullen and the main road."
+          ],
+          "keywords": [],
+          "to": 10582
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see a house."
+          ],
+          "keywords": [
+            "door"
+          ],
+          "to": 10504
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see West Gullen Way."
+          ],
+          "keywords": [],
+          "to": 10603
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10605,
+      "name": "Main Road",
+      "desc": [
+        "This is the main road in Solace. Down the street you can see various",
+        "shops and houses."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the end of the main road."
+          ],
+          "keywords": [],
+          "to": 10606
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the intersection of Gullen Way and the main road."
+          ],
+          "keywords": [],
+          "to": 10582
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10606,
+      "name": "End of the Main Road",
+      "desc": [
+        "The main road of Solace stops here. Other smaller roadways lead off",
+        "in various directions.",
+        "To the west is the marketplace, where farmers go to sell thier harvests.",
+        "Farther north you see a large building.",
+        "To the East is the Townguard Administration Building."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see a cobblestone path."
+          ],
+          "keywords": [],
+          "to": 10532
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see a dusty road."
+          ],
+          "keywords": [],
+          "to": 10522
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see the Main Road of Solace."
+          ],
+          "keywords": [],
+          "to": 10605
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Marketplace."
+          ],
+          "keywords": [],
+          "to": 10607
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10607,
+      "name": "Marketplace.",
+      "desc": [
+        "This is the Marketplace of Solace. Where the farmers come to sell their",
+        "crops. The smell of vegetables and fruit fill the air. There are a couple",
+        "other vendors selling trinkets and other items.",
+        "There is a sign at the entrance to the market."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Croben's Container Emporium."
+          ],
+          "keywords": [],
+          "to": 10501
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the End of the Main Road of Solace."
+          ],
+          "keywords": [],
+          "to": 10606
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Nisi's Frozen Food Store."
+          ],
+          "keywords": [],
+          "to": 10614
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Marketplace."
+          ],
+          "keywords": [],
+          "to": 10608
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "**NOTICE**",
+            "",
+            "Stealing will NOT be tolerated.",
+            "Any sort of shady actions will be punishable by death.",
+            "",
+            "",
+            "-Captain of the Guard-"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10608,
+      "name": "Marketplace.",
+      "desc": [
+        "This is the Marketplace of Solace. Where the farmers come to sell their",
+        "crops. The smell of vegetables and fruit fill the air. There are a couple",
+        "other vendors selling trinkets and other items."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Lexie's Scuba Shop."
+          ],
+          "keywords": [],
+          "to": 10500
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10607
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Janni's Souvenir Shop."
+          ],
+          "keywords": [],
+          "to": 10613
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Marketplace."
+          ],
+          "keywords": [],
+          "to": 10609
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10609,
+      "name": "Marketplace.",
+      "desc": [
+        "This is the Marketplace of Solace. Where the farmers come to sell their",
+        "crops. The smell of vegetables and fruit fill the air. There are a couple",
+        "other vendors selling trinkets and other items."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Rashan's Rutabagas Restaurant."
+          ],
+          "keywords": [],
+          "to": 10616
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10608
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Krista's Fruit Stand."
+          ],
+          "keywords": [],
+          "to": 10612
+        },
+        {
+          "dir": "west",
+          "desc": [
+            "You see the Marketplace."
+          ],
+          "keywords": [],
+          "to": 10610
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10610,
+      "name": "Marketplace.",
+      "desc": [
+        "This is the Marketplace of Solace. Where the farmers come to sell their",
+        "crops. The smell of vegetables and fruit fill the air. There are a couple",
+        "other vendors selling trinkets and other items.",
+        "These are the last stalls in the marketplace. Next to you stands the West wall",
+        "of the town."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see Molin's Mulburry Extract Distillery."
+          ],
+          "keywords": [],
+          "to": 10615
+        },
+        {
+          "dir": "east",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10609
+        },
+        {
+          "dir": "south",
+          "desc": [
+            "You see Jhen's Vegtable Cart."
+          ],
+          "keywords": [],
+          "to": 10611
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 10611,
+      "name": "Jhen's Vegetable Cart.",
+      "desc": [
+        "This is where Jhen the farmer comes to sell his crops. His wooden vegtable",
+        "cart stands here filled with all sorts of vegetables. All his vegtables are",
+        "unusually large. What kind of plant food does he use anyway...?",
+        "There is a small sign nailed to the cart."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10610
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10612,
+      "name": "Krista's Fruit Stand.",
+      "desc": [
+        "This is where Krista peddles her fruits. Every year she travels from her",
+        "orchards in the mountains to Solace to sell her fruit. Everything seems",
+        "to have an unusually small size. I wonder if she shrinks heads too...",
+        "There is a small sign hanging above the fruit stand."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10609
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10613,
+      "name": "Janni's Souvenirs.",
+      "desc": [
+        "This is Janni's Souvenir shop. He makes trinkets year round that he peddles",
+        "here in the market. You wouldn't want to leave Solace without a souvenir",
+        "would you?",
+        "there is a sign behind the glass case."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10608
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10614,
+      "name": "Nisi's Frozen Food",
+      "desc": [
+        "This is one of the oddest venders in the marketplace. Nisi claims to have",
+        "various fresh frozen types of vegetables. They are frozen all right. In",
+        "fact they are hard enough to stop an axe swing...go figure..",
+        "And just how does she keep them from melting...",
+        "There is a small sign on the wall in the back of the shop."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10607
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10615,
+      "name": "Molin's Mulburry Extracts.",
+      "desc": [
+        "This is the shop of the famous mulburry extract. Known throughout the",
+        "valley to quech the thirst of even the thirstiest traveller. What else it does",
+        "is just rumor. That person recovered in a month anyway...",
+        "There is a small sign on the wall."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10610
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    },
+    {
+      "id": 10616,
+      "name": "Rashan's Rutabagas",
+      "desc": [
+        "This is one shop to stay away from. Rashan's rutabagas have been know",
+        "to do strange things to people. And true to its reputation the shop is",
+        "very very empty. I'm sure Rashan would be more than willing to sell",
+        "you one. Business obviously has been very slow....",
+        "There is a small sign hanging next to you."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [
+            "You see the marketplace."
+          ],
+          "keywords": [],
+          "to": 10609
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "The sign reads:",
+            "",
+            "  List  - Show which various items are in the store.",
+            "  Buy   - Buy an item.",
+            "  Value - The shopkeeper will (free of charge) tell how much he will",
+            "          pay for your item.",
+            "  Sell  - Sell an item."
+          ]
+        }
+      ]
+    }
+  ],
+  "RESETS": [
+    {
+      "action": "npc",
+      "id": 10538,
+      "limit": 1,
+      "room": 10500
+    },
+    {
+      "action": "give",
+      "id": 10538
+    },
+    {
+      "action": "give",
+      "id": 10537
+    },
+    {
+      "action": "give",
+      "id": 10536
+    },
+    {
+      "action": "give",
+      "id": 10535
+    },
+    {
+      "action": "npc",
+      "id": 10539,
+      "limit": 1,
+      "room": 10501
+    },
+    {
+      "action": "give",
+      "id": 10541
+    },
+    {
+      "action": "give",
+      "id": 10540
+    },
+    {
+      "action": "give",
+      "id": 10539
+    },
+    {
+      "action": "npc",
+      "id": 10521,
+      "limit": 1,
+      "room": 10502
+    },
+    {
+      "action": "give",
+      "id": 10518
+    },
+    {
+      "action": "give",
+      "id": 10517
+    },
+    {
+      "action": "give",
+      "id": 10516
+    },
+    {
+      "action": "give",
+      "id": 10515
+    },
+    {
+      "action": "equip",
+      "id": 10500,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10503
+    },
+    {
+      "action": "npc",
+      "id": 10520,
+      "limit": 5,
+      "room": 10503
+    },
+    {
+      "action": "npc",
+      "id": 10551,
+      "limit": 10,
+      "room": 10503
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10503,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10504
+    },
+    {
+      "action": "npc",
+      "id": 10520,
+      "limit": 5,
+      "room": 10504
+    },
+    {
+      "action": "npc",
+      "id": 10551,
+      "limit": 10,
+      "room": 10504
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10504,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10523,
+      "limit": 1,
+      "room": 10505
+    },
+    {
+      "action": "give",
+      "id": 10508
+    },
+    {
+      "action": "give",
+      "id": 10507
+    },
+    {
+      "action": "give",
+      "id": 10506
+    },
+    {
+      "action": "give",
+      "id": 10505
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10505,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10506
+    },
+    {
+      "action": "npc",
+      "id": 10520,
+      "limit": 5,
+      "room": 10506
+    },
+    {
+      "action": "npc",
+      "id": 10551,
+      "limit": 10,
+      "room": 10506
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10506
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10506,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10507
+    },
+    {
+      "action": "npc",
+      "id": 10550,
+      "limit": 6,
+      "room": 10507
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10507,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10522,
+      "limit": 1,
+      "room": 10508
+    },
+    {
+      "action": "give",
+      "id": 10504
+    },
+    {
+      "action": "give",
+      "id": 10503
+    },
+    {
+      "action": "give",
+      "id": 10502
+    },
+    {
+      "action": "give",
+      "id": 10501
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10509
+    },
+    {
+      "action": "npc",
+      "id": 10520,
+      "limit": 5,
+      "room": 10509
+    },
+    {
+      "action": "npc",
+      "id": 10551,
+      "limit": 10,
+      "room": 10509
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10509,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10510,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10511
+    },
+    {
+      "action": "npc",
+      "id": 10520,
+      "limit": 5,
+      "room": 10511
+    },
+    {
+      "action": "npc",
+      "id": 10551,
+      "limit": 10,
+      "room": 10511
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10511
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10511,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10524,
+      "limit": 1,
+      "room": 10512
+    },
+    {
+      "action": "npc",
+      "id": 10513,
+      "limit": 1,
+      "room": 10513
+    },
+    {
+      "action": "npc",
+      "id": 10512,
+      "limit": 1,
+      "room": 10513
+    },
+    {
+      "action": "npc",
+      "id": 10511,
+      "limit": 1,
+      "room": 10513
+    },
+    {
+      "action": "npc",
+      "id": 10510,
+      "limit": 1,
+      "room": 10513
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10514
+    },
+    {
+      "action": "npc",
+      "id": 10552,
+      "limit": 5,
+      "room": 10514
+    },
+    {
+      "action": "npc",
+      "id": 10500,
+      "limit": 4,
+      "room": 10514
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10514,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10526,
+      "limit": 5,
+      "room": 10515
+    },
+    {
+      "action": "npc",
+      "id": 10527,
+      "limit": 1,
+      "room": 10515
+    },
+    {
+      "action": "give",
+      "id": 10569
+    },
+    {
+      "action": "give",
+      "id": 10568
+    },
+    {
+      "action": "give",
+      "id": 10567
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10515
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10515,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10526,
+      "limit": 5,
+      "room": 10516
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10516
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10516,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10516,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10526,
+      "limit": 5,
+      "room": 10517
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10517
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10517,
+      "state": "closed"
+    },
+    {
+      "action": "object",
+      "id": 10570,
+      "room": 10518
+    },
+    {
+      "action": "npc",
+      "id": 10525,
+      "limit": 5,
+      "room": 10519
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10519,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10518,
+      "limit": 4,
+      "room": 10520
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10518,
+      "limit": 4,
+      "room": 10520
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10518,
+      "limit": 4,
+      "room": 10521
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10518,
+      "limit": 4,
+      "room": 10521
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10522
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10523,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10524
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10524
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10524
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10524
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10524,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10524,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10525,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10530,
+      "limit": 1,
+      "room": 10526
+    },
+    {
+      "action": "equip",
+      "id": 10565,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10509,
+      "slot": 16
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10526,
+      "state": "locked"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10526,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10531,
+      "limit": 4,
+      "room": 10527
+    },
+    {
+      "action": "equip",
+      "id": 10510,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "object",
+      "id": 10562,
+      "room": 10527
+    },
+    {
+      "action": "put",
+      "id": 10563,
+      "container": 10562
+    },
+    {
+      "action": "object",
+      "id": 10562,
+      "room": 10527
+    },
+    {
+      "action": "put",
+      "id": 10563,
+      "container": 10562
+    },
+    {
+      "action": "object",
+      "id": 10562,
+      "room": 10527
+    },
+    {
+      "action": "put",
+      "id": 10563,
+      "container": 10562
+    },
+    {
+      "action": "object",
+      "id": 10562,
+      "room": 10527
+    },
+    {
+      "action": "put",
+      "id": 10563,
+      "container": 10562
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10527,
+      "state": "locked"
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10528
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10528,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10545,
+      "limit": 1,
+      "room": 10529
+    },
+    {
+      "action": "object",
+      "id": 10564,
+      "room": 10529
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10530,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10530,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10530,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10530,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10531,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10533
+    },
+    {
+      "action": "npc",
+      "id": 10509,
+      "limit": 1,
+      "room": 10533
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10533,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10535,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10536,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10546,
+      "limit": 5,
+      "room": 10538
+    },
+    {
+      "action": "equip",
+      "id": 10544,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "npc",
+      "id": 10547,
+      "limit": 5,
+      "room": 10538
+    },
+    {
+      "action": "equip",
+      "id": 10547,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10546,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10548,
+      "limit": 5,
+      "room": 10538
+    },
+    {
+      "action": "equip",
+      "id": 10550,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10549,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10548,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10549,
+      "limit": 5,
+      "room": 10538
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10551,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10545,
+      "slot": 17
+    },
+    {
+      "action": "npc",
+      "id": 10546,
+      "limit": 5,
+      "room": 10539
+    },
+    {
+      "action": "equip",
+      "id": 10544,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "npc",
+      "id": 10547,
+      "limit": 5,
+      "room": 10539
+    },
+    {
+      "action": "equip",
+      "id": 10547,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10546,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10548,
+      "limit": 5,
+      "room": 10539
+    },
+    {
+      "action": "equip",
+      "id": 10550,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10549,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10548,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10549,
+      "limit": 5,
+      "room": 10539
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10551,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10545,
+      "slot": 17
+    },
+    {
+      "action": "npc",
+      "id": 10502,
+      "limit": 4,
+      "room": 10539
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10539,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10546,
+      "limit": 5,
+      "room": 10540
+    },
+    {
+      "action": "equip",
+      "id": 10544,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "npc",
+      "id": 10547,
+      "limit": 5,
+      "room": 10540
+    },
+    {
+      "action": "equip",
+      "id": 10547,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10546,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10548,
+      "limit": 5,
+      "room": 10540
+    },
+    {
+      "action": "equip",
+      "id": 10550,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10549,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10548,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10549,
+      "limit": 5,
+      "room": 10540
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10551,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10545,
+      "slot": 17
+    },
+    {
+      "action": "npc",
+      "id": 10502,
+      "limit": 4,
+      "room": 10540
+    },
+    {
+      "action": "npc",
+      "id": 10546,
+      "limit": 5,
+      "room": 10541
+    },
+    {
+      "action": "equip",
+      "id": 10544,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "npc",
+      "id": 10547,
+      "limit": 5,
+      "room": 10541
+    },
+    {
+      "action": "equip",
+      "id": 10547,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10546,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10548,
+      "limit": 5,
+      "room": 10541
+    },
+    {
+      "action": "equip",
+      "id": 10550,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10549,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10548,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10549,
+      "limit": 5,
+      "room": 10541
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10551,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10545,
+      "slot": 17
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10541
+    },
+    {
+      "action": "npc",
+      "id": 10540,
+      "limit": 1,
+      "room": 10541
+    },
+    {
+      "action": "give",
+      "id": 10569
+    },
+    {
+      "action": "give",
+      "id": 10568
+    },
+    {
+      "action": "give",
+      "id": 10567
+    },
+    {
+      "action": "npc",
+      "id": 10541,
+      "limit": 1,
+      "room": 10541
+    },
+    {
+      "action": "give",
+      "id": 10569
+    },
+    {
+      "action": "give",
+      "id": 10568
+    },
+    {
+      "action": "give",
+      "id": 10567
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10541,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10542
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10542
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10542
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10542
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10542,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10542,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10516,
+      "limit": 1,
+      "room": 10543
+    },
+    {
+      "action": "equip",
+      "id": 10604,
+      "slot": 15
+    },
+    {
+      "action": "equip",
+      "id": 10604,
+      "slot": 14
+    },
+    {
+      "action": "equip",
+      "id": 10582,
+      "slot": 1
+    },
+    {
+      "action": "equip",
+      "id": 10605,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10603,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10579,
+      "slot": 4
+    },
+    {
+      "action": "equip",
+      "id": 10602,
+      "slot": 13
+    },
+    {
+      "action": "equip",
+      "id": 10601,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10600,
+      "slot": 8
+    },
+    {
+      "action": "equip",
+      "id": 10599,
+      "slot": 9
+    },
+    {
+      "action": "equip",
+      "id": 10598,
+      "slot": 7
+    },
+    {
+      "action": "equip",
+      "id": 10597,
+      "slot": 10
+    },
+    {
+      "action": "equip",
+      "id": 10560,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10596,
+      "slot": 6
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10543,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10545
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10545,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10547
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10547
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10547
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10547
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10549,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10546,
+      "limit": 5,
+      "room": 10551
+    },
+    {
+      "action": "equip",
+      "id": 10544,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "npc",
+      "id": 10547,
+      "limit": 5,
+      "room": 10551
+    },
+    {
+      "action": "equip",
+      "id": 10547,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10546,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10543,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10548,
+      "limit": 5,
+      "room": 10551
+    },
+    {
+      "action": "equip",
+      "id": 10550,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10549,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10548,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 10549,
+      "limit": 5,
+      "room": 10551
+    },
+    {
+      "action": "equip",
+      "id": 10542,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10551,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10545,
+      "slot": 17
+    },
+    {
+      "action": "npc",
+      "id": 10542,
+      "limit": 1,
+      "room": 10551
+    },
+    {
+      "action": "npc",
+      "id": 10543,
+      "limit": 3,
+      "room": 10551
+    },
+    {
+      "action": "npc",
+      "id": 10544,
+      "limit": 1,
+      "room": 10551
+    },
+    {
+      "action": "npc",
+      "id": 10514,
+      "limit": 1,
+      "room": 10552
+    },
+    {
+      "action": "give",
+      "id": 10580
+    },
+    {
+      "action": "equip",
+      "id": 10583,
+      "slot": 15
+    },
+    {
+      "action": "equip",
+      "id": 10583,
+      "slot": 14
+    },
+    {
+      "action": "equip",
+      "id": 10582,
+      "slot": 1
+    },
+    {
+      "action": "equip",
+      "id": 10581,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10566,
+      "slot": 17
+    },
+    {
+      "action": "equip",
+      "id": 10578,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10579,
+      "slot": 4
+    },
+    {
+      "action": "equip",
+      "id": 10577,
+      "slot": 13
+    },
+    {
+      "action": "equip",
+      "id": 10576,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10575,
+      "slot": 8
+    },
+    {
+      "action": "equip",
+      "id": 10574,
+      "slot": 9
+    },
+    {
+      "action": "equip",
+      "id": 10573,
+      "slot": 7
+    },
+    {
+      "action": "equip",
+      "id": 10572,
+      "slot": 10
+    },
+    {
+      "action": "equip",
+      "id": 10558,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10571,
+      "slot": 6
+    },
+    {
+      "action": "object",
+      "id": 10584,
+      "room": 10552
+    },
+    {
+      "action": "put",
+      "id": 10585,
+      "container": 10584
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10552,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10508,
+      "limit": 1,
+      "room": 10555
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10555,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10556
+    },
+    {
+      "action": "npc",
+      "id": 10502,
+      "limit": 4,
+      "room": 10559
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10559,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10503,
+      "limit": 1,
+      "room": 10560
+    },
+    {
+      "action": "equip",
+      "id": 10553,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 10552,
+      "slot": 17
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10560,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10504,
+      "limit": 1,
+      "room": 10561
+    },
+    {
+      "action": "equip",
+      "id": 10556,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10557,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10554,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10561,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10505,
+      "limit": 1,
+      "room": 10562
+    },
+    {
+      "action": "give",
+      "id": 10563
+    },
+    {
+      "action": "npc",
+      "id": 10506,
+      "limit": 3,
+      "room": 10562
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10562,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10562,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10564
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10564,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10515,
+      "limit": 1,
+      "room": 10565
+    },
+    {
+      "action": "equip",
+      "id": 10594,
+      "slot": 15
+    },
+    {
+      "action": "equip",
+      "id": 10594,
+      "slot": 14
+    },
+    {
+      "action": "equip",
+      "id": 10582,
+      "slot": 1
+    },
+    {
+      "action": "equip",
+      "id": 10595,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10593,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 10579,
+      "slot": 4
+    },
+    {
+      "action": "equip",
+      "id": 10592,
+      "slot": 13
+    },
+    {
+      "action": "equip",
+      "id": 10591,
+      "slot": 3
+    },
+    {
+      "action": "equip",
+      "id": 10590,
+      "slot": 8
+    },
+    {
+      "action": "equip",
+      "id": 10589,
+      "slot": 9
+    },
+    {
+      "action": "equip",
+      "id": 10588,
+      "slot": 7
+    },
+    {
+      "action": "equip",
+      "id": 10587,
+      "slot": 10
+    },
+    {
+      "action": "equip",
+      "id": 10559,
+      "slot": 5
+    },
+    {
+      "action": "equip",
+      "id": 10586,
+      "slot": 6
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10565,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10568
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10569,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10570,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10571,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10507,
+      "limit": 1,
+      "room": 10572
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10572,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10572,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10573,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10574,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10578
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10578
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10578
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10578
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10578
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10579,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10579,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10580
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10582
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10582
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10582
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10582
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10582
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10583,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10586
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10586
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10586
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10586
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10587
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10588
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10588,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 10589,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10590
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10590
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10592,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10595
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 10595,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10597
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10517,
+      "limit": 12,
+      "room": 10597
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10529,
+      "limit": 10,
+      "room": 10599
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10599
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 10599,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10601
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10601
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10601
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10601
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10502,
+      "limit": 4,
+      "room": 10603
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10603,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 10604,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 10519,
+      "limit": 10,
+      "room": 10608
+    },
+    {
+      "action": "npc",
+      "id": 10501,
+      "limit": 8,
+      "room": 10608
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10610
+    },
+    {
+      "action": "equip",
+      "id": 10607,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10610
+    },
+    {
+      "action": "equip",
+      "id": 10608,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10610
+    },
+    {
+      "action": "equip",
+      "id": 10609,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10528,
+      "limit": 40,
+      "room": 10610
+    },
+    {
+      "action": "equip",
+      "id": 10561,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 10606,
+      "slot": 5
+    },
+    {
+      "action": "npc",
+      "id": 10532,
+      "limit": 1,
+      "room": 10611
+    },
+    {
+      "action": "give",
+      "id": 10514
+    },
+    {
+      "action": "give",
+      "id": 10513
+    },
+    {
+      "action": "give",
+      "id": 10512
+    },
+    {
+      "action": "give",
+      "id": 10511
+    },
+    {
+      "action": "npc",
+      "id": 10533,
+      "limit": 1,
+      "room": 10612
+    },
+    {
+      "action": "give",
+      "id": 10522
+    },
+    {
+      "action": "give",
+      "id": 10521
+    },
+    {
+      "action": "give",
+      "id": 10520
+    },
+    {
+      "action": "give",
+      "id": 10519
+    },
+    {
+      "action": "npc",
+      "id": 10534,
+      "limit": 1,
+      "room": 10613
+    },
+    {
+      "action": "give",
+      "id": 10525
+    },
+    {
+      "action": "give",
+      "id": 10524
+    },
+    {
+      "action": "give",
+      "id": 10523
+    },
+    {
+      "action": "npc",
+      "id": 10535,
+      "limit": 1,
+      "room": 10614
+    },
+    {
+      "action": "give",
+      "id": 10529
+    },
+    {
+      "action": "give",
+      "id": 10528
+    },
+    {
+      "action": "give",
+      "id": 10527
+    },
+    {
+      "action": "give",
+      "id": 10526
+    },
+    {
+      "action": "npc",
+      "id": 10536,
+      "limit": 1,
+      "room": 10615
+    },
+    {
+      "action": "give",
+      "id": 10530
+    },
+    {
+      "action": "give",
+      "id": 10530
+    },
+    {
+      "action": "give",
+      "id": 10530
+    },
+    {
+      "action": "give",
+      "id": 10530
+    },
+    {
+      "action": "npc",
+      "id": 10537,
+      "limit": 1,
+      "room": 10616
+    },
+    {
+      "action": "give",
+      "id": 10534
+    },
+    {
+      "action": "give",
+      "id": 10533
+    },
+    {
+      "action": "give",
+      "id": 10532
+    },
+    {
+      "action": "give",
+      "id": 10531
+    }
+  ],
+  "SHOPS": []
+}

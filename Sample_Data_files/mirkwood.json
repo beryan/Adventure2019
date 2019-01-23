@@ -1,0 +1,2474 @@
+{
+  "AREA": {
+    "name": "Mirkwood"
+  },
+  "HELPS": [],
+  "NPCS": [
+    {
+      "id": 8800,
+      "keywords": [
+        "sylvan",
+        "elf",
+        "scout"
+      ],
+      "shortdesc": "a sylvan elf scout",
+      "longdesc": [
+        "A Sylvan Elf scout is offended at your intrusion!"
+      ],
+      "description": [
+        "The Sylvan Elves are a good people, but centuries of subjection to the",
+        "violences and prejudices of other races have made them wary and very",
+        "hostile toward outsiders. However, if you're tough enough, perhaps he'll",
+        "back down. As natives of Mirkwood, they are virtually imposssible to see",
+        "if they don't want to be seen."
+      ]
+    },
+    {
+      "id": 8801,
+      "keywords": [
+        "sylvan",
+        "elf",
+        "warrior"
+      ],
+      "shortdesc": "a sylvan elf warrior",
+      "longdesc": [
+        "A Sylvan Elf warrior lunges at you with his sword!"
+      ],
+      "description": [
+        "The Sylvan Elves are a good people, but centuries of subjection to the",
+        "violences and prejudices of other races have made them wary and very",
+        "hostile toward outsiders. However, if you're tough enough, perhaps he'll",
+        "back down."
+      ]
+    },
+    {
+      "id": 8802,
+      "keywords": [
+        "orc",
+        "scout"
+      ],
+      "shortdesc": "an orc scout",
+      "longdesc": [
+        "An Orcish scout screams and attacks!"
+      ],
+      "description": [
+        "These foul creatures have been sent in advance by Orcish forces to scout",
+        "out the defenses of Mirkwood. So far, their attempts have resulted only",
+        "in their own demise, but eventually the Elves will be worn down by the",
+        "sheer weight of numbers of the immense Orcish hordes."
+      ]
+    },
+    {
+      "id": 8803,
+      "keywords": [
+        "orc",
+        "warrior"
+      ],
+      "shortdesc": "an orc warrior",
+      "longdesc": [
+        "An Orcish warrior screams and attacks!"
+      ],
+      "description": [
+        "These fell minions of Sauron have been sent in an attempt to subjugate",
+        "Mirkwood. So far, their attempts have resulted only in their own demise,",
+        "but eventually the Elves will be worn down by the",
+        "sheer weight of numbers of the immense Orcish hordes."
+      ]
+    },
+    {
+      "id": 8804,
+      "keywords": [
+        "guard"
+      ],
+      "shortdesc": "a wood elf guard",
+      "longdesc": [
+        "A Wood Elf guard angrily accosts you."
+      ],
+      "description": [
+        "This angry guard is incensed at your trespass in the hall of his king, and",
+        "will attempt to forcibly eject you."
+      ]
+    },
+    {
+      "id": 8805,
+      "keywords": [
+        "chief",
+        "guard"
+      ],
+      "shortdesc": "the chief of the guard",
+      "longdesc": [
+        "A Wood Elf chief of the guard lunges at you with his sword!"
+      ],
+      "description": [
+        "The Wood Elves are a good people, but centuries of subjection to the",
+        "violences and prejudices of other races have made them wary and very",
+        "hostile toward outsiders. However, if you're tough enough, perhaps he'll",
+        "back down."
+      ]
+    },
+    {
+      "id": 8806,
+      "keywords": [
+        "galion",
+        "butler"
+      ],
+      "shortdesc": "Galion the butler",
+      "longdesc": [
+        "A Wood Elf butler glares at you accusingly."
+      ],
+      "description": [
+        "Galion has a tremenous fondness for Dorwinion Wine, and he is now well and",
+        "truly inebriated. However that does not mean he won't react to your",
+        "intrusion."
+      ]
+    },
+    {
+      "id": 8807,
+      "keywords": [
+        "thranduil"
+      ],
+      "shortdesc": "Thranduil, king of the Wood Elves",
+      "longdesc": [
+        "Thranduil, King of the Wood Elves, eyes you suspiciously."
+      ],
+      "description": [
+        "While not immune to the prejudices of his brethren, Thranduil is a trifle",
+        "wiser (and more civilized) and he will not attack without provocation."
+      ]
+    },
+    {
+      "id": 8808,
+      "keywords": [
+        "wood",
+        "elf"
+      ],
+      "shortdesc": "a male wood elf",
+      "longdesc": [
+        "A male Wood Elf glares angrily at you."
+      ],
+      "description": [
+        "This person won't attack you like the guards will, but that doesn't mean",
+        "he likes you any more than they do..."
+      ]
+    },
+    {
+      "id": 8809,
+      "keywords": [
+        "wood",
+        "elf"
+      ],
+      "shortdesc": "a female wood elf",
+      "longdesc": [
+        "A female Wood Elf glares angrily at you."
+      ],
+      "description": [
+        "This person won't attack you like the guards will, but that doesn't mean",
+        "ahe likes you any more than they do..."
+      ]
+    },
+    {
+      "id": 8810,
+      "keywords": [
+        "turnkey",
+        "elf"
+      ],
+      "shortdesc": "the turnkey",
+      "longdesc": [
+        "The turnkey sleeps here."
+      ],
+      "description": [
+        "This surly fellow is almost always passed out from copious alcohol",
+        "consumption."
+      ]
+    },
+    {
+      "id": 8811,
+      "keywords": [
+        "thorin",
+        "oakenshield"
+      ],
+      "shortdesc": "Thorin Oakenshield",
+      "longdesc": [
+        "Thorin Oakenshield politely bows before you."
+      ],
+      "description": [
+        "This Dwarf is descended from noble blood. He and his fellows were waylaid",
+        "by the Wood Elves while journeying to avenge their brethren against the",
+        "dragon Smaug."
+      ]
+    }
+  ],
+  "OBJECTS": [
+    {
+      "id": 8800,
+      "keywords": [
+        "pool"
+      ],
+      "shortdesc": "a pool",
+      "longdesc": [
+        "A pool of crystal-clear water fills this clearing."
+      ],
+      "extra": [
+        {
+          "keywords": [
+            "pool"
+          ],
+          "desc": [
+            "It looks tasty. Have a drink!"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8801,
+      "keywords": [
+        "sword"
+      ],
+      "shortdesc": "an elvish sword",
+      "longdesc": [
+        "A beautiful sword has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8802,
+      "keywords": [
+        "cloak"
+      ],
+      "shortdesc": "a plain elven cloak",
+      "longdesc": [
+        "A plain, but practical, Elven cloak lies here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8803,
+      "keywords": [
+        "boots"
+      ],
+      "shortdesc": "a pair of plain elven boots",
+      "longdesc": [
+        "A plain, but practical, pair of Elven boots."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8804,
+      "keywords": [
+        "water",
+        "flask"
+      ],
+      "shortdesc": "a water flask",
+      "longdesc": [
+        "An Elven water flask. It is rumored that they can provide water for days."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8805,
+      "keywords": [
+        "shield"
+      ],
+      "shortdesc": "a spiked metal shield",
+      "longdesc": [
+        "An Orcish spiked metal shield has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8806,
+      "keywords": [
+        "scimitar"
+      ],
+      "shortdesc": "an orcish scimitar",
+      "longdesc": [
+        "An Orcish scimitar has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8807,
+      "keywords": [
+        "helm"
+      ],
+      "shortdesc": "an ugly spiked helm",
+      "longdesc": [
+        "An ugly Orcish spiked helm has been left here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8808,
+      "keywords": [
+        "flask",
+        "wine"
+      ],
+      "shortdesc": "a flask of Dorwinion wine",
+      "longdesc": [
+        "A half-drunk flask of fine Dorwinion wine lies here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8809,
+      "keywords": [
+        "barrel",
+        "wine"
+      ],
+      "shortdesc": "a barrel of Dorwinion wine",
+      "longdesc": [
+        "A barrel of Dorwinion wine is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8810,
+      "keywords": [
+        "barrel"
+      ],
+      "shortdesc": "an empty barrel",
+      "longdesc": [
+        "This empty barrel would make a fine boat."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8811,
+      "keywords": [
+        "sword"
+      ],
+      "shortdesc": "a fine elven sword",
+      "longdesc": [
+        "A fine Elven sword glimmers softly here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8812,
+      "keywords": [
+        "key"
+      ],
+      "shortdesc": "a key",
+      "longdesc": [
+        "A key to a cell door is here."
+      ],
+      "extra": []
+    },
+    {
+      "id": 8813,
+      "keywords": [
+        "key"
+      ],
+      "shortdesc": "a key",
+      "longdesc": [
+        "A key to a cave door is here."
+      ],
+      "extra": []
+    }
+  ],
+  "ROOMS": [
+    {
+      "id": 8800,
+      "name": "Entrance to Mirkwood",
+      "desc": [
+        "You have entered the quasi-magical Elven forest of Mirkwood, populated by",
+        "Sylvan Elves and their mysterious allies. Strangers are frowned upon here,",
+        "so be on your guard. It is rumored that many different races of Elves",
+        "actually inhabit this forest, in various parts and sometimes they are",
+        "carefully hidden, away from the prying eyes of strangers.",
+        "",
+        "There is a sign tacked to a tree nearby."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8801
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8855
+        }
+      ],
+      "extended_descriptions": [
+        {
+          "keywords": [
+            "sign"
+          ],
+          "desc": [
+            "This area serves as a connector for many areas with an Elven or Faerie",
+            "flavour, favored areas of the Immortal Yaegar. Tread carefully, and remember",
+            "to keep track of where you have been.",
+            "",
+            "--Yaegar"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 8801,
+      "name": "The Path Through Mirkwood",
+      "desc": [
+        "You are advancing along a narrow path that runs deep into the forest of",
+        "Mirkwood. Giant, ancient trees tower over you to either side, and sweet",
+        "songbirds sing in their lofty branches. However, despite this serene scene,",
+        "you can't shake the feeling that you're being watched."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8802
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8800
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8802,
+      "name": "The Path Through Mirkwood",
+      "desc": [
+        "You are advancing along a narrow path that runs deep into the forest of",
+        "Mirkwood. Giant, ancient trees tower over you to either side, and sweet",
+        "songbirds sing in their lofty branches. However, despite this serene scene,",
+        "you can't shake the feeling that you're being watched."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8803
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8801
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8803,
+      "name": "A Fork in the Path",
+      "desc": [
+        "You have reached a point where the path branches, with paths running to the",
+        "east and west. A wild animal suddenly howls angrily some distance away, and",
+        "you involuntarily jump."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8804
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8802
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8820
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8804,
+      "name": "A Broad Path",
+      "desc": [
+        "This branch of the path widens out after a short distance, and you notice",
+        "signs of heavy use, evidently by non-Elves, as Elves do not leave footprints.",
+        "The trees are thinner and smaller in this part of the forest, giving the",
+        "impression that it has been recently cleared."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8805
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8803
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8805,
+      "name": "Another Junction",
+      "desc": [
+        "The path once again divides, this time into northern and southern branches.",
+        "To the north an impressive-looking citadel looms over the treetops, while",
+        "to the south the trail becomes significantly narrower, and overgrown."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8806
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8808
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8804
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8806,
+      "name": "A Bend in the Road",
+      "desc": [
+        "The northern road bends to the east at this point, allowing you to gaze",
+        "upon a wondrous Elven Fortress. Although you are more than a mile away,",
+        "it still looms large ahead of you."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8807
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8805
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8807,
+      "name": "Plains",
+      "desc": [
+        "The road opens onto an area cleared of trees here, a broad plain dotted with",
+        "the occasional hedge or distant farmhouse. There is a marked path running",
+        "due east toward the west gate of the distant fortress."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [
+            "the plains of malathar"
+          ],
+          "keywords": [],
+          "to": 400
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8806
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8808,
+      "name": "The Southern Trail",
+      "desc": [
+        "Progress along this narrow, overgrown path is next to impossible, and you",
+        "find yourself having to stop several times for a rest. There doesn't seem to",
+        "be any quick end to it either."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8805
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8809
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8809,
+      "name": "The Southern Trail",
+      "desc": [
+        "Progress along this narrow, overgrown path is next to impossible, and you",
+        "find yourself having to stop several times for a rest. There doesn't seem to",
+        "be any quick end to it either.",
+        "",
+        "You spy a rope ladder ascending to a platform in a nearby tree."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8808
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8811
+        },
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8810
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8810,
+      "name": "A Guard Post",
+      "desc": [
+        "You have stumbled into a Sylvan Elf guard post, from which they carefully",
+        "watch out for intruding Orcs or Goblins. They dislike strangers in general,",
+        "and detest interlopers into their personal areas even more. Expect a violent",
+        "reception if there is a guard present..."
+      ],
+      "doors": [
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8809
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8811,
+      "name": "The Southern Trail",
+      "desc": [
+        "Progress along this narrow, overgrown path is next to impossible, and you",
+        "find yourself having to stop several times for a rest. There doesn't seem to",
+        "be any quick end to it either.",
+        "",
+        "At this point you may follow a side trail which runs to the east. It seems",
+        "to be a little less overgrown."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8809
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8813
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8812
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8812,
+      "name": "A Dead End",
+      "desc": [
+        "WHAT? After all that exertion, the path ends at a DEAD END??? Ah well, I",
+        "guess you had better turn back..."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8811
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8813,
+      "name": "The Eastern Path",
+      "desc": [
+        "This path is certainly less overgrown than the north-south one. You actually",
+        "find yourself able to move relatively quickly through the forest, stopping",
+        "only occasionally to hack away an overhanging branch or vine."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8814
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8811
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8814,
+      "name": "The Eastern Path",
+      "desc": [
+        "This path is certainly less overgrown than the north-south one. You actually",
+        "find yourself able to move relatively quickly through the forest, stopping",
+        "only occasionally to hack away an overhanging branch or vine."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8815
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8813
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8815,
+      "name": "A Bend in the Path",
+      "desc": [
+        "You have reached a point where the path bends to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8816
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8814
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8816,
+      "name": "The Northern Path",
+      "desc": [
+        "The path here is fairly clear and free of vegetation. It actually looks",
+        "fairly well-maintained. You think you can hear a distant singing to the",
+        "north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8817
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8815
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8817,
+      "name": "The Northern Path",
+      "desc": [
+        "The path here is fairly clear and free of vegetation. It actually looks",
+        "fairly well-maintained. You think you can hear a distant singing to the",
+        "north.",
+        "",
+        "Another path runs to the east of here."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8819
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8818
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8816
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8818,
+      "name": "The End of the Path",
+      "desc": [
+        "The path ends here in a small clearing with a small shallow pool of crystal",
+        "clear water. You feel strangely at ease here."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8817
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8819,
+      "name": "Approaching the Holy Grove",
+      "desc": [
+        "The singing is clearly audible here, and it is coming from a well-tended",
+        "grove to the east. Dimly visible are all manner of man and beast, and",
+        "although they would usually feed upon each other, they all seem to be at",
+        "peace."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8904
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8817
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8820,
+      "name": "The Western Path",
+      "desc": [
+        "This path is rather overgrown but it is still easily navigable. You fancy",
+        "you can see a rope ladder ascending into the brances of a tall oak near the",
+        "eastern side of the road."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8803
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8822
+        },
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8821
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8821,
+      "name": "A Guard Post",
+      "desc": [
+        "You have stumbled into a Sylvan Elf guard post, from which they carefully",
+        "watch out for intruding Orcs or Goblins. They dislike strangers in general,",
+        "and detest interlopers into their personal areas even more. Expect a violent",
+        "reception if there is a guard present..."
+      ],
+      "doors": [
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8820
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8822,
+      "name": "A Bend to the North",
+      "desc": [
+        "The path bends to the north here, running for some distance toward a stream."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8823
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8820
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8823,
+      "name": "A Northern Path",
+      "desc": [
+        "This path is fairly even and well-used, so going is not as rough as the",
+        "previous paths. There is a wide stream dead ahead."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8824
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8822
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8824,
+      "name": "A Stream",
+      "desc": [
+        "This stream is too wide and deep to wade across. You'll need a boat or a",
+        "spell. Mind you, you could always whip out your rod and start angling :)"
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8825
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8866
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8823
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8825,
+      "name": "A Northern Path",
+      "desc": [
+        "This path is fairly even and well-used, so going is not as rough as the",
+        "previous paths. There is a wide stream to the south.",
+        "",
+        "A broad, tree-lined path runs to the east."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8826
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8856
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8824
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8826,
+      "name": "A Junction",
+      "desc": [
+        "You have reached a point where you can proceed either north or west. Your",
+        "choice. You still have the feeling you're being watched..."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8830
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8825
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8827
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8827,
+      "name": "The Western Path",
+      "desc": [
+        "The path you are on here runs down a gently sloping hill, to the base of a",
+        "beautiful valley below."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8826
+        },
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8828
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8828,
+      "name": "The Hill",
+      "desc": [
+        "The path you are on here runs down a gently sloping hill, to the base of a",
+        "beautiful valley below."
+      ],
+      "doors": [
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8827
+        },
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8829
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8829,
+      "name": "The Base of the Hill",
+      "desc": [
+        "You can proceed north toward the valley from here, or return to the summit",
+        "above."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 7800
+        },
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8828
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8830,
+      "name": "A Northern Path",
+      "desc": [
+        "This path is fairly even and well-used, so going is not as rough as the",
+        "previous paths. There is a narrow path to the east."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8832
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8831
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8826
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8831,
+      "name": "A Narrow Path",
+      "desc": [
+        "You are walking along a narrow path that runs from the major northern path",
+        "through Mirkwood. Up ahead the path ends in a dead end."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 29001
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8830
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8832,
+      "name": "A Northern Path",
+      "desc": [
+        "This path is fairly even and well-used, so going is not as rough as the",
+        "previous paths."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8833
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8830
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8833,
+      "name": "A Northern Path",
+      "desc": [
+        "This path is fairly even and well-used, so going is not as rough as the",
+        "previous paths. There is a broad junction to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8834
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8832
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8834,
+      "name": "A Broad Junction",
+      "desc": [
+        "You have come to another junction in the forest. The path to the east runs",
+        "through some handsome aspen and pine, but the northern passage is lined by",
+        "sickly-looking, dying trees of unidentifiable type."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8835
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8841
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8833
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8835,
+      "name": "An Evil Section of the Forest",
+      "desc": [
+        "There is a palpable evil in this area that causes you to shiver as you pass",
+        "by the blighted vegetation that lines this twisted gray path. The sky can",
+        "no longer be seen overhead- instead a canopy of decaying leaves and rotten",
+        "branches obscures your view."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8836
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8834
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8836,
+      "name": "An Evil Section of the Forest",
+      "desc": [
+        "There is a palpable eveil in this area that causes you to shiver as you pass",
+        "by the blighted vegetation that lines this twisted gray path. The sky can",
+        "no longer be seen overhead- instead a canopy of decaying leaves and rotten",
+        "branches obscures your view."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8835
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8837
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8837,
+      "name": "An Evil Section of the Forest",
+      "desc": [
+        "There is a palpable eveil in this area that causes you to shiver as you pass",
+        "by the blighted vegetation that lines this twisted gray path. The sky can",
+        "no longer be seen overhead- instead a canopy of decaying leaves and rotten",
+        "branches obscures your view.",
+        "",
+        "The dying screams of some animal can be heard."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8836
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8838
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8838,
+      "name": "An Evil Section of the Forest",
+      "desc": [
+        "There is a palpable eveil in this area that causes you to shiver as you pass",
+        "by the blighted vegetation that lines this twisted gray path. The sky can",
+        "no longer be seen overhead- instead a canopy of decaying leaves and rotten",
+        "branches obscures your view.",
+        "",
+        "Maggots crawl from a decaying Elven corpse hanging from an overhead branch.",
+        "The stench is unbearable.",
+        "",
+        "To the north you see a shadowy area of the forest."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 1300
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8837
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8839
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8839,
+      "name": "An Evil Section of the Forest",
+      "desc": [
+        "There is a palpable eveil in this area that causes you to shiver as you pass",
+        "by the blighted vegetation that lines this twisted gray path. The sky can",
+        "no longer be seen overhead- instead a canopy of decaying leaves and rotten",
+        "branches obscures your view.",
+        "",
+        "At this point the twisting turning path runs sharply downward toward a large",
+        "gash in the side of a grey cliff face."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8838
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8840
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8840,
+      "name": "The Cliff Face",
+      "desc": [
+        "You are standing before the gash in the cliff-face now, wondering whether",
+        "you should continue into the inky darkness beyond..."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8839
+        },
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 14000
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8841,
+      "name": "A Bend in the Path",
+      "desc": [
+        "You reach a bend in the path, where you can head north or west."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8842
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8834
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8842,
+      "name": "A Bend in the Path",
+      "desc": [
+        "You reach a bend in the path, where you can head south or east."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8843
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8841
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8843,
+      "name": "A Junction",
+      "desc": [
+        "The path once again divides, this time into northern and southern branches.",
+        "To the north lies another bend in the trail, while to the south the trail",
+        "becomes significantly narrower, and overgrown."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8845
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8844
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8842
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8844,
+      "name": "A Dead End",
+      "desc": [
+        "The passage ends in a dead end, but you see a small rope ladder hanging down",
+        "from a nearby oak tree, disappearing in its bushy branches above."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8843
+        },
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8846
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8845,
+      "name": "A Bend in the Path",
+      "desc": [
+        "Here, the path bends sharply to the east, heading toward an area of the",
+        "forest that is very different from the previous section. A second path",
+        "runs to the north."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8868
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8847
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8843
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8846,
+      "name": "A Guard Post",
+      "desc": [
+        "You have stumbled into a Sylvan Elf guard post, from which they carefully",
+        "watch out for intruding Orcs or Goblins. They dislike strangers in general,",
+        "and detest interlopers into their personal areas even more. Expect a violent",
+        "reception if there is a guard present..."
+      ],
+      "doors": [
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8844
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8847,
+      "name": "A T-Junction",
+      "desc": [
+        "You have come out of Mirkwood onto a rather dusty trail. At this point you",
+        "may proceed east toward some well-cultivated fields, or south and west back",
+        "into the forest."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8848
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8849
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8845
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8848,
+      "name": "Cultivated Field",
+      "desc": [
+        "This field borders on a neatly-tended area with several small farmhouses and",
+        "a small watch-tower near a wide stream."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 5600
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8847
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8849,
+      "name": "A Desolate Section of the Forest",
+      "desc": [
+        "You have entered a rather forlorn section of the forest, littered with dead",
+        "and dying trees, plus the occasional corpse. Howls and cries of pain sound",
+        "far off to the south."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8847
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8850
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8850,
+      "name": "A Desolate Section of the Forest",
+      "desc": [
+        "You have entered a rather forlorn section of the forest, littered with dead",
+        "and dying trees, plus the occasional corpse. Howls and cries of pain sound",
+        "far off to the south."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8851
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8849
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8851,
+      "name": "A Desolate Section of the Forest",
+      "desc": [
+        "You have entered a rather forlorn section of the forest, littered with dead",
+        "and dying trees, plus the occasional corpse. Howls and cries of pain sound",
+        "far off to the south.",
+        "",
+        "To the south is a particularly dark patch of forest."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8850
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 3505
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8852,
+      "name": "The Path to Firetop Mountain",
+      "desc": [
+        "The path runs past the rubble and up into the foothills of an immense",
+        "mountain range. far in the distance looms Firetop Mountain."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8853
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 5649
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8853,
+      "name": "The Path Continues",
+      "desc": [
+        "You continue for what seems like an eternity, drawing slowly closer to the",
+        "distant peak."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8854
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8852
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8854,
+      "name": "The Path Continues",
+      "desc": [
+        "You continue for what seems like an eternity, drawing slowly closer to the",
+        "distant peak."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 5735
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8853
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8855,
+      "name": "Approaching Mirkwood",
+      "desc": [
+        "The forest begins to surround you as you step into its depths. The path",
+        "abruptly turns to the north and you continue."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8800
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 338
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8856,
+      "name": "A Broad Tree-Lined Path",
+      "desc": [
+        "This path runs for some distance toward a huge cave, entrance to which is",
+        "restricted by a massive, handsome door that glows with magic. Magnificent",
+        "oaks tower high to either side, and everywhere there is light and beauty.",
+        "However, intruders are frowned upon here, so be on your guard."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8857
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8825
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8857,
+      "name": "A Broad Tree-Lined Path",
+      "desc": [
+        "This path runs for some distance toward a huge cave, entrance to which is",
+        "restricted by a massive, handsome door that glows with magic. Magnificent",
+        "oaks tower high to either side, and everywhere there is light and beauty.",
+        "However, intruders are frowned upon here, so be on your guard.",
+        "",
+        "The entrance is directly before you."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8858
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8856
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8858,
+      "name": "Inside the Cave",
+      "desc": [
+        "You are in the castle of the Wood Elven King Thranduil. The corridor here",
+        "is usually deserted. It would be advisable to keep a low profile, as the",
+        "natives are hostile...",
+        "",
+        "The enchantments here prohibit spellcasting of any form."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8859
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8864
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8857
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8859,
+      "name": "Inside the Cave",
+      "desc": [
+        "You are in the castle of the Wood Elven King Thranduil. The corridor here",
+        "is usually deserted. It would be advisable to keep a low profile, as the",
+        "natives are hostile..."
+      ],
+      "doors": [
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8860
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8858
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8860,
+      "name": "A Guard Room",
+      "desc": [
+        "You have stumbled into the guard room! The guards will definitely not",
+        "be happy to see you. You fancy you can hear muffled cries for help."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8867
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8861
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8859
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8861,
+      "name": "Storage Room",
+      "desc": [
+        "In this room the Elves store their foodstuffs and beloved Dorwinion Wine.",
+        "A trapdoor in the floor allows access to the river, and it is through here",
+        "that the Elves deposit their empty barrels, so that the river may carry",
+        "them down to Lake Town."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8860
+        },
+        {
+          "dir": "down",
+          "desc": [],
+          "keywords": [],
+          "to": 8862
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8862,
+      "name": "The River",
+      "desc": [
+        "You are floating along a river that will carry you back through the forest,",
+        "and eventually to Lake Town."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8863
+        },
+        {
+          "dir": "up",
+          "desc": [],
+          "keywords": [],
+          "to": 8861
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8863,
+      "name": "The River",
+      "desc": [
+        "You are floating along a river that will carry you back through the forest,",
+        "and eventually to Lake Town."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8862
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8866
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8864,
+      "name": "Inside the Cave",
+      "desc": [
+        "You are in the castle of the Wood Elven King Thranduil. The corridor here",
+        "is usually deserted. It would be advisable to keep a low profile, as the",
+        "natives are hostile..."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8858
+        },
+        {
+          "dir": "east",
+          "desc": [],
+          "keywords": [],
+          "to": 8865
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8865,
+      "name": "The Throne Room of Thrandul",
+      "desc": [
+        "Now you've blown it. You've gone and stumbled into the King's Throne Room.",
+        "He is seated upon an intricately-carved wooden throne at the end of the hall.",
+        "Dour guards glare at you on all sides."
+      ],
+      "doors": [
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8864
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8866,
+      "name": "The River",
+      "desc": [
+        "You are floating along a river that will carry you back through the forest,",
+        "and eventually to Lake Town."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8863
+        },
+        {
+          "dir": "west",
+          "desc": [],
+          "keywords": [],
+          "to": 8824
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8867,
+      "name": "A Cell",
+      "desc": [
+        "This damp cell is small and cramped, and offers little comfort to its",
+        "single inhabitant."
+      ],
+      "doors": [
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8860
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8868,
+      "name": "A Northern Path",
+      "desc": [
+        "This path runs more or less directly north toward a rather old-looking",
+        "section of the woods."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 8869
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8845
+        }
+      ],
+      "extended_descriptions": []
+    },
+    {
+      "id": 8869,
+      "name": "A Northern Path",
+      "desc": [
+        "You are progressing along a long, straight northern path. Up ahead, you can",
+        "see some sort of clearing."
+      ],
+      "doors": [
+        {
+          "dir": "north",
+          "desc": [],
+          "keywords": [],
+          "to": 9001
+        },
+        {
+          "dir": "south",
+          "desc": [],
+          "keywords": [],
+          "to": 8868
+        }
+      ],
+      "extended_descriptions": []
+    }
+  ],
+  "RESETS": [
+    {
+      "action": "npc",
+      "id": 8800,
+      "limit": 4,
+      "room": 8810
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "object",
+      "id": 8800,
+      "room": 8818
+    },
+    {
+      "action": "npc",
+      "id": 8801,
+      "limit": 4,
+      "room": 8821
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "npc",
+      "id": 8802,
+      "limit": 3,
+      "room": 8836
+    },
+    {
+      "action": "equip",
+      "id": 8805,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 8806,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8807,
+      "slot": 6
+    },
+    {
+      "action": "npc",
+      "id": 8803,
+      "limit": 3,
+      "room": 8839
+    },
+    {
+      "action": "equip",
+      "id": 8805,
+      "slot": 11
+    },
+    {
+      "action": "equip",
+      "id": 8806,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8807,
+      "slot": 6
+    },
+    {
+      "action": "npc",
+      "id": 8800,
+      "limit": 4,
+      "room": 8846
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "npc",
+      "id": 8804,
+      "limit": 4,
+      "room": 8857
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "give",
+      "id": 8813
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 8857,
+      "state": "locked"
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 8858,
+      "state": "locked"
+    },
+    {
+      "action": "npc",
+      "id": 8808,
+      "limit": 2,
+      "room": 8859
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 8859,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 8810,
+      "limit": 1,
+      "room": 8860
+    },
+    {
+      "action": "give",
+      "id": 8812
+    },
+    {
+      "action": "give",
+      "id": 8808
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 8860,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 0,
+      "room": 8860,
+      "state": "locked"
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 8860,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 8805,
+      "limit": 1,
+      "room": 8861
+    },
+    {
+      "action": "give",
+      "id": 8808
+    },
+    {
+      "action": "npc",
+      "id": 8806,
+      "limit": 1,
+      "room": 8861
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "object",
+      "id": 8809,
+      "room": 8861
+    },
+    {
+      "action": "object",
+      "id": 8810,
+      "room": 8861
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 8861,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 5,
+      "room": 8861,
+      "state": "closed"
+    },
+    {
+      "action": "door",
+      "id": 4,
+      "room": 8862,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 8809,
+      "limit": 2,
+      "room": 8864
+    },
+    {
+      "action": "door",
+      "id": 1,
+      "room": 8864,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 8807,
+      "limit": 1,
+      "room": 8865
+    },
+    {
+      "action": "equip",
+      "id": 8811,
+      "slot": 16
+    },
+    {
+      "action": "npc",
+      "id": 8804,
+      "limit": 4,
+      "room": 8865
+    },
+    {
+      "action": "equip",
+      "id": 8801,
+      "slot": 16
+    },
+    {
+      "action": "equip",
+      "id": 8802,
+      "slot": 12
+    },
+    {
+      "action": "equip",
+      "id": 8803,
+      "slot": 8
+    },
+    {
+      "action": "give",
+      "id": 8804
+    },
+    {
+      "action": "door",
+      "id": 3,
+      "room": 8865,
+      "state": "closed"
+    },
+    {
+      "action": "npc",
+      "id": 8811,
+      "limit": 1,
+      "room": 8867
+    },
+    {
+      "action": "door",
+      "id": 2,
+      "room": 8867,
+      "state": "locked"
+    }
+  ],
+  "SHOPS": []
+}

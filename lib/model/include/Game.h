@@ -7,9 +7,11 @@
 
 #include "GameResponse.h"
 #include "Server.h"
+#include "Player.h"
 
 #include <functional>
 #include <deque>
+#include <map>
 
 using networking::Connection;
 using networking::Message;
@@ -30,6 +32,17 @@ namespace model {
         std::vector<long unsigned int>* disconnectedClientIds;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
+
+        static const char* const COMMAND_SHUTDOWN;
+        static const char* const COMMAND_QUIT;
+        static const char* const COMMAND_SAY;
+        static const char* const COMMAND_HELP;
+        static const char* const COMMAND_LOGOUT;
+        static const char* const COMMAND_REGISTER;
+        static const char* const COMMAND_INFO;
+        static const char* const COMMAND_START;
+
+        std::map<unsigned long int, Player> activePlayerList;
 
         /**
          * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -63,6 +76,9 @@ namespace model {
          */
         std::deque<Message>
         formMessages(std::deque<GameResponse> &results);
+
+        std::optional<Player>
+        getPlayer(const unsigned long int& clientId);
 
     public:
         /**

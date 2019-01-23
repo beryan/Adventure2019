@@ -21,6 +21,15 @@ lowercase(std::string string) {
 }
 
 namespace model {
+    const char* const Game::COMMAND_SHUTDOWN = "shutdown";
+    const char* const Game::COMMAND_QUIT = "quit";
+    const char* const Game::COMMAND_SAY = "say";
+    const char* const Game::COMMAND_HELP = "help";
+    const char* const Game::COMMAND_LOGOUT = "logout";
+    const char* const Game::COMMAND_REGISTER = "register";
+    const char* const Game::COMMAND_INFO = "info";
+    const char* const Game::COMMAND_START = "start";
+
     Game::Game(std::vector<Connection> &clients,
                std::vector<unsigned long int> &newClientIds,
                std::vector<unsigned long int> &disconnectedClientIds,
@@ -31,6 +40,7 @@ namespace model {
         this->disconnectedClientIds = &disconnectedClientIds;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
+        this->activePlayerList = {};
     }
 
     void
@@ -68,34 +78,43 @@ namespace model {
                 param = input.text.substr(input.text.find(' ') + 1);
             }
 
-            if (command == "quit") {
+            if (command == COMMAND_QUIT) {
                 this->disconnect(input.connection);
 
-            } else if (command == "shutdown") {
+            } else if (command == COMMAND_SHUTDOWN) {
                 std::cout << "Shutting down.\n";
                 this->shutdown();
 
-            } else if (command == "start") {
+            } else if (command == COMMAND_START) {
                 WorldHandler wh;
 
-            } else if (command == "say") {
+            } else if (command == COMMAND_SAY) {
                 isLocal = false;
                 tempMessage << input.connection.id << "> " << param << "\n";
 
-            } else if (command == "help") {
-                tempMessage << "********\n"
+            } else if (command == COMMAND_LOGOUT) {
+                tempMessage << "Logout not yet implemented\n";
+
+            } else if (command == COMMAND_REGISTER) {
+                tempMessage << "Registering not yet implemented\n";
+
+            } else if (command == COMMAND_HELP) {
+                tempMessage << "\n"
+                            << "********\n"
                             << "* HELP *\n"
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - help (shows this help interface)\n"
-                            << "  - say [message] (sends [message] to other players in the game)\n"
-                            << "  - quit (disconnects you from the game server)\n"
-                            << "  - shutdown (shuts down the game server)\n"
-                            << "  - info (displays current location information)\n"
+                            << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
+                            << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << COMMAND_REGISTER << " [email password](registers user [email] with password [password])\n"
+                            << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
+                            << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
+                            << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
+                            << "  - " << COMMAND_INFO     << " (displays current location information)\n"
                             << "\n";
 
-            } else if (command == "info") {
+            } else if (command == COMMAND_INFO) {
                 model::Room stubRoom = model::Room();
                 stubRoom.createStub();
                 tempMessage << stubRoom;
@@ -136,6 +155,17 @@ namespace model {
         }
 
         return outgoing;
+    }
+
+    std::optional<Player>
+    Game::getPlayer(const unsigned long int &clientId) {
+        std::optional<Player> player;
+
+        if (this->activePlayerList.count(clientId)) {
+            player = this->activePlayerList.at(clientId);
+        }
+
+        return player;
     }
 
     std::deque<Message>

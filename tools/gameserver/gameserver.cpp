@@ -44,7 +44,7 @@ onDisconnect(Connection c) {
 
 std::string
 getHTTPMessage(const char* htmlLocation) {
-  if (access(htmlLocation, R_OK ) != -1) {
+  if (access(htmlLocation, R_OK) != -1) {
     std::ifstream infile{htmlLocation};
     return std::string{std::istreambuf_iterator<char>(infile),
                        std::istreambuf_iterator<char>()};

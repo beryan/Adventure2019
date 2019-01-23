@@ -8,6 +8,8 @@
 #include <string>
 #include "Object.h"
 
+const bool DEFAULT_CAN_EQUIP = false;
+
 namespace model {
 
 /**
@@ -20,14 +22,16 @@ namespace model {
  *  accessed and changed.
  */
 
-    enum class Slot {Head, Body, Legs, Arm, Weapon};
+    // Count returns the length of the Slots
+    enum Slot {Head, Body, Legs, Arm, Weapon, Misc, Count};
 
     class Item {
     public:
-        Item(int id, std::string name, std::string description, bool canEquip, Slot slot)
-            : object(id, std::move(name), std::move(description)),
-              canEquip(canEquip),
-              slot(slot) {}
+        Item();
+
+        Item(int id, std::string name, std::string description, Slot slot);
+
+        Item(int id, std::string name, std::string description, bool canEquip, Slot slot);
 
         Slot getSlot();
 
@@ -36,6 +40,12 @@ namespace model {
         bool getCanEquip();
 
         void setCanEquip(bool canEquip);
+
+        Object getObject();
+
+        void setObject(Object object);
+
+        bool operator==(const Item& rhs) const;
 
     private:
         Object object;
