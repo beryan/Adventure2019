@@ -2,7 +2,6 @@ add_library(model
         src/User.cpp
         src/Player.cpp
         src/NPC.cpp
-        src/UserCollection.cpp
         src/Object.cpp
         src/Item.cpp
         include/Role.h
@@ -13,7 +12,7 @@ add_library(model
         src/Reset.cpp
         src/World.cpp
         src/WorldHandler.cpp
-        src/UserHandler.cpp)
+        src/PlayerHandler.cpp)
 
 target_include_directories(model
         PUBLIC
