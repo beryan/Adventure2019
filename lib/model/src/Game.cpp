@@ -133,7 +133,7 @@ namespace model {
                     }
 
                     if (this->tempUserToId.count(username)) {
-                        tempMessage << "This username " << username << " has already been taken,"
+                        tempMessage << "The username " << username << " has already been taken,"
                                     << " please use a different username.\n";
                         results.emplace_back(GameResponse(clientId, tempMessage.str()));
                         continue;
@@ -234,8 +234,9 @@ namespace model {
             } else if (command == COMMAND_LOGOUT) {
                 /* Login/Register code */
                 std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
-                this->activePlayerList.erase(input.connection.id);
-                this->newClientIds->push_back(input.connection.id);
+                this->activeIdToClient.erase(this->tempUserToId.at(username));
+                this->activePlayerList.erase(clientId);
+                this->newClientIds->push_back(clientId);
 
                 std::cout << username << " has logged out of the game\n";
                 tempMessage << "Logged out successfully.\n"
