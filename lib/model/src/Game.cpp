@@ -20,7 +20,7 @@ lowercase(std::string string) {
     return string;
 }
 
-/* Placeholder code */
+/* Login/Register code */
 int idTracker = 0;
 /* End */
 
@@ -46,10 +46,11 @@ namespace model {
         this->disconnect = disconnect;
         this->shutdown = shutdown;
 
-        /* Placeholder member variables */
+        /* Login/Register member variables */
         this->tempUserToPass = {};
         this->tempUserToId = {};
         this->tempIdToPlayer = {};
+        this->activeIdToClient = {};
         /* End */
 
         this->activePlayerList = {};
@@ -78,9 +79,9 @@ namespace model {
         while (!this->disconnectedClientIds->empty()) {
             auto clientId = this->disconnectedClientIds->back();
 
-            /* For placeholder logged in */
+            /* Login/Register code */
             if (this->activePlayerList.count(clientId)) {
-                std::string username = this->activePlayerList.at(clientId).getUsername();
+                std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
                 this->activePlayerList.erase(clientId);
 
                 std::cout << username << " has been logged out of the game due to disconnect\n";
@@ -118,31 +119,41 @@ namespace model {
             // Main menu commands
             if (!this->activePlayerList.count(clientId)) {
                 if (command == COMMAND_REGISTER) {
-                    /* Placeholder code */
+                    /* Login/Register code */
                     std::string username = param.substr(0, param.find(' '));
                     std::string password;
 
                     if (param.find(' ') != std::string::npos) {
                         password = param.substr(param.find(' ') + 1);
 
-                        Player newPlayer = Player(idTracker, username, password);
-                        this->activePlayerList.emplace(clientId, newPlayer);
-                        this->tempUserToPass.emplace(newPlayer.getUsername(), newPlayer.getPassword());
-                        this->tempUserToId.emplace(newPlayer.getUsername(), newPlayer.getId());
-                        this->tempIdToPlayer.emplace(newPlayer.getId(), newPlayer);
-                        ++idTracker;
-
-                        std::cout << username << " has been registered to the game\n";
-                        tempMessage << "Account created!\n";
-
                     } else {
                         tempMessage << "Missing fields for registration.\n";
-
+                        results.emplace_back(GameResponse(clientId, tempMessage.str()));
+                        continue;
                     }
+
+                    if (this->tempUserToId.count(username)) {
+                        tempMessage << "This username " << username << " has already been taken,"
+                                    << " please use a different username.\n";
+                        results.emplace_back(GameResponse(clientId, tempMessage.str()));
+                        continue;
+                    }
+
+                    int currentId = idTracker;
+                    this->tempIdToPlayer.emplace(idTracker, Player(currentId, username, password));
+                    this->tempUserToId.emplace(username, currentId);
+                    this->tempUserToPass.emplace(username, password);
+                    this->activeIdToClient.emplace(currentId, clientId);
+                    this->activePlayerList.emplace(clientId, currentId);
+                    ++idTracker;
+
+                    std::cout << username << " has been registered to the game\n";
+                    tempMessage << "Account created!\n";
+
                     /* End */
 
                 } else if (command == COMMAND_LOGIN) {
-                    /* Placeholder code */
+                    /* Login/Register code */
                     std::string username = param.substr(0, param.find(' '));
                     std::string password;
                     bool success = false;
@@ -152,7 +163,25 @@ namespace model {
 
                         if (this->tempUserToPass.count(username)) {
                             if (this->tempUserToPass.at(username) == password) {
-                                this->activePlayerList.emplace(clientId, this->tempIdToPlayer.at(this->tempUserToId.at(username)));
+                                if (!this->activeIdToClient.count(this->tempUserToId.at(username))) {
+                                    this->activeIdToClient.emplace(this->tempUserToId.at(username), clientId);
+                                    this->activePlayerList.emplace(clientId, this->tempUserToId.at(username));
+
+                                } else {
+                                    // Player is already being used by a client, logout associated client
+                                    // and login with new client
+                                    results.emplace_back(GameResponse(this->activeIdToClient.at(this->tempUserToId.at(username)),
+                                                         "You have been logged out due to being logged in elsewhere.\n\n"));
+
+                                    this->activePlayerList.erase(this->activeIdToClient.at(this->tempUserToId.at(username)));
+                                    this->activeIdToClient.erase(this->tempUserToId.at(username));
+
+                                    this->activeIdToClient.emplace(this->tempUserToId.at(username), clientId);
+                                    this->activePlayerList.emplace(clientId, this->tempUserToId.at(username));
+
+                                    std::cout << username << " is now being used by " << clientId << ".\n";
+                                }
+
                                 success = true;
                             }
                         }
@@ -166,7 +195,6 @@ namespace model {
                         tempMessage << "Invalid username or password.\n";
                     }
                     /* End */
-
 
                 } else if (command == COMMAND_HELP) {
                     tempMessage << "\n"
@@ -191,7 +219,7 @@ namespace model {
 
                 }
 
-                results.emplace_back(GameResponse(input.connection.id, tempMessage.str()));
+                results.emplace_back(GameResponse(clientId, tempMessage.str()));
                 continue;
             }
 
@@ -201,11 +229,11 @@ namespace model {
 
             } else if (command == COMMAND_SAY) {
                 isLocal = false;
-                tempMessage << this->activePlayerList.at(input.connection.id).getUsername() << "> " << param << "\n";
+                tempMessage << this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername() << "> " << param << "\n";
 
             } else if (command == COMMAND_LOGOUT) {
-                /* Placeholder code */
-                std::string username = this->activePlayerList.at(clientId).getUsername();
+                /* Login/Register code */
+                std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
                 this->activePlayerList.erase(input.connection.id);
                 this->newClientIds->push_back(input.connection.id);
 
@@ -261,7 +289,10 @@ namespace model {
 
             } else {
                 for (auto client : *this->clients) {
-                    clientMessages[client.id] << entry.getMessage();
+                    // Send to public messages to logged in users only
+                    if (this->activePlayerList.count(client.id)) {
+                        clientMessages[client.id] << entry.getMessage();
+                    }
                 }
             }
         }
@@ -278,7 +309,7 @@ namespace model {
         std::optional<Player> player;
 
         if (this->activePlayerList.count(clientId)) {
-            player = this->activePlayerList.at(clientId);
+            player = this->tempIdToPlayer.at(this->activePlayerList.at(clientId));
         }
 
         return player;

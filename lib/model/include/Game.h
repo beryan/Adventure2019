@@ -43,13 +43,14 @@ namespace model {
         static const char* const COMMAND_INFO;
         static const char* const COMMAND_START;
 
-        /* Placeholder member variables */
+        /* Login/Register member variables */
         std::map<std::string, std::string> tempUserToPass;
         std::map<std::string, int> tempUserToId;
         std::map<int, Player> tempIdToPlayer;
+        std::map<int, unsigned long int> activeIdToClient;
         /* End */
 
-        std::map<unsigned long int, Player> activePlayerList;
+        std::map<unsigned long int, int> activePlayerList;
 
         /**
          * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
