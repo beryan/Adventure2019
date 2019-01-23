@@ -7,11 +7,16 @@
 
 #include <string>
 #include <vector>
+#include <array>
 #include <utility>
+#include "Item.h"
 
 const double STARTING_HEALTH = 100.00;
 const double MAX_HEALTH = 100.00;
 const int MAX_KEYWORDS = 8;
+
+using model::Item;
+using model::Slot;
 
 namespace model {
     class User {
@@ -38,12 +43,23 @@ namespace model {
 
         void setDescription(std::string desc);
 
+        std::array<Item*, Slot::Count> getEquipments();
+
+        void equipItem(Item *item);
+
+        std::vector<Item> getInventory();
+
+        void addItem(Item item);
     private:
         int id;
 
         std::vector<std::string> keywords;
 
         std::vector<std::string> description;
+
+        std::vector<Item> inventory;
+
+        std::array<Item*, Slot::Count> equipment;
 
         double health;
     };
