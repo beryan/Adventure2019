@@ -1,4 +1,5 @@
 add_library(model
+        src/User.cpp
         src/Player.cpp
         src/NPC.cpp
         src/UserCollection.cpp
@@ -8,6 +9,8 @@ add_library(model
         src/User.cpp
         src/Door.cpp
         src/Room.cpp
+        src/Area.cpp
+        src/Reset.cpp
         src/World.cpp
         src/WorldHandler.cpp
         )
