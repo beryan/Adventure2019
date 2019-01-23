@@ -8,7 +8,7 @@ using model::Player;
 using model::Role;
 
 namespace model {
-    Player::Player(int id, std::string username, int password) :
+    Player::Player(int id, std::string username, std::string password) :
         User(id),
         username(std::move(username)),
         password(password),
@@ -23,11 +23,11 @@ namespace model {
         this->username.assign(username);
     }
 
-    int Player::getPassword() {
+    std::string Player::getPassword() {
         return password;
     }
 
-    void Player::setPassword(int password) {
+    void Player::setPassword(std::string password) {
         this->password = password;
     }
 

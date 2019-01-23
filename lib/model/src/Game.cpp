@@ -20,15 +20,20 @@ lowercase(std::string string) {
     return string;
 }
 
+/* Placeholder code */
+int idTracker = 0;
+/* End */
+
 namespace model {
     const char* const Game::COMMAND_SHUTDOWN = "shutdown";
-    const char* const Game::COMMAND_QUIT = "quit";
-    const char* const Game::COMMAND_SAY = "say";
-    const char* const Game::COMMAND_HELP = "help";
-    const char* const Game::COMMAND_LOGOUT = "logout";
+    const char* const Game::COMMAND_QUIT     = "quit";
+    const char* const Game::COMMAND_SAY      = "say";
+    const char* const Game::COMMAND_HELP     = "help";
     const char* const Game::COMMAND_REGISTER = "register";
-    const char* const Game::COMMAND_INFO = "info";
-    const char* const Game::COMMAND_START = "start";
+    const char* const Game::COMMAND_LOGIN    = "login";
+    const char* const Game::COMMAND_LOGOUT   = "logout";
+    const char* const Game::COMMAND_INFO     = "info";
+    const char* const Game::COMMAND_START    = "start";
 
     Game::Game(std::vector<Connection> &clients,
                std::vector<unsigned long int> &newClientIds,
@@ -40,6 +45,13 @@ namespace model {
         this->disconnectedClientIds = &disconnectedClientIds;
         this->disconnect = disconnect;
         this->shutdown = shutdown;
+
+        /* Placeholder member variables */
+        this->tempUserToPass = {};
+        this->tempUserToId = {};
+        this->tempIdToPlayer = {};
+        /* End */
+
         this->activePlayerList = {};
     }
 
@@ -48,8 +60,14 @@ namespace model {
         while (!this->newClientIds->empty()) {
             auto clientId = this->newClientIds->back();
 
-            std::cout << clientId << " has connected to the game.\n";
-            results.emplace_back(GameResponse(clientId, "Welcome to Adventure 2019!\n"));
+            std::ostringstream introduction;
+
+            introduction << "Welcome to Adventure 2019!\n"
+                         << "\n"
+                         << "Enter \"login [username] [password]\" to sign into an existing account\n"
+                         << "Enter \"register [username] [password]\" to make a new account\n";
+
+            results.emplace_back(GameResponse(clientId, introduction.str()));
 
             this->newClientIds->pop_back();
         }
@@ -60,7 +78,15 @@ namespace model {
         while (!this->disconnectedClientIds->empty()) {
             auto clientId = this->disconnectedClientIds->back();
 
-            std::cout << clientId << " has disconnected from the game.\n";
+            /* For placeholder logged in */
+            if (this->activePlayerList.count(clientId)) {
+                std::string username = this->activePlayerList.at(clientId).getUsername();
+                this->activePlayerList.erase(clientId);
+
+                std::cout << username << " has been logged out of the game due to disconnect\n";
+            }
+            /* End */
+
 
             this->disconnectedClientIds->pop_back();
         }
@@ -69,6 +95,8 @@ namespace model {
     void
     Game::handleIncoming(const std::deque<Message> &incoming, std::deque<GameResponse> &results) {
         for (auto& input : incoming) {
+            unsigned long int clientId = input.connection.id;
+
             std::ostringstream tempMessage;
             std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
             std::string param;
@@ -84,19 +112,107 @@ namespace model {
             } else if (command == COMMAND_SHUTDOWN) {
                 std::cout << "Shutting down.\n";
                 this->shutdown();
+                return;
+            }
 
-            } else if (command == COMMAND_START) {
+            // Main menu commands
+            if (!this->activePlayerList.count(clientId)) {
+                if (command == COMMAND_REGISTER) {
+                    /* Placeholder code */
+                    std::string username = param.substr(0, param.find(' '));
+                    std::string password;
+
+                    if (param.find(' ') != std::string::npos) {
+                        password = param.substr(param.find(' ') + 1);
+
+                        Player newPlayer = Player(idTracker, username, password);
+                        this->activePlayerList.emplace(clientId, newPlayer);
+                        this->tempUserToPass.emplace(newPlayer.getUsername(), newPlayer.getPassword());
+                        this->tempUserToId.emplace(newPlayer.getUsername(), newPlayer.getId());
+                        this->tempIdToPlayer.emplace(newPlayer.getId(), newPlayer);
+                        ++idTracker;
+
+                        std::cout << username << " has been registered to the game\n";
+                        tempMessage << "Account created!\n";
+
+                    } else {
+                        tempMessage << "Missing fields for registration.\n";
+
+                    }
+                    /* End */
+
+                } else if (command == COMMAND_LOGIN) {
+                    /* Placeholder code */
+                    std::string username = param.substr(0, param.find(' '));
+                    std::string password;
+                    bool success = false;
+
+                    if (param.find(' ') != std::string::npos) {
+                        password = param.substr(param.find(' ') + 1);
+
+                        if (this->tempUserToPass.count(username)) {
+                            if (this->tempUserToPass.at(username) == password) {
+                                this->activePlayerList.emplace(clientId, this->tempIdToPlayer.at(this->tempUserToId.at(username)));
+                                success = true;
+                            }
+                        }
+                    }
+
+                    if (success) {
+                        std::cout << username << " has entered the game\n";
+                        tempMessage << "Logged in successfully!\n";
+
+                    } else {
+                        tempMessage << "Invalid username or password.\n";
+                    }
+                    /* End */
+
+
+                } else if (command == COMMAND_HELP) {
+                    tempMessage << "\n"
+                                << "********\n"
+                                << "* HELP *\n"
+                                << "********\n"
+                                << "\n"
+                                << "COMMANDS:\n"
+                                << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
+                                << "  - " << COMMAND_REGISTER << " (create a new account with [username] [password])\n"
+                                << "  - " << COMMAND_LOGIN    << " (login to an account with [username] [password])\n"
+                                << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
+                                << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
+                                << "\n";
+
+                } else {
+                    tempMessage << "The word \"" << command << "\" is not a valid command.\n"
+                                << "\n"
+                                << "Enter " << "\"" << COMMAND_LOGIN << " [username] [password]\" to log into an existing account\n"
+                                << "Enter " << "\"" << COMMAND_REGISTER << "[username] [password]\" to create a new account\n"
+                                << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
+
+                }
+
+                results.emplace_back(GameResponse(input.connection.id, tempMessage.str()));
+                continue;
+            }
+
+            // In-game commands
+            if (command == COMMAND_START) {
                 WorldHandler wh;
 
             } else if (command == COMMAND_SAY) {
                 isLocal = false;
-                tempMessage << input.connection.id << "> " << param << "\n";
+                tempMessage << this->activePlayerList.at(input.connection.id).getUsername() << "> " << param << "\n";
 
             } else if (command == COMMAND_LOGOUT) {
-                tempMessage << "Logout not yet implemented\n";
+                /* Placeholder code */
+                std::string username = this->activePlayerList.at(clientId).getUsername();
+                this->activePlayerList.erase(input.connection.id);
+                this->newClientIds->push_back(input.connection.id);
 
-            } else if (command == COMMAND_REGISTER) {
-                tempMessage << "Registering not yet implemented\n";
+                std::cout << username << " has logged out of the game\n";
+                tempMessage << "Logged out successfully.\n"
+                            << "\n";
+                /* End */
 
             } else if (command == COMMAND_HELP) {
                 tempMessage << "\n"

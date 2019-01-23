@@ -15,6 +15,7 @@ namespace model {
     Player registerPlayer(std::string username, std::string password);
     Player login(std::string username, std::string password);
     bool isRegistered(std::string);
+
 //    void parseJSONUsers();
   private:
     std::map<std::string, int> usernameToIdMap;

@@ -37,10 +37,17 @@ namespace model {
         static const char* const COMMAND_QUIT;
         static const char* const COMMAND_SAY;
         static const char* const COMMAND_HELP;
-        static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_REGISTER;
+        static const char* const COMMAND_LOGIN;
+        static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_INFO;
         static const char* const COMMAND_START;
+
+        /* Placeholder member variables */
+        std::map<std::string, std::string> tempUserToPass;
+        std::map<std::string, int> tempUserToId;
+        std::map<int, Player> tempIdToPlayer;
+        /* End */
 
         std::map<unsigned long int, Player> activePlayerList;
 
