@@ -6,17 +6,8 @@
 #include <algorithm>
 
 #include "UserCollection.h"
+
 using model::UserCollection;
-
-UserCollection* UserCollection::instance = nullptr;
-
-UserCollection* UserCollection::Instance() {
-  if (!instance) {
-    instance = new UserCollection;
-  }
-
-  return instance;
-}
 
 void model::UserCollection::addUser(const model::User& user) {
   users.push_back(user);
@@ -42,4 +33,8 @@ long model::UserCollection::findUser(const model::User& user) {
   }
 
   return index;
+}
+
+model::UserCollection::UserCollection(std::vector<User> users) {
+  this->users = std::move(users);
 }

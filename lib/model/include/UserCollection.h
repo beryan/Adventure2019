@@ -9,23 +9,28 @@
 #include <memory>
 #include "User.h"
 
-namespace model {
-    class UserCollection {
-    public:
-      static UserCollection* Instance();
-      void addUser(const User&);
-      User getUser(unsigned int index);
-      unsigned long getSize();
-      void deleteUser(unsigned int index);
-      long findUser(const User&);
+using model::User;
 
-    private:
-      std::vector<model::User> users;
-      UserCollection() = default;
-      UserCollection(UserCollection const&);
-      UserCollection& operator=(UserCollection const&) {};
-      static UserCollection* instance;
-    };
+namespace model {
+  class UserCollection {
+  public:
+    UserCollection() = default;
+
+    explicit UserCollection(std::vector<User>);
+
+    void addUser(const User&);
+
+    User getUser(unsigned int index);
+
+    unsigned long getSize();
+
+    void deleteUser(unsigned int index);
+
+    long findUser(const User&);
+
+  private:
+    std::vector<User> users;
+  };
 }
 
 #endif //WEBSOCKETNETWORKING_USERCOLLECTION_H
