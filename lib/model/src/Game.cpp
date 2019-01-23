@@ -252,7 +252,6 @@ namespace model {
                             << "COMMANDS:\n"
                             << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
                             << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << COMMAND_REGISTER << " [email password](registers user [email] with password [password])\n"
                             << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
                             << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
                             << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
