@@ -7,6 +7,8 @@ add_library(model
         include/Role.h
         src/User.cpp
         src/Door.cpp
+        src/Game.cpp
+        src/GameResponse.cpp
         src/Room.cpp
         src/Area.cpp
         src/Reset.cpp
@@ -22,13 +24,13 @@ target_include_directories(model
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
+target_link_libraries(model networking json)
+
 set_target_properties(model
         PROPERTIES
         LINKER_LANGUAGE CXX
         CXX_STANDARD 17
         )
-
-target_link_libraries(model json)
 
 install(TARGETS model
         ARCHIVE DESTINATION lib
