@@ -1,11 +1,17 @@
-find_package(Boost REQUIRED COMPONENTS unit_test_framework REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
+add_subdirectory(lib/googlemock)
+enable_testing()
 
-add_executable(unit_tests
-        player_class_test.cpp
+add_executable(runAllTests
+        user-test.cpp
         )
 
-target_link_libraries(unit_tests
-        model
-        )
+target_link_libraries(runAllTests gmock gtest gtest_main)
+target_link_libraries(runAllTests model)
+
+include_directories(
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/googletest/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/lib/googlemock/include/
+)
+
+add_test(NAME AllTests COMMAND runAllTests)
 
