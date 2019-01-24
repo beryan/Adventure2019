@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "gmock//gmock.h"
+#include "gmock/gmock.h"
 #include "User.h"
 
 TEST(UserTestSuite, UserTest) {
