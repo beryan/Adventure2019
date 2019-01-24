@@ -6,6 +6,6 @@
 #include "gmock//gmock.h"
 #include "User.h"
 
-TEST(USerTestSuite, UserTest) {
+TEST(UserTestSuite, UserTest) {
 
 }
