@@ -22,8 +22,8 @@ using networking::Message;
 using model::Game;
 
 std::vector<Connection> clients;
-std::vector<unsigned long int> newClientIds;
-std::vector<unsigned long int> disconnectedClientIds;
+std::vector<uintptr_t> newClientIds;
+std::vector<uintptr_t> disconnectedClientIds;
 
 void
 onConnect(Connection c) {
@@ -66,7 +66,7 @@ main(int argc, char* argv[]) {
   }
 
   bool done = false;
-  unsigned short port = std::stoi(argv[1]);
+  unsigned short port = (unsigned short) std::stoi(argv[1]);
   Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
   std::function<void(Connection)> disconnect = [&server](Connection connection) {

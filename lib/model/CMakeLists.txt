@@ -8,7 +8,6 @@ add_library(model
         src/User.cpp
         src/Door.cpp
         src/Game.cpp
-        src/GameResponse.cpp
         src/Room.cpp
         src/Area.cpp
         src/Reset.cpp
