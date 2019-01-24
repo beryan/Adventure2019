@@ -46,14 +46,11 @@ namespace model {
         /* Login/Register member variables */
         typedef int IdType;
         IdType nextId;
-
-        std::map<std::string, std::string> tempUserToPass;
-        std::map<std::string, IdType> tempUserToId;
-        std::map<IdType, Player> tempIdToPlayer;
+        std::map<std::string, Player*> usernameToPlayer;
+        std::map<IdType, Player> idToPlayer;
         std::map<IdType, unsigned long int> activeIdToClient;
+        std::map<unsigned long int, IdType> activeClientToId;
         /* End */
-
-        std::map<unsigned long int, IdType> activePlayerList;
 
         /**
          * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -88,8 +85,13 @@ namespace model {
         std::deque<Message>
         formMessages(std::deque<GameResponse> &results);
 
-        std::optional<Player>
-        getPlayer(const unsigned long int& clientId);
+        /* Login/Register Code */
+        void
+        loginPlayer(unsigned long int clientId, IdType playerId);
+
+        void
+        logoutPlayer(IdType playerId);
+        /* End */
 
     public:
         /**
