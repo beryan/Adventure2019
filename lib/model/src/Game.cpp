@@ -32,8 +32,8 @@ namespace model {
     const char* const Game::COMMAND_START    = "start";
 
     Game::Game(std::vector<Connection> &clients,
-               std::vector<unsigned long int> &newClientIds,
-               std::vector<unsigned long int> &disconnectedClientIds,
+               std::vector<uintptr_t> &newClientIds,
+               std::vector<uintptr_t> &disconnectedClientIds,
                std::function<void(Connection)> &disconnect,
                std::function<void()> &shutdown) {
         this->clients = &clients;
@@ -52,7 +52,7 @@ namespace model {
     }
 
     void
-    Game::handleConnects(std::deque<GameResponse> &results) {
+    Game::handleConnects(std::deque<Response> &results) {
         while (!this->newClientIds->empty()) {
             auto clientId = this->newClientIds->back();
 
@@ -63,14 +63,14 @@ namespace model {
                          << "Enter \"login [username] [password]\" to sign into an existing account\n"
                          << "Enter \"register [username] [password]\" to make a new account\n";
 
-            results.emplace_back(GameResponse(clientId, introduction.str()));
+            results.push_back({clientId, introduction.str(), true});
 
             this->newClientIds->pop_back();
         }
     }
 
     void
-    Game::handleDisconnects(std::deque<GameResponse> &results) {
+    Game::handleDisconnects(std::deque<Response> &results) {
         while (!this->disconnectedClientIds->empty()) {
             auto clientId = this->disconnectedClientIds->back();
 
@@ -90,9 +90,9 @@ namespace model {
     }
 
     void
-    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<GameResponse> &results) {
+    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &results) {
         for (auto& input : incoming) {
-            unsigned long int clientId = input.connection.id;
+            uintptr_t clientId = input.connection.id;
 
             std::ostringstream tempMessage;
             std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
@@ -125,14 +125,14 @@ namespace model {
 
                     } else {
                         tempMessage << "Missing fields for registration.\n";
-                        results.emplace_back(GameResponse(clientId, tempMessage.str()));
+                        results.push_back({clientId, tempMessage.str(), true});
                         continue;
                     }
 
                     if (this->usernameToPlayer.count(username)) {
                         tempMessage << "The username " << username << " has already been taken,"
                                     << " please use a different username.\n";
-                        results.emplace_back(GameResponse(clientId, tempMessage.str()));
+                        results.push_back(Response{clientId, tempMessage.str(), true});
                         continue;
                     }
 
@@ -169,8 +169,9 @@ namespace model {
                                 } else {
                                     // Player is already being used by a client, logout associated client
                                     // and login with new client
-                                    results.emplace_back(GameResponse(this->activeIdToClient.at(playerId),
-                                                         "You have been logged out due to being logged in elsewhere.\n\n"));
+                                    results.push_back({this->activeIdToClient.at(playerId),
+                                                         "You have been logged out due to being logged in elsewhere.\n\n",
+                                                         true});
 
                                     this->logoutPlayer(playerId);
                                     this->loginPlayer(clientId, playerId);
@@ -215,7 +216,7 @@ namespace model {
 
                 }
 
-                results.emplace_back(GameResponse(clientId, tempMessage.str()));
+                results.push_back({clientId, tempMessage.str(), true});
                 continue;
             }
 
@@ -268,31 +269,31 @@ namespace model {
                 tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
             }
 
-            results.emplace_back(GameResponse(input.connection.id, tempMessage.str(), isLocal));
+            results.push_back({clientId, tempMessage.str(), isLocal});
         }
     }
 
     void
-    Game::handleOutgoing(std::deque<model::GameResponse> &results) {
+    Game::handleOutgoing(std::deque<model::Response> &results) {
         /*
-         * Call handler methods that push GameResponses without requiring user input here
+         * Call handler methods that push Responses without requiring user input here
          */
     }
 
     std::deque<Message>
-    Game::formMessages(std::deque<GameResponse> &results) {
+    Game::formMessages(std::deque<Response> &results) {
         std::deque<Message> outgoing;
-        std::map<unsigned long int, std::ostringstream> clientMessages;
+        std::map<uintptr_t, std::ostringstream> clientMessages;
 
-        for (auto entry : results) {
-            if (entry.isLocal()) {
-                clientMessages[entry.getClientId()] << entry.getMessage();
+        for (const auto &entry : results) {
+            if (entry.isLocal) {
+                clientMessages[entry.clientId] << entry.message;
 
             } else {
                 for (auto client : *this->clients) {
                     // Send to public messages to logged in users only
                     if (this->activeClientToId.count(client.id)) {
-                        clientMessages[client.id] << entry.getMessage();
+                        clientMessages[client.id] << entry.message;
                     }
                 }
             }
@@ -307,7 +308,7 @@ namespace model {
 
     /* Login/Register Code */
     void
-    Game::loginPlayer(unsigned long int clientId, IdType playerId) {
+    Game::loginPlayer(uintptr_t clientId, IdType playerId) {
         this->activeIdToClient.emplace(playerId, clientId);
         this->activeClientToId.emplace(clientId, playerId);
     }
@@ -321,7 +322,7 @@ namespace model {
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        std::deque<GameResponse> results;
+        std::deque<Response> results;
 
         this->handleConnects(results);
 
