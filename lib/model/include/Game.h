@@ -37,12 +37,23 @@ namespace model {
         static const char* const COMMAND_QUIT;
         static const char* const COMMAND_SAY;
         static const char* const COMMAND_HELP;
-        static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_REGISTER;
+        static const char* const COMMAND_LOGIN;
+        static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_INFO;
         static const char* const COMMAND_START;
 
-        std::map<unsigned long int, Player> activePlayerList;
+        /* Login/Register member variables */
+        typedef int IdType;
+        IdType nextId;
+
+        std::map<std::string, std::string> tempUserToPass;
+        std::map<std::string, IdType> tempUserToId;
+        std::map<IdType, Player> tempIdToPlayer;
+        std::map<IdType, unsigned long int> activeIdToClient;
+        /* End */
+
+        std::map<unsigned long int, IdType> activePlayerList;
 
         /**
          * Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
