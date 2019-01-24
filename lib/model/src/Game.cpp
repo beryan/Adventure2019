@@ -20,10 +20,6 @@ lowercase(std::string string) {
     return string;
 }
 
-/* Login/Register code */
-int idTracker = 0;
-/* End */
-
 namespace model {
     const char* const Game::COMMAND_SHUTDOWN = "shutdown";
     const char* const Game::COMMAND_QUIT     = "quit";
@@ -47,6 +43,7 @@ namespace model {
         this->shutdown = shutdown;
 
         /* Login/Register member variables */
+        this->nextId = 1;
         this->tempUserToPass = {};
         this->tempUserToId = {};
         this->tempIdToPlayer = {};
@@ -139,13 +136,13 @@ namespace model {
                         continue;
                     }
 
-                    int currentId = idTracker;
-                    this->tempIdToPlayer.emplace(idTracker, Player(currentId, username, password));
+                    int currentId = this->nextId;
+                    this->tempIdToPlayer.emplace(this->nextId, Player(currentId, username, password));
                     this->tempUserToId.emplace(username, currentId);
                     this->tempUserToPass.emplace(username, password);
                     this->activeIdToClient.emplace(currentId, clientId);
                     this->activePlayerList.emplace(clientId, currentId);
-                    ++idTracker;
+                    ++this->nextId;
 
                     std::cout << username << " has been registered to the game\n";
                     tempMessage << "Account created!\n";
