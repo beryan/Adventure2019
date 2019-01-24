@@ -11,15 +11,15 @@
 namespace model {
     class Player : public User {
     public:
-        Player(int id, std::string username, int password);
+        Player(int id, std::string username, std::string password);
 
         std::string getUsername();
 
         void setUsername(std::string username);
 
-        int getPassword();
+        std::string getPassword();
 
-        void setPassword(int password);
+        void setPassword(std::string password);
 
         Role getRole();
 
@@ -28,7 +28,7 @@ namespace model {
     private:
         std::string username;
 
-        int password;
+        std::string password;
 
         Role role;
     };
