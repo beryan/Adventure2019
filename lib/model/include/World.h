@@ -6,12 +6,23 @@
 #define WEBSOCKETNETWORKING_WORLD_H
 
 #include <map>
+#include <vector>
 #include "Player.h"
+#include "Area.h"
+
+using model::Area;
 
 namespace model{
  class World{
  public:
      World();
+     World(std::vector<Area> areas);
+
+     //getters and setters
+     std::vector<Area> getAreas();
+     void setAreas(std::vector<Area> areas);
+
+     void addArea(Area area);
 
      std::map<int, Player> getUserMap();
 //     std::map<int, Character> getAreaMap();
@@ -21,6 +32,7 @@ namespace model{
      void printUsers();
 
  private:
+     std::vector<Area> areas;
      std::map<int, Player> usersMap;
      //std::map<int, Area> areasMap;
 
@@ -28,5 +40,3 @@ namespace model{
 }
 
 #endif //WEBSOCKETNETWORKING_WORLD_H
-
-
