@@ -9,7 +9,7 @@
 #include <iostream>
 #include <unistd.h>
 
-#include "ChatWindow.h"
+#include "GameWindow.h"
 #include "Client.h"
 
 

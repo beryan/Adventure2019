@@ -58,7 +58,7 @@ namespace model {
     void WorldHandler::createUsersFromJSON(json users){
         for (json::iterator it = users.begin(); it != users.end(); ++it) {
 //            std::cout << it.value().at("password") << std::endl;
-            model::Player p (it.value().at("id"), it.value().at("username"), 1232442);
+            model::Player p (it.value().at("id"), it.value().at("username"), "foobar");
             addUser(p);
         }
     }

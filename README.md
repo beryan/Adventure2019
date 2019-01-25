@@ -76,21 +76,21 @@ After that, you're all set. Your executable files should be in the `adventureBui
 `NEVER` build from the adventure2019 directory.
 
 ### Running
-First run the chat server on an unused port of the server machine. The server also takes an HTML file that it will server to standard http requests for `index.html`.
+First run the game server on an unused port of the server machine. The server also takes an HTML file that it will server to standard http requests for `index.html`.
 
 ```
-bin/chatserver 4000 ../adventure2019/webchat.html
+bin/gameserver 4000 ../adventure2019/webgame.html
 ```
 
-In separate terminals, run multiple instances of the chat client using:
+In separate terminals, run multiple instances of the game client using:
 
 ```
-bin/chatclient localhost 4000
+bin/gameclient localhost 4000
 ```
 
-This will connect to the given port (4000 in this case) of the local machine. Connecting to a remote machine can be done by explicitly using the remote machine's IP address instead of `localhost`. Inside the chat client, you can enter commands or chat with other clients by typing text and hitting the ENTER key. You can disconnect from the server by typing `quit`. You can shut down the server and disconnect all clients by typing `shutdown`. Typing anything else will send a chat message to other clients.
+This will connect to the given port (4000 in this case) of the local machine. Connecting to a remote machine can be done by explicitly using the remote machine's IP address instead of `localhost`. Inside the game client, you can enter commands or game with other clients by typing text and hitting the ENTER key. You can disconnect from the server by typing `quit`. You can shut down the server and disconnect all clients by typing `shutdown`. Typing anything else will send a game message to other clients.
 
-A browser based interface can be accessed by opening the URL `http://localhost:4000/index.html`. The server will respond with the specified web page above. By clicking `Connect`, the page gains access to chat on the server via web sockets in browsers that support web sockets.
+A browser based interface can be accessed by opening the URL `http://localhost:4000/index.html`. The server will respond with the specified web page above. By clicking `Connect`, the page gains access to game on the server via web sockets in browsers that support web sockets.
 
 ## Provisioning with Vagrant
 
@@ -110,7 +110,7 @@ Once the provisioning has completed, use ```vagrant ssh``` to access the VM's co
 
 The project built with cmake and make is found at ```/home/vagrant/build``` or ```~/build```.
 
-You can run the chatserver with ```./bin/chatserver 3000 ../adventure2019/webchat.html``` and access the server (localhost:3000) with your browser.
+You can run the gameserver with ```./bin/gameserver 3000 ../adventure2019/webgame.html``` and access the server (localhost:3000) with your browser.
 **Note: Vagrant is configured to forward ports 3000 and 4000 to your computer, so be sure to only use these ports or reconfigure the VagrantFile and run ```vagrant reload```.**
 
 Use the command ```exit``` to disconnect from the VM.
