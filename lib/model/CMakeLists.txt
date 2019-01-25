@@ -3,7 +3,6 @@ add_library(model
         src/Player.cpp
         src/NPC.cpp
         src/Object.cpp
-        src/Character.cpp
         src/Door.cpp
         src/Game.cpp
         src/Room.cpp
