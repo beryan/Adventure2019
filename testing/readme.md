@@ -2,15 +2,19 @@
 1. Create a source file appended with `-test` just before the `.cpp`
 > This is for naming convention sake, the actual test case files don't require `-test` for it to work.
 2. Implement a `TEST(arg1, arg2)` function with `arg1` being the Test Suite it belongs in, and `arg2` being the name of the Test Case being executed
-> ![image](/uploads/ac75f6d8d955ac43d96dcbca9a146559/image.png)
->
+
+
+![image](/uploads/ac75f6d8d955ac43d96dcbca9a146559/image.png)
+
+
 > Use `ASSERT` when the condition must hold - if it doesn't the test stops right there. Use this when the
 > remainder of the test doesn't have semantic meaning without this condition holding.
 >
 > Use `EXPECT` when the condition should hold, but in cases where it doesn't we can still get value out of
 > continuing the test. (The test will still ultimately fail at the end, though.) [1]
 3. Add `{file-name}-test.cpp` to the `{project-root}/testing/CMakeLists.txt` file's `add_executable` function for it to build correcty
-> ![image](/uploads/3455bcb7fa75cb81c2117410569f4d2a/image.png)
+
+![image](/uploads/3455bcb7fa75cb81c2117410569f4d2a/image.png)
 
 Once you've followed these steps, all you need to do is `build` and `make` in your project's out-of-source build directory and you are set.
 
