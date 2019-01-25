@@ -19,6 +19,12 @@ namespace model {
         password(std::move(password))
         {}
 
+    Player::Player(int id, std::string username) :
+        Character(id),
+        username(std::move(username)),
+        password("foobar")
+        {}
+
     std::string Player::getUsername() const {
         return this->username;
     }

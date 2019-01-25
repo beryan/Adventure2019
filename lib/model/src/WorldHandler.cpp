@@ -5,6 +5,7 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include <PlayerHandler.h>
 
 #include "WorldHandler.h"
 
@@ -43,25 +44,18 @@ namespace model {
 
         json t = json::parse(ifs);
 
-        json users;
+        json usersJson;
 
         for (json::iterator it = t.begin(); it != t.end(); ++it) {
             if(it.key() == "USERS"){
-                users = it.value();
+                usersJson = it.value();
             }
         }
 
-        createUsersFromJSON(users);
+        auto players = model::PlayerHandler::parseJsonUsers(usersJson);
+        for (const auto &player : players) {
+            addUser(player);
+        }
         world.printUsers();
     }
-
-    void WorldHandler::createUsersFromJSON(json users){
-        for (json::iterator it = users.begin(); it != users.end(); ++it) {
-//            std::cout << it.value().at("password") << std::endl;
-            model::Player p (it.value().at("id"), it.value().at("username"), "foobar");
-            addUser(p);
-        }
-    }
-
-
 }
