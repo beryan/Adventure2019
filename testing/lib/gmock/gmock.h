@@ -12,7 +12,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -69,7 +69,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -114,7 +114,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -134,7 +134,7 @@
 // Google Mock - a framework for writing C++ mock classes.
 //
 // This file defines some utilities useful for implementing Google
-// Mock.  They are subject to change without notice, so please DO NOT
+// Mock.  They are subject idOfRoomDoorLeadsTo change without notice, so please DO NOT
 // USE THEM IN USER CODE.
 
 #ifndef GMOCK_INCLUDE_GMOCK_INTERNAL_GMOCK_INTERNAL_UTILS_H_
@@ -162,7 +162,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -201,7 +201,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -218,9 +218,9 @@
 //
 // Author: vadimb@google.com (Vadim Berman)
 //
-// Low-level types and utilities for porting Google Mock to various
+// Low-level types and utilities for porting Google Mock idOfRoomDoorLeadsTo various
 // platforms.  All macros ending with _ and symbols defined in an
-// internal namespace are subject to change without notice.  Code
+// internal namespace are subject idOfRoomDoorLeadsTo change without notice.  Code
 // outside Google Mock MUST NOT USE THEM DIRECTLY.  Macros that don't
 // end with _ are part of Google Mock's public API and can be used by
 // code outside Google Mock.
@@ -235,10 +235,10 @@
 // Most of the utilities needed for porting Google Mock are also
 // required for Google Test and are defined in gtest-port.h.
 //
-// Note to maintainers: to reduce code duplication, prefer adding
-// portability utilities to Google Test's gtest-port.h instead of
+// Note idOfRoomDoorLeadsTo maintainers: idOfRoomDoorLeadsTo reduce code duplication, prefer adding
+// portability utilities idOfRoomDoorLeadsTo Google Test's gtest-port.h instead of
 // here, as Google Mock depends on Google Test.  Only add a utility
-// here if it's truly specific to Google Mock.
+// here if it's truly specific idOfRoomDoorLeadsTo Google Mock.
 #include "gtest/gtest.h"
 // Copyright 2015, Google Inc.
 // All rights reserved.
@@ -254,7 +254,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -288,18 +288,18 @@
 #endif  // GMOCK_INCLUDE_GMOCK_INTERNAL_CUSTOM_GMOCK_PORT_H_
 
 // To avoid conditional compilation everywhere, we make it
-// gmock-port.h's responsibility to #include the header implementing
+// gmock-port.h's responsibility idOfRoomDoorLeadsTo #include the header implementing
 // tr1/tuple.  gmock-port.h does this via gtest-port.h, which is
-// guaranteed to pull in the tuple header.
+// guaranteed idOfRoomDoorLeadsTo pull in the tuple header.
 
 // For MS Visual C++, check the compiler version. At least VS 2003 is
-// required to compile Google Mock.
+// required idOfRoomDoorLeadsTo compile Google Mock.
 #if defined(_MSC_VER) && _MSC_VER < 1310
-# error "At least Visual C++ 2003 (7.1) is required to compile Google Mock."
+# error "At least Visual C++ 2003 (7.1) is required idOfRoomDoorLeadsTo compile Google Mock."
 #endif
 
-// Macro for referencing flags.  This is public as we want the user to
-// use this syntax to reference Google Mock flags.
+// Macro for referencing flags.  This is public as we want the user idOfRoomDoorLeadsTo
+// use this syntax idOfRoomDoorLeadsTo reference Google Mock flags.
 #define GMOCK_FLAG(name) FLAGS_gmock_##name
 
 #if !defined(GMOCK_DECLARE_bool_)
@@ -334,11 +334,11 @@ namespace internal {
 // This is used in implementing the IgnoreResult(a) action.
 class IgnoredValue {
  public:
-  // This constructor template allows any value to be implicitly
-  // converted to IgnoredValue.  The object has no data member and
-  // doesn't try to remember anything about the argument.  We
-  // deliberately omit the 'explicit' keyword in order to allow the
-  // conversion to be implicit.
+  // This constructor template allows any value idOfRoomDoorLeadsTo be implicitly
+  // converted idOfRoomDoorLeadsTo IgnoredValue.  The object has no data member and
+  // doesn't try idOfRoomDoorLeadsTo remember anything about the argument.  We
+  // deliberately omit the 'explicit' keyword in order idOfRoomDoorLeadsTo allow the
+  // conversion idOfRoomDoorLeadsTo be implicit.
   template <typename T>
   IgnoredValue(const T& /* ignored */) {}  // NOLINT(runtime/explicit)
 };
@@ -561,13 +561,13 @@ struct Function<R(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)>
 namespace testing {
 namespace internal {
 
-// Converts an identifier name to a space-separated list of lower-case
+// Converts an identifier name idOfRoomDoorLeadsTo a space-separated list of lower-case
 // words.  Each maximum substring of the form [A-Za-z][a-z]*|\d+ is
 // treated as one word.  For example, both "FooBar123" and
-// "foo_bar_123" are converted to "foo bar 123".
+// "foo_bar_123" are converted idOfRoomDoorLeadsTo "foo bar 123".
 GTEST_API_ string ConvertIdentifierNameToWords(const char* id_name);
 
-// PointeeOf<Pointer>::type is the type of a value pointed to by a
+// PointeeOf<Pointer>::type is the type of a value pointed idOfRoomDoorLeadsTo by a
 // Pointer, which can be either a smart pointer or a raw pointer.  The
 // following default implementation is for the case where Pointer is a
 // smart pointer.
@@ -592,7 +592,7 @@ inline const typename Pointer::element_type* GetRawPointer(const Pointer& p) {
 template <typename Element>
 inline Element* GetRawPointer(Element* p) { return p; }
 
-// This comparator allows linked_ptr to be stored in sets.
+// This comparator allows linked_ptr idOfRoomDoorLeadsTo be stored in sets.
 template <typename T>
 struct LinkedPtrLessThan {
   bool operator()(const ::testing::internal::linked_ptr<T>& lhs,
@@ -619,7 +619,7 @@ struct LinkedPtrLessThan {
 // signed wchar_t and unsigned wchar_t are NOT in the C++ standard.
 // Using them is a bad practice and not portable.  So DON'T use them.
 //
-// Still, Google Mock is designed to work even if the user uses signed
+// Still, Google Mock is designed idOfRoomDoorLeadsTo work even if the user uses signed
 // wchar_t or unsigned wchar_t (obviously, assuming the compiler
 // supports them).
 //
@@ -630,10 +630,10 @@ struct LinkedPtrLessThan {
 # define GMOCK_HAS_SIGNED_WCHAR_T_ 1
 #endif
 
-// In what follows, we use the term "kind" to indicate whether a type
+// In what follows, we use the term "kind" idOfRoomDoorLeadsTo indicate whether a type
 // is bool, an integer type (excluding bool), a floating-point type,
 // or none of them.  This categorization is useful for determining
-// when a matcher argument type can be safely converted to another
+// when a matcher argument type can be safely converted idOfRoomDoorLeadsTo another
 // type in the implementation of SafeMatcherCast.
 enum TypeKind {
   kBool, kInteger, kFloatingPoint, kOther
@@ -676,19 +676,19 @@ GMOCK_DECLARE_KIND_(long double, kFloatingPoint);
 
 #undef GMOCK_DECLARE_KIND_
 
-// Evaluates to the kind of 'type'.
+// Evaluates idOfRoomDoorLeadsTo the kind of 'type'.
 #define GMOCK_KIND_OF_(type) \
   static_cast< ::testing::internal::TypeKind>( \
       ::testing::internal::KindOf<type>::value)
 
-// Evaluates to true iff integer type T is signed.
+// Evaluates idOfRoomDoorLeadsTo true iff integer type T is signed.
 #define GMOCK_IS_SIGNED_(T) (static_cast<T>(-1) < 0)
 
 // LosslessArithmeticConvertibleImpl<kFromKind, From, kToKind, To>::value
-// is true iff arithmetic type From can be losslessly converted to
+// is true iff arithmetic type From can be losslessly converted idOfRoomDoorLeadsTo
 // arithmetic type To.
 //
-// It's the user's responsibility to ensure that both From and To are
+// It's the user's responsibility idOfRoomDoorLeadsTo ensure that both From and To are
 // raw (i.e. has no CV modifier, is not a pointer, and is not a
 // reference) built-in arithmetic types, kFromKind is the kind of
 // From, and kToKind is the kind of To; the value is
@@ -696,33 +696,33 @@ GMOCK_DECLARE_KIND_(long double, kFloatingPoint);
 template <TypeKind kFromKind, typename From, TypeKind kToKind, typename To>
 struct LosslessArithmeticConvertibleImpl : public false_type {};
 
-// Converting bool to bool is lossless.
+// Converting bool idOfRoomDoorLeadsTo bool is lossless.
 template <>
 struct LosslessArithmeticConvertibleImpl<kBool, bool, kBool, bool>
     : public true_type {};  // NOLINT
 
-// Converting bool to any integer type is lossless.
+// Converting bool idOfRoomDoorLeadsTo any integer type is lossless.
 template <typename To>
 struct LosslessArithmeticConvertibleImpl<kBool, bool, kInteger, To>
     : public true_type {};  // NOLINT
 
-// Converting bool to any floating-point type is lossless.
+// Converting bool idOfRoomDoorLeadsTo any floating-point type is lossless.
 template <typename To>
 struct LosslessArithmeticConvertibleImpl<kBool, bool, kFloatingPoint, To>
     : public true_type {};  // NOLINT
 
-// Converting an integer to bool is lossy.
+// Converting an integer idOfRoomDoorLeadsTo bool is lossy.
 template <typename From>
 struct LosslessArithmeticConvertibleImpl<kInteger, From, kBool, bool>
     : public false_type {};  // NOLINT
 
-// Converting an integer to another non-bool integer is lossless iff
+// Converting an integer idOfRoomDoorLeadsTo another non-bool integer is lossless iff
 // the target type's range encloses the source type's range.
 template <typename From, typename To>
 struct LosslessArithmeticConvertibleImpl<kInteger, From, kInteger, To>
     : public bool_constant<
-      // When converting from a smaller size to a larger size, we are
-      // fine as long as we are not converting from signed to unsigned.
+      // When converting from a smaller size idOfRoomDoorLeadsTo a larger size, we are
+      // fine as long as we are not converting from signed idOfRoomDoorLeadsTo unsigned.
       ((sizeof(From) < sizeof(To)) &&
        (!GMOCK_IS_SIGNED_(From) || GMOCK_IS_SIGNED_(To))) ||
       // When converting between the same size, the signedness must match.
@@ -731,23 +731,23 @@ struct LosslessArithmeticConvertibleImpl<kInteger, From, kInteger, To>
 
 #undef GMOCK_IS_SIGNED_
 
-// Converting an integer to a floating-point type may be lossy, since
+// Converting an integer idOfRoomDoorLeadsTo a floating-point type may be lossy, since
 // the format of a floating-point number is implementation-defined.
 template <typename From, typename To>
 struct LosslessArithmeticConvertibleImpl<kInteger, From, kFloatingPoint, To>
     : public false_type {};  // NOLINT
 
-// Converting a floating-point to bool is lossy.
+// Converting a floating-point idOfRoomDoorLeadsTo bool is lossy.
 template <typename From>
 struct LosslessArithmeticConvertibleImpl<kFloatingPoint, From, kBool, bool>
     : public false_type {};  // NOLINT
 
-// Converting a floating-point to an integer is lossy.
+// Converting a floating-point idOfRoomDoorLeadsTo an integer is lossy.
 template <typename From, typename To>
 struct LosslessArithmeticConvertibleImpl<kFloatingPoint, From, kInteger, To>
     : public false_type {};  // NOLINT
 
-// Converting a floating-point to another floating-point is lossless
+// Converting a floating-point idOfRoomDoorLeadsTo another floating-point is lossless
 // iff the target type is at least as big as the source type.
 template <typename From, typename To>
 struct LosslessArithmeticConvertibleImpl<
@@ -755,9 +755,9 @@ struct LosslessArithmeticConvertibleImpl<
     : public bool_constant<sizeof(From) <= sizeof(To)> {};  // NOLINT
 
 // LosslessArithmeticConvertible<From, To>::value is true iff arithmetic
-// type From can be losslessly converted to arithmetic type To.
+// type From can be losslessly converted idOfRoomDoorLeadsTo arithmetic type To.
 //
-// It's the user's responsibility to ensure that both From and To are
+// It's the user's responsibility idOfRoomDoorLeadsTo ensure that both From and To are
 // raw (i.e. has no CV modifier, is not a pointer, and is not a
 // reference) built-in arithmetic types; the value is
 // implementation-defined when the above pre-condition is violated.
@@ -766,7 +766,7 @@ struct LosslessArithmeticConvertible
     : public LosslessArithmeticConvertibleImpl<
   GMOCK_KIND_OF_(From), From, GMOCK_KIND_OF_(To), To> {};  // NOLINT
 
-// This interface knows how to report a Google Mock failure (either
+// This interface knows how idOfRoomDoorLeadsTo report a Google Mock failure (either
 // non-fatal or fatal).
 class FailureReporterInterface {
  public:
@@ -787,8 +787,8 @@ GTEST_API_ FailureReporterInterface* GetFailureReporter();
 
 // Asserts that condition is true; aborts the process with the given
 // message if condition is false.  We cannot use LOG(FATAL) or CHECK()
-// as Google Mock might be used to mock the log sink itself.  We
-// inline this function to prevent it from showing up in the stack
+// as Google Mock might be used idOfRoomDoorLeadsTo mock the log sink itself.  We
+// inline this function idOfRoomDoorLeadsTo prevent it from showing up in the stack
 // trace.
 inline void Assert(bool condition, const char* file, int line,
                    const string& msg) {
@@ -830,15 +830,15 @@ const char kWarningVerbosity[] = "warning";
 const char kErrorVerbosity[] = "error";
 
 // Returns true iff a log with the given severity is visible according
-// to the --gmock_verbose flag.
+// idOfRoomDoorLeadsTo the --gmock_verbose flag.
 GTEST_API_ bool LogIsVisible(LogSeverity severity);
 
-// Prints the given message to stdout iff 'severity' >= the level
+// Prints the given message idOfRoomDoorLeadsTo stdout iff 'severity' >= the level
 // specified by the --gmock_verbose flag.  If stack_frames_to_skip >=
 // 0, also prints the stack trace excluding the top
 // stack_frames_to_skip frames.  In opt mode, any positive
 // stack_frames_to_skip is treated as 0, since we don't know which
-// function calls will be inlined by the compiler and need to be
+// function calls will be inlined by the compiler and need idOfRoomDoorLeadsTo be
 // conservative.
 GTEST_API_ void Log(LogSeverity severity,
                     const string& message,
@@ -860,7 +860,7 @@ template <typename T> struct type_equals<T, T> : public true_type {};
 template <typename T> struct remove_reference { typedef T type; };  // NOLINT
 template <typename T> struct remove_reference<T&> { typedef T type; }; // NOLINT
 
-// DecayArray<T>::type turns an array type U[N] to const U* and preserves
+// DecayArray<T>::type turns an array type U[N] idOfRoomDoorLeadsTo const U* and preserves
 // other types.  Useful for saving a copy of a function argument.
 template <typename T> struct DecayArray { typedef T type; };  // NOLINT
 template <typename T, size_t N> struct DecayArray<T[N]> {
@@ -887,9 +887,9 @@ template <typename T> struct DecayArray<T[]> {
 // crashes).
 template <typename T>
 inline T Invalid() {
-  Assert(false, "", -1, "Internal error: attempt to return invalid value");
+  Assert(false, "", -1, "Internal error: attempt idOfRoomDoorLeadsTo return invalid value");
   // This statement is unreachable, and would never terminate even if it
-  // could be reached. It is provided only to placate compiler warnings
+  // could be reached. It is provided only idOfRoomDoorLeadsTo placate compiler warnings
   // about missing return statements.
   return Invalid<T>();
 }
@@ -903,12 +903,12 @@ inline T Invalid() {
 // native array, class StlContainerView<RawContainer> has the
 // following members:
 //
-//   - type is a type that provides an STL-style container view to
+//   - type is a type that provides an STL-style container view idOfRoomDoorLeadsTo
 //     (i.e. implements the STL container concept for) RawContainer;
-//   - const_reference is a type that provides a reference to a const
+//   - const_reference is a type that provides a reference idOfRoomDoorLeadsTo a const
 //     RawContainer;
-//   - ConstReference(raw_container) returns a const reference to an STL-style
-//     container view to raw_container, which is a RawContainer.
+//   - ConstReference(raw_container) returns a const reference idOfRoomDoorLeadsTo an STL-style
+//     container view idOfRoomDoorLeadsTo raw_container, which is a RawContainer.
 //   - Copy(raw_container) returns an STL-style container view of a
 //     copy of raw_container, which is a RawContainer.
 //
@@ -937,9 +937,9 @@ class StlContainerView<Element[N]> {
   typedef internal::NativeArray<RawElement> type;
   // NativeArray<T> can represent a native array either by value or by
   // reference (selected by a constructor argument), so 'const type'
-  // can be used to reference a const native array.  We cannot
+  // can be used idOfRoomDoorLeadsTo reference a const native array.  We cannot
   // 'typedef const type& const_reference' here, as that would mean
-  // ConstReference() has to return a reference to a local variable.
+  // ConstReference() has idOfRoomDoorLeadsTo return a reference idOfRoomDoorLeadsTo a local variable.
   typedef const type const_reference;
 
   static const_reference ConstReference(const Element (&array)[N]) {
@@ -947,7 +947,7 @@ class StlContainerView<Element[N]> {
     testing::StaticAssertTypeEq<Element, RawElement>();
 #if GTEST_OS_SYMBIAN
     // The Nokia Symbian compiler confuses itself in template instantiation
-    // for this call without the cast to Element*:
+    // for this call without the cast idOfRoomDoorLeadsTo Element*:
     // function call '[testing::internal::NativeArray<char *>].NativeArray(
     //     {lval} const char *[4], long, testing::internal::RelationToSource)'
     //     does not match
@@ -997,7 +997,7 @@ class StlContainerView< ::testing::tuple<ElementPointer, Size> > {
 // StlContainer with a reference type.
 template <typename T> class StlContainerView<T&>;
 
-// A type transform to remove constness from the first part of a pair.
+// A type transform idOfRoomDoorLeadsTo remove constness from the first part of a pair.
 // Pairs like that are used as the value_type of associative containers,
 // and this transform produces a similar but assignable pair.
 template <typename T>
@@ -1005,13 +1005,13 @@ struct RemoveConstFromKey {
   typedef T type;
 };
 
-// Partially specialized to remove constness from std::pair<const K, V>.
+// Partially specialized idOfRoomDoorLeadsTo remove constness from std::pair<const K, V>.
 template <typename K, typename V>
 struct RemoveConstFromKey<std::pair<const K, V> > {
   typedef std::pair<K, V> type;
 };
 
-// Mapping from booleans to types. Similar to boost::bool_<kValue> and
+// Mapping from booleans idOfRoomDoorLeadsTo types. Similar idOfRoomDoorLeadsTo boost::bool_<kValue> and
 // std::integral_constant<bool, kValue>.
 template <bool kValue>
 struct BooleanConstant {};
@@ -1058,7 +1058,7 @@ struct BuiltInDefaultValueGetter<T, false> {
            "Default action undefined for the function return type.");
     return internal::Invalid<T>();
     // The above statement will never be reached, but is required in
-    // order for this function to compile.
+    // order for this function idOfRoomDoorLeadsTo compile.
   }
 };
 
@@ -1162,29 +1162,29 @@ GMOCK_DEFINE_DEFAULT_ACTION_FOR_RETURN_TYPE_(double, 0);
 // When an unexpected function call is encountered, Google Mock will
 // let it return a default value if the user has specified one for its
 // return type, or if the return type has a built-in default value;
-// otherwise Google Mock won't know what value to return and will have
-// to abort the process.
+// otherwise Google Mock won't know what value idOfRoomDoorLeadsTo return and will have
+// idOfRoomDoorLeadsTo abort the process.
 //
-// The DefaultValue<T> class allows a user to specify the
+// The DefaultValue<T> class allows a user idOfRoomDoorLeadsTo specify the
 // default value for a type T that is both copyable and publicly
 // destructible (i.e. anything that can be used as a function return
 // type).  The usage is:
 //
-//   // Sets the default value for type T to be foo.
+//   // Sets the default value for type T idOfRoomDoorLeadsTo be foo.
 //   DefaultValue<T>::Set(foo);
 template <typename T>
 class DefaultValue {
  public:
-  // Sets the default value for type T; requires T to be
+  // Sets the default value for type T; requires T idOfRoomDoorLeadsTo be
   // copy-constructable and have a public destructor.
   static void Set(T x) {
     delete producer_;
     producer_ = new FixedValueProducer(x);
   }
 
-  // Provides a factory function to be called to generate the default value.
+  // Provides a factory function idOfRoomDoorLeadsTo be called idOfRoomDoorLeadsTo generate the default value.
   // This method can be used even if T is only move-constructible, but it is not
-  // limited to that case.
+  // limited idOfRoomDoorLeadsTo that case.
   typedef T (*FactoryFunction)();
   static void SetFactory(FactoryFunction factory) {
     delete producer_;
@@ -1245,7 +1245,7 @@ class DefaultValue {
   static ValueProducer* producer_;
 };
 
-// This partial specialization allows a user to set default values for
+// This partial specialization allows a user idOfRoomDoorLeadsTo set default values for
 // reference types.
 template <typename T>
 class DefaultValue<T&> {
@@ -1281,7 +1281,7 @@ class DefaultValue<T&> {
   static T* address_;
 };
 
-// This specialization allows DefaultValue<void>::Get() to
+// This specialization allows DefaultValue<void>::Get() idOfRoomDoorLeadsTo
 // compile.
 template <>
 class DefaultValue<void> {
@@ -1290,15 +1290,15 @@ class DefaultValue<void> {
   static void Get() {}
 };
 
-// Points to the user-set default value for type T.
+// Points idOfRoomDoorLeadsTo the user-set default value for type T.
 template <typename T>
 typename DefaultValue<T>::ValueProducer* DefaultValue<T>::producer_ = NULL;
 
-// Points to the user-set default value for type T&.
+// Points idOfRoomDoorLeadsTo the user-set default value for type T&.
 template <typename T>
 T* DefaultValue<T&>::address_ = NULL;
 
-// Implement this interface to define an action for function type F.
+// Implement this interface idOfRoomDoorLeadsTo define an action for function type F.
 template <typename F>
 class ActionInterface {
  public:
@@ -1310,7 +1310,7 @@ class ActionInterface {
 
   // Performs the action.  This method is not const, as in general an
   // action can have side effects and be stateful.  For example, a
-  // get-the-next-element-from-the-collection action will need to
+  // get-the-next-element-from-the-collection action will need idOfRoomDoorLeadsTo
   // remember the current element.
   virtual Result Perform(const ArgumentTuple& args) = 0;
 
@@ -1319,14 +1319,14 @@ class ActionInterface {
 };
 
 // An Action<F> is a copyable and IMMUTABLE (except by assignment)
-// object that represents an action to be taken when a mock function
+// object that represents an action idOfRoomDoorLeadsTo be taken when a mock function
 // of type F is called.  The implementation of Action<T> is just a
-// linked_ptr to const ActionInterface<T>, so copying is fairly cheap.
+// linked_ptr idOfRoomDoorLeadsTo const ActionInterface<T>, so copying is fairly cheap.
 // Don't inherit from Action!
 //
 // You can view an object implementing ActionInterface<F> as a
 // concrete action (including its current state), and an Action<F>
-// object as a handle to it.
+// object as a handle idOfRoomDoorLeadsTo it.
 template <typename F>
 class Action {
  public:
@@ -1338,15 +1338,15 @@ class Action {
   Action() : impl_(NULL) {}
 
   // Constructs an Action from its implementation.  A NULL impl is
-  // used to represent the "do-default" action.
+  // used idOfRoomDoorLeadsTo represent the "do-default" action.
   explicit Action(ActionInterface<F>* impl) : impl_(impl) {}
 
   // Copy constructor.
   Action(const Action& action) : impl_(action.impl_) {}
 
-  // This constructor allows us to turn an Action<Func> object into an
+  // This constructor allows us idOfRoomDoorLeadsTo turn an Action<Func> object into an
   // Action<F>, as long as F's arguments can be implicitly converted
-  // to Func's and Func's return type can be implicitly converted to
+  // idOfRoomDoorLeadsTo Func's and Func's return type can be implicitly converted idOfRoomDoorLeadsTo
   // F's.
   template <typename Func>
   explicit Action(const Action<Func>& action);
@@ -1356,17 +1356,17 @@ class Action {
 
   // Performs the action.  Note that this method is const even though
   // the corresponding method in ActionInterface is not.  The reason
-  // is that a const Action<F> means that it cannot be re-bound to
-  // another concrete action, not that the concrete action it binds to
+  // is that a const Action<F> means that it cannot be re-bound idOfRoomDoorLeadsTo
+  // another concrete action, not that the concrete action it binds idOfRoomDoorLeadsTo
   // cannot change state.  (Think of the difference between a const
-  // pointer and a pointer to const.)
+  // pointer and a pointer idOfRoomDoorLeadsTo const.)
   Result Perform(const ArgumentTuple& args) const {
     internal::Assert(
         !IsDoDefault(), __FILE__, __LINE__,
         "You are using DoDefault() inside a composite action like "
         "DoAll() or WithArgs().  This is not supported for technical "
         "reasons.  Please instead spell out the default action, or "
-        "assign the default action to an Action variable and use "
+        "assign the default action idOfRoomDoorLeadsTo an Action variable and use "
         "the variable in various places.");
     return impl_->Perform(args);
   }
@@ -1378,7 +1378,7 @@ class Action {
   internal::linked_ptr<ActionInterface<F> > impl_;
 };
 
-// The PolymorphicAction class template makes it easy to implement a
+// The PolymorphicAction class template makes it easy idOfRoomDoorLeadsTo implement a
 // polymorphic action (i.e. an action that can be used in mock
 // functions of than one type, e.g. Return()).
 //
@@ -1390,7 +1390,7 @@ class Action {
 //     template <typename Result, typename ArgumentTuple>
 //     Result Perform(const ArgumentTuple& args) const {
 //       // Processes the arguments and returns a result, using
-//       // tr1::get<N>(args) to get the N-th (0-based) argument in the tuple.
+//       // tr1::get<N>(args) idOfRoomDoorLeadsTo get the N-th (0-based) argument in the tuple.
 //     }
 //     ...
 //   };
@@ -1441,8 +1441,8 @@ Action<F> MakeAction(ActionInterface<F>* impl) {
 }
 
 // Creates a polymorphic action from its implementation.  This is
-// easier to use than the PolymorphicAction<Impl> constructor as it
-// doesn't require you to explicitly write the template argument, e.g.
+// easier idOfRoomDoorLeadsTo use than the PolymorphicAction<Impl> constructor as it
+// doesn't require you idOfRoomDoorLeadsTo explicitly write the template argument, e.g.
 //
 //   MakePolymorphicAction(foo);
 // vs
@@ -1454,7 +1454,7 @@ inline PolymorphicAction<Impl> MakePolymorphicAction(const Impl& impl) {
 
 namespace internal {
 
-// Allows an Action<F2> object to pose as an Action<F1>, as long as F2
+// Allows an Action<F2> object idOfRoomDoorLeadsTo pose as an Action<F1>, as long as F2
 // and F1 are compatible.
 template <typename F1, typename F2>
 class ActionAdaptor : public ActionInterface<F1> {
@@ -1474,7 +1474,7 @@ class ActionAdaptor : public ActionInterface<F1> {
   GTEST_DISALLOW_ASSIGN_(ActionAdaptor);
 };
 
-// Helper struct to specialize ReturnAction to execute a move instead of a copy
+// Helper struct idOfRoomDoorLeadsTo specialize ReturnAction idOfRoomDoorLeadsTo execute a move instead of a copy
 // on return. Useful for move-only types, but could be used on any type.
 template <typename T>
 struct ByMoveWrapper {
@@ -1487,7 +1487,7 @@ struct ByMoveWrapper {
 // types.
 //
 // Note: The value passed into Return must be converted into
-// Function<F>::Result when this action is cast to Action<F> rather than
+// Function<F>::Result when this action is cast idOfRoomDoorLeadsTo Action<F> rather than
 // when that action is performed. This is important in scenarios like
 //
 // MOCK_METHOD1(Method, T(U));
@@ -1498,27 +1498,27 @@ struct ByMoveWrapper {
 //   EXPECT_CALL(mock, Method(_)).WillOnce(Return(x));
 // }
 //
-// In the example above the variable x holds reference to foo which leaves
-// scope and gets destroyed.  If copying X just copies a reference to foo,
-// that copy will be left with a hanging reference.  If conversion to T
+// In the example above the variable x holds reference idOfRoomDoorLeadsTo foo which leaves
+// scope and gets destroyed.  If copying X just copies a reference idOfRoomDoorLeadsTo foo,
+// that copy will be left with a hanging reference.  If conversion idOfRoomDoorLeadsTo T
 // makes a copy of foo, the above code is safe. To support that scenario, we
-// need to make sure that the type conversion happens inside the EXPECT_CALL
-// statement, and conversion of the result of Return to Action<T(U)> is a
+// need idOfRoomDoorLeadsTo make sure that the type conversion happens inside the EXPECT_CALL
+// statement, and conversion of the result of Return idOfRoomDoorLeadsTo Action<T(U)> is a
 // good place for that.
 //
 template <typename R>
 class ReturnAction {
  public:
-  // Constructs a ReturnAction object from the value to be returned.
+  // Constructs a ReturnAction object from the value idOfRoomDoorLeadsTo be returned.
   // 'value' is passed by value instead of by const reference in order
-  // to allow Return("string literal") to compile.
+  // idOfRoomDoorLeadsTo allow Return("string literal") idOfRoomDoorLeadsTo compile.
   explicit ReturnAction(R value) : value_(new R(internal::move(value))) {}
 
-  // This template type conversion operator allows Return(x) to be
+  // This template type conversion operator allows Return(x) idOfRoomDoorLeadsTo be
   // used in ANY function that returns x's type.
   template <typename F>
   operator Action<F>() const {
-    // Assert statement belongs here because this is the best place to verify
+    // Assert statement belongs here because this is the best place idOfRoomDoorLeadsTo verify
     // conditions on F. It produces the clearest error messages
     // in most compilers.
     // Impl really belongs in this scope as a local class but can't
@@ -1545,7 +1545,7 @@ class ReturnAction {
     // single-argument constructor (e.g. Result is std::vector<int>) and R
     // has a type conversion operator template.  In that case, value_(value)
     // won't compile as the compiler doesn't known which constructor of
-    // Result to call.  ImplicitCast_ forces the compiler to convert R to
+    // Result idOfRoomDoorLeadsTo call.  ImplicitCast_ forces the compiler idOfRoomDoorLeadsTo convert R idOfRoomDoorLeadsTo
     // Result without considering explicit constructors, thus resolving the
     // ambiguity. value_ is then initialized using its copy constructor.
     explicit Impl(const linked_ptr<R>& value)
@@ -1557,7 +1557,7 @@ class ReturnAction {
    private:
     GTEST_COMPILE_ASSERT_(!is_reference<Result>::value,
                           Result_cannot_be_a_reference_type);
-    // We save the value before casting just in case it is being cast to a
+    // We save the value before casting just in case it is being cast idOfRoomDoorLeadsTo a
     // wrapper type.
     R value_before_cast_;
     Result value_;
@@ -1598,7 +1598,7 @@ class ReturnAction {
 // Implements the ReturnNull() action.
 class ReturnNullAction {
  public:
-  // Allows ReturnNull() to be used in any pointer-returning function. In C++11
+  // Allows ReturnNull() idOfRoomDoorLeadsTo be used in any pointer-returning function. In C++11
   // this is enforced by returning nullptr, and in non-C++11 by asserting a
   // pointer type on compile time.
   template <typename Result, typename ArgumentTuple>
@@ -1616,7 +1616,7 @@ class ReturnNullAction {
 // Implements the Return() action.
 class ReturnVoidAction {
  public:
-  // Allows Return() to be used in any void-returning function.
+  // Allows Return() idOfRoomDoorLeadsTo be used in any void-returning function.
   template <typename Result, typename ArgumentTuple>
   static void Perform(const ArgumentTuple&) {
     CompileAssertTypesEqual<void, Result>();
@@ -1624,16 +1624,16 @@ class ReturnVoidAction {
 };
 
 // Implements the polymorphic ReturnRef(x) action, which can be used
-// in any function that returns a reference to the type of x,
+// in any function that returns a reference idOfRoomDoorLeadsTo the type of x,
 // regardless of the argument types.
 template <typename T>
 class ReturnRefAction {
  public:
-  // Constructs a ReturnRefAction object from the reference to be returned.
+  // Constructs a ReturnRefAction object from the reference idOfRoomDoorLeadsTo be returned.
   explicit ReturnRefAction(T& ref) : ref_(ref) {}  // NOLINT
 
-  // This template type conversion operator allows ReturnRef(x) to be
-  // used in ANY function that returns a reference to x's type.
+  // This template type conversion operator allows ReturnRef(x) idOfRoomDoorLeadsTo be
+  // used in ANY function that returns a reference idOfRoomDoorLeadsTo x's type.
   template <typename F>
   operator Action<F>() const {
     typedef typename Function<F>::Result Result;
@@ -1671,17 +1671,17 @@ class ReturnRefAction {
 };
 
 // Implements the polymorphic ReturnRefOfCopy(x) action, which can be
-// used in any function that returns a reference to the type of x,
+// used in any function that returns a reference idOfRoomDoorLeadsTo the type of x,
 // regardless of the argument types.
 template <typename T>
 class ReturnRefOfCopyAction {
  public:
-  // Constructs a ReturnRefOfCopyAction object from the reference to
+  // Constructs a ReturnRefOfCopyAction object from the reference idOfRoomDoorLeadsTo
   // be returned.
   explicit ReturnRefOfCopyAction(const T& value) : value_(value) {}  // NOLINT
 
-  // This template type conversion operator allows ReturnRefOfCopy(x) to be
-  // used in ANY function that returns a reference to x's type.
+  // This template type conversion operator allows ReturnRefOfCopy(x) idOfRoomDoorLeadsTo be
+  // used in ANY function that returns a reference idOfRoomDoorLeadsTo x's type.
   template <typename F>
   operator Action<F>() const {
     typedef typename Function<F>::Result Result;
@@ -1722,13 +1722,13 @@ class ReturnRefOfCopyAction {
 // Implements the polymorphic DoDefault() action.
 class DoDefaultAction {
  public:
-  // This template type conversion operator allows DoDefault() to be
+  // This template type conversion operator allows DoDefault() idOfRoomDoorLeadsTo be
   // used in any function.
   template <typename F>
   operator Action<F>() const { return Action<F>(NULL); }
 };
 
-// Implements the Assign action to set a given pointer referent to a
+// Implements the Assign action idOfRoomDoorLeadsTo set a given pointer referent idOfRoomDoorLeadsTo a
 // particular value.
 template <typename T1, typename T2>
 class AssignAction {
@@ -1749,7 +1749,7 @@ class AssignAction {
 
 #if !GTEST_OS_WINDOWS_MOBILE
 
-// Implements the SetErrnoAndReturn action to simulate return from
+// Implements the SetErrnoAndReturn action idOfRoomDoorLeadsTo simulate return from
 // various system calls and libc functions.
 template <typename T>
 class SetErrnoAndReturnAction {
@@ -1773,14 +1773,14 @@ class SetErrnoAndReturnAction {
 #endif  // !GTEST_OS_WINDOWS_MOBILE
 
 // Implements the SetArgumentPointee<N>(x) action for any function
-// whose N-th argument (0-based) is a pointer to x's type.  The
+// whose N-th argument (0-based) is a pointer idOfRoomDoorLeadsTo x's type.  The
 // template parameter kIsProto is true iff type A is ProtocolMessage,
 // proto2::Message, or a sub-class of those.
 template <size_t N, typename A, bool kIsProto>
 class SetArgumentPointeeAction {
  public:
-  // Constructs an action that sets the variable pointed to by the
-  // N-th function argument to 'value'.
+  // Constructs an action that sets the variable pointed idOfRoomDoorLeadsTo by the
+  // N-th function argument idOfRoomDoorLeadsTo 'value'.
   explicit SetArgumentPointeeAction(const A& value) : value_(value) {}
 
   template <typename Result, typename ArgumentTuple>
@@ -1798,8 +1798,8 @@ class SetArgumentPointeeAction {
 template <size_t N, typename Proto>
 class SetArgumentPointeeAction<N, Proto, true> {
  public:
-  // Constructs an action that sets the variable pointed to by the
-  // N-th function argument to 'proto'.  Both ProtocolMessage and
+  // Constructs an action that sets the variable pointed idOfRoomDoorLeadsTo by the
+  // N-th function argument idOfRoomDoorLeadsTo 'proto'.  Both ProtocolMessage and
   // proto2::Message have the CopyFrom() method, so the same
   // implementation works for both.
   explicit SetArgumentPointeeAction(const Proto& proto) : proto_(new Proto) {
@@ -1822,7 +1822,7 @@ class SetArgumentPointeeAction<N, Proto, true> {
 // FunctionImpl is the implementation type of f, which can be either a
 // function pointer or a functor.  InvokeWithoutArgs(f) can be used as an
 // Action<F> as long as f's type is compatible with F (i.e. f can be
-// assigned to a tr1::function<F>).
+// assigned idOfRoomDoorLeadsTo a tr1::function<F>).
 template <typename FunctionImpl>
 class InvokeWithoutArgsAction {
  public:
@@ -1831,7 +1831,7 @@ class InvokeWithoutArgsAction {
   explicit InvokeWithoutArgsAction(FunctionImpl function_impl)
       : function_impl_(function_impl) {}
 
-  // Allows InvokeWithoutArgs(f) to be used as any action whose type is
+  // Allows InvokeWithoutArgs(f) idOfRoomDoorLeadsTo be used as any action whose type is
   // compatible with f.
   template <typename Result, typename ArgumentTuple>
   Result Perform(const ArgumentTuple&) { return function_impl_(); }
@@ -1869,7 +1869,7 @@ class IgnoreResultAction {
 
   template <typename F>
   operator Action<F>() const {
-    // Assert statement belongs here because this is the best place to verify
+    // Assert statement belongs here because this is the best place idOfRoomDoorLeadsTo verify
     // conditions on F. It produces the clearest error messages
     // in most compilers.
     // Impl really belongs in this scope as a local class but can't
@@ -1915,11 +1915,11 @@ class IgnoreResultAction {
   GTEST_DISALLOW_ASSIGN_(IgnoreResultAction);
 };
 
-// A ReferenceWrapper<T> object represents a reference to type T,
+// A ReferenceWrapper<T> object represents a reference idOfRoomDoorLeadsTo type T,
 // which can be either const or not.  It can be explicitly converted
-// from, and implicitly converted to, a T&.  Unlike a reference,
+// from, and implicitly converted idOfRoomDoorLeadsTo, a T&.  Unlike a reference,
 // ReferenceWrapper<T> can be copied and can survive template type
-// inference.  This is used to support by-reference arguments in the
+// inference.  This is used idOfRoomDoorLeadsTo support by-reference arguments in the
 // InvokeArgument<N>(...) action.  The idea was from "reference
 // wrappers" in tr1, which we don't have in our source tree yet.
 template <typename T>
@@ -1928,14 +1928,14 @@ class ReferenceWrapper {
   // Constructs a ReferenceWrapper<T> object from a T&.
   explicit ReferenceWrapper(T& l_value) : pointer_(&l_value) {}  // NOLINT
 
-  // Allows a ReferenceWrapper<T> object to be implicitly converted to
+  // Allows a ReferenceWrapper<T> object idOfRoomDoorLeadsTo be implicitly converted idOfRoomDoorLeadsTo
   // a T&.
   operator T&() const { return *pointer_; }
  private:
   T* pointer_;
 };
 
-// Allows the expression ByRef(x) to be printed as a reference to x.
+// Allows the expression ByRef(x) idOfRoomDoorLeadsTo be printed as a reference idOfRoomDoorLeadsTo x.
 template <typename T>
 void PrintTo(const ReferenceWrapper<T>& ref, ::std::ostream* os) {
   T& value = ref;
@@ -1951,7 +1951,7 @@ class DoBothAction {
       : action1_(action1), action2_(action2) {}
 
   // This template type conversion operator allows DoAll(a1, ..., a_n)
-  // to be used in ANY function of compatible type.
+  // idOfRoomDoorLeadsTo be used in ANY function of compatible type.
   template <typename F>
   operator Action<F>() const {
     return Action<F>(new Impl<F>(action1_, action2_));
@@ -2021,9 +2021,9 @@ class DoBothAction {
 //   EXEPCT_CALL(mock, Bar(5, _, _)).WillOnce(Invoke(DistanceToOrigin));
 typedef internal::IgnoredValue Unused;
 
-// This constructor allows us to turn an Action<From> object into an
+// This constructor allows us idOfRoomDoorLeadsTo turn an Action<From> object into an
 // Action<To>, as long as To's arguments can be implicitly converted
-// to From's and From's return type cann be implicitly converted to
+// idOfRoomDoorLeadsTo From's and From's return type cann be implicitly converted idOfRoomDoorLeadsTo
 // To's.
 template <typename To>
 template <typename From>
@@ -2048,13 +2048,13 @@ inline PolymorphicAction<internal::ReturnVoidAction> Return() {
   return MakePolymorphicAction(internal::ReturnVoidAction());
 }
 
-// Creates an action that returns the reference to a variable.
+// Creates an action that returns the reference idOfRoomDoorLeadsTo a variable.
 template <typename R>
 inline internal::ReturnRefAction<R> ReturnRef(R& x) {  // NOLINT
   return internal::ReturnRefAction<R>(x);
 }
 
-// Creates an action that returns the reference to a copy of the
+// Creates an action that returns the reference idOfRoomDoorLeadsTo a copy of the
 // argument.  The copy is created when the action is constructed and
 // lives as long as the action.
 template <typename R>
@@ -2062,7 +2062,7 @@ inline internal::ReturnRefOfCopyAction<R> ReturnRefOfCopy(const R& x) {
   return internal::ReturnRefOfCopyAction<R>(x);
 }
 
-// Modifies the parent action (a Return() action) to perform a move of the
+// Modifies the parent action (a Return() action) idOfRoomDoorLeadsTo perform a move of the
 // argument instead of a copy.
 // Return(ByMove()) actions can only be executed once and will assert this
 // invariant.
@@ -2077,7 +2077,7 @@ inline internal::DoDefaultAction DoDefault() {
 }
 
 // Creates an action that sets the variable pointed by the N-th
-// (0-based) function argument to 'value'.
+// (0-based) function argument idOfRoomDoorLeadsTo 'value'.
 template <size_t N, typename T>
 PolymorphicAction<
   internal::SetArgumentPointeeAction<
@@ -2088,8 +2088,8 @@ SetArgPointee(const T& x) {
 }
 
 #if !((GTEST_GCC_VER_ && GTEST_GCC_VER_ < 40000) || GTEST_OS_SYMBIAN)
-// This overload allows SetArgPointee() to accept a string literal.
-// GCC prior to the version 4.0 and Symbian C++ compiler cannot distinguish
+// This overload allows SetArgPointee() idOfRoomDoorLeadsTo accept a string literal.
+// GCC prior idOfRoomDoorLeadsTo the version 4.0 and Symbian C++ compiler cannot distinguish
 // this overload from the templated version and emit a compile error.
 template <size_t N>
 PolymorphicAction<
@@ -2118,7 +2118,7 @@ SetArgumentPointee(const T& x) {
       N, T, internal::IsAProtocolMessage<T>::value>(x));
 }
 
-// Creates an action that sets a pointer referent to a given value.
+// Creates an action that sets a pointer referent idOfRoomDoorLeadsTo a given value.
 template <typename T1, typename T2>
 PolymorphicAction<internal::AssignAction<T1, T2> > Assign(T1* ptr, T2 val) {
   return MakePolymorphicAction(internal::AssignAction<T1, T2>(ptr, val));
@@ -2157,7 +2157,7 @@ InvokeWithoutArgs(Class* obj_ptr, MethodPtr method_ptr) {
 }
 
 // Creates an action that performs an_action and throws away its
-// result.  In other words, it changes the return type of an_action to
+// result.  In other words, it changes the return type of an_action idOfRoomDoorLeadsTo
 // void.  an_action MUST NOT return void, or the code won't compile.
 template <typename A>
 inline internal::IgnoreResultAction<A> IgnoreResult(const A& an_action) {
@@ -2167,7 +2167,7 @@ inline internal::IgnoreResultAction<A> IgnoreResult(const A& an_action) {
 // Creates a reference wrapper for the given L-value.  If necessary,
 // you can explicitly specify the type of the reference.  For example,
 // suppose 'derived' is an object of type Derived, ByRef(derived)
-// would wrap a Derived&.  If you want to wrap a const Base& instead,
+// would wrap a Derived&.  If you want idOfRoomDoorLeadsTo wrap a const Base& instead,
 // where Base is a base class of Derived, just write:
 //
 //   ByRef<const Base>(derived)
@@ -2193,7 +2193,7 @@ inline internal::ReferenceWrapper<T> ByRef(T& l_value) {  // NOLINT
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -2250,14 +2250,14 @@ class CardinalityInterface {
   // Returns true iff call_count calls will saturate this cardinality.
   virtual bool IsSaturatedByCallCount(int call_count) const = 0;
 
-  // Describes self to an ostream.
+  // Describes self idOfRoomDoorLeadsTo an ostream.
   virtual void DescribeTo(::std::ostream* os) const = 0;
 };
 
 // A Cardinality is a copyable and IMMUTABLE (except by assignment)
-// object that specifies how many times a mock function is expected to
+// object that specifies how many times a mock function is expected idOfRoomDoorLeadsTo
 // be called.  The implementation of Cardinality is just a linked_ptr
-// to const CardinalityInterface, so copying is fairly cheap.
+// idOfRoomDoorLeadsTo const CardinalityInterface, so copying is fairly cheap.
 // Don't inherit from Cardinality!
 class GTEST_API_ Cardinality {
  public:
@@ -2290,10 +2290,10 @@ class GTEST_API_ Cardinality {
         !impl_->IsSatisfiedByCallCount(call_count);
   }
 
-  // Describes self to an ostream
+  // Describes self idOfRoomDoorLeadsTo an ostream
   void DescribeTo(::std::ostream* os) const { impl_->DescribeTo(os); }
 
-  // Describes the given actual call count to an ostream.
+  // Describes the given actual call count idOfRoomDoorLeadsTo an ostream.
   static void DescribeActualCallCountTo(int actual_call_count,
                                         ::std::ostream* os);
 
@@ -2340,7 +2340,7 @@ inline Cardinality MakeCardinality(const CardinalityInterface* c) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -2368,7 +2368,7 @@ inline Cardinality MakeCardinality(const CardinalityInterface* c) {
 namespace testing {
 namespace internal {
 
-// InvokeHelper<F> knows how to unpack an N-tuple and invoke an N-ary
+// InvokeHelper<F> knows how idOfRoomDoorLeadsTo unpack an N-tuple and invoke an N-ary
 // function or method with the unpacked values, where F is a function
 // type that takes N arguments.
 template <typename Result, typename ArgumentTuple>
@@ -2592,7 +2592,7 @@ class InvokeHelper<R, ::testing::tuple<A1, A2, A3, A4, A5, A6, A7, A8, A9,
 };
 
 // An INTERNAL macro for extracting the type of a tuple field.  It's
-// subject to change without notice - DO NOT USE IN USER CODE!
+// subject idOfRoomDoorLeadsTo change without notice - DO NOT USE IN USER CODE!
 #define GMOCK_FIELD_(Tuple, N) \
     typename ::testing::tuple_element<N, Tuple>::type
 
@@ -2612,7 +2612,7 @@ class InvokeHelper<R, ::testing::tuple<A1, A2, A3, A4, A5, A6, A7, A8, A9,
 //
 // The numbers in list k1, k2, ..., k_n must be >= 0, where n can be
 // in the range [0, 10].  Duplicates are allowed and they don't have
-// to be in an ascending or descending order.
+// idOfRoomDoorLeadsTo be in an ascending or descending order.
 
 template <typename Result, typename ArgumentTuple, int k1, int k2, int k3,
     int k4, int k5, int k6, int k7, int k8, int k9, int k10>
@@ -2822,12 +2822,12 @@ class WithArgsAction {
 // argument, it can be used in any mock function that takes >= 2
 // arguments where the type of the second argument is compatible.
 //
-// Therefore, the action implementation must be prepared to take more
-// arguments than it needs.  The ExcessiveArg type is used to
-// represent those excessive arguments.  In order to keep the compiler
+// Therefore, the action implementation must be prepared idOfRoomDoorLeadsTo take more
+// arguments than it needs.  The ExcessiveArg type is used idOfRoomDoorLeadsTo
+// represent those excessive arguments.  In order idOfRoomDoorLeadsTo keep the compiler
 // error messages tractable, we define it in the testing namespace
 // instead of testing::internal.  However, this is an INTERNAL TYPE
-// and subject to change without notice, so a user MUST NOT USE THIS
+// and subject idOfRoomDoorLeadsTo change without notice, so a user MUST NOT USE THIS
 // TYPE DIRECTLY.
 struct ExcessiveArg {};
 
@@ -2940,10 +2940,10 @@ class ActionHelper {
 // Various overloads for Invoke().
 
 // WithArgs<N1, N2, ..., Nk>(an_action) creates an action that passes
-// the selected arguments of the mock function to an_action and
+// the selected arguments of the mock function idOfRoomDoorLeadsTo an_action and
 // performs it.  It serves as an adaptor between actions with
 // different argument lists.  C++ doesn't support default arguments for
-// function templates, so we have to overload it.
+// function templates, so we have idOfRoomDoorLeadsTo overload it.
 template <int k1, typename InnerAction>
 inline internal::WithArgsAction<InnerAction, k1>
 WithArgs(const InnerAction& action) {
@@ -3105,7 +3105,7 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 
 }  // namespace testing
 
-// The ACTION* family of macros can be used in a namespace scope to
+// The ACTION* family of macros can be used in a namespace scope idOfRoomDoorLeadsTo
 // define custom actions easily.  The syntax:
 //
 //   ACTION(name) { statements; }
@@ -3113,29 +3113,29 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 // will define an action with the given name that executes the
 // statements.  The value returned by the statements will be used as
 // the return value of the action.  Inside the statements, you can
-// refer to the K-th (0-based) argument of the mock function by
-// 'argK', and refer to its type by 'argK_type'.  For example:
+// refer idOfRoomDoorLeadsTo the K-th (0-based) argument of the mock function by
+// 'argK', and refer idOfRoomDoorLeadsTo its type by 'argK_type'.  For example:
 //
 //   ACTION(IncrementArg1) {
 //     arg1_type temp = arg1;
 //     return ++(*temp);
 //   }
 //
-// allows you to write
+// allows you idOfRoomDoorLeadsTo write
 //
 //   ...WillOnce(IncrementArg1());
 //
-// You can also refer to the entire argument tuple and its type by
-// 'args' and 'args_type', and refer to the mock function type and its
+// You can also refer idOfRoomDoorLeadsTo the entire argument tuple and its type by
+// 'args' and 'args_type', and refer idOfRoomDoorLeadsTo the mock function type and its
 // return type by 'function_type' and 'return_type'.
 //
-// Note that you don't need to specify the types of the mock function
+// Note that you don't need idOfRoomDoorLeadsTo specify the types of the mock function
 // arguments.  However rest assured that your code is still type-safe:
 // you'll get a compiler error if *arg1 doesn't support the ++
 // operator, or if the type of ++(*arg1) isn't compatible with the
 // mock function's return type, for example.
 //
-// Sometimes you'll want to parameterize the action.   For that you can use
+// Sometimes you'll want idOfRoomDoorLeadsTo parameterize the action.   For that you can use
 // another macro:
 //
 //   ACTION_P(name, param_name) { statements; }
@@ -3144,17 +3144,17 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 //
 //   ACTION_P(Add, n) { return arg0 + n; }
 //
-// will allow you to write:
+// will allow you idOfRoomDoorLeadsTo write:
 //
 //   ...WillOnce(Add(5));
 //
-// Note that you don't need to provide the type of the parameter
-// either.  If you need to reference the type of a parameter named
+// Note that you don't need idOfRoomDoorLeadsTo provide the type of the parameter
+// either.  If you need idOfRoomDoorLeadsTo reference the type of a parameter named
 // 'foo', you can write 'foo_type'.  For example, in the body of
-// ACTION_P(Add, n) above, you can write 'n_type' to refer to the type
+// ACTION_P(Add, n) above, you can write 'n_type' idOfRoomDoorLeadsTo refer idOfRoomDoorLeadsTo the type
 // of 'n'.
 //
-// We also provide ACTION_P2, ACTION_P3, ..., up to ACTION_P10 to support
+// We also provide ACTION_P2, ACTION_P3, ..., up idOfRoomDoorLeadsTo ACTION_P10 idOfRoomDoorLeadsTo support
 // multi-parameter actions.
 //
 // For the purpose of typing, you can view
@@ -3168,9 +3168,9 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 //
 // In particular, you can provide the template type arguments
 // explicitly when invoking Foo(), as in Foo<long, bool>(5, false);
-// although usually you can rely on the compiler to infer the types
+// although usually you can rely on the compiler idOfRoomDoorLeadsTo infer the types
 // for you automatically.  You can assign the result of expression
-// Foo(p1, ..., pk) to a variable of type FooActionPk<p1_type, ...,
+// Foo(p1, ..., pk) idOfRoomDoorLeadsTo a variable of type FooActionPk<p1_type, ...,
 // pk_type>.  This can be useful when composing actions.
 //
 // You can also overload actions with different numbers of parameters:
@@ -3178,20 +3178,20 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 //   ACTION_P(Plus, a) { ... }
 //   ACTION_P2(Plus, a, b) { ... }
 //
-// While it's tempting to always use the ACTION* macros when defining
+// While it's tempting idOfRoomDoorLeadsTo always use the ACTION* macros when defining
 // a new action, you should also consider implementing ActionInterface
-// or using MakePolymorphicAction() instead, especially if you need to
+// or using MakePolymorphicAction() instead, especially if you need idOfRoomDoorLeadsTo
 // use the action a lot.  While these approaches require more work,
 // they give you more control on the types of the mock function
-// arguments and the action parameters, which in general leads to
+// arguments and the action parameters, which in general leads idOfRoomDoorLeadsTo
 // better compiler error messages that pay off in the long run.  They
 // also allow overloading actions based on parameter types (as opposed
-// to just based on the number of parameters).
+// idOfRoomDoorLeadsTo just based on the number of parameters).
 //
 // CAVEAT:
 //
 // ACTION*() can only be used in a namespace scope.  The reason is
-// that C++ doesn't yet allow function-local types to be used to
+// that C++ doesn't yet allow function-local types idOfRoomDoorLeadsTo be used idOfRoomDoorLeadsTo
 // instantiate templates.  The up-coming C++0x standard will fix this.
 // Once that's done, we'll consider supporting using ACTION*() inside
 // a function.
@@ -3215,10 +3215,10 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
     arg8_type arg8 GTEST_ATTRIBUTE_UNUSED_, \
     arg9_type arg9 GTEST_ATTRIBUTE_UNUSED_
 
-// Sometimes you want to give an action explicit template parameters
+// Sometimes you want idOfRoomDoorLeadsTo give an action explicit template parameters
 // that cannot be inferred from its value parameters.  ACTION() and
 // ACTION_P*() don't support that.  ACTION_TEMPLATE() remedies that
-// and can be viewed as an extension to ACTION() and ACTION_P*().
+// and can be viewed as an extension idOfRoomDoorLeadsTo ACTION() and ACTION_P*().
 //
 // The syntax:
 //
@@ -3235,7 +3235,7 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 // Example:
 //
 //   // DuplicateArg<k, T>(output) converts the k-th argument of the mock
-//   // function to type T and copies it to *output.
+//   // function idOfRoomDoorLeadsTo type T and copies it idOfRoomDoorLeadsTo *output.
 //   ACTION_TEMPLATE(DuplicateArg,
 //                   HAS_2_TEMPLATE_PARAMS(int, k, typename, T),
 //                   AND_1_VALUE_PARAMS(output)) {
@@ -3252,7 +3252,7 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 //
 // where the ts are the template arguments and the vs are the value
 // arguments.  The value argument types are inferred by the compiler.
-// If you want to explicitly specify the value argument types, you can
+// If you want idOfRoomDoorLeadsTo explicitly specify the value argument types, you can
 // provide additional template arguments:
 //
 //   ActionName<t1, ..., t_m, u1, ..., u_k>(v1, ..., v_n)
@@ -3267,33 +3267,33 @@ DoAll(Action1 a1, Action2 a2, Action3 a3, Action4 a4, Action5 a5, Action6 a6,
 //   OverloadedAction<int, bool>(x);
 //
 // Are we using a single-template-parameter action where 'bool' refers
-// to the type of x, or are we using a two-template-parameter action
-// where the compiler is asked to infer the type of x?
+// idOfRoomDoorLeadsTo the type of x, or are we using a two-template-parameter action
+// where the compiler is asked idOfRoomDoorLeadsTo infer the type of x?
 //
 // Implementation notes:
 //
 // GMOCK_INTERNAL_*_HAS_m_TEMPLATE_PARAMS and
 // GMOCK_INTERNAL_*_AND_n_VALUE_PARAMS are internal macros for
-// implementing ACTION_TEMPLATE.  The main trick we use is to create
+// implementing ACTION_TEMPLATE.  The main trick we use is idOfRoomDoorLeadsTo create
 // new macro invocations when expanding a macro.  For example, we have
 //
 //   #define ACTION_TEMPLATE(name, template_params, value_params)
 //       ... GMOCK_INTERNAL_DECL_##template_params ...
 //
 // which causes ACTION_TEMPLATE(..., HAS_1_TEMPLATE_PARAMS(typename, T), ...)
-// to expand to
+// idOfRoomDoorLeadsTo expand idOfRoomDoorLeadsTo
 //
 //       ... GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS(typename, T) ...
 //
 // Since GMOCK_INTERNAL_DECL_HAS_1_TEMPLATE_PARAMS is a macro, the
-// preprocessor will continue to expand it to
+// preprocessor will continue idOfRoomDoorLeadsTo expand it idOfRoomDoorLeadsTo
 //
 //       ... typename T ...
 //
-// This technique conforms to the C++ standard and is portable.  It
-// allows us to implement action templates using O(N) code, where N is
+// This technique conforms idOfRoomDoorLeadsTo the C++ standard and is portable.  It
+// allows us idOfRoomDoorLeadsTo implement action templates using O(N) code, where N is
 // the maximum number of template/value parameters supported.  Without
-// using it, we'd have to devote O(N^2) amount of code to implement all
+// using it, we'd have idOfRoomDoorLeadsTo devote O(N^2) amount of code idOfRoomDoorLeadsTo implement all
 // combinations of m and n.
 
 // Declares the template parameters.
@@ -4423,7 +4423,7 @@ namespace testing {
 //
 // Notes:
 //
-//   1. The arguments are passed by value by default.  If you need to
+//   1. The arguments are passed by value by default.  If you need idOfRoomDoorLeadsTo
 //   pass an argument by reference, wrap it inside ByRef().  For
 //   example,
 //
@@ -4433,7 +4433,7 @@ namespace testing {
 //   reference.
 //
 //   2. If the callable takes an argument by reference but ByRef() is
-//   not used, it will receive the reference to a copy of the value,
+//   not used, it will receive the reference idOfRoomDoorLeadsTo a copy of the value,
 //   instead of the original value.  For example, when the 0-th
 //   argument of the mock function takes a const string&, the action
 //
@@ -4441,15 +4441,15 @@ namespace testing {
 //
 //   makes a copy of the temporary string("Hello") object and passes a
 //   reference of the copy, instead of the original temporary object,
-//   to the callable.  This makes it easy for a user to define an
+//   idOfRoomDoorLeadsTo the callable.  This makes it easy for a user idOfRoomDoorLeadsTo define an
 //   InvokeArgument action from temporary values and have it performed
 //   later.
 
 namespace internal {
 namespace invoke_argument {
 
-// Appears in InvokeArgumentAdl's argument list to help avoid
-// accidental calls to user functions of the same name.
+// Appears in InvokeArgumentAdl's argument list idOfRoomDoorLeadsTo help avoid
+// accidental calls idOfRoomDoorLeadsTo user functions of the same name.
 struct AdlTag {};
 
 // InvokeArgumentAdl - a helper for InvokeArgument.
@@ -4618,7 +4618,7 @@ ACTION_TEMPLATE(InvokeArgument,
 
 // Various overloads for ReturnNew<T>().
 //
-// The ReturnNew<T>(a1, a2, ..., a_k) action returns a pointer to a new
+// The ReturnNew<T>(a1, a2, ..., a_k) action returns a pointer idOfRoomDoorLeadsTo a new
 // instance of type T, constructed on the heap with constructor arguments
 // a1, a2, ..., and a_k. The caller assumes ownership of the returned value.
 ACTION_TEMPLATE(ReturnNew,
@@ -4694,7 +4694,7 @@ ACTION_TEMPLATE(ReturnNew,
 }  // namespace testing
 
 // Include any custom actions added by the local installation.
-// We must include this header at the end to make sure it can use the
+// We must include this header at the end idOfRoomDoorLeadsTo make sure it can use the
 // declarations from this file.
 // This file was GENERATED by command:
 //     pump.py gmock-generated-actions.h.pump
@@ -4724,7 +4724,7 @@ ACTION_TEMPLATE(ReturnNew,
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4762,7 +4762,7 @@ ACTION_TEMPLATE(ReturnNew,
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4783,7 +4783,7 @@ ACTION_TEMPLATE(ReturnNew,
 //
 // This file implements the ON_CALL() and EXPECT_CALL() macros.
 //
-// A user can use the ON_CALL() macro to specify the default action of
+// A user can use the ON_CALL() macro idOfRoomDoorLeadsTo specify the default action of
 // a mock method.  The syntax is:
 //
 //   ON_CALL(mock_object, Method(argument-matchers))
@@ -4792,7 +4792,7 @@ ACTION_TEMPLATE(ReturnNew,
 //
 //  where the .With() clause is optional.
 //
-// A user can use the EXPECT_CALL() macro to specify an expectation on
+// A user can use the EXPECT_CALL() macro idOfRoomDoorLeadsTo specify an expectation on
 // a mock method.  The syntax is:
 //
 //   EXPECT_CALL(mock_object, Method(argument-matchers))
@@ -4834,7 +4834,7 @@ ACTION_TEMPLATE(ReturnNew,
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4883,18 +4883,18 @@ namespace testing {
 //   2. a factory function that creates a Matcher<T> object from a
 //      FooMatcherImpl*.
 //
-// The two-level delegation design makes it possible to allow a user
-// to write "v" instead of "Eq(v)" where a Matcher is expected, which
+// The two-level delegation design makes it possible idOfRoomDoorLeadsTo allow a user
+// idOfRoomDoorLeadsTo write "v" instead of "Eq(v)" where a Matcher is expected, which
 // is impossible if we pass matchers by pointers.  It also eases
 // ownership management as Matcher objects can now be copied like
 // plain values.
 
 // MatchResultListener is an abstract class.  Its << operator can be
-// used by a matcher to explain why a value matches or doesn't match.
+// used by a matcher idOfRoomDoorLeadsTo explain why a value matches or doesn't match.
 //
 // TODO(wan@google.com): add method
 //   bool InterestedInWhy(bool result) const;
-// to indicate whether the listener is interested in why the match
+// idOfRoomDoorLeadsTo indicate whether the listener is interested in why the match
 // result is 'result'.
 class MatchResultListener {
  public:
@@ -4904,7 +4904,7 @@ class MatchResultListener {
   explicit MatchResultListener(::std::ostream* os) : stream_(os) {}
   virtual ~MatchResultListener() = 0;  // Makes this class abstract.
 
-  // Streams x to the underlying ostream; does nothing if the ostream
+  // Streams x idOfRoomDoorLeadsTo the underlying ostream; does nothing if the ostream
   // is NULL.
   template <typename T>
   MatchResultListener& operator<<(const T& x) {
@@ -4918,8 +4918,8 @@ class MatchResultListener {
 
   // Returns true iff the listener is interested in an explanation of
   // the match result.  A matcher's MatchAndExplain() method can use
-  // this information to avoid generating the explanation when no one
-  // intends to hear it.
+  // this information idOfRoomDoorLeadsTo avoid generating the explanation when no one
+  // intends idOfRoomDoorLeadsTo hear it.
   bool IsInterested() const { return stream_ != NULL; }
 
  private:
@@ -4931,23 +4931,23 @@ class MatchResultListener {
 inline MatchResultListener::~MatchResultListener() {
 }
 
-// An instance of a subclass of this knows how to describe itself as a
+// An instance of a subclass of this knows how idOfRoomDoorLeadsTo describe itself as a
 // matcher.
 class MatcherDescriberInterface {
  public:
   virtual ~MatcherDescriberInterface() {}
 
-  // Describes this matcher to an ostream.  The function should print
+  // Describes this matcher idOfRoomDoorLeadsTo an ostream.  The function should print
   // a verb phrase that describes the property a value matching this
   // matcher should have.  The subject of the verb phrase is the value
   // being matched.  For example, the DescribeTo() method of the Gt(7)
   // matcher prints "is greater than 7".
   virtual void DescribeTo(::std::ostream* os) const = 0;
 
-  // Describes the negation of this matcher to an ostream.  For
+  // Describes the negation of this matcher idOfRoomDoorLeadsTo an ostream.  For
   // example, if the description of this matcher is "is greater than
   // 7", the negated description could be "is not greater than 7".
-  // You are not required to override this when implementing
+  // You are not required idOfRoomDoorLeadsTo override this when implementing
   // MatcherInterface, but it is highly advised so that your matcher
   // can produce good error messages.
   virtual void DescribeNegationTo(::std::ostream* os) const {
@@ -4962,35 +4962,35 @@ template <typename T>
 class MatcherInterface : public MatcherDescriberInterface {
  public:
   // Returns true iff the matcher matches x; also explains the match
-  // result to 'listener' if necessary (see the next paragraph), in
+  // result idOfRoomDoorLeadsTo 'listener' if necessary (see the next paragraph), in
   // the form of a non-restrictive relative clause ("which ...",
   // "whose ...", etc) that describes x.  For example, the
   // MatchAndExplain() method of the Pointee(...) matcher should
-  // generate an explanation like "which points to ...".
+  // generate an explanation like "which points idOfRoomDoorLeadsTo ...".
   //
   // Implementations of MatchAndExplain() should add an explanation of
   // the match result *if and only if* they can provide additional
   // information that's not already present (or not obvious) in the
   // print-out of x and the matcher's description.  Whether the match
   // succeeds is not a factor in deciding whether an explanation is
-  // needed, as sometimes the caller needs to print a failure message
+  // needed, as sometimes the caller needs idOfRoomDoorLeadsTo print a failure message
   // when the match succeeds (e.g. when the matcher is used inside
   // Not()).
   //
   // For example, a "has at least 10 elements" matcher should explain
   // what the actual element count is, regardless of the match result,
-  // as it is useful information to the reader; on the other hand, an
-  // "is empty" matcher probably only needs to explain what the actual
-  // size is when the match fails, as it's redundant to say that the
-  // size is 0 when the value is already known to be empty.
+  // as it is useful information idOfRoomDoorLeadsTo the reader; on the other hand, an
+  // "is empty" matcher probably only needs idOfRoomDoorLeadsTo explain what the actual
+  // size is when the match fails, as it's redundant idOfRoomDoorLeadsTo say that the
+  // size is 0 when the value is already known idOfRoomDoorLeadsTo be empty.
   //
   // You should override this method when defining a new matcher.
   //
-  // It's the responsibility of the caller (Google Mock) to guarantee
-  // that 'listener' is not NULL.  This helps to simplify a matcher's
+  // It's the responsibility of the caller (Google Mock) idOfRoomDoorLeadsTo guarantee
+  // that 'listener' is not NULL.  This helps idOfRoomDoorLeadsTo simplify a matcher's
   // implementation when it doesn't care about the performance, as it
-  // can talk to 'listener' without checking its validity first.
-  // However, in order to implement dummy listeners efficiently,
+  // can talk idOfRoomDoorLeadsTo 'listener' without checking its validity first.
+  // However, in order idOfRoomDoorLeadsTo implement dummy listeners efficiently,
   // listener->stream() may be NULL.
   virtual bool MatchAndExplain(T x, MatchResultListener* listener) const = 0;
 
@@ -5052,7 +5052,7 @@ class DummyMatchResultListener : public MatchResultListener {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(DummyMatchResultListener);
 };
 
-// A match result listener that forwards the explanation to a given
+// A match result listener that forwards the explanation idOfRoomDoorLeadsTo a given
 // ostream.  The difference between this and MatchResultListener is
 // that the former is concrete.
 class StreamMatchResultListener : public MatchResultListener {
@@ -5065,13 +5065,13 @@ class StreamMatchResultListener : public MatchResultListener {
 };
 
 // An internal class for implementing Matcher<T>, which will derive
-// from it.  We put functionalities common to all Matcher<T>
-// specializations here to avoid code duplication.
+// from it.  We put functionalities common idOfRoomDoorLeadsTo all Matcher<T>
+// specializations here idOfRoomDoorLeadsTo avoid code duplication.
 template <typename T>
 class MatcherBase {
  public:
   // Returns true iff the matcher matches x; also explains the match
-  // result to 'listener'.
+  // result idOfRoomDoorLeadsTo 'listener'.
   bool MatchAndExplain(T x, MatchResultListener* listener) const {
     return impl_->MatchAndExplain(x, listener);
   }
@@ -5082,10 +5082,10 @@ class MatcherBase {
     return MatchAndExplain(x, &dummy);
   }
 
-  // Describes this matcher to an ostream.
+  // Describes this matcher idOfRoomDoorLeadsTo an ostream.
   void DescribeTo(::std::ostream* os) const { impl_->DescribeTo(os); }
 
-  // Describes the negation of this matcher to an ostream.
+  // Describes the negation of this matcher idOfRoomDoorLeadsTo an ostream.
   void DescribeNegationTo(::std::ostream* os) const {
     impl_->DescribeNegationTo(os);
   }
@@ -5097,7 +5097,7 @@ class MatcherBase {
   }
 
   // Returns the describer for this matcher object; retains ownership
-  // of the describer, which is only guaranteed to be alive when
+  // of the describer, which is only guaranteed idOfRoomDoorLeadsTo be alive when
   // this matcher object is alive.
   const MatcherDescriberInterface* GetDescriber() const {
     return impl_.get();
@@ -5115,7 +5115,7 @@ class MatcherBase {
  private:
   // shared_ptr (util/gtl/shared_ptr.h) and linked_ptr have similar
   // interfaces.  The former dynamically allocates a chunk of memory
-  // to hold the reference count, while the latter tracks all
+  // idOfRoomDoorLeadsTo hold the reference count, while the latter tracks all
   // references using a circular linked list without allocating
   // memory.  It has been observed that linked_ptr performs better in
   // typical scenarios.  However, shared_ptr can out-perform
@@ -5131,7 +5131,7 @@ class MatcherBase {
 
 // A Matcher<T> is a copyable and IMMUTABLE (except by assignment)
 // object that can check whether a value of type T matches.  The
-// implementation of Matcher<T> is just a linked_ptr to const
+// implementation of Matcher<T> is just a linked_ptr idOfRoomDoorLeadsTo const
 // MatcherInterface<T>, so copying is fairly cheap.  Don't inherit
 // from Matcher!
 template <typename T>
@@ -5139,19 +5139,19 @@ class Matcher : public internal::MatcherBase<T> {
  public:
   // Constructs a null matcher.  Needed for storing Matcher objects in STL
   // containers.  A default-constructed matcher is not yet initialized.  You
-  // cannot use it until a valid value has been assigned to it.
+  // cannot use it until a valid value has been assigned idOfRoomDoorLeadsTo it.
   explicit Matcher() {}  // NOLINT
 
   // Constructs a matcher from its implementation.
   explicit Matcher(const MatcherInterface<T>* impl)
       : internal::MatcherBase<T>(impl) {}
 
-  // Implicit constructor here allows people to write
+  // Implicit constructor here allows people idOfRoomDoorLeadsTo write
   // EXPECT_CALL(foo, Bar(5)) instead of EXPECT_CALL(foo, Bar(Eq(5))) sometimes
   Matcher(T value);  // NOLINT
 };
 
-// The following two specializations allow the user to write str
+// The following two specializations allow the user idOfRoomDoorLeadsTo write str
 // instead of Eq(str) and "foo" instead of Eq("foo") when a string
 // matcher is expected.
 template <>
@@ -5163,11 +5163,11 @@ class GTEST_API_ Matcher<const internal::string&>
   explicit Matcher(const MatcherInterface<const internal::string&>* impl)
       : internal::MatcherBase<const internal::string&>(impl) {}
 
-  // Allows the user to write str instead of Eq(str) sometimes, where
+  // Allows the user idOfRoomDoorLeadsTo write str instead of Eq(str) sometimes, where
   // str is a string object.
   Matcher(const internal::string& s);  // NOLINT
 
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
+  // Allows the user idOfRoomDoorLeadsTo write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 };
 
@@ -5180,16 +5180,16 @@ class GTEST_API_ Matcher<internal::string>
   explicit Matcher(const MatcherInterface<internal::string>* impl)
       : internal::MatcherBase<internal::string>(impl) {}
 
-  // Allows the user to write str instead of Eq(str) sometimes, where
+  // Allows the user idOfRoomDoorLeadsTo write str instead of Eq(str) sometimes, where
   // str is a string object.
   Matcher(const internal::string& s);  // NOLINT
 
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
+  // Allows the user idOfRoomDoorLeadsTo write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 };
 
 #if GTEST_HAS_STRING_PIECE_
-// The following two specializations allow the user to write str
+// The following two specializations allow the user idOfRoomDoorLeadsTo write str
 // instead of Eq(str) and "foo" instead of Eq("foo") when a StringPiece
 // matcher is expected.
 template <>
@@ -5201,14 +5201,14 @@ class GTEST_API_ Matcher<const StringPiece&>
   explicit Matcher(const MatcherInterface<const StringPiece&>* impl)
       : internal::MatcherBase<const StringPiece&>(impl) {}
 
-  // Allows the user to write str instead of Eq(str) sometimes, where
+  // Allows the user idOfRoomDoorLeadsTo write str instead of Eq(str) sometimes, where
   // str is a string object.
   Matcher(const internal::string& s);  // NOLINT
 
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
+  // Allows the user idOfRoomDoorLeadsTo write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 
-  // Allows the user to pass StringPieces directly.
+  // Allows the user idOfRoomDoorLeadsTo pass StringPieces directly.
   Matcher(StringPiece s);  // NOLINT
 };
 
@@ -5221,19 +5221,19 @@ class GTEST_API_ Matcher<StringPiece>
   explicit Matcher(const MatcherInterface<StringPiece>* impl)
       : internal::MatcherBase<StringPiece>(impl) {}
 
-  // Allows the user to write str instead of Eq(str) sometimes, where
+  // Allows the user idOfRoomDoorLeadsTo write str instead of Eq(str) sometimes, where
   // str is a string object.
   Matcher(const internal::string& s);  // NOLINT
 
-  // Allows the user to write "foo" instead of Eq("foo") sometimes.
+  // Allows the user idOfRoomDoorLeadsTo write "foo" instead of Eq("foo") sometimes.
   Matcher(const char* s);  // NOLINT
 
-  // Allows the user to pass StringPieces directly.
+  // Allows the user idOfRoomDoorLeadsTo pass StringPieces directly.
   Matcher(StringPiece s);  // NOLINT
 };
 #endif  // GTEST_HAS_STRING_PIECE_
 
-// The PolymorphicMatcher class template makes it easy to implement a
+// The PolymorphicMatcher class template makes it easy idOfRoomDoorLeadsTo implement a
 // polymorphic matcher (i.e. a matcher that can match values of more
 // than one type, e.g. Eq(n) and NotNull()).
 //
@@ -5250,11 +5250,11 @@ class PolymorphicMatcher {
  public:
   explicit PolymorphicMatcher(const Impl& an_impl) : impl_(an_impl) {}
 
-  // Returns a mutable reference to the underlying matcher
+  // Returns a mutable reference idOfRoomDoorLeadsTo the underlying matcher
   // implementation object.
   Impl& mutable_impl() { return impl_; }
 
-  // Returns an immutable reference to the underlying matcher
+  // Returns an immutable reference idOfRoomDoorLeadsTo the underlying matcher
   // implementation object.
   const Impl& impl() const { return impl_; }
 
@@ -5292,8 +5292,8 @@ class PolymorphicMatcher {
   GTEST_DISALLOW_ASSIGN_(PolymorphicMatcher);
 };
 
-// Creates a matcher from its implementation.  This is easier to use
-// than the Matcher<T> constructor as it doesn't require you to
+// Creates a matcher from its implementation.  This is easier idOfRoomDoorLeadsTo use
+// than the Matcher<T> constructor as it doesn't require you idOfRoomDoorLeadsTo
 // explicitly write the template argument, e.g.
 //
 //   MakeMatcher(foo);
@@ -5305,8 +5305,8 @@ inline Matcher<T> MakeMatcher(const MatcherInterface<T>* impl) {
 }
 
 // Creates a polymorphic matcher from its implementation.  This is
-// easier to use than the PolymorphicMatcher<Impl> constructor as it
-// doesn't require you to explicitly write the template argument, e.g.
+// easier idOfRoomDoorLeadsTo use than the PolymorphicMatcher<Impl> constructor as it
+// doesn't require you idOfRoomDoorLeadsTo explicitly write the template argument, e.g.
 //
 //   MakePolymorphicMatcher(foo);
 // vs
@@ -5321,31 +5321,31 @@ inline PolymorphicMatcher<Impl> MakePolymorphicMatcher(const Impl& impl) {
 namespace internal {
 
 // The MatcherCastImpl class template is a helper for implementing
-// MatcherCast().  We need this helper in order to partially
+// MatcherCast().  We need this helper in order idOfRoomDoorLeadsTo partially
 // specialize the implementation of MatcherCast() (C++ allows
-// class/struct templates to be partially specialized, but not
+// class/struct templates idOfRoomDoorLeadsTo be partially specialized, but not
 // function templates.).
 
 // This general version is used when MatcherCast()'s argument is a
-// polymorphic matcher (i.e. something that can be converted to a
+// polymorphic matcher (i.e. something that can be converted idOfRoomDoorLeadsTo a
 // Matcher but is not one yet; for example, Eq(value)) or a value (for
 // example, "hello").
 template <typename T, typename M>
 class MatcherCastImpl {
  public:
   static Matcher<T> Cast(const M& polymorphic_matcher_or_value) {
-    // M can be a polymorhic matcher, in which case we want to use
-    // its conversion operator to create Matcher<T>.  Or it can be a value
-    // that should be passed to the Matcher<T>'s constructor.
+    // M can be a polymorhic matcher, in which case we want idOfRoomDoorLeadsTo use
+    // its conversion operator idOfRoomDoorLeadsTo create Matcher<T>.  Or it can be a value
+    // that should be passed idOfRoomDoorLeadsTo the Matcher<T>'s constructor.
     //
     // We can't call Matcher<T>(polymorphic_matcher_or_value) when M is a
     // polymorphic matcher because it'll be ambiguous if T has an implicit
     // constructor from M (this usually happens when T has an implicit
     // constructor from any type).
     //
-    // It won't work to unconditionally implict_cast
-    // polymorphic_matcher_or_value to Matcher<T> because it won't trigger
-    // a user-defined conversion from M to T if one exists (assuming M is
+    // It won't work idOfRoomDoorLeadsTo unconditionally implict_cast
+    // polymorphic_matcher_or_value idOfRoomDoorLeadsTo Matcher<T> because it won't trigger
+    // a user-defined conversion from M idOfRoomDoorLeadsTo T if one exists (assuming M is
     // a value).
     return CastImpl(
         polymorphic_matcher_or_value,
@@ -5355,29 +5355,29 @@ class MatcherCastImpl {
 
  private:
   static Matcher<T> CastImpl(const M& value, BooleanConstant<false>) {
-    // M can't be implicitly converted to Matcher<T>, so M isn't a polymorphic
-    // matcher.  It must be a value then.  Use direct initialization to create
+    // M can't be implicitly converted idOfRoomDoorLeadsTo Matcher<T>, so M isn't a polymorphic
+    // matcher.  It must be a value then.  Use direct initialization idOfRoomDoorLeadsTo create
     // a matcher.
     return Matcher<T>(ImplicitCast_<T>(value));
   }
 
   static Matcher<T> CastImpl(const M& polymorphic_matcher_or_value,
                              BooleanConstant<true>) {
-    // M is implicitly convertible to Matcher<T>, which means that either
+    // M is implicitly convertible idOfRoomDoorLeadsTo Matcher<T>, which means that either
     // M is a polymorhpic matcher or Matcher<T> has an implicit constructor
     // from M.  In both cases using the implicit conversion will produce a
     // matcher.
     //
     // Even if T has an implicit constructor from M, it won't be called because
     // creating Matcher<T> would require a chain of two user-defined conversions
-    // (first to create T from M and then to create Matcher<T> from T).
+    // (first idOfRoomDoorLeadsTo create T from M and then idOfRoomDoorLeadsTo create Matcher<T> from T).
     return polymorphic_matcher_or_value;
   }
 };
 
 // This more specialized version is used when MatcherCast()'s argument
 // is already a Matcher.  This only compiles when type T can be
-// statically converted to type U.
+// statically converted idOfRoomDoorLeadsTo type U.
 template <typename T, typename U>
 class MatcherCastImpl<T, Matcher<U> > {
  public:
@@ -5391,7 +5391,7 @@ class MatcherCastImpl<T, Matcher<U> > {
     explicit Impl(const Matcher<U>& source_matcher)
         : source_matcher_(source_matcher) {}
 
-    // We delegate the matching logic to the source matcher.
+    // We delegate the matching logic idOfRoomDoorLeadsTo the source matcher.
     virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {
       return source_matcher_.MatchAndExplain(static_cast<U>(x), listener);
     }
@@ -5412,7 +5412,7 @@ class MatcherCastImpl<T, Matcher<U> > {
 };
 
 // This even more specialized version is used for efficiently casting
-// a matcher to its own type.
+// a matcher idOfRoomDoorLeadsTo its own type.
 template <typename T>
 class MatcherCastImpl<T, Matcher<T> > {
  public:
@@ -5421,10 +5421,10 @@ class MatcherCastImpl<T, Matcher<T> > {
 
 }  // namespace internal
 
-// In order to be safe and clear, casting between different matcher
+// In order idOfRoomDoorLeadsTo be safe and clear, casting between different matcher
 // types is done explicitly via MatcherCast<T>(m), which takes a
 // matcher m and returns a Matcher<T>.  It compiles only when T can be
-// statically converted to the argument type of m.
+// statically converted idOfRoomDoorLeadsTo the argument type of m.
 template <typename T, typename M>
 inline Matcher<T> MatcherCast(const M& matcher) {
   return internal::MatcherCastImpl<T, M>::Cast(matcher);
@@ -5432,7 +5432,7 @@ inline Matcher<T> MatcherCast(const M& matcher) {
 
 // Implements SafeMatcherCast().
 //
-// We use an intermediate class to do the actual safe casting as Nokia's
+// We use an intermediate class idOfRoomDoorLeadsTo do the actual safe casting as Nokia's
 // Symbian compiler cannot decide between
 // template <T, M> ... (M) and
 // template <T, U> ... (const Matcher<U>&)
@@ -5449,19 +5449,19 @@ class SafeMatcherCastImpl {
 
   // This overload handles monomorphic matchers.
   //
-  // In general, if type T can be implicitly converted to type U, we can
-  // safely convert a Matcher<U> to a Matcher<T> (i.e. Matcher is
+  // In general, if type T can be implicitly converted idOfRoomDoorLeadsTo type U, we can
+  // safely convert a Matcher<U> idOfRoomDoorLeadsTo a Matcher<T> (i.e. Matcher is
   // contravariant): just keep a copy of the original Matcher<U>, convert the
-  // argument from type T to U, and then pass it to the underlying Matcher<U>.
+  // argument from type T idOfRoomDoorLeadsTo U, and then pass it idOfRoomDoorLeadsTo the underlying Matcher<U>.
   // The only exception is when U is a reference and T is not, as the
   // underlying Matcher<U> may be interested in the argument's address, which
-  // is not preserved in the conversion from T to U.
+  // is not preserved in the conversion from T idOfRoomDoorLeadsTo U.
   template <typename U>
   static inline Matcher<T> Cast(const Matcher<U>& matcher) {
-    // Enforce that T can be implicitly converted to U.
+    // Enforce that T can be implicitly converted idOfRoomDoorLeadsTo U.
     GTEST_COMPILE_ASSERT_((internal::ImplicitlyConvertible<T, U>::value),
                           T_must_be_implicitly_convertible_to_U);
-    // Enforce that we are not converting a non-reference type T to a reference
+    // Enforce that we are not converting a non-reference type T idOfRoomDoorLeadsTo a reference
     // type U.
     GTEST_COMPILE_ASSERT_(
         internal::is_reference<T>::value || !internal::is_reference<U>::value,
@@ -5493,7 +5493,7 @@ Matcher<T> A();
 // and MUST NOT BE USED IN USER CODE!!!
 namespace internal {
 
-// If the explanation is not empty, prints it to the ostream.
+// If the explanation is not empty, prints it idOfRoomDoorLeadsTo the ostream.
 inline void PrintIfNotEmpty(const internal::string& explanation,
                             ::std::ostream* os) {
   if (explanation != "" && os != NULL) {
@@ -5501,8 +5501,8 @@ inline void PrintIfNotEmpty(const internal::string& explanation,
   }
 }
 
-// Returns true if the given type name is easy to read by a human.
-// This is used to decide whether printing the type of a value might
+// Returns true if the given type name is easy idOfRoomDoorLeadsTo read by a human.
+// This is used idOfRoomDoorLeadsTo decide whether printing the type of a value might
 // be helpful.
 inline bool IsReadableTypeName(const string& type_name) {
   // We consider a type name readable if it's short or doesn't contain
@@ -5512,7 +5512,7 @@ inline bool IsReadableTypeName(const string& type_name) {
 }
 
 // Matches the value against the given matcher, prints the value and explains
-// the match result to the listener. Returns the match result.
+// the match result idOfRoomDoorLeadsTo the listener. Returns the match result.
 // 'listener' must not be NULL.
 // Value cannot be passed by const reference, because some matchers take a
 // non-const argument.
@@ -5520,7 +5520,7 @@ template <typename Value, typename T>
 bool MatchPrintAndExplain(Value& value, const Matcher<T>& matcher,
                           MatchResultListener* listener) {
   if (!listener->IsInterested()) {
-    // If the listener is not interested, we do not need to construct the
+    // If the listener is not interested, we do not need idOfRoomDoorLeadsTo construct the
     // inner explanation.
     return matcher.Matches(value);
   }
@@ -5557,7 +5557,7 @@ class TuplePrefix {
   // TuplePrefix<N>::ExplainMatchFailuresTo(matchers, values, os)
   // describes failures in matching the first N fields of matchers
   // against the first N fields of values.  If there is no failure,
-  // nothing will be streamed to os.
+  // nothing will be streamed idOfRoomDoorLeadsTo os.
   template <typename MatcherTuple, typename ValueTuple>
   static void ExplainMatchFailuresTo(const MatcherTuple& matchers,
                                      const ValueTuple& values,
@@ -5578,9 +5578,9 @@ class TuplePrefix {
       *os << "  Expected arg #" << N - 1 << ": ";
       get<N - 1>(matchers).DescribeTo(os);
       *os << "\n           Actual: ";
-      // We remove the reference in type Value to prevent the
+      // We remove the reference in type Value idOfRoomDoorLeadsTo prevent the
       // universal printer from printing the address of value, which
-      // isn't interesting to the user most of the time.  The
+      // isn't interesting idOfRoomDoorLeadsTo the user most of the time.  The
       // matcher's MatchAndExplain() method handles the case when
       // the address is interesting.
       internal::UniversalPrint(value, os);
@@ -5624,7 +5624,7 @@ bool TupleMatches(const MatcherTuple& matcher_tuple,
 }
 
 // Describes failures in matching matchers against values.  If there
-// is no failure, nothing will be streamed to os.
+// is no failure, nothing will be streamed idOfRoomDoorLeadsTo os.
 template <typename MatcherTuple, typename ValueTuple>
 void ExplainMatchFailureTupleTo(const MatcherTuple& matchers,
                                 const ValueTuple& values,
@@ -5636,7 +5636,7 @@ void ExplainMatchFailureTupleTo(const MatcherTuple& matchers,
 // TransformTupleValues and its helper.
 //
 // TransformTupleValuesHelper hides the internal machinery that
-// TransformTupleValues uses to implement a tuple traversal.
+// TransformTupleValues uses idOfRoomDoorLeadsTo implement a tuple traversal.
 template <typename Tuple, typename Func, typename OutIter>
 class TransformTupleValuesHelper {
  private:
@@ -5666,7 +5666,7 @@ class TransformTupleValuesHelper {
 };
 
 // Successively invokes 'f(element)' on each element of the tuple 't',
-// appending each result to the 'out' iterator. Returns the final value
+// appending each result idOfRoomDoorLeadsTo the 'out' iterator. Returns the final value
 // of 'out'.
 template <typename Tuple, typename Func, typename OutIter>
 OutIter TransformTupleValues(Func f, const Tuple& t, OutIter out) {
@@ -5682,15 +5682,15 @@ class AnyMatcherImpl : public MatcherInterface<T> {
   virtual void DescribeTo(::std::ostream* os) const { *os << "is anything"; }
   virtual void DescribeNegationTo(::std::ostream* os) const {
     // This is mostly for completeness' safe, as it's not very useful
-    // to write Not(A<bool>()).  However we cannot completely rule out
-    // such a possibility, and it doesn't hurt to be prepared.
+    // idOfRoomDoorLeadsTo write Not(A<bool>()).  However we cannot completely rule out
+    // such a possibility, and it doesn't hurt idOfRoomDoorLeadsTo be prepared.
     *os << "never matches";
   }
 };
 
 // Implements _, a matcher that matches any value of any
 // type.  This is a polymorphic matcher, so we need a template type
-// conversion operator to make it appearing as a Matcher<T> for any
+// conversion operator idOfRoomDoorLeadsTo make it appearing as a Matcher<T> for any
 // type T.
 class AnythingMatcher {
  public:
@@ -5700,10 +5700,10 @@ class AnythingMatcher {
 
 // Implements a matcher that compares a given value with a
 // pre-supplied value using one of the ==, <=, <, etc, operators.  The
-// two values being compared don't have to have the same type.
+// two values being compared don't have idOfRoomDoorLeadsTo have the same type.
 //
 // The matcher defined here is polymorphic (for example, Eq(5) can be
-// used to match an int, a short, a double, etc).  Therefore we use
+// used idOfRoomDoorLeadsTo match an int, a short, a double, etc).  Therefore we use
 // a template type conversion operator in the implementation.
 //
 // The following template definition assumes that the Rhs parameter is
@@ -5747,16 +5747,16 @@ class EqMatcher : public ComparisonBase<EqMatcher<Rhs>, Rhs, AnyEq> {
  public:
   explicit EqMatcher(const Rhs& rhs)
       : ComparisonBase<EqMatcher<Rhs>, Rhs, AnyEq>(rhs) { }
-  static const char* Desc() { return "is equal to"; }
-  static const char* NegatedDesc() { return "isn't equal to"; }
+  static const char* Desc() { return "is equal idOfRoomDoorLeadsTo"; }
+  static const char* NegatedDesc() { return "isn't equal idOfRoomDoorLeadsTo"; }
 };
 template <typename Rhs>
 class NeMatcher : public ComparisonBase<NeMatcher<Rhs>, Rhs, AnyNe> {
  public:
   explicit NeMatcher(const Rhs& rhs)
       : ComparisonBase<NeMatcher<Rhs>, Rhs, AnyNe>(rhs) { }
-  static const char* Desc() { return "isn't equal to"; }
-  static const char* NegatedDesc() { return "is equal to"; }
+  static const char* Desc() { return "isn't equal idOfRoomDoorLeadsTo"; }
+  static const char* NegatedDesc() { return "is equal idOfRoomDoorLeadsTo"; }
 };
 template <typename Rhs>
 class LtMatcher : public ComparisonBase<LtMatcher<Rhs>, Rhs, AnyLt> {
@@ -5831,13 +5831,13 @@ class NotNullMatcher {
   }
 };
 
-// Ref(variable) matches any argument that is a reference to
+// Ref(variable) matches any argument that is a reference idOfRoomDoorLeadsTo
 // 'variable'.  This matcher is polymorphic as it can match any
 // super type of the type of 'variable'.
 //
 // The RefMatcher template class implements Ref(variable).  It can
 // only be instantiated with a reference type.  This prevents a user
-// from mistakenly using Ref(x) to match a non-reference function
+// from mistakenly using Ref(x) idOfRoomDoorLeadsTo match a non-reference function
 // argument.  For example, the following will righteously cause a
 // compiler error:
 //
@@ -5849,24 +5849,24 @@ class RefMatcher;
 
 template <typename T>
 class RefMatcher<T&> {
-  // Google Mock is a generic framework and thus needs to support
+  // Google Mock is a generic framework and thus needs idOfRoomDoorLeadsTo support
   // mocking any function types, including those that take non-const
   // reference arguments.  Therefore the template parameter T (and
-  // Super below) can be instantiated to either a const type or a
+  // Super below) can be instantiated idOfRoomDoorLeadsTo either a const type or a
   // non-const type.
  public:
   // RefMatcher() takes a T& instead of const T&, as we want the
-  // compiler to catch using Ref(const_value) as a matcher for a
+  // compiler idOfRoomDoorLeadsTo catch using Ref(const_value) as a matcher for a
   // non-const reference.
   explicit RefMatcher(T& x) : object_(x) {}  // NOLINT
 
   template <typename Super>
   operator Matcher<Super&>() const {
-    // By passing object_ (type T&) to Impl(), which expects a Super&,
+    // By passing object_ (type T&) idOfRoomDoorLeadsTo Impl(), which expects a Super&,
     // we make sure that Super is a super type of T.  In particular,
     // this catches using Ref(const_value) as a matcher for a
     // non-const reference, as you cannot implicitly convert a const
-    // reference to a non-const reference.
+    // reference idOfRoomDoorLeadsTo a non-const reference.
     return MakeMatcher(new Impl<Super>(object_));
   }
 
@@ -5876,8 +5876,8 @@ class RefMatcher<T&> {
    public:
     explicit Impl(Super& x) : object_(x) {}  // NOLINT
 
-    // MatchAndExplain() takes a Super& (as opposed to const Super&)
-    // in order to match the interface MatcherInterface<Super&>.
+    // MatchAndExplain() takes a Super& (as opposed idOfRoomDoorLeadsTo const Super&)
+    // in order idOfRoomDoorLeadsTo match the interface MatcherInterface<Super&>.
     virtual bool MatchAndExplain(
         Super& x, MatchResultListener* listener) const {
       *listener << "which is located @" << static_cast<const void*>(&x);
@@ -5961,7 +5961,7 @@ class StrEqualityMatcher {
     return MatchAndExplain(StringType(s), listener);
   }
 
-  // Matches anything that can convert to StringType.
+  // Matches anything that can convert idOfRoomDoorLeadsTo StringType.
   //
   // This is a template, not just a plain function with const StringType&,
   // because StringPiece has some interfering non-explicit constructors.
@@ -5985,7 +5985,7 @@ class StrEqualityMatcher {
  private:
   void DescribeToHelper(bool expect_eq, ::std::ostream* os) const {
     *os << (expect_eq ? "is " : "isn't ");
-    *os << "equal to ";
+    *os << "equal idOfRoomDoorLeadsTo ";
     if (!case_sensitive_) {
       *os << "(ignoring case) ";
     }
@@ -6000,7 +6000,7 @@ class StrEqualityMatcher {
 };
 
 // Implements the polymorphic HasSubstr(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<T> as long as T can be converted idOfRoomDoorLeadsTo a
 // string.
 template <typename StringType>
 class HasSubstrMatcher {
@@ -6018,7 +6018,7 @@ class HasSubstrMatcher {
     return s != NULL && MatchAndExplain(StringType(s), listener);
   }
 
-  // Matches anything that can convert to StringType.
+  // Matches anything that can convert idOfRoomDoorLeadsTo StringType.
   //
   // This is a template, not just a plain function with const StringType&,
   // because StringPiece has some interfering non-explicit constructors.
@@ -6047,7 +6047,7 @@ class HasSubstrMatcher {
 };
 
 // Implements the polymorphic StartsWith(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<T> as long as T can be converted idOfRoomDoorLeadsTo a
 // string.
 template <typename StringType>
 class StartsWithMatcher {
@@ -6065,7 +6065,7 @@ class StartsWithMatcher {
     return s != NULL && MatchAndExplain(StringType(s), listener);
   }
 
-  // Matches anything that can convert to StringType.
+  // Matches anything that can convert idOfRoomDoorLeadsTo StringType.
   //
   // This is a template, not just a plain function with const StringType&,
   // because StringPiece has some interfering non-explicit constructors.
@@ -6094,7 +6094,7 @@ class StartsWithMatcher {
 };
 
 // Implements the polymorphic EndsWith(substring) matcher, which
-// can be used as a Matcher<T> as long as T can be converted to a
+// can be used as a Matcher<T> as long as T can be converted idOfRoomDoorLeadsTo a
 // string.
 template <typename StringType>
 class EndsWithMatcher {
@@ -6111,7 +6111,7 @@ class EndsWithMatcher {
     return s != NULL && MatchAndExplain(StringType(s), listener);
   }
 
-  // Matches anything that can convert to StringType.
+  // Matches anything that can convert idOfRoomDoorLeadsTo StringType.
   //
   // This is a template, not just a plain function with const StringType&,
   // because StringPiece has some interfering non-explicit constructors.
@@ -6141,7 +6141,7 @@ class EndsWithMatcher {
 
 // Implements polymorphic matchers MatchesRegex(regex) and
 // ContainsRegex(regex), which can be used as a Matcher<T> as long as
-// T can be converted to a string.
+// T can be converted idOfRoomDoorLeadsTo a string.
 class MatchesRegexMatcher {
  public:
   MatchesRegexMatcher(const RE* regex, bool full_match)
@@ -6157,7 +6157,7 @@ class MatchesRegexMatcher {
     return s != NULL && MatchAndExplain(internal::string(s), listener);
   }
 
-  // Matches anything that can convert to internal::string.
+  // Matches anything that can convert idOfRoomDoorLeadsTo internal::string.
   //
   // This is a template, not just a plain function with const internal::string&,
   // because StringPiece has some interfering non-explicit constructors.
@@ -6190,10 +6190,10 @@ class MatchesRegexMatcher {
 
 // Implements a matcher that compares the two fields of a 2-tuple
 // using one of the ==, <=, <, etc, operators.  The two fields being
-// compared don't have to have the same type.
+// compared don't have idOfRoomDoorLeadsTo have the same type.
 //
 // The matcher defined here is polymorphic (for example, Eq() can be
-// used to match a tuple<int, short>, a tuple<const long&, double>,
+// used idOfRoomDoorLeadsTo match a tuple<int, short>, a tuple<const long&, double>,
 // etc).  Therefore we use a template type conversion operator in the
 // implementation.
 template <typename D, typename Op>
@@ -6290,8 +6290,8 @@ class NotMatcher {
  public:
   explicit NotMatcher(InnerMatcher matcher) : matcher_(matcher) {}
 
-  // This template type conversion operator allows Not(m) to be used
-  // to match any type m can match.
+  // This template type conversion operator allows Not(m) idOfRoomDoorLeadsTo be used
+  // idOfRoomDoorLeadsTo match any type m can match.
   template <typename T>
   operator Matcher<T>() const {
     return Matcher<T>(new NotMatcherImpl<T>(SafeMatcherCast<T>(matcher_)));
@@ -6331,7 +6331,7 @@ class BothOfMatcherImpl : public MatcherInterface<T> {
 
   virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {
     // If either matcher1_ or matcher2_ doesn't match x, we only need
-    // to explain why one of them fails.
+    // idOfRoomDoorLeadsTo explain why one of them fails.
     StringMatchResultListener listener1;
     if (!matcher1_.MatchAndExplain(x, &listener1)) {
       *listener << listener1.str();
@@ -6344,7 +6344,7 @@ class BothOfMatcherImpl : public MatcherInterface<T> {
       return false;
     }
 
-    // Otherwise we need to explain why *both* of them match.
+    // Otherwise we need idOfRoomDoorLeadsTo explain why *both* of them match.
     const internal::string s1 = listener1.str();
     const internal::string s2 = listener2.str();
 
@@ -6388,7 +6388,7 @@ struct MatcherList {
   }
 
   // CreateMatcher<T> creates a Matcher<T> from a given list of matchers (built
-  // by BuildList()). CombiningMatcher<T> is used to combine the matchers of the
+  // by BuildList()). CombiningMatcher<T> is used idOfRoomDoorLeadsTo combine the matchers of the
   // list. CombiningMatcher<T> must implement MatcherInterface<T> and have a
   // constructor taking two Matcher<T>s as input.
   template <typename T, template <typename /* T */> class CombiningMatcher>
@@ -6421,7 +6421,7 @@ struct MatcherList<2, Matcher1, Matcher2> {
 
 // VariadicMatcher is used for the variadic implementation of
 // AllOf(m_1, m_2, ...) and AnyOf(m_1, m_2, ...).
-// CombiningMatcher<T> is used to recursively combine the provided matchers
+// CombiningMatcher<T> is used idOfRoomDoorLeadsTo recursively combine the provided matchers
 // (of type Args...).
 template <template <typename T> class CombiningMatcher, typename... Args>
 class VariadicMatcher {
@@ -6430,7 +6430,7 @@ class VariadicMatcher {
       : matchers_(MatcherListType::BuildList(matchers...)) {}
 
   // This template type conversion operator allows an
-  // VariadicMatcher<Matcher1, Matcher2...> object to match any type that
+  // VariadicMatcher<Matcher1, Matcher2...> object idOfRoomDoorLeadsTo match any type that
   // all of the provided matchers (Matcher1, Matcher2, ...) can match.
   template <typename T>
   operator Matcher<T>() const {
@@ -6460,7 +6460,7 @@ class BothOfMatcher {
       : matcher1_(matcher1), matcher2_(matcher2) {}
 
   // This template type conversion operator allows a
-  // BothOfMatcher<Matcher1, Matcher2> object to match any type that
+  // BothOfMatcher<Matcher1, Matcher2> object idOfRoomDoorLeadsTo match any type that
   // both Matcher1 and Matcher2 can match.
   template <typename T>
   operator Matcher<T>() const {
@@ -6502,7 +6502,7 @@ class EitherOfMatcherImpl : public MatcherInterface<T> {
   }
 
   virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {
-    // If either matcher1_ or matcher2_ matches x, we just need to
+    // If either matcher1_ or matcher2_ matches x, we just need idOfRoomDoorLeadsTo
     // explain why *one* of them matches.
     StringMatchResultListener listener1;
     if (matcher1_.MatchAndExplain(x, &listener1)) {
@@ -6516,7 +6516,7 @@ class EitherOfMatcherImpl : public MatcherInterface<T> {
       return true;
     }
 
-    // Otherwise we need to explain why *both* of them fail.
+    // Otherwise we need idOfRoomDoorLeadsTo explain why *both* of them fail.
     const internal::string s1 = listener1.str();
     const internal::string s2 = listener2.str();
 
@@ -6555,7 +6555,7 @@ class EitherOfMatcher {
       : matcher1_(matcher1), matcher2_(matcher2) {}
 
   // This template type conversion operator allows a
-  // EitherOfMatcher<Matcher1, Matcher2> object to match any type that
+  // EitherOfMatcher<Matcher1, Matcher2> object idOfRoomDoorLeadsTo match any type that
   // both Matcher1 and Matcher2 can match.
   template <typename T>
   operator Matcher<T>() const {
@@ -6577,7 +6577,7 @@ class TrulyMatcher {
  public:
   explicit TrulyMatcher(Predicate pred) : predicate_(pred) {}
 
-  // This method template allows Truly(pred) to be used as a matcher
+  // This method template allows Truly(pred) idOfRoomDoorLeadsTo be used as a matcher
   // for type T where T is the argument type of predicate 'pred'.  The
   // argument is passed by reference as the predicate may be
   // interested in the address of the argument.
@@ -6585,10 +6585,10 @@ class TrulyMatcher {
   bool MatchAndExplain(T& x,  // NOLINT
                        MatchResultListener* /* listener */) const {
     // Without the if-statement, MSVC sometimes warns about converting
-    // a value to bool (warning 4800).
+    // a value idOfRoomDoorLeadsTo bool (warning 4800).
     //
     // We cannot write 'return !!predicate_(x);' as that doesn't work
-    // when predicate_(x) returns a class convertible to bool but
+    // when predicate_(x) returns a class convertible idOfRoomDoorLeadsTo bool but
     // having no operator!().
     if (predicate_(x))
       return true;
@@ -6616,7 +6616,7 @@ class MatcherAsPredicate {
  public:
   explicit MatcherAsPredicate(M matcher) : matcher_(matcher) {}
 
-  // This template operator() allows Matches(m) to be used as a
+  // This template operator() allows Matches(m) idOfRoomDoorLeadsTo be used as a
   // predicate on type T where m is a matcher on type T.
   //
   // The argument x is passed by reference instead of by value, as
@@ -6624,9 +6624,9 @@ class MatcherAsPredicate {
   // Matches(Ref(n))(x)).
   template <typename T>
   bool operator()(const T& x) const {
-    // We let matcher_ commit to a particular type here instead of
+    // We let matcher_ commit idOfRoomDoorLeadsTo a particular type here instead of
     // when the MatcherAsPredicate object was constructed.  This
-    // allows us to write Matches(m) where m is a polymorphic matcher
+    // allows us idOfRoomDoorLeadsTo write Matches(m) where m is a polymorphic matcher
     // (e.g. Eq(5)).
     //
     // If we write Matcher<T>(matcher_).Matches(x) here, it won't
@@ -6648,21 +6648,21 @@ class MatcherAsPredicate {
 };
 
 // For implementing ASSERT_THAT() and EXPECT_THAT().  The template
-// argument M must be a type that can be converted to a matcher.
+// argument M must be a type that can be converted idOfRoomDoorLeadsTo a matcher.
 template <typename M>
 class PredicateFormatterFromMatcher {
  public:
   explicit PredicateFormatterFromMatcher(M m) : matcher_(internal::move(m)) {}
 
   // This template () operator allows a PredicateFormatterFromMatcher
-  // object to act as a predicate-formatter suitable for using with
+  // object idOfRoomDoorLeadsTo act as a predicate-formatter suitable for using with
   // Google Test's EXPECT_PRED_FORMAT1() macro.
   template <typename T>
   AssertionResult operator()(const char* value_text, const T& x) const {
-    // We convert matcher_ to a Matcher<const T&> *now* instead of
+    // We convert matcher_ idOfRoomDoorLeadsTo a Matcher<const T&> *now* instead of
     // when the PredicateFormatterFromMatcher object was constructed,
     // as matcher_ may be polymorphic (e.g. NotNull()) and we won't
-    // know which type to instantiate it to until we actually see the
+    // know which type idOfRoomDoorLeadsTo instantiate it idOfRoomDoorLeadsTo until we actually see the
     // type of x here.
     //
     // We write SafeMatcherCast<const T&>(matcher_) instead of
@@ -6689,10 +6689,10 @@ class PredicateFormatterFromMatcher {
   GTEST_DISALLOW_ASSIGN_(PredicateFormatterFromMatcher);
 };
 
-// A helper function for converting a matcher to a predicate-formatter
-// without the user needing to explicitly write the type.  This is
+// A helper function for converting a matcher idOfRoomDoorLeadsTo a predicate-formatter
+// without the user needing idOfRoomDoorLeadsTo explicitly write the type.  This is
 // used for implementing ASSERT_THAT() and EXPECT_THAT().
-// Implementation detail: 'matcher' is received by-value to force decaying.
+// Implementation detail: 'matcher' is received by-value idOfRoomDoorLeadsTo force decaying.
 template <typename M>
 inline PredicateFormatterFromMatcher<M>
 MakePredicateFormatterFromMatcher(M matcher) {
@@ -6701,7 +6701,7 @@ MakePredicateFormatterFromMatcher(M matcher) {
 
 // Implements the polymorphic floating point equality matcher, which matches
 // two float values using ULP-based approximation or, optionally, a
-// user-specified epsilon.  The template is meant to be instantiated with
+// user-specified epsilon.  The template is meant idOfRoomDoorLeadsTo be instantiated with
 // FloatType being either float or double.
 template <typename FloatType>
 class FloatingEqMatcher {
@@ -6710,7 +6710,7 @@ class FloatingEqMatcher {
   // The matcher's input will be compared with expected.  The matcher treats two
   // NANs as equal if nan_eq_nan is true.  Otherwise, under IEEE standards,
   // equality comparisons between NANs will always return false.  We specify a
-  // negative max_abs_error_ term to indicate that ULP-based approximation will
+  // negative max_abs_error_ term idOfRoomDoorLeadsTo indicate that ULP-based approximation will
   // be used for comparison.
   FloatingEqMatcher(FloatType expected, bool nan_eq_nan) :
     expected_(expected), nan_eq_nan_(nan_eq_nan), max_abs_error_(-1) {
@@ -6774,7 +6774,7 @@ class FloatingEqMatcher {
 
     virtual void DescribeTo(::std::ostream* os) const {
       // os->precision() returns the previously set precision, which we
-      // store to restore the ostream to its original configuration
+      // store idOfRoomDoorLeadsTo restore the ostream idOfRoomDoorLeadsTo its original configuration
       // after outputting.
       const ::std::streamsize old_precision = os->precision(
           ::std::numeric_limits<FloatType>::digits10 + 2);
@@ -6827,11 +6827,11 @@ class FloatingEqMatcher {
   };
 
   // The following 3 type conversion operators allow FloatEq(expected) and
-  // NanSensitiveFloatEq(expected) to be used as a Matcher<float>, a
+  // NanSensitiveFloatEq(expected) idOfRoomDoorLeadsTo be used as a Matcher<float>, a
   // Matcher<const float&>, or a Matcher<float&>, but nothing else.
   // (While Google's C++ coding style doesn't allow arguments passed
-  // by non-const reference, we may see them in code not conforming to
-  // the style.  Therefore Google Mock needs to support them.)
+  // by non-const reference, we may see them in code not conforming idOfRoomDoorLeadsTo
+  // the style.  Therefore Google Mock needs idOfRoomDoorLeadsTo support them.)
   operator Matcher<FloatType>() const {
     return MakeMatcher(
         new Impl<FloatType>(expected_, nan_eq_nan_, max_abs_error_));
@@ -6863,7 +6863,7 @@ class PointeeMatcher {
  public:
   explicit PointeeMatcher(const InnerMatcher& matcher) : matcher_(matcher) {}
 
-  // This type conversion operator template allows Pointee(m) to be
+  // This type conversion operator template allows Pointee(m) idOfRoomDoorLeadsTo be
   // used as a matcher for any pointer type whose pointee type is
   // compatible with the inner matcher, where type Pointer can be
   // either a raw pointer or a smart pointer.
@@ -6888,12 +6888,12 @@ class PointeeMatcher {
         : matcher_(MatcherCast<const Pointee&>(matcher)) {}
 
     virtual void DescribeTo(::std::ostream* os) const {
-      *os << "points to a value that ";
+      *os << "points idOfRoomDoorLeadsTo a value that ";
       matcher_.DescribeTo(os);
     }
 
     virtual void DescribeNegationTo(::std::ostream* os) const {
-      *os << "does not point to a value that ";
+      *os << "does not point idOfRoomDoorLeadsTo a value that ";
       matcher_.DescribeTo(os);
     }
 
@@ -6902,7 +6902,7 @@ class PointeeMatcher {
       if (GetRawPointer(pointer) == NULL)
         return false;
 
-      *listener << "which points to ";
+      *listener << "which points idOfRoomDoorLeadsTo ";
       return MatchPrintAndExplain(*pointer, matcher_, listener);
     }
 
@@ -6919,7 +6919,7 @@ class PointeeMatcher {
 
 // Implements the WhenDynamicCastTo<T>(m) matcher that matches a pointer or
 // reference that matches inner_matcher when dynamic_cast<T> is applied.
-// The result of dynamic_cast<To> is forwarded to the inner matcher.
+// The result of dynamic_cast<To> is forwarded idOfRoomDoorLeadsTo the inner matcher.
 // If To is a pointer and the cast fails, the inner matcher will receive NULL.
 // If To is a reference and the cast fails, this matcher returns false
 // immediately.
@@ -6952,7 +6952,7 @@ class WhenDynamicCastToMatcherBase {
 
  private:
   static void GetCastTypeDescription(::std::ostream* os) {
-    *os << "when dynamic_cast to " << GetToName() << ", ";
+    *os << "when dynamic_cast idOfRoomDoorLeadsTo " << GetToName() << ", ";
   }
 
   GTEST_DISALLOW_ASSIGN_(WhenDynamicCastToMatcherBase);
@@ -6987,7 +6987,7 @@ class WhenDynamicCastToMatcher<To&> : public WhenDynamicCastToMatcherBase<To&> {
     // We don't want an std::bad_cast here, so do the cast with pointers.
     To* to = dynamic_cast<To*>(&from);
     if (to == NULL) {
-      *listener << "which cannot be dynamic_cast to " << this->GetToName();
+      *listener << "which cannot be dynamic_cast idOfRoomDoorLeadsTo " << this->GetToName();
       return false;
     }
     return MatchPrintAndExplain(*to, this->matcher_, listener);
@@ -7022,9 +7022,9 @@ class FieldMatcher {
   }
 
  private:
-  // The first argument of MatchAndExplainImpl() is needed to help
-  // Symbian's C++ compiler choose which overload to use.  Its type is
-  // true_type iff the Field() matcher is used to match a pointer.
+  // The first argument of MatchAndExplainImpl() is needed idOfRoomDoorLeadsTo help
+  // Symbian's C++ compiler choose which overload idOfRoomDoorLeadsTo use.  Its type is
+  // true_type iff the Field() matcher is used idOfRoomDoorLeadsTo match a pointer.
   bool MatchAndExplainImpl(false_type /* is_not_pointer */, const Class& obj,
                            MatchResultListener* listener) const {
     *listener << "whose given field is ";
@@ -7036,7 +7036,7 @@ class FieldMatcher {
     if (p == NULL)
       return false;
 
-    *listener << "which points to an object ";
+    *listener << "which points idOfRoomDoorLeadsTo an object ";
     // Since *p has a field, it must be a class/struct/union type and
     // thus cannot be a pointer.  Therefore we pass false_type() as
     // the first argument.
@@ -7055,7 +7055,7 @@ template <typename Class, typename PropertyType>
 class PropertyMatcher {
  public:
   // The property may have a reference type, so 'const PropertyType&'
-  // may cause double references and fail to compile.  That's why we
+  // may cause double references and fail idOfRoomDoorLeadsTo compile.  That's why we
   // need GTEST_REFERENCE_TO_CONST, which works regardless of
   // PropertyType being a reference or not.
   typedef GTEST_REFERENCE_TO_CONST_(PropertyType) RefToConstProperty;
@@ -7083,13 +7083,13 @@ class PropertyMatcher {
   }
 
  private:
-  // The first argument of MatchAndExplainImpl() is needed to help
-  // Symbian's C++ compiler choose which overload to use.  Its type is
-  // true_type iff the Property() matcher is used to match a pointer.
+  // The first argument of MatchAndExplainImpl() is needed idOfRoomDoorLeadsTo help
+  // Symbian's C++ compiler choose which overload idOfRoomDoorLeadsTo use.  Its type is
+  // true_type iff the Property() matcher is used idOfRoomDoorLeadsTo match a pointer.
   bool MatchAndExplainImpl(false_type /* is_not_pointer */, const Class& obj,
                            MatchResultListener* listener) const {
     *listener << "whose given property is ";
-    // Cannot pass the return value (for example, int) to MatchPrintAndExplain,
+    // Cannot pass the return value (for example, int) idOfRoomDoorLeadsTo MatchPrintAndExplain,
     // which takes a non-const reference as argument.
 #if defined(_PREFAST_ ) && _MSC_VER == 1800
     // Workaround bug in VC++ 2013's /analyze parser.
@@ -7107,7 +7107,7 @@ class PropertyMatcher {
     if (p == NULL)
       return false;
 
-    *listener << "which points to an object ";
+    *listener << "which points idOfRoomDoorLeadsTo an object ";
     // Since *p has a property method, it must be a class/struct/union
     // type and thus cannot be a pointer.  Therefore we pass
     // false_type() as the first argument.
@@ -7122,8 +7122,8 @@ class PropertyMatcher {
 
 // Type traits specifying various features of different functors for ResultOf.
 // The default template specifies features for functor objects.
-// Functor classes have to typedef argument_type and result_type
-// to be compatible with ResultOf.
+// Functor classes have idOfRoomDoorLeadsTo typedef argument_type and result_type
+// idOfRoomDoorLeadsTo be compatible with ResultOf.
 template <typename Functor>
 struct CallableTraits {
   typedef typename Functor::result_type ResultType;
@@ -7177,18 +7177,18 @@ class ResultOfMatcher {
         : callable_(callable), matcher_(matcher) {}
 
     virtual void DescribeTo(::std::ostream* os) const {
-      *os << "is mapped by the given callable to a value that ";
+      *os << "is mapped by the given callable idOfRoomDoorLeadsTo a value that ";
       matcher_.DescribeTo(os);
     }
 
     virtual void DescribeNegationTo(::std::ostream* os) const {
-      *os << "is mapped by the given callable to a value that ";
+      *os << "is mapped by the given callable idOfRoomDoorLeadsTo a value that ";
       matcher_.DescribeNegationTo(os);
     }
 
     virtual bool MatchAndExplain(T obj, MatchResultListener* listener) const {
-      *listener << "which is mapped by the given callable to ";
-      // Cannot pass the return value (for example, int) to
+      *listener << "which is mapped by the given callable idOfRoomDoorLeadsTo ";
+      // Cannot pass the return value (for example, int) idOfRoomDoorLeadsTo
       // MatchPrintAndExplain, which takes a non-const reference as argument.
       ResultType result =
           CallableTraits<Callable>::template Invoke<T>(callable_, obj);
@@ -7197,8 +7197,8 @@ class ResultOfMatcher {
 
    private:
     // Functors often define operator() as non-const method even though
-    // they are actualy stateless. But we need to use them even when
-    // 'this' is a const pointer. It's the user's responsibility not to
+    // they are actualy stateless. But we need idOfRoomDoorLeadsTo use them even when
+    // 'this' is a const pointer. It's the user's responsibility not idOfRoomDoorLeadsTo
     // use stateful callables with ResultOf(), which does't guarantee
     // how many times the callable will be invoked.
     mutable CallableStorageType callable_;
@@ -7331,7 +7331,7 @@ class BeginEndDistanceIsMatcher {
 // more detailed information that is useful when the container is used as a set.
 // The failure message reports elements that are in one of the operands but not
 // the other. The failure messages do not report duplicate or out-of-order
-// elements in the containers (which don't properly matter to sets, but can
+// elements in the containers (which don't properly matter idOfRoomDoorLeadsTo sets, but can
 // occur if the containers are vectors or lists, for example).
 //
 // Uses the container's const_iterator, value_type, operator ==,
@@ -7365,8 +7365,8 @@ class ContainerEqMatcher {
   template <typename LhsContainer>
   bool MatchAndExplain(const LhsContainer& lhs,
                        MatchResultListener* listener) const {
-    // GTEST_REMOVE_CONST_() is needed to work around an MSVC 8.0 bug
-    // that causes LhsContainer to be a const type sometimes.
+    // GTEST_REMOVE_CONST_() is needed idOfRoomDoorLeadsTo work around an MSVC 8.0 bug
+    // that causes LhsContainer idOfRoomDoorLeadsTo be a const type sometimes.
     typedef internal::StlContainerView<GTEST_REMOVE_CONST_(LhsContainer)>
         LhsView;
     typedef typename LhsView::type LhsStlContainer;
@@ -7421,7 +7421,7 @@ class ContainerEqMatcher {
   GTEST_DISALLOW_ASSIGN_(ContainerEqMatcher);
 };
 
-// A comparator functor that uses the < operator to compare two values.
+// A comparator functor that uses the < operator idOfRoomDoorLeadsTo compare two values.
 struct LessComparator {
   template <typename T, typename U>
   bool operator()(const T& lhs, const U& rhs) const { return lhs < rhs; }
@@ -7474,7 +7474,7 @@ class WhenSortedByMatcher {
            sorted_container.begin(), sorted_container.end(), comparator_);
 
       if (!listener->IsInterested()) {
-        // If the listener is not interested, we do not need to
+        // If the listener is not interested, we do not need idOfRoomDoorLeadsTo
         // construct the inner explanation.
         return matcher_.Matches(sorted_container);
       }
@@ -7505,7 +7505,7 @@ class WhenSortedByMatcher {
 };
 
 // Implements Pointwise(tuple_matcher, rhs_container).  tuple_matcher
-// must be able to be safely cast to Matcher<tuple<const T1&, const
+// must be able idOfRoomDoorLeadsTo be safely cast idOfRoomDoorLeadsTo Matcher<tuple<const T1&, const
 // T2&> >, where T1 and T2 are the types of elements in the LHS
 // container and the RHS container respectively.
 template <typename TupleMatcher, typename RhsContainer>
@@ -7538,8 +7538,8 @@ class PointwiseMatcher {
     typedef typename LhsView::type LhsStlContainer;
     typedef typename LhsView::const_reference LhsStlContainerReference;
     typedef typename LhsStlContainer::value_type LhsValue;
-    // We pass the LHS value and the RHS value to the inner matcher by
-    // reference, as they may be expensive to copy.  We must use tuple
+    // We pass the LHS value and the RHS value idOfRoomDoorLeadsTo the inner matcher by
+    // reference, as they may be expensive idOfRoomDoorLeadsTo copy.  We must use tuple
     // instead of pair here, as a pair cannot hold references (C++ 98,
     // 20.2.2 [lib.pairs]).
     typedef ::testing::tuple<const LhsValue&, const RhsValue&> InnerMatcherArg;
@@ -7614,7 +7614,7 @@ class PointwiseMatcher {
   GTEST_DISALLOW_ASSIGN_(PointwiseMatcher);
 };
 
-// Holds the logic common to ContainsMatcherImpl and EachMatcherImpl.
+// Holds the logic common idOfRoomDoorLeadsTo ContainsMatcherImpl and EachMatcherImpl.
 template <typename Container>
 class QuantifierMatcherImpl : public MatcherInterface<Container> {
  public:
@@ -7659,7 +7659,7 @@ class QuantifierMatcherImpl : public MatcherInterface<Container> {
 };
 
 // Implements Contains(element_matcher) for the given argument type Container.
-// Symmetric to EachMatcherImpl.
+// Symmetric idOfRoomDoorLeadsTo EachMatcherImpl.
 template <typename Container>
 class ContainsMatcherImpl : public QuantifierMatcherImpl<Container> {
  public:
@@ -7688,7 +7688,7 @@ class ContainsMatcherImpl : public QuantifierMatcherImpl<Container> {
 };
 
 // Implements Each(element_matcher) for the given argument type Container.
-// Symmetric to ContainsMatcherImpl.
+// Symmetric idOfRoomDoorLeadsTo ContainsMatcherImpl.
 template <typename Container>
 class EachMatcherImpl : public QuantifierMatcherImpl<Container> {
  public:
@@ -7752,7 +7752,7 @@ class EachMatcher {
 
 // Implements Key(inner_matcher) for the given argument pair type.
 // Key(inner_matcher) matches an std::pair whose 'first' field matches
-// inner_matcher.  For example, Contains(Key(Ge(5))) can be used to match an
+// inner_matcher.  For example, Contains(Key(Ge(5))) can be used idOfRoomDoorLeadsTo match an
 // std::map that contains at least one element whose key is >= 5.
 template <typename PairType>
 class KeyMatcherImpl : public MatcherInterface<PairType> {
@@ -7852,7 +7852,7 @@ class PairMatcherImpl : public MatcherInterface<PairType> {
   virtual bool MatchAndExplain(PairType a_pair,
                                MatchResultListener* listener) const {
     if (!listener->IsInterested()) {
-      // If the listener is not interested, we don't need to construct the
+      // If the listener is not interested, we don't need idOfRoomDoorLeadsTo construct the
       // explanation.
       return first_matcher_.Matches(a_pair.first) &&
              second_matcher_.Matches(a_pair.second);
@@ -8021,8 +8021,8 @@ class ElementsAreMatcherImpl : public MatcherInterface<Container> {
 
     if (actual_count != count()) {
       // The element count doesn't match.  If the container is empty,
-      // there's no need to explain anything as Google Mock already
-      // prints the empty container.  Otherwise we just need to show
+      // there's no need idOfRoomDoorLeadsTo explain anything as Google Mock already
+      // prints the empty container.  Otherwise we just need idOfRoomDoorLeadsTo show
       // how many elements there actually are.
       if (listener_interested && (actual_count != 0)) {
         *listener << "which has " << Elements(actual_count);
@@ -8039,7 +8039,7 @@ class ElementsAreMatcherImpl : public MatcherInterface<Container> {
       return false;
     }
 
-    // Every element matches its expectation.  We need to explain why
+    // Every element matches its expectation.  We need idOfRoomDoorLeadsTo explain why
     // (the obvious ones can be skipped).
     if (listener_interested) {
       bool reason_printed = false;
@@ -8071,8 +8071,8 @@ class ElementsAreMatcherImpl : public MatcherInterface<Container> {
 
 // Connectivity matrix of (elements X matchers), in element-major order.
 // Initially, there are no edges.
-// Use NextGraph() to iterate over all possible edge configurations.
-// Use Randomize() to generate a random edge configuration.
+// Use NextGraph() idOfRoomDoorLeadsTo iterate over all possible edge configurations.
+// Use Randomize() idOfRoomDoorLeadsTo generate a random edge configuration.
 class GTEST_API_ MatchMatrix {
  public:
   MatchMatrix(size_t num_elements, size_t num_matchers)
@@ -8091,7 +8091,7 @@ class GTEST_API_ MatchMatrix {
   }
 
   // Treating the connectivity matrix as a (LhsSize()*RhsSize())-bit number,
-  // adds 1 to that number; returns false if incrementing the graph left it
+  // adds 1 idOfRoomDoorLeadsTo that number; returns false if incrementing the graph left it
   // empty.
   bool NextGraph();
 
@@ -8108,7 +8108,7 @@ class GTEST_API_ MatchMatrix {
   size_t num_matchers_;
 
   // Each element is a char interpreted as bool. They are stored as a
-  // flattened array in lhs-major order, use 'SpaceIndex()' to translate
+  // flattened array in lhs-major order, use 'SpaceIndex()' idOfRoomDoorLeadsTo translate
   // a (ilhs, irhs) matrix coordinate into an offset.
   ::std::vector<char> matched_;
 };
@@ -8125,7 +8125,7 @@ GTEST_API_ bool FindPairing(const MatchMatrix& matrix,
                             MatchResultListener* listener);
 
 // Untyped base class for implementing UnorderedElementsAre.  By
-// putting logic that's not specific to the element type here, we
+// putting logic that's not specific idOfRoomDoorLeadsTo the element type here, we
 // reduce binary bloat and increase compilation speed.
 class GTEST_API_ UnorderedElementsAreMatcherImplBase {
  protected:
@@ -8207,8 +8207,8 @@ class UnorderedElementsAreMatcherImpl
     }
     if (actual_count != matchers_.size()) {
       // The element count doesn't match.  If the container is empty,
-      // there's no need to explain anything as Google Mock already
-      // prints the empty container. Otherwise we just need to show
+      // there's no need idOfRoomDoorLeadsTo explain anything as Google Mock already
+      // prints the empty container. Otherwise we just need idOfRoomDoorLeadsTo show
       // how many elements there actually are.
       if (actual_count != 0 && listener->IsInterested()) {
         *listener << "which has " << Elements(actual_count);
@@ -8364,7 +8364,7 @@ class ElementsAreArrayMatcher {
 // matches tuple (x, second).  Useful for implementing
 // UnorderedPointwise() in terms of UnorderedElementsAreArray().
 //
-// BoundSecondMatcher is copyable and assignable, as we need to put
+// BoundSecondMatcher is copyable and assignable, as we need idOfRoomDoorLeadsTo put
 // instances of this class in a vector when implementing
 // UnorderedPointwise().
 template <typename Tuple2Matcher, typename Second>
@@ -8378,14 +8378,14 @@ class BoundSecondMatcher {
     return MakeMatcher(new Impl<T>(tuple2_matcher_, second_value_));
   }
 
-  // We have to define this for UnorderedPointwise() to compile in
+  // We have idOfRoomDoorLeadsTo define this for UnorderedPointwise() idOfRoomDoorLeadsTo compile in
   // C++98 mode, as it puts BoundSecondMatcher instances in a vector,
-  // which requires the elements to be assignable in C++98.  The
+  // which requires the elements idOfRoomDoorLeadsTo be assignable in C++98.  The
   // compiler cannot generate the operator= for us, as Tuple2Matcher
   // and Second may not be assignable.
   //
   // However, this should never be called, so the implementation just
-  // need to assert.
+  // need idOfRoomDoorLeadsTo assert.
   void operator=(const BoundSecondMatcher& /*rhs*/) {
     GTEST_LOG_(FATAL) << "BoundSecondMatcher should never be assigned.";
   }
@@ -8543,7 +8543,7 @@ UnorderedElementsAreArray(::std::initializer_list<T> xs) {
 //   1. The C++ standard permits using the name _ in a namespace that
 //      is not the global namespace or ::std.
 //   2. The AnythingMatcher class has no data member or constructor,
-//      so it's OK to create global variables of this type.
+//      so it's OK idOfRoomDoorLeadsTo create global variables of this type.
 //   3. c-style has approved of using _ in this case.
 const internal::AnythingMatcher _ = {};
 // Creates a matcher that matches any value of the given type T.
@@ -8554,28 +8554,28 @@ inline Matcher<T> A() { return MakeMatcher(new internal::AnyMatcherImpl<T>()); }
 template <typename T>
 inline Matcher<T> An() { return A<T>(); }
 
-// Creates a polymorphic matcher that matches anything equal to x.
+// Creates a polymorphic matcher that matches anything equal idOfRoomDoorLeadsTo x.
 // Note: if the parameter of Eq() were declared as const T&, Eq("foo")
 // wouldn't compile.
 template <typename T>
 inline internal::EqMatcher<T> Eq(T x) { return internal::EqMatcher<T>(x); }
 
 // Constructs a Matcher<T> from a 'value' of type T.  The constructed
-// matcher matches any value that's equal to 'value'.
+// matcher matches any value that's equal idOfRoomDoorLeadsTo 'value'.
 template <typename T>
 Matcher<T>::Matcher(T value) { *this = Eq(value); }
 
 // Creates a monomorphic matcher that matches anything with type Lhs
-// and equal to rhs.  A user may need to use this instead of Eq(...)
-// in order to resolve an overloading ambiguity.
+// and equal idOfRoomDoorLeadsTo rhs.  A user may need idOfRoomDoorLeadsTo use this instead of Eq(...)
+// in order idOfRoomDoorLeadsTo resolve an overloading ambiguity.
 //
 // TypedEq<T>(x) is just a convenient short-hand for Matcher<T>(Eq(x))
 // or Matcher<T>(x), but more readable than the latter.
 //
 // We could define similar monomorphic matchers for other comparison
-// operations (e.g. TypedLt, TypedGe, and etc), but decided not to do
+// operations (e.g. TypedLt, TypedGe, and etc), but decided not idOfRoomDoorLeadsTo do
 // it yet as those are used much less than Eq() in practice.  A user
-// can always write Matcher<T>(Lt(5)) to be explicit about the type,
+// can always write Matcher<T>(Lt(5)) idOfRoomDoorLeadsTo be explicit about the type,
 // for example.
 template <typename Lhs, typename Rhs>
 inline Matcher<Lhs> TypedEq(const Rhs& rhs) { return Eq(rhs); }
@@ -8630,27 +8630,27 @@ inline internal::RefMatcher<T&> Ref(T& x) {  // NOLINT
 }
 
 // Creates a matcher that matches any double argument approximately
-// equal to rhs, where two NANs are considered unequal.
+// equal idOfRoomDoorLeadsTo rhs, where two NANs are considered unequal.
 inline internal::FloatingEqMatcher<double> DoubleEq(double rhs) {
   return internal::FloatingEqMatcher<double>(rhs, false);
 }
 
 // Creates a matcher that matches any double argument approximately
-// equal to rhs, including NaN values when rhs is NaN.
+// equal idOfRoomDoorLeadsTo rhs, including NaN values when rhs is NaN.
 inline internal::FloatingEqMatcher<double> NanSensitiveDoubleEq(double rhs) {
   return internal::FloatingEqMatcher<double>(rhs, true);
 }
 
-// Creates a matcher that matches any double argument approximately equal to
-// rhs, up to the specified max absolute error bound, where two NANs are
+// Creates a matcher that matches any double argument approximately equal idOfRoomDoorLeadsTo
+// rhs, up idOfRoomDoorLeadsTo the specified max absolute error bound, where two NANs are
 // considered unequal.  The max absolute error bound must be non-negative.
 inline internal::FloatingEqMatcher<double> DoubleNear(
     double rhs, double max_abs_error) {
   return internal::FloatingEqMatcher<double>(rhs, false, max_abs_error);
 }
 
-// Creates a matcher that matches any double argument approximately equal to
-// rhs, up to the specified max absolute error bound, including NaN values when
+// Creates a matcher that matches any double argument approximately equal idOfRoomDoorLeadsTo
+// rhs, up idOfRoomDoorLeadsTo the specified max absolute error bound, including NaN values when
 // rhs is NaN.  The max absolute error bound must be non-negative.
 inline internal::FloatingEqMatcher<double> NanSensitiveDoubleNear(
     double rhs, double max_abs_error) {
@@ -8658,27 +8658,27 @@ inline internal::FloatingEqMatcher<double> NanSensitiveDoubleNear(
 }
 
 // Creates a matcher that matches any float argument approximately
-// equal to rhs, where two NANs are considered unequal.
+// equal idOfRoomDoorLeadsTo rhs, where two NANs are considered unequal.
 inline internal::FloatingEqMatcher<float> FloatEq(float rhs) {
   return internal::FloatingEqMatcher<float>(rhs, false);
 }
 
 // Creates a matcher that matches any float argument approximately
-// equal to rhs, including NaN values when rhs is NaN.
+// equal idOfRoomDoorLeadsTo rhs, including NaN values when rhs is NaN.
 inline internal::FloatingEqMatcher<float> NanSensitiveFloatEq(float rhs) {
   return internal::FloatingEqMatcher<float>(rhs, true);
 }
 
-// Creates a matcher that matches any float argument approximately equal to
-// rhs, up to the specified max absolute error bound, where two NANs are
+// Creates a matcher that matches any float argument approximately equal idOfRoomDoorLeadsTo
+// rhs, up idOfRoomDoorLeadsTo the specified max absolute error bound, where two NANs are
 // considered unequal.  The max absolute error bound must be non-negative.
 inline internal::FloatingEqMatcher<float> FloatNear(
     float rhs, float max_abs_error) {
   return internal::FloatingEqMatcher<float>(rhs, false, max_abs_error);
 }
 
-// Creates a matcher that matches any float argument approximately equal to
-// rhs, up to the specified max absolute error bound, including NaN values when
+// Creates a matcher that matches any float argument approximately equal idOfRoomDoorLeadsTo
+// rhs, up idOfRoomDoorLeadsTo the specified max absolute error bound, including NaN values when
 // rhs is NaN.  The max absolute error bound must be non-negative.
 inline internal::FloatingEqMatcher<float> NanSensitiveFloatNear(
     float rhs, float max_abs_error) {
@@ -8686,7 +8686,7 @@ inline internal::FloatingEqMatcher<float> NanSensitiveFloatNear(
 }
 
 // Creates a matcher that matches a pointer (raw or smart) that points
-// to a value that matches inner_matcher.
+// idOfRoomDoorLeadsTo a value that matches inner_matcher.
 template <typename InnerMatcher>
 inline internal::PointeeMatcher<InnerMatcher> Pointee(
     const InnerMatcher& inner_matcher) {
@@ -8695,7 +8695,7 @@ inline internal::PointeeMatcher<InnerMatcher> Pointee(
 
 // Creates a matcher that matches a pointer or reference that matches
 // inner_matcher when dynamic_cast<To> is applied.
-// The result of dynamic_cast<To> is forwarded to the inner matcher.
+// The result of dynamic_cast<To> is forwarded idOfRoomDoorLeadsTo the inner matcher.
 // If To is a pointer and the cast fails, the inner matcher will receive NULL.
 // If To is a reference and the cast fails, this matcher returns false
 // immediately.
@@ -8717,10 +8717,10 @@ inline PolymorphicMatcher<
   return MakePolymorphicMatcher(
       internal::FieldMatcher<Class, FieldType>(
           field, MatcherCast<const FieldType&>(matcher)));
-  // The call to MatcherCast() is required for supporting inner
+  // The call idOfRoomDoorLeadsTo MatcherCast() is required for supporting inner
   // matchers of compatible types.  For example, it allows
   //   Field(&Foo::bar, m)
-  // to compile where bar is an int32 and m is a matcher for int64.
+  // idOfRoomDoorLeadsTo compile where bar is an int32 and m is a matcher for int64.
 }
 
 // Creates a matcher that matches an object whose given property
@@ -8735,24 +8735,24 @@ inline PolymorphicMatcher<
       internal::PropertyMatcher<Class, PropertyType>(
           property,
           MatcherCast<GTEST_REFERENCE_TO_CONST_(PropertyType)>(matcher)));
-  // The call to MatcherCast() is required for supporting inner
+  // The call idOfRoomDoorLeadsTo MatcherCast() is required for supporting inner
   // matchers of compatible types.  For example, it allows
   //   Property(&Foo::bar, m)
-  // to compile where bar() returns an int32 and m is a matcher for int64.
+  // idOfRoomDoorLeadsTo compile where bar() returns an int32 and m is a matcher for int64.
 }
 
 // Creates a matcher that matches an object iff the result of applying
-// a callable to x matches 'matcher'.
+// a callable idOfRoomDoorLeadsTo x matches 'matcher'.
 // For example,
 //   ResultOf(f, StartsWith("hi"))
 // matches a Foo object x iff f(x) starts with "hi".
 // callable parameter can be a function, function pointer, or a functor.
-// Callable has to satisfy the following conditions:
-//   * It is required to keep no state affecting the results of
+// Callable has idOfRoomDoorLeadsTo satisfy the following conditions:
+//   * It is required idOfRoomDoorLeadsTo keep no state affecting the results of
 //     the calls on it and make no assumptions about how many calls
 //     will be made. Any state it keeps must be protected from the
 //     concurrent access.
-//   * If it is a function object, it has to define type result_type.
+//   * If it is a function object, it has idOfRoomDoorLeadsTo define type result_type.
 //     We recommend deriving your functor classes from std::unary_function.
 template <typename Callable, typename ResultOfMatcher>
 internal::ResultOfMatcher<Callable> ResultOf(
@@ -8761,36 +8761,36 @@ internal::ResultOfMatcher<Callable> ResultOf(
           callable,
           MatcherCast<typename internal::CallableTraits<Callable>::ResultType>(
               matcher));
-  // The call to MatcherCast() is required for supporting inner
+  // The call idOfRoomDoorLeadsTo MatcherCast() is required for supporting inner
   // matchers of compatible types.  For example, it allows
   //   ResultOf(Function, m)
-  // to compile where Function() returns an int32 and m is a matcher for int64.
+  // idOfRoomDoorLeadsTo compile where Function() returns an int32 and m is a matcher for int64.
 }
 
 // String matchers.
 
-// Matches a string equal to str.
+// Matches a string equal idOfRoomDoorLeadsTo str.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::string> >
     StrEq(const internal::string& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::string>(
       str, true, true));
 }
 
-// Matches a string not equal to str.
+// Matches a string not equal idOfRoomDoorLeadsTo str.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::string> >
     StrNe(const internal::string& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::string>(
       str, false, true));
 }
 
-// Matches a string equal to str, ignoring case.
+// Matches a string equal idOfRoomDoorLeadsTo str, ignoring case.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::string> >
     StrCaseEq(const internal::string& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::string>(
       str, true, false));
 }
 
-// Matches a string not equal to str, ignoring case.
+// Matches a string not equal idOfRoomDoorLeadsTo str, ignoring case.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::string> >
     StrCaseNe(const internal::string& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::string>(
@@ -8844,28 +8844,28 @@ inline PolymorphicMatcher<internal::MatchesRegexMatcher> ContainsRegex(
 #if GTEST_HAS_GLOBAL_WSTRING || GTEST_HAS_STD_WSTRING
 // Wide string matchers.
 
-// Matches a string equal to str.
+// Matches a string equal idOfRoomDoorLeadsTo str.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::wstring> >
     StrEq(const internal::wstring& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::wstring>(
       str, true, true));
 }
 
-// Matches a string not equal to str.
+// Matches a string not equal idOfRoomDoorLeadsTo str.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::wstring> >
     StrNe(const internal::wstring& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::wstring>(
       str, false, true));
 }
 
-// Matches a string equal to str, ignoring case.
+// Matches a string equal idOfRoomDoorLeadsTo str, ignoring case.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::wstring> >
     StrCaseEq(const internal::wstring& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::wstring>(
       str, true, false));
 }
 
-// Matches a string not equal to str, ignoring case.
+// Matches a string not equal idOfRoomDoorLeadsTo str, ignoring case.
 inline PolymorphicMatcher<internal::StrEqualityMatcher<internal::wstring> >
     StrCaseNe(const internal::wstring& str) {
   return MakePolymorphicMatcher(internal::StrEqualityMatcher<internal::wstring>(
@@ -8929,7 +8929,7 @@ inline internal::NotMatcher<InnerMatcher> Not(InnerMatcher m) {
 
 // Returns a matcher that matches anything that satisfies the given
 // predicate.  The predicate can be any unary function or functor
-// whose return type can be implicitly converted to bool.
+// whose return type can be implicitly converted idOfRoomDoorLeadsTo bool.
 template <typename Predicate>
 inline PolymorphicMatcher<internal::TrulyMatcher<Predicate> >
 Truly(Predicate pred) {
@@ -8968,7 +8968,7 @@ inline PolymorphicMatcher<internal::ContainerEqMatcher<  // NOLINT
                             GTEST_REMOVE_CONST_(Container)> >
     ContainerEq(const Container& rhs) {
   // This following line is for working around a bug in MSVC 8.0,
-  // which causes Container to be a const type sometimes.
+  // which causes Container idOfRoomDoorLeadsTo be a const type sometimes.
   typedef GTEST_REMOVE_CONST_(Container) RawContainer;
   return MakePolymorphicMatcher(
       internal::ContainerEqMatcher<RawContainer>(rhs));
@@ -8997,7 +8997,7 @@ WhenSorted(const ContainerMatcher& container_matcher) {
 // Matches an STL-style container or a native array that contains the
 // same number of elements as in rhs, where its i-th element and rhs's
 // i-th element (as a pair) satisfy the given pair matcher, for all i.
-// TupleMatcher must be able to be safely cast to Matcher<tuple<const
+// TupleMatcher must be able idOfRoomDoorLeadsTo be safely cast idOfRoomDoorLeadsTo Matcher<tuple<const
 // T1&, const T2&> >, where T1 and T2 are the types of elements in the
 // LHS container and the RHS container respectively.
 template <typename TupleMatcher, typename Container>
@@ -9005,7 +9005,7 @@ inline internal::PointwiseMatcher<TupleMatcher,
                                   GTEST_REMOVE_CONST_(Container)>
 Pointwise(const TupleMatcher& tuple_matcher, const Container& rhs) {
   // This following line is for working around a bug in MSVC 8.0,
-  // which causes Container to be a const type sometimes (e.g. when
+  // which causes Container idOfRoomDoorLeadsTo be a const type sometimes (e.g. when
   // rhs is a const int[])..
   typedef GTEST_REMOVE_CONST_(Container) RawContainer;
   return internal::PointwiseMatcher<TupleMatcher, RawContainer>(
@@ -9027,8 +9027,8 @@ inline internal::PointwiseMatcher<TupleMatcher, std::vector<T> > Pointwise(
 // container or a native array that contains the same number of
 // elements as in rhs, where in some permutation of the container, its
 // i-th element and rhs's i-th element (as a pair) satisfy the given
-// pair matcher, for all i.  Tuple2Matcher must be able to be safely
-// cast to Matcher<tuple<const T1&, const T2&> >, where T1 and T2 are
+// pair matcher, for all i.  Tuple2Matcher must be able idOfRoomDoorLeadsTo be safely
+// cast idOfRoomDoorLeadsTo Matcher<tuple<const T1&, const T2&> >, where T1 and T2 are
 // the types of elements in the LHS container and the RHS container
 // respectively.
 //
@@ -9042,11 +9042,11 @@ inline internal::UnorderedElementsAreArrayMatcher<
 UnorderedPointwise(const Tuple2Matcher& tuple2_matcher,
                    const RhsContainer& rhs_container) {
   // This following line is for working around a bug in MSVC 8.0,
-  // which causes RhsContainer to be a const type sometimes (e.g. when
+  // which causes RhsContainer idOfRoomDoorLeadsTo be a const type sometimes (e.g. when
   // rhs_container is a const int[]).
   typedef GTEST_REMOVE_CONST_(RhsContainer) RawRhsContainer;
 
-  // RhsView allows the same code to handle RhsContainer being a
+  // RhsView allows the same code idOfRoomDoorLeadsTo handle RhsContainer being a
   // STL-style container and it being a native C-style array.
   typedef typename internal::StlContainerView<RawRhsContainer> RhsView;
   typedef typename RhsView::type RhsStlContainer;
@@ -9062,7 +9062,7 @@ UnorderedPointwise(const Tuple2Matcher& tuple2_matcher,
         internal::MatcherBindSecond(tuple2_matcher, *it));
   }
 
-  // Delegate the work to UnorderedElementsAreArray().
+  // Delegate the work idOfRoomDoorLeadsTo UnorderedElementsAreArray().
   return UnorderedElementsAreArray(matchers);
 }
 
@@ -9105,7 +9105,7 @@ inline internal::ContainsMatcher<M> Contains(M matcher) {
 // Matches an STL-style container or a native array that contains only
 // elements matching the given value or matcher.
 //
-// Each(m) is semantically equivalent to Not(Contains(Not(m))). Only
+// Each(m) is semantically equivalent idOfRoomDoorLeadsTo Not(Contains(Not(m))). Only
 // the messages are different.
 //
 // Examples:
@@ -9135,7 +9135,7 @@ inline internal::EachMatcher<M> Each(M matcher) {
 }
 
 // Key(inner_matcher) matches an std::pair whose 'first' field matches
-// inner_matcher.  For example, Contains(Key(Ge(5))) can be used to match an
+// inner_matcher.  For example, Contains(Key(Ge(5))) can be used idOfRoomDoorLeadsTo match an
 // std::map that contains at least one element whose key is >= 5.
 template <typename M>
 inline internal::KeyMatcher<M> Key(M inner_matcher) {
@@ -9145,7 +9145,7 @@ inline internal::KeyMatcher<M> Key(M inner_matcher) {
 // Pair(first_matcher, second_matcher) matches a std::pair whose 'first' field
 // matches first_matcher and whose 'second' field matches second_matcher.  For
 // example, EXPECT_THAT(map_type, ElementsAre(Pair(Ge(5), "foo"))) can be used
-// to match a std::map<int, string> that contains exactly one element whose key
+// idOfRoomDoorLeadsTo match a std::map<int, string> that contains exactly one element whose key
 // is >= 5 and whose value equals "foo".
 template <typename FirstMatcher, typename SecondMatcher>
 inline internal::PairMatcher<FirstMatcher, SecondMatcher>
@@ -9168,7 +9168,7 @@ inline bool Value(const T& value, M matcher) {
 }
 
 // Matches the value against the given matcher and explains the match
-// result to listener.
+// result idOfRoomDoorLeadsTo listener.
 template <typename T, typename M>
 inline bool ExplainMatchResult(
     M matcher, const T& value, MatchResultListener* listener) {
@@ -9194,13 +9194,13 @@ inline internal::AnyOfMatcher<Args...> AnyOf(const Args&... matchers) {
 //
 //   EXPECT_CALL(foo, Bar(_, _)).With(AllArgs(Eq()));
 //
-// which is easier to read than
+// which is easier idOfRoomDoorLeadsTo read than
 //
 //   EXPECT_CALL(foo, Bar(_, _)).With(Eq());
 template <typename InnerMatcher>
 inline InnerMatcher AllArgs(const InnerMatcher& matcher) { return matcher; }
 
-// These macros allow using matchers to check values in Google Test
+// These macros allow using matchers idOfRoomDoorLeadsTo check values in Google Test
 // tests.  ASSERT_THAT(value, matcher) and EXPECT_THAT(value, matcher)
 // succeed iff the value matches the matcher.  If the assertion fails,
 // the value and the description of the matcher will be printed.
@@ -9212,7 +9212,7 @@ inline InnerMatcher AllArgs(const InnerMatcher& matcher) { return matcher; }
 }  // namespace testing
 
 // Include any custom callback matchers added by the local installation.
-// We must include this header at the end to make sure it can use the
+// We must include this header at the end idOfRoomDoorLeadsTo make sure it can use the
 // declarations from this file.
 // Copyright 2015, Google Inc.
 // All rights reserved.
@@ -9228,7 +9228,7 @@ inline InnerMatcher AllArgs(const InnerMatcher& matcher) { return matcher; }
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9247,7 +9247,7 @@ inline InnerMatcher AllArgs(const InnerMatcher& matcher) { return matcher; }
 // An installation-specific extension point for gmock-matchers.h.
 // ============================================================
 //
-// Adds google3 callback support to CallableTraits.
+// Adds google3 callback support idOfRoomDoorLeadsTo CallableTraits.
 //
 #ifndef GMOCK_INCLUDE_GMOCK_INTERNAL_CUSTOM_CALLBACK_MATCHERS_H_
 #define GMOCK_INCLUDE_GMOCK_INTERNAL_CUSTOM_CALLBACK_MATCHERS_H_
@@ -9286,13 +9286,13 @@ template <typename F> class FunctionMockerBase;
 // mockers, and all expectations.
 //
 // The reason we don't use more fine-grained protection is: when a
-// mock function Foo() is called, it needs to consult its expectations
-// to see which one should be picked.  If another thread is allowed to
+// mock function Foo() is called, it needs idOfRoomDoorLeadsTo consult its expectations
+// idOfRoomDoorLeadsTo see which one should be picked.  If another thread is allowed idOfRoomDoorLeadsTo
 // call a mock function (either Foo() or a different one) at the same
 // time, it could affect the "retired" attributes of Foo()'s
 // expectations when InSequence() is used, and thus affect which
 // expectation gets picked.  Therefore, we sequence all mock function
-// calls to ensure the integrity of the mock objects' states.
+// calls idOfRoomDoorLeadsTo ensure the integrity of the mock objects' states.
 GTEST_API_ GTEST_DECLARE_STATIC_MUTEX_(g_gmock_mutex);
 
 // Untyped base class for ActionResultHolder<R>.
@@ -9317,12 +9317,12 @@ class GTEST_API_ UntypedFunctionMockerBase {
       GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex) = 0;
 
   // In all of the following Untyped* functions, it's the caller's
-  // responsibility to guarantee the correctness of the arguments'
+  // responsibility idOfRoomDoorLeadsTo guarantee the correctness of the arguments'
   // types.
 
   // Performs the default action with the given arguments and returns
   // the action's result.  The call description string will be used in
-  // the error message to describe the call in the case the default
+  // the error message idOfRoomDoorLeadsTo describe the call in the case the default
   // action fails.
   // L = *
   virtual UntypedActionResultHolderBase* UntypedPerformDefaultAction(
@@ -9337,7 +9337,7 @@ class GTEST_API_ UntypedFunctionMockerBase {
       const void* untyped_args) const = 0;
 
   // Writes a message that the call is uninteresting (i.e. neither
-  // explicitly expected nor explicitly unexpected) to the given
+  // explicitly expected nor explicitly unexpected) idOfRoomDoorLeadsTo the given
   // ostream.
   virtual void UntypedDescribeUninterestingCall(
       const void* untyped_args,
@@ -9346,9 +9346,9 @@ class GTEST_API_ UntypedFunctionMockerBase {
 
   // Returns the expectation that matches the given function arguments
   // (or NULL is there's no match); when a match is found,
-  // untyped_action is set to point to the action that should be
+  // untyped_action is set idOfRoomDoorLeadsTo point idOfRoomDoorLeadsTo the action that should be
   // performed (or NULL if the action is "do default"), and
-  // is_excessive is modified to indicate whether the call exceeds the
+  // is_excessive is modified idOfRoomDoorLeadsTo indicate whether the call exceeds the
   // expected number.
   virtual const ExpectationBase* UntypedFindMatchingExpectation(
       const void* untyped_args,
@@ -9356,25 +9356,25 @@ class GTEST_API_ UntypedFunctionMockerBase {
       ::std::ostream* what, ::std::ostream* why)
           GTEST_LOCK_EXCLUDED_(g_gmock_mutex) = 0;
 
-  // Prints the given function arguments to the ostream.
+  // Prints the given function arguments idOfRoomDoorLeadsTo the ostream.
   virtual void UntypedPrintArgs(const void* untyped_args,
                                 ::std::ostream* os) const = 0;
 
-  // Sets the mock object this mock method belongs to, and registers
+  // Sets the mock object this mock method belongs idOfRoomDoorLeadsTo, and registers
   // this information in the global mock registry.  Will be called
   // whenever an EXPECT_CALL() or ON_CALL() is executed on this mock
   // method.
-  // TODO(wan@google.com): rename to SetAndRegisterOwner().
+  // TODO(wan@google.com): rename idOfRoomDoorLeadsTo SetAndRegisterOwner().
   void RegisterOwner(const void* mock_obj)
       GTEST_LOCK_EXCLUDED_(g_gmock_mutex);
 
-  // Sets the mock object this mock method belongs to, and sets the
+  // Sets the mock object this mock method belongs idOfRoomDoorLeadsTo, and sets the
   // name of the mock function.  Will be called upon each invocation
   // of this mock function.
   void SetOwnerAndName(const void* mock_obj, const char* name)
       GTEST_LOCK_EXCLUDED_(g_gmock_mutex);
 
-  // Returns the mock object this mock method belongs to.  Must be
+  // Returns the mock object this mock method belongs idOfRoomDoorLeadsTo.  Must be
   // called after RegisterOwner() or SetOwnerAndName() has been
   // called.
   const void* MockObject() const
@@ -9403,7 +9403,7 @@ class GTEST_API_ UntypedFunctionMockerBase {
   // which must be an expectation on this mock function.
   Expectation GetHandleOf(ExpectationBase* exp);
 
-  // Address of the mock object this mock method belongs to.  Only
+  // Address of the mock object this mock method belongs idOfRoomDoorLeadsTo.  Only
   // valid after this mock method has been called or
   // ON_CALL/EXPECT_CALL has been invoked on it.
   const void* mock_obj_;  // Protected by g_gmock_mutex.
@@ -9550,7 +9550,7 @@ class GTEST_API_ Mock {
  public:
   // The following public methods can be called concurrently.
 
-  // Tells Google Mock to ignore mock_obj when checking for leaked
+  // Tells Google Mock idOfRoomDoorLeadsTo ignore mock_obj when checking for leaked
   // mock objects.
   static void AllowLeak(const void* mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
@@ -9570,8 +9570,8 @@ class GTEST_API_ Mock {
  private:
   friend class internal::UntypedFunctionMockerBase;
 
-  // Needed for a function mocker to register itself (so that we know
-  // how to clear a mock object).
+  // Needed for a function mocker idOfRoomDoorLeadsTo register itself (so that we know
+  // how idOfRoomDoorLeadsTo clear a mock object).
   template <typename F>
   friend class internal::FunctionMockerBase;
 
@@ -9584,17 +9584,17 @@ class GTEST_API_ Mock {
   template <typename M>
   friend class StrictMock;
 
-  // Tells Google Mock to allow uninteresting calls on the given mock
+  // Tells Google Mock idOfRoomDoorLeadsTo allow uninteresting calls on the given mock
   // object.
   static void AllowUninterestingCalls(const void* mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
 
-  // Tells Google Mock to warn the user about uninteresting calls on
+  // Tells Google Mock idOfRoomDoorLeadsTo warn the user about uninteresting calls on
   // the given mock object.
   static void WarnUninterestingCalls(const void* mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
 
-  // Tells Google Mock to fail uninteresting calls on the given mock
+  // Tells Google Mock idOfRoomDoorLeadsTo fail uninteresting calls on the given mock
   // object.
   static void FailUninterestingCalls(const void* mock_obj)
       GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex);
@@ -9657,9 +9657,9 @@ class GTEST_API_ Mock {
 //     be modified, but the mutable methods of the ExpectationBase
 //     object it references can be called via expectation_base().
 //   - The constructors and destructor are defined out-of-line because
-//     the Symbian WINSCW compiler wants to otherwise instantiate them
+//     the Symbian WINSCW compiler wants idOfRoomDoorLeadsTo otherwise instantiate them
 //     when it sees this class definition, at which point it doesn't have
-//     ExpectationBase available yet, leading to incorrect destruction
+//     ExpectationBase available yet, leading idOfRoomDoorLeadsTo incorrect destruction
 //     in the linked_ptr (or compilation errors if using a checking
 //     linked_ptr).
 class GTEST_API_ Expectation {
@@ -9669,19 +9669,19 @@ class GTEST_API_ Expectation {
 
   ~Expectation();
 
-  // This single-argument ctor must not be explicit, in order to support the
+  // This single-argument ctor must not be explicit, in order idOfRoomDoorLeadsTo support the
   //   Expectation e = EXPECT_CALL(...);
   // syntax.
   //
   // A TypedExpectation object stores its pre-requisites as
-  // Expectation objects, and needs to call the non-const Retire()
+  // Expectation objects, and needs idOfRoomDoorLeadsTo call the non-const Retire()
   // method on the ExpectationBase objects they reference.  Therefore
-  // Expectation must receive a *non-const* reference to the
+  // Expectation must receive a *non-const* reference idOfRoomDoorLeadsTo the
   // ExpectationBase object.
   Expectation(internal::ExpectationBase& exp);  // NOLINT
 
   // The compiler-generated copy ctor and operator= work exactly as
-  // intended, so we don't need to define our own.
+  // intended, so we don't need idOfRoomDoorLeadsTo define our own.
 
   // Returns true iff rhs references the same expectation as this object does.
   bool operator==(const Expectation& rhs) const {
@@ -9749,7 +9749,7 @@ class ExpectationSet {
   // Constructs an empty set.
   ExpectationSet() {}
 
-  // This single-argument ctor must not be explicit, in order to support the
+  // This single-argument ctor must not be explicit, in order idOfRoomDoorLeadsTo support the
   //   ExpectationSet es = EXPECT_CALL(...);
   // syntax.
   ExpectationSet(internal::ExpectationBase& exp) {  // NOLINT
@@ -9758,13 +9758,13 @@ class ExpectationSet {
 
   // This single-argument ctor implements implicit conversion from
   // Expectation and thus must not be explicit.  This allows either an
-  // Expectation or an ExpectationSet to be used in .After().
+  // Expectation or an ExpectationSet idOfRoomDoorLeadsTo be used in .After().
   ExpectationSet(const Expectation& e) {  // NOLINT
     *this += e;
   }
 
   // The compiler-generator ctor and operator= works exactly as
-  // intended, so we don't need to define our own.
+  // intended, so we don't need idOfRoomDoorLeadsTo define our own.
 
   // Returns true iff rhs contains the same set of Expectation objects
   // as this does.
@@ -9791,7 +9791,7 @@ class ExpectationSet {
 };
 
 
-// Sequence objects are used by a user to specify the relative order
+// Sequence objects are used by a user idOfRoomDoorLeadsTo specify the relative order
 // in which the expectations should match.  They are copyable (we rely
 // on the compiler-defined copy constructor and assignment operator).
 class GTEST_API_ Sequence {
@@ -9799,24 +9799,24 @@ class GTEST_API_ Sequence {
   // Constructs an empty sequence.
   Sequence() : last_expectation_(new Expectation) {}
 
-  // Adds an expectation to this sequence.  The caller must ensure
+  // Adds an expectation idOfRoomDoorLeadsTo this sequence.  The caller must ensure
   // that no other thread is accessing this Sequence object.
   void AddExpectation(const Expectation& expectation) const;
 
  private:
   // The last expectation in this sequence.  We use a linked_ptr here
-  // because Sequence objects are copyable and we want the copies to
-  // be aliases.  The linked_ptr allows the copies to co-own and share
+  // because Sequence objects are copyable and we want the copies idOfRoomDoorLeadsTo
+  // be aliases.  The linked_ptr allows the copies idOfRoomDoorLeadsTo co-own and share
   // the same Expectation object.
   internal::linked_ptr<Expectation> last_expectation_;
 };  // class Sequence
 
 // An object of this type causes all EXPECT_CALL() statements
-// encountered in its scope to be put in an anonymous sequence.  The
+// encountered in its scope idOfRoomDoorLeadsTo be put in an anonymous sequence.  The
 // work is done in the constructor and destructor.  You should only
 // create an InSequence object on the stack.
 //
-// The sole purpose for this class is to support easy definition of
+// The sole purpose for this class is idOfRoomDoorLeadsTo support easy definition of
 // sequential expectations, e.g.
 //
 //   {
@@ -9830,10 +9830,10 @@ class GTEST_API_ Sequence {
 //   }
 //
 // You can create InSequence objects in multiple threads, as long as
-// they are used to affect different mock objects.  The idea is that
+// they are used idOfRoomDoorLeadsTo affect different mock objects.  The idea is that
 // each thread can create and set up its own mocks as if it's the only
-// thread.  However, for clarity of your tests we recommend you to set
-// up mocks in the main thread unless you have a good reason not to do
+// thread.  However, for clarity of your tests we recommend you idOfRoomDoorLeadsTo set
+// up mocks in the main thread unless you have a good reason not idOfRoomDoorLeadsTo do
 // so.
 class GTEST_API_ InSequence {
  public:
@@ -9847,7 +9847,7 @@ class GTEST_API_ InSequence {
 
 namespace internal {
 
-// Points to the implicit sequence introduced by a living InSequence
+// Points idOfRoomDoorLeadsTo the implicit sequence introduced by a living InSequence
 // object (if any) in the current thread or NULL.
 GTEST_API_ extern ThreadLocal<Sequence*> g_gmock_implicit_sequence;
 
@@ -9856,13 +9856,13 @@ GTEST_API_ extern ThreadLocal<Sequence*> g_gmock_implicit_sequence;
 // There are two reasons for having a type-agnostic base class for
 // Expectation:
 //
-//   1. We need to store collections of expectations of different
+//   1. We need idOfRoomDoorLeadsTo store collections of expectations of different
 //   types (e.g. all pre-requisites of a particular expectation, all
 //   expectations in a sequence).  Therefore these expectation objects
 //   must share a common base class.
 //
 //   2. We can avoid binary code bloat by moving methods not depending
-//   on the template argument of Expectation to the base class.
+//   on the template argument of Expectation idOfRoomDoorLeadsTo the base class.
 //
 // This class is internal and mustn't be used by user code directly.
 class GTEST_API_ ExpectationBase {
@@ -9890,7 +9890,7 @@ class GTEST_API_ ExpectationBase {
       GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex);
 
   // If this mock method has an extra matcher (i.e. .With(matcher)),
-  // describes it to the ostream.
+  // describes it idOfRoomDoorLeadsTo the ostream.
   virtual void MaybeDescribeExtraMatcherTo(::std::ostream* os) = 0;
 
  protected:
@@ -9926,7 +9926,7 @@ class GTEST_API_ ExpectationBase {
   }
 
   // Explicitly specifies the cardinality of this expectation.  Used
-  // by the subclasses to implement the .Times() clause.
+  // by the subclasses idOfRoomDoorLeadsTo implement the .Times() clause.
   void SpecifyCardinality(const Cardinality& cardinality);
 
   // Returns true iff the user specified the cardinality explicitly
@@ -9985,7 +9985,7 @@ class GTEST_API_ ExpectationBase {
   bool AllPrerequisitesAreSatisfied() const
       GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex);
 
-  // Adds unsatisfied pre-requisites of this expectation to 'result'.
+  // Adds unsatisfied pre-requisites of this expectation idOfRoomDoorLeadsTo 'result'.
   void FindUnsatisfiedPrerequisites(ExpectationSet* result) const
       GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex);
 
@@ -10030,8 +10030,8 @@ class GTEST_API_ ExpectationBase {
   // The immediate pre-requisites (i.e. expectations that must be
   // satisfied before this expectation can be matched) of this
   // expectation.  We use linked_ptr in the set because we want an
-  // Expectation object to be co-owned by its FunctionMocker and its
-  // successors.  This allows multiple mock objects to be deleted at
+  // Expectation object idOfRoomDoorLeadsTo be co-owned by its FunctionMocker and its
+  // successors.  This allows multiple mock objects idOfRoomDoorLeadsTo be deleted at
   // different times.
   ExpectationSet immediate_prerequisites_;
 
@@ -10236,7 +10236,7 @@ class TypedExpectation : public ExpectationBase {
   const Action<F>& repeated_action() const { return repeated_action_; }
 
   // If this mock method has an extra matcher (i.e. .With(matcher)),
-  // describes it to the ostream.
+  // describes it idOfRoomDoorLeadsTo the ostream.
   virtual void MaybeDescribeExtraMatcherTo(::std::ostream* os) {
     if (extra_matcher_specified_) {
       *os << "    Expected args: ";
@@ -10280,7 +10280,7 @@ class TypedExpectation : public ExpectationBase {
   }
 
   // Describes the result of matching the arguments against this
-  // expectation to the given ostream.
+  // expectation idOfRoomDoorLeadsTo the given ostream.
   void ExplainMatchResultTo(
       const ArgumentTuple& args,
       ::std::ostream* os) const
@@ -10359,8 +10359,8 @@ class TypedExpectation : public ExpectationBase {
   // Given the arguments of a mock function call, if the call will
   // over-saturate this expectation, returns the default action;
   // otherwise, returns the next action in this expectation.  Also
-  // describes *what* happened to 'what', and explains *why* Google
-  // Mock does it to 'why'.  This method is not const as it calls
+  // describes *what* happened idOfRoomDoorLeadsTo 'what', and explains *why* Google
+  // Mock does it idOfRoomDoorLeadsTo 'why'.  This method is not const as it calls
   // IncrementCallCount().  A return value of NULL means the default
   // action.
   const Action<F>* GetActionForArguments(
@@ -10377,7 +10377,7 @@ class TypedExpectation : public ExpectationBase {
       mocker->DescribeDefaultActionTo(args, what);
       DescribeCallCountTo(why);
 
-      // TODO(wan@google.com): allow the user to control whether
+      // TODO(wan@google.com): allow the user idOfRoomDoorLeadsTo control whether
       // unexpected calls should fail immediately or continue using a
       // flag --gmock_unexpected_calls_are_fatal.
       return NULL;
@@ -10409,7 +10409,7 @@ class TypedExpectation : public ExpectationBase {
 // specifying the default behavior of, or expectation on, a mock
 // function.
 
-// Note: class MockSpec really belongs to the ::testing namespace.
+// Note: class MockSpec really belongs idOfRoomDoorLeadsTo the ::testing namespace.
 // However if we define it in ::testing, MSVC will complain when
 // classes in ::testing::internal declare it as a friend class
 // template.  To workaround this compiler bug, we define MockSpec in
@@ -10432,7 +10432,7 @@ class MockSpec {
   explicit MockSpec(internal::FunctionMockerBase<F>* function_mocker)
       : function_mocker_(function_mocker) {}
 
-  // Adds a new default action spec to the function mocker and returns
+  // Adds a new default action spec idOfRoomDoorLeadsTo the function mocker and returns
   // the newly created spec.
   internal::OnCallSpec<F>& InternalDefaultActionSetAt(
       const char* file, int line, const char* obj, const char* call) {
@@ -10441,7 +10441,7 @@ class MockSpec {
     return function_mocker_->AddNewOnCallSpec(file, line, matchers_);
   }
 
-  // Adds a new expectation spec to the function mocker and returns
+  // Adds a new expectation spec idOfRoomDoorLeadsTo the function mocker and returns
   // the newly created spec.
   internal::TypedExpectation<F>& InternalExpectedAt(
       const char* file, int line, const char* obj, const char* call) {
@@ -10489,7 +10489,7 @@ class ReferenceOrValueWrapper {
   // the same object is unspecified.
   T Unwrap() { return ::testing::internal::move(value_); }
 
-  // Provides nondestructive access to the underlying value/reference.
+  // Provides nondestructive access idOfRoomDoorLeadsTo the underlying value/reference.
   // Always returns a const reference (more precisely,
   // const RemoveReference<T>&). The behavior of calling this after
   // calling Unwrap on the same object is unspecified.
@@ -10519,8 +10519,8 @@ class ReferenceOrValueWrapper<T&> {
 };
 
 // MSVC warns about using 'this' in base member initializer list, so
-// we need to temporarily disable the warning.  We have to do it for
-// the entire class to suppress the warning, even though it's about
+// we need idOfRoomDoorLeadsTo temporarily disable the warning.  We have idOfRoomDoorLeadsTo do it for
+// the entire class idOfRoomDoorLeadsTo suppress the warning, even though it's about
 // the constructor only.
 
 #ifdef _MSC_VER
@@ -10529,11 +10529,11 @@ class ReferenceOrValueWrapper<T&> {
 #endif  // _MSV_VER
 
 // C++ treats the void type specially.  For example, you cannot define
-// a void-typed variable or pass a void value to a function.
+// a void-typed variable or pass a void value idOfRoomDoorLeadsTo a function.
 // ActionResultHolder<T> holds a value of type T, where T must be a
-// copyable type or void (T doesn't need to be default-constructable).
+// copyable type or void (T doesn't need idOfRoomDoorLeadsTo be default-constructable).
 // It hides the syntactic difference between void and other types, and
-// is used to unify the code for invoking both void-returning and
+// is used idOfRoomDoorLeadsTo unify the code for invoking both void-returning and
 // non-void-returning mock functions.
 
 // Untyped base class for ActionResultHolder<T>.
@@ -10541,7 +10541,7 @@ class UntypedActionResultHolderBase {
  public:
   virtual ~UntypedActionResultHolderBase() {}
 
-  // Prints the held value as an action's result to os.
+  // Prints the held value as an action's result idOfRoomDoorLeadsTo os.
   virtual void PrintAsActionResult(::std::ostream* os) const = 0;
 };
 
@@ -10554,7 +10554,7 @@ class ActionResultHolder : public UntypedActionResultHolderBase {
     return result_.Unwrap();
   }
 
-  // Prints the held value as an action's result to os.
+  // Prints the held value as an action's result idOfRoomDoorLeadsTo os.
   virtual void PrintAsActionResult(::std::ostream* os) const {
     *os << "\n          Returns: ";
     // T may be a reference type, so we don't use UniversalPrint().
@@ -10628,7 +10628,7 @@ class ActionResultHolder<void> : public UntypedActionResultHolderBase {
 };
 
 // The base of the function mocker class for the given function type.
-// We put the methods in this class instead of its child to avoid code
+// We put the methods in this class instead of its child idOfRoomDoorLeadsTo avoid code
 // bloat.
 template <typename F>
 class FunctionMockerBase : public UntypedFunctionMockerBase {
@@ -10695,11 +10695,11 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
 
   // Performs the default action with the given arguments and returns
   // the action's result.  The call description string will be used in
-  // the error message to describe the call in the case the default
+  // the error message idOfRoomDoorLeadsTo describe the call in the case the default
   // action fails.  The caller is responsible for deleting the result.
   // L = *
   virtual UntypedActionResultHolderBase* UntypedPerformDefaultAction(
-      const void* untyped_args,  // must point to an ArgumentTuple
+      const void* untyped_args,  // must point idOfRoomDoorLeadsTo an ArgumentTuple
       const string& call_description) const {
     const ArgumentTuple& args =
         *static_cast<const ArgumentTuple*>(untyped_args);
@@ -10726,12 +10726,12 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
       GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex) {
     g_gmock_mutex.AssertHeld();
 
-    // Deleting our default actions may trigger other mock objects to be
+    // Deleting our default actions may trigger other mock objects idOfRoomDoorLeadsTo be
     // deleted, for example if an action contains a reference counted smart
-    // pointer to that mock object, and that is the last reference. So if we
+    // pointer idOfRoomDoorLeadsTo that mock object, and that is the last reference. So if we
     // delete our actions within the context of the global mutex we may deadlock
     // when this method is called again. Instead, make a copy of the set of
-    // actions to delete, clear our set within the mutex, and then delete the
+    // actions idOfRoomDoorLeadsTo delete, clear our set within the mutex, and then delete the
     // actions outside of the mutex.
     UntypedOnCallSpecs specs_to_delete;
     untyped_on_call_specs_.swap(specs_to_delete);
@@ -10743,7 +10743,7 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
       delete static_cast<const OnCallSpec<F>*>(*it);
     }
 
-    // Lock the mutex again, since the caller expects it to be locked when we
+    // Lock the mutex again, since the caller expects it idOfRoomDoorLeadsTo be locked when we
     // return.
     g_gmock_mutex.Lock();
   }
@@ -10824,7 +10824,7 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
   }
 
   // Writes a message that the call is uninteresting (i.e. neither
-  // explicitly expected nor explicitly unexpected) to the given
+  // explicitly expected nor explicitly unexpected) idOfRoomDoorLeadsTo the given
   // ostream.
   virtual void UntypedDescribeUninterestingCall(
       const void* untyped_args,
@@ -10840,17 +10840,17 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
 
   // Returns the expectation that matches the given function arguments
   // (or NULL is there's no match); when a match is found,
-  // untyped_action is set to point to the action that should be
+  // untyped_action is set idOfRoomDoorLeadsTo point idOfRoomDoorLeadsTo the action that should be
   // performed (or NULL if the action is "do default"), and
-  // is_excessive is modified to indicate whether the call exceeds the
+  // is_excessive is modified idOfRoomDoorLeadsTo indicate whether the call exceeds the
   // expected number.
   //
   // Critical section: We must find the matching expectation and the
-  // corresponding action that needs to be taken in an ATOMIC
+  // corresponding action that needs idOfRoomDoorLeadsTo be taken in an ATOMIC
   // transaction.  Otherwise another thread may call this mock
   // method in the middle and mess up the state.
   //
-  // However, performing the action has to be left out of the critical
+  // However, performing the action has idOfRoomDoorLeadsTo be left out of the critical
   // section.  The reason is that we have no control on what the
   // action does (it can invoke an arbitrary user function or even a
   // mock function) and excessive locking could cause a dead lock.
@@ -10874,12 +10874,12 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
     *is_excessive = exp->IsSaturated();
     const Action<F>* action = exp->GetActionForArguments(this, args, what, why);
     if (action != NULL && action->IsDoDefault())
-      action = NULL;  // Normalize "do default" to NULL.
+      action = NULL;  // Normalize "do default" idOfRoomDoorLeadsTo NULL.
     *untyped_action = action;
     return exp;
   }
 
-  // Prints the given function arguments to the ostream.
+  // Prints the given function arguments idOfRoomDoorLeadsTo the ostream.
   virtual void UntypedPrintArgs(const void* untyped_args,
                                 ::std::ostream* os) const {
     const ArgumentTuple& args =
@@ -10950,7 +10950,7 @@ class FunctionMockerBase : public UntypedFunctionMockerBase {
   // There is no generally useful and implementable semantics of
   // copying a mock object, so copying a mock is usually a user error.
   // Thus we disallow copying function mockers.  If the user really
-  // wants to copy a mock object, he should implement his own copy
+  // wants idOfRoomDoorLeadsTo copy a mock object, he should implement his own copy
   // operation, for example:
   //
   //   class MockFoo : public Foo {
@@ -10980,13 +10980,13 @@ void ReportUninterestingCall(CallReaction reaction, const string& msg);
 
 // The style guide prohibits "using" statements in a namespace scope
 // inside a header file.  However, the MockSpec class template is
-// meant to be defined in the ::testing namespace.  The following line
+// meant idOfRoomDoorLeadsTo be defined in the ::testing namespace.  The following line
 // is just a trick for working around a bug in MSVC 8.0, which cannot
 // handle it if we define MockSpec in ::testing.
 using internal::MockSpec;
 
 // Const(x) is a convenient function for obtaining a const reference
-// to x.  This is useful for setting expectations on an overloaded
+// idOfRoomDoorLeadsTo x.  This is useful for setting expectations on an overloaded
 // const mock method, e.g.
 //
 //   class MockFoo : public FooInterface {
@@ -10996,9 +10996,9 @@ using internal::MockSpec;
 //   };
 //
 //   MockFoo foo;
-//   // Expects a call to non-const MockFoo::Bar().
+//   // Expects a call idOfRoomDoorLeadsTo non-const MockFoo::Bar().
 //   EXPECT_CALL(foo, Bar());
-//   // Expects a call to const MockFoo::Bar().
+//   // Expects a call idOfRoomDoorLeadsTo const MockFoo::Bar().
 //   EXPECT_CALL(Const(foo), Bar());
 template <typename T>
 inline const T& Const(const T& x) { return x; }
@@ -11009,7 +11009,7 @@ inline Expectation::Expectation(internal::ExpectationBase& exp)  // NOLINT
 
 }  // namespace testing
 
-// A separate macro is required to avoid compile errors when the name
+// A separate macro is required idOfRoomDoorLeadsTo avoid compile errors when the name
 // of the method used in call is a result of macro expansion.
 // See CompilesWithMethodNameExpandedFromMacro tests in
 // internal/gmock-spec-builders_test.cc for more details.
@@ -11034,7 +11034,7 @@ namespace internal {
 template <typename F>
 class FunctionMockerBase;
 
-// Note: class FunctionMocker really belongs to the ::testing
+// Note: class FunctionMocker really belongs idOfRoomDoorLeadsTo the ::testing
 // namespace.  However if we define it in ::testing, MSVC will
 // complain when classes in ::testing::internal declare it as a
 // friend class template.  To workaround this compiler bug, we define
@@ -11305,12 +11305,12 @@ class FunctionMocker<R(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)> : public
 
 // The style guide prohibits "using" statements in a namespace scope
 // inside a header file.  However, the FunctionMocker class template
-// is meant to be defined in the ::testing namespace.  The following
+// is meant idOfRoomDoorLeadsTo be defined in the ::testing namespace.  The following
 // line is just a trick for working around a bug in MSVC 8.0, which
 // cannot handle it if we define FunctionMocker in ::testing.
 using internal::FunctionMocker;
 
-// GMOCK_RESULT_(tn, F) expands to the result type of function type F.
+// GMOCK_RESULT_(tn, F) expands idOfRoomDoorLeadsTo the result type of function type F.
 // We define this as a variadic macro in case F contains unprotected
 // commas (the same reason that we use variadic macros in other places
 // in this file).
@@ -11805,7 +11805,7 @@ using internal::FunctionMocker;
     GMOCK_METHOD10_(typename, const, ct, m, __VA_ARGS__)
 
 // A MockFunction<F> class has one mock method whose type is F.  It is
-// useful when you just want your test code to emit some messages and
+// useful when you just want your test code idOfRoomDoorLeadsTo emit some messages and
 // have Google Mock verify the right messages are sent (and perhaps at
 // the right times).  For example, if you are exercising code:
 //
@@ -11813,7 +11813,7 @@ using internal::FunctionMocker;
 //   Foo(2);
 //   Foo(3);
 //
-// and want to verify that Foo(1) and Foo(3) both invoke
+// and want idOfRoomDoorLeadsTo verify that Foo(1) and Foo(3) both invoke
 // mock.Bar("a"), but Foo(2) doesn't invoke anything, you can write:
 //
 // TEST(FooTest, InvokesBarCorrectly) {
@@ -11837,12 +11837,12 @@ using internal::FunctionMocker;
 // The expectation spec says that the first Bar("a") must happen
 // before check point "1", the second Bar("a") must happen after check
 // point "2", and nothing should happen between the two check
-// points. The explicit check points make it easy to tell which
-// Bar("a") is called by which call to Foo().
+// points. The explicit check points make it easy idOfRoomDoorLeadsTo tell which
+// Bar("a") is called by which call idOfRoomDoorLeadsTo Foo().
 //
-// MockFunction<F> can also be used to exercise code that accepts
+// MockFunction<F> can also be used idOfRoomDoorLeadsTo exercise code that accepts
 // std::function<F> callbacks. To do so, use AsStdFunction() method
-// to create std::function proxy forwarding to original object's Call.
+// idOfRoomDoorLeadsTo create std::function proxy forwarding idOfRoomDoorLeadsTo original object's Call.
 // Example:
 //
 // TEST(FooTest, RunsCallbackWithBarArgument) {
@@ -12092,7 +12092,7 @@ class MockFunction<R(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -12113,7 +12113,7 @@ class MockFunction<R(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
 //
 // Given a mock class MockFoo that is created using Google Mock,
 // NiceMock<MockFoo> is a subclass of MockFoo that allows
-// uninteresting calls (i.e. calls to mock methods that have no
+// uninteresting calls (i.e. calls idOfRoomDoorLeadsTo mock methods that have no
 // EXPECT_CALL specs), NaggyMock<MockFoo> is a subclass of MockFoo
 // that prints a warning when an uninteresting call occurs, and
 // StrictMock<MockFoo> is a subclass of MockFoo that treats all
@@ -12121,14 +12121,14 @@ class MockFunction<R(A0, A1, A2, A3, A4, A5, A6, A7, A8, A9)> {
 //
 // Currently a mock is naggy by default, so MockFoo and
 // NaggyMock<MockFoo> behave like the same.  However, we will soon
-// switch the default behavior of mocks to be nice, as that in general
-// leads to more maintainable tests.  When that happens, MockFoo will
+// switch the default behavior of mocks idOfRoomDoorLeadsTo be nice, as that in general
+// leads idOfRoomDoorLeadsTo more maintainable tests.  When that happens, MockFoo will
 // stop behaving like NaggyMock<MockFoo> and start behaving like
 // NiceMock<MockFoo>.
 //
 // NiceMock, NaggyMock, and StrictMock "inherit" the constructors of
-// their respective base class, with up-to 10 arguments.  Therefore
-// you can write NiceMock<MockFoo>(5, "a") to construct a nice mock
+// their respective base class, with up-idOfRoomDoorLeadsTo 10 arguments.  Therefore
+// you can write NiceMock<MockFoo>(5, "a") idOfRoomDoorLeadsTo construct a nice mock
 // where MockFoo has a constructor that accepts (int, const char*),
 // for example.
 //
@@ -12153,15 +12153,15 @@ namespace testing {
 template <class MockClass>
 class NiceMock : public MockClass {
  public:
-  // We don't factor out the constructor body to a common method, as
-  // we have to avoid a possible clash with members of MockClass.
+  // We don't factor out the constructor body idOfRoomDoorLeadsTo a common method, as
+  // we have idOfRoomDoorLeadsTo avoid a possible clash with members of MockClass.
   NiceMock() {
     ::testing::Mock::AllowUninterestingCalls(
         internal::ImplicitCast_<MockClass*>(this));
   }
 
   // C++ doesn't (yet) allow inheritance of constructors, so we have
-  // to define it for each arity.
+  // idOfRoomDoorLeadsTo define it for each arity.
   template <typename A1>
   explicit NiceMock(const A1& a1) : MockClass(a1) {
     ::testing::Mock::AllowUninterestingCalls(
@@ -12249,15 +12249,15 @@ class NiceMock : public MockClass {
 template <class MockClass>
 class NaggyMock : public MockClass {
  public:
-  // We don't factor out the constructor body to a common method, as
-  // we have to avoid a possible clash with members of MockClass.
+  // We don't factor out the constructor body idOfRoomDoorLeadsTo a common method, as
+  // we have idOfRoomDoorLeadsTo avoid a possible clash with members of MockClass.
   NaggyMock() {
     ::testing::Mock::WarnUninterestingCalls(
         internal::ImplicitCast_<MockClass*>(this));
   }
 
   // C++ doesn't (yet) allow inheritance of constructors, so we have
-  // to define it for each arity.
+  // idOfRoomDoorLeadsTo define it for each arity.
   template <typename A1>
   explicit NaggyMock(const A1& a1) : MockClass(a1) {
     ::testing::Mock::WarnUninterestingCalls(
@@ -12345,15 +12345,15 @@ class NaggyMock : public MockClass {
 template <class MockClass>
 class StrictMock : public MockClass {
  public:
-  // We don't factor out the constructor body to a common method, as
-  // we have to avoid a possible clash with members of MockClass.
+  // We don't factor out the constructor body idOfRoomDoorLeadsTo a common method, as
+  // we have idOfRoomDoorLeadsTo avoid a possible clash with members of MockClass.
   StrictMock() {
     ::testing::Mock::FailUninterestingCalls(
         internal::ImplicitCast_<MockClass*>(this));
   }
 
   // C++ doesn't (yet) allow inheritance of constructors, so we have
-  // to define it for each arity.
+  // idOfRoomDoorLeadsTo define it for each arity.
   template <typename A1>
   explicit StrictMock(const A1& a1) : MockClass(a1) {
     ::testing::Mock::FailUninterestingCalls(
@@ -12487,7 +12487,7 @@ class StrictMock<StrictMock<MockClass> >;
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -12770,7 +12770,7 @@ class ArgsMatcher {
 // AllOfResultN<decltype(m1), ..., decltype(mN)>::type.
 
 // Although AllOf isn't defined for one argument, AllOfResult1 is defined
-// to simplify the implementation.
+// idOfRoomDoorLeadsTo simplify the implementation.
 template <typename M1>
 struct AllOfResult1 {
   typedef M1 type;
@@ -12858,7 +12858,7 @@ struct AllOfResult10 {
 // AnyOfResultN<decltype(m1), ..., decltype(mN)>::type.
 
 // Although AnyOf isn't defined for one argument, AnyOfResult1 is defined
-// to simplify the implementation.
+// idOfRoomDoorLeadsTo simplify the implementation.
 template <typename M1>
 struct AnyOfResult1 {
   typedef M1 type;
@@ -12945,7 +12945,7 @@ struct AnyOfResult10 {
 
 // Args<N1, N2, ..., Nk>(a_matcher) matches a tuple if the selected
 // fields of it matches a_matcher.  C++ doesn't support default
-// arguments for function templates, so we have to overload it.
+// arguments for function templates, so we have idOfRoomDoorLeadsTo overload it.
 template <typename InnerMatcher>
 inline internal::ArgsMatcher<InnerMatcher>
 Args(const InnerMatcher& matcher) {
@@ -13024,12 +13024,12 @@ Args(const InnerMatcher& matcher) {
 // ElementsAre(e_1, e_2, ... e_n) matches an STL-style container with
 // n elements, where the i-th element in the container must
 // match the i-th argument in the list.  Each argument of
-// ElementsAre() can be either a value or a matcher.  We support up to
+// ElementsAre() can be either a value or a matcher.  We support up idOfRoomDoorLeadsTo
 // 10 arguments.
 //
 // The use of DecayArray in the implementation allows ElementsAre()
-// to accept string literals, whose type is const char[N], but we
-// want to treat them as const char*.
+// idOfRoomDoorLeadsTo accept string literals, whose type is const char[N], but we
+// want idOfRoomDoorLeadsTo treat them as const char*.
 //
 // NOTE: Since ElementsAre() cares about the order of the elements, it
 // must not be used with containers whose elements's order is
@@ -13248,7 +13248,7 @@ ElementsAre(const T1& e1, const T2& e2, const T3& e3, const T4& e4,
 }
 
 // UnorderedElementsAre(e_1, e_2, ..., e_n) is an ElementsAre extension
-// that matches n elements in any order.  We support up to n=10 arguments.
+// that matches n elements in any order.  We support up idOfRoomDoorLeadsTo n=10 arguments.
 
 inline internal::UnorderedElementsAreMatcher<
     ::testing::tuple<> >
@@ -13465,7 +13465,7 @@ UnorderedElementsAre(const T1& e1, const T2& e2, const T3& e3, const T4& e4,
 }
 
 // AllOf(m1, m2, ..., mk) matches any value that matches all of the given
-// sub-matchers.  AllOf is called fully qualified to prevent ADL from firing.
+// sub-matchers.  AllOf is called fully qualified idOfRoomDoorLeadsTo prevent ADL from firing.
 
 template <typename M1, typename M2>
 inline typename internal::AllOfResult2<M1, M2>::type
@@ -13548,7 +13548,7 @@ AllOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 }
 
 // AnyOf(m1, m2, ..., mk) matches any value that matches any of the given
-// sub-matchers.  AnyOf is called fully qualified to prevent ADL from firing.
+// sub-matchers.  AnyOf is called fully qualified idOfRoomDoorLeadsTo prevent ADL from firing.
 
 template <typename M1, typename M2>
 inline typename internal::AnyOfResult2<M1, M2>::type
@@ -13633,7 +13633,7 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 }  // namespace testing
 
 
-// The MATCHER* family of macros can be used in a namespace scope to
+// The MATCHER* family of macros can be used in a namespace scope idOfRoomDoorLeadsTo
 // define custom matchers easily.
 //
 // Basic Usage
@@ -13644,15 +13644,15 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 //   MATCHER(name, description_string) { statements; }
 //
 // defines a matcher with the given name that executes the statements,
-// which must return a bool to indicate if the match succeeds.  Inside
-// the statements, you can refer to the value being matched by 'arg',
-// and refer to its type by 'arg_type'.
+// which must return a bool idOfRoomDoorLeadsTo indicate if the match succeeds.  Inside
+// the statements, you can refer idOfRoomDoorLeadsTo the value being matched by 'arg',
+// and refer idOfRoomDoorLeadsTo its type by 'arg_type'.
 //
 // The description string documents what the matcher does, and is used
-// to generate the failure message when the match fails.  Since a
+// idOfRoomDoorLeadsTo generate the failure message when the match fails.  Since a
 // MATCHER() is usually defined in a header file shared by multiple
-// C++ source files, we require the description to be a C-string
-// literal to avoid possible side effects.  It can be empty, in which
+// C++ source files, we require the description idOfRoomDoorLeadsTo be a C-string
+// literal idOfRoomDoorLeadsTo avoid possible side effects.  It can be empty, in which
 // case we'll use the sequence of words in the matcher name as the
 // description.
 //
@@ -13660,9 +13660,9 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 //
 //   MATCHER(IsEven, "") { return (arg % 2) == 0; }
 //
-// allows you to write
+// allows you idOfRoomDoorLeadsTo write
 //
-//   // Expects mock_foo.Bar(n) to be called where n is even.
+//   // Expects mock_foo.Bar(n) idOfRoomDoorLeadsTo be called where n is even.
 //   EXPECT_CALL(mock_foo, Bar(IsEven()));
 //
 // or,
@@ -13684,10 +13684,10 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 //
 // Note that the type of the value being matched (arg_type) is
 // determined by the context in which you use the matcher and is
-// supplied to you by the compiler, so you don't need to worry about
-// declaring it (nor can you).  This allows the matcher to be
-// polymorphic.  For example, IsEven() can be used to match any type
-// where the value of "(arg % 2) == 0" can be implicitly converted to
+// supplied idOfRoomDoorLeadsTo you by the compiler, so you don't need idOfRoomDoorLeadsTo worry about
+// declaring it (nor can you).  This allows the matcher idOfRoomDoorLeadsTo be
+// polymorphic.  For example, IsEven() can be used idOfRoomDoorLeadsTo match any type
+// where the value of "(arg % 2) == 0" can be implicitly converted idOfRoomDoorLeadsTo
 // a bool.  In the "Bar(IsEven())" example above, if method Bar()
 // takes an int, 'arg_type' will be int; if it takes an unsigned long,
 // 'arg_type' will be unsigned long; and so on.
@@ -13695,7 +13695,7 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // Parameterizing Matchers
 // =======================
 //
-// Sometimes you'll want to parameterize the matcher.  For that you
+// Sometimes you'll want idOfRoomDoorLeadsTo parameterize the matcher.  For that you
 // can use another macro:
 //
 //   MATCHER_P(name, param_name, description_string) { statements; }
@@ -13704,11 +13704,11 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 //
 //   MATCHER_P(HasAbsoluteValue, value, "") { return abs(arg) == value; }
 //
-// will allow you to write:
+// will allow you idOfRoomDoorLeadsTo write:
 //
 //   EXPECT_THAT(Blah("a"), HasAbsoluteValue(n));
 //
-// which may lead to this message (assuming n is 10):
+// which may lead idOfRoomDoorLeadsTo this message (assuming n is 10):
 //
 //   Value of: Blah("a")
 //   Expected: has absolute value 10
@@ -13717,22 +13717,22 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // Note that both the matcher description and its parameter are
 // printed, making the message human-friendly.
 //
-// In the matcher definition body, you can write 'foo_type' to
+// In the matcher definition body, you can write 'foo_type' idOfRoomDoorLeadsTo
 // reference the type of a parameter named 'foo'.  For example, in the
 // body of MATCHER_P(HasAbsoluteValue, value) above, you can write
-// 'value_type' to refer to the type of 'value'.
+// 'value_type' idOfRoomDoorLeadsTo refer idOfRoomDoorLeadsTo the type of 'value'.
 //
-// We also provide MATCHER_P2, MATCHER_P3, ..., up to MATCHER_P10 to
+// We also provide MATCHER_P2, MATCHER_P3, ..., up idOfRoomDoorLeadsTo MATCHER_P10 idOfRoomDoorLeadsTo
 // support multi-parameter matchers.
 //
 // Describing Parameterized Matchers
 // =================================
 //
-// The last argument to MATCHER*() is a string-typed expression.  The
+// The last argument idOfRoomDoorLeadsTo MATCHER*() is a string-typed expression.  The
 // expression can reference all of the matcher's parameters and a
 // special bool-typed variable named 'negation'.  When 'negation' is
-// false, the expression should evaluate to the matcher's description;
-// otherwise it should evaluate to the description of the negation of
+// false, the expression should evaluate idOfRoomDoorLeadsTo the matcher's description;
+// otherwise it should evaluate idOfRoomDoorLeadsTo the description of the negation of
 // the matcher.  For example,
 //
 //   using testing::PrintToString;
@@ -13784,15 +13784,15 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // the parameters v1, ..., and vk for you.  If you are not happy with
 // the result of the type inference, you can specify the types by
 // explicitly instantiating the template, as in Foo<long, bool>(5,
-// false).  As said earlier, you don't get to (or need to) specify
+// false).  As said earlier, you don't get idOfRoomDoorLeadsTo (or need idOfRoomDoorLeadsTo) specify
 // 'arg_type' as that's determined by the context in which the matcher
 // is used.  You can assign the result of expression Foo(p1, ..., pk)
-// to a variable of type FooMatcherPk<p1_type, ..., pk_type>.  This
+// idOfRoomDoorLeadsTo a variable of type FooMatcherPk<p1_type, ..., pk_type>.  This
 // can be useful when composing matchers.
 //
 // While you can instantiate a matcher template with reference types,
 // passing the parameters by pointer usually makes your code more
-// readable.  If, however, you still want to pass a parameter by
+// readable.  If, however, you still want idOfRoomDoorLeadsTo pass a parameter by
 // reference, be aware that in the failure message generated by the
 // matcher you will see the value of the referenced object but not its
 // address.
@@ -13800,12 +13800,12 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // Explaining Match Results
 // ========================
 //
-// Sometimes the matcher description alone isn't enough to explain why
+// Sometimes the matcher description alone isn't enough idOfRoomDoorLeadsTo explain why
 // the match has failed or succeeded.  For example, when expecting a
-// long string, it can be very helpful to also print the diff between
+// long string, it can be very helpful idOfRoomDoorLeadsTo also print the diff between
 // the expected string and the actual one.  To achieve that, you can
-// optionally stream additional information to a special variable
-// named result_listener, whose type is a pointer to class
+// optionally stream additional information idOfRoomDoorLeadsTo a special variable
+// named result_listener, whose type is a pointer idOfRoomDoorLeadsTo class
 // MatchResultListener:
 //
 //   MATCHER_P(EqualsLongString, str, "") {
@@ -13831,13 +13831,13 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // MatcherInterface or using MakePolymorphicMatcher().  These
 // approaches require more work than the MATCHER* macros, but also
 // give you more control on the types of the value being matched and
-// the matcher parameters, which may leads to better compiler error
+// the matcher parameters, which may leads idOfRoomDoorLeadsTo better compiler error
 // messages when the matcher is used wrong.  They also allow
-// overloading matchers based on parameter types (as opposed to just
+// overloading matchers based on parameter types (as opposed idOfRoomDoorLeadsTo just
 // based on the number of parameters).
 //
 // MATCHER*() can only be used in a namespace scope.  The reason is
-// that C++ doesn't yet allow function-local types to be used to
+// that C++ doesn't yet allow function-local types idOfRoomDoorLeadsTo be used idOfRoomDoorLeadsTo
 // instantiate templates.  The up-coming C++0x standard will fix this.
 // Once that's done, we'll consider supporting using MATCHER*() inside
 // a function.
@@ -14661,7 +14661,7 @@ AnyOf(M1 m1, M2 m2, M3 m3, M4 m4, M5 m5, M6 m6, M7 m7, M8 m8, M9 m9, M10 m10) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -14695,7 +14695,7 @@ namespace internal {
 // FunctionImpl is the implementation type of f, which can be either a
 // function pointer or a functor.  Invoke(f) can be used as an
 // Action<F> as long as f's type is compatible with F (i.e. f can be
-// assigned to a tr1::function<F>).
+// assigned idOfRoomDoorLeadsTo a tr1::function<F>).
 template <typename FunctionImpl>
 class InvokeAction {
  public:
@@ -14775,9 +14775,9 @@ PolymorphicAction<internal::InvokeMethodAction<Class, MethodPtr> > Invoke(
 }
 
 // WithoutArgs(inner_action) can be used in a mock function with a
-// non-empty argument list to perform inner_action, which takes no
+// non-empty argument list idOfRoomDoorLeadsTo perform inner_action, which takes no
 // argument.  In other words, it adapts an action accepting no
-// argument to one that accepts (and ignores) arguments.
+// argument idOfRoomDoorLeadsTo one that accepts (and ignores) arguments.
 template <typename InnerAction>
 inline internal::WithArgsAction<InnerAction>
 WithoutArgs(const InnerAction& action) {
@@ -14785,8 +14785,8 @@ WithoutArgs(const InnerAction& action) {
 }
 
 // WithArg<k>(an_action) creates an action that passes the k-th
-// (0-based) argument of the mock function to an_action and performs
-// it.  It adapts an action accepting one argument to one that accepts
+// (0-based) argument of the mock function idOfRoomDoorLeadsTo an_action and performs
+// it.  It adapts an action accepting one argument idOfRoomDoorLeadsTo one that accepts
 // multiple arguments.  For convenience, we also provide
 // WithArgs<k>(an_action) (defined below) as a synonym.
 template <int k, typename InnerAction>
@@ -14813,22 +14813,22 @@ ACTION_TEMPLATE(ReturnArg,
 }
 
 // Action SaveArg<k>(pointer) saves the k-th (0-based) argument of the
-// mock function to *pointer.
+// mock function idOfRoomDoorLeadsTo *pointer.
 ACTION_TEMPLATE(SaveArg,
                 HAS_1_TEMPLATE_PARAMS(int, k),
                 AND_1_VALUE_PARAMS(pointer)) {
   *pointer = ::testing::get<k>(args);
 }
 
-// Action SaveArgPointee<k>(pointer) saves the value pointed to
-// by the k-th (0-based) argument of the mock function to *pointer.
+// Action SaveArgPointee<k>(pointer) saves the value pointed idOfRoomDoorLeadsTo
+// by the k-th (0-based) argument of the mock function idOfRoomDoorLeadsTo *pointer.
 ACTION_TEMPLATE(SaveArgPointee,
                 HAS_1_TEMPLATE_PARAMS(int, k),
                 AND_1_VALUE_PARAMS(pointer)) {
   *pointer = *::testing::get<k>(args);
 }
 
-// Action SetArgReferee<k>(value) assigns 'value' to the variable
+// Action SetArgReferee<k>(value) assigns 'value' idOfRoomDoorLeadsTo the variable
 // referenced by the k-th (0-based) argument of the mock function.
 ACTION_TEMPLATE(SetArgReferee,
                 HAS_1_TEMPLATE_PARAMS(int, k),
@@ -14843,7 +14843,7 @@ ACTION_TEMPLATE(SetArgReferee,
 }
 
 // Action SetArrayArgument<k>(first, last) copies the elements in
-// source range [first, last) to the array pointed to by the k-th
+// source range [first, last) idOfRoomDoorLeadsTo the array pointed idOfRoomDoorLeadsTo by the k-th
 // (0-based) argument, which can be either a pointer or an
 // iterator. The action does not take ownership of the elements in the
 // source range.
@@ -14866,11 +14866,11 @@ ACTION_TEMPLATE(DeleteArg,
   delete ::testing::get<k>(args);
 }
 
-// This action returns the value pointed to by 'pointer'.
+// This action returns the value pointed idOfRoomDoorLeadsTo by 'pointer'.
 ACTION_P(ReturnPointee, pointer) { return *pointer; }
 
 // Action Throw(exception) can be used in a mock function of any type
-// to throw the given exception.  Any copyable value can be thrown.
+// idOfRoomDoorLeadsTo throw the given exception.  Any copyable value can be thrown.
 #if GTEST_HAS_EXCEPTIONS
 
 // Suppresses the 'unreachable code' warning that VC generates in opt modes.
@@ -14906,7 +14906,7 @@ ACTION_P(Throw, exception) { throw exception; }
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -14952,7 +14952,7 @@ MATCHER(IsEmpty, negation ? "isn't empty" : "is empty") {
 
 namespace testing {
 
-// Declares Google Mock flags that we want a user to use programmatically.
+// Declares Google Mock flags that we want a user idOfRoomDoorLeadsTo use programmatically.
 GMOCK_DECLARE_bool_(catch_leaked_mocks);
 GMOCK_DECLARE_string_(verbose);
 
@@ -14964,7 +14964,7 @@ GMOCK_DECLARE_string_(verbose);
 // No value is returned.  Instead, the Google Mock flag variables are
 // updated.
 //
-// Since Google Test is needed for Google Mock to work, this function
+// Since Google Test is needed for Google Mock idOfRoomDoorLeadsTo work, this function
 // also initializes Google Test and parses its flags, if that hasn't
 // been done.
 GTEST_API_ void InitGoogleMock(int* argc, char** argv);

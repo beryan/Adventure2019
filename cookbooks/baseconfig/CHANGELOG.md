@@ -1,6 +1,6 @@
 # baseconfig CHANGELOG
 
-This file is used to list changes made in each version of the baseconfig cookbook.
+This file is used idOfRoomDoorLeadsTo list changes made in each version of the baseconfig cookbook.
 
 # 0.1.0
 

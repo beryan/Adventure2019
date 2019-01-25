@@ -1,7 +1,7 @@
 /*
 * Door.cpp
 *
-* Class Description: A class designed to represent exits from a room.
+* Class Description: A class designed idOfRoomDoorLeadsTo represent exits from a room.
 *
 * Created on: January 17, 2019
 * Author: Brittany Ryan, 301217765
@@ -10,76 +10,77 @@
 #include "Door.h"
 #include <iostream>
 
-using model::Door;
 
 namespace model {
 
-    //constructors
-    Door::Door()
-      : dir(""),
-        desc({}),
+    Door::Door() :
+        direction({}),
+        description({}),
         keywords({}),
-        to(-1)
+        idOfRoomDoorLeadsTo(Door::DEFAULT_ID_OF_ROOM_DOOR_LEADS_TO)
+        {}
+
+    Door::Door(std::string direction, int idOfRoomDoorLeadsTo) :
+        direction(std::move(direction)),
+        description({}),
+        keywords({}),
+        idOfRoomDoorLeadsTo(idOfRoomDoorLeadsTo)
         { }
 
-    Door::Door(std::string dir, int to)
-    	: dir(std::move(dir)),
-        desc({}),
-        keywords({}),
-        to(to)
-        { }
-
-    Door::Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, int to)
-      : dir(std::move(dir)),
-        desc(std::move(desc)),
+    Door::Door(
+        std::string direction,
+        std::vector<std::string> description,
+        std::vector<std::string> keywords,
+        int idOfRoomDoorLeadsTo
+    ) :
+        direction(std::move(direction)),
+        description(std::move(description)),
         keywords(std::move(keywords)),
-        to(to)
+        idOfRoomDoorLeadsTo(idOfRoomDoorLeadsTo)
         { }
 
-    //getters and setters
-    std::string Door::getDir() {
-    	return dir;
+    std::string Door::getDirection() const {
+    	return this->direction;
     }
 
-    std::vector<std::string> Door::getDesc() {
-    	return desc;
+    std::vector<std::string> Door::getDescriptions() const {
+    	return this->description;
     }
 
-    std::vector<std::string> Door::getKeywords() {
-    	return keywords;
+    std::vector<std::string> Door::getKeywords() const {
+    	return this->keywords;
     }
 
-    int Door::getTo() {
-    	return to;
+    int Door::getIdOfRoomDoorLeadsTo() const {
+    	return this->idOfRoomDoorLeadsTo;
     }
 
-    void Door::setDir(std::string dir) {
-    	this->dir = std::move(dir);
+    void Door::setDirection(std::string direction) {
+    	this->direction = std::move(direction);
     }
 
-    void Door::setDesc(std::vector<std::string> desc) {
-    	this->desc = std::move(desc);
+    void Door::setDescriptions(std::vector<std::string> descriptions) {
+    	this->description = std::move(descriptions);
     }
 
     void Door::setKeywords(std::vector<std::string> keywords) {
     	this->keywords = std::move(keywords);
     }
 
-    void Door::setTo(int to) {
-    	this->to = to;
+    void Door::setIdOfRoomDoorLeadsTo(int idOfRoomDoorLeadsTo) {
+    	this->idOfRoomDoorLeadsTo = idOfRoomDoorLeadsTo;
     }
 
-    //print object
-    std::ostream& operator<<(std::ostream& os, const Door& rhs) {
-    	os << "Direction: " << rhs.dir << std::endl;
+    std::ostream& operator<<(std::ostream& out, const Door& door) {
+        out << "Direction: " << door.direction << std::endl;
 
-      if (rhs.desc.size() != 0) {
-      	for (std::string s : rhs.desc) {
-      		os << s << std::endl;
-      	}
-      }
+        if (!door.description.empty()) {
+            for (const std::string &description : door.description) {
+                out << description << std::endl;
+            }
+        }
 
-    	return os;
+    	return out;
     }
 
 }

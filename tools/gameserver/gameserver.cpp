@@ -50,7 +50,7 @@ getHTTPMessage(const char* htmlLocation) {
                        std::istreambuf_iterator<char>()};
 
   } else {
-    std::cerr << "Unable to open HTML index file:\n"
+    std::cerr << "Unable idOfRoomDoorLeadsTo open HTML index file:\n"
               << htmlLocation << "\n";
     std::exit(-1);
   }

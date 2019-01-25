@@ -1,7 +1,7 @@
 /*
 * Room.h
 *
-* Class Description: A class designed to represent a room.
+* Class Description: A class designed idOfRoomDoorLeadsTo represent a room.
 *
 * Created on: January 18, 2019
 * Author: Brittany Ryan, 301217765

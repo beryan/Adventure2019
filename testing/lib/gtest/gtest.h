@@ -12,7 +12,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -34,14 +34,14 @@
 // This header file defines the public API for Google Test.  It should be
 // included by any test program that uses Google Test.
 //
-// IMPORTANT NOTE: Due to limitation of the C++ language, we have to
+// IMPORTANT NOTE: Due idOfRoomDoorLeadsTo limitation of the C++ language, we have idOfRoomDoorLeadsTo
 // leave some internal implementation details in this header file.
 // They are clearly marked by comments like this:
 //
 //   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 //
-// Such code is NOT meant to be used by a user directly, and is subject
-// to CHANGE WITHOUT NOTICE.  Therefore DO NOT DEPEND ON IT in a user
+// Such code is NOT meant idOfRoomDoorLeadsTo be used by a user directly, and is subject
+// idOfRoomDoorLeadsTo CHANGE WITHOUT NOTICE.  Therefore DO NOT DEPEND ON IT in a user
 // program!
 //
 // Acknowledgment: Google Test borrowed the idea of automatic test
@@ -69,7 +69,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -89,7 +89,7 @@
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file declares functions and macros used internally by
-// Google Test.  They are subject to change without notice.
+// Google Test.  They are subject idOfRoomDoorLeadsTo change without notice.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
 #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_INTERNAL_H_
@@ -108,7 +108,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -125,15 +125,15 @@
 //
 // Authors: wan@google.com (Zhanyong Wan)
 //
-// Low-level types and utilities for porting Google Test to various
+// Low-level types and utilities for porting Google Test idOfRoomDoorLeadsTo various
 // platforms.  All macros ending with _ and symbols defined in an
-// internal namespace are subject to change without notice.  Code
+// internal namespace are subject idOfRoomDoorLeadsTo change without notice.  Code
 // outside Google Test MUST NOT USE THEM DIRECTLY.  Macros that don't
 // end with _ are part of Google Test's public API and can be used by
 // code outside Google Test.
 //
-// This file is fundamental to Google Test.  All other Google Test source
-// files are expected to #include this.  Therefore, it cannot #include
+// This file is fundamental idOfRoomDoorLeadsTo Google Test.  All other Google Test source
+// files are expected idOfRoomDoorLeadsTo #include this.  Therefore, it cannot #include
 // any other Google Test header.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_PORT_H_
@@ -147,71 +147,71 @@
 // used in, such that Google Test can provide environment-specific
 // features and implementations.
 //
-// Google Test tries to automatically detect the properties of its
-// environment, so users usually don't need to worry about these
+// Google Test tries idOfRoomDoorLeadsTo automatically detect the properties of its
+// environment, so users usually don't need idOfRoomDoorLeadsTo worry about these
 // macros.  However, the automatic detection is not perfect.
-// Sometimes it's necessary for a user to define some of the following
-// macros in the build script to override Google Test's decisions.
+// Sometimes it's necessary for a user idOfRoomDoorLeadsTo define some of the following
+// macros in the build script idOfRoomDoorLeadsTo override Google Test's decisions.
 //
 // If the user doesn't define a macro in the list, Google Test will
 // provide a default definition.  After this header is #included, all
-// macros in this list will be defined to either 1 or 0.
+// macros in this list will be defined idOfRoomDoorLeadsTo either 1 or 0.
 //
-// Notes to maintainers:
+// Notes idOfRoomDoorLeadsTo maintainers:
 //   - Each macro here is a user-tweakable knob; do not grow the list
 //     lightly.
-//   - Use #if to key off these macros.  Don't use #ifdef or "#if
+//   - Use #if idOfRoomDoorLeadsTo key off these macros.  Don't use #ifdef or "#if
 //     defined(...)", which will not work as these macros are ALWAYS
 //     defined.
 //
-//   GTEST_HAS_CLONE          - Define it to 1/0 to indicate that clone(2)
+//   GTEST_HAS_CLONE          - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that clone(2)
 //                              is/isn't available.
-//   GTEST_HAS_EXCEPTIONS     - Define it to 1/0 to indicate that exceptions
+//   GTEST_HAS_EXCEPTIONS     - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that exceptions
 //                              are enabled.
-//   GTEST_HAS_GLOBAL_STRING  - Define it to 1/0 to indicate that ::string
+//   GTEST_HAS_GLOBAL_STRING  - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that ::string
 //                              is/isn't available (some systems define
-//                              ::string, which is different to std::string).
-//   GTEST_HAS_GLOBAL_WSTRING - Define it to 1/0 to indicate that ::string
+//                              ::string, which is different idOfRoomDoorLeadsTo std::string).
+//   GTEST_HAS_GLOBAL_WSTRING - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that ::string
 //                              is/isn't available (some systems define
-//                              ::wstring, which is different to std::wstring).
-//   GTEST_HAS_POSIX_RE       - Define it to 1/0 to indicate that POSIX regular
+//                              ::wstring, which is different idOfRoomDoorLeadsTo std::wstring).
+//   GTEST_HAS_POSIX_RE       - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that POSIX regular
 //                              expressions are/aren't available.
-//   GTEST_HAS_PTHREAD        - Define it to 1/0 to indicate that <pthread.h>
+//   GTEST_HAS_PTHREAD        - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that <pthread.h>
 //                              is/isn't available.
-//   GTEST_HAS_RTTI           - Define it to 1/0 to indicate that RTTI is/isn't
+//   GTEST_HAS_RTTI           - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that RTTI is/isn't
 //                              enabled.
-//   GTEST_HAS_STD_WSTRING    - Define it to 1/0 to indicate that
+//   GTEST_HAS_STD_WSTRING    - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that
 //                              std::wstring does/doesn't work (Google Test can
 //                              be used where std::wstring is unavailable).
-//   GTEST_HAS_TR1_TUPLE      - Define it to 1/0 to indicate tr1::tuple
+//   GTEST_HAS_TR1_TUPLE      - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate tr1::tuple
 //                              is/isn't available.
-//   GTEST_HAS_SEH            - Define it to 1/0 to indicate whether the
+//   GTEST_HAS_SEH            - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate whether the
 //                              compiler supports Microsoft's "Structured
 //                              Exception Handling".
 //   GTEST_HAS_STREAM_REDIRECTION
-//                            - Define it to 1/0 to indicate whether the
+//                            - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate whether the
 //                              platform supports I/O stream redirection using
 //                              dup() and dup2().
-//   GTEST_USE_OWN_TR1_TUPLE  - Define it to 1/0 to indicate whether Google
+//   GTEST_USE_OWN_TR1_TUPLE  - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate whether Google
 //                              Test's own tr1 tuple implementation should be
 //                              used.  Unused when the user sets
-//                              GTEST_HAS_TR1_TUPLE to 0.
-//   GTEST_LANG_CXX11         - Define it to 1/0 to indicate that Google Test
+//                              GTEST_HAS_TR1_TUPLE idOfRoomDoorLeadsTo 0.
+//   GTEST_LANG_CXX11         - Define it idOfRoomDoorLeadsTo 1/0 idOfRoomDoorLeadsTo indicate that Google Test
 //                              is building in C++11/C++98 mode.
 //   GTEST_LINKED_AS_SHARED_LIBRARY
-//                            - Define to 1 when compiling tests that use
+//                            - Define idOfRoomDoorLeadsTo 1 when compiling tests that use
 //                              Google Test as a shared library (known as
 //                              DLL on Windows).
 //   GTEST_CREATE_SHARED_LIBRARY
-//                            - Define to 1 when compiling Google Test itself
+//                            - Define idOfRoomDoorLeadsTo 1 when compiling Google Test itself
 //                              as a shared library.
 
 // Platform-indicating macros
 // --------------------------
 //
 // Macros indicating the platform on which Google Test is being used
-// (a macro is defined to 1 if compiled on the given platform;
-// otherwise UNDEFINED -- it's never defined to 0.).  Google Test
+// (a macro is defined idOfRoomDoorLeadsTo 1 if compiled on the given platform;
+// otherwise UNDEFINED -- it's never defined idOfRoomDoorLeadsTo 0.).  Google Test
 // defines these macros automatically.  Code outside Google Test MUST
 // NOT define them.
 //
@@ -238,7 +238,7 @@
 //
 // Among the platforms, Cygwin, Linux, Max OS X, and Windows have the
 // most stable support.  Since core members of the Google Test project
-// don't have access to other platforms, support for them may be less
+// don't have access idOfRoomDoorLeadsTo other platforms, support for them may be less
 // stable.  If you notice any problems on your platform, please notify
 // googletestframework@googlegroups.com (patches for fixing them are
 // even more welcome!).
@@ -249,8 +249,8 @@
 // -------------------------
 //
 // Macros indicating which Google Test features are available (a macro
-// is defined to 1 if the corresponding feature is supported;
-// otherwise UNDEFINED -- it's never defined to 0.).  Google Test
+// is defined idOfRoomDoorLeadsTo 1 if the corresponding feature is supported;
+// otherwise UNDEFINED -- it's never defined idOfRoomDoorLeadsTo 0.).  Google Test
 // defines these macros automatically.  Code outside Google Test MUST
 // NOT define them.
 //
@@ -279,7 +279,7 @@
 // Misc public macros
 // ------------------
 //
-//   GTEST_FLAG(flag_name)  - references the variable corresponding to
+//   GTEST_FLAG(flag_name)  - references the variable corresponding idOfRoomDoorLeadsTo
 //                            the given Google Test flag.
 
 // Internal utilities
@@ -291,7 +291,7 @@
 // Macros for basic C++ coding:
 //   GTEST_AMBIGUOUS_ELSE_BLOCKER_ - for disabling a gcc warning.
 //   GTEST_ATTRIBUTE_UNUSED_  - declares that a class' instances or a
-//                              variable don't have to be used.
+//                              variable don't have idOfRoomDoorLeadsTo be used.
 //   GTEST_DISALLOW_ASSIGN_   - disables operator=.
 //   GTEST_DISALLOW_COPY_AND_ASSIGN_ - disables copy ctor and operator=.
 //   GTEST_MUST_USE_RESULT_   - declares that a function's result must be used.
@@ -324,7 +324,7 @@
 //
 // Logging:
 //   GTEST_LOG_()   - logs messages at the specified severity level.
-//   LogToStderr()  - directs all log messages to stderr.
+//   LogToStderr()  - directs all log messages idOfRoomDoorLeadsTo stderr.
 //   FlushInfoLog() - flushes informational log messages.
 //
 // Stdout and stderr capturing:
@@ -336,7 +336,7 @@
 //                         string.
 //
 // Integer types:
-//   TypeWithSize   - maps an integer to a int type.
+//   TypeWithSize   - maps an integer idOfRoomDoorLeadsTo a int type.
 //   Int32, UInt32, Int64, UInt64, TimeInMillis
 //                  - integers of known sizes.
 //   BiggestInt     - the biggest signed integer type.
@@ -388,7 +388,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -432,7 +432,7 @@
 #   define GTEST_OS_WINDOWS_RT 1
 #  else
     // WINAPI_FAMILY defined but no known partition matched.
-    // Default to desktop.
+    // Default idOfRoomDoorLeadsTo desktop.
 #   define GTEST_OS_WINDOWS_DESKTOP 1
 #  endif
 # else
@@ -481,7 +481,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -501,7 +501,7 @@
 //
 //   Flag related macros:
 //     GTEST_FLAG(flag_name)
-//     GTEST_USE_OWN_FLAGFILE_FLAG_  - Define to 0 when the system provides its
+//     GTEST_USE_OWN_FLAGFILE_FLAG_  - Define idOfRoomDoorLeadsTo 0 when the system provides its
 //                                     own flagfile flag parsing.
 //     GTEST_DECLARE_bool_(name)
 //     GTEST_DECLARE_int32_(name)
@@ -518,7 +518,7 @@
 //   Logging:
 //     GTEST_LOG_(severity)
 //     GTEST_CHECK_(condition)
-//     Functions LogToStderr() and FlushInfoLog() have to be provided too.
+//     Functions LogToStderr() and FlushInfoLog() have idOfRoomDoorLeadsTo be provided too.
 //
 //   Threading:
 //     GTEST_HAS_NOTIFICATION_ - Enabled if Notification is already provided.
@@ -550,7 +550,7 @@
 # define GTEST_INIT_GOOGLE_TEST_NAME_ "testing::InitGoogleTest"
 #endif  // !defined(GTEST_INIT_GOOGLE_TEST_NAME_)
 
-// Determines the version of gcc that is used to compile this.
+// Determines the version of gcc that is used idOfRoomDoorLeadsTo compile this.
 #ifdef __GNUC__
 // 40302 means version 4.3.2.
 # define GTEST_GCC_VER_ \
@@ -588,7 +588,7 @@
 #endif
 
 // Distinct from C++11 language support, some environments don't provide
-// proper C++11 library support. Notably, it's possible to build in
+// proper C++11 library support. Notably, it's possible idOfRoomDoorLeadsTo build in
 // C++11 mode when targeting Mac OS X 10.6, which has an old libstdc++
 // with no C++11 support.
 //
@@ -651,25 +651,25 @@
 #  include <direct.h>
 #  include <io.h>
 # endif
-// In order to avoid having to include <windows.h>, use forward declaration
+// In order idOfRoomDoorLeadsTo avoid having idOfRoomDoorLeadsTo include <windows.h>, use forward declaration
 // assuming CRITICAL_SECTION is a typedef of _RTL_CRITICAL_SECTION.
 // This assumption is verified by
 // WindowsTypesTest.CRITICAL_SECTIONIs_RTL_CRITICAL_SECTION.
 struct _RTL_CRITICAL_SECTION;
 #else
 // This assumes that non-Windows OSes provide unistd.h. For OSes where this
-// is not the case, we need to include headers that provide the functions
+// is not the case, we need idOfRoomDoorLeadsTo include headers that provide the functions
 // mentioned above.
 # include <unistd.h>
 # include <strings.h>
 #endif  // GTEST_OS_WINDOWS
 
 #if GTEST_OS_LINUX_ANDROID
-// Used to define __ANDROID_API__ matching the target NDK API level.
+// Used idOfRoomDoorLeadsTo define __ANDROID_API__ matching the target NDK API level.
 #  include <android/api-level.h>  // NOLINT
 #endif
 
-// Defines this to true iff Google Test can use POSIX regular expressions.
+// Defines this idOfRoomDoorLeadsTo true iff Google Test can use POSIX regular expressions.
 #ifndef GTEST_HAS_POSIX_RE
 # if GTEST_OS_LINUX_ANDROID
 // On Android, <regex.h> is only available starting with Gingerbread.
@@ -684,9 +684,9 @@ struct _RTL_CRITICAL_SECTION;
 
 #elif GTEST_HAS_POSIX_RE
 
-// On some platforms, <regex.h> needs someone to define size_t, and
+// On some platforms, <regex.h> needs someone idOfRoomDoorLeadsTo define size_t, and
 // won't compile otherwise.  We can #include it here as we already
-// included <stdlib.h>, which is guaranteed to define size_t through
+// included <stdlib.h>, which is guaranteed idOfRoomDoorLeadsTo define size_t through
 // <stddef.h>.
 # include <regex.h>  // NOLINT
 
@@ -708,10 +708,10 @@ struct _RTL_CRITICAL_SECTION;
 
 #ifndef GTEST_HAS_EXCEPTIONS
 // The user didn't tell us whether exceptions are enabled, so we need
-// to figure it out.
+// idOfRoomDoorLeadsTo figure it out.
 # if defined(_MSC_VER) || defined(__BORLANDC__)
 // MSVC's and C++Builder's implementations of the STL use the _HAS_EXCEPTIONS
-// macro to enable exceptions, so we'll do the same.
+// macro idOfRoomDoorLeadsTo enable exceptions, so we'll do the same.
 // Assumes that exceptions are enabled by default.
 #  ifndef _HAS_EXCEPTIONS
 #   define _HAS_EXCEPTIONS 1
@@ -722,12 +722,12 @@ struct _RTL_CRITICAL_SECTION;
 // but iff cleanups are enabled after that. In Obj-C++ files, there can be
 // cleanups for ObjC exceptions which also need cleanups, even if C++ exceptions
 // are disabled. clang has __has_feature(cxx_exceptions) which checks for C++
-// exceptions starting at clang r206352, but which checked for cleanups prior to
+// exceptions starting at clang r206352, but which checked for cleanups prior idOfRoomDoorLeadsTo
 // that. To reliably check for C++ exception availability with clang, check for
 // __EXCEPTIONS && __has_feature(cxx_exceptions).
 #  define GTEST_HAS_EXCEPTIONS (__EXCEPTIONS && __has_feature(cxx_exceptions))
 # elif defined(__GNUC__) && __EXCEPTIONS
-// gcc defines __EXCEPTIONS to 1 iff exceptions are enabled.
+// gcc defines __EXCEPTIONS idOfRoomDoorLeadsTo 1 iff exceptions are enabled.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__SUNPRO_CC)
 // Sun Pro CC supports exceptions.  However, there is no compile-time way of
@@ -735,14 +735,14 @@ struct _RTL_CRITICAL_SECTION;
 // they are enabled unless the user tells us otherwise.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__IBMCPP__) && __EXCEPTIONS
-// xlC defines __EXCEPTIONS to 1 iff exceptions are enabled.
+// xlC defines __EXCEPTIONS idOfRoomDoorLeadsTo 1 iff exceptions are enabled.
 #  define GTEST_HAS_EXCEPTIONS 1
 # elif defined(__HP_aCC)
-// Exception handling is in effect by default in HP aCC compiler. It has to
+// Exception handling is in effect by default in HP aCC compiler. It has idOfRoomDoorLeadsTo
 // be turned of by +noeh compiler option if desired.
 #  define GTEST_HAS_EXCEPTIONS 1
 # else
-// For other compilers, we assume exceptions are disabled to be
+// For other compilers, we assume exceptions are disabled idOfRoomDoorLeadsTo be
 // conservative.
 #  define GTEST_HAS_EXCEPTIONS 0
 # endif  // defined(_MSC_VER) || defined(__BORLANDC__)
@@ -759,7 +759,7 @@ struct _RTL_CRITICAL_SECTION;
 
 #ifndef GTEST_HAS_GLOBAL_STRING
 // The user didn't tell us whether ::string is available, so we need
-// to figure it out.
+// idOfRoomDoorLeadsTo figure it out.
 
 # define GTEST_HAS_GLOBAL_STRING 0
 
@@ -767,8 +767,8 @@ struct _RTL_CRITICAL_SECTION;
 
 #ifndef GTEST_HAS_STD_WSTRING
 // The user didn't tell us whether ::std::wstring is available, so we need
-// to figure it out.
-// TODO(wan@google.com): uses autoconf to detect whether ::std::wstring
+// idOfRoomDoorLeadsTo figure it out.
+// TODO(wan@google.com): uses autoconf idOfRoomDoorLeadsTo detect whether ::std::wstring
 //   is available.
 
 // Cygwin 1.7 and below doesn't support ::std::wstring.
@@ -781,14 +781,14 @@ struct _RTL_CRITICAL_SECTION;
 
 #ifndef GTEST_HAS_GLOBAL_WSTRING
 // The user didn't tell us whether ::wstring is available, so we need
-// to figure it out.
+// idOfRoomDoorLeadsTo figure it out.
 # define GTEST_HAS_GLOBAL_WSTRING \
     (GTEST_HAS_STD_WSTRING && GTEST_HAS_GLOBAL_STRING)
 #endif  // GTEST_HAS_GLOBAL_WSTRING
 
 // Determines whether RTTI is available.
 #ifndef GTEST_HAS_RTTI
-// The user didn't tell us whether RTTI is enabled, so we need to
+// The user didn't tell us whether RTTI is enabled, so we need idOfRoomDoorLeadsTo
 // figure it out.
 
 # ifdef _MSC_VER
@@ -805,7 +805,7 @@ struct _RTL_CRITICAL_SECTION;
 #  ifdef __GXX_RTTI
 // When building against STLport with the Android NDK and with
 // -frtti -fno-exceptions, the build fails at link time with undefined
-// references to __cxa_bad_typeid. Note sure if STL or toolchain bug,
+// references idOfRoomDoorLeadsTo __cxa_bad_typeid. Note sure if STL or toolchain bug,
 // so disable RTTI when detected.
 #   if GTEST_OS_LINUX_ANDROID && defined(_STLPORT_MAJOR) && \
        !defined(__EXCEPTIONS)
@@ -824,7 +824,7 @@ struct _RTL_CRITICAL_SECTION;
 
 #  define GTEST_HAS_RTTI __has_feature(cxx_rtti)
 
-// Starting with version 9.0 IBM Visual Age defines __RTTI_ALL__ to 1 if
+// Starting with version 9.0 IBM Visual Age defines __RTTI_ALL__ idOfRoomDoorLeadsTo 1 if
 // both the typeid and dynamic_cast features are present.
 # elif defined(__IBMCPP__) && (__IBMCPP__ >= 900)
 
@@ -843,7 +843,7 @@ struct _RTL_CRITICAL_SECTION;
 
 #endif  // GTEST_HAS_RTTI
 
-// It's this header's responsibility to #include <typeinfo> when RTTI
+// It's this header's responsibility idOfRoomDoorLeadsTo #include <typeinfo> when RTTI
 // is enabled.
 #if GTEST_HAS_RTTI
 # include <typeinfo>
@@ -855,13 +855,13 @@ struct _RTL_CRITICAL_SECTION;
 // which platforms have pthreads support.
 //
 // To disable threading support in Google Test, add -DGTEST_HAS_PTHREAD=0
-// to your compiler flags.
+// idOfRoomDoorLeadsTo your compiler flags.
 # define GTEST_HAS_PTHREAD (GTEST_OS_LINUX || GTEST_OS_MAC || GTEST_OS_HPUX \
     || GTEST_OS_QNX || GTEST_OS_FREEBSD || GTEST_OS_NACL)
 #endif  // GTEST_HAS_PTHREAD
 
 #if GTEST_HAS_PTHREAD
-// gtest-port.h guarantees to #include <pthread.h> when GTEST_HAS_PTHREAD is
+// gtest-port.h guarantees idOfRoomDoorLeadsTo #include <pthread.h> when GTEST_HAS_PTHREAD is
 // true.
 # include <pthread.h>  // NOLINT
 
@@ -879,14 +879,14 @@ struct _RTL_CRITICAL_SECTION;
 #endif  // !defined(GTEST_HAS_HASH_MAP_)
 
 // Determines whether Google Test can use tr1/tuple.  You can define
-// this macro to 0 to prevent Google Test from using tuple (any
+// this macro idOfRoomDoorLeadsTo 0 idOfRoomDoorLeadsTo prevent Google Test from using tuple (any
 // feature depending on tuple with be disabled in this mode).
 #ifndef GTEST_HAS_TR1_TUPLE
 # if GTEST_OS_LINUX_ANDROID && defined(_STLPORT_MAJOR)
 // STLport, provided with the Android NDK, has neither <tr1/tuple> or <tuple>.
 #  define GTEST_HAS_TR1_TUPLE 0
 # else
-// The user didn't tell us not to do it, so we assume it's OK.
+// The user didn't tell us not idOfRoomDoorLeadsTo do it, so we assume it's OK.
 #  define GTEST_HAS_TR1_TUPLE 1
 # endif
 #endif  // GTEST_HAS_TR1_TUPLE
@@ -894,13 +894,13 @@ struct _RTL_CRITICAL_SECTION;
 // Determines whether Google Test's own tr1 tuple implementation
 // should be used.
 #ifndef GTEST_USE_OWN_TR1_TUPLE
-// The user didn't tell us, so we need to figure it out.
+// The user didn't tell us, so we need idOfRoomDoorLeadsTo figure it out.
 
 // We use our own TR1 tuple if we aren't sure the user has an
 // implementation of it already.  At this time, libstdc++ 4.0.0+ and
 // MSVC 2010 are the only mainstream standard libraries that come
 // with a TR1 tuple implementation.  NVIDIA's CUDA NVCC compiler
-// pretends to be GCC by defining __GNUC__ and friends, but cannot
+// pretends idOfRoomDoorLeadsTo be GCC by defining __GNUC__ and friends, but cannot
 // compile GCC's tuple implementation.  MSVC 2008 (9.0) provides TR1
 // tuple in a 323 MB Feature Pack download, which we cannot assume the
 // user has.  QNX's QCC compiler is a modified GCC but it doesn't
@@ -913,7 +913,7 @@ struct _RTL_CRITICAL_SECTION;
 
 // C++11 specifies that <tuple> provides std::tuple. Use that if gtest is used
 // in C++11 mode and libstdc++ isn't very old (binaries targeting OS X 10.6
-// can build with clang but need to use gcc4.2's libstdc++).
+// can build with clang but need idOfRoomDoorLeadsTo use gcc4.2's libstdc++).
 # if GTEST_LANG_CXX11 && (!defined(__GLIBCXX__) || __GLIBCXX__ > 20110325)
 #  define GTEST_ENV_HAS_STD_TUPLE_ 1
 # endif
@@ -927,14 +927,14 @@ struct _RTL_CRITICAL_SECTION;
 #endif  // GTEST_USE_OWN_TR1_TUPLE
 
 // To avoid conditional compilation everywhere, we make it
-// gtest-port.h's responsibility to #include the header implementing
+// gtest-port.h's responsibility idOfRoomDoorLeadsTo #include the header implementing
 // tuple.
 #if GTEST_HAS_STD_TUPLE_
 # include <tuple>  // IWYU pragma: export
 # define GTEST_TUPLE_NAMESPACE_ ::std
 #endif  // GTEST_HAS_STD_TUPLE_
 
-// We include tr1::tuple even if std::tuple is available to define printers for
+// We include tr1::tuple even if std::tuple is available idOfRoomDoorLeadsTo define printers for
 // them.
 #if GTEST_HAS_TR1_TUPLE
 # ifndef GTEST_TUPLE_NAMESPACE_
@@ -960,7 +960,7 @@ struct _RTL_CRITICAL_SECTION;
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -1002,7 +1002,7 @@ struct _RTL_CRITICAL_SECTION;
 // those compilers.
 #if defined(_MSC_VER) && _MSC_VER >= 1600  /* 1600 is Visual Studio 2010 */
 # error "gtest's tuple doesn't compile on Visual Studio 2010 or later. \
-GTEST_USE_OWN_TR1_TUPLE must be set to 0 on those compilers."
+GTEST_USE_OWN_TR1_TUPLE must be set idOfRoomDoorLeadsTo 0 on those compilers."
 #endif
 
 // GTEST_n_TUPLE_(T) is the type of an n-tuple.
@@ -1613,7 +1613,7 @@ class tuple {
 // 6.1.3.2 Tuple creation functions.
 
 // Known limitations: we don't support passing an
-// std::tr1::reference_wrapper<T> to make_tuple().  And we don't
+// std::tr1::reference_wrapper<T> idOfRoomDoorLeadsTo make_tuple().  And we don't
 // implement tie().
 
 inline tuple<> make_tuple() { return tuple<>(); }
@@ -1965,7 +1965,7 @@ inline bool operator!=(const GTEST_10_TUPLE_(T)& t,
 # elif GTEST_ENV_HAS_STD_TUPLE_
 #  include <tuple>
 // C++11 puts its tuple into the ::std namespace rather than
-// ::std::tr1.  gtest expects tuple to live in ::std::tr1, so put it there.
+// ::std::tr1.  gtest expects tuple idOfRoomDoorLeadsTo live in ::std::tr1, so put it there.
 // This causes undefined behavior, but supported compilers react in
 // the way we intend.
 namespace std {
@@ -1980,10 +1980,10 @@ using ::std::tuple_size;
 
 # elif GTEST_OS_SYMBIAN
 
-// On Symbian, BOOST_HAS_TR1_TUPLE causes Boost's TR1 tuple library to
+// On Symbian, BOOST_HAS_TR1_TUPLE causes Boost's TR1 tuple library idOfRoomDoorLeadsTo
 // use STLport's tuple implementation, which unfortunately doesn't
 // work as the copy of STLport distributed with Symbian is incomplete.
-// By making sure BOOST_HAS_TR1_TUPLE is undefined, we force Boost to
+// By making sure BOOST_HAS_TR1_TUPLE is undefined, we force Boost idOfRoomDoorLeadsTo
 // use its own tuple implementation.
 #  ifdef BOOST_HAS_TR1_TUPLE
 #   undef BOOST_HAS_TR1_TUPLE
@@ -1996,18 +1996,18 @@ using ::std::tuple_size;
 
 # elif defined(__GNUC__) && (GTEST_GCC_VER_ >= 40000)
 // GCC 4.0+ implements tr1/tuple in the <tr1/tuple> header.  This does
-// not conform to the TR1 spec, which requires the header to be <tuple>.
+// not conform idOfRoomDoorLeadsTo the TR1 spec, which requires the header idOfRoomDoorLeadsTo be <tuple>.
 
 #  if !GTEST_HAS_RTTI && GTEST_GCC_VER_ < 40302
 // Until version 4.3.2, gcc has a bug that causes <tr1/functional>,
-// which is #included by <tr1/tuple>, to not compile when RTTI is
+// which is #included by <tr1/tuple>, idOfRoomDoorLeadsTo not compile when RTTI is
 // disabled.  _TR1_FUNCTIONAL is the header guard for
-// <tr1/functional>.  Hence the following #define is a hack to prevent
+// <tr1/functional>.  Hence the following #define is a hack idOfRoomDoorLeadsTo prevent
 // <tr1/functional> from being included.
 #   define _TR1_FUNCTIONAL 1
 #   include <tr1/tuple>
-#   undef _TR1_FUNCTIONAL  // Allows the user to #include
-                        // <tr1/functional> if he chooses to.
+#   undef _TR1_FUNCTIONAL  // Allows the user idOfRoomDoorLeadsTo #include
+                        // <tr1/functional> if he chooses idOfRoomDoorLeadsTo.
 #  else
 #   include <tr1/tuple>  // NOLINT
 #  endif  // !GTEST_HAS_RTTI && GTEST_GCC_VER_ < 40302
@@ -2025,7 +2025,7 @@ using ::std::tuple_size;
 // Linux on the Itanium architecture.
 // Also see http://linux.die.net/man/2/clone.
 #ifndef GTEST_HAS_CLONE
-// The user didn't tell us, so we need to figure it out.
+// The user didn't tell us, so we need idOfRoomDoorLeadsTo figure it out.
 
 # if GTEST_OS_LINUX && !defined(__ia64__)
 #  if GTEST_OS_LINUX_ANDROID
@@ -2044,8 +2044,8 @@ using ::std::tuple_size;
 
 #endif  // GTEST_HAS_CLONE
 
-// Determines whether to support stream redirection. This is used to test
-// output correctness and to implement death tests.
+// Determines whether idOfRoomDoorLeadsTo support stream redirection. This is used idOfRoomDoorLeadsTo test
+// output correctness and idOfRoomDoorLeadsTo implement death tests.
 #ifndef GTEST_HAS_STREAM_REDIRECTION
 // By default, we assume that stream redirection is supported on all
 // platforms except known mobile ones.
@@ -2057,7 +2057,7 @@ using ::std::tuple_size;
 # endif  // !GTEST_OS_WINDOWS_MOBILE && !GTEST_OS_SYMBIAN
 #endif  // GTEST_HAS_STREAM_REDIRECTION
 
-// Determines whether to support death tests.
+// Determines whether idOfRoomDoorLeadsTo support death tests.
 // Google Test does not support death tests for VC 7.1 and earlier as
 // abort() in a VC 7.1 application compiled as GUI in debug config
 // pops up a dialog window that cannot be suppressed programmatically.
@@ -2074,7 +2074,7 @@ using ::std::tuple_size;
 // value-parameterized tests.
 #define GTEST_HAS_PARAM_TEST 1
 
-// Determines whether to support type-driven tests.
+// Determines whether idOfRoomDoorLeadsTo support type-driven tests.
 
 // Typed tests need <typeinfo> and variadic macros, which GCC, VC++ 8.0,
 // Sun Pro CC, IBM Visual Age, and HP aCC support.
@@ -2084,7 +2084,7 @@ using ::std::tuple_size;
 # define GTEST_HAS_TYPED_TEST_P 1
 #endif
 
-// Determines whether to support Combine(). This only makes sense when
+// Determines whether idOfRoomDoorLeadsTo support Combine(). This only makes sense when
 // value-parameterized tests are enabled.  The implementation doesn't
 // work on Sun Studio since it doesn't understand templated conversion
 // operators.
@@ -2096,7 +2096,7 @@ using ::std::tuple_size;
 #define GTEST_WIDE_STRING_USES_UTF16_ \
     (GTEST_OS_WINDOWS || GTEST_OS_CYGWIN || GTEST_OS_SYMBIAN || GTEST_OS_AIX)
 
-// Determines whether test results can be streamed to a socket.
+// Determines whether test results can be streamed idOfRoomDoorLeadsTo a socket.
 #if GTEST_OS_LINUX
 # define GTEST_CAN_STREAM_RESULTS_ 1
 #endif
@@ -2104,20 +2104,20 @@ using ::std::tuple_size;
 // Defines some utility macros.
 
 // The GNU compiler emits a warning if nested "if" statements are followed by
-// an "else" statement and braces are not used to explicitly disambiguate the
-// "else" binding.  This leads to problems with code like:
+// an "else" statement and braces are not used idOfRoomDoorLeadsTo explicitly disambiguate the
+// "else" binding.  This leads idOfRoomDoorLeadsTo problems with code like:
 //
 //   if (gate)
 //     ASSERT_*(condition) << "Some message";
 //
-// The "switch (0) case 0:" idiom is used to suppress this.
+// The "switch (0) case 0:" idiom is used idOfRoomDoorLeadsTo suppress this.
 #ifdef __INTEL_COMPILER
 # define GTEST_AMBIGUOUS_ELSE_BLOCKER_
 #else
 # define GTEST_AMBIGUOUS_ELSE_BLOCKER_ switch (0) case 0: default:  // NOLINT
 #endif
 
-// Use this annotation at the end of a struct/class definition to
+// Use this annotation at the end of a struct/class definition idOfRoomDoorLeadsTo
 // prevent the compiler from optimizing away instances that are never
 // used.  This is useful when all interesting logic happens inside the
 // c'tor and / or d'tor.  Example:
@@ -2126,8 +2126,8 @@ using ::std::tuple_size;
 //     Foo() { ... }
 //   } GTEST_ATTRIBUTE_UNUSED_;
 //
-// Also use it after a variable or parameter declaration to tell the
-// compiler the variable/parameter does not have to be used.
+// Also use it after a variable or parameter declaration idOfRoomDoorLeadsTo tell the
+// compiler the variable/parameter does not have idOfRoomDoorLeadsTo be used.
 #if defined(__GNUC__) && !defined(COMPILER_ICC)
 # define GTEST_ATTRIBUTE_UNUSED_ __attribute__ ((unused))
 #elif defined(__clang__)
@@ -2139,18 +2139,18 @@ using ::std::tuple_size;
 # define GTEST_ATTRIBUTE_UNUSED_
 #endif
 
-// A macro to disallow operator=
+// A macro idOfRoomDoorLeadsTo disallow operator=
 // This should be used in the private: declarations for a class.
 #define GTEST_DISALLOW_ASSIGN_(type)\
   void operator=(type const &)
 
-// A macro to disallow copy constructor and operator=
+// A macro idOfRoomDoorLeadsTo disallow copy constructor and operator=
 // This should be used in the private: declarations for a class.
 #define GTEST_DISALLOW_COPY_AND_ASSIGN_(type)\
   type(type const &);\
   GTEST_DISALLOW_ASSIGN_(type)
 
-// Tell the compiler to warn about unused return values for functions declared
+// Tell the compiler idOfRoomDoorLeadsTo warn about unused return values for functions declared
 // with this macro.  The macro should be used on function declarations
 // following the argument list:
 //
@@ -2162,7 +2162,7 @@ using ::std::tuple_size;
 #endif  // __GNUC__ && (GTEST_GCC_VER_ >= 30400) && !COMPILER_ICC
 
 // MS C++ compiler emits warning when a conditional expression is compile time
-// constant. In some contexts this warning is false positive and needs to be
+// constant. In some contexts this warning is false positive and needs idOfRoomDoorLeadsTo be
 // suppressed. Use the following two macros in such cases:
 //
 // GTEST_INTENTIONAL_CONST_COND_PUSH_()
@@ -2178,10 +2178,10 @@ using ::std::tuple_size;
 // Handling.  This is supported by several Windows compilers but generally
 // does not exist on any other system.
 #ifndef GTEST_HAS_SEH
-// The user didn't tell us, so we need to figure it out.
+// The user didn't tell us, so we need idOfRoomDoorLeadsTo figure it out.
 
 # if defined(_MSC_VER) || defined(__BORLANDC__)
-// These two compilers are known to support SEH.
+// These two compilers are known idOfRoomDoorLeadsTo support SEH.
 #  define GTEST_HAS_SEH 1
 # else
 // Assume no SEH.
@@ -2210,7 +2210,7 @@ using ::std::tuple_size;
 #endif
 
 #ifdef __GNUC__
-// Ask the compiler to never inline a given function.
+// Ask the compiler idOfRoomDoorLeadsTo never inline a given function.
 # define GTEST_NO_INLINE_ __attribute__((noinline))
 #else
 # define GTEST_NO_INLINE_
@@ -2223,7 +2223,7 @@ using ::std::tuple_size;
 # define GTEST_HAS_CXXABI_H_ 0
 #endif
 
-// A function level attribute to disable checking for use of uninitialized
+// A function level attribute idOfRoomDoorLeadsTo disable checking for use of uninitialized
 // memory when built with MemorySanitizer.
 #if defined(__clang__)
 # if __has_feature(memory_sanitizer)
@@ -2236,7 +2236,7 @@ using ::std::tuple_size;
 # define GTEST_ATTRIBUTE_NO_SANITIZE_MEMORY_
 #endif  // __clang__
 
-// A function level attribute to disable AddressSanitizer instrumentation.
+// A function level attribute idOfRoomDoorLeadsTo disable AddressSanitizer instrumentation.
 #if defined(__clang__)
 # if __has_feature(address_sanitizer)
 #  define GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_ \
@@ -2248,7 +2248,7 @@ using ::std::tuple_size;
 # define GTEST_ATTRIBUTE_NO_SANITIZE_ADDRESS_
 #endif  // __clang__
 
-// A function level attribute to disable ThreadSanitizer instrumentation.
+// A function level attribute idOfRoomDoorLeadsTo disable ThreadSanitizer instrumentation.
 #if defined(__clang__)
 # if __has_feature(thread_sanitizer)
 #  define GTEST_ATTRIBUTE_NO_SANITIZE_THREAD_ \
@@ -2266,7 +2266,7 @@ class Message;
 
 #if defined(GTEST_TUPLE_NAMESPACE_)
 // Import tuple and friends into the ::testing namespace.
-// It is part of our interface, having them in ::testing allows us to change
+// It is part of our interface, having them in ::testing allows us idOfRoomDoorLeadsTo change
 // their types as needed.
 using GTEST_TUPLE_NAMESPACE_::get;
 using GTEST_TUPLE_NAMESPACE_::make_tuple;
@@ -2278,22 +2278,22 @@ using GTEST_TUPLE_NAMESPACE_::tuple_element;
 namespace internal {
 
 // A secret type that Google Test users don't know about.  It has no
-// definition on purpose.  Therefore it's impossible to create a
+// definition on purpose.  Therefore it's impossible idOfRoomDoorLeadsTo create a
 // Secret object, which is what we want.
 class Secret;
 
-// The GTEST_COMPILE_ASSERT_ macro can be used to verify that a compile time
-// expression is true. For example, you could use it to verify the
+// The GTEST_COMPILE_ASSERT_ macro can be used idOfRoomDoorLeadsTo verify that a compile time
+// expression is true. For example, you could use it idOfRoomDoorLeadsTo verify the
 // size of a static array:
 //
 //   GTEST_COMPILE_ASSERT_(GTEST_ARRAY_SIZE_(names) == NUM_NAMES,
 //                         names_incorrect_size);
 //
-// or to make sure a struct is smaller than a certain size:
+// or idOfRoomDoorLeadsTo make sure a struct is smaller than a certain size:
 //
 //   GTEST_COMPILE_ASSERT_(sizeof(foo) < 128, foo_too_large);
 //
-// The second argument to the macro is the name of the variable. If
+// The second argument idOfRoomDoorLeadsTo the macro is the name of the variable. If
 // the expression is false, most compilers will issue a warning/error
 // containing the name of the variable.
 
@@ -2322,11 +2322,11 @@ template <bool>
 //
 //   does not work, as gcc supports variable-length arrays whose sizes
 //   are determined at run-time (this is gcc's extension and not part
-//   of the C++ standard).  As a result, gcc fails to reject the
+//   of the C++ standard).  As a result, gcc fails idOfRoomDoorLeadsTo reject the
 //   following code with the simple definition:
 //
 //     int foo;
-//     GTEST_COMPILE_ASSERT_(foo, msg); // not supposed to compile as foo is
+//     GTEST_COMPILE_ASSERT_(foo, msg); // not supposed idOfRoomDoorLeadsTo compile as foo is
 //                                      // not a compile-time constant.
 //
 // - By using the type CompileAssert<(bool(expr))>, we ensures that
@@ -2334,23 +2334,23 @@ template <bool>
 //   determined at compile-time.)
 //
 // - The outter parentheses in CompileAssert<(bool(expr))> are necessary
-//   to work around a bug in gcc 3.4.4 and 4.0.1.  If we had written
+//   idOfRoomDoorLeadsTo work around a bug in gcc 3.4.4 and 4.0.1.  If we had written
 //
 //     CompileAssert<bool(expr)>
 //
-//   instead, these compilers will refuse to compile
+//   instead, these compilers will refuse idOfRoomDoorLeadsTo compile
 //
 //     GTEST_COMPILE_ASSERT_(5 > 0, some_message);
 //
-//   (They seem to think the ">" in "5 > 0" marks the end of the
+//   (They seem idOfRoomDoorLeadsTo think the ">" in "5 > 0" marks the end of the
 //   template argument list.)
 //
 // - The array size is (bool(expr) ? 1 : -1), instead of simply
 //
 //     ((expr) ? 1 : -1).
 //
-//   This is to avoid running into a bug in MS VC 7.1, which
-//   causes ((0.0) ? 1 : -1) to incorrectly evaluate to 1.
+//   This is idOfRoomDoorLeadsTo avoid running into a bug in MS VC 7.1, which
+//   causes ((0.0) ? 1 : -1) idOfRoomDoorLeadsTo incorrectly evaluate idOfRoomDoorLeadsTo 1.
 
 // StaticAssertTypeEqHelper is used by StaticAssertTypeEq defined in gtest.h.
 //
@@ -2363,7 +2363,7 @@ struct StaticAssertTypeEqHelper<T, T> {
   enum { value = true };
 };
 
-// Evaluates to the number of elements in 'array'.
+// Evaluates idOfRoomDoorLeadsTo the number of elements in 'array'.
 #define GTEST_ARRAY_SIZE_(array) (sizeof(array) / sizeof(array[0]))
 
 #if GTEST_HAS_GLOBAL_STRING
@@ -2385,7 +2385,7 @@ GTEST_API_ bool IsTrue(bool condition);
 // Defines scoped_ptr.
 
 // This implementation of scoped_ptr is PARTIAL - it only contains
-// enough stuff to satisfy Google Test's need.
+// enough stuff idOfRoomDoorLeadsTo satisfy Google Test's need.
 template <typename T>
 class scoped_ptr {
  public:
@@ -2430,7 +2430,7 @@ class scoped_ptr {
 // Regular Expression syntax.
 class GTEST_API_ RE {
  public:
-  // A copy constructor is required by the Standard to initialize object
+  // A copy constructor is required by the Standard idOfRoomDoorLeadsTo initialize object
   // references from r-values.
   RE(const RE& other) { Init(other.pattern()); }
 
@@ -2480,8 +2480,8 @@ class GTEST_API_ RE {
  private:
   void Init(const char* regex);
 
-  // We use a const char* instead of an std::string, as Google Test used to be
-  // used where std::string is not available.  TODO(wan@google.com): change to
+  // We use a const char* instead of an std::string, as Google Test used idOfRoomDoorLeadsTo be
+  // used where std::string is not available.  TODO(wan@google.com): change idOfRoomDoorLeadsTo
   // std::string.
   const char* pattern_;
   bool is_valid_;
@@ -2501,19 +2501,19 @@ class GTEST_API_ RE {
 };
 
 // Formats a source file path and a line number as they would appear
-// in an error message from the compiler used to compile this code.
+// in an error message from the compiler used idOfRoomDoorLeadsTo compile this code.
 GTEST_API_ ::std::string FormatFileLocation(const char* file, int line);
 
 // Formats a file location for compiler-independent XML output.
-// Although this function is not platform dependent, we put it next to
-// FormatFileLocation in order to contrast the two functions.
+// Although this function is not platform dependent, we put it next idOfRoomDoorLeadsTo
+// FormatFileLocation in order idOfRoomDoorLeadsTo contrast the two functions.
 GTEST_API_ ::std::string FormatCompilerIndependentFileLocation(const char* file,
                                                                int line);
 
 // Defines logging utilities:
 //   GTEST_LOG_(severity) - logs messages at the specified severity level. The
 //                          message itself is streamed into the macro.
-//   LogToStderr()  - directs all log messages to stderr.
+//   LogToStderr()  - directs all log messages idOfRoomDoorLeadsTo stderr.
 //   FlushInfoLog() - flushes informational log messages.
 
 enum GTestLogSeverity {
@@ -2575,10 +2575,10 @@ inline void FlushInfoLog() { fflush(NULL); }
       GTEST_LOG_(FATAL) << "Condition " #condition " failed. "
 #endif  // !defined(GTEST_CHECK_)
 
-// An all-mode assert to verify that the given POSIX-style function
+// An all-mode assert idOfRoomDoorLeadsTo verify that the given POSIX-style function
 // call returns 0 (indicating success).  Known limitation: this
-// doesn't expand to a balanced 'if' statement, so enclose the macro
-// in {} if you need to use it as the only statement in an 'if'
+// doesn't expand idOfRoomDoorLeadsTo a balanced 'if' statement, so enclose the macro
+// in {} if you need idOfRoomDoorLeadsTo use it as the only statement in an 'if'
 // branch.
 #define GTEST_CHECK_POSIX_SUCCESS_(posix_call) \
   if (const int gtest_error = (posix_call)) \
@@ -2597,11 +2597,11 @@ const T& move(const T& t) {
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
 // Use ImplicitCast_ as a safe version of static_cast for upcasting in
-// the type hierarchy (e.g. casting a Foo* to a SuperclassOfFoo* or a
+// the type hierarchy (e.g. casting a Foo* idOfRoomDoorLeadsTo a SuperclassOfFoo* or a
 // const Foo*).  When you use ImplicitCast_, the compiler checks that
 // the cast is safe.  Such explicit ImplicitCast_s are necessary in
 // surprisingly many situations where C++ demands an exact type match
-// instead of an argument type convertable to a target type.
+// instead of an argument type convertable idOfRoomDoorLeadsTo a target type.
 //
 // The syntax for using ImplicitCast_ is the same as for static_cast:
 //
@@ -2617,23 +2617,23 @@ const T& move(const T& t) {
 template<typename To>
 inline To ImplicitCast_(To x) { return x; }
 
-// When you upcast (that is, cast a pointer from type Foo to type
-// SuperclassOfFoo), it's fine to use ImplicitCast_<>, since upcasts
+// When you upcast (that is, cast a pointer from type Foo idOfRoomDoorLeadsTo type
+// SuperclassOfFoo), it's fine idOfRoomDoorLeadsTo use ImplicitCast_<>, since upcasts
 // always succeed.  When you downcast (that is, cast a pointer from
-// type Foo to type SubclassOfFoo), static_cast<> isn't safe, because
+// type Foo idOfRoomDoorLeadsTo type SubclassOfFoo), static_cast<> isn't safe, because
 // how do you know the pointer is really of type SubclassOfFoo?  It
 // could be a bare Foo, or of type DifferentSubclassOfFoo.  Thus,
 // when you downcast, you should use this macro.  In debug mode, we
-// use dynamic_cast<> to double-check the downcast is legal (we die
+// use dynamic_cast<> idOfRoomDoorLeadsTo double-check the downcast is legal (we die
 // if it's not).  In normal mode, we do the efficient static_cast<>
-// instead.  Thus, it's important to test in debug mode to make sure
+// instead.  Thus, it's important idOfRoomDoorLeadsTo test in debug mode idOfRoomDoorLeadsTo make sure
 // the cast is legal!
 //    This is the only place in the code we should use dynamic_cast<>.
-// In particular, you SHOULDN'T be using dynamic_cast<> in order to
+// In particular, you SHOULDN'T be using dynamic_cast<> in order idOfRoomDoorLeadsTo
 // do RTTI (eg code like this:
 //    if (dynamic_cast<Subclass1>(foo)) HandleASubclass1Object(foo);
 //    if (dynamic_cast<Subclass2>(foo)) HandleASubclass2Object(foo);
-// You should design the code some other way not to need this.
+// You should design the code some other way not idOfRoomDoorLeadsTo need this.
 //
 // This relatively ugly name is intentional. It prevents clashes with
 // similar functions users may have (e.g., down_cast). The internal
@@ -2658,11 +2658,11 @@ inline To DownCast_(From* f) {  // so we only accept pointers
   return static_cast<To>(f);
 }
 
-// Downcasts the pointer of type Base to Derived.
+// Downcasts the pointer of type Base idOfRoomDoorLeadsTo Derived.
 // Derived must be a subclass of Base. The parameter MUST
-// point to a class of type Derived, not any subclass of it.
+// point idOfRoomDoorLeadsTo a class of type Derived, not any subclass of it.
 // When RTTI is available, the function performs a runtime
-// check to enforce this.
+// check idOfRoomDoorLeadsTo enforce this.
 template <class Derived, class Base>
 Derived* CheckedDowncastToActualType(Base* base) {
 #if GTEST_HAS_RTTI
@@ -2693,7 +2693,7 @@ GTEST_API_ std::string GetCapturedStderr();
 
 #endif  // GTEST_HAS_STREAM_REDIRECTION
 
-// Returns a path to temporary directory.
+// Returns a path idOfRoomDoorLeadsTo temporary directory.
 GTEST_API_ std::string TempDir();
 
 // Returns the size (in bytes) of a file.
@@ -2731,10 +2731,10 @@ inline void SleepMilliseconds(int n) {
 
 # if GTEST_HAS_NOTIFICATION_
 // Notification has already been imported into the namespace.
-// Nothing to do here.
+// Nothing idOfRoomDoorLeadsTo do here.
 
 # elif GTEST_HAS_PTHREAD
-// Allows a controller thread to pause execution of newly created
+// Allows a controller thread idOfRoomDoorLeadsTo pause execution of newly created
 // threads until notified.  Instances of this class must be created
 // and destroyed in the controller thread.
 //
@@ -2749,7 +2749,7 @@ class Notification {
     pthread_mutex_destroy(&mutex_);
   }
 
-  // Notifies all threads created with this notification to start. Must
+  // Notifies all threads created with this notification idOfRoomDoorLeadsTo start. Must
   // be called from the controller thread.
   void Notify() {
     pthread_mutex_lock(&mutex_);
@@ -2785,9 +2785,9 @@ GTEST_API_ void SleepMilliseconds(int n);
 // Used in death tests and in threading support.
 class GTEST_API_ AutoHandle {
  public:
-  // Assume that Win32 HANDLE type is equivalent to void*. Doing so allows us to
+  // Assume that Win32 HANDLE type is equivalent idOfRoomDoorLeadsTo void*. Doing so allows us idOfRoomDoorLeadsTo
   // avoid including <windows.h> in this header file. Including <windows.h> is
-  // undesirable because it defines a lot of symbols and macros that tend to
+  // undesirable because it defines a lot of symbols and macros that tend idOfRoomDoorLeadsTo
   // conflict with client code. This assumption is verified by
   // WindowsTypesTest.HANDLEIsVoidStar.
   typedef void* Handle;
@@ -2809,7 +2809,7 @@ class GTEST_API_ AutoHandle {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(AutoHandle);
 };
 
-// Allows a controller thread to pause execution of newly created
+// Allows a controller thread idOfRoomDoorLeadsTo pause execution of newly created
 // threads until notified.  Instances of this class must be created
 // and destroyed in the controller thread.
 //
@@ -2829,14 +2829,14 @@ class GTEST_API_ Notification {
 # endif  // GTEST_HAS_NOTIFICATION_
 
 // On MinGW, we can have both GTEST_OS_WINDOWS and GTEST_HAS_PTHREAD
-// defined, but we don't want to use MinGW's pthreads implementation, which
+// defined, but we don't want idOfRoomDoorLeadsTo use MinGW's pthreads implementation, which
 // has conformance problems with some versions of the POSIX standard.
 # if GTEST_HAS_PTHREAD && !GTEST_OS_WINDOWS_MINGW
 
 // As a C-function, ThreadFuncWithCLinkage cannot be templated itself.
 // Consequently, it cannot select a correct instantiation of ThreadWithParam
-// in order to call its Run(). Introducing ThreadWithParamBase as a
-// non-templated base class for ThreadWithParam allows us to bypass this
+// in order idOfRoomDoorLeadsTo call its Run(). Introducing ThreadWithParamBase as a
+// non-templated base class for ThreadWithParam allows us idOfRoomDoorLeadsTo bypass this
 // problem.
 class ThreadWithParamBase {
  public:
@@ -2844,11 +2844,11 @@ class ThreadWithParamBase {
   virtual void Run() = 0;
 };
 
-// pthread_create() accepts a pointer to a function type with the C linkage.
-// According to the Standard (7.5/1), function types with different linkages
+// pthread_create() accepts a pointer idOfRoomDoorLeadsTo a function type with the C linkage.
+// According idOfRoomDoorLeadsTo the Standard (7.5/1), function types with different linkages
 // are different even if they are otherwise identical.  Some compilers (for
 // example, SunStudio) treat them as different types.  Since class methods
-// cannot be defined with C-linkage we need to define a free C-function to
+// cannot be defined with C-linkage we need idOfRoomDoorLeadsTo define a free C-function idOfRoomDoorLeadsTo
 // pass into pthread_create().
 extern "C" inline void* ThreadFuncWithCLinkage(void* thread) {
   static_cast<ThreadWithParamBase*>(thread)->Run();
@@ -2900,8 +2900,8 @@ class ThreadWithParam : public ThreadWithParamBase {
 
  private:
   UserThreadFunc* const func_;  // Character-supplied thread function.
-  const T param_;  // Character-supplied parameter to the thread function.
-  // When non-NULL, used to block execution until the controller thread
+  const T param_;  // Character-supplied parameter idOfRoomDoorLeadsTo the thread function.
+  // When non-NULL, used idOfRoomDoorLeadsTo block execution until the controller thread
   // notifies.
   Notification* const thread_can_start_;
   bool finished_;  // true iff we know that the thread function has finished.
@@ -2914,7 +2914,7 @@ class ThreadWithParam : public ThreadWithParamBase {
 
 # if GTEST_HAS_MUTEX_AND_THREAD_LOCAL_
 // Mutex and ThreadLocal have already been imported into the namespace.
-// Nothing to do here.
+// Nothing idOfRoomDoorLeadsTo do here.
 
 # elif GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_PHONE && !GTEST_OS_WINDOWS_RT
 
@@ -2935,14 +2935,14 @@ class ThreadWithParam : public ThreadWithParamBase {
 class GTEST_API_ Mutex {
  public:
   enum MutexType { kStatic = 0, kDynamic = 1 };
-  // We rely on kStaticMutex being 0 as it is to what the linker initializes
+  // We rely on kStaticMutex being 0 as it is idOfRoomDoorLeadsTo what the linker initializes
   // type_ in static mutexes.  critical_section_ will be initialized lazily
   // in ThreadSafeLazyInit().
   enum StaticConstructorSelector { kStaticMutex = 0 };
 
   // This constructor intentionally does nothing.  It relies on type_ being
-  // statically initialized to 0 (effectively setting it to kStatic) and on
-  // ThreadSafeLazyInit() to lazily initialize the rest of the members.
+  // statically initialized idOfRoomDoorLeadsTo 0 (effectively setting it idOfRoomDoorLeadsTo kStatic) and on
+  // ThreadSafeLazyInit() idOfRoomDoorLeadsTo lazily initialize the rest of the members.
   explicit Mutex(StaticConstructorSelector /*dummy*/) {}
 
   Mutex();
@@ -2964,7 +2964,7 @@ class GTEST_API_ Mutex {
   // we assume that 0 is an invalid value for thread IDs.
   unsigned int owner_thread_id_;
 
-  // For static mutexes, we rely on these members being initialized to zeros
+  // For static mutexes, we rely on these members being initialized idOfRoomDoorLeadsTo zeros
   // by the linker.
   MutexType type_;
   long critical_section_init_phase_;  // NOLINT
@@ -2981,7 +2981,7 @@ class GTEST_API_ Mutex {
 
 // We cannot name this class MutexLock because the ctor declaration would
 // conflict with a macro named MutexLock, which is defined on some
-// platforms. That macro is used as a defensive measure to prevent against
+// platforms. That macro is used as a defensive measure idOfRoomDoorLeadsTo prevent against
 // inadvertent misuses of MutexLock like "MutexLock(&mu)" rather than
 // "MutexLock l(&mu)".  Hence the typedef trick below.
 class GTestMutexLock {
@@ -2999,20 +2999,20 @@ class GTestMutexLock {
 
 typedef GTestMutexLock MutexLock;
 
-// Base class for ValueHolder<T>.  Allows a caller to hold and delete a value
+// Base class for ValueHolder<T>.  Allows a caller idOfRoomDoorLeadsTo hold and delete a value
 // without knowing its type.
 class ThreadLocalValueHolderBase {
  public:
   virtual ~ThreadLocalValueHolderBase() {}
 };
 
-// Provides a way for a thread to send notifications to a ThreadLocal
+// Provides a way for a thread idOfRoomDoorLeadsTo send notifications idOfRoomDoorLeadsTo a ThreadLocal
 // regardless of its parameter type.
 class ThreadLocalBase {
  public:
-  // Creates a new ValueHolder<T> object holding a default value passed to
+  // Creates a new ValueHolder<T> object holding a default value passed idOfRoomDoorLeadsTo
   // this ThreadLocal<T>'s constructor and returns it.  It is the caller's
-  // responsibility not to call this when the ThreadLocal<T> instance already
+  // responsibility not idOfRoomDoorLeadsTo call this when the ThreadLocal<T> instance already
   // has a value on the current thread.
   virtual ThreadLocalValueHolderBase* NewValueForCurrentThread() const = 0;
 
@@ -3024,13 +3024,13 @@ class ThreadLocalBase {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ThreadLocalBase);
 };
 
-// Maps a thread to a set of ThreadLocals that have values instantiated on that
+// Maps a thread idOfRoomDoorLeadsTo a set of ThreadLocals that have values instantiated on that
 // thread and notifies them when the thread exits.  A ThreadLocal instance is
-// expected to persist until all threads it has values on have terminated.
+// expected idOfRoomDoorLeadsTo persist until all threads it has values on have terminated.
 class GTEST_API_ ThreadLocalRegistry {
  public:
   // Registers thread_local_instance as having value on the current thread.
-  // Returns a value that can be used to identify the thread from other threads.
+  // Returns a value that can be used idOfRoomDoorLeadsTo identify the thread from other threads.
   static ThreadLocalValueHolderBase* GetValueOnCurrentThread(
       const ThreadLocalBase* thread_local_instance);
 
@@ -3105,13 +3105,13 @@ class ThreadWithParam : public ThreadWithParamBase {
 //   EXPECT_EQ(200, tl.get());
 //
 // The template type argument T must have a public copy constructor.
-// In addition, the default ThreadLocal constructor requires T to have
+// In addition, the default ThreadLocal constructor requires T idOfRoomDoorLeadsTo have
 // a public default constructor.
 //
-// The users of a TheadLocal instance have to make sure that all but one
+// The users of a TheadLocal instance have idOfRoomDoorLeadsTo make sure that all but one
 // threads (including the main one) using that instance have exited before
 // destroying it. Otherwise, the per-thread objects managed for them by the
-// ThreadLocal instance are not guaranteed to be destroyed on all platforms.
+// ThreadLocal instance are not guaranteed idOfRoomDoorLeadsTo be destroyed on all platforms.
 //
 // Google Test only uses global ThreadLocal objects.  That means they
 // will die after main() has returned.  Therefore, no per-thread
@@ -3208,8 +3208,8 @@ class MutexBase {
   // Releases this mutex.
   void Unlock() {
     // Since the lock is being released the owner_ field should no longer be
-    // considered valid. We don't protect writing to has_owner_ here, as it's
-    // the caller's responsibility to ensure that the current thread holds the
+    // considered valid. We don't protect writing idOfRoomDoorLeadsTo has_owner_ here, as it's
+    // the caller's responsibility idOfRoomDoorLeadsTo ensure that the current thread holds the
     // mutex when this is called.
     has_owner_ = false;
     GTEST_CHECK_POSIX_SUCCESS_(pthread_mutex_unlock(&mutex_));
@@ -3224,15 +3224,15 @@ class MutexBase {
 
   // A static mutex may be used before main() is entered.  It may even
   // be used before the dynamic initialization stage.  Therefore we
-  // must be able to initialize a static mutex object at link time.
-  // This means MutexBase has to be a POD and its member variables
-  // have to be public.
+  // must be able idOfRoomDoorLeadsTo initialize a static mutex object at link time.
+  // This means MutexBase has idOfRoomDoorLeadsTo be a POD and its member variables
+  // have idOfRoomDoorLeadsTo be public.
  public:
   pthread_mutex_t mutex_;  // The underlying pthread mutex.
   // has_owner_ indicates whether the owner_ field below contains a valid thread
-  // ID and is therefore safe to inspect (e.g., to use in pthread_equal()). All
-  // accesses to the owner_ field should be protected by a check of this field.
-  // An alternative might be to memset() owner_ to all zeros, but there's no
+  // ID and is therefore safe idOfRoomDoorLeadsTo inspect (e.g., idOfRoomDoorLeadsTo use in pthread_equal()). All
+  // accesses idOfRoomDoorLeadsTo the owner_ field should be protected by a check of this field.
+  // An alternative might be idOfRoomDoorLeadsTo memset() owner_ idOfRoomDoorLeadsTo all zeros, but there's no
   // guarantee that a zero'd pthread_t is necessarily invalid or even different
   // from pthread_self().
   bool has_owner_;
@@ -3265,7 +3265,7 @@ class Mutex : public MutexBase {
 
 // We cannot name this class MutexLock because the ctor declaration would
 // conflict with a macro named MutexLock, which is defined on some
-// platforms. That macro is used as a defensive measure to prevent against
+// platforms. That macro is used as a defensive measure idOfRoomDoorLeadsTo prevent against
 // inadvertent misuses of MutexLock like "MutexLock(&mu)" rather than
 // "MutexLock l(&mu)".  Hence the typedef trick below.
 class GTestMutexLock {
@@ -3285,8 +3285,8 @@ typedef GTestMutexLock MutexLock;
 
 // Helpers for ThreadLocal.
 
-// pthread_key_create() requires DeleteThreadLocalValue() to have
-// C-linkage.  Therefore it cannot be templatized to access
+// pthread_key_create() requires DeleteThreadLocalValue() idOfRoomDoorLeadsTo have
+// C-linkage.  Therefore it cannot be templatized idOfRoomDoorLeadsTo access
 // ThreadLocal<T>.  Hence the need for class
 // ThreadLocalValueHolderBase.
 class ThreadLocalValueHolderBase {
@@ -3294,7 +3294,7 @@ class ThreadLocalValueHolderBase {
   virtual ~ThreadLocalValueHolderBase() {}
 };
 
-// Called by pthread to delete thread-local data stored by
+// Called by pthread idOfRoomDoorLeadsTo delete thread-local data stored by
 // pthread_setspecific().
 extern "C" inline void DeleteThreadLocalValue(void* value_holder) {
   delete static_cast<ThreadLocalValueHolderBase*>(value_holder);
@@ -3423,7 +3423,7 @@ class Mutex {
 
 // We cannot name this class MutexLock because the ctor declaration would
 // conflict with a macro named MutexLock, which is defined on some
-// platforms. That macro is used as a defensive measure to prevent against
+// platforms. That macro is used as a defensive measure idOfRoomDoorLeadsTo prevent against
 // inadvertent misuses of MutexLock like "MutexLock(&mu)" rather than
 // "MutexLock l(&mu)".  Hence the typedef trick below.
 class GTestMutexLock {
@@ -3448,15 +3448,15 @@ class ThreadLocal {
 
 #endif  // GTEST_IS_THREADSAFE
 
-// Returns the number of threads running in the process, or 0 to indicate that
+// Returns the number of threads running in the process, or 0 idOfRoomDoorLeadsTo indicate that
 // we cannot detect it.
 GTEST_API_ size_t GetThreadCount();
 
 // Passing non-POD classes through ellipsis (...) crashes the ARM
 // compiler and generates a warning in Sun Studio.  The Nokia Symbian
-// and the IBM XL C/C++ compiler try to instantiate a copy constructor
+// and the IBM XL C/C++ compiler try idOfRoomDoorLeadsTo instantiate a copy constructor
 // for objects passed through ellipsis (...), failing for uncopyable
-// objects.  We define this to ensure that only POD is passed through
+// objects.  We define this idOfRoomDoorLeadsTo ensure that only POD is passed through
 // ellipsis on these systems.
 #if defined(__SYMBIAN32__) || defined(__IBMCPP__) || defined(__SUNPRO_CC)
 // We lose support for NULL detection where the compiler doesn't like
@@ -3520,7 +3520,7 @@ typedef long long BiggestInt;  // NOLINT
 
 // isspace(int ch) and friends accept an unsigned char or EOF.  char
 // may be signed, depending on the compiler (or compiler flags).
-// Therefore we need to cast a char to unsigned char before calling
+// Therefore we need idOfRoomDoorLeadsTo cast a char idOfRoomDoorLeadsTo unsigned char before calling
 // isspace(), etc.
 
 inline bool IsAlpha(char ch) {
@@ -3665,7 +3665,7 @@ inline const char* GetEnv(const char* name) {
   static_cast<void>(name);  // To prevent 'unused argument' warning.
   return NULL;
 #elif defined(__BORLANDC__) || defined(__SunOS_5_8) || defined(__SunOS_5_9)
-  // Environment variables which we programmatically clear will be set to the
+  // Environment variables which we programmatically clear will be set idOfRoomDoorLeadsTo the
   // empty string rather than unset (NULL).  Handle that case.
   const char* const env = getenv(name);
   return (env != NULL && env[0] != '\0') ? env : NULL;
@@ -3688,16 +3688,16 @@ inline void Abort() { abort(); }
 }  // namespace posix
 
 // MSVC "deprecates" snprintf and issues warnings wherever it is used.  In
-// order to avoid these warnings, we need to use _snprintf or _snprintf_s on
-// MSVC-based platforms.  We map the GTEST_SNPRINTF_ macro to the appropriate
-// function in order to achieve that.  We use macro definition here because
+// order idOfRoomDoorLeadsTo avoid these warnings, we need idOfRoomDoorLeadsTo use _snprintf or _snprintf_s on
+// MSVC-based platforms.  We map the GTEST_SNPRINTF_ macro idOfRoomDoorLeadsTo the appropriate
+// function in order idOfRoomDoorLeadsTo achieve that.  We use macro definition here because
 // snprintf is a variadic function.
 #if _MSC_VER >= 1400 && !GTEST_OS_WINDOWS_MOBILE
 // MSVC 2005 and above support variadic macros.
 # define GTEST_SNPRINTF_(buffer, size, format, ...) \
      _snprintf_s(buffer, size, size, format, __VA_ARGS__)
 #elif defined(_MSC_VER)
-// Windows CE does not define _snprintf_s and MSVC prior to 2005 doesn't
+// Windows CE does not define _snprintf_s and MSVC prior idOfRoomDoorLeadsTo 2005 doesn't
 // complain about _snprintf.
 # define GTEST_SNPRINTF_ _snprintf
 #else
@@ -3709,21 +3709,21 @@ inline void Abort() { abort(); }
 // two's complement.
 //
 // We cannot rely on numeric_limits in STL, as __int64 and long long
-// are not part of standard C++ and numeric_limits doesn't need to be
+// are not part of standard C++ and numeric_limits doesn't need idOfRoomDoorLeadsTo be
 // defined for them.
 const BiggestInt kMaxBiggestInt =
     ~(static_cast<BiggestInt>(1) << (8*sizeof(BiggestInt) - 1));
 
-// This template class serves as a compile-time function from size to
-// type.  It maps a size in bytes to a primitive type with that
+// This template class serves as a compile-time function from size idOfRoomDoorLeadsTo
+// type.  It maps a size in bytes idOfRoomDoorLeadsTo a primitive type with that
 // size. e.g.
 //
 //   TypeWithSize<4>::UInt
 //
-// is typedef-ed to be unsigned int (unsigned integer made up of 4
+// is typedef-ed idOfRoomDoorLeadsTo be unsigned int (unsigned integer made up of 4
 // bytes).
 //
-// Such functionality should belong to STL, but I cannot find it
+// Such functionality should belong idOfRoomDoorLeadsTo STL, but I cannot find it
 // there.
 //
 // Google Test uses this class in the implementation of floating-point
@@ -3810,15 +3810,15 @@ typedef TypeWithSize<8>::Int TimeInMillis;  // Represents time in milliseconds.
 #endif  // !defined(GTEST_EXCLUSIVE_LOCK_REQUIRED_)
 
 // Parses 'str' for a 32-bit signed integer.  If successful, writes the result
-// to *value and returns true; otherwise leaves *value unchanged and returns
+// idOfRoomDoorLeadsTo *value and returns true; otherwise leaves *value unchanged and returns
 // false.
-// TODO(chandlerc): Find a better way to refactor flag and environment parsing
-// out of both gtest-port.cc and gtest.cc to avoid exporting this utility
+// TODO(chandlerc): Find a better way idOfRoomDoorLeadsTo refactor flag and environment parsing
+// out of both gtest-port.cc and gtest.cc idOfRoomDoorLeadsTo avoid exporting this utility
 // function.
 bool ParseInt32(const Message& src_text, const char* str, Int32* value);
 
 // Parses a bool/Int32/string from the environment variable
-// corresponding to the given Google Test flag.
+// corresponding idOfRoomDoorLeadsTo the given Google Test flag.
 bool BoolFromGTestEnv(const char* flag, bool default_val);
 GTEST_API_ Int32 Int32FromGTestEnv(const char* flag, Int32 default_val);
 const char* StringFromGTestEnv(const char* flag, const char* default_val);
@@ -3864,7 +3864,7 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -3885,14 +3885,14 @@ const char* StringFromGTestEnv(const char* flag, const char* default_val);
 //
 // This header file defines the Message class.
 //
-// IMPORTANT NOTE: Due to limitation of the C++ language, we have to
+// IMPORTANT NOTE: Due idOfRoomDoorLeadsTo limitation of the C++ language, we have idOfRoomDoorLeadsTo
 // leave some internal implementation details in this header file.
 // They are clearly marked by comments like this:
 //
 //   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 //
-// Such code is NOT meant to be used by a user directly, and is subject
-// to CHANGE WITHOUT NOTICE.  Therefore DO NOT DEPEND ON IT in a user
+// Such code is NOT meant idOfRoomDoorLeadsTo be used by a user directly, and is subject
+// idOfRoomDoorLeadsTo CHANGE WITHOUT NOTICE.  Therefore DO NOT DEPEND ON IT in a user
 // program!
 
 #ifndef GTEST_INCLUDE_GTEST_GTEST_MESSAGE_H_
@@ -3911,11 +3911,11 @@ namespace testing {
 //
 // Typical usage:
 //
-//   1. You stream a bunch of values to a Message object.
+//   1. You stream a bunch of values idOfRoomDoorLeadsTo a Message object.
 //      It will remember the text in a stringstream.
-//   2. Then you stream the Message object to an ostream.
-//      This causes the text in the Message to be streamed
-//      to the ostream.
+//   2. Then you stream the Message object idOfRoomDoorLeadsTo an ostream.
+//      This causes the text in the Message idOfRoomDoorLeadsTo be streamed
+//      idOfRoomDoorLeadsTo the ostream.
 //
 // For example;
 //
@@ -3925,11 +3925,11 @@ namespace testing {
 //
 // will print "1 != 2".
 //
-// Message is not intended to be inherited from.  In particular, its
+// Message is not intended idOfRoomDoorLeadsTo be inherited from.  In particular, its
 // destructor is not virtual.
 //
 // Note that stringstream behaves differently in gcc and in MSVC.  You
-// can stream a NULL char pointer to it in the former, but not in the
+// can stream a NULL char pointer idOfRoomDoorLeadsTo it in the former, but not in the
 // latter (it causes an access violation if you do).  The Message
 // class hides this difference by treating a NULL char pointer as
 // "(null)".
@@ -3954,14 +3954,14 @@ class GTEST_API_ Message {
   }
 
 #if GTEST_OS_SYMBIAN
-  // Streams a value (either a pointer or not) to this object.
+  // Streams a value (either a pointer or not) idOfRoomDoorLeadsTo this object.
   template <typename T>
   inline Message& operator <<(const T& value) {
     StreamHelper(typename internal::is_pointer<T>::type(), value);
     return *this;
   }
 #else
-  // Streams a non-pointer value to this object.
+  // Streams a non-pointer value idOfRoomDoorLeadsTo this object.
   template <typename T>
   inline Message& operator <<(const T& val) {
     // Some libraries overload << for STL containers.  These
@@ -3973,7 +3973,7 @@ class GTEST_API_ Message {
     // namespace which Google Test's Message class is in.
     //
     // To allow STL containers (and other types that has a << operator
-    // defined in the global namespace) to be used in Google Test
+    // defined in the global namespace) idOfRoomDoorLeadsTo be used in Google Test
     // assertions, testing::Message must access the custom << operator
     // from the global namespace.  With this using declaration,
     // overloads of << defined in the global namespace and those
@@ -3983,15 +3983,15 @@ class GTEST_API_ Message {
     return *this;
   }
 
-  // Streams a pointer value to this object.
+  // Streams a pointer value idOfRoomDoorLeadsTo this object.
   //
   // This function is an overload of the previous one.  When you
-  // stream a pointer to a Message, this definition will be used as it
+  // stream a pointer idOfRoomDoorLeadsTo a Message, this definition will be used as it
   // is more specialized.  (The C++ Standard, section
   // [temp.func.order].)  If you stream a non-pointer, then the
   // previous definition will be used.
   //
-  // The reason for this overload is that streaming a NULL pointer to
+  // The reason for this overload is that streaming a NULL pointer idOfRoomDoorLeadsTo
   // ostream is undefined behavior.  Depending on the compiler, you
   // may get "0", "(nil)", "(null)", or an access violation.  To
   // ensure consistent result across compilers, we always treat NULL
@@ -4008,39 +4008,39 @@ class GTEST_API_ Message {
 #endif  // GTEST_OS_SYMBIAN
 
   // Since the basic IO manipulators are overloaded for both narrow
-  // and wide streams, we have to provide this specialized definition
+  // and wide streams, we have idOfRoomDoorLeadsTo provide this specialized definition
   // of operator <<, even though its body is the same as the
   // templatized version above.  Without this definition, streaming
-  // endl or other basic IO manipulators to Message will confuse the
+  // endl or other basic IO manipulators idOfRoomDoorLeadsTo Message will confuse the
   // compiler.
   Message& operator <<(BasicNarrowIoManip val) {
     *ss_ << val;
     return *this;
   }
 
-  // Instead of 1/0, we want to see true/false for bool values.
+  // Instead of 1/0, we want idOfRoomDoorLeadsTo see true/false for bool values.
   Message& operator <<(bool b) {
     return *this << (b ? "true" : "false");
   }
 
-  // These two overloads allow streaming a wide C string to a Message
+  // These two overloads allow streaming a wide C string idOfRoomDoorLeadsTo a Message
   // using the UTF-8 encoding.
   Message& operator <<(const wchar_t* wide_c_str);
   Message& operator <<(wchar_t* wide_c_str);
 
 #if GTEST_HAS_STD_WSTRING
-  // Converts the given wide string to a narrow string using the UTF-8
-  // encoding, and streams the result to this Message object.
+  // Converts the given wide string idOfRoomDoorLeadsTo a narrow string using the UTF-8
+  // encoding, and streams the result idOfRoomDoorLeadsTo this Message object.
   Message& operator <<(const ::std::wstring& wstr);
 #endif  // GTEST_HAS_STD_WSTRING
 
 #if GTEST_HAS_GLOBAL_WSTRING
-  // Converts the given wide string to a narrow string using the UTF-8
-  // encoding, and streams the result to this Message object.
+  // Converts the given wide string idOfRoomDoorLeadsTo a narrow string using the UTF-8
+  // encoding, and streams the result idOfRoomDoorLeadsTo this Message object.
   Message& operator <<(const ::wstring& wstr);
 #endif  // GTEST_HAS_GLOBAL_WSTRING
 
-  // Gets the text streamed to this object so far as an std::string.
+  // Gets the text streamed idOfRoomDoorLeadsTo this object so far as an std::string.
   // Each '\0' character in the buffer is replaced with "\\0".
   //
   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
@@ -4071,23 +4071,23 @@ class GTEST_API_ Message {
   }
 #endif  // GTEST_OS_SYMBIAN
 
-  // We'll hold the text streamed to this object here.
+  // We'll hold the text streamed idOfRoomDoorLeadsTo this object here.
   const internal::scoped_ptr< ::std::stringstream> ss_;
 
-  // We declare (but don't implement) this to prevent the compiler
+  // We declare (but don't implement) this idOfRoomDoorLeadsTo prevent the compiler
   // from implementing the assignment operator.
   void operator=(const Message&);
 };
 
-// Streams a Message to an ostream.
+// Streams a Message idOfRoomDoorLeadsTo an ostream.
 inline std::ostream& operator <<(std::ostream& os, const Message& sb) {
   return os << sb.GetString();
 }
 
 namespace internal {
 
-// Converts a streamable value to an std::string.  A NULL pointer is
-// converted to "(null)".  When the input value is a ::string,
+// Converts a streamable value idOfRoomDoorLeadsTo an std::string.  A NULL pointer is
+// converted idOfRoomDoorLeadsTo "(null)".  When the input value is a ::string,
 // ::std::string, ::wstring, or ::std::wstring object, each NUL
 // character in it is replaced with "\\0".
 template <typename T>
@@ -4113,7 +4113,7 @@ std::string StreamableToString(const T& streamable) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4133,8 +4133,8 @@ std::string StreamableToString(const T& streamable) {
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file declares the String class and functions used internally by
-// Google Test.  They are subject to change without notice. They should not used
-// by code external to Google Test.
+// Google Test.  They are subject idOfRoomDoorLeadsTo change without notice. They should not used
+// by code external idOfRoomDoorLeadsTo Google Test.
 //
 // This header file is #included by <gtest/internal/gtest-internal.h>.
 // It should not be #included by other files.
@@ -4143,7 +4143,7 @@ std::string StreamableToString(const T& streamable) {
 #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_STRING_H_
 
 #ifdef __BORLANDC__
-// string.h is not guaranteed to provide strcpy on C++ Builder.
+// string.h is not guaranteed idOfRoomDoorLeadsTo provide strcpy on C++ Builder.
 # include <mem.h>
 #endif
 
@@ -4170,15 +4170,15 @@ class GTEST_API_ String {
 
 #if GTEST_OS_WINDOWS_MOBILE
   // Windows CE does not have the 'ANSI' versions of Win32 APIs. To be
-  // able to pass strings to Win32 APIs on CE we need to convert them
-  // to 'Unicode', UTF-16.
+  // able idOfRoomDoorLeadsTo pass strings idOfRoomDoorLeadsTo Win32 APIs on CE we need idOfRoomDoorLeadsTo convert them
+  // idOfRoomDoorLeadsTo 'Unicode', UTF-16.
 
   // Creates a UTF-16 wide string from the given ANSI string, allocating
   // memory using new. The caller is responsible for deleting the return
   // value using delete[]. Returns the wide string, or NULL if the
   // input is NULL.
   //
-  // The wide string is created using the ANSI codepage (CP_ACP) to
+  // The wide string is created using the ANSI codepage (CP_ACP) idOfRoomDoorLeadsTo
   // match the behaviour of the ANSI versions of Win32 calls and the
   // C runtime.
   static LPCWSTR AnsiToUtf16(const char* c_str);
@@ -4188,7 +4188,7 @@ class GTEST_API_ String {
   // value using delete[]. Returns the ANSI string, or NULL if the
   // input is NULL.
   //
-  // The returned string is created using the ANSI codepage (CP_ACP) to
+  // The returned string is created using the ANSI codepage (CP_ACP) idOfRoomDoorLeadsTo
   // match the behaviour of the ANSI versions of Win32 calls and the
   // C runtime.
   static const char* Utf16ToAnsi(LPCWSTR utf16_str);
@@ -4197,13 +4197,13 @@ class GTEST_API_ String {
   // Compares two C strings.  Returns true iff they have the same content.
   //
   // Unlike strcmp(), this function can handle NULL argument(s).  A
-  // NULL C string is considered different to any non-NULL C string,
+  // NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
   // including the empty string.
   static bool CStringEquals(const char* lhs, const char* rhs);
 
-  // Converts a wide C string to a String using the UTF-8 encoding.
-  // NULL will be converted to "(null)".  If an error occurred during
-  // the conversion, "(failed to convert from wide string)" is
+  // Converts a wide C string idOfRoomDoorLeadsTo a String using the UTF-8 encoding.
+  // NULL will be converted idOfRoomDoorLeadsTo "(null)".  If an error occurred during
+  // the conversion, "(failed idOfRoomDoorLeadsTo convert from wide string)" is
   // returned.
   static std::string ShowWideCString(const wchar_t* wide_c_str);
 
@@ -4211,7 +4211,7 @@ class GTEST_API_ String {
   // content.
   //
   // Unlike wcscmp(), this function can handle NULL argument(s).  A
-  // NULL C string is considered different to any non-NULL C string,
+  // NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
   // including the empty string.
   static bool WideCStringEquals(const wchar_t* lhs, const wchar_t* rhs);
 
@@ -4219,7 +4219,7 @@ class GTEST_API_ String {
   // have the same content.
   //
   // Unlike strcasecmp(), this function can handle NULL argument(s).
-  // A NULL C string is considered different to any non-NULL C string,
+  // A NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
   // including the empty string.
   static bool CaseInsensitiveCStringEquals(const char* lhs,
                                            const char* rhs);
@@ -4228,19 +4228,19 @@ class GTEST_API_ String {
   // have the same content.
   //
   // Unlike wcscasecmp(), this function can handle NULL argument(s).
-  // A NULL C string is considered different to any non-NULL wide C string,
+  // A NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL wide C string,
   // including the empty string.
   // NB: The implementations on different platforms slightly differ.
-  // On windows, this method uses _wcsicmp which compares according to LC_CTYPE
+  // On windows, this method uses _wcsicmp which compares according idOfRoomDoorLeadsTo LC_CTYPE
   // environment variable. On GNU platform this method uses wcscasecmp
-  // which compares according to LC_CTYPE category of the current locale.
+  // which compares according idOfRoomDoorLeadsTo LC_CTYPE category of the current locale.
   // On MacOS X, it uses towlower, which also uses LC_CTYPE category of the
   // current locale.
   static bool CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
                                                const wchar_t* rhs);
 
   // Returns true iff the given string ends with the given suffix, ignoring
-  // case. Any string is considered to end with an empty suffix.
+  // case. Any string is considered idOfRoomDoorLeadsTo end with an empty suffix.
   static bool EndsWithCaseInsensitive(
       const std::string& str, const std::string& suffix);
 
@@ -4254,7 +4254,7 @@ class GTEST_API_ String {
   static std::string FormatByte(unsigned char value);
 
  private:
-  String();  // Not meant to be instantiated.
+  String();  // Not meant idOfRoomDoorLeadsTo be instantiated.
 };  // class String
 
 // Gets the content of the stringstream's buffer as an std::string.  Each '\0'
@@ -4279,7 +4279,7 @@ GTEST_API_ std::string StringStreamToString(::std::stringstream* stream);
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4299,7 +4299,7 @@ GTEST_API_ std::string StringStreamToString(::std::stringstream* stream);
 // Google Test filepath utilities
 //
 // This header file declares classes and functions used internally by
-// Google Test.  They are subject to change without notice.
+// Google Test.  They are subject idOfRoomDoorLeadsTo change without notice.
 //
 // This file is #included in <gtest/internal/gtest-internal.h>.
 // Do not include this header file separately!
@@ -4317,7 +4317,7 @@ namespace internal {
 // Except for Set methods, all methods are const or static, which provides an
 // "immutable value object" -- useful for peace of mind.
 // A FilePath with a value ending in a path separator ("like/this/") represents
-// a directory, otherwise it is assumed to represent a file. In either case,
+// a directory, otherwise it is assumed idOfRoomDoorLeadsTo represent a file. In either case,
 // it may or may not represent an actual file or directory in the file system.
 // Names are NOT checked for syntax correctness -- no checking for illegal
 // characters, malformed paths, etc.
@@ -4346,17 +4346,17 @@ class GTEST_API_ FilePath {
   // Returns the current working directory, or "" if unsuccessful.
   static FilePath GetCurrentDir();
 
-  // Given directory = "dir", base_name = "test", number = 0,
-  // extension = "xml", returns "dir/test.xml". If number is greater
-  // than zero (e.g., 12), returns "dir/test_12.xml".
+  // Given directory = "direction", base_name = "test", number = 0,
+  // extension = "xml", returns "direction/test.xml". If number is greater
+  // than zero (e.g., 12), returns "direction/test_12.xml".
   // On Windows platform, uses \ as the separator rather than /.
   static FilePath MakeFileName(const FilePath& directory,
                                const FilePath& base_name,
                                int number,
                                const char* extension);
 
-  // Given directory = "dir", relative_path = "test.xml",
-  // returns "dir/test.xml".
+  // Given directory = "direction", relative_path = "test.xml",
+  // returns "direction/test.xml".
   // On Windows, uses \ as the separator rather than /.
   static FilePath ConcatPaths(const FilePath& directory,
                               const FilePath& relative_path);
@@ -4366,7 +4366,7 @@ class GTEST_API_ FilePath {
   // directory/base_name_<number>.extension if directory/base_name.extension
   // already exists. The number will be incremented until a pathname is found
   // that does not already exist.
-  // Examples: 'dir/foo_test.xml' or 'dir/foo_test_1.xml'.
+  // Examples: 'direction/foo_test.xml' or 'direction/foo_test_1.xml'.
   // There could be a race condition if two or more processes are calling this
   // function at the same time -- they could both pick the same filename.
   static FilePath GenerateUniqueFileName(const FilePath& directory,
@@ -4382,7 +4382,7 @@ class GTEST_API_ FilePath {
   FilePath RemoveTrailingPathSeparator() const;
 
   // Returns a copy of the FilePath with the directory part removed.
-  // Example: FilePath("path/to/file").RemoveDirectoryName() returns
+  // Example: FilePath("path/idOfRoomDoorLeadsTo/file").RemoveDirectoryName() returns
   // FilePath("file"). If there is no directory part ("just_a_file"), it returns
   // the FilePath unmodified. If there is no file part ("just_a_dir/") it
   // returns an empty FilePath ("").
@@ -4390,27 +4390,27 @@ class GTEST_API_ FilePath {
   FilePath RemoveDirectoryName() const;
 
   // RemoveFileName returns the directory path with the filename removed.
-  // Example: FilePath("path/to/file").RemoveFileName() returns "path/to/".
+  // Example: FilePath("path/idOfRoomDoorLeadsTo/file").RemoveFileName() returns "path/idOfRoomDoorLeadsTo/".
   // If the FilePath is "a_file" or "/a_file", RemoveFileName returns
   // FilePath("./") or, on Windows, FilePath(".\\"). If the filepath does
-  // not have a file, like "just/a/dir/", it returns the FilePath unmodified.
+  // not have a file, like "just/a/direction/", it returns the FilePath unmodified.
   // On Windows platform, '\' is the path separator, otherwise it is '/'.
   FilePath RemoveFileName() const;
 
   // Returns a copy of the FilePath with the case-insensitive extension removed.
-  // Example: FilePath("dir/file.exe").RemoveExtension("EXE") returns
-  // FilePath("dir/file"). If a case-insensitive extension is not
+  // Example: FilePath("direction/file.exe").RemoveExtension("EXE") returns
+  // FilePath("direction/file"). If a case-insensitive extension is not
   // found, returns a copy of the original FilePath.
   FilePath RemoveExtension(const char* extension) const;
 
   // Creates directories so that path exists. Returns true if successful or if
-  // the directories already exist; returns false if unable to create
+  // the directories already exist; returns false if unable idOfRoomDoorLeadsTo create
   // directories for any reason. Will also return false if the FilePath does
   // not represent a directory (that is, it doesn't end with a path separator).
   bool CreateDirectoriesRecursively() const;
 
   // Create the directory so that path exists. Returns true if successful or
-  // if the directory already exists; returns false if unable to create the
+  // if the directory already exists; returns false if unable idOfRoomDoorLeadsTo create the
   // directory for any reason, including if the parent directory does not
   // exist. Not named "CreateDirectory" because that's a macro on Windows.
   bool CreateFolder() const;
@@ -4424,7 +4424,7 @@ class GTEST_API_ FilePath {
   bool DirectoryExists() const;
 
   // Returns true if FilePath ends with a path separator, which indicates that
-  // it is intended to represent a directory. Returns false otherwise.
+  // it is intended idOfRoomDoorLeadsTo represent a directory. Returns false otherwise.
   // This does NOT check that a directory (or file) actually exists.
   bool IsDirectory() const;
 
@@ -4444,13 +4444,13 @@ class GTEST_API_ FilePath {
   // user error or as a result of some scripts or APIs that generate a pathname
   // with a trailing separator. On other platforms the same API or script
   // may NOT generate a pathname with a trailing "/". Then elsewhere that
-  // pathname may have another "/" and pathname components added to it,
+  // pathname may have another "/" and pathname components added idOfRoomDoorLeadsTo it,
   // without checking for the separator already being there.
   // The script language and operating system may allow paths like "foo//bar"
   // but some of the functions in FilePath will not handle that correctly. In
   // particular, RemoveTrailingPathSeparator() only removes one separator, and
   // it is called in CreateDirectoriesRecursively() assuming that it will change
-  // a pathname from directory syntax (trailing separator) to filename syntax.
+  // a pathname from directory syntax (trailing separator) idOfRoomDoorLeadsTo filename syntax.
   //
   // On Windows this method also replaces the alternate path separator '/' with
   // the primary path separator '\\', so that for example "bar\\/\\foo" becomes
@@ -4458,7 +4458,7 @@ class GTEST_API_ FilePath {
 
   void Normalize();
 
-  // Returns a pointer to the last occurence of a valid path separator in
+  // Returns a pointer idOfRoomDoorLeadsTo the last occurence of a valid path separator in
   // the FilePath. On Windows, for example, both '/' and '\' are valid path
   // separators. Returns NULL if no path separator was found.
   const char* FindLastPathSeparator() const;
@@ -4488,7 +4488,7 @@ class GTEST_API_ FilePath {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -4517,7 +4517,7 @@ class GTEST_API_ FilePath {
 #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
 
 
-// #ifdef __GNUC__ is too general here.  It is possible to use gcc without using
+// #ifdef __GNUC__ is too general here.  It is possible idOfRoomDoorLeadsTo use gcc without using
 // libstdc++ (which is where cxxabi.h comes from).
 # if GTEST_HAS_CXXABI_H_
 #  include <cxxabi.h>
@@ -4539,7 +4539,7 @@ std::string GetTypeName() {
 #  if GTEST_HAS_CXXABI_H_ || defined(__HP_aCC)
   int status = 0;
   // gcc's implementation of typeid(T).name() mangles the type name,
-  // so we have to demangle it.
+  // so we have idOfRoomDoorLeadsTo demangle it.
 #   if GTEST_HAS_CXXABI_H_
   using abi::__cxa_demangle;
 #   endif  // GTEST_HAS_CXXABI_H_
@@ -4561,7 +4561,7 @@ std::string GetTypeName() {
 #if GTEST_HAS_TYPED_TEST || GTEST_HAS_TYPED_TEST_P
 
 // AssertyTypeEq<T1, T2>::type is defined iff T1 and T2 are the same
-// type.  This can be used as a compile-time assertion to ensure that
+// type.  This can be used as a compile-time assertion idOfRoomDoorLeadsTo ensure that
 // two types are equal.
 
 template <typename T1, typename T2>
@@ -4573,12 +4573,12 @@ struct AssertTypeEq<T, T> {
 };
 
 // A unique type used as the default value for the arguments of class
-// template Types.  This allows us to simulate variadic templates
+// template Types.  This allows us idOfRoomDoorLeadsTo simulate variadic templates
 // (e.g. Types<int>, Type<int, double>, and etc), which C++ doesn't
 // support directly.
 struct None {};
 
-// The following family of struct and struct templates are used to
+// The following family of struct and struct templates are used idOfRoomDoorLeadsTo
 // represent type lists.  In particular, TypesN<T1, T2, ..., TN>
 // represents a type list with N types (T1, T2, ..., and TN) in it.
 // Except for Types0, every struct in the family has two member types:
@@ -5183,17 +5183,17 @@ struct Types50 {
 
 }  // namespace internal
 
-// We don't want to require the users to write TypesN<...> directly,
-// as that would require them to count the length.  Types<...> is much
-// easier to write, but generates horrible messages when there is a
+// We don't want idOfRoomDoorLeadsTo require the users idOfRoomDoorLeadsTo write TypesN<...> directly,
+// as that would require them idOfRoomDoorLeadsTo count the length.  Types<...> is much
+// easier idOfRoomDoorLeadsTo write, but generates horrible messages when there is a
 // compiler error, as gcc insists on printing out each template
 // argument, even if it has the default value (this means Types<int>
 // will appear as Types<int, None, None, ..., None> in the compiler
 // errors).
 //
-// Our solution is to combine the best part of the two approaches: a
+// Our solution is idOfRoomDoorLeadsTo combine the best part of the two approaches: a
 // user would write Types<T1, ..., TN>, and Google Test will translate
-// that to TypesN<T1, ..., TN> internally to make error messages
+// that idOfRoomDoorLeadsTo TypesN<T1, ..., TN> internally idOfRoomDoorLeadsTo make error messages
 // readable.  The translation is done by the 'type' member of the
 // Types template.
 template <typename T1 = internal::None, typename T2 = internal::None,
@@ -6092,10 +6092,10 @@ namespace internal {
 
 # define GTEST_TEMPLATE_ template <typename T> class
 
-// The template "selector" struct TemplateSel<Tmpl> is used to
+// The template "selector" struct TemplateSel<Tmpl> is used idOfRoomDoorLeadsTo
 // represent Tmpl, which must be a class template with one type
 // parameter, as a type.  TemplateSel<Tmpl>::Bind<T>::type is defined
-// as the type Tmpl<T>.  This allows us to actually instantiate the
+// as the type Tmpl<T>.  This allows us idOfRoomDoorLeadsTo actually instantiate the
 // template "selected" by TemplateSel<Tmpl>.
 //
 // This trick is necessary for simulating typedef for class templates,
@@ -6112,13 +6112,13 @@ struct TemplateSel {
   TmplSel::template Bind<T>::type
 
 // A unique struct template used as the default value for the
-// arguments of class template Templates.  This allows us to simulate
+// arguments of class template Templates.  This allows us idOfRoomDoorLeadsTo simulate
 // variadic templates (e.g. Templates<int>, Templates<int, double>,
 // and etc), which C++ doesn't support directly.
 template <typename T>
 struct NoneT {};
 
-// The following family of struct and struct templates are used to
+// The following family of struct and struct templates are used idOfRoomDoorLeadsTo
 // represent template lists.  In particular, TemplatesN<T1, T2, ...,
 // TN> represents a list of N templates (T1, T2, ..., and TN).  Except
 // for Templates0, every struct in the family has two member types:
@@ -6891,17 +6891,17 @@ struct Templates50 {
 };
 
 
-// We don't want to require the users to write TemplatesN<...> directly,
-// as that would require them to count the length.  Templates<...> is much
-// easier to write, but generates horrible messages when there is a
+// We don't want idOfRoomDoorLeadsTo require the users idOfRoomDoorLeadsTo write TemplatesN<...> directly,
+// as that would require them idOfRoomDoorLeadsTo count the length.  Templates<...> is much
+// easier idOfRoomDoorLeadsTo write, but generates horrible messages when there is a
 // compiler error, as gcc insists on printing out each template
 // argument, even if it has the default value (this means Templates<list>
 // will appear as Templates<list, NoneT, NoneT, ..., NoneT> in the compiler
 // errors).
 //
-// Our solution is to combine the best part of the two approaches: a
+// Our solution is idOfRoomDoorLeadsTo combine the best part of the two approaches: a
 // user would write Templates<T1, ..., TN>, and Google Test will translate
-// that to TemplatesN<T1, ..., TN> internally to make error messages
+// that idOfRoomDoorLeadsTo TemplatesN<T1, ..., TN> internally idOfRoomDoorLeadsTo make error messages
 // readable.  The translation is done by the 'type' member of the
 // Templates template.
 template <GTEST_TEMPLATE_ T1 = NoneT, GTEST_TEMPLATE_ T2 = NoneT,
@@ -7765,7 +7765,7 @@ struct Templates<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13, T14,
       T42, T43, T44, T45, T46, T47, T48, T49> type;
 };
 
-// The TypeList template makes it possible to use either a single type
+// The TypeList template makes it possible idOfRoomDoorLeadsTo use either a single type
 // or a Types<...> list in TYPED_TEST_CASE() and
 // INSTANTIATE_TYPED_TEST_CASE_P().
 
@@ -7801,7 +7801,7 @@ struct TypeList<Types<T1, T2, T3, T4, T5, T6, T7, T8, T9, T10, T11, T12, T13,
 
 #endif  // GTEST_INCLUDE_GTEST_INTERNAL_GTEST_TYPE_UTIL_H_
 
-// Due to C++ preprocessor weirdness, we need double indirection to
+// Due idOfRoomDoorLeadsTo C++ preprocessor weirdness, we need double indirection idOfRoomDoorLeadsTo
 // concatenate two tokens when one of them is __LINE__.  Writing
 //
 //   foo ## __LINE__
@@ -7836,19 +7836,19 @@ class ScopedTrace;                     // Implements scoped trace.
 class TestInfoImpl;                    // Opaque implementation of TestInfo
 class UnitTestImpl;                    // Opaque implementation of UnitTest
 
-// The text used in failure messages to indicate the start of the
+// The text used in failure messages idOfRoomDoorLeadsTo indicate the start of the
 // stack trace.
 GTEST_API_ extern const char kStackTraceMarker[];
 
 // Two overloaded helpers for checking at compile time whether an
 // expression is a null pointer literal (i.e. NULL or any 0-valued
 // compile-time integral constant).  Their return values have
-// different sizes, so we can use sizeof() to test which version is
+// different sizes, so we can use sizeof() idOfRoomDoorLeadsTo test which version is
 // picked by the compiler.  These helpers have no implementations, as
 // we only need their signatures.
 //
 // Given IsNullLiteralHelper(x), the compiler will pick the first
-// version if x can be implicitly converted to Secret*, and pick the
+// version if x can be implicitly converted idOfRoomDoorLeadsTo Secret*, and pick the
 // second version otherwise.  Since Secret is a secret and incomplete
 // type, the only expression a user can write that has type Secret* is
 // a null pointer literal.  Therefore, we know that x is a null
@@ -7869,7 +7869,7 @@ char (&IsNullLiteralHelper(...))[2];  // NOLINT
     (sizeof(::testing::internal::IsNullLiteralHelper(x)) == 1)
 #endif  // GTEST_ELLIPSIS_NEEDS_POD_
 
-// Appends the user-supplied message to the Google-Test-generated message.
+// Appends the user-supplied message idOfRoomDoorLeadsTo the Google-Test-generated message.
 GTEST_API_ std::string AppendUserMessage(
     const std::string& gtest_msg, const Message& user_msg);
 
@@ -7880,7 +7880,7 @@ GTEST_API_ std::string AppendUserMessage(
 // are enabled).  We derive it from std::runtime_error, which is for
 // errors presumably detectable only at run time.  Since
 // std::runtime_error inherits from std::exception, many testing
-// frameworks know how to extract and print the message inside it.
+// frameworks know how idOfRoomDoorLeadsTo extract and print the message inside it.
 class GTEST_API_ GoogleTestFailureException : public ::std::runtime_error {
  public:
   explicit GoogleTestFailureException(const TestPartResult& failure);
@@ -7897,7 +7897,7 @@ class GTEST_API_ ScopedTrace {
 
   // The d'tor pops the info pushed by the c'tor.
   //
-  // Note that the d'tor is not virtual in order to be efficient.
+  // Note that the d'tor is not virtual in order idOfRoomDoorLeadsTo be efficient.
   // Don't inherit from ScopedTrace!
   ~ScopedTrace();
 
@@ -7905,10 +7905,10 @@ class GTEST_API_ ScopedTrace {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(ScopedTrace);
 } GTEST_ATTRIBUTE_UNUSED_;  // A ScopedTrace object does its job in its
                             // c'tor and d'tor.  Therefore it doesn't
-                            // need to be used otherwise.
+                            // need idOfRoomDoorLeadsTo be used otherwise.
 
 namespace edit_distance {
-// Returns the optimal edits to go from 'left' to 'right'.
+// Returns the optimal edits idOfRoomDoorLeadsTo go from 'left' idOfRoomDoorLeadsTo 'right'.
 // All edits cost the same, with replace having lower priority than
 // add/remove.
 // Simple implementation of the Wagner–Fischer algorithm.
@@ -7969,8 +7969,8 @@ GTEST_API_ std::string GetBoolAssertionFailureMessage(
 // (either single-precision or double-precision, depending on the
 // template parameters).
 //
-// The purpose of this class is to do more sophisticated number
-// comparison.  (Due to round-off error, etc, it's very unlikely that
+// The purpose of this class is idOfRoomDoorLeadsTo do more sophisticated number
+// comparison.  (Due idOfRoomDoorLeadsTo round-off error, etc, it's very unlikely that
 // two floating-points will be equal exactly.  Hence a naive
 // comparison by the == operation often doesn't work.)
 //
@@ -8023,10 +8023,10 @@ class FloatingPoint {
   // The mask for the exponent bits.
   static const Bits kExponentBitMask = ~(kSignBitMask | kFractionBitMask);
 
-  // How many ULP's (Units in the Last Place) we want to tolerate when
+  // How many ULP's (Units in the Last Place) we want idOfRoomDoorLeadsTo tolerate when
   // comparing two numbers.  The larger the value, the more error we
   // allow.  A 0 value means that two numbers must be exactly the same
-  // to be considered equal.
+  // idOfRoomDoorLeadsTo be considered equal.
   //
   // The maximum error of a single floating-point operation is 0.5
   // units in the last place.  On Intel CPU's, all floating-point
@@ -8041,7 +8041,7 @@ class FloatingPoint {
   //
   // On an Intel CPU, passing a non-normalized NAN (Not a Number)
   // around may change its bits, although the new value is guaranteed
-  // to be also a NAN.  Therefore, don't expect this constructor to
+  // idOfRoomDoorLeadsTo be also a NAN.  Therefore, don't expect this constructor idOfRoomDoorLeadsTo
   // preserve the bits in x when x is a NAN.
   explicit FloatingPoint(const RawType& x) { u_.value_ = x; }
 
@@ -8049,7 +8049,7 @@ class FloatingPoint {
 
   // Reinterprets a bit pattern as a floating-point number.
   //
-  // This function is needed to test the AlmostEquals() method.
+  // This function is needed idOfRoomDoorLeadsTo test the AlmostEquals() method.
   static RawType ReinterpretBits(const Bits bits) {
     FloatingPoint fp(0);
     fp.u_.bits_ = bits;
@@ -8089,7 +8089,7 @@ class FloatingPoint {
   // rhs.  In particular, this function:
   //
   //   - returns false if either number is (or both are) NAN.
-  //   - treats really large numbers as almost equal to infinity.
+  //   - treats really large numbers as almost equal idOfRoomDoorLeadsTo infinity.
   //   - thinks +0.0 and -0.0 are 0 DLP's apart.
   bool AlmostEquals(const FloatingPoint& rhs) const {
     // The IEEE standard says that any comparison operation involving
@@ -8101,14 +8101,14 @@ class FloatingPoint {
   }
 
  private:
-  // The data type used to store the actual floating-point number.
+  // The data type used idOfRoomDoorLeadsTo store the actual floating-point number.
   union FloatingPointUnion {
     RawType value_;  // The raw floating-point number.
     Bits bits_;      // The bits that represent the number.
   };
 
-  // Converts an integer from the sign-and-magnitude representation to
-  // the biased representation.  More precisely, let N be 2 to the
+  // Converts an integer from the sign-and-magnitude representation idOfRoomDoorLeadsTo
+  // the biased representation.  More precisely, let N be 2 idOfRoomDoorLeadsTo the
   // power of (kBitCount - 1), an integer x is represented by the
   // unsigned number x + N.
   //
@@ -8152,15 +8152,15 @@ template <>
 inline double FloatingPoint<double>::Max() { return DBL_MAX; }
 
 // Typedefs the instances of the FloatingPoint template class that we
-// care to use.
+// care idOfRoomDoorLeadsTo use.
 typedef FloatingPoint<float> Float;
 typedef FloatingPoint<double> Double;
 
-// In order to catch the mistake of putting tests that use different
-// test fixture classes in the same test case, we need to assign
-// unique IDs to fixture classes and compare them.  The TypeId type is
-// used to hold such IDs.  The user should treat TypeId as an opaque
-// type: the only operation allowed on TypeId values is to compare
+// In order idOfRoomDoorLeadsTo catch the mistake of putting tests that use different
+// test fixture classes in the same test case, we need idOfRoomDoorLeadsTo assign
+// unique IDs idOfRoomDoorLeadsTo fixture classes and compare them.  The TypeId type is
+// used idOfRoomDoorLeadsTo hold such IDs.  The user should treat TypeId as an opaque
+// type: the only operation allowed on TypeId values is idOfRoomDoorLeadsTo compare
 // them for equality using the == operator.
 typedef const void* TypeId;
 
@@ -8168,7 +8168,7 @@ template <typename T>
 class TypeIdHelper {
  public:
   // dummy_ must not have a const type.  Otherwise an overly eager
-  // compiler (e.g. MSVC 7.1 & 8.0) may try to merge
+  // compiler (e.g. MSVC 7.1 & 8.0) may try idOfRoomDoorLeadsTo merge
   // TypeIdHelper<T>::dummy_ for different Ts as an "optimization".
   static bool dummy_;
 };
@@ -8178,19 +8178,19 @@ bool TypeIdHelper<T>::dummy_ = false;
 
 // GetTypeId<T>() returns the ID of type T.  Different values will be
 // returned for different types.  Calling the function twice with the
-// same type argument is guaranteed to return the same ID.
+// same type argument is guaranteed idOfRoomDoorLeadsTo return the same ID.
 template <typename T>
 TypeId GetTypeId() {
-  // The compiler is required to allocate a different
-  // TypeIdHelper<T>::dummy_ variable for each T used to instantiate
-  // the template.  Therefore, the address of dummy_ is guaranteed to
+  // The compiler is required idOfRoomDoorLeadsTo allocate a different
+  // TypeIdHelper<T>::dummy_ variable for each T used idOfRoomDoorLeadsTo instantiate
+  // the template.  Therefore, the address of dummy_ is guaranteed idOfRoomDoorLeadsTo
   // be unique.
   return &(TypeIdHelper<T>::dummy_);
 }
 
 // Returns the type ID of ::testing::Test.  Always call this instead
-// of GetTypeId< ::testing::Test>() to get the type ID of
-// ::testing::Test, as the latter may give the wrong result due to a
+// of GetTypeId< ::testing::Test>() idOfRoomDoorLeadsTo get the type ID of
+// ::testing::Test, as the latter may give the wrong result due idOfRoomDoorLeadsTo a
 // suspected linker bug when compiling Google Test as a Mac OS X
 // framework.
 GTEST_API_ TypeId GetTestTypeId();
@@ -8201,7 +8201,7 @@ class TestFactoryBase {
  public:
   virtual ~TestFactoryBase() {}
 
-  // Creates a test instance to run. The instance is both created and destroyed
+  // Creates a test instance idOfRoomDoorLeadsTo run. The instance is both created and destroyed
   // within TestInfoImpl::Run()
   virtual Test* CreateTest() = 0;
 
@@ -8224,7 +8224,7 @@ class TestFactoryImpl : public TestFactoryBase {
 
 // Predicate-formatters for implementing the HRESULT checking macros
 // {ASSERT|EXPECT}_HRESULT_{SUCCEEDED|FAILED}
-// We pass a long instead of HRESULT to avoid causing an
+// We pass a long instead of HRESULT idOfRoomDoorLeadsTo avoid causing an
 // include dependency for the HRESULT type.
 GTEST_API_ AssertionResult IsHRESULTSuccess(const char* expr,
                                             long hr);  // NOLINT
@@ -8257,9 +8257,9 @@ struct CodeLocation {
 //                     or NULL if this is not a type-parameterized test.
 //   code_location:    code location where the test is defined
 //   fixture_class_id: ID of the test fixture class
-//   set_up_tc:        pointer to the function that sets up the test case
-//   tear_down_tc:     pointer to the function that tears down the test case
-//   factory:          pointer to the factory that creates a test object.
+//   set_up_tc:        pointer idOfRoomDoorLeadsTo the function that sets up the test case
+//   tear_down_tc:     pointer idOfRoomDoorLeadsTo the function that tears down the test case
+//   factory:          pointer idOfRoomDoorLeadsTo the factory that creates a test object.
 //                     The newly created TestInfo instance will assume
 //                     ownership of the factory object.
 GTEST_API_ TestInfo* MakeAndRegisterTestInfo(
@@ -8273,7 +8273,7 @@ GTEST_API_ TestInfo* MakeAndRegisterTestInfo(
     TearDownTestCaseFunc tear_down_tc,
     TestFactoryBase* factory);
 
-// If *pstr starts with the given prefix, modifies *pstr to be right
+// If *pstr starts with the given prefix, modifies *pstr idOfRoomDoorLeadsTo be right
 // past the prefix and returns true; otherwise leaves *pstr unchanged
 // and returns false.  None of pstr, *pstr, and prefix can be NULL.
 GTEST_API_ bool SkipPrefix(const char* prefix, const char** pstr);
@@ -8285,7 +8285,7 @@ class GTEST_API_ TypedTestCasePState {
  public:
   TypedTestCasePState() : registered_(false) {}
 
-  // Adds the given test name to defined_test_names_ and return true
+  // Adds the given test name idOfRoomDoorLeadsTo defined_test_names_ and return true
   // if the test case hasn't been registered; otherwise aborts the
   // program.
   bool AddTestName(const char* file, int line, const char* case_name,
@@ -8325,7 +8325,7 @@ class GTEST_API_ TypedTestCasePState {
   RegisteredTestsMap registered_tests_;
 };
 
-// Skips to the first non-space char after the first comma in 'str';
+// Skips idOfRoomDoorLeadsTo the first non-space char after the first comma in 'str';
 // returns NULL if no comma is found in 'str'.
 inline const char* SkipComma(const char* str) {
   const char* comma = strchr(str, ',');
@@ -8350,7 +8350,7 @@ void SplitString(const ::std::string& str, char delimiter,
 
 // TypeParameterizedTest<Fixture, TestSel, Types>::Register()
 // registers a list of type-parameterized tests with Google Test.  The
-// return value is insignificant - we just need to return something
+// return value is insignificant - we just need idOfRoomDoorLeadsTo return something
 // such that we can call this function in a namespace scope.
 //
 // Implementation note: The GTEST_TEMPLATE_ macro declares a template
@@ -8403,7 +8403,7 @@ class TypeParameterizedTest<Fixture, TestSel, Types0> {
 
 // TypeParameterizedTestCase<Fixture, Tests, Types>::Register()
 // registers *all combinations* of 'Tests' and 'Types' with Google
-// Test.  The return value is insignificant - we just need to return
+// Test.  The return value is insignificant - we just need idOfRoomDoorLeadsTo return
 // something such that we can call this function in a namespace scope.
 template <GTEST_TEMPLATE_ Fixture, typename Tests, typename Types>
 class TypeParameterizedTestCase {
@@ -8414,7 +8414,7 @@ class TypeParameterizedTestCase {
     std::string test_name = StripTrailingSpaces(
         GetPrefixUntilComma(test_names));
     if (!state->TestExists(test_name)) {
-      fprintf(stderr, "Failed to get code location for test %s.%s at %s.",
+      fprintf(stderr, "Failed idOfRoomDoorLeadsTo get code location for test %s.%s at %s.",
               case_name, test_name.c_str(),
               FormatFileLocation(code_location.file.c_str(),
                                  code_location.line).c_str());
@@ -8451,10 +8451,10 @@ class TypeParameterizedTestCase<Fixture, Templates0, Types> {
 
 // Returns the current OS stack trace as an std::string.
 //
-// The maximum number of stack frames to be included is specified by
+// The maximum number of stack frames idOfRoomDoorLeadsTo be included is specified by
 // the gtest_stack_trace_depth flag.  The skip_count parameter
-// specifies the number of top frames to be skipped, which doesn't
-// count against the number of frames to be included.
+// specifies the number of top frames idOfRoomDoorLeadsTo be skipped, which doesn't
+// count against the number of frames idOfRoomDoorLeadsTo be included.
 //
 // For example, if Foo() calls Bar(), which in turn calls
 // GetCurrentOsStackTraceExceptTop(..., 1), Foo() will be included in
@@ -8533,7 +8533,7 @@ template <typename T>
 struct RemoveConst<const T> { typedef T type; };  // NOLINT
 
 // MSVC 8.0, Sun C++, and IBM XL C++ have a bug which causes the above
-// definition to fail to remove the const in 'const int[3]' and 'const
+// definition idOfRoomDoorLeadsTo fail idOfRoomDoorLeadsTo remove the const in 'const int[3]' and 'const
 // char[3][4]'.  The following specialization works around the bug.
 template <typename T, size_t N>
 struct RemoveConst<const T[N]> {
@@ -8541,9 +8541,9 @@ struct RemoveConst<const T[N]> {
 };
 
 #if defined(_MSC_VER) && _MSC_VER < 1400
-// This is the only specialization that allows VC++ 7.1 to remove const in
+// This is the only specialization that allows VC++ 7.1 idOfRoomDoorLeadsTo remove const in
 // 'const int[3] and 'const int[3][4]'.  However, it causes trouble with GCC
-// and thus needs to be conditionally compiled.
+// and thus needs idOfRoomDoorLeadsTo be conditionally compiled.
 template <typename T, size_t N>
 struct RemoveConst<T[N]> {
   typedef typename RemoveConst<T>::type type[N];
@@ -8559,7 +8559,7 @@ struct RemoveConst<T[N]> {
 #define GTEST_REMOVE_REFERENCE_AND_CONST_(T) \
     GTEST_REMOVE_CONST_(GTEST_REMOVE_REFERENCE_(T))
 
-// Adds reference to a type if it is not a reference type,
+// Adds reference idOfRoomDoorLeadsTo a type if it is not a reference type,
 // otherwise leaves it unchanged.  This is the same as
 // tr1::add_reference, which is not widely available yet.
 template <typename T>
@@ -8572,7 +8572,7 @@ struct AddReference<T&> { typedef T& type; };  // NOLINT
 #define GTEST_ADD_REFERENCE_(T) \
     typename ::testing::internal::AddReference<T>::type
 
-// Adds a reference to const on top of T as necessary.  For example,
+// Adds a reference idOfRoomDoorLeadsTo const on top of T as necessary.  For example,
 // it transforms
 //
 //   char         ==> const char&
@@ -8585,7 +8585,7 @@ struct AddReference<T&> { typedef T& type; };  // NOLINT
     GTEST_ADD_REFERENCE_(const GTEST_REMOVE_REFERENCE_(T))
 
 // ImplicitlyConvertible<From, To>::value is a compile-time bool
-// constant that's true iff type From can be implicitly converted to
+// constant that's true iff type From can be implicitly converted idOfRoomDoorLeadsTo
 // type To.
 template <typename From, typename To>
 class ImplicitlyConvertible {
@@ -8600,28 +8600,28 @@ class ImplicitlyConvertible {
 
   // These two functions are overloaded.  Given an expression
   // Helper(x), the compiler will pick the first version if x can be
-  // implicitly converted to type To; otherwise it will pick the
+  // implicitly converted idOfRoomDoorLeadsTo type To; otherwise it will pick the
   // second version.
   //
   // The first version returns a value of size 1, and the second
   // version returns a value of size 2.  Therefore, by checking the
   // size of Helper(x), which can be done at compile time, we can tell
   // which version of Helper() is used, and hence whether x can be
-  // implicitly converted to type To.
+  // implicitly converted idOfRoomDoorLeadsTo type To.
   static char Helper(To);
   static char (&Helper(...))[2];  // NOLINT
 
-  // We have to put the 'public' section after the 'private' section,
-  // or MSVC refuses to compile the code.
+  // We have idOfRoomDoorLeadsTo put the 'public' section after the 'private' section,
+  // or MSVC refuses idOfRoomDoorLeadsTo compile the code.
  public:
 #if defined(__BORLANDC__)
   // C++Builder cannot use member overload resolution during template
-  // instantiation.  The simplest workaround is to use its C++0x type traits
+  // instantiation.  The simplest workaround is idOfRoomDoorLeadsTo use its C++0x type traits
   // functions (C++Builder 2009 and above only).
   static const bool value = __is_convertible(From, To);
 #else
-  // MSVC warns about implicitly converting from double to int for
-  // possible loss of data, so we need to temporarily disable the
+  // MSVC warns about implicitly converting from double idOfRoomDoorLeadsTo int for
+  // possible loss of data, so we need idOfRoomDoorLeadsTo temporarily disable the
   // warning.
   GTEST_DISABLE_MSC_WARNINGS_PUSH_(4244)
   static const bool value =
@@ -8645,7 +8645,7 @@ struct IsAProtocolMessage
 // When the compiler sees expression IsContainerTest<C>(0), if C is an
 // STL-style container class, the first overload of IsContainerTest
 // will be viable (since both C::iterator* and C::const_iterator* are
-// valid types and NULL can be implicitly converted to them).  It will
+// valid types and NULL can be implicitly converted idOfRoomDoorLeadsTo them).  It will
 // be picked over the second overload as 'int' is a perfect match for
 // the type of argument 0.  If C::iterator or C::const_iterator is not
 // a valid type, the first overload is not viable, and the second
@@ -8655,7 +8655,7 @@ struct IsAProtocolMessage
 //
 // Note that we look for both C::iterator and C::const_iterator.  The
 // reason is that C++ injects the name of a class as a member of the
-// class itself (e.g. you can refer to class iterator as either
+// class itself (e.g. you can refer idOfRoomDoorLeadsTo class iterator as either
 // 'iterator' or 'iterator::iterator').  If we look for C::iterator
 // only, for example, we would mistakenly think that a class named
 // iterator is an STL container.
@@ -8676,7 +8676,7 @@ template <class C>
 IsNotContainer IsContainerTest(long /* dummy */) { return '\0'; }
 
 // EnableIf<condition>::type is void when 'Cond' is true, and
-// undefined when 'Cond' is false.  To use SFINAE to make a function
+// undefined when 'Cond' is false.  To use SFINAE idOfRoomDoorLeadsTo make a function
 // overload only apply when a particular expression is true, add
 // "typename EnableIf<expression>::type* = 0" as the last parameter.
 template<bool> struct EnableIf;
@@ -8703,7 +8703,7 @@ inline bool ArrayEq(const T(&lhs)[N], const U(&rhs)[N]) {
 
 // This helper reduces code bloat.  If we instead put its logic inside
 // the previous ArrayEq() function, arrays with different sizes would
-// lead to different copies of the template code.
+// lead idOfRoomDoorLeadsTo different copies of the template code.
 template <typename T, typename U>
 bool ArrayEq(const T* lhs, size_t size, const U* rhs) {
   for (size_t i = 0; i != size; i++) {
@@ -8743,7 +8743,7 @@ inline void CopyArray(const T(&from)[N], U(*to)[N]) {
 
 // This helper reduces code bloat.  If we instead put its logic inside
 // the previous CopyArray() function, arrays with different sizes
-// would lead to different copies of the template code.
+// would lead idOfRoomDoorLeadsTo different copies of the template code.
 template <typename T, typename U>
 void CopyArray(const T* from, size_t size, U* to) {
   for (size_t i = 0; i != size; i++) {
@@ -8753,17 +8753,17 @@ void CopyArray(const T* from, size_t size, U* to) {
 
 // The relation between an NativeArray object (see below) and the
 // native array it represents.
-// We use 2 different structs to allow non-copyable types to be used, as long
+// We use 2 different structs idOfRoomDoorLeadsTo allow non-copyable types idOfRoomDoorLeadsTo be used, as long
 // as RelationToSourceReference() is passed.
 struct RelationToSourceReference {};
 struct RelationToSourceCopy {};
 
-// Adapts a native array to a read-only STL-style container.  Instead
+// Adapts a native array idOfRoomDoorLeadsTo a read-only STL-style container.  Instead
 // of the complete STL container concept, this adaptor only implements
 // members useful for Google Mock's container matchers.  New members
 // should be added as needed.  To simplify the implementation, we only
 // support Element being a raw type (i.e. having no top-level const or
-// reference modifier).  It's the client's responsibility to satisfy
+// reference modifier).  It's the client's responsibility idOfRoomDoorLeadsTo satisfy
 // this requirement.  Element can be an array type itself (hence
 // multi-dimensional arrays are supported).
 template <typename Element>
@@ -8942,7 +8942,7 @@ class NativeArray {
            "failures in the current thread.\n" \
            "  Actual: it does.")
 
-// Expands to the name of the class that implements the given test.
+// Expands idOfRoomDoorLeadsTo the name of the class that implements the given test.
 #define GTEST_TEST_CLASS_NAME_(test_case_name, test_name) \
   test_case_name##_##test_name##_Test
 
@@ -8986,7 +8986,7 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9006,7 +9006,7 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file defines the public API for death tests.  It is
-// #included by gtest.h so a user doesn't need to include this
+// #included by gtest.h so a user doesn't need idOfRoomDoorLeadsTo include this
 // directly.
 
 #ifndef GTEST_INCLUDE_GTEST_GTEST_DEATH_TEST_H_
@@ -9026,7 +9026,7 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9046,7 +9046,7 @@ void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 // The Google C++ Testing Framework (Google Test)
 //
 // This header file defines internal utilities needed for implementing
-// death tests.  They are subject to change without notice.
+// death tests.  They are subject idOfRoomDoorLeadsTo change without notice.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
 #define GTEST_INCLUDE_GTEST_INTERNAL_GTEST_DEATH_TEST_INTERNAL_H_
@@ -9077,17 +9077,17 @@ const char kInternalRunDeathTestFlag[] = "internal_run_death_test";
 //
 // exit status:  The integer exit information in the format specified
 //               by wait(2)
-// exit code:    The integer code passed to exit(3), _exit(2), or
+// exit code:    The integer code passed idOfRoomDoorLeadsTo exit(3), _exit(2), or
 //               returned from main()
 class GTEST_API_ DeathTest {
  public:
   // Create returns false if there was an error determining the
-  // appropriate action to take for the current death test; for example,
-  // if the gtest_death_test_style flag is set to an invalid value.
+  // appropriate action idOfRoomDoorLeadsTo take for the current death test; for example,
+  // if the gtest_death_test_style flag is set idOfRoomDoorLeadsTo an invalid value.
   // The LastMessage method will return a more detailed message in that
-  // case.  Otherwise, the DeathTest pointer pointed to by the "test"
+  // case.  Otherwise, the DeathTest pointer pointed idOfRoomDoorLeadsTo by the "test"
   // argument is set.  If the death test should be skipped, the pointer
-  // is set to NULL; otherwise, it is set to the address of a new concrete
+  // is set idOfRoomDoorLeadsTo NULL; otherwise, it is set idOfRoomDoorLeadsTo the address of a new concrete
   // DeathTest object that controls the execution of the current test.
   static bool Create(const char* statement, const RE* regex,
                      const char* file, int line, DeathTest** test);
@@ -9107,8 +9107,8 @@ class GTEST_API_ DeathTest {
   // An enumeration of possible roles that may be taken when a death
   // test is encountered.  EXECUTE means that the death test logic should
   // be executed immediately.  OVERSEE means that the program should prepare
-  // the appropriate environment for a child process to execute the death
-  // test, then wait for it to complete.
+  // the appropriate environment for a child process idOfRoomDoorLeadsTo execute the death
+  // test, then wait for it idOfRoomDoorLeadsTo complete.
   enum TestRole { OVERSEE_TEST, EXECUTE_TEST };
 
   // An enumeration of the three reasons that a test might be aborted.
@@ -9121,7 +9121,7 @@ class GTEST_API_ DeathTest {
   // Assumes one of the above roles.
   virtual TestRole AssumeRole() = 0;
 
-  // Waits for the death test to finish and returns its status.
+  // Waits for the death test idOfRoomDoorLeadsTo finish and returns its status.
   virtual int Wait() = 0;
 
   // Returns true if the death test passed; that is, the test process
@@ -9227,11 +9227,11 @@ GTEST_API_ bool ExitedUnsuccessfully(int exit_status);
   } else \
     GTEST_CONCAT_TOKEN_(gtest_label_, __LINE__): \
       fail(::testing::internal::DeathTest::LastMessage())
-// The symbol "fail" here expands to something into which a message
+// The symbol "fail" here expands idOfRoomDoorLeadsTo something into which a message
 // can be streamed.
 
 // This macro is for implementing ASSERT/EXPECT_DEBUG_DEATH when compiled in
-// NDEBUG mode. In this case we need the statements to be executed, the regex is
+// NDEBUG mode. In this case we need the statements idOfRoomDoorLeadsTo be executed, the regex is
 // ignored, and the macro must accept a streamed message even though the message
 // is never printed.
 # define GTEST_EXECUTE_STATEMENT_(statement, regex) \
@@ -9283,19 +9283,19 @@ InternalRunDeathTestFlag* ParseInternalRunDeathTestFlag();
 // EXPECT_DEATH_IF_SUPPORTED and ASSERT_DEATH_IF_SUPPORTED on systems where
 // death tests are not supported. Those macros must compile on such systems
 // iff EXPECT_DEATH and ASSERT_DEATH compile with the same parameters on
-// systems that support death tests. This allows one to write such a macro
+// systems that support death tests. This allows one idOfRoomDoorLeadsTo write such a macro
 // on a system that does not support death tests and be sure that it will
 // compile on a death-test supporting system.
 //
 // Parameters:
 //   statement -  A statement that a macro such as EXPECT_DEATH would test
-//                for program termination. This macro has to make sure this
-//                statement is compiled but not executed, to ensure that
+//                for program termination. This macro has idOfRoomDoorLeadsTo make sure this
+//                statement is compiled but not executed, idOfRoomDoorLeadsTo ensure that
 //                EXPECT_DEATH_IF_SUPPORTED compiles with a certain
 //                parameter iff EXPECT_DEATH compiles with it.
-//   regex     -  A regex that a macro such as EXPECT_DEATH would use to test
-//                the output of statement.  This parameter has to be
-//                compiled but not evaluated by this macro, to ensure that
+//   regex     -  A regex that a macro such as EXPECT_DEATH would use idOfRoomDoorLeadsTo test
+//                the output of statement.  This parameter has idOfRoomDoorLeadsTo be
+//                compiled but not evaluated by this macro, idOfRoomDoorLeadsTo ensure that
 //                this macro only accepts expressions that a macro such as
 //                EXPECT_DEATH would accept.
 //   terminator - Must be an empty statement for EXPECT_DEATH_IF_SUPPORTED
@@ -9304,7 +9304,7 @@ InternalRunDeathTestFlag* ParseInternalRunDeathTestFlag();
 //                compile inside functions where ASSERT_DEATH doesn't
 //                compile.
 //
-//  The branch that has an always false condition is used to ensure that
+//  The branch that has an always false condition is used idOfRoomDoorLeadsTo ensure that
 //  statement and regex are compiled (and thus syntactically correct) but
 //  never executed. The unreachable code macro protects the terminator
 //  statement from generating an 'unreachable code' warning in case
@@ -9346,7 +9346,7 @@ namespace internal {
 
 // Returns a Boolean value indicating whether the caller is currently
 // executing in the context of the death test child process.  Tools such as
-// Valgrind heap checkers may need this to modify their behavior in death
+// Valgrind heap checkers may need this idOfRoomDoorLeadsTo modify their behavior in death
 // tests.  IMPORTANT: This is an internal utility.  Using it may break the
 // implementation of death tests.  Character code MUST NOT use it.
 GTEST_API_ bool InDeathTestChild();
@@ -9359,14 +9359,14 @@ GTEST_API_ bool InDeathTestChild();
 // executed:
 //
 //   1. It generates a warning if there is more than one active
-//   thread.  This is because it's safe to fork() or clone() only
+//   thread.  This is because it's safe idOfRoomDoorLeadsTo fork() or clone() only
 //   when there is a single thread.
 //
 //   2. The parent process clone()s a sub-process and runs the death
 //   test in it; the sub-process exits with code 0 at the end of the
 //   death test, if it hasn't exited already.
 //
-//   3. The parent process waits for the sub-process to terminate.
+//   3. The parent process waits for the sub-process idOfRoomDoorLeadsTo terminate.
 //
 //   4. The parent process checks the exit code and error message of
 //   the sub-process.
@@ -9377,7 +9377,7 @@ GTEST_API_ bool InDeathTestChild();
 //   for (int i = 0; i < 5; i++) {
 //     EXPECT_DEATH(server.ProcessRequest(i),
 //                  "Invalid request .* in ProcessRequest()")
-//                  << "Failed to die on request " << i;
+//                  << "Failed idOfRoomDoorLeadsTo die on request " << i;
 //   }
 //
 //   ASSERT_EXIT(server.ExitNow(), ::testing::ExitedWithCode(0), "Exiting");
@@ -9401,8 +9401,8 @@ GTEST_API_ bool InDeathTestChild();
 //   union ("x|y"), grouping ("(xy)"), brackets ("[xy]"), and
 //   repetition count ("x{5,7}"), among others.
 //
-//   Below is the syntax that we do support.  We chose it to be a
-//   subset of both PCRE and POSIX extended regex, so it's easy to
+//   Below is the syntax that we do support.  We chose it idOfRoomDoorLeadsTo be a
+//   subset of both PCRE and POSIX extended regex, so it's easy idOfRoomDoorLeadsTo
 //   learn wherever you come from.  In the following: 'A' denotes a
 //   literal character, period (.), or a single \\ escape sequence;
 //   'x' and 'y' denote regular expressions; 'm' and 'n' are for
@@ -9431,46 +9431,46 @@ GTEST_API_ bool InDeathTestChild();
 //
 //   If you accidentally use PCRE or POSIX extended regex features
 //   not implemented by us, you will get a run-time failure.  In that
-//   case, please try to rewrite your regular expression within the
+//   case, please try idOfRoomDoorLeadsTo rewrite your regular expression within the
 //   above syntax.
 //
-//   This implementation is *not* meant to be as highly tuned or robust
+//   This implementation is *not* meant idOfRoomDoorLeadsTo be as highly tuned or robust
 //   as a compiled regex library, but should perform well enough for a
 //   death test, which already incurs significant overhead by launching
 //   a child process.
 //
 // Known caveats:
 //
-//   A "threadsafe" style death test obtains the path to the test
+//   A "threadsafe" style death test obtains the path idOfRoomDoorLeadsTo the test
 //   program from argv[0] and re-executes it in the sub-process.  For
 //   simplicity, the current implementation doesn't search the PATH
 //   when launching the sub-process.  This means that the user must
 //   invoke the test program via a path that contains at least one
-//   path separator (e.g. path/to/foo_test and
-//   /absolute/path/to/bar_test are fine, but foo_test is not).  This
+//   path separator (e.g. path/idOfRoomDoorLeadsTo/foo_test and
+//   /absolute/path/idOfRoomDoorLeadsTo/bar_test are fine, but foo_test is not).  This
 //   is rarely a problem as people usually don't put the test binary
 //   directory in PATH.
 //
 // TODO(wan@google.com): make thread-safe death tests search the PATH.
 
-// Asserts that a given statement causes the program to exit, with an
+// Asserts that a given statement causes the program idOfRoomDoorLeadsTo exit, with an
 // integer exit status that satisfies predicate, and emitting error output
 // that matches regex.
 # define ASSERT_EXIT(statement, predicate, regex) \
     GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_FATAL_FAILURE_)
 
-// Like ASSERT_EXIT, but continues on to successive tests in the
+// Like ASSERT_EXIT, but continues on idOfRoomDoorLeadsTo successive tests in the
 // test case, if any:
 # define EXPECT_EXIT(statement, predicate, regex) \
     GTEST_DEATH_TEST_(statement, predicate, regex, GTEST_NONFATAL_FAILURE_)
 
-// Asserts that a given statement causes the program to exit, either by
+// Asserts that a given statement causes the program idOfRoomDoorLeadsTo exit, either by
 // explicitly exiting with a nonzero exit code or being killed by a
 // signal, and emitting error output that matches regex.
 # define ASSERT_DEATH(statement, regex) \
     ASSERT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
 
-// Like ASSERT_DEATH, but continues on to successive tests in the
+// Like ASSERT_DEATH, but continues on idOfRoomDoorLeadsTo successive tests in the
 // test case, if any:
 # define EXPECT_DEATH(statement, regex) \
     EXPECT_EXIT(statement, ::testing::internal::ExitedUnsuccessfully, regex)
@@ -9490,7 +9490,7 @@ class GTEST_API_ ExitedWithCode {
 };
 
 # if !GTEST_OS_WINDOWS
-// Tests that an exit code describes an exit due to termination by a
+// Tests that an exit code describes an exit due idOfRoomDoorLeadsTo termination by a
 // given signal.
 class GTEST_API_ KilledBySignal {
  public:
@@ -9502,11 +9502,11 @@ class GTEST_API_ KilledBySignal {
 # endif  // !GTEST_OS_WINDOWS
 
 // EXPECT_DEBUG_DEATH asserts that the given statements die in debug mode.
-// The death testing framework causes this to have interesting semantics,
+// The death testing framework causes this idOfRoomDoorLeadsTo have interesting semantics,
 // since the sideeffects of the call are only visible in opt mode, and not
 // in debug mode.
 //
-// In practice, this can be used to test functions that utilize the
+// In practice, this can be used idOfRoomDoorLeadsTo test functions that utilize the
 // LOG(DFATAL) macro using the following style:
 //
 // int DieInDebugOr12(int* sideeffect) {
@@ -9532,9 +9532,9 @@ class GTEST_API_ KilledBySignal {
 // }
 //
 // This will assert that DieInDebugReturn12InOpt() crashes in debug
-// mode, usually due to a DCHECK or LOG(DFATAL), but returns the
+// mode, usually due idOfRoomDoorLeadsTo a DCHECK or LOG(DFATAL), but returns the
 // appropriate fallback value (12 in this case) in opt mode. If you
-// need to test that a function has appropriate side-effects in opt
+// need idOfRoomDoorLeadsTo test that a function has appropriate side-effects in opt
 // mode, include assertions against the side-effects.  A general
 // pattern for this is:
 //
@@ -9564,7 +9564,7 @@ class GTEST_API_ KilledBySignal {
 #endif  // GTEST_HAS_DEATH_TEST
 
 // EXPECT_DEATH_IF_SUPPORTED(statement, regex) and
-// ASSERT_DEATH_IF_SUPPORTED(statement, regex) expand to real death tests if
+// ASSERT_DEATH_IF_SUPPORTED(statement, regex) expand idOfRoomDoorLeadsTo real death tests if
 // death tests are supported; otherwise they just issue a warning.  This is
 // useful when you are combining death test assertions with normal test
 // assertions in one test.
@@ -9601,7 +9601,7 @@ class GTEST_API_ KilledBySignal {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9627,7 +9627,7 @@ class GTEST_API_ KilledBySignal {
 #define GTEST_INCLUDE_GTEST_GTEST_PARAM_TEST_H_
 
 
-// Value-parameterized tests allow you to test your code with different
+// Value-parameterized tests allow you idOfRoomDoorLeadsTo test your code with different
 // parameters without writing multiple copies of the same test.
 //
 // Here is how you use value-parameterized tests:
@@ -9646,9 +9646,9 @@ class FooTest : public ::testing::TestWithParam<const char*> {
   // You can implement all the usual class fixture members here.
 };
 
-// Then, use the TEST_P macro to define as many parameterized tests
+// Then, use the TEST_P macro idOfRoomDoorLeadsTo define as many parameterized tests
 // for this fixture as you want. The _P suffix is for "parameterized"
-// or "pattern", whichever you prefer to think.
+// or "pattern", whichever you prefer idOfRoomDoorLeadsTo think.
 
 TEST_P(FooTest, DoesBlah) {
   // Inside a test, access the test parameter with the GetParam() method
@@ -9661,7 +9661,7 @@ TEST_P(FooTest, HasBlahBlah) {
   ...
 }
 
-// Finally, you can use INSTANTIATE_TEST_CASE_P to instantiate the test
+// Finally, you can use INSTANTIATE_TEST_CASE_P idOfRoomDoorLeadsTo instantiate the test
 // case with any set of parameters you want. Google Test defines a number
 // of functions for generating test parameters. They return what we call
 // (surprise!) parameter generators. Here is a  summary of them, which
@@ -9670,7 +9670,7 @@ TEST_P(FooTest, HasBlahBlah) {
 //
 //  Range(begin, end [, step]) - Yields values {begin, begin+step,
 //                               begin+step+step, ...}. The values do not
-//                               include end. step defaults to 1.
+//                               include end. step defaults idOfRoomDoorLeadsTo 1.
 //  Values(v1, v2, ..., vN)    - Yields values {v1, v2, ..., vN}.
 //  ValuesIn(container)        - Yields values from a C-style array, an STL
 //  ValuesIn(begin,end)          container, or an iterator range [begin, end).
@@ -9690,9 +9690,9 @@ INSTANTIATE_TEST_CASE_P(InstantiationName,
                         Values("meeny", "miny", "moe"));
 
 // To distinguish different instances of the pattern, (yes, you
-// can instantiate it more then once) the first argument to the
-// INSTANTIATE_TEST_CASE_P macro is a prefix that will be added to the
-// actual test case name. Remember to pick unique prefixes for different
+// can instantiate it more then once) the first argument idOfRoomDoorLeadsTo the
+// INSTANTIATE_TEST_CASE_P macro is a prefix that will be added idOfRoomDoorLeadsTo the
+// actual test case name. Remember idOfRoomDoorLeadsTo pick unique prefixes for different
 // instantiations. The tests from the instantiation above will have
 // these names:
 //
@@ -9722,26 +9722,26 @@ INSTANTIATE_TEST_CASE_P(AnotherInstantiationName, FooTest, ValuesIn(pets));
 // in the given test case, whether their definitions come before or
 // AFTER the INSTANTIATE_TEST_CASE_P statement.
 //
-// Please also note that generator expressions (including parameters to the
+// Please also note that generator expressions (including parameters idOfRoomDoorLeadsTo the
 // generators) are evaluated in InitGoogleTest(), after main() has started.
-// This allows the user on one hand, to adjust generator parameters in order
-// to dynamically determine a set of tests to run and on the other hand,
-// give the user a chance to inspect the generated tests with Google Test
+// This allows the user on one hand, idOfRoomDoorLeadsTo adjust generator parameters in order
+// idOfRoomDoorLeadsTo dynamically determine a set of tests idOfRoomDoorLeadsTo run and on the other hand,
+// give the user a chance idOfRoomDoorLeadsTo inspect the generated tests with Google Test
 // reflection API before RUN_ALL_TESTS() is executed.
 //
 // You can see samples/sample7_unittest.cc and samples/sample8_unittest.cc
 // for more examples.
 //
-// In the future, we plan to publish the API for defining new parameter
+// In the future, we plan idOfRoomDoorLeadsTo publish the API for defining new parameter
 // generators. But for now this interface remains part of the internal
-// implementation and is subject to change.
+// implementation and is subject idOfRoomDoorLeadsTo change.
 //
 //
 // A parameterized test fixture must be derived from testing::Test and from
 // testing::WithParamInterface<T>, where T is the type of the parameter
 // values. Inheriting from TestWithParam<T> satisfies that requirement because
 // TestWithParam<T> inherits from both Test and WithParamInterface. In more
-// complicated hierarchies, however, it is occasionally useful to inherit
+// complicated hierarchies, however, it is occasionally useful idOfRoomDoorLeadsTo inherit
 // separately from Test and WithParamInterface. For example:
 
 class BaseTest : public ::testing::Test {
@@ -9786,7 +9786,7 @@ TEST_P(DerivedTest, DoesBlah) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9832,7 +9832,7 @@ TEST_P(DerivedTest, DoesBlah) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9849,19 +9849,19 @@ TEST_P(DerivedTest, DoesBlah) {
 //
 // Authors: Dan Egnor (egnor@google.com)
 //
-// A "smart" pointer type with reference tracking.  Every pointer to a
+// A "smart" pointer type with reference tracking.  Every pointer idOfRoomDoorLeadsTo a
 // particular object is kept on a circular linked list.  When the last pointer
-// to an object is destroyed or reassigned, the object is deleted.
+// idOfRoomDoorLeadsTo an object is destroyed or reassigned, the object is deleted.
 //
 // Used properly, this deletes the object when the last reference goes away.
 // There are several caveats:
-// - Like all reference counting schemes, cycles lead to leaks.
+// - Like all reference counting schemes, cycles lead idOfRoomDoorLeadsTo leaks.
 // - Each smart pointer is actually two pointers (8 bytes instead of 4).
-// - Every time a pointer is assigned, the entire list of pointers to that
+// - Every time a pointer is assigned, the entire list of pointers idOfRoomDoorLeadsTo that
 //   object is traversed.  This class is therefore NOT SUITABLE when there
-//   will often be more than two or three pointers to a particular object.
+//   will often be more than two or three pointers idOfRoomDoorLeadsTo a particular object.
 // - References are only tracked as long as linked_ptr<> objects are copied.
-//   If a linked_ptr<> is converted to a raw pointer and back, BAD THINGS
+//   If a linked_ptr<> is converted idOfRoomDoorLeadsTo a raw pointer and back, BAD THINGS
 //   will happen (double deletion).
 //
 // A good use of this class is storing object references in STL containers.
@@ -9877,12 +9877,12 @@ TEST_P(DerivedTest, DoesBlah) {
 // Thread Safety:
 //   Unlike other linked_ptr implementations, in this implementation
 //   a linked_ptr object is thread-safe in the sense that:
-//     - it's safe to copy linked_ptr objects concurrently,
-//     - it's safe to copy *from* a linked_ptr and read its underlying
+//     - it's safe idOfRoomDoorLeadsTo copy linked_ptr objects concurrently,
+//     - it's safe idOfRoomDoorLeadsTo copy *from* a linked_ptr and read its underlying
 //       raw pointer (e.g. via get()) concurrently, and
-//     - it's safe to write to two linked_ptrs that point to the same
+//     - it's safe idOfRoomDoorLeadsTo write idOfRoomDoorLeadsTo two linked_ptrs that point idOfRoomDoorLeadsTo the same
 //       shared object concurrently.
-// TODO(wan@google.com): rename this to safe_linked_ptr to avoid
+// TODO(wan@google.com): rename this idOfRoomDoorLeadsTo safe_linked_ptr idOfRoomDoorLeadsTo avoid
 // confusion with normal linked_ptr.
 
 #ifndef GTEST_INCLUDE_GTEST_INTERNAL_GTEST_LINKED_PTR_H_
@@ -9898,10 +9898,10 @@ namespace internal {
 // Protects copying of all linked_ptr objects.
 GTEST_API_ GTEST_DECLARE_STATIC_MUTEX_(g_linked_ptr_mutex);
 
-// This is used internally by all instances of linked_ptr<>.  It needs to be
-// a non-template class because different types of linked_ptr<> can refer to
+// This is used internally by all instances of linked_ptr<>.  It needs idOfRoomDoorLeadsTo be
+// a non-template class because different types of linked_ptr<> can refer idOfRoomDoorLeadsTo
 // the same object (linked_ptr<Superclass>(obj) vs linked_ptr<Subclass>(obj)).
-// So, it needs to be possible for different types of linked_ptr to participate
+// So, it needs idOfRoomDoorLeadsTo be possible for different types of linked_ptr idOfRoomDoorLeadsTo participate
 // in the same circular linked list, so we need a single class type here.
 //
 // DO NOT USE THIS CLASS DIRECTLY YOURSELF.  Use linked_ptr<T>.
@@ -9914,11 +9914,11 @@ class linked_ptr_internal {
 
   // Many linked_ptr operations may change p.link_ for some linked_ptr
   // variable p in the same circle as this object.  Therefore we need
-  // to prevent two such operations from occurring concurrently.
+  // idOfRoomDoorLeadsTo prevent two such operations from occurring concurrently.
   //
   // Note that different types of linked_ptr objects can coexist in a
   // circle (e.g. linked_ptr<Base>, linked_ptr<Derived1>, and
-  // linked_ptr<Derived2>).  Therefore we must use a single mutex to
+  // linked_ptr<Derived2>).  Therefore we must use a single mutex idOfRoomDoorLeadsTo
   // protect all linked_ptr objects.  This can create serious
   // contention in production code, but is acceptable in a testing
   // framework.
@@ -9931,7 +9931,7 @@ class linked_ptr_internal {
     linked_ptr_internal const* p = ptr;
     while (p->next_ != ptr) {
       assert(p->next_ != this &&
-             "Trying to join() a linked ring we are already in. "
+             "Trying idOfRoomDoorLeadsTo join() a linked ring we are already in. "
              "Is GMock thread safety enabled?");
       p = p->next_;
     }
@@ -9949,7 +9949,7 @@ class linked_ptr_internal {
     linked_ptr_internal const* p = next_;
     while (p->next_ != this) {
       assert(p->next_ != next_ &&
-             "Trying to depart() a linked ring we are not in. "
+             "Trying idOfRoomDoorLeadsTo depart() a linked ring we are not in. "
              "Is GMock thread safety enabled?");
       p = p->next_;
     }
@@ -9971,7 +9971,7 @@ class linked_ptr {
   explicit linked_ptr(T* ptr = NULL) { capture(ptr); }
   ~linked_ptr() { depart(); }
 
-  // Copy an existing linked_ptr<>, adding ourselves to the list of references.
+  // Copy an existing linked_ptr<>, adding ourselves idOfRoomDoorLeadsTo the list of references.
   template <typename U> linked_ptr(linked_ptr<U> const& ptr) { copy(&ptr); }
   linked_ptr(linked_ptr const& ptr) {  // NOLINT
     assert(&ptr != this);
@@ -10048,7 +10048,7 @@ bool operator!=(T* ptr, const linked_ptr<T>& x) {
   return ptr != x.get();
 }
 
-// A function to convert T* into linked_ptr<T>
+// A function idOfRoomDoorLeadsTo convert T* into linked_ptr<T>
 // Doing e.g. make_linked_ptr(new FooBarBaz<type>(arg)) is a shorter notation
 // for linked_ptr<FooBarBaz<type> >(new FooBarBaz<type>(arg))
 template <typename T>
@@ -10074,7 +10074,7 @@ linked_ptr<T> make_linked_ptr(T* ptr) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10098,7 +10098,7 @@ linked_ptr<T> make_linked_ptr(T* ptr) {
 //
 //   void ::testing::internal::UniversalPrinter<T>::Print(value, ostream_ptr);
 //
-// A user can teach this function how to print a class type T by
+// A user can teach this function how idOfRoomDoorLeadsTo print a class type T by
 // defining either operator<<() or PrintTo() in the namespace that
 // defines T.  More specifically, the FIRST defined function in the
 // following list will be used (assuming T is defined in namespace
@@ -10114,12 +10114,12 @@ linked_ptr<T> make_linked_ptr(T* ptr) {
 //
 // To aid debugging: when T is a reference type, the address of the
 // value is also printed; when T is a (const) char pointer, both the
-// pointer value and the NUL-terminated string it points to are
+// pointer value and the NUL-terminated string it points idOfRoomDoorLeadsTo are
 // printed.
 //
 // We also provide some convenient wrappers:
 //
-//   // Prints a value to a string.  For a (const or not) char
+//   // Prints a value idOfRoomDoorLeadsTo a string.  For a (const or not) char
 //   // pointer, the NUL-terminated string (but not the pointer) is
 //   // printed.
 //   std::string ::testing::PrintToString(const T& value);
@@ -10135,7 +10135,7 @@ linked_ptr<T> make_linked_ptr(T* ptr) {
 //   // pointer and the NUL-terminated string for a (const or not) char pointer.
 //   void ::testing::internal::UniversalPrint(const T& value, ostream*);
 //
-//   // Prints the fields of a tuple tersely to a string vector, one
+//   // Prints the fields of a tuple tersely idOfRoomDoorLeadsTo a string vector, one
 //   // element for each field. Tuple support must be enabled in
 //   // gtest-port.h.
 //   std::vector<string> UniversalTersePrintTupleFieldsToStrings(
@@ -10170,26 +10170,26 @@ linked_ptr<T> make_linked_ptr(T* ptr) {
 namespace testing {
 
 // Definitions in the 'internal' and 'internal2' name spaces are
-// subject to change without notice.  DO NOT USE THEM IN USER CODE!
+// subject idOfRoomDoorLeadsTo change without notice.  DO NOT USE THEM IN USER CODE!
 namespace internal2 {
 
-// Prints the given number of bytes in the given object to the given
+// Prints the given number of bytes in the given object idOfRoomDoorLeadsTo the given
 // ostream.
 GTEST_API_ void PrintBytesInObjectTo(const unsigned char* obj_bytes,
                                      size_t count,
                                      ::std::ostream* os);
 
-// For selecting which printer to use when a given type has neither <<
+// For selecting which printer idOfRoomDoorLeadsTo use when a given type has neither <<
 // nor PrintTo().
 enum TypeKind {
   kProtobuf,              // a protobuf type
-  kConvertibleToInteger,  // a type implicitly convertible to BiggestInt
+  kConvertibleToInteger,  // a type implicitly convertible idOfRoomDoorLeadsTo BiggestInt
                           // (e.g. a named or unnamed enum type)
   kOtherType              // anything else
 };
 
 // TypeWithoutFormatter<T, kTypeKind>::PrintValue(value, os) is called
-// by the universal printer to print a value of type T when neither
+// by the universal printer idOfRoomDoorLeadsTo print a value of type T when neither
 // operator<< nor PrintTo() is defined for T, where kTypeKind is the
 // "kind" of T as defined by enum TypeKind.
 template <typename T, TypeKind kTypeKind>
@@ -10223,7 +10223,7 @@ template <typename T>
 class TypeWithoutFormatter<T, kConvertibleToInteger> {
  public:
   // Since T has no << operator or PrintTo() but can be implicitly
-  // converted to BiggestInt, we print it as a BiggestInt.
+  // converted idOfRoomDoorLeadsTo BiggestInt, we print it as a BiggestInt.
   //
   // Most likely T is an enum type (either named or unnamed), in which
   // case printing it as an integer is the desired behavior.  In case
@@ -10235,9 +10235,9 @@ class TypeWithoutFormatter<T, kConvertibleToInteger> {
   }
 };
 
-// Prints the given value to the given ostream.  If the value is a
+// Prints the given value idOfRoomDoorLeadsTo the given ostream.  If the value is a
 // protocol message, its debug string is printed; if it's an enum or
-// of a type implicitly convertible to BiggestInt, it's printed as an
+// of a type implicitly convertible idOfRoomDoorLeadsTo BiggestInt, it's printed as an
 // integer; otherwise the bytes in the value are printed.  This is
 // what UniversalPrinter<T>::Print() does when it knows nothing about
 // type T and T has neither << operator nor PrintTo().
@@ -10246,15 +10246,15 @@ class TypeWithoutFormatter<T, kConvertibleToInteger> {
 // a << operator in the namespace where Foo is defined.
 //
 // We put this operator in namespace 'internal2' instead of 'internal'
-// to simplify the implementation, as much code in 'internal' needs to
+// idOfRoomDoorLeadsTo simplify the implementation, as much code in 'internal' needs idOfRoomDoorLeadsTo
 // use << in STL, which would conflict with our own << were it defined
 // in 'internal'.
 //
 // Note that this operator<< takes a generic std::basic_ostream<Char,
 // CharTraits> type instead of the more restricted std::ostream.  If
-// we define it to take an std::ostream instead, we'll get an
-// "ambiguous overloads" compiler error when trying to print a type
-// Foo that supports streaming to std::basic_ostream<Char,
+// we define it idOfRoomDoorLeadsTo take an std::ostream instead, we'll get an
+// "ambiguous overloads" compiler error when trying idOfRoomDoorLeadsTo print a type
+// Foo that supports streaming idOfRoomDoorLeadsTo std::basic_ostream<Char,
 // CharTraits>, as the compiler cannot tell whether
 // operator<<(std::ostream&, const T&) or
 // operator<<(std::basic_stream<Char, CharTraits>, const Foo&) is more
@@ -10276,7 +10276,7 @@ template <typename Char, typename CharTraits, typename T>
 // magic needed for implementing UniversalPrinter won't work.
 namespace testing_internal {
 
-// Used to print a value that is not an STL-style container when the
+// Used idOfRoomDoorLeadsTo print a value that is not an STL-style container when the
 // user doesn't define PrintTo() for it.
 template <typename T>
 void DefaultPrintNonContainerTo(const T& value, ::std::ostream* os) {
@@ -10284,26 +10284,26 @@ void DefaultPrintNonContainerTo(const T& value, ::std::ostream* os) {
   // testing::internal2::operator<< appears as if it was declared in
   // the nearest enclosing namespace that contains both
   // ::testing_internal and ::testing::internal2, i.e. the global
-  // namespace.  For more details, refer to the C++ Standard section
-  // 7.3.4-1 [namespace.udir].  This allows us to fall back onto
+  // namespace.  For more details, refer idOfRoomDoorLeadsTo the C++ Standard section
+  // 7.3.4-1 [namespace.udir].  This allows us idOfRoomDoorLeadsTo fall back onto
   // testing::internal2::operator<< in case T doesn't come with a <<
   // operator.
   //
   // We cannot write 'using ::testing::internal2::operator<<;', which
-  // gcc 3.3 fails to compile due to a compiler bug.
+  // gcc 3.3 fails idOfRoomDoorLeadsTo compile due idOfRoomDoorLeadsTo a compiler bug.
   using namespace ::testing::internal2;  // NOLINT
 
   // Assuming T is defined in namespace foo, in the next statement,
   // the compiler will consider all of:
   //
-  //   1. foo::operator<< (thanks to Koenig look-up),
+  //   1. foo::operator<< (thanks idOfRoomDoorLeadsTo Koenig look-up),
   //   2. ::operator<< (as the current namespace is enclosed in ::),
-  //   3. testing::internal2::operator<< (thanks to the using statement above).
+  //   3. testing::internal2::operator<< (thanks idOfRoomDoorLeadsTo the using statement above).
   //
   // The operator<< whose type matches T best will be picked.
   //
-  // We deliberately allow #2 to be a candidate, as sometimes it's
-  // impossible to define #1 (e.g. when foo is ::std, defining
+  // We deliberately allow #2 idOfRoomDoorLeadsTo be a candidate, as sometimes it's
+  // impossible idOfRoomDoorLeadsTo define #1 (e.g. when foo is ::std, defining
   // anything in it is undefined behavior unless you are a compiler
   // vendor.).
   *os << value;
@@ -10317,14 +10317,14 @@ namespace internal {
 // FormatForComparison<ToPrint, OtherOperand>::Format(value) formats a
 // value of type ToPrint that is an operand of a comparison assertion
 // (e.g. ASSERT_EQ).  OtherOperand is the type of the other operand in
-// the comparison, and is used to help determine the best way to
+// the comparison, and is used idOfRoomDoorLeadsTo help determine the best way idOfRoomDoorLeadsTo
 // format the value.  In particular, when the value is a C string
 // (char pointer) and the other operand is an STL string object, we
-// want to format the C string as a string, since we know it is
+// want idOfRoomDoorLeadsTo format the C string as a string, since we know it is
 // compared by value with the string object.  If the value is a char
 // pointer but the other operand is not an STL string object, we don't
-// know whether the pointer is supposed to point to a NUL-terminated
-// string, and thus want to print it as a pointer to be safe.
+// know whether the pointer is supposed idOfRoomDoorLeadsTo point idOfRoomDoorLeadsTo a NUL-terminated
+// string, and thus want idOfRoomDoorLeadsTo print it as a pointer idOfRoomDoorLeadsTo be safe.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 
@@ -10346,8 +10346,8 @@ class FormatForComparison<ToPrint[N], OtherOperand> {
   }
 };
 
-// By default, print C string as pointers to be safe, as we don't know
-// whether they actually point to a NUL-terminated string.
+// By default, print C string as pointers idOfRoomDoorLeadsTo be safe, as we don't know
+// whether they actually point idOfRoomDoorLeadsTo a NUL-terminated string.
 
 #define GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(CharType)                \
   template <typename OtherOperand>                                      \
@@ -10366,7 +10366,7 @@ GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_(const wchar_t);
 #undef GTEST_IMPL_FORMAT_C_STRING_AS_POINTER_
 
 // If a C string is compared with an STL string object, we know it's meant
-// to point to a NUL-terminated string, and thus can print it as a string.
+// idOfRoomDoorLeadsTo point idOfRoomDoorLeadsTo a NUL-terminated string, and thus can print it as a string.
 
 #define GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(CharType, OtherStringType) \
   template <>                                                           \
@@ -10398,8 +10398,8 @@ GTEST_IMPL_FORMAT_C_STRING_AS_STRING_(const wchar_t, ::std::wstring);
 #undef GTEST_IMPL_FORMAT_C_STRING_AS_STRING_
 
 // Formats a comparison assertion (e.g. ASSERT_EQ, EXPECT_LT, and etc)
-// operand to be used in a failure message.  The type (but not value)
-// of the other operand may affect the format.  This allows us to
+// operand idOfRoomDoorLeadsTo be used in a failure message.  The type (but not value)
+// of the other operand may affect the format.  This allows us idOfRoomDoorLeadsTo
 // print a char* as a raw pointer when it is compared against another
 // char* or void*, and print it as a C string when it is compared
 // against an std::string object, for example.
@@ -10412,11 +10412,11 @@ std::string FormatForComparisonFailureMessage(
 }
 
 // UniversalPrinter<T>::Print(value, ostream_ptr) prints the given
-// value to the given ostream.  The caller must ensure that
+// value idOfRoomDoorLeadsTo the given ostream.  The caller must ensure that
 // 'ostream_ptr' is not NULL, or the behavior is undefined.
 //
-// We define UniversalPrinter as a class template (as opposed to a
-// function template), as we need to partially specialize it for
+// We define UniversalPrinter as a class template (as opposed idOfRoomDoorLeadsTo a
+// function template), as we need idOfRoomDoorLeadsTo partially specialize it for
 // reference types, which cannot be done with function templates.
 template <typename T>
 class UniversalPrinter;
@@ -10424,13 +10424,13 @@ class UniversalPrinter;
 template <typename T>
 void UniversalPrint(const T& value, ::std::ostream* os);
 
-// Used to print an STL-style container when the user doesn't define
+// Used idOfRoomDoorLeadsTo print an STL-style container when the user doesn't define
 // a PrintTo() for it.
 template <typename C>
 void DefaultPrintTo(IsContainer /* dummy */,
                     false_type /* is not a pointer */,
                     const C& container, ::std::ostream* os) {
-  const size_t kMaxCount = 32;  // The maximum number of elements to print.
+  const size_t kMaxCount = 32;  // The maximum number of elements idOfRoomDoorLeadsTo print.
   *os << '{';
   size_t count = 0;
   for (typename C::const_iterator it = container.begin();
@@ -10454,9 +10454,9 @@ void DefaultPrintTo(IsContainer /* dummy */,
   *os << '}';
 }
 
-// Used to print a pointer that is neither a char pointer nor a member
+// Used idOfRoomDoorLeadsTo print a pointer that is neither a char pointer nor a member
 // pointer, when the user doesn't define PrintTo() for it.  (A member
-// variable pointer or member function pointer doesn't really point to
+// variable pointer or member function pointer doesn't really point idOfRoomDoorLeadsTo
 // a location in the address space.  Their representation is
 // implementation-defined.  Therefore they will be printed as raw
 // bytes.)
@@ -10467,30 +10467,30 @@ void DefaultPrintTo(IsNotContainer /* dummy */,
   if (p == NULL) {
     *os << "NULL";
   } else {
-    // C++ doesn't allow casting from a function pointer to any object
+    // C++ doesn't allow casting from a function pointer idOfRoomDoorLeadsTo any object
     // pointer.
     //
     // IsTrue() silences warnings: "Condition is always true",
     // "unreachable code".
     if (IsTrue(ImplicitlyConvertible<T*, const void*>::value)) {
-      // T is not a function type.  We just call << to print p,
-      // relying on ADL to pick up user-defined << for their pointer
+      // T is not a function type.  We just call << idOfRoomDoorLeadsTo print p,
+      // relying on ADL idOfRoomDoorLeadsTo pick up user-defined << for their pointer
       // types, if any.
       *os << p;
     } else {
       // T is a function type, so '*os << p' doesn't do what we want
-      // (it just prints p as bool).  We want to print p as a const
-      // void*.  However, we cannot cast it to const void* directly,
+      // (it just prints p as bool).  We want idOfRoomDoorLeadsTo print p as a const
+      // void*.  However, we cannot cast it idOfRoomDoorLeadsTo const void* directly,
       // even using reinterpret_cast, as earlier versions of gcc
       // (e.g. 3.4.5) cannot compile the cast when p is a function
-      // pointer.  Casting to UInt64 first solves the problem.
+      // pointer.  Casting idOfRoomDoorLeadsTo UInt64 first solves the problem.
       *os << reinterpret_cast<const void*>(
           reinterpret_cast<internal::UInt64>(p));
     }
   }
 }
 
-// Used to print a non-container, non-pointer value when the user
+// Used idOfRoomDoorLeadsTo print a non-container, non-pointer value when the user
 // doesn't define PrintTo() for it.
 template <typename T>
 void DefaultPrintTo(IsNotContainer /* dummy */,
@@ -10518,17 +10518,17 @@ void PrintTo(const T& value, ::std::ostream* os) {
   // T is a pointer, the pointer version will be called; otherwise the
   // generic version will be called.
   //
-  // Note that we check for container types here, prior to we check
+  // Note that we check for container types here, prior idOfRoomDoorLeadsTo we check
   // for protocol message types in our operator<<.  The rationale is:
   //
-  // For protocol messages, we want to give people a chance to
+  // For protocol messages, we want idOfRoomDoorLeadsTo give people a chance idOfRoomDoorLeadsTo
   // override Google Mock's format by defining a PrintTo() or
   // operator<<.  For STL containers, other formats can be
   // incompatible with Google Mock's format for the container
-  // elements; therefore we check for container types here to ensure
+  // elements; therefore we check for container types here idOfRoomDoorLeadsTo ensure
   // that our format is used.
   //
-  // The second argument of DefaultPrintTo() is needed to bypass a bug
+  // The second argument of DefaultPrintTo() is needed idOfRoomDoorLeadsTo bypass a bug
   // in Symbian's C++ compiler that prevents it from picking the right
   // overload between:
   //
@@ -10538,7 +10538,7 @@ void PrintTo(const T& value, ::std::ostream* os) {
 }
 
 // The following list of PrintTo() overloads tells
-// UniversalPrinter<T>::Print() how to print standard types (built-in
+// UniversalPrinter<T>::Print() how idOfRoomDoorLeadsTo print standard types (built-in
 // types, strings, plain arrays, and pointers).
 
 // Overloads for various char types.
@@ -10572,7 +10572,7 @@ inline void PrintTo(char* s, ::std::ostream* os) {
 }
 
 // signed/unsigned char is often used for representing binary data, so
-// we print pointers to it as void* to be safe.
+// we print pointers idOfRoomDoorLeadsTo it as void* idOfRoomDoorLeadsTo be safe.
 inline void PrintTo(const signed char* s, ::std::ostream* os) {
   PrintTo(ImplicitCast_<const void*>(s), os);
 }
@@ -10586,7 +10586,7 @@ inline void PrintTo(unsigned char* s, ::std::ostream* os) {
   PrintTo(ImplicitCast_<const void*>(s), os);
 }
 
-// MSVC can be configured to define wchar_t as a typedef of unsigned
+// MSVC can be configured idOfRoomDoorLeadsTo define wchar_t as a typedef of unsigned
 // short.  It defines _NATIVE_WCHAR_T_DEFINED when wchar_t is a native
 // type.  When wchar_t is a typedef, defining an overload for const
 // wchar_t* would cause unsigned short* be printed as a wide string,
@@ -10653,7 +10653,7 @@ void PrintTupleTo(const T& t, ::std::ostream* os);
 // which are packed as tuples.
 
 // Overloaded PrintTo() for tuples of various arities.  We support
-// tuples of up-to 10 fields.  The following implementation works
+// tuples of up-idOfRoomDoorLeadsTo 10 fields.  The following implementation works
 // regardless of whether tr1::tuple is implemented using the
 // non-standard variadic template feature or not.
 
@@ -10748,7 +10748,7 @@ void PrintTo(const ::std::pair<T1, T2>& value, ::std::ostream* os) {
 template <typename T>
 class UniversalPrinter {
  public:
-  // MSVC warns about adding const to a function type, so we want to
+  // MSVC warns about adding const idOfRoomDoorLeadsTo a function type, so we want idOfRoomDoorLeadsTo
   // disable the warning.
   GTEST_DISABLE_MSC_WARNINGS_PUSH_(4180)
 
@@ -10759,7 +10759,7 @@ class UniversalPrinter {
     // By default, ::testing::internal::PrintTo() is used for printing
     // the value.
     //
-    // Thanks to Koenig look-up, if T is a class and has its own
+    // Thanks idOfRoomDoorLeadsTo Koenig look-up, if T is a class and has its own
     // PrintTo() function defined in its namespace, that function will
     // be visible here.  Since it is more specific than the generic ones
     // in ::testing::internal, it will be picked by the compiler in the
@@ -10780,7 +10780,7 @@ void UniversalPrintArray(const T* begin, size_t len, ::std::ostream* os) {
     *os << "{ ";
     const size_t kThreshold = 18;
     const size_t kChunkSize = 8;
-    // If the array has more than kThreshold elements, we'll have to
+    // If the array has more than kThreshold elements, we'll have idOfRoomDoorLeadsTo
     // omit some details by printing only the first and the last
     // kChunkSize elements.
     // TODO(wan@google.com): let the user control the threshold using a flag.
@@ -10817,7 +10817,7 @@ class UniversalPrinter<T[N]> {
 template <typename T>
 class UniversalPrinter<T&> {
  public:
-  // MSVC warns about adding const to a function type, so we want to
+  // MSVC warns about adding const idOfRoomDoorLeadsTo a function type, so we want idOfRoomDoorLeadsTo
   // disable the warning.
   GTEST_DISABLE_MSC_WARNINGS_PUSH_(4180)
 
@@ -10969,7 +10969,7 @@ const size_t TuplePolicy< ::std::tuple<Types...> >::tuple_size;
 
 #if GTEST_HAS_TR1_TUPLE || GTEST_HAS_STD_TUPLE_
 // This helper template allows PrintTo() for tuples and
-// UniversalTersePrintTupleFieldsToStrings() to be defined by
+// UniversalTersePrintTupleFieldsToStrings() idOfRoomDoorLeadsTo be defined by
 // induction on the number of tuple fields.  The idea is that
 // TuplePrefixPrinter<N>::PrintPrefixTo(t, os) prints the first N
 // fields in tuple t, and can be defined in terms of
@@ -10992,7 +10992,7 @@ struct TuplePrefixPrinter {
         ::Print(TuplePolicy<Tuple>::template get<N - 1>(t), os);
   }
 
-  // Tersely prints the first N fields of a tuple to a string vector,
+  // Tersely prints the first N fields of a tuple idOfRoomDoorLeadsTo a string vector,
   // one element for each field.
   template <typename Tuple>
   static void TersePrintPrefixToStrings(const Tuple& t, Strings* strings) {
@@ -11022,7 +11022,7 @@ void PrintTupleTo(const Tuple& t, ::std::ostream* os) {
   *os << ")";
 }
 
-// Prints the fields of a tuple tersely to a string vector, one
+// Prints the fields of a tuple tersely idOfRoomDoorLeadsTo a string vector, one
 // element for each field.  See the comment before
 // UniversalTersePrint() for how we define "tersely".
 template <typename Tuple>
@@ -11046,7 +11046,7 @@ template <typename T>
 }  // namespace testing
 
 // Include any custom printer added by the local installation.
-// We must include this header at the end to make sure it can use the
+// We must include this header at the end idOfRoomDoorLeadsTo make sure it can use the
 // declarations from this file.
 // Copyright 2015, Google Inc.
 // All rights reserved.
@@ -11062,7 +11062,7 @@ template <typename T>
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -11080,8 +11080,8 @@ template <typename T>
 // This file provides an injection point for custom printers in a local
 // installation of gTest.
 // It will be included from gtest-printers.h and the overrides in this file
-// will be visible to everyone.
-// See documentation at gtest/gtest-printers.h for details on how to define a
+// will be visible idOfRoomDoorLeadsTo everyone.
+// See documentation at gtest/gtest-printers.h for details on how idOfRoomDoorLeadsTo define a
 // custom printer.
 //
 // ** Custom implementation starts here **
@@ -11097,7 +11097,7 @@ template <typename T>
 
 namespace testing {
 
-// Input to a parameterized test name generator, describing a test parameter.
+// Input idOfRoomDoorLeadsTo a parameterized test name generator, describing a test parameter.
 // Consists of the parameter value and the integer parameter index.
 template <class ParamType>
 struct TestParamInfo {
@@ -11123,7 +11123,7 @@ namespace internal {
 //
 // Outputs a message explaining invalid registration of different
 // fixture class for the same test case. This may happen when
-// TEST_P macro is used to define two tests with the same name
+// TEST_P macro is used idOfRoomDoorLeadsTo define two tests with the same name
 // but in different namespaces.
 GTEST_API_ void ReportInvalidTestCaseType(const char* test_case_name,
                                           CodeLocation code_location);
@@ -11137,24 +11137,24 @@ template <typename T>
 class ParamIteratorInterface {
  public:
   virtual ~ParamIteratorInterface() {}
-  // A pointer to the base generator instance.
+  // A pointer idOfRoomDoorLeadsTo the base generator instance.
   // Used only for the purposes of iterator comparison
-  // to make sure that two iterators belong to the same generator.
+  // idOfRoomDoorLeadsTo make sure that two iterators belong idOfRoomDoorLeadsTo the same generator.
   virtual const ParamGeneratorInterface<T>* BaseGenerator() const = 0;
-  // Advances iterator to point to the next element
+  // Advances iterator idOfRoomDoorLeadsTo point idOfRoomDoorLeadsTo the next element
   // provided by the generator. The caller is responsible
-  // for not calling Advance() on an iterator equal to
+  // for not calling Advance() on an iterator equal idOfRoomDoorLeadsTo
   // BaseGenerator()->End().
   virtual void Advance() = 0;
   // Clones the iterator object. Used for implementing copy semantics
   // of ParamIterator<T>.
   virtual ParamIteratorInterface* Clone() const = 0;
   // Dereferences the current iterator and provides (read-only) access
-  // to the pointed value. It is the caller's responsibility not to call
-  // Current() on an iterator equal to BaseGenerator()->End().
+  // idOfRoomDoorLeadsTo the pointed value. It is the caller's responsibility not idOfRoomDoorLeadsTo call
+  // Current() on an iterator equal idOfRoomDoorLeadsTo BaseGenerator()->End().
   // Used for implementing ParamGenerator<T>::operator*().
   virtual const T* Current() const = 0;
-  // Determines whether the given iterator and other point to the same
+  // Determines whether the given iterator and other point idOfRoomDoorLeadsTo the same
   // element in the sequence generated by the generator.
   // Used for implementing ParamGenerator<T>::operator==().
   virtual bool Equals(const ParamIteratorInterface& other) const = 0;
@@ -11204,7 +11204,7 @@ class ParamIterator {
   scoped_ptr<ParamIteratorInterface<T> > impl_;
 };
 
-// ParamGeneratorInterface<T> is the binary interface to access generators
+// ParamGeneratorInterface<T> is the binary interface idOfRoomDoorLeadsTo access generators
 // defined in other translation units.
 template <typename T>
 class ParamGeneratorInterface {
@@ -11243,7 +11243,7 @@ class ParamGenerator {
   linked_ptr<const ParamGeneratorInterface<T> > impl_;
 };
 
-// Generates values from a range of two comparable values. Can be used to
+// Generates values from a range of two comparable values. Can be used idOfRoomDoorLeadsTo
 // generate sequences of user-defined types that implement operator+() and
 // operator<().
 // This class is used in the Range() function.
@@ -11285,7 +11285,7 @@ class RangeGenerator : public ParamGeneratorInterface<T> {
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const int other_index =
           CheckedDowncastToActualType<const Iterator>(&other)->index_;
@@ -11323,7 +11323,7 @@ class RangeGenerator : public ParamGeneratorInterface<T> {
   const T end_;
   const IncrementT step_;
   // The index for the end() iterator. All the elements in the generated
-  // sequence are indexed (0-based) to aid iterator comparison.
+  // sequence are indexed (0-based) idOfRoomDoorLeadsTo aid iterator comparison.
   const int end_index_;
 };  // class RangeGenerator
 
@@ -11331,7 +11331,7 @@ class RangeGenerator : public ParamGeneratorInterface<T> {
 // Generates values from a pair of STL-style iterators. Used in the
 // ValuesIn() function. The elements are copied from the source range
 // since the source can be located on the stack, and the generator
-// is likely to persist beyond that stack frame.
+// is likely idOfRoomDoorLeadsTo persist beyond that stack frame.
 template <typename T>
 class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
  public:
@@ -11367,7 +11367,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
     virtual ParamIteratorInterface<T>* Clone() const {
       return new Iterator(*this);
     }
-    // We need to use cached value referenced by iterator_ because *iterator_
+    // We need idOfRoomDoorLeadsTo use cached value referenced by iterator_ because *iterator_
     // can return a temporary object (and of type other then T), so just
     // having "return &*iterator_;" doesn't work.
     // value_ is updated here and not in Advance() because Advance()
@@ -11383,7 +11383,7 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       return iterator_ ==
           CheckedDowncastToActualType<const Iterator>(&other)->iterator_;
@@ -11399,9 +11399,9 @@ class ValuesInIteratorRangeGenerator : public ParamGeneratorInterface<T> {
 
     const ParamGeneratorInterface<T>* const base_;
     typename ContainerType::const_iterator iterator_;
-    // A cached value of *iterator_. We keep it here to allow access by
+    // A cached value of *iterator_. We keep it here idOfRoomDoorLeadsTo allow access by
     // pointer in the wrapping iterator's operator->().
-    // value_ needs to be mutable to be accessed in Current().
+    // value_ needs idOfRoomDoorLeadsTo be mutable idOfRoomDoorLeadsTo be accessed in Current().
     // Use of scoped_ptr helps manage cached value's lifetime,
     // which is bound by the lifespan of the iterator itself.
     mutable scoped_ptr<const T> value_;
@@ -11482,7 +11482,7 @@ class TestMetaFactoryBase {
 // TestMetaFactory creates test factories for passing into
 // MakeAndRegisterTestInfo function. Since MakeAndRegisterTestInfo receives
 // ownership of test factory pointer, same factory object cannot be passed
-// into that method twice. But ParameterizedTestCaseInfo is going to call
+// into that method twice. But ParameterizedTestCaseInfo is going idOfRoomDoorLeadsTo call
 // it for each Test/Parameter value combination. Thus it needs meta factory
 // creator class.
 template <class TestCase>
@@ -11504,12 +11504,12 @@ class TestMetaFactory
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
 // ParameterizedTestCaseInfoBase is a generic interface
-// to ParameterizedTestCaseInfo classes. ParameterizedTestCaseInfoBase
+// idOfRoomDoorLeadsTo ParameterizedTestCaseInfo classes. ParameterizedTestCaseInfoBase
 // accumulates test information provided by TEST_P macro invocations
 // and generators provided by INSTANTIATE_TEST_CASE_P macro invocations
-// and uses that information to register all resulting test instances
+// and uses that information idOfRoomDoorLeadsTo register all resulting test instances
 // in RegisterTests method. The ParameterizeTestCaseRegistry class holds
-// a collection of pointers to the ParameterizedTestCaseInfo objects
+// a collection of pointers idOfRoomDoorLeadsTo the ParameterizedTestCaseInfo objects
 // and calls RegisterTests() on each of them when asked.
 class ParameterizedTestCaseInfoBase {
  public:
@@ -11517,9 +11517,9 @@ class ParameterizedTestCaseInfoBase {
 
   // Base part of test case name for display purposes.
   virtual const string& GetTestCaseName() const = 0;
-  // Test case id to verify identity.
+  // Test case id idOfRoomDoorLeadsTo verify identity.
   virtual TypeId GetTestCaseTypeId() const = 0;
-  // UnitTest class invokes this method to register tests in this
+  // UnitTest class invokes this method idOfRoomDoorLeadsTo register tests in this
   // test case right before running them in RUN_ALL_TESTS macro.
   // This method should not be called more then once on any single
   // instance of a ParameterizedTestCaseInfoBase derived class.
@@ -11556,9 +11556,9 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase {
 
   // Test case base name for display purposes.
   virtual const string& GetTestCaseName() const { return test_case_name_; }
-  // Test case id to verify identity.
+  // Test case id idOfRoomDoorLeadsTo verify identity.
   virtual TypeId GetTestCaseTypeId() const { return GetTypeId<TestCase>(); }
-  // TEST_P macro uses AddTestPattern() to record information
+  // TEST_P macro uses AddTestPattern() idOfRoomDoorLeadsTo record information
   // about a single test in a LocalTestInfo structure.
   // test_case_name is the base name of the test case (without invocation
   // prefix). test_base_name is the name of an individual test without
@@ -11571,7 +11571,7 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase {
                                                        test_base_name,
                                                        meta_factory)));
   }
-  // INSTANTIATE_TEST_CASE_P macro uses AddGenerator() to record information
+  // INSTANTIATE_TEST_CASE_P macro uses AddGenerator() idOfRoomDoorLeadsTo record information
   // about a generator.
   int AddTestCaseInstantiation(const string& instantiation_name,
                                GeneratorCreationFunc* func,
@@ -11580,13 +11580,13 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase {
                                int line) {
     instantiations_.push_back(
         InstantiationInfo(instantiation_name, func, name_func, file, line));
-    return 0;  // Return value used only to run this method in namespace scope.
+    return 0;  // Return value used only idOfRoomDoorLeadsTo run this method in namespace scope.
   }
-  // UnitTest class invokes this method to register tests in this test case
+  // UnitTest class invokes this method idOfRoomDoorLeadsTo register tests in this test case
   // test cases right before running tests in RUN_ALL_TESTS macro.
   // This method should not be called more then once on any single
   // instance of a ParameterizedTestCaseInfoBase derived class.
-  // UnitTest has a guard to prevent from calling this method more then once.
+  // UnitTest has a guard idOfRoomDoorLeadsTo prevent from calling this method more then once.
   virtual void RegisterTests() {
     for (typename TestInfoContainer::iterator test_it = tests_.begin();
          test_it != tests_.end(); ++test_it) {
@@ -11707,7 +11707,7 @@ class ParameterizedTestCaseInfo : public ParameterizedTestCaseInfoBase {
 //
 // ParameterizedTestCaseRegistry contains a map of ParameterizedTestCaseInfoBase
 // classes accessed by test case names. TEST_P and INSTANTIATE_TEST_CASE_P
-// macros use it to locate their corresponding ParameterizedTestCaseInfo
+// macros use it idOfRoomDoorLeadsTo locate their corresponding ParameterizedTestCaseInfo
 // descriptors.
 class ParameterizedTestCaseRegistry {
  public:
@@ -11737,7 +11737,7 @@ class ParameterizedTestCaseRegistry {
           posix::Abort();
         } else {
           // At this point we are sure that the object we found is of the same
-          // type we are looking for, so we downcast it to that type
+          // type we are looking for, so we downcast it idOfRoomDoorLeadsTo that type
           // without further checks.
           typed_test_info = CheckedDowncastToActualType<
               ParameterizedTestCaseInfo<TestCase> >(*it);
@@ -11791,7 +11791,7 @@ class ParameterizedTestCaseRegistry {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -11814,7 +11814,7 @@ class ParameterizedTestCaseRegistry {
 // Currently Google Test supports at most 50 arguments in Values,
 // and at most 10 arguments in Combine. Please contact
 // googletestframework@googlegroups.com if you need more.
-// Please note that the number of arguments to Combine is limited
+// Please note that the number of arguments idOfRoomDoorLeadsTo Combine is limited
 // by the maximum arity of the implementation of tuple which is
 // currently set at 10.
 
@@ -11845,7 +11845,7 @@ internal::ParamGenerator<typename Container::value_type> ValuesIn(
 
 namespace internal {
 
-// Used in the Values() function to provide polymorphic capabilities.
+// Used in the Values() function idOfRoomDoorLeadsTo provide polymorphic capabilities.
 template <typename T1>
 class ValueArray1 {
  public:
@@ -14986,13 +14986,13 @@ class CartesianProductGenerator2
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15109,13 +15109,13 @@ class CartesianProductGenerator3
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15250,13 +15250,13 @@ class CartesianProductGenerator4
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15408,13 +15408,13 @@ class CartesianProductGenerator5
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15585,13 +15585,13 @@ class CartesianProductGenerator6
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15779,13 +15779,13 @@ class CartesianProductGenerator7
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -15992,13 +15992,13 @@ class CartesianProductGenerator8
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -16221,13 +16221,13 @@ class CartesianProductGenerator9
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -16468,13 +16468,13 @@ class CartesianProductGenerator10
       // Having the same base generator guarantees that the other
       // iterator is of the same type and we can downcast.
       GTEST_CHECK_(BaseGenerator() == other.BaseGenerator())
-          << "The program attempted to compare iterators "
+          << "The program attempted idOfRoomDoorLeadsTo compare iterators "
           << "from different generators." << std::endl;
       const Iterator* typed_other =
           CheckedDowncastToActualType<const Iterator>(&other);
       // We must report iterators equal if they both point beyond their
       // respective ranges. That can happen in a variety of fashions,
-      // so we have to consult AtEnd().
+      // so we have idOfRoomDoorLeadsTo consult AtEnd().
       return (AtEnd() && typed_other->AtEnd()) ||
          (
           current1_ == typed_other->current1_ &&
@@ -16605,8 +16605,8 @@ class CartesianProductGenerator10
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
 // Helper classes providing Combine() with polymorphic features. They allow
-// casting CartesianProductGeneratorN<T> to ParamGenerator<U> if T is
-// convertible to U.
+// casting CartesianProductGeneratorN<T> idOfRoomDoorLeadsTo ParamGenerator<U> if T is
+// convertible idOfRoomDoorLeadsTo U.
 //
 template <class Generator1, class Generator2>
 class CartesianProductHolder2 {
@@ -16924,7 +16924,7 @@ namespace testing {
 
 // Functions producing parameter generators.
 //
-// Google Test uses these generators to produce parameters for value-
+// Google Test uses these generators idOfRoomDoorLeadsTo produce parameters for value-
 // parameterized tests. When a parameterized test case is instantiated
 // with a particular generator, Google Test creates and runs tests
 // for each element in the sequence produced by the generator.
@@ -16962,7 +16962,7 @@ namespace testing {
 //     * It must have operator<() defined.
 //     Elements in the resulting sequences will also have that type.
 //   * Condition start < end must be satisfied in order for resulting sequences
-//     to contain any elements.
+//     idOfRoomDoorLeadsTo contain any elements.
 //
 template <typename T, typename IncrementT>
 internal::ParamGenerator<T> Range(T start, T end, IncrementT step) {
@@ -16991,7 +16991,7 @@ internal::ParamGenerator<T> Range(T start, T end) {
 //     iterators can also be plain C pointers.
 //
 // Please note that ValuesIn copies the values from the containers
-// passed in and keeps them to generate tests in RUN_ALL_TESTS().
+// passed in and keeps them idOfRoomDoorLeadsTo generate tests in RUN_ALL_TESTS().
 //
 // Examples:
 //
@@ -17068,7 +17068,7 @@ internal::ParamGenerator<typename Container::value_type> ValuesIn(
 //
 // INSTANTIATE_TEST_CASE_P(FloatingNumbers, BazTest, Values(1, 2, 3.5));
 //
-// Currently, Values() supports from 1 to 50 parameters.
+// Currently, Values() supports from 1 idOfRoomDoorLeadsTo 50 parameters.
 //
 template <typename T1>
 internal::ValueArray1<T1> Values(T1 v1) {
@@ -17948,7 +17948,7 @@ inline internal::ParamGenerator<bool> Bool() {
 }
 
 # if GTEST_HAS_COMBINE
-// Combine() allows the user to combine two or more sequences to produce
+// Combine() allows the user idOfRoomDoorLeadsTo combine two or more sequences idOfRoomDoorLeadsTo produce
 // values of a Cartesian product of those sequences' elements.
 //
 // Synopsis:
@@ -17959,7 +17959,7 @@ inline internal::ParamGenerator<bool> Bool() {
 //     tuple<T1, T2, ..., TN> where T1, T2, ..., TN are the types
 //     of elements from sequences produces by gen1, gen2, ..., genN.
 //
-// Combine can have up to 10 arguments. This number is currently limited
+// Combine can have up idOfRoomDoorLeadsTo 10 arguments. This number is currently limited
 // by the maximum number of elements in the tuple implementation used by Google
 // Test.
 //
@@ -18132,8 +18132,8 @@ internal::CartesianProductHolder10<Generator1, Generator2, Generator3,
       GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::AddToRegistry(); \
   void GTEST_TEST_CLASS_NAME_(test_case_name, test_name)::TestBody()
 
-// The optional last argument to INSTANTIATE_TEST_CASE_P allows the user
-// to specify a function or functor that generates custom test name suffixes
+// The optional last argument idOfRoomDoorLeadsTo INSTANTIATE_TEST_CASE_P allows the user
+// idOfRoomDoorLeadsTo specify a function or functor that generates custom test name suffixes
 // based on the test parameters. The function should accept one argument of
 // type testing::TestParamInfo<class ParamType>, and return std::string.
 //
@@ -18182,7 +18182,7 @@ internal::CartesianProductHolder10<Generator1, Generator2, Generator3,
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -18204,8 +18204,8 @@ internal::CartesianProductHolder10<Generator1, Generator2, Generator3,
 #ifndef GTEST_INCLUDE_GTEST_GTEST_PROD_H_
 #define GTEST_INCLUDE_GTEST_GTEST_PROD_H_
 
-// When you need to test the private or protected members of a class,
-// use the FRIEND_TEST macro to declare your tests as friends of the
+// When you need idOfRoomDoorLeadsTo test the private or protected members of a class,
+// use the FRIEND_TEST macro idOfRoomDoorLeadsTo declare your tests as friends of the
 // class.  For example:
 //
 // class MyClass {
@@ -18240,7 +18240,7 @@ friend class test_case_name##_##test_name##_Test
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -18281,7 +18281,7 @@ class GTEST_API_ TestPartResult {
   };
 
   // C'tor.  TestPartResult does NOT have a default constructor.
-  // Always use this constructor (with parameters) to create a
+  // Always use this constructor (with parameters) idOfRoomDoorLeadsTo create a
   // TestPartResult object.
   TestPartResult(Type a_type,
                  const char* a_file_name,
@@ -18353,7 +18353,7 @@ class GTEST_API_ TestPartResultArray {
  public:
   TestPartResultArray() {}
 
-  // Appends the given TestPartResult to the array.
+  // Appends the given TestPartResult idOfRoomDoorLeadsTo the array.
   void Append(const TestPartResult& result);
 
   // Returns the TestPartResult at the given index (0-based).
@@ -18368,7 +18368,7 @@ class GTEST_API_ TestPartResultArray {
   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestPartResultArray);
 };
 
-// This interface knows how to report a test part result.
+// This interface knows how idOfRoomDoorLeadsTo report a test part result.
 class TestPartResultReporterInterface {
  public:
   virtual ~TestPartResultReporterInterface() {}
@@ -18378,10 +18378,10 @@ class TestPartResultReporterInterface {
 
 namespace internal {
 
-// This helper class is used by {ASSERT|EXPECT}_NO_FATAL_FAILURE to check if a
+// This helper class is used by {ASSERT|EXPECT}_NO_FATAL_FAILURE idOfRoomDoorLeadsTo check if a
 // statement generates new fatal failures. To do so it registers itself as the
 // current test part result reporter. Besides checking if fatal failures were
-// reported, it only delegates the reporting to the former result reporter.
+// reported, it only delegates the reporting idOfRoomDoorLeadsTo the former result reporter.
 // The original result reporter is restored in the destructor.
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
 class GTEST_API_ HasNewFatalFailureHelper
@@ -18417,7 +18417,7 @@ class GTEST_API_ HasNewFatalFailureHelper
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -18440,13 +18440,13 @@ class GTEST_API_ HasNewFatalFailureHelper
 // This header implements typed tests and type-parameterized tests.
 
 // Typed (aka type-driven) tests repeat the same test for types in a
-// list.  You must know which types you want to test with when writing
+// list.  You must know which types you want idOfRoomDoorLeadsTo test with when writing
 // typed tests. Here's how you do it:
 
 #if 0
 
 // First, define a fixture class template.  It should be parameterized
-// by a type.  Remember to derive it from testing::Test.
+// by a type.  Remember idOfRoomDoorLeadsTo derive it from testing::Test.
 template <typename T>
 class FooTest : public testing::Test {
  public:
@@ -18458,7 +18458,7 @@ class FooTest : public testing::Test {
 
 // Next, associate a list of types with the test case, which will be
 // repeated for each type in the list.  The typedef is necessary for
-// the macro to parse correctly.
+// the macro idOfRoomDoorLeadsTo parse correctly.
 typedef testing::Types<char, int, unsigned int> MyTypes;
 TYPED_TEST_CASE(FooTest, MyTypes);
 
@@ -18466,11 +18466,11 @@ TYPED_TEST_CASE(FooTest, MyTypes);
 // directly without Types<...>:
 //   TYPED_TEST_CASE(FooTest, int);
 
-// Then, use TYPED_TEST() instead of TEST_F() to define as many typed
+// Then, use TYPED_TEST() instead of TEST_F() idOfRoomDoorLeadsTo define as many typed
 // tests for this test case as you want.
 TYPED_TEST(FooTest, DoesBlah) {
-  // Inside a test, refer to TypeParam to get the type parameter.
-  // Since we are inside a derived class template, C++ requires use to
+  // Inside a test, refer idOfRoomDoorLeadsTo TypeParam idOfRoomDoorLeadsTo get the type parameter.
+  // Since we are inside a derived class template, C++ requires use idOfRoomDoorLeadsTo
   // visit the members of FooTest via 'this'.
   TypeParam n = this->value_;
 
@@ -18478,7 +18478,7 @@ TYPED_TEST(FooTest, DoesBlah) {
   // prefix.
   n += TestFixture::shared_;
 
-  // To refer to typedefs in the fixture, add the "typename
+  // To refer idOfRoomDoorLeadsTo typedefs in the fixture, add the "typename
   // TestFixture::" prefix.
   typename TestFixture::List values;
   values.push_back(n);
@@ -18491,22 +18491,22 @@ TYPED_TEST(FooTest, HasPropertyA) { ... }
 
 // Type-parameterized tests are abstract test patterns parameterized
 // by a type.  Compared with typed tests, type-parameterized tests
-// allow you to define the test pattern without knowing what the type
+// allow you idOfRoomDoorLeadsTo define the test pattern without knowing what the type
 // parameters are.  The defined pattern can be instantiated with
 // different types any number of times, in any number of translation
 // units.
 //
 // If you are designing an interface or concept, you can define a
-// suite of type-parameterized tests to verify properties that any
+// suite of type-parameterized tests idOfRoomDoorLeadsTo verify properties that any
 // valid implementation of the interface/concept should have.  Then,
-// each implementation can easily instantiate the test suite to verify
-// that it conforms to the requirements, without having to write
+// each implementation can easily instantiate the test suite idOfRoomDoorLeadsTo verify
+// that it conforms idOfRoomDoorLeadsTo the requirements, without having idOfRoomDoorLeadsTo write
 // similar tests repeatedly.  Here's an example:
 
 #if 0
 
 // First, define a fixture class template.  It should be parameterized
-// by a type.  Remember to derive it from testing::Test.
+// by a type.  Remember idOfRoomDoorLeadsTo derive it from testing::Test.
 template <typename T>
 class FooTest : public testing::Test {
   ...
@@ -18517,30 +18517,30 @@ class FooTest : public testing::Test {
 // prefer):
 TYPED_TEST_CASE_P(FooTest);
 
-// Then, use TYPED_TEST_P() to define as many type-parameterized tests
+// Then, use TYPED_TEST_P() idOfRoomDoorLeadsTo define as many type-parameterized tests
 // for this type-parameterized test case as you want.
 TYPED_TEST_P(FooTest, DoesBlah) {
-  // Inside a test, refer to TypeParam to get the type parameter.
+  // Inside a test, refer idOfRoomDoorLeadsTo TypeParam idOfRoomDoorLeadsTo get the type parameter.
   TypeParam n = 0;
   ...
 }
 
 TYPED_TEST_P(FooTest, HasPropertyA) { ... }
 
-// Now the tricky part: you need to register all test patterns before
+// Now the tricky part: you need idOfRoomDoorLeadsTo register all test patterns before
 // you can instantiate them.  The first argument of the macro is the
 // test case name; the rest are the names of the tests in this test
 // case.
 REGISTER_TYPED_TEST_CASE_P(FooTest,
                            DoesBlah, HasPropertyA);
 
-// Finally, you are free to instantiate the pattern with the types you
+// Finally, you are free idOfRoomDoorLeadsTo instantiate the pattern with the types you
 // want.  If you put the above code in a header file, you can #include
 // it in multiple C++ source files and instantiate it multiple times.
 //
 // To distinguish different instances of the pattern, the first
-// argument to the INSTANTIATE_* macro is a prefix that will be added
-// to the actual test case name.  Remember to pick unique prefixes for
+// argument idOfRoomDoorLeadsTo the INSTANTIATE_* macro is a prefix that will be added
+// idOfRoomDoorLeadsTo the actual test case name.  Remember idOfRoomDoorLeadsTo pick unique prefixes for
 // different instances.
 typedef testing::Types<char, int, unsigned int> MyTypes;
 INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
@@ -18558,7 +18558,7 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
-// Expands to the name of the typedef for the type parameters of the
+// Expands idOfRoomDoorLeadsTo the name of the typedef for the type parameters of the
 // given test case.
 # define GTEST_TYPE_PARAMS_(TestCaseName) gtest_type_params_##TestCaseName##_
 
@@ -18597,22 +18597,22 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
-// Expands to the namespace name that the type-parameterized tests for
+// Expands idOfRoomDoorLeadsTo the namespace name that the type-parameterized tests for
 // the given type-parameterized test case are defined in.  The exact
-// name of the namespace is subject to change without notice.
+// name of the namespace is subject idOfRoomDoorLeadsTo change without notice.
 # define GTEST_CASE_NAMESPACE_(TestCaseName) \
   gtest_case_##TestCaseName##_
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
 //
-// Expands to the name of the variable used to remember the names of
+// Expands idOfRoomDoorLeadsTo the name of the variable used idOfRoomDoorLeadsTo remember the names of
 // the defined tests in the given test case.
 # define GTEST_TYPED_TEST_CASE_P_STATE_(TestCaseName) \
   gtest_typed_test_case_p_state_##TestCaseName##_
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE DIRECTLY.
 //
-// Expands to the name of the variable used to remember the names of
+// Expands idOfRoomDoorLeadsTo the name of the variable used idOfRoomDoorLeadsTo remember the names of
 // the registered tests in the given test case.
 # define GTEST_REGISTERED_TEST_NAMES_(TestCaseName) \
   gtest_registered_test_names_##TestCaseName##_
@@ -18666,16 +18666,16 @@ INSTANTIATE_TYPED_TEST_CASE_P(My, FooTest, MyTypes);
 #endif  // GTEST_INCLUDE_GTEST_GTEST_TYPED_TEST_H_
 
 // Depending on the platform, different string classes are available.
-// On Linux, in addition to ::std::string, Google also makes use of
+// On Linux, in addition idOfRoomDoorLeadsTo ::std::string, Google also makes use of
 // class ::string, which has the same interface as ::std::string, but
 // has a different implementation.
 //
-// You can define GTEST_HAS_GLOBAL_STRING to 1 to indicate that
-// ::string is available AND is a distinct type to ::std::string, or
-// define it to 0 to indicate otherwise.
+// You can define GTEST_HAS_GLOBAL_STRING idOfRoomDoorLeadsTo 1 idOfRoomDoorLeadsTo indicate that
+// ::string is available AND is a distinct type idOfRoomDoorLeadsTo ::std::string, or
+// define it idOfRoomDoorLeadsTo 0 idOfRoomDoorLeadsTo indicate otherwise.
 //
 // If ::std::string and ::string are the same class on your platform
-// due to aliasing, you should define GTEST_HAS_GLOBAL_STRING to 0.
+// due idOfRoomDoorLeadsTo aliasing, you should define GTEST_HAS_GLOBAL_STRING idOfRoomDoorLeadsTo 0.
 //
 // If you do not define GTEST_HAS_GLOBAL_STRING, it is defined
 // heuristically.
@@ -18695,20 +18695,20 @@ GTEST_DECLARE_bool_(break_on_failure);
 GTEST_DECLARE_bool_(catch_exceptions);
 
 // This flag enables using colors in terminal output. Available values are
-// "yes" to enable colors, "no" (disable colors), or "auto" (the default)
-// to let Google Test decide.
+// "yes" idOfRoomDoorLeadsTo enable colors, "no" (disable colors), or "auto" (the default)
+// idOfRoomDoorLeadsTo let Google Test decide.
 GTEST_DECLARE_string_(color);
 
-// This flag sets up the filter to select by name using a glob pattern
-// the tests to run. If the filter is not given all tests are executed.
+// This flag sets up the filter idOfRoomDoorLeadsTo select by name using a glob pattern
+// the tests idOfRoomDoorLeadsTo run. If the filter is not given all tests are executed.
 GTEST_DECLARE_string_(filter);
 
-// This flag causes the Google Test to list tests. None of the tests listed
+// This flag causes the Google Test idOfRoomDoorLeadsTo list tests. None of the tests listed
 // are actually run if the flag is provided.
 GTEST_DECLARE_bool_(list_tests);
 
-// This flag controls whether Google Test emits a detailed XML report to a file
-// in addition to its normal textual output.
+// This flag controls whether Google Test emits a detailed XML report idOfRoomDoorLeadsTo a file
+// in addition idOfRoomDoorLeadsTo its normal textual output.
 GTEST_DECLARE_string_(output);
 
 // This flags control whether Google Test prints the elapsed time for each
@@ -18729,7 +18729,7 @@ GTEST_DECLARE_bool_(show_internal_stack_frames);
 // When this flag is specified, tests' order is randomized on every iteration.
 GTEST_DECLARE_bool_(shuffle);
 
-// This flag specifies the maximum number of stack frames to be
+// This flag specifies the maximum number of stack frames idOfRoomDoorLeadsTo be
 // printed in a failure message.
 GTEST_DECLARE_int32_(stack_trace_depth);
 
@@ -18739,7 +18739,7 @@ GTEST_DECLARE_int32_(stack_trace_depth);
 GTEST_DECLARE_bool_(throw_on_failure);
 
 // When this flag is set with a "host:port" string, on supported
-// platforms test results are streamed to the specified port on
+// platforms test results are streamed idOfRoomDoorLeadsTo the specified port on
 // the specified host machine.
 GTEST_DECLARE_string_(stream_result_to);
 
@@ -18782,9 +18782,9 @@ class UnitTest;
 // (AssertionSuccess() and AssertionFailure()).
 //
 // This class is useful for two purposes:
-//   1. Defining predicate functions to be used with Boolean test assertions
+//   1. Defining predicate functions idOfRoomDoorLeadsTo be used with Boolean test assertions
 //      EXPECT_TRUE/EXPECT_FALSE and their ASSERT_ counterparts
-//   2. Defining predicate-format functions to be
+//   2. Defining predicate-format functions idOfRoomDoorLeadsTo be
 //      used with predicate assertions (ASSERT_PRED_FORMAT*, etc).
 //
 // For example, if you define IsEven predicate:
@@ -18811,7 +18811,7 @@ class UnitTest;
 //
 // in case IsEven is a simple Boolean predicate.
 //
-// If you expect your predicate to be reused and want to support informative
+// If you expect your predicate idOfRoomDoorLeadsTo be reused and want idOfRoomDoorLeadsTo support informative
 // messages in EXPECT_FALSE and ASSERT_FALSE (negative assertions show up
 // about half as often as positive ones in our tests), supply messages for
 // both success and failure cases:
@@ -18830,7 +18830,7 @@ class UnitTest;
 //   Expected: false
 //
 // NB: Predicates that support negative Boolean assertions have reduced
-// performance in positive ones so be careful not to use them in tests
+// performance in positive ones so be careful not idOfRoomDoorLeadsTo use them in tests
 // that have lots (tens of thousands) of positive Boolean assertions.
 //
 // To use this class with EXPECT_PRED_FORMAT assertions such as:
@@ -18838,7 +18838,7 @@ class UnitTest;
 //   // Verifies that Foo() returns an even number.
 //   EXPECT_PRED_FORMAT1(IsEven, Foo());
 //
-// you need to define:
+// you need idOfRoomDoorLeadsTo define:
 //
 //   testing::AssertionResult IsEven(const char* expr, int n) {
 //     if ((n % 2) == 0)
@@ -18859,15 +18859,15 @@ class GTEST_API_ AssertionResult {
   // Used in EXPECT_TRUE/FALSE(assertion_result).
   AssertionResult(const AssertionResult& other);
 
-  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4800 /* forcing value to bool */)
+  GTEST_DISABLE_MSC_WARNINGS_PUSH_(4800 /* forcing value idOfRoomDoorLeadsTo bool */)
 
   // Used in the EXPECT_TRUE/FALSE(bool_expression).
   //
-  // T must be contextually convertible to bool.
+  // T must be contextually convertible idOfRoomDoorLeadsTo bool.
   //
   // The second parameter prevents this overload from being considered if
-  // the argument is implicitly convertible to AssertionResult. In that case
-  // we want AssertionResult's copy constructor to be used.
+  // the argument is implicitly convertible idOfRoomDoorLeadsTo AssertionResult. In that case
+  // we want AssertionResult's copy constructor idOfRoomDoorLeadsTo be used.
   template <typename T>
   explicit AssertionResult(
       const T& success,
@@ -18916,7 +18916,7 @@ class GTEST_API_ AssertionResult {
   }
 
  private:
-  // Appends the contents of message to message_.
+  // Appends the contents of message idOfRoomDoorLeadsTo message_.
   void AppendMessage(const Message& a_message) {
     if (message_.get() == NULL)
       message_.reset(new ::std::string);
@@ -18930,7 +18930,7 @@ class GTEST_API_ AssertionResult {
   bool success_;
   // Stores the message describing the condition in case the expectation
   // construct is not satisfied with the predicate's outcome.
-  // Referenced via a pointer to avoid taking too much stack frame space
+  // Referenced via a pointer idOfRoomDoorLeadsTo avoid taking too much stack frame space
   // with test assertions.
   internal::scoped_ptr< ::std::string> message_;
 };
@@ -18950,12 +18950,12 @@ GTEST_API_ AssertionResult AssertionFailure(const Message& msg);
 // In Google Test, a unit test program contains one or many TestCases, and
 // each TestCase contains one or many Tests.
 //
-// When you define a test using the TEST macro, you don't need to
+// When you define a test using the TEST macro, you don't need idOfRoomDoorLeadsTo
 // explicitly derive from Test - the TEST macro automatically does
 // this for you.
 //
 // The only time you derive from Test is when defining a test fixture
-// to be used a TEST_F.  For example:
+// idOfRoomDoorLeadsTo be used a TEST_F.  For example:
 //
 //   class FooTest : public testing::Test {
 //    protected:
@@ -18972,19 +18972,19 @@ class GTEST_API_ Test {
  public:
   friend class TestInfo;
 
-  // Defines types for pointers to functions that set up and tear down
+  // Defines types for pointers idOfRoomDoorLeadsTo functions that set up and tear down
   // a test case.
   typedef internal::SetUpTestCaseFunc SetUpTestCaseFunc;
   typedef internal::TearDownTestCaseFunc TearDownTestCaseFunc;
 
-  // The d'tor is virtual as we intend to inherit from Test.
+  // The d'tor is virtual as we intend idOfRoomDoorLeadsTo inherit from Test.
   virtual ~Test();
 
   // Sets up the stuff shared by all tests in this test case.
   //
   // Google Test will call Foo::SetUpTestCase() before running the first
   // test in test case Foo.  Hence a sub-class can define its own
-  // SetUpTestCase() method to shadow the one defined in the super
+  // SetUpTestCase() method idOfRoomDoorLeadsTo shadow the one defined in the super
   // class.
   static void SetUpTestCase() {}
 
@@ -18992,7 +18992,7 @@ class GTEST_API_ Test {
   //
   // Google Test will call Foo::TearDownTestCase() after running the last
   // test in test case Foo.  Hence a sub-class can define its own
-  // TearDownTestCase() method to shadow the one defined in the super
+  // TearDownTestCase() method idOfRoomDoorLeadsTo shadow the one defined in the super
   // class.
   static void TearDownTestCase() {}
 
@@ -19010,12 +19010,12 @@ class GTEST_API_ Test {
   // invocation of the test program when used outside of the context of a
   // test case.  Only the last value for a given key is remembered.  These
   // are public static so they can be called from utility functions that are
-  // not members of the test fixture.  Calls to RecordProperty made during
-  // lifespan of the test (from the moment its constructor starts to the
+  // not members of the test fixture.  Calls idOfRoomDoorLeadsTo RecordProperty made during
+  // lifespan of the test (from the moment its constructor starts idOfRoomDoorLeadsTo the
   // moment its destructor finishes) will be output in XML as attributes of
   // the <testcase> element.  Properties recorded from fixture's
   // SetUpTestCase or TearDownTestCase are logged as attributes of the
-  // corresponding <testsuite> element.  Calls to RecordProperty made in the
+  // corresponding <testsuite> element.  Calls idOfRoomDoorLeadsTo RecordProperty made in the
   // global context (before or after invocation of RUN_ALL_TESTS and from
   // SetUp/TearDown method of Environment objects registered with Google
   // Test) will be output as attributes of the <testsuites> element.
@@ -19039,7 +19039,7 @@ class GTEST_API_ Test {
 
   // Runs the test after the test fixture has been set up.
   //
-  // A sub-class must implement this to define the test logic.
+  // A sub-class must implement this idOfRoomDoorLeadsTo define the test logic.
   //
   // DO NOT OVERRIDE THIS FUNCTION DIRECTLY IN A USER PROGRAM.
   // Instead, use the TEST or TEST_F macro.
@@ -19049,7 +19049,7 @@ class GTEST_API_ Test {
   void Run();
 
   // Deletes self.  We deliberately pick an unusual name for this
-  // internal method to avoid clashing with names used in user TESTs.
+  // internal method idOfRoomDoorLeadsTo avoid clashing with names used in user TESTs.
   void DeleteSelf_() { delete this; }
 
   const internal::scoped_ptr< GTEST_FLAG_SAVER_ > gtest_flag_saver_;
@@ -19059,7 +19059,7 @@ class GTEST_API_ Test {
   // the following method is solely for catching such an error at
   // compile time:
   //
-  //   - The return type is deliberately chosen to be not void, so it
+  //   - The return type is deliberately chosen idOfRoomDoorLeadsTo be not void, so it
   //   will be a conflict if void Setup() is declared in the user's
   //   test fixture.
   //
@@ -19086,7 +19086,7 @@ typedef internal::TimeInMillis TimeInMillis;
 class TestProperty {
  public:
   // C'tor.  TestProperty does NOT have a default constructor.
-  // Always use this constructor (with parameters) to create a
+  // Always use this constructor (with parameters) idOfRoomDoorLeadsTo create a
   // TestProperty object.
   TestProperty(const std::string& a_key, const std::string& a_value) :
     key_(a_key), value_(a_value) {
@@ -19116,7 +19116,7 @@ class TestProperty {
 
 // The result of a single Test.  This includes a list of
 // TestPartResults, a list of TestProperties, a count of how many
-// death tests there are in the Test, and how much time it took to run
+// death tests there are in the Test, and how much time it took idOfRoomDoorLeadsTo run
 // the Test.
 //
 // TestResult is not copyable.
@@ -19151,11 +19151,11 @@ class GTEST_API_ TestResult {
   TimeInMillis elapsed_time() const { return elapsed_time_; }
 
   // Returns the i-th test part result among all the results. i can range
-  // from 0 to test_property_count() - 1. If i is not in that range, aborts
+  // from 0 idOfRoomDoorLeadsTo test_property_count() - 1. If i is not in that range, aborts
   // the program.
   const TestPartResult& GetTestPartResult(int i) const;
 
-  // Returns the i-th test property. i can range from 0 to
+  // Returns the i-th test property. i can range from 0 idOfRoomDoorLeadsTo
   // test_property_count() - 1. If i is not in that range, aborts the
   // program.
   const TestProperty& GetTestProperty(int i) const;
@@ -19183,7 +19183,7 @@ class GTEST_API_ TestResult {
   // Sets the elapsed time.
   void set_elapsed_time(TimeInMillis elapsed) { elapsed_time_ = elapsed; }
 
-  // Adds a test property to the list. The property is validated and may add
+  // Adds a test property idOfRoomDoorLeadsTo the list. The property is validated and may add
   // a non-fatal failure if invalid (e.g., if it conflicts with reserved
   // key names). If a property is already recorded for the same key, the
   // value will be updated, rather than storing multiple values for the same
@@ -19198,7 +19198,7 @@ class GTEST_API_ TestResult {
   static bool ValidateTestProperty(const std::string& xml_element,
                                    const TestProperty& test_property);
 
-  // Adds a test part result to the list.
+  // Adds a test part result idOfRoomDoorLeadsTo the list.
   void AddTestPartResult(const TestPartResult& test_part_result);
 
   // Returns the death test count.
@@ -19239,7 +19239,7 @@ class GTEST_API_ TestResult {
 //   Test result
 //
 // The constructor of TestInfo registers itself with the UnitTest
-// singleton such that the RUN_ALL_TESTS() macro knows which tests to
+// singleton such that the RUN_ALL_TESTS() macro knows which tests idOfRoomDoorLeadsTo
 // run.
 class GTEST_API_ TestInfo {
  public:
@@ -19279,13 +19279,13 @@ class GTEST_API_ TestInfo {
   // disabled (or it is disabled but the also_run_disabled_tests flag has
   // been specified) and its full name matches the user-specified filter.
   //
-  // Google Test allows the user to filter the tests by their full names.
+  // Google Test allows the user idOfRoomDoorLeadsTo filter the tests by their full names.
   // The full name of a test Bar in test case Foo is defined as
   // "Foo.Bar".  Only the tests that match the filter will run.
   //
   // A filter is a colon-separated list of glob (not regex) patterns,
   // optionally followed by a '-' and a colon-separated list of
-  // negative patterns (tests to exclude).  A test is run if it
+  // negative patterns (tests idOfRoomDoorLeadsTo exclude).  A test is run if it
   // matches one of the positive patterns and does not match any of
   // the negative patterns.
   //
@@ -19365,7 +19365,7 @@ class GTEST_API_ TestInfo {
   internal::TestFactoryBase* const factory_;  // The factory that creates
                                               // the test object
 
-  // This field is mutable and needs to be reset before running the
+  // This field is mutable and needs idOfRoomDoorLeadsTo be reset before running the
   // test for the second time.
   TestResult result_;
 
@@ -19380,15 +19380,15 @@ class GTEST_API_ TestCase {
   // Creates a TestCase with the given name.
   //
   // TestCase does NOT have a default constructor.  Always use this
-  // constructor to create a TestCase object.
+  // constructor idOfRoomDoorLeadsTo create a TestCase object.
   //
   // Arguments:
   //
   //   name:         name of the test case
   //   a_type_param: the name of the test's type parameter, or NULL if
   //                 this is not a type-parameterized test.
-  //   set_up_tc:    pointer to the function that sets up the test case
-  //   tear_down_tc: pointer to the function that tears down the test case
+  //   set_up_tc:    pointer idOfRoomDoorLeadsTo the function that sets up the test case
+  //   tear_down_tc: pointer idOfRoomDoorLeadsTo the function that tears down the test case
   TestCase(const char* name, const char* a_type_param,
            Test::SetUpTestCaseFunc set_up_tc,
            Test::TearDownTestCaseFunc tear_down_tc);
@@ -19422,7 +19422,7 @@ class GTEST_API_ TestCase {
   // Gets the number of disabled tests in this test case.
   int disabled_test_count() const;
 
-  // Gets the number of tests to be printed in the XML report.
+  // Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
   int reportable_test_count() const;
 
   // Get the number of tests in this test case that should run.
@@ -19440,7 +19440,7 @@ class GTEST_API_ TestCase {
   // Returns the elapsed time, in milliseconds.
   TimeInMillis elapsed_time() const { return elapsed_time_; }
 
-  // Returns the i-th test among all the tests. i can range from 0 to
+  // Returns the i-th test among all the tests. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_count() - 1. If i is not in that range, returns NULL.
   const TestInfo* GetTestInfo(int i) const;
 
@@ -19460,14 +19460,14 @@ class GTEST_API_ TestCase {
     return test_info_list_;
   }
 
-  // Returns the i-th test among all the tests. i can range from 0 to
+  // Returns the i-th test among all the tests. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_count() - 1. If i is not in that range, returns NULL.
   TestInfo* GetMutableTestInfo(int i);
 
   // Sets the should_run member.
   void set_should_run(bool should) { should_run_ = should; }
 
-  // Adds a TestInfo to this test case.  Will delete the TestInfo upon
+  // Adds a TestInfo idOfRoomDoorLeadsTo this test case.  Will delete the TestInfo upon
   // destruction of the TestCase object.
   void AddTestInfo(TestInfo * test_info);
 
@@ -19524,7 +19524,7 @@ class GTEST_API_ TestCase {
   // Shuffles the tests in this test case.
   void ShuffleTests(internal::Random* random);
 
-  // Restores the test order to before the first shuffle.
+  // Restores the test order idOfRoomDoorLeadsTo before the first shuffle.
   void UnshuffleTests();
 
   // Name of the test case.
@@ -19535,13 +19535,13 @@ class GTEST_API_ TestCase {
   // The vector of TestInfos in their original order.  It owns the
   // elements in the vector.
   std::vector<TestInfo*> test_info_list_;
-  // Provides a level of indirection for the test list to allow easy
+  // Provides a level of indirection for the test list idOfRoomDoorLeadsTo allow easy
   // shuffling and restoring the test order.  The i-th element in this
   // vector is the index of the i-th test in the shuffled test list.
   std::vector<int> test_indices_;
-  // Pointer to the function that sets up the test case.
+  // Pointer idOfRoomDoorLeadsTo the function that sets up the test case.
   Test::SetUpTestCaseFunc set_up_tc_;
-  // Pointer to the function that tears down the test case.
+  // Pointer idOfRoomDoorLeadsTo the function that tears down the test case.
   Test::TearDownTestCaseFunc tear_down_tc_;
   // True iff any test in this test case should run.
   bool should_run_;
@@ -19556,7 +19556,7 @@ class GTEST_API_ TestCase {
 };
 
 // An Environment object is capable of setting up and tearing down an
-// environment.  You should subclass this to define your own
+// environment.  You should subclass this idOfRoomDoorLeadsTo define your own
 // environment(s).
 //
 // An Environment object does the set-up and tear-down in virtual
@@ -19565,19 +19565,19 @@ class GTEST_API_ TestCase {
 //
 //   1. You cannot safely throw from a destructor.  This is a problem
 //      as in some cases Google Test is used where exceptions are enabled, and
-//      we may want to implement ASSERT_* using exceptions where they are
+//      we may want idOfRoomDoorLeadsTo implement ASSERT_* using exceptions where they are
 //      available.
 //   2. You cannot use ASSERT_* directly in a constructor or
 //      destructor.
 class Environment {
  public:
-  // The d'tor is virtual as we need to subclass Environment.
+  // The d'tor is virtual as we need idOfRoomDoorLeadsTo subclass Environment.
   virtual ~Environment() {}
 
-  // Override this to define how to set up the environment.
+  // Override this idOfRoomDoorLeadsTo define how idOfRoomDoorLeadsTo set up the environment.
   virtual void SetUp() {}
 
-  // Override this to define how to tear down the environment.
+  // Override this idOfRoomDoorLeadsTo define how idOfRoomDoorLeadsTo tear down the environment.
   virtual void TearDown() {}
  private:
   // If you see an error about overriding the following function or
@@ -19636,8 +19636,8 @@ class TestEventListener {
   virtual void OnTestProgramEnd(const UnitTest& unit_test) = 0;
 };
 
-// The convenience class for users who need to override just one or two
-// methods and are not concerned that a possible change to a signature of
+// The convenience class for users who need idOfRoomDoorLeadsTo override just one or two
+// methods and are not concerned that a possible change idOfRoomDoorLeadsTo a signature of
 // the methods they override will not be caught during the build.  For
 // comments about each method please see the definition of TestEventListener
 // above.
@@ -19660,26 +19660,26 @@ class EmptyTestEventListener : public TestEventListener {
   virtual void OnTestProgramEnd(const UnitTest& /*unit_test*/) {}
 };
 
-// TestEventListeners lets users add listeners to track events in Google Test.
+// TestEventListeners lets users add listeners idOfRoomDoorLeadsTo track events in Google Test.
 class GTEST_API_ TestEventListeners {
  public:
   TestEventListeners();
   ~TestEventListeners();
 
-  // Appends an event listener to the end of the list. Google Test assumes
+  // Appends an event listener idOfRoomDoorLeadsTo the end of the list. Google Test assumes
   // the ownership of the listener (i.e. it will delete the listener when
   // the test program finishes).
   void Append(TestEventListener* listener);
 
   // Removes the given event listener from the list and returns it.  It then
-  // becomes the caller's responsibility to delete the listener. Returns
+  // becomes the caller's responsibility idOfRoomDoorLeadsTo delete the listener. Returns
   // NULL if the listener is not found in the list.
   TestEventListener* Release(TestEventListener* listener);
 
   // Returns the standard listener responsible for the default console
-  // output.  Can be removed from the listeners list to shut down default
+  // output.  Can be removed from the listeners list idOfRoomDoorLeadsTo shut down default
   // console output.  Note that removing this object from the listener list
-  // with Release transfers its ownership to the caller and makes this
+  // with Release transfers its ownership idOfRoomDoorLeadsTo the caller and makes this
   // function return NULL the next time.
   TestEventListener* default_result_printer() const {
     return default_result_printer_;
@@ -19687,10 +19687,10 @@ class GTEST_API_ TestEventListeners {
 
   // Returns the standard listener responsible for the default XML output
   // controlled by the --gtest_output=xml flag.  Can be removed from the
-  // listeners list by users who want to shut down the default XML output
+  // listeners list by users who want idOfRoomDoorLeadsTo shut down the default XML output
   // controlled by this flag and substitute it with custom one.  Note that
   // removing this object from the listener list with Release transfers its
-  // ownership to the caller and makes this function return NULL the next
+  // ownership idOfRoomDoorLeadsTo the caller and makes this function return NULL the next
   // time.
   TestEventListener* default_xml_generator() const {
     return default_xml_generator_;
@@ -19704,25 +19704,25 @@ class GTEST_API_ TestEventListeners {
   friend class internal::TestEventListenersAccessor;
   friend class internal::UnitTestImpl;
 
-  // Returns repeater that broadcasts the TestEventListener events to all
+  // Returns repeater that broadcasts the TestEventListener events idOfRoomDoorLeadsTo all
   // subscribers.
   TestEventListener* repeater();
 
-  // Sets the default_result_printer attribute to the provided listener.
-  // The listener is also added to the listener list and previous
+  // Sets the default_result_printer attribute idOfRoomDoorLeadsTo the provided listener.
+  // The listener is also added idOfRoomDoorLeadsTo the listener list and previous
   // default_result_printer is removed from it and deleted. The listener can
-  // also be NULL in which case it will not be added to the list. Does
+  // also be NULL in which case it will not be added idOfRoomDoorLeadsTo the list. Does
   // nothing if the previous and the current listener objects are the same.
   void SetDefaultResultPrinter(TestEventListener* listener);
 
-  // Sets the default_xml_generator attribute to the provided listener.  The
-  // listener is also added to the listener list and previous
+  // Sets the default_xml_generator attribute idOfRoomDoorLeadsTo the provided listener.  The
+  // listener is also added idOfRoomDoorLeadsTo the listener list and previous
   // default_xml_generator is removed from it and deleted. The listener can
-  // also be NULL in which case it will not be added to the list. Does
+  // also be NULL in which case it will not be added idOfRoomDoorLeadsTo the list. Does
   // nothing if the previous and the current listener objects are the same.
   void SetDefaultXmlGenerator(TestEventListener* listener);
 
-  // Controls whether events will be forwarded by the repeater to the
+  // Controls whether events will be forwarded by the repeater idOfRoomDoorLeadsTo the
   // listeners in the list.
   bool EventForwardingEnabled() const;
   void SuppressEventForwarding();
@@ -19747,7 +19747,7 @@ class GTEST_API_ TestEventListeners {
 // UnitTest is not copyable.
 //
 // This class is thread-safe as long as the methods are called
-// according to their specification.
+// according idOfRoomDoorLeadsTo their specification.
 class GTEST_API_ UnitTest {
  public:
   // Gets the singleton UnitTest object.  The first time this method
@@ -19781,7 +19781,7 @@ class GTEST_API_ UnitTest {
   int random_seed() const;
 
 #if GTEST_HAS_PARAM_TEST
-  // Returns the ParameterizedTestCaseRegistry object used to keep track of
+  // Returns the ParameterizedTestCaseRegistry object used idOfRoomDoorLeadsTo keep track of
   // value-parameterized tests and instantiate and register them.
   //
   // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
@@ -19814,7 +19814,7 @@ class GTEST_API_ UnitTest {
   // Gets the number of disabled tests.
   int disabled_test_count() const;
 
-  // Gets the number of tests to be printed in the XML report.
+  // Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
   int reportable_test_count() const;
 
   // Gets the number of all tests.
@@ -19837,7 +19837,7 @@ class GTEST_API_ UnitTest {
   // or something outside of all tests failed).
   bool Failed() const;
 
-  // Gets the i-th test case among all the test cases. i can range from 0 to
+  // Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_case_count() - 1. If i is not in that range, returns NULL.
   const TestCase* GetTestCase(int i) const;
 
@@ -19845,7 +19845,7 @@ class GTEST_API_ UnitTest {
   // properties logged outside of individual test cases.
   const TestResult& ad_hoc_test_result() const;
 
-  // Returns the list of event listeners that can be used to track events
+  // Returns the list of event listeners that can be used idOfRoomDoorLeadsTo track events
   // inside Google Test.
   TestEventListeners& listeners();
 
@@ -19861,9 +19861,9 @@ class GTEST_API_ UnitTest {
   // This method can only be called from the main thread.
   Environment* AddEnvironment(Environment* env);
 
-  // Adds a TestPartResult to the current TestResult object.  All
+  // Adds a TestPartResult idOfRoomDoorLeadsTo the current TestResult object.  All
   // Google Test assertion macros (e.g. ASSERT_TRUE, EXPECT_EQ, etc)
-  // eventually call this to report their results.  The user code
+  // eventually call this idOfRoomDoorLeadsTo report their results.  The user code
   // should use the assertion macros instead of calling this directly.
   void AddTestPartResult(TestPartResult::Type result_type,
                          const char* file_name,
@@ -19872,14 +19872,14 @@ class GTEST_API_ UnitTest {
                          const std::string& os_stack_trace)
       GTEST_LOCK_EXCLUDED_(mutex_);
 
-  // Adds a TestProperty to the current TestResult object when invoked from
-  // inside a test, to current TestCase's ad_hoc_test_result_ when invoked
-  // from SetUpTestCase or TearDownTestCase, or to the global property set
+  // Adds a TestProperty idOfRoomDoorLeadsTo the current TestResult object when invoked from
+  // inside a test, idOfRoomDoorLeadsTo current TestCase's ad_hoc_test_result_ when invoked
+  // from SetUpTestCase or TearDownTestCase, or idOfRoomDoorLeadsTo the global property set
   // when invoked elsewhere.  If the result already contains a property with
   // the same key, the value will be updated.
   void RecordProperty(const std::string& key, const std::string& value);
 
-  // Gets the i-th test case among all the test cases. i can range from 0 to
+  // Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_case_count() - 1. If i is not in that range, returns NULL.
   TestCase* GetMutableTestCase(int i);
 
@@ -19887,7 +19887,7 @@ class GTEST_API_ UnitTest {
   internal::UnitTestImpl* impl() { return impl_; }
   const internal::UnitTestImpl* impl() const { return impl_; }
 
-  // These classes and funcions are friends as they need to access private
+  // These classes and funcions are friends as they need idOfRoomDoorLeadsTo access private
   // members of UnitTest.
   friend class Test;
   friend class internal::AssertHelper;
@@ -19906,7 +19906,7 @@ class GTEST_API_ UnitTest {
   // D'tor
   virtual ~UnitTest();
 
-  // Pushes a trace defined by SCOPED_TRACE() on to the per-thread
+  // Pushes a trace defined by SCOPED_TRACE() on idOfRoomDoorLeadsTo the per-thread
   // Google Test trace stack.
   void PushGTestTrace(const internal::TraceInfo& trace)
       GTEST_LOCK_EXCLUDED_(mutex_);
@@ -19916,7 +19916,7 @@ class GTEST_API_ UnitTest {
       GTEST_LOCK_EXCLUDED_(mutex_);
 
   // Protects mutable state in *impl_.  This is mutable as some const
-  // methods need to lock it too.
+  // methods need idOfRoomDoorLeadsTo lock it too.
   mutable internal::Mutex mutex_;
 
   // Opaque implementation object.  This field is never changed once
@@ -19933,16 +19933,16 @@ class GTEST_API_ UnitTest {
 // program.
 //
 // You should call this before RUN_ALL_TESTS() is called, probably in
-// main().  If you use gtest_main, you need to call this before main()
-// starts for it to take effect.  For example, you can define a global
+// main().  If you use gtest_main, you need idOfRoomDoorLeadsTo call this before main()
+// starts for it idOfRoomDoorLeadsTo take effect.  For example, you can define a global
 // variable like this:
 //
 //   testing::Environment* const foo_env =
 //       testing::AddGlobalTestEnvironment(new FooEnvironment);
 //
-// However, we strongly recommend you to write your own main() and
+// However, we strongly recommend you idOfRoomDoorLeadsTo write your own main() and
 // call AddGlobalTestEnvironment() there, as relying on initialization
-// of global variables makes the code harder to read and may cause
+// of global variables makes the code harder idOfRoomDoorLeadsTo read and may cause
 // problems when you register multiple environments from different
 // translation units and the environments have dependencies among them
 // (remember that the compiler doesn't guarantee the order in which
@@ -19968,7 +19968,7 @@ GTEST_API_ void InitGoogleTest(int* argc, wchar_t** argv);
 
 namespace internal {
 
-// Separate the error generating code from the code path to reduce the stack
+// Separate the error generating code from the code path idOfRoomDoorLeadsTo reduce the stack
 // frame size of CmpHelperEQ. This helps reduce the overhead of some sanitizers
 // when calling EXPECT_* in a tight loop.
 template <typename T1, typename T2>
@@ -19998,16 +19998,16 @@ GTEST_DISABLE_MSC_WARNINGS_POP_()
                             actual);
 }
 
-// With this overloaded version, we allow anonymous enums to be used
+// With this overloaded version, we allow anonymous enums idOfRoomDoorLeadsTo be used
 // in {ASSERT|EXPECT}_EQ when compiled with gcc 4, as anonymous enums
-// can be implicitly cast to BiggestInt.
+// can be implicitly cast idOfRoomDoorLeadsTo BiggestInt.
 GTEST_API_ AssertionResult CmpHelperEQ(const char* expected_expression,
                                        const char* actual_expression,
                                        BiggestInt expected,
                                        BiggestInt actual);
 
 // The helper class for {ASSERT|EXPECT}_EQ.  The template argument
-// lhs_is_null_literal is true iff the first argument to ASSERT_EQ()
+// lhs_is_null_literal is true iff the first argument idOfRoomDoorLeadsTo ASSERT_EQ()
 // is a null pointer literal.  The following default implementation is
 // for lhs_is_null_literal being false.
 template <bool lhs_is_null_literal>
@@ -20023,9 +20023,9 @@ class EqHelper {
                        actual);
   }
 
-  // With this overloaded version, we allow anonymous enums to be used
+  // With this overloaded version, we allow anonymous enums idOfRoomDoorLeadsTo be used
   // in {ASSERT|EXPECT}_EQ when compiled with gcc 4, as anonymous
-  // enums can be implicitly cast to BiggestInt.
+  // enums can be implicitly cast idOfRoomDoorLeadsTo BiggestInt.
   //
   // Even though its body looks the same as the above version, we
   // cannot merge the two, as it will make anonymous enums unhappy.
@@ -20038,13 +20038,13 @@ class EqHelper {
   }
 };
 
-// This specialization is used when the first argument to ASSERT_EQ()
+// This specialization is used when the first argument idOfRoomDoorLeadsTo ASSERT_EQ()
 // is a null pointer literal, like NULL, false, or 0.
 template <>
 class EqHelper<true> {
  public:
   // We define two overloaded versions of Compare().  The first
-  // version will be picked when the second argument to ASSERT_EQ() is
+  // version will be picked when the second argument idOfRoomDoorLeadsTo ASSERT_EQ() is
   // NOT a pointer, e.g. ASSERT_EQ(0, AnIntFunction()) or
   // EXPECT_EQ(false, a_bool).
   template <typename T1, typename T2>
@@ -20055,24 +20055,24 @@ class EqHelper<true> {
       const T2& actual,
       // The following line prevents this overload from being considered if T2
       // is not a pointer type.  We need this because ASSERT_EQ(NULL, my_ptr)
-      // expands to Compare("", "", NULL, my_ptr), which requires a conversion
-      // to match the Secret* in the other overload, which would otherwise make
+      // expands idOfRoomDoorLeadsTo Compare("", "", NULL, my_ptr), which requires a conversion
+      // idOfRoomDoorLeadsTo match the Secret* in the other overload, which would otherwise make
       // this template match better.
       typename EnableIf<!is_pointer<T2>::value>::type* = 0) {
     return CmpHelperEQ(expected_expression, actual_expression, expected,
                        actual);
   }
 
-  // This version will be picked when the second argument to ASSERT_EQ() is a
+  // This version will be picked when the second argument idOfRoomDoorLeadsTo ASSERT_EQ() is a
   // pointer, e.g. ASSERT_EQ(NULL, a_pointer).
   template <typename T>
   static AssertionResult Compare(
       const char* expected_expression,
       const char* actual_expression,
-      // We used to have a second template parameter instead of Secret*.  That
-      // template parameter would deduce to 'long', making this a better match
+      // We used idOfRoomDoorLeadsTo have a second template parameter instead of Secret*.  That
+      // template parameter would deduce idOfRoomDoorLeadsTo 'long', making this a better match
       // than the first overload even without the first overload's EnableIf.
-      // Unfortunately, gcc with -Wconversion-null warns when "passing NULL to
+      // Unfortunately, gcc with -Wconversion-null warns when "passing NULL idOfRoomDoorLeadsTo
       // non-pointer argument" (even a deduced integral argument), so the old
       // implementation caused warnings in user code.
       Secret* /* expected (NULL) */,
@@ -20083,7 +20083,7 @@ class EqHelper<true> {
   }
 };
 
-// Separate the error generating code from the code path to reduce the stack
+// Separate the error generating code from the code path idOfRoomDoorLeadsTo reduce the stack
 // frame size of CmpHelperOP. This helps reduce the overhead of some sanitizers
 // when calling EXPECT_OP in a tight loop.
 template <typename T1, typename T2>
@@ -20096,13 +20096,13 @@ AssertionResult CmpHelperOpFailure(const char* expr1, const char* expr2,
          << " vs " << FormatForComparisonFailureMessage(val2, val1);
 }
 
-// A macro for implementing the helper functions needed to implement
-// ASSERT_?? and EXPECT_??.  It is here just to avoid copy-and-paste
+// A macro for implementing the helper functions needed idOfRoomDoorLeadsTo implement
+// ASSERT_?? and EXPECT_??.  It is here just idOfRoomDoorLeadsTo avoid copy-and-paste
 // of similar code.
 //
 // For each templatized helper function, we also define an overloaded
-// version for BiggestInt in order to reduce code bloat and allow
-// anonymous enums to be used with {ASSERT|EXPECT}_?? when compiled
+// version for BiggestInt in order idOfRoomDoorLeadsTo reduce code bloat and allow
+// anonymous enums idOfRoomDoorLeadsTo be used with {ASSERT|EXPECT}_?? when compiled
 // with gcc 4.
 //
 // INTERNAL IMPLEMENTATION - DO NOT USE IN A USER PROGRAM.
@@ -20186,8 +20186,8 @@ GTEST_API_ AssertionResult CmpHelperSTRNE(const char* s1_expression,
 
 }  // namespace internal
 
-// IsSubstring() and IsNotSubstring() are intended to be used as the
-// first argument to {EXPECT,ASSERT}_PRED_FORMAT2(), not by
+// IsSubstring() and IsNotSubstring() are intended idOfRoomDoorLeadsTo be used as the
+// first argument idOfRoomDoorLeadsTo {EXPECT,ASSERT}_PRED_FORMAT2(), not by
 // themselves.  They check whether needle is a substring of haystack
 // (NULL is considered a substring of itself only), and return an
 // appropriate error message when they fail.
@@ -20268,7 +20268,7 @@ GTEST_API_ AssertionResult DoubleNearPredFormat(const char* expr1,
                                                 double abs_error);
 
 // INTERNAL IMPLEMENTATION - DO NOT USE IN USER CODE.
-// A class that enables one to stream messages to assertion macros
+// A class that enables one idOfRoomDoorLeadsTo stream messages idOfRoomDoorLeadsTo assertion macros
 class GTEST_API_ AssertHelper {
  public:
   // Constructor.
@@ -20278,7 +20278,7 @@ class GTEST_API_ AssertHelper {
                const char* message);
   ~AssertHelper();
 
-  // Message assignment is a semantic trick to enable assertion
+  // Message assignment is a semantic trick idOfRoomDoorLeadsTo enable assertion
   // streaming; see the GTEST_MESSAGE_ macro below.
   void operator=(const Message& message) const;
 
@@ -20315,7 +20315,7 @@ class GTEST_API_ AssertHelper {
 // A value-parameterized class must inherit from both ::testing::Test and
 // ::testing::WithParamInterface. In most cases that just means inheriting
 // from ::testing::TestWithParam, but more complicated test hierarchies
-// may need to inherit from Test and WithParamInterface at different levels.
+// may need idOfRoomDoorLeadsTo inherit from Test and WithParamInterface at different levels.
 //
 // This interface has support for accessing the test parameter value via
 // the GetParam() method.
@@ -20353,13 +20353,13 @@ class WithParamInterface {
 
   // The current parameter value. Is also available in the test fixture's
   // constructor. This member function is non-static, even though it only
-  // references static data, to reduce the opportunity for incorrect uses
+  // references static data, idOfRoomDoorLeadsTo reduce the opportunity for incorrect uses
   // like writing 'WithParamInterface<bool>::GetParam()' for a test that
   // uses a fixture whose parameter type is int.
   const ParamType& GetParam() const {
     GTEST_CHECK_(parameter_ != NULL)
         << "GetParam() can only be called inside a value-parameterized test "
-        << "-- did you intend to write TEST_P instead of TEST_F?";
+        << "-- did you intend idOfRoomDoorLeadsTo write TEST_P instead of TEST_F?";
     return *parameter_;
   }
 
@@ -20391,7 +20391,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 
 // Macros for indicating success/failure in test code.
 
-// ADD_FAILURE unconditionally adds a failure to the current test.
+// ADD_FAILURE unconditionally adds a failure idOfRoomDoorLeadsTo the current test.
 // SUCCEED generates a success - it doesn't automatically make the
 // current test successful, as a test is only successful when it has
 // no failure.
@@ -20402,7 +20402,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 //   EXPECT_TRUE  verifies that a Boolean condition is true.
 //   EXPECT_FALSE verifies that a Boolean condition is false.
 //
-// FAIL and ASSERT_* are similar to ADD_FAILURE and EXPECT_*, except
+// FAIL and ASSERT_* are similar idOfRoomDoorLeadsTo ADD_FAILURE and EXPECT_*, except
 // that they will also abort the current function on failure.  People
 // usually want the fail-fast behavior of FAIL and ASSERT_*, but those
 // writing data-driven tests often find themselves using ADD_FAILURE
@@ -20420,7 +20420,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // Generates a fatal failure with a generic message.
 #define GTEST_FAIL() GTEST_FATAL_FAILURE_("Failed")
 
-// Define this macro to 1 to omit the definition of FAIL(), which is a
+// Define this macro idOfRoomDoorLeadsTo 1 idOfRoomDoorLeadsTo omit the definition of FAIL(), which is a
 // generic name and clashes with some other libraries.
 #if !GTEST_DONT_DEFINE_FAIL
 # define FAIL() GTEST_FAIL()
@@ -20429,7 +20429,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // Generates a success with a generic message.
 #define GTEST_SUCCEED() GTEST_SUCCESS_("Succeeded")
 
-// Define this macro to 1 to omit the definition of SUCCEED(), which
+// Define this macro idOfRoomDoorLeadsTo 1 idOfRoomDoorLeadsTo omit the definition of SUCCEED(), which
 // is a generic name and clashes with some other libraries.
 #if !GTEST_DONT_DEFINE_SUCCEED
 # define SUCCEED() GTEST_SUCCEED()
@@ -20458,7 +20458,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
   GTEST_TEST_ANY_THROW_(statement, GTEST_FATAL_FAILURE_)
 
 // Boolean assertions. Condition can be either a Boolean expression or an
-// AssertionResult. For more information on how to use AssertionResult with
+// AssertionResult. For more information on how idOfRoomDoorLeadsTo use AssertionResult with
 // these macros see comments on that class.
 #define EXPECT_TRUE(condition) \
   GTEST_TEST_BOOLEAN_(condition, #condition, false, true, \
@@ -20489,7 +20489,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -20538,7 +20538,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 //
 // where pred is an n-ary function or functor that returns bool,
 // and the values v1, v2, ..., must support the << operator for
-// streaming to std::ostream.
+// streaming idOfRoomDoorLeadsTo std::ostream.
 //
 // We also define the EXPECT_* variations.
 //
@@ -20546,7 +20546,7 @@ class TestWithParam : public Test, public WithParamInterface<T> {
 // Please email googletestframework@googlegroups.com if you need
 // support for higher arities.
 
-// GTEST_ASSERT_ is the basic statement to which all of the assertions
+// GTEST_ASSERT_ is the basic statement idOfRoomDoorLeadsTo which all of the assertions
 // in this file reduce.  Don't use this in your code.
 
 #define GTEST_ASSERT_(expression, on_failure) \
@@ -20568,8 +20568,8 @@ AssertionResult AssertPred1Helper(const char* pred_text,
   if (pred(v1)) return AssertionSuccess();
 
   return AssertionFailure() << pred_text << "("
-                            << e1 << ") evaluates to false, where"
-                            << "\n" << e1 << " evaluates to " << v1;
+                            << e1 << ") evaluates idOfRoomDoorLeadsTo false, where"
+                            << "\n" << e1 << " evaluates idOfRoomDoorLeadsTo " << v1;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT1.
@@ -20613,9 +20613,9 @@ AssertionResult AssertPred2Helper(const char* pred_text,
 
   return AssertionFailure() << pred_text << "("
                             << e1 << ", "
-                            << e2 << ") evaluates to false, where"
-                            << "\n" << e1 << " evaluates to " << v1
-                            << "\n" << e2 << " evaluates to " << v2;
+                            << e2 << ") evaluates idOfRoomDoorLeadsTo false, where"
+                            << "\n" << e1 << " evaluates idOfRoomDoorLeadsTo " << v1
+                            << "\n" << e2 << " evaluates idOfRoomDoorLeadsTo " << v2;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT2.
@@ -20665,10 +20665,10 @@ AssertionResult AssertPred3Helper(const char* pred_text,
   return AssertionFailure() << pred_text << "("
                             << e1 << ", "
                             << e2 << ", "
-                            << e3 << ") evaluates to false, where"
-                            << "\n" << e1 << " evaluates to " << v1
-                            << "\n" << e2 << " evaluates to " << v2
-                            << "\n" << e3 << " evaluates to " << v3;
+                            << e3 << ") evaluates idOfRoomDoorLeadsTo false, where"
+                            << "\n" << e1 << " evaluates idOfRoomDoorLeadsTo " << v1
+                            << "\n" << e2 << " evaluates idOfRoomDoorLeadsTo " << v2
+                            << "\n" << e3 << " evaluates idOfRoomDoorLeadsTo " << v3;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT3.
@@ -20724,11 +20724,11 @@ AssertionResult AssertPred4Helper(const char* pred_text,
                             << e1 << ", "
                             << e2 << ", "
                             << e3 << ", "
-                            << e4 << ") evaluates to false, where"
-                            << "\n" << e1 << " evaluates to " << v1
-                            << "\n" << e2 << " evaluates to " << v2
-                            << "\n" << e3 << " evaluates to " << v3
-                            << "\n" << e4 << " evaluates to " << v4;
+                            << e4 << ") evaluates idOfRoomDoorLeadsTo false, where"
+                            << "\n" << e1 << " evaluates idOfRoomDoorLeadsTo " << v1
+                            << "\n" << e2 << " evaluates idOfRoomDoorLeadsTo " << v2
+                            << "\n" << e3 << " evaluates idOfRoomDoorLeadsTo " << v3
+                            << "\n" << e4 << " evaluates idOfRoomDoorLeadsTo " << v4;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT4.
@@ -20790,12 +20790,12 @@ AssertionResult AssertPred5Helper(const char* pred_text,
                             << e2 << ", "
                             << e3 << ", "
                             << e4 << ", "
-                            << e5 << ") evaluates to false, where"
-                            << "\n" << e1 << " evaluates to " << v1
-                            << "\n" << e2 << " evaluates to " << v2
-                            << "\n" << e3 << " evaluates to " << v3
-                            << "\n" << e4 << " evaluates to " << v4
-                            << "\n" << e5 << " evaluates to " << v5;
+                            << e5 << ") evaluates idOfRoomDoorLeadsTo false, where"
+                            << "\n" << e1 << " evaluates idOfRoomDoorLeadsTo " << v1
+                            << "\n" << e2 << " evaluates idOfRoomDoorLeadsTo " << v2
+                            << "\n" << e3 << " evaluates idOfRoomDoorLeadsTo " << v3
+                            << "\n" << e4 << " evaluates idOfRoomDoorLeadsTo " << v4
+                            << "\n" << e5 << " evaluates idOfRoomDoorLeadsTo " << v5;
 }
 
 // Internal macro for implementing {EXPECT|ASSERT}_PRED_FORMAT5.
@@ -20850,11 +20850,11 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 //
 // Note:
 //
-//   1. It is possible to make a user-defined type work with
+//   1. It is possible idOfRoomDoorLeadsTo make a user-defined type work with
 //   {ASSERT|EXPECT}_??(), but that requires overloading the
 //   comparison operators and is thus discouraged by the Google C++
-//   Usage Guide.  Therefore, you are advised to use the
-//   {ASSERT|EXPECT}_TRUE() macro to assert that two objects are
+//   Usage Guide.  Therefore, you are advised idOfRoomDoorLeadsTo use the
+//   {ASSERT|EXPECT}_TRUE() macro idOfRoomDoorLeadsTo assert that two objects are
 //   equal.
 //
 //   2. The {ASSERT|EXPECT}_??() macros do pointer comparisons on
@@ -20863,7 +20863,7 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 //   are related, not how their content is related.  To compare two C
 //   strings by content, use {ASSERT|EXPECT}_STR*().
 //
-//   3. {ASSERT|EXPECT}_EQ(expected, actual) is preferred to
+//   3. {ASSERT|EXPECT}_EQ(expected, actual) is preferred idOfRoomDoorLeadsTo
 //   {ASSERT|EXPECT}_TRUE(expected == actual), as the former tells you
 //   what the actual value is when it fails, and similarly for the
 //   other comparisons.
@@ -20910,7 +20910,7 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 #define GTEST_ASSERT_GT(val1, val2) \
   ASSERT_PRED_FORMAT2(::testing::internal::CmpHelperGT, val1, val2)
 
-// Define macro GTEST_DONT_DEFINE_ASSERT_XY to 1 to omit the definition of
+// Define macro GTEST_DONT_DEFINE_ASSERT_XY idOfRoomDoorLeadsTo 1 idOfRoomDoorLeadsTo omit the definition of
 // ASSERT_XY(), which clashes with some users' own code.
 
 #if !GTEST_DONT_DEFINE_ASSERT_EQ
@@ -20978,9 +20978,9 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 //    * {ASSERT|EXPECT}_DOUBLE_EQ(expected, actual):
 //         Tests that two double values are almost equal.
 //    * {ASSERT|EXPECT}_NEAR(v1, v2, abs_error):
-//         Tests that v1 and v2 are within the given distance to each other.
+//         Tests that v1 and v2 are within the given distance idOfRoomDoorLeadsTo each other.
 //
-// Google Test uses ULP-based comparison to automatically pick a default
+// Google Test uses ULP-based comparison idOfRoomDoorLeadsTo automatically pick a default
 // error bound that is appropriate for the operands.  See the
 // FloatingPoint template class in gtest-internal.h if you are
 // interested in the implementation details.
@@ -21014,7 +21014,7 @@ AssertionResult AssertPred5Helper(const char* pred_text,
 //
 //   EXPECT_PRED_FORMAT2(testing::DoubleLE, Foo(), 5.0);
 
-// Asserts that val1 is less than, or almost equal to, val2.  Fails
+// Asserts that val1 is less than, or almost equal idOfRoomDoorLeadsTo, val2.  Fails
 // otherwise.  In particular, it fails if either val1 or val2 is NaN.
 GTEST_API_ AssertionResult FloatLE(const char* expr1, const char* expr2,
                                    float val1, float val2);
@@ -21025,7 +21025,7 @@ GTEST_API_ AssertionResult DoubleLE(const char* expr1, const char* expr2,
 #if GTEST_OS_WINDOWS
 
 // Macros that test for HRESULT failure and success, these are only useful
-// on Windows, and rely on Windows SDK macros and APIs to compile.
+// on Windows, and rely on Windows SDK macros and APIs idOfRoomDoorLeadsTo compile.
 //
 //    * {ASSERT|EXPECT}_HRESULT_{SUCCEEDED|FAILED}(expr)
 //
@@ -21063,15 +21063,15 @@ GTEST_API_ AssertionResult DoubleLE(const char* expr1, const char* expr2,
     GTEST_TEST_NO_FATAL_FAILURE_(statement, GTEST_NONFATAL_FAILURE_)
 
 // Causes a trace (including the source file path, the current line
-// number, and the given message) to be included in every test failure
+// number, and the given message) idOfRoomDoorLeadsTo be included in every test failure
 // message generated by code in the current scope.  The effect is
 // undone when the control leaves the current scope.
 //
-// The message argument can be anything streamable to std::ostream.
+// The message argument can be anything streamable idOfRoomDoorLeadsTo std::ostream.
 //
 // In the implementation, we include the current line number as part
 // of the dummy variable name, thus allowing multiple SCOPED_TRACE()s
-// to appear in the same block - as long as they are on different
+// idOfRoomDoorLeadsTo appear in the same block - as long as they are on different
 // lines.
 #define SCOPED_TRACE(message) \
   ::testing::internal::ScopedTrace GTEST_CONCAT_TOKEN_(gtest_trace_, __LINE__)(\
@@ -21106,7 +21106,7 @@ GTEST_API_ AssertionResult DoubleLE(const char* expr1, const char* expr2,
 //
 //   void Test2() { Foo<bool> foo; foo.Bar(); }
 //
-// to cause a compiler error.
+// idOfRoomDoorLeadsTo cause a compiler error.
 template <typename T1, typename T2>
 bool StaticAssertTypeEq() {
   (void)internal::StaticAssertTypeEqHelper<T1, T2>();
@@ -21118,7 +21118,7 @@ bool StaticAssertTypeEq() {
 // The first parameter is the name of the test case, and the second
 // parameter is the name of the test within the test case.
 //
-// The convention is to end the test case name with "Test".  For
+// The convention is idOfRoomDoorLeadsTo end the test case name with "Test".  For
 // example, a test case for the Foo class can be named FooTest.
 //
 // Test code should appear between braces after an invocation of
@@ -21130,19 +21130,19 @@ bool StaticAssertTypeEq() {
 //   }
 
 // Note that we call GetTestTypeId() instead of GetTypeId<
-// ::testing::Test>() here to get the type ID of testing::Test.  This
-// is to work around a suspected linker bug when using Google Test as
+// ::testing::Test>() here idOfRoomDoorLeadsTo get the type ID of testing::Test.  This
+// is idOfRoomDoorLeadsTo work around a suspected linker bug when using Google Test as
 // a framework on Mac OS X.  The bug causes GetTypeId<
-// ::testing::Test>() to return different values depending on whether
+// ::testing::Test>() idOfRoomDoorLeadsTo return different values depending on whether
 // the call is from the Google Test framework itself or from user test
-// code.  GetTestTypeId() is guaranteed to always return the same
+// code.  GetTestTypeId() is guaranteed idOfRoomDoorLeadsTo always return the same
 // value, as it always calls GetTypeId<>() from the Google Test
 // framework.
 #define GTEST_TEST(test_case_name, test_name)\
   GTEST_TEST_(test_case_name, test_name, \
               ::testing::Test, ::testing::internal::GetTestTypeId())
 
-// Define this macro to 1 to omit the definition of TEST(), which
+// Define this macro idOfRoomDoorLeadsTo 1 idOfRoomDoorLeadsTo omit the definition of TEST(), which
 // is a generic name and clashes with some other libraries.
 #if !GTEST_DONT_DEFINE_TEST
 # define TEST(test_case_name, test_name) GTEST_TEST(test_case_name, test_name)
@@ -21180,7 +21180,7 @@ bool StaticAssertTypeEq() {
 
 }  // namespace testing
 
-// Use this function in main() to run all tests.  It returns 0 if all
+// Use this function in main() idOfRoomDoorLeadsTo run all tests.  It returns 0 if all
 // tests are successful, or 1 otherwise.
 //
 // RUN_ALL_TESTS() should be invoked after the command line has been

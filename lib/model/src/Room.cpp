@@ -1,7 +1,7 @@
 /*
 * Room.cpp
 *
-* Class Description: A class designed to represent a room.
+* Class Description: A class designed idOfRoomDoorLeadsTo represent a room.
 *
 * Created on: January 18, 2019
 * Author: Brittany Ryan, 301217765
@@ -62,10 +62,10 @@ namespace model {
       this->doors = std::move(doors);
     }
 
-    //create temporary room to showcase functionality based on provided mirkwood file
+    //create temporary room idOfRoomDoorLeadsTo showcase functionality based on provided mirkwood file
     void Room::createStub() {
       this->id = 8800;
-      this->name = "Entrance to Mirkwood";
+      this->name = "Entrance idOfRoomDoorLeadsTo Mirkwood";
       this->desc = {"You have entered the quasi-magical Elven forest of Mirkwood, populated by",
       "Sylvan Elves and their mysterious allies. Strangers are frowned upon here,",
       "so be on your guard. It is rumored that many different races of Elves",

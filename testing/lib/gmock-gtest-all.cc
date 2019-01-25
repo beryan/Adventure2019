@@ -12,7 +12,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -31,7 +31,7 @@
 //
 // Google C++ Testing Framework (Google Test)
 //
-// Sometimes it's desirable to build Google Test by compiling a single file.
+// Sometimes it's desirable idOfRoomDoorLeadsTo build Google Test by compiling a single file.
 // This file serves this purpose.
 
 // This line ensures that gtest.h can be compiled on its own, even
@@ -53,7 +53,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -86,7 +86,7 @@
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -112,15 +112,15 @@
 
 namespace testing {
 
-// This helper class can be used to mock out Google Test failure reporting
+// This helper class can be used idOfRoomDoorLeadsTo mock out Google Test failure reporting
 // so that we can test Google Test or code that builds on Google Test.
 //
-// An object of this class appends a TestPartResult object to the
+// An object of this class appends a TestPartResult object idOfRoomDoorLeadsTo the
 // TestPartResultArray object given in the constructor whenever a Google Test
 // failure is reported. It can either intercept only failures that are
 // generated in the same thread that created this object or it can intercept
 // all generated failures. The scope of this mock object can be controlled with
-// the second argument to the two arguments constructor.
+// the second argument idOfRoomDoorLeadsTo the two arguments constructor.
 class GTEST_API_ ScopedFakeTestPartResultReporter
     : public TestPartResultReporterInterface {
  public:
@@ -131,7 +131,7 @@ class GTEST_API_ ScopedFakeTestPartResultReporter
   };
 
   // The c'tor sets this object as the test part result reporter used
-  // by Google Test.  The 'result' parameter specifies where to report the
+  // by Google Test.  The 'result' parameter specifies where idOfRoomDoorLeadsTo report the
   // results. This reporter will only catch failures generated in the current
   // thread. DEPRECATED
   explicit ScopedFakeTestPartResultReporter(TestPartResultArray* result);
@@ -143,7 +143,7 @@ class GTEST_API_ ScopedFakeTestPartResultReporter
   // The d'tor restores the previous test part result reporter.
   virtual ~ScopedFakeTestPartResultReporter();
 
-  // Appends the TestPartResult object to the TestPartResultArray
+  // Appends the TestPartResult object idOfRoomDoorLeadsTo the TestPartResultArray
   // received in the constructor.
   //
   // This method is from the TestPartResultReporterInterface
@@ -186,7 +186,7 @@ class GTEST_API_ SingleFailureChecker {
 }  // namespace testing
 
 // A set of macros for testing Google Test assertions or code that's expected
-// to generate Google Test fatal failures.  It verifies that the given
+// idOfRoomDoorLeadsTo generate Google Test fatal failures.  It verifies that the given
 // statement will cause exactly one fatal Google Test failure with 'substr'
 // being part of the failure message.
 //
@@ -201,13 +201,13 @@ class GTEST_API_ SingleFailureChecker {
 //   - 'statement' cannot reference local non-static variables or
 //     non-static members of the current object.
 //   - 'statement' cannot return a value.
-//   - You cannot stream a failure message to this macro.
+//   - You cannot stream a failure message idOfRoomDoorLeadsTo this macro.
 //
 // Note that even though the implementations of the following two
-// macros are much alike, we cannot refactor them to use a common
-// helper macro, due to some peculiarity in how the preprocessor
+// macros are much alike, we cannot refactor them idOfRoomDoorLeadsTo use a common
+// helper macro, due idOfRoomDoorLeadsTo some peculiarity in how the preprocessor
 // works.  The AcceptsMacroThatExpandsToUnprotectedComma test in
-// gtest_unittest.cc will fail to compile if we do that.
+// gtest_unittest.cc will fail idOfRoomDoorLeadsTo compile if we do that.
 #define EXPECT_FATAL_FAILURE(statement, substr) \
   do { \
     class GTestExpectFatalFailureHelper {\
@@ -242,7 +242,7 @@ class GTEST_API_ SingleFailureChecker {
     }\
   } while (::testing::internal::AlwaysFalse())
 
-// A macro for testing Google Test assertions or code that's expected to
+// A macro for testing Google Test assertions or code that's expected idOfRoomDoorLeadsTo
 // generate Google Test non-fatal failures.  It asserts that the given
 // statement will cause exactly one non-fatal Google Test failure with 'substr'
 // being part of the failure message.
@@ -251,29 +251,29 @@ class GTEST_API_ SingleFailureChecker {
 // affects and considers failures generated in the current thread and
 // EXPECT_NONFATAL_FAILURE_ON_ALL_THREADS does the same but for all threads.
 //
-// 'statement' is allowed to reference local variables and members of
+// 'statement' is allowed idOfRoomDoorLeadsTo reference local variables and members of
 // the current object.
 //
 // The verification of the assertion is done correctly even when the statement
 // throws an exception or aborts the current function.
 //
 // Known restrictions:
-//   - You cannot stream a failure message to this macro.
+//   - You cannot stream a failure message idOfRoomDoorLeadsTo this macro.
 //
 // Note that even though the implementations of the following two
-// macros are much alike, we cannot refactor them to use a common
-// helper macro, due to some peculiarity in how the preprocessor
+// macros are much alike, we cannot refactor them idOfRoomDoorLeadsTo use a common
+// helper macro, due idOfRoomDoorLeadsTo some peculiarity in how the preprocessor
 // works.  If we do that, the code won't compile when the user gives
 // EXPECT_NONFATAL_FAILURE() a statement that contains a macro that
-// expands to code containing an unprotected comma.  The
+// expands idOfRoomDoorLeadsTo code containing an unprotected comma.  The
 // AcceptsMacroThatExpandsToUnprotectedComma test in gtest_unittest.cc
 // catches that.
 //
-// For the same reason, we have to write
+// For the same reason, we have idOfRoomDoorLeadsTo write
 //   if (::testing::internal::AlwaysTrue()) { statement; }
 // instead of
 //   GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_(statement)
-// to avoid an MSVC warning on unreachable code.
+// idOfRoomDoorLeadsTo avoid an MSVC warning on unreachable code.
 #define EXPECT_NONFATAL_FAILURE(statement, substr) \
   do {\
     ::testing::TestPartResultArray gtest_failures;\
@@ -324,7 +324,7 @@ class GTEST_API_ SingleFailureChecker {
 
 #if GTEST_OS_LINUX
 
-// TODO(kenton@google.com): Use autoconf to detect availability of
+// TODO(kenton@google.com): Use autoconf idOfRoomDoorLeadsTo detect availability of
 // gettimeofday().
 # define GTEST_HAS_GETTIMEOFDAY_ 1
 
@@ -363,16 +363,16 @@ class GTEST_API_ SingleFailureChecker {
 
 # if GTEST_OS_WINDOWS_MINGW
 // MinGW has gettimeofday() but not _ftime64().
-// TODO(kenton@google.com): Use autoconf to detect availability of
+// TODO(kenton@google.com): Use autoconf idOfRoomDoorLeadsTo detect availability of
 //   gettimeofday().
-// TODO(kenton@google.com): There are other ways to get the time on
+// TODO(kenton@google.com): There are other ways idOfRoomDoorLeadsTo get the time on
 //   Windows, like GetTickCount() or GetSystemTimeAsFileTime().  MinGW
 //   supports these.  consider using them instead.
 #  define GTEST_HAS_GETTIMEOFDAY_ 1
 #  include <sys/time.h>  // NOLINT
 # endif  // GTEST_OS_WINDOWS_MINGW
 
-// cpplint thinks that the header is already included, so we want to
+// cpplint thinks that the header is already included, so we want idOfRoomDoorLeadsTo
 // silence it.
 # include <windows.h>  // NOLINT
 # undef min
@@ -380,11 +380,11 @@ class GTEST_API_ SingleFailureChecker {
 #else
 
 // Assume other platforms have gettimeofday().
-// TODO(kenton@google.com): Use autoconf to detect availability of
+// TODO(kenton@google.com): Use autoconf idOfRoomDoorLeadsTo detect availability of
 //   gettimeofday().
 # define GTEST_HAS_GETTIMEOFDAY_ 1
 
-// cpplint thinks that the header is already included, so we want to
+// cpplint thinks that the header is already included, so we want idOfRoomDoorLeadsTo
 // silence it.
 # include <sys/time.h>  // NOLINT
 # include <unistd.h>  // NOLINT
@@ -404,7 +404,7 @@ class GTEST_API_ SingleFailureChecker {
 
 // Indicates that this translation unit is part of Google Test's
 // implementation.  It must come before gtest-internal-inl.h is
-// included, or there will be a compiler error.  This trick is to
+// included, or there will be a compiler error.  This trick is idOfRoomDoorLeadsTo
 // prevent a user from accidentally including gtest-internal-inl.h in
 // his code.
 #define GTEST_IMPLEMENTATION_ 1
@@ -422,7 +422,7 @@ class GTEST_API_ SingleFailureChecker {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -447,7 +447,7 @@ class GTEST_API_ SingleFailureChecker {
 #ifndef GTEST_SRC_GTEST_INTERNAL_INL_H_
 #define GTEST_SRC_GTEST_INTERNAL_INL_H_
 
-// GTEST_IMPLEMENTATION_ is defined to 1 iff the current translation unit is
+// GTEST_IMPLEMENTATION_ is defined idOfRoomDoorLeadsTo 1 iff the current translation unit is
 // part of Google Test's implementation; otherwise it's undefined.
 #if !GTEST_IMPLEMENTATION_
 // If this file is included from the user's code, just say no.
@@ -481,9 +481,9 @@ namespace testing {
 
 // Declares the flags.
 //
-// We don't want the users to modify this flag in the code, but want
-// Google Test's own unit tests to be able to access it. Therefore we
-// declare it here as opposed to in gtest.h.
+// We don't want the users idOfRoomDoorLeadsTo modify this flag in the code, but want
+// Google Test's own unit tests idOfRoomDoorLeadsTo be able idOfRoomDoorLeadsTo access it. Therefore we
+// declare it here as opposed idOfRoomDoorLeadsTo in gtest.h.
 GTEST_DECLARE_bool_(death_test_use_fork);
 
 namespace internal {
@@ -525,8 +525,8 @@ GTEST_API_ bool ShouldUseColor(bool stdout_is_tty);
 // Formats the given time in milliseconds as seconds.
 GTEST_API_ std::string FormatTimeInMillisAsSeconds(TimeInMillis ms);
 
-// Converts the given time in milliseconds to a date string in the ISO 8601
-// format, without the timezone information.  N.B.: due to the use the
+// Converts the given time in milliseconds idOfRoomDoorLeadsTo a date string in the ISO 8601
+// format, without the timezone information.  N.B.: due idOfRoomDoorLeadsTo the use the
 // non-reentrant localtime() function, this function is not thread safe.  Do
 // not use it in any code that can be called from multiple threads.
 GTEST_API_ std::string FormatEpochTimeInMillisAsIso8601(TimeInMillis ms);
@@ -545,8 +545,8 @@ inline int GetRandomSeedFromFlag(Int32 random_seed_flag) {
       static_cast<unsigned int>(GetTimeInMillis()) :
       static_cast<unsigned int>(random_seed_flag);
 
-  // Normalizes the actual seed to range [1, kMaxRandomSeed] such that
-  // it's easy to type.
+  // Normalizes the actual seed idOfRoomDoorLeadsTo range [1, kMaxRandomSeed] such that
+  // it's easy idOfRoomDoorLeadsTo type.
   const int normalized_seed =
       static_cast<int>((raw_seed - 1U) %
                        static_cast<unsigned int>(kMaxRandomSeed)) + 1;
@@ -555,7 +555,7 @@ inline int GetRandomSeedFromFlag(Int32 random_seed_flag) {
 
 // Returns the first valid random seed after 'seed'.  The behavior is
 // undefined if 'seed' is invalid.  The seed after kMaxRandomSeed is
-// considered to be 1.
+// considered idOfRoomDoorLeadsTo be 1.
 inline int GetNextRandomSeed(int seed) {
   GTEST_CHECK_(1 <= seed && seed <= kMaxRandomSeed)
       << "Invalid random seed " << seed << " - must be in [1, "
@@ -631,24 +631,24 @@ class GTestFlagSaver {
   bool throw_on_failure_;
 } GTEST_ATTRIBUTE_UNUSED_;
 
-// Converts a Unicode code point to a narrow string in UTF-8 encoding.
+// Converts a Unicode code point idOfRoomDoorLeadsTo a narrow string in UTF-8 encoding.
 // code_point parameter is of type UInt32 because wchar_t may not be
-// wide enough to contain a code point.
+// wide enough idOfRoomDoorLeadsTo contain a code point.
 // If the code_point is not a valid Unicode code point
-// (i.e. outside of Unicode range U+0 to U+10FFFF) it will be converted
-// to "(Invalid Unicode 0xXXXXXXXX)".
+// (i.e. outside of Unicode range U+0 idOfRoomDoorLeadsTo U+10FFFF) it will be converted
+// idOfRoomDoorLeadsTo "(Invalid Unicode 0xXXXXXXXX)".
 GTEST_API_ std::string CodePointToUtf8(UInt32 code_point);
 
-// Converts a wide string to a narrow string in UTF-8 encoding.
-// The wide string is assumed to have the following encoding:
+// Converts a wide string idOfRoomDoorLeadsTo a narrow string in UTF-8 encoding.
+// The wide string is assumed idOfRoomDoorLeadsTo have the following encoding:
 //   UTF-16 if sizeof(wchar_t) == 2 (on Windows, Cygwin, Symbian OS)
 //   UTF-32 if sizeof(wchar_t) == 4 (on Linux)
-// Parameter str points to a null-terminated wide string.
+// Parameter str points idOfRoomDoorLeadsTo a null-terminated wide string.
 // Parameter num_chars may additionally limit the number
 // of wchar_t characters processed. -1 is used when the entire string
 // should be processed.
 // If the string contains code points that are not valid Unicode code points
-// (i.e. outside of Unicode range U+0 to U+10FFFF) they will be output
+// (i.e. outside of Unicode range U+0 idOfRoomDoorLeadsTo U+10FFFF) they will be output
 // as '(Invalid Unicode 0xXXXXXXXX)'. If the string is in UTF16 encoding
 // and contains invalid UTF-16 surrogate pairs, values in those pairs
 // will be encoded as individual Unicode characters from Basic Normal Plane.
@@ -664,8 +664,8 @@ void WriteToShardStatusFileIfNeeded();
 // environment variable values. If the variables are present,
 // but inconsistent (e.g., shard_index >= total_shards), prints
 // an error and exits. If in_subprocess_for_death_test, sharding is
-// disabled because it must only be applied to the original test
-// process. Otherwise, we could filter out death tests we intended to execute.
+// disabled because it must only be applied idOfRoomDoorLeadsTo the original test
+// process. Otherwise, we could filter out death tests we intended idOfRoomDoorLeadsTo execute.
 GTEST_API_ bool ShouldShard(const char* total_shards_str,
                             const char* shard_index_str,
                             bool in_subprocess_for_death_test);
@@ -677,7 +677,7 @@ GTEST_API_ Int32 Int32FromEnvOrDie(const char* env_var, Int32 default_val);
 
 // Given the total number of shards, the shard index, and the test id,
 // returns true iff the test should be run on this shard. The test id is
-// some arbitrary but unique non-negative integer assigned to each test
+// some arbitrary but unique non-negative integer assigned idOfRoomDoorLeadsTo each test
 // method. Assumes that 0 <= shard_index < total_shards.
 GTEST_API_ bool ShouldRunTestOnShard(
     int total_shards, int shard_index, int test_id);
@@ -698,7 +698,7 @@ inline int CountIf(const Container& c, Predicate predicate) {
   return count;
 }
 
-// Applies a function/functor to each element in the container.
+// Applies a function/functor idOfRoomDoorLeadsTo each element in the container.
 template <class Container, typename Functor>
 void ForEach(const Container& c, Functor functor) {
   std::for_each(c.begin(), c.end(), functor);
@@ -713,8 +713,8 @@ inline E GetElementOr(const std::vector<E>& v, int i, E default_value) {
 
 // Performs an in-place shuffle of a range of the vector's elements.
 // 'begin' and 'end' are element indices as an STL-style range;
-// i.e. [begin, end) are shuffled, where 'end' == size() means to
-// shuffle to the end of the vector.
+// i.e. [begin, end) are shuffled, where 'end' == size() means idOfRoomDoorLeadsTo
+// shuffle idOfRoomDoorLeadsTo the end of the vector.
 template <typename E>
 void ShuffleRange(internal::Random* random, int begin, int end,
                   std::vector<E>* v) {
@@ -829,15 +829,15 @@ class OsStackTraceGetterInterface {
 
   // Returns the current OS stack trace as an std::string.  Parameters:
   //
-  //   max_depth  - the maximum number of stack frames to be included
+  //   max_depth  - the maximum number of stack frames idOfRoomDoorLeadsTo be included
   //                in the trace.
-  //   skip_count - the number of top frames to be skipped; doesn't count
+  //   skip_count - the number of top frames idOfRoomDoorLeadsTo be skipped; doesn't count
   //                against max_depth.
   virtual string CurrentStackTrace(int max_depth, int skip_count) = 0;
 
   // UponLeavingGTest() should be called immediately before Google Test calls
   // user code. It saves some information about the current stack that
-  // CurrentStackTrace() will use to find and hide Google Test stack frames.
+  // CurrentStackTrace() will use idOfRoomDoorLeadsTo find and hide Google Test stack frames.
   virtual void UponLeavingGTest() = 0;
 
   // This string is inserted in place of stack frames that are part of
@@ -890,7 +890,7 @@ class DefaultPerThreadTestPartResultReporter
  public:
   explicit DefaultPerThreadTestPartResultReporter(UnitTestImpl* unit_test);
   // Implements the TestPartResultReporterInterface. The implementation just
-  // delegates to the current global test part result reporter of *unit_test_.
+  // delegates idOfRoomDoorLeadsTo the current global test part result reporter of *unit_test_.
   virtual void ReportTestPartResult(const TestPartResult& result);
 
  private:
@@ -901,18 +901,18 @@ class DefaultPerThreadTestPartResultReporter
 
 // The private implementation of the UnitTest class.  We don't protect
 // the methods under a mutex, as this class is not accessible by a
-// user and the UnitTest class that delegates work to this class does
+// user and the UnitTest class that delegates work idOfRoomDoorLeadsTo this class does
 // proper locking.
 class GTEST_API_ UnitTestImpl {
  public:
   explicit UnitTestImpl(UnitTest* parent);
   virtual ~UnitTestImpl();
 
-  // There are two different ways to register your own TestPartResultReporter.
-  // You can register your own repoter to listen either only for test results
+  // There are two different ways idOfRoomDoorLeadsTo register your own TestPartResultReporter.
+  // You can register your own repoter idOfRoomDoorLeadsTo listen either only for test results
   // from the current thread or for results from all threads.
   // By default, each per-thread test result repoter just passes a new
-  // TestPartResult to the global test result reporter, which registers the
+  // TestPartResult idOfRoomDoorLeadsTo the global test result reporter, which registers the
   // test part result for the currently running test.
 
   // Returns the global test part result reporter.
@@ -954,7 +954,7 @@ class GTEST_API_ UnitTestImpl {
   // Gets the number of disabled tests.
   int disabled_test_count() const;
 
-  // Gets the number of tests to be printed in the XML report.
+  // Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
   int reportable_test_count() const;
 
   // Gets the number of all tests.
@@ -979,21 +979,21 @@ class GTEST_API_ UnitTestImpl {
     return failed_test_case_count() > 0 || ad_hoc_test_result()->Failed();
   }
 
-  // Gets the i-th test case among all the test cases. i can range from 0 to
+  // Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_case_count() - 1. If i is not in that range, returns NULL.
   const TestCase* GetTestCase(int i) const {
     const int index = GetElementOr(test_case_indices_, i, -1);
     return index < 0 ? NULL : test_cases_[i];
   }
 
-  // Gets the i-th test case among all the test cases. i can range from 0 to
+  // Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
   // total_test_case_count() - 1. If i is not in that range, returns NULL.
   TestCase* GetMutableTestCase(int i) {
     const int index = GetElementOr(test_case_indices_, i, -1);
     return index < 0 ? NULL : test_cases_[index];
   }
 
-  // Provides access to the event listener list.
+  // Provides access idOfRoomDoorLeadsTo the event listener list.
   TestEventListeners* listeners() { return &listeners_; }
 
   // Returns the TestResult for the test that's currently running, or
@@ -1017,10 +1017,10 @@ class GTEST_API_ UnitTestImpl {
 
   // Returns the current OS stack trace as an std::string.
   //
-  // The maximum number of stack frames to be included is specified by
+  // The maximum number of stack frames idOfRoomDoorLeadsTo be included is specified by
   // the gtest_stack_trace_depth flag.  The skip_count parameter
-  // specifies the number of top frames to be skipped, which doesn't
-  // count against the number of frames to be included.
+  // specifies the number of top frames idOfRoomDoorLeadsTo be skipped, which doesn't
+  // count against the number of frames idOfRoomDoorLeadsTo be included.
   //
   // For example, if Foo() calls Bar(), which in turn calls
   // CurrentOsStackTraceExceptTop(1), Foo() will be included in the
@@ -1035,34 +1035,34 @@ class GTEST_API_ UnitTestImpl {
   //   test_case_name: name of the test case
   //   type_param:     the name of the test's type parameter, or NULL if
   //                   this is not a typed or a type-parameterized test.
-  //   set_up_tc:      pointer to the function that sets up the test case
-  //   tear_down_tc:   pointer to the function that tears down the test case
+  //   set_up_tc:      pointer idOfRoomDoorLeadsTo the function that sets up the test case
+  //   tear_down_tc:   pointer idOfRoomDoorLeadsTo the function that tears down the test case
   TestCase* GetTestCase(const char* test_case_name,
                         const char* type_param,
                         Test::SetUpTestCaseFunc set_up_tc,
                         Test::TearDownTestCaseFunc tear_down_tc);
 
-  // Adds a TestInfo to the unit test.
+  // Adds a TestInfo idOfRoomDoorLeadsTo the unit test.
   //
   // Arguments:
   //
-  //   set_up_tc:    pointer to the function that sets up the test case
-  //   tear_down_tc: pointer to the function that tears down the test case
+  //   set_up_tc:    pointer idOfRoomDoorLeadsTo the function that sets up the test case
+  //   tear_down_tc: pointer idOfRoomDoorLeadsTo the function that tears down the test case
   //   test_info:    the TestInfo object
   void AddTestInfo(Test::SetUpTestCaseFunc set_up_tc,
                    Test::TearDownTestCaseFunc tear_down_tc,
                    TestInfo* test_info) {
-    // In order to support thread-safe death tests, we need to
+    // In order idOfRoomDoorLeadsTo support thread-safe death tests, we need idOfRoomDoorLeadsTo
     // remember the original working directory when the test program
     // was first invoked.  We cannot do this in RUN_ALL_TESTS(), as
     // the user may have changed the current directory before calling
     // RUN_ALL_TESTS().  Therefore we capture the current directory in
-    // AddTestInfo(), which is called to register a TEST or TEST_F
+    // AddTestInfo(), which is called idOfRoomDoorLeadsTo register a TEST or TEST_F
     // before main() is reached.
     if (original_working_dir_.IsEmpty()) {
       original_working_dir_.Set(FilePath::GetCurrentDir());
       GTEST_CHECK_(!original_working_dir_.IsEmpty())
-          << "Failed to get the current working directory.";
+          << "Failed idOfRoomDoorLeadsTo get the current working directory.";
     }
 
     GetTestCase(test_info->test_case_name(),
@@ -1072,7 +1072,7 @@ class GTEST_API_ UnitTestImpl {
   }
 
 #if GTEST_HAS_PARAM_TEST
-  // Returns ParameterizedTestCaseRegistry object used to keep track of
+  // Returns ParameterizedTestCaseRegistry object used idOfRoomDoorLeadsTo keep track of
   // value-parameterized tests and instantiate and register them.
   internal::ParameterizedTestCaseRegistry& parameterized_test_registry() {
     return parameterized_test_registry_;
@@ -1101,7 +1101,7 @@ class GTEST_API_ UnitTestImpl {
 
   // Runs all tests in this UnitTest object, prints the result, and
   // returns true if all tests are successful.  If any exception is
-  // thrown during a test, this test is considered to be failed, but
+  // thrown during a test, this test is considered idOfRoomDoorLeadsTo be failed, but
   // the rest of the tests will still be run.
   bool RunAllTests();
 
@@ -1115,8 +1115,8 @@ class GTEST_API_ UnitTestImpl {
     ad_hoc_test_result_.Clear();
   }
 
-  // Adds a TestProperty to the current TestResult object when invoked in a
-  // context of a test or a test case, or to the global property set. If the
+  // Adds a TestProperty idOfRoomDoorLeadsTo the current TestResult object when invoked in a
+  // context of a test or a test case, or idOfRoomDoorLeadsTo the global property set. If the
   // result already contains a property with the same key, the value will be
   // updated.
   void RecordProperty(const TestProperty& test_property);
@@ -1127,7 +1127,7 @@ class GTEST_API_ UnitTestImpl {
   };
 
   // Matches the full name of each test against the user-specified
-  // filter to decide whether the test should run, then records the
+  // filter idOfRoomDoorLeadsTo decide whether the test should run, then records the
   // result in each TestCase and TestInfo object.
   // If shard_tests == HONOR_SHARDING_PROTOCOL, further filters tests
   // based on sharding variables in the environment.
@@ -1141,7 +1141,7 @@ class GTEST_API_ UnitTestImpl {
   TestInfo* current_test_info() { return current_test_info_; }
   const TestInfo* current_test_info() const { return current_test_info_; }
 
-  // Returns the vector of environments that need to be set-up/torn-down
+  // Returns the vector of environments that need idOfRoomDoorLeadsTo be set-up/torn-down
   // before/after the tests are run.
   std::vector<Environment*>& environments() { return environments_; }
 
@@ -1157,15 +1157,15 @@ class GTEST_API_ UnitTestImpl {
   void InitDeathTestSubprocessControlInfo() {
     internal_run_death_test_flag_.reset(ParseInternalRunDeathTestFlag());
   }
-  // Returns a pointer to the parsed --gtest_internal_run_death_test
+  // Returns a pointer idOfRoomDoorLeadsTo the parsed --gtest_internal_run_death_test
   // flag, or NULL if that flag was not specified.
   // This information is useful only in a death test child process.
-  // Must not be called before a call to InitGoogleTest.
+  // Must not be called before a call idOfRoomDoorLeadsTo InitGoogleTest.
   const InternalRunDeathTestFlag* internal_run_death_test_flag() const {
     return internal_run_death_test_flag_.get();
   }
 
-  // Returns a pointer to the current death test factory.
+  // Returns a pointer idOfRoomDoorLeadsTo the current death test factory.
   internal::DeathTestFactory* death_test_factory() {
     return death_test_factory_.get();
   }
@@ -1180,16 +1180,16 @@ class GTEST_API_ UnitTestImpl {
   void ConfigureXmlOutput();
 
 #if GTEST_CAN_STREAM_RESULTS_
-  // Initializes the event listener for streaming test results to a socket.
+  // Initializes the event listener for streaming test results idOfRoomDoorLeadsTo a socket.
   // Must not be called before InitGoogleTest.
   void ConfigureStreamingOutput();
 #endif
 
   // Performs initialization dependent upon flag values obtained in
-  // ParseGoogleTestFlagsOnly.  Is called from InitGoogleTest after the call to
-  // ParseGoogleTestFlagsOnly.  In case a user neglects to call InitGoogleTest
+  // ParseGoogleTestFlagsOnly.  Is called from InitGoogleTest after the call idOfRoomDoorLeadsTo
+  // ParseGoogleTestFlagsOnly.  In case a user neglects idOfRoomDoorLeadsTo call InitGoogleTest
   // this function is also called from RunAllTests.  Since this function can be
-  // called more than once, it has to be idempotent.
+  // called more than once, it has idOfRoomDoorLeadsTo be idempotent.
   void PostFlagParsingInit();
 
   // Gets the random seed used at the start of the current test iteration.
@@ -1202,7 +1202,7 @@ class GTEST_API_ UnitTestImpl {
   // making sure that death tests are still run first.
   void ShuffleTests();
 
-  // Restores the test cases and tests to their order before the first shuffle.
+  // Restores the test cases and tests idOfRoomDoorLeadsTo their order before the first shuffle.
   void UnshuffleTests();
 
   // Returns the value of GTEST_FLAG(catch_exceptions) at the moment
@@ -1212,7 +1212,7 @@ class GTEST_API_ UnitTestImpl {
  private:
   friend class ::testing::UnitTest;
 
-  // Used by UnitTest::Run() to capture the state of
+  // Used by UnitTest::Run() idOfRoomDoorLeadsTo capture the state of
   // GTEST_FLAG(catch_exceptions) at the moment it starts.
   void set_catch_exceptions(bool value) { catch_exceptions_ = value; }
 
@@ -1228,17 +1228,17 @@ class GTEST_API_ UnitTestImpl {
   DefaultPerThreadTestPartResultReporter
       default_per_thread_test_part_result_reporter_;
 
-  // Points to (but doesn't own) the global test part result reporter.
+  // Points idOfRoomDoorLeadsTo (but doesn't own) the global test part result reporter.
   TestPartResultReporterInterface* global_test_part_result_repoter_;
 
-  // Protects read and write access to global_test_part_result_reporter_.
+  // Protects read and write access idOfRoomDoorLeadsTo global_test_part_result_reporter_.
   internal::Mutex global_test_part_result_reporter_mutex_;
 
-  // Points to (but doesn't own) the per-thread test part result reporter.
+  // Points idOfRoomDoorLeadsTo (but doesn't own) the per-thread test part result reporter.
   internal::ThreadLocal<TestPartResultReporterInterface*>
       per_thread_test_part_result_reporter_;
 
-  // The vector of environments that need to be set-up/torn-down
+  // The vector of environments that need idOfRoomDoorLeadsTo be set-up/torn-down
   // before/after the tests are run.
   std::vector<Environment*> environments_;
 
@@ -1246,14 +1246,14 @@ class GTEST_API_ UnitTestImpl {
   // elements in the vector.
   std::vector<TestCase*> test_cases_;
 
-  // Provides a level of indirection for the test case list to allow
+  // Provides a level of indirection for the test case list idOfRoomDoorLeadsTo allow
   // easy shuffling and restoring the test case order.  The i-th
   // element of this vector is the index of the i-th test case in the
   // shuffled order.
   std::vector<int> test_case_indices_;
 
 #if GTEST_HAS_PARAM_TEST
-  // ParameterizedTestRegistry object used to register value-parameterized
+  // ParameterizedTestRegistry object used idOfRoomDoorLeadsTo register value-parameterized
   // tests.
   internal::ParameterizedTestCaseRegistry parameterized_test_registry_;
 
@@ -1264,35 +1264,35 @@ class GTEST_API_ UnitTestImpl {
   // Index of the last death test case registered.  Initially -1.
   int last_death_test_case_;
 
-  // This points to the TestCase for the currently running test.  It
+  // This points idOfRoomDoorLeadsTo the TestCase for the currently running test.  It
   // changes as Google Test goes through one test case after another.
-  // When no test is running, this is set to NULL and Google Test
+  // When no test is running, this is set idOfRoomDoorLeadsTo NULL and Google Test
   // stores assertion results in ad_hoc_test_result_.  Initially NULL.
   TestCase* current_test_case_;
 
-  // This points to the TestInfo for the currently running test.  It
+  // This points idOfRoomDoorLeadsTo the TestInfo for the currently running test.  It
   // changes as Google Test goes through one test after another.  When
-  // no test is running, this is set to NULL and Google Test stores
+  // no test is running, this is set idOfRoomDoorLeadsTo NULL and Google Test stores
   // assertion results in ad_hoc_test_result_.  Initially NULL.
   TestInfo* current_test_info_;
 
   // Normally, a user only writes assertions inside a TEST or TEST_F,
   // or inside a function called by a TEST or TEST_F.  Since Google
   // Test keeps track of which test is current running, it can
-  // associate such an assertion with the test it belongs to.
+  // associate such an assertion with the test it belongs idOfRoomDoorLeadsTo.
   //
   // If an assertion is encountered when no TEST or TEST_F is running,
-  // Google Test attributes the assertion result to an imaginary "ad hoc"
+  // Google Test attributes the assertion result idOfRoomDoorLeadsTo an imaginary "ad hoc"
   // test, and records the result in ad_hoc_test_result_.
   TestResult ad_hoc_test_result_;
 
-  // The list of event listeners that can be used to track events inside
+  // The list of event listeners that can be used idOfRoomDoorLeadsTo track events inside
   // Google Test.
   TestEventListeners listeners_;
 
   // The OS stack trace getter.  Will be deleted when the UnitTest
   // object is destructed.  By default, an OsStackTraceGetter is used,
-  // but the user can set this field to use a custom getter if that is
+  // but the user can set this field idOfRoomDoorLeadsTo use a custom getter if that is
   // desired.
   OsStackTraceGetterInterface* os_stack_trace_getter_;
 
@@ -1309,7 +1309,7 @@ class GTEST_API_ UnitTestImpl {
   // UNIX epoch.
   TimeInMillis start_timestamp_;
 
-  // How long the test took to run, in milliseconds.
+  // How long the test took idOfRoomDoorLeadsTo run, in milliseconds.
   TimeInMillis elapsed_time_;
 
 #if GTEST_HAS_DEATH_TEST
@@ -1366,7 +1366,7 @@ GTEST_API_ void ParseGoogleTestFlagsOnly(int* argc, wchar_t** argv);
 // platform.
 GTEST_API_ std::string GetLastErrnoDescription();
 
-// Attempts to parse a string into a positive integer pointed to by the
+// Attempts idOfRoomDoorLeadsTo parse a string into a positive integer pointed idOfRoomDoorLeadsTo by the
 // number parameter.  Returns true if that is possible.
 // GTEST_HAS_DEATH_TEST implies that we have ::std::string, so we can use
 // it here.
@@ -1382,7 +1382,7 @@ bool ParseNaturalNumber(const ::std::string& str, Integer* number) {
 
   char* end;
   // BiggestConvertible is the largest integer type that system-provided
-  // string-to-number conversion routines can return.
+  // string-idOfRoomDoorLeadsTo-number conversion routines can return.
 
 # if GTEST_OS_WINDOWS && !defined(__GNUC__)
 
@@ -1399,7 +1399,7 @@ bool ParseNaturalNumber(const ::std::string& str, Integer* number) {
 
   const bool parse_success = *end == '\0' && errno == 0;
 
-  // TODO(vladl@google.com): Convert this to compile time assertion when it is
+  // TODO(vladl@google.com): Convert this idOfRoomDoorLeadsTo compile time assertion when it is
   // available.
   GTEST_CHECK_(sizeof(Integer) <= sizeof(parsed));
 
@@ -1414,7 +1414,7 @@ bool ParseNaturalNumber(const ::std::string& str, Integer* number) {
 
 // TestResult contains some private methods that should be hidden from
 // Google Test user but are required for testing. This class allow our tests
-// to access them.
+// idOfRoomDoorLeadsTo access them.
 //
 // This class is supplied only for the purpose of testing Google Test's own
 // constructs. Do not use it in user tests, either directly or indirectly.
@@ -1438,27 +1438,27 @@ class TestResultAccessor {
 
 #if GTEST_CAN_STREAM_RESULTS_
 
-// Streams test results to the given port on the given host machine.
+// Streams test results idOfRoomDoorLeadsTo the given port on the given host machine.
 class GTEST_API_ StreamingListener : public EmptyTestEventListener {
  public:
-  // Abstract base class for writing strings to a socket.
+  // Abstract base class for writing strings idOfRoomDoorLeadsTo a socket.
   class AbstractSocketWriter {
    public:
     virtual ~AbstractSocketWriter() {}
 
-    // Sends a string to the socket.
+    // Sends a string idOfRoomDoorLeadsTo the socket.
     virtual void Send(const string& message) = 0;
 
     // Closes the socket.
     virtual void CloseConnection() {}
 
-    // Sends a string and a newline to the socket.
+    // Sends a string and a newline idOfRoomDoorLeadsTo the socket.
     void SendLn(const string& message) {
       Send(message + "\n");
     }
   };
 
-  // Concrete class for actually writing strings to a socket.
+  // Concrete class for actually writing strings idOfRoomDoorLeadsTo a socket.
   class SocketWriter : public AbstractSocketWriter {
    public:
     SocketWriter(const string& host, const string& port)
@@ -1471,7 +1471,7 @@ class GTEST_API_ StreamingListener : public EmptyTestEventListener {
         CloseConnection();
     }
 
-    // Sends a string to the socket.
+    // Sends a string idOfRoomDoorLeadsTo the socket.
     virtual void Send(const string& message) {
       GTEST_CHECK_(sockfd_ != -1)
           << "Send() can be called only when there is a connection.";
@@ -1479,13 +1479,13 @@ class GTEST_API_ StreamingListener : public EmptyTestEventListener {
       const int len = static_cast<int>(message.length());
       if (write(sockfd_, message.c_str(), len) != len) {
         GTEST_LOG_(WARNING)
-            << "stream_result_to: failed to stream to "
+            << "stream_result_to: failed idOfRoomDoorLeadsTo stream idOfRoomDoorLeadsTo "
             << host_name_ << ":" << port_num_;
       }
     }
 
    private:
-    // Creates a client socket and connects to the server.
+    // Creates a client socket and connects idOfRoomDoorLeadsTo the server.
     void MakeConnection();
 
     // Closes the socket.
@@ -1522,7 +1522,7 @@ class GTEST_API_ StreamingListener : public EmptyTestEventListener {
     // test iteration, not for the entire test program.
     SendLn("event=TestProgramEnd&passed=" + FormatBool(unit_test.Passed()));
 
-    // Notify the streaming server to stop.
+    // Notify the streaming server idOfRoomDoorLeadsTo stop.
     socket_writer_->CloseConnection();
   }
 
@@ -1568,10 +1568,10 @@ class GTEST_API_ StreamingListener : public EmptyTestEventListener {
   }
 
  private:
-  // Sends the given message and a newline to the socket.
+  // Sends the given message and a newline idOfRoomDoorLeadsTo the socket.
   void SendLn(const string& message) { socket_writer_->SendLn(message); }
 
-  // Called at the start of streaming to notify the receiver what
+  // Called at the start of streaming idOfRoomDoorLeadsTo notify the receiver what
   // protocol we are using.
   void Start() { SendLn("gtest_streaming_protocol_version=1.0"); }
 
@@ -1627,7 +1627,7 @@ static const char kTestShardStatusFile[] = "GTEST_SHARD_STATUS_FILE";
 
 namespace internal {
 
-// The text used in failure messages to indicate the start of the
+// The text used in failure messages idOfRoomDoorLeadsTo indicate the start of the
 // stack trace.
 const char kStackTraceMarker[] = "\nStack trace:\n";
 
@@ -1650,7 +1650,7 @@ static const char* GetDefaultFilter() {
 GTEST_DEFINE_bool_(
     also_run_disabled_tests,
     internal::BoolFromGTestEnv("also_run_disabled_tests", false),
-    "Run disabled tests too, in addition to the tests normally being run.");
+    "Run disabled tests too, in addition idOfRoomDoorLeadsTo the tests normally being run.");
 
 GTEST_DEFINE_bool_(
     break_on_failure,
@@ -1666,17 +1666,17 @@ GTEST_DEFINE_bool_(
 GTEST_DEFINE_string_(
     color,
     internal::StringFromGTestEnv("color", "auto"),
-    "Whether to use colors in the output.  Valid values: yes, no, "
-    "and auto.  'auto' means to use colors if the output is "
-    "being sent to a terminal and the TERM environment variable "
-    "is set to a terminal type that supports colors.");
+    "Whether idOfRoomDoorLeadsTo use colors in the output.  Valid values: yes, no, "
+    "and auto.  'auto' means idOfRoomDoorLeadsTo use colors if the output is "
+    "being sent idOfRoomDoorLeadsTo a terminal and the TERM environment variable "
+    "is set idOfRoomDoorLeadsTo a terminal type that supports colors.");
 
 GTEST_DEFINE_string_(
     filter,
     internal::StringFromGTestEnv("filter", GetDefaultFilter()),
     "A colon-separated list of glob (not regex) patterns "
-    "for filtering the tests to run, optionally followed by a "
-    "'-' and a : separated list of negative patterns (tests to "
+    "for filtering the tests idOfRoomDoorLeadsTo run, optionally followed by a "
+    "'-' and a : separated list of negative patterns (tests idOfRoomDoorLeadsTo "
     "exclude).  A test is run if it matches one of the positive "
     "patterns and does not match any of the negative patterns.");
 
@@ -1704,13 +1704,13 @@ GTEST_DEFINE_bool_(
 GTEST_DEFINE_int32_(
     random_seed,
     internal::Int32FromGTestEnv("random_seed", 0),
-    "Random number seed to use when shuffling test orders.  Must be in range "
-    "[1, 99999], or 0 to use a seed based on the current time.");
+    "Random number seed idOfRoomDoorLeadsTo use when shuffling test orders.  Must be in range "
+    "[1, 99999], or 0 idOfRoomDoorLeadsTo use a seed based on the current time.");
 
 GTEST_DEFINE_int32_(
     repeat,
     internal::Int32FromGTestEnv("repeat", 1),
-    "How many times to repeat each test.  Specify a negative number "
+    "How many times idOfRoomDoorLeadsTo repeat each test.  Specify a negative number "
     "for repeating forever.  Useful for shaking out flaky tests.");
 
 GTEST_DEFINE_bool_(
@@ -1727,13 +1727,13 @@ GTEST_DEFINE_bool_(
 GTEST_DEFINE_int32_(
     stack_trace_depth,
     internal::Int32FromGTestEnv("stack_trace_depth", kMaxStackTraceDepth),
-    "The maximum number of stack frames to print when an "
+    "The maximum number of stack frames idOfRoomDoorLeadsTo print when an "
     "assertion fails.  The valid range is 0 through 100, inclusive.");
 
 GTEST_DEFINE_string_(
     stream_result_to,
     internal::StringFromGTestEnv("stream_result_to", ""),
-    "This flag specifies the host name and the port number on which to stream "
+    "This flag specifies the host name and the port number on which idOfRoomDoorLeadsTo stream "
     "test results. Example: \"localhost:555\". The flag is effective only on "
     "Linux.");
 
@@ -1748,7 +1748,7 @@ GTEST_DEFINE_bool_(
 GTEST_DEFINE_string_(
     flagfile,
     internal::StringFromGTestEnv("flagfile", ""),
-    "This flag specifies the flagfile to read command-line flags from.");
+    "This flag specifies the flagfile idOfRoomDoorLeadsTo read command-line flags from.");
 #endif  // GTEST_USE_OWN_FLAGFILE_FLAG_
 
 namespace internal {
@@ -1768,7 +1768,7 @@ UInt32 Random::Generate(UInt32 range) {
 
   // Converting via modulus introduces a bit of downward bias, but
   // it's simple, and a linear congruential generator isn't too good
-  // to begin with.
+  // idOfRoomDoorLeadsTo begin with.
   return state_ % range;
 }
 
@@ -1951,7 +1951,7 @@ bool UnitTestOptions::FilterMatchesTest(const std::string &test_case_name,
                                         const std::string &test_name) {
   const std::string& full_name = test_case_name + "." + test_name.c_str();
 
-  // Split --gtest_filter at '-', if there is one, to separate into
+  // Split --gtest_filter at '-', if there is one, idOfRoomDoorLeadsTo separate into
   // positive filter and negative filter portions
   const char* const p = GTEST_FLAG(filter).c_str();
   const char* const dash = strchr(p, '-');
@@ -1961,7 +1961,7 @@ bool UnitTestOptions::FilterMatchesTest(const std::string &test_case_name,
     positive = GTEST_FLAG(filter).c_str();  // Whole string is a positive filter
     negative = "";
   } else {
-    positive = std::string(p, dash);   // Everything up to the dash
+    positive = std::string(p, dash);   // Everything up idOfRoomDoorLeadsTo the dash
     negative = std::string(dash + 1);  // Everything after the dash
     if (positive.empty()) {
       // Treat '-test1' as the same as '*-test1'
@@ -1981,7 +1981,7 @@ bool UnitTestOptions::FilterMatchesTest(const std::string &test_case_name,
 // This function is useful as an __except condition.
 int UnitTestOptions::GTestShouldProcessSEH(DWORD exception_code) {
   // Google Test should handle a SEH exception if:
-  //   1. the user wants it to, AND
+  //   1. the user wants it idOfRoomDoorLeadsTo, AND
   //   2. this is not a breakpoint exception, AND
   //   3. this is not a C++ exception (VC++ implements them via SEH,
   //      apparently).
@@ -2006,7 +2006,7 @@ int UnitTestOptions::GTestShouldProcessSEH(DWORD exception_code) {
 }  // namespace internal
 
 // The c'tor sets this object as the test part result reporter used by
-// Google Test.  The 'result' parameter specifies where to report the
+// Google Test.  The 'result' parameter specifies where idOfRoomDoorLeadsTo report the
 // results. Intercepts only failures from the current thread.
 ScopedFakeTestPartResultReporter::ScopedFakeTestPartResultReporter(
     TestPartResultArray* result)
@@ -2016,7 +2016,7 @@ ScopedFakeTestPartResultReporter::ScopedFakeTestPartResultReporter(
 }
 
 // The c'tor sets this object as the test part result reporter used by
-// Google Test.  The 'result' parameter specifies where to report the
+// Google Test.  The 'result' parameter specifies where idOfRoomDoorLeadsTo report the
 // results.
 ScopedFakeTestPartResultReporter::ScopedFakeTestPartResultReporter(
     InterceptMode intercept_mode, TestPartResultArray* result)
@@ -2057,12 +2057,12 @@ void ScopedFakeTestPartResultReporter::ReportTestPartResult(
 namespace internal {
 
 // Returns the type ID of ::testing::Test.  We should always call this
-// instead of GetTypeId< ::testing::Test>() to get the type ID of
-// testing::Test.  This is to work around a suspected linker bug when
+// instead of GetTypeId< ::testing::Test>() idOfRoomDoorLeadsTo get the type ID of
+// testing::Test.  This is idOfRoomDoorLeadsTo work around a suspected linker bug when
 // using Google Test as a framework on Mac OS X.  The bug causes
-// GetTypeId< ::testing::Test>() to return different values depending
+// GetTypeId< ::testing::Test>() idOfRoomDoorLeadsTo return different values depending
 // on whether the call is from the Google Test framework itself or
-// from user test code.  GetTestTypeId() is guaranteed to always
+// from user test code.  GetTestTypeId() is guaranteed idOfRoomDoorLeadsTo always
 // return the same value, as it always calls GetTypeId<>() from the
 // gtest.cc, which is within the Google Test framework.
 TypeId GetTestTypeId() {
@@ -2112,7 +2112,7 @@ AssertionResult HasOneFailure(const char* /* results_expr */,
   return AssertionSuccess();
 }
 
-// The constructor of SingleFailureChecker remembers where to look up
+// The constructor of SingleFailureChecker remembers where idOfRoomDoorLeadsTo look up
 // test part results, what type of failure we expect, and what
 // substring the failure message should contain.
 SingleFailureChecker:: SingleFailureChecker(
@@ -2216,7 +2216,7 @@ int UnitTestImpl::disabled_test_count() const {
   return SumOverTestCaseList(test_cases_, &TestCase::disabled_test_count);
 }
 
-// Gets the number of tests to be printed in the XML report.
+// Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
 int UnitTestImpl::reportable_test_count() const {
   return SumOverTestCaseList(test_cases_, &TestCase::reportable_test_count);
 }
@@ -2233,10 +2233,10 @@ int UnitTestImpl::test_to_run_count() const {
 
 // Returns the current OS stack trace as an std::string.
 //
-// The maximum number of stack frames to be included is specified by
+// The maximum number of stack frames idOfRoomDoorLeadsTo be included is specified by
 // the gtest_stack_trace_depth flag.  The skip_count parameter
-// specifies the number of top frames to be skipped, which doesn't
-// count against the number of frames to be included.
+// specifies the number of top frames idOfRoomDoorLeadsTo be skipped, which doesn't
+// count against the number of frames idOfRoomDoorLeadsTo be included.
 //
 // For example, if Foo() calls Bar(), which in turn calls
 // CurrentOsStackTraceExceptTop(1), Foo() will be included in the
@@ -2276,7 +2276,7 @@ TimeInMillis GetTimeInMillis() {
 #elif GTEST_OS_WINDOWS && !GTEST_HAS_GETTIMEOFDAY_
   __timeb64 now;
 
-  // MSVC 8 deprecates _ftime64(), so we want to suppress warning 4996
+  // MSVC 8 deprecates _ftime64(), so we want idOfRoomDoorLeadsTo suppress warning 4996
   // (deprecated function) there.
   // TODO(kenton@google.com): Use GetTickCount()?  Or use
   //   SystemTimeToFileTime()
@@ -2290,7 +2290,7 @@ TimeInMillis GetTimeInMillis() {
   gettimeofday(&now, NULL);
   return static_cast<TimeInMillis>(now.tv_sec) * 1000 + now.tv_usec / 1000;
 #else
-# error "Don't know how to get the current time on your system."
+# error "Don't know how idOfRoomDoorLeadsTo get the current time on your system."
 #endif
 }
 
@@ -2337,7 +2337,7 @@ const char* String::Utf16ToAnsi(LPCWSTR utf16_str)  {
 // Compares two C strings.  Returns true iff they have the same content.
 //
 // Unlike strcmp(), this function can handle NULL argument(s).  A NULL
-// C string is considered different to any non-NULL C string,
+// C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
 // including the empty string.
 bool String::CStringEquals(const char * lhs, const char * rhs) {
   if ( lhs == NULL ) return rhs == NULL;
@@ -2349,8 +2349,8 @@ bool String::CStringEquals(const char * lhs, const char * rhs) {
 
 #if GTEST_HAS_STD_WSTRING || GTEST_HAS_GLOBAL_WSTRING
 
-// Converts an array of wide chars to a narrow string using the UTF-8
-// encoding, and streams the result to the given Message object.
+// Converts an array of wide chars idOfRoomDoorLeadsTo a narrow string using the UTF-8
+// encoding, and streams the result idOfRoomDoorLeadsTo the given Message object.
 static void StreamWideCharsToMessage(const wchar_t* wstr, size_t length,
                                      Message* msg) {
   for (size_t i = 0; i != length; ) {  // NOLINT
@@ -2388,16 +2388,16 @@ void SplitString(const ::std::string& str, char delimiter,
 
 // Constructs an empty Message.
 // We allocate the stringstream separately because otherwise each use of
-// ASSERT/EXPECT in a procedure adds over 200 bytes to the procedure's
-// stack frame leading to huge stack frames in some cases; gcc does not reuse
+// ASSERT/EXPECT in a procedure adds over 200 bytes idOfRoomDoorLeadsTo the procedure's
+// stack frame leading idOfRoomDoorLeadsTo huge stack frames in some cases; gcc does not reuse
 // the stack space.
 Message::Message() : ss_(new ::std::stringstream) {
-  // By default, we want there to be enough precision when printing
-  // a double to a Message.
+  // By default, we want there idOfRoomDoorLeadsTo be enough precision when printing
+  // a double idOfRoomDoorLeadsTo a Message.
   *ss_ << std::setprecision(std::numeric_limits<double>::digits10 + 2);
 }
 
-// These two overloads allow streaming a wide C string to a Message
+// These two overloads allow streaming a wide C string idOfRoomDoorLeadsTo a Message
 // using the UTF-8 encoding.
 Message& Message::operator <<(const wchar_t* wide_c_str) {
   return *this << internal::String::ShowWideCString(wide_c_str);
@@ -2407,8 +2407,8 @@ Message& Message::operator <<(wchar_t* wide_c_str) {
 }
 
 #if GTEST_HAS_STD_WSTRING
-// Converts the given wide string to a narrow string using the UTF-8
-// encoding, and streams the result to this Message object.
+// Converts the given wide string idOfRoomDoorLeadsTo a narrow string using the UTF-8
+// encoding, and streams the result idOfRoomDoorLeadsTo this Message object.
 Message& Message::operator <<(const ::std::wstring& wstr) {
   internal::StreamWideCharsToMessage(wstr.c_str(), wstr.length(), this);
   return *this;
@@ -2416,15 +2416,15 @@ Message& Message::operator <<(const ::std::wstring& wstr) {
 #endif  // GTEST_HAS_STD_WSTRING
 
 #if GTEST_HAS_GLOBAL_WSTRING
-// Converts the given wide string to a narrow string using the UTF-8
-// encoding, and streams the result to this Message object.
+// Converts the given wide string idOfRoomDoorLeadsTo a narrow string using the UTF-8
+// encoding, and streams the result idOfRoomDoorLeadsTo this Message object.
 Message& Message::operator <<(const ::wstring& wstr) {
   internal::StreamWideCharsToMessage(wstr.c_str(), wstr.length(), this);
   return *this;
 }
 #endif  // GTEST_HAS_GLOBAL_WSTRING
 
-// Gets the text streamed to this object so far as an std::string.
+// Gets the text streamed idOfRoomDoorLeadsTo this object so far as an std::string.
 // Each '\0' character in the buffer is replaced with "\\0".
 std::string Message::GetString() const {
   return internal::StringStreamToString(ss_.get());
@@ -2510,7 +2510,7 @@ std::vector<EditType> CalculateOptimalEdits(const std::vector<size_t>& left,
         costs[l_i + 1][r_i + 1] = remove + 1;
         best_move[l_i + 1][r_i + 1] = kRemove;
       } else {
-        // We make replace a little more expensive than add/remove to lower
+        // We make replace a little more expensive than add/remove idOfRoomDoorLeadsTo lower
         // their priority.
         costs[l_i + 1][r_i + 1] = replace + 1.00001;
         best_move[l_i + 1][r_i + 1] = kReplace;
@@ -2532,7 +2532,7 @@ std::vector<EditType> CalculateOptimalEdits(const std::vector<size_t>& left,
 
 namespace {
 
-// Helper class to convert string into ids with deduplication.
+// Helper class idOfRoomDoorLeadsTo convert string into ids with deduplication.
 class InternalStrings {
  public:
   size_t GetId(const std::string& str) {
@@ -2567,9 +2567,9 @@ std::vector<EditType> CalculateOptimalEdits(
 
 namespace {
 
-// Helper class that holds the state for one hunk and prints it out to the
+// Helper class that holds the state for one hunk and prints it out idOfRoomDoorLeadsTo the
 // stream.
-// It reorders adds/removes when possible to group all removes before all
+// It reorders adds/removes when possible idOfRoomDoorLeadsTo group all removes before all
 // adds. It also adds the hunk header before printint into the stream.
 class Hunk {
  public:
@@ -2663,7 +2663,7 @@ std::string CreateUnifiedDiff(const std::vector<std::string>& left,
       ++edit_i;
     }
 
-    // Find the first line to include in the hunk.
+    // Find the first line idOfRoomDoorLeadsTo include in the hunk.
     const size_t prefix_context = std::min(l_i, context);
     Hunk hunk(l_i - prefix_context + 1, r_i - prefix_context + 1);
     for (size_t i = prefix_context; i > 0; --i) {
@@ -2821,9 +2821,9 @@ AssertionResult DoubleNearPredFormat(const char* expr1,
   return AssertionFailure()
       << "The difference between " << expr1 << " and " << expr2
       << " is " << diff << ", which exceeds " << abs_error_expr << ", where\n"
-      << expr1 << " evaluates to " << val1 << ",\n"
-      << expr2 << " evaluates to " << val2 << ", and\n"
-      << abs_error_expr << " evaluates to " << abs_error << ".";
+      << expr1 << " evaluates idOfRoomDoorLeadsTo " << val1 << ",\n"
+      << expr2 << " evaluates idOfRoomDoorLeadsTo " << val2 << ", and\n"
+      << abs_error_expr << " evaluates idOfRoomDoorLeadsTo " << abs_error << ".";
 }
 
 
@@ -2838,7 +2838,7 @@ AssertionResult FloatingPointLE(const char* expr1,
     return AssertionSuccess();
   }
 
-  // or if val1 is almost equal to val2.
+  // or if val1 is almost equal idOfRoomDoorLeadsTo val2.
   const FloatingPoint<RawType> lhs(val1), rhs(val2);
   if (lhs.AlmostEquals(rhs)) {
     return AssertionSuccess();
@@ -2864,14 +2864,14 @@ AssertionResult FloatingPointLE(const char* expr1,
 
 }  // namespace internal
 
-// Asserts that val1 is less than, or almost equal to, val2.  Fails
+// Asserts that val1 is less than, or almost equal idOfRoomDoorLeadsTo, val2.  Fails
 // otherwise.  In particular, it fails if either val1 or val2 is NaN.
 AssertionResult FloatLE(const char* expr1, const char* expr2,
                         float val1, float val2) {
   return internal::FloatingPointLE<float>(expr1, expr2, val1, val2);
 }
 
-// Asserts that val1 is less than, or almost equal to, val2.  Fails
+// Asserts that val1 is less than, or almost equal idOfRoomDoorLeadsTo, val2.  Fails
 // otherwise.  In particular, it fails if either val1 or val2 is NaN.
 AssertionResult DoubleLE(const char* expr1, const char* expr2,
                          double val1, double val2) {
@@ -2897,9 +2897,9 @@ AssertionResult CmpHelperEQ(const char* expected_expression,
                    false);
 }
 
-// A macro for implementing the helper functions needed to implement
+// A macro for implementing the helper functions needed idOfRoomDoorLeadsTo implement
 // ASSERT_?? and EXPECT_?? with integer or enum arguments.  It is here
-// just to avoid copy-and-paste of similar code.
+// just idOfRoomDoorLeadsTo avoid copy-and-paste of similar code.
 #define GTEST_IMPL_CMP_HELPER_(op_name, op)\
 AssertionResult CmpHelper##op_name(const char* expr1, const char* expr2, \
                                    BiggestInt val1, BiggestInt val2) {\
@@ -3119,7 +3119,7 @@ AssertionResult HRESULTFailureHelper(const char* expr,
 # else
 
   // Looks up the human-readable system message for the HRESULT code
-  // and since we're not passing any params to FormatMessage, we don't
+  // and since we're not passing any params idOfRoomDoorLeadsTo FormatMessage, we don't
   // want inserts expanded.
   const DWORD kFlags = FORMAT_MESSAGE_FROM_SYSTEM |
                        FORMAT_MESSAGE_IGNORE_INSERTS;
@@ -3191,19 +3191,19 @@ const UInt32 kMaxCodePoint4 = (static_cast<UInt32>(1) << (3 + 3*6)) - 1;
 
 // Chops off the n lowest bits from a bit pattern.  Returns the n
 // lowest bits.  As a side effect, the original bit pattern will be
-// shifted to the right by n bits.
+// shifted idOfRoomDoorLeadsTo the right by n bits.
 inline UInt32 ChopLowBits(UInt32* bits, int n) {
   const UInt32 low_bits = *bits & ((static_cast<UInt32>(1) << n) - 1);
   *bits >>= n;
   return low_bits;
 }
 
-// Converts a Unicode code point to a narrow string in UTF-8 encoding.
+// Converts a Unicode code point idOfRoomDoorLeadsTo a narrow string in UTF-8 encoding.
 // code_point parameter is of type UInt32 because wchar_t may not be
-// wide enough to contain a code point.
+// wide enough idOfRoomDoorLeadsTo contain a code point.
 // If the code_point is not a valid Unicode code point
-// (i.e. outside of Unicode range U+0 to U+10FFFF) it will be converted
-// to "(Invalid Unicode 0xXXXXXXXX)".
+// (i.e. outside of Unicode range U+0 idOfRoomDoorLeadsTo U+10FFFF) it will be converted
+// idOfRoomDoorLeadsTo "(Invalid Unicode 0xXXXXXXXX)".
 std::string CodePointToUtf8(UInt32 code_point) {
   if (code_point > kMaxCodePoint4) {
     return "(Invalid Unicode 0x" + String::FormatHexInt(code_point) + ")";
@@ -3255,16 +3255,16 @@ inline UInt32 CreateCodePointFromUtf16SurrogatePair(wchar_t first,
       static_cast<UInt32>(first);
 }
 
-// Converts a wide string to a narrow string in UTF-8 encoding.
-// The wide string is assumed to have the following encoding:
+// Converts a wide string idOfRoomDoorLeadsTo a narrow string in UTF-8 encoding.
+// The wide string is assumed idOfRoomDoorLeadsTo have the following encoding:
 //   UTF-16 if sizeof(wchar_t) == 2 (on Windows, Cygwin, Symbian OS)
 //   UTF-32 if sizeof(wchar_t) == 4 (on Linux)
-// Parameter str points to a null-terminated wide string.
+// Parameter str points idOfRoomDoorLeadsTo a null-terminated wide string.
 // Parameter num_chars may additionally limit the number
 // of wchar_t characters processed. -1 is used when the entire string
 // should be processed.
 // If the string contains code points that are not valid Unicode code points
-// (i.e. outside of Unicode range U+0 to U+10FFFF) they will be output
+// (i.e. outside of Unicode range U+0 idOfRoomDoorLeadsTo U+10FFFF) they will be output
 // as '(Invalid Unicode 0xXXXXXXXX)'. If the string is in UTF16 encoding
 // and contains invalid UTF-16 surrogate pairs, values in those pairs
 // will be encoded as individual Unicode characters from Basic Normal Plane.
@@ -3291,8 +3291,8 @@ std::string WideStringToUtf8(const wchar_t* str, int num_chars) {
   return StringStreamToString(&stream);
 }
 
-// Converts a wide C string to an std::string using the UTF-8 encoding.
-// NULL will be converted to "(null)".
+// Converts a wide C string idOfRoomDoorLeadsTo an std::string using the UTF-8 encoding.
+// NULL will be converted idOfRoomDoorLeadsTo "(null)".
 std::string String::ShowWideCString(const wchar_t * wide_c_str) {
   if (wide_c_str == NULL)  return "(null)";
 
@@ -3303,7 +3303,7 @@ std::string String::ShowWideCString(const wchar_t * wide_c_str) {
 // content.
 //
 // Unlike wcscmp(), this function can handle NULL argument(s).  A NULL
-// C string is considered different to any non-NULL C string,
+// C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
 // including the empty string.
 bool String::WideCStringEquals(const wchar_t * lhs, const wchar_t * rhs) {
   if (lhs == NULL) return rhs == NULL;
@@ -3348,7 +3348,7 @@ AssertionResult CmpHelperSTRNE(const char* s1_expression,
 // the same content.
 //
 // Unlike strcasecmp(), this function can handle NULL argument(s).  A
-// NULL C string is considered different to any non-NULL C string,
+// NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL C string,
 // including the empty string.
 bool String::CaseInsensitiveCStringEquals(const char * lhs, const char * rhs) {
   if (lhs == NULL)
@@ -3362,12 +3362,12 @@ bool String::CaseInsensitiveCStringEquals(const char * lhs, const char * rhs) {
   // have the same content.
   //
   // Unlike wcscasecmp(), this function can handle NULL argument(s).
-  // A NULL C string is considered different to any non-NULL wide C string,
+  // A NULL C string is considered different idOfRoomDoorLeadsTo any non-NULL wide C string,
   // including the empty string.
   // NB: The implementations on different platforms slightly differ.
-  // On windows, this method uses _wcsicmp which compares according to LC_CTYPE
+  // On windows, this method uses _wcsicmp which compares according idOfRoomDoorLeadsTo LC_CTYPE
   // environment variable. On GNU platform this method uses wcscasecmp
-  // which compares according to LC_CTYPE category of the current locale.
+  // which compares according idOfRoomDoorLeadsTo LC_CTYPE category of the current locale.
   // On MacOS X, it uses towlower, which also uses LC_CTYPE category of the
   // current locale.
 bool String::CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
@@ -3393,7 +3393,7 @@ bool String::CaseInsensitiveWideCStringEquals(const wchar_t* lhs,
 }
 
 // Returns true iff str ends with the given suffix, ignoring case.
-// Any string is considered to end with an empty suffix.
+// Any string is considered idOfRoomDoorLeadsTo end with an empty suffix.
 bool String::EndsWithCaseInsensitive(
     const std::string& str, const std::string& suffix) {
   const size_t str_len = str.length();
@@ -3425,8 +3425,8 @@ std::string String::FormatByte(unsigned char value) {
   return ss.str();
 }
 
-// Converts the buffer in a stringstream to an std::string, converting NUL
-// bytes to "\\0" along the way.
+// Converts the buffer in a stringstream idOfRoomDoorLeadsTo an std::string, converting NUL
+// bytes idOfRoomDoorLeadsTo "\\0" along the way.
 std::string StringStreamToString(::std::stringstream* ss) {
   const ::std::string& str = ss->str();
   const char* const start = str.c_str();
@@ -3445,7 +3445,7 @@ std::string StringStreamToString(::std::stringstream* ss) {
   return result;
 }
 
-// Appends the user-supplied message to the Google-Test-generated message.
+// Appends the user-supplied message idOfRoomDoorLeadsTo the Google-Test-generated message.
 std::string AppendUserMessage(const std::string& gtest_msg,
                               const Message& user_msg) {
   // Appends the user message if it's non-empty.
@@ -3472,7 +3472,7 @@ TestResult::~TestResult() {
 }
 
 // Returns the i-th test part result among all the results. i can
-// range from 0 to total_part_count() - 1. If i is not in that range,
+// range from 0 idOfRoomDoorLeadsTo total_part_count() - 1. If i is not in that range,
 // aborts the program.
 const TestPartResult& TestResult::GetTestPartResult(int i) const {
   if (i < 0 || i >= total_part_count())
@@ -3480,7 +3480,7 @@ const TestPartResult& TestResult::GetTestPartResult(int i) const {
   return test_part_results_.at(i);
 }
 
-// Returns the i-th test property. i can range from 0 to
+// Returns the i-th test property. i can range from 0 idOfRoomDoorLeadsTo
 // test_property_count() - 1. If i is not in that range, aborts the
 // program.
 const TestProperty& TestResult::GetTestProperty(int i) const {
@@ -3494,12 +3494,12 @@ void TestResult::ClearTestPartResults() {
   test_part_results_.clear();
 }
 
-// Adds a test part result to the list.
+// Adds a test part result idOfRoomDoorLeadsTo the list.
 void TestResult::AddTestPartResult(const TestPartResult& test_part_result) {
   test_part_results_.push_back(test_part_result);
 }
 
-// Adds a test property to the list. If a property with the same key as the
+// Adds a test property idOfRoomDoorLeadsTo the list. If a property with the same key as the
 // supplied property is already represented, the value of this test_property
 // replaces the old value for that key.
 void TestResult::RecordProperty(const std::string& xml_element,
@@ -3681,12 +3681,12 @@ void Test::SetUp() {
 void Test::TearDown() {
 }
 
-// Allows user supplied key value pairs to be recorded for later output.
+// Allows user supplied key value pairs idOfRoomDoorLeadsTo be recorded for later output.
 void Test::RecordProperty(const std::string& key, const std::string& value) {
   UnitTest::GetInstance()->RecordProperty(key, value);
 }
 
-// Allows user supplied key value pairs to be recorded for later output.
+// Allows user supplied key value pairs idOfRoomDoorLeadsTo be recorded for later output.
 void Test::RecordProperty(const std::string& key, int value) {
   Message value_message;
   value_message << value;
@@ -3697,7 +3697,7 @@ namespace internal {
 
 void ReportFailureInUnknownLocation(TestPartResult::Type result_type,
                                     const std::string& message) {
-  // This function is a friend of UnitTest and as such has access to
+  // This function is a friend of UnitTest and as such has access idOfRoomDoorLeadsTo
   // AddTestPartResult.
   UnitTest::GetInstance()->AddTestPartResult(
       result_type,
@@ -3709,7 +3709,7 @@ void ReportFailureInUnknownLocation(TestPartResult::Type result_type,
 
 }  // namespace internal
 
-// Google Test requires all tests in the same test case to use the same test
+// Google Test requires all tests in the same test case idOfRoomDoorLeadsTo use the same test
 // fixture class.  This function checks if the current test has the
 // same fixture class as the first test in the current test case.  If
 // yes, it returns true; otherwise it generates a Google Test failure and
@@ -3736,7 +3736,7 @@ bool Test::HasSameFixtureClass() {
 
     if (first_is_TEST || this_is_TEST) {
       // Both TEST and TEST_F appear in same test case, which is incorrect.
-      // Tell the user how to fix this.
+      // Tell the user how idOfRoomDoorLeadsTo fix this.
 
       // Gets the name of the TEST and the name of the TEST_F.  Note
       // that first_is_TEST and this_is_TEST cannot both be true, as
@@ -3753,11 +3753,11 @@ bool Test::HasSameFixtureClass() {
           << ",\n"
           << "test " << TEST_F_name << " is defined using TEST_F but\n"
           << "test " << TEST_name << " is defined using TEST.  You probably\n"
-          << "want to change the TEST to TEST_F or move it to another test\n"
+          << "want idOfRoomDoorLeadsTo change the TEST idOfRoomDoorLeadsTo TEST_F or move it idOfRoomDoorLeadsTo another test\n"
           << "case.";
     } else {
       // Two fixture classes with the same name appear in two different
-      // namespaces, which is not allowed. Tell the user how to fix this.
+      // namespaces, which is not allowed. Tell the user how idOfRoomDoorLeadsTo fix this.
       ADD_FAILURE()
           << "All tests in the same test case must use the same test fixture\n"
           << "class.  However, in test case "
@@ -3767,7 +3767,7 @@ bool Test::HasSameFixtureClass() {
           << "using two different test fixture classes.  This can happen if\n"
           << "the two classes are from different namespaces or translation\n"
           << "units and have the same name.  You should probably rename one\n"
-          << "of the classes to put the tests into different test cases.";
+          << "of the classes idOfRoomDoorLeadsTo put the tests into different test cases.";
     }
     return false;
   }
@@ -3777,7 +3777,7 @@ bool Test::HasSameFixtureClass() {
 
 #if GTEST_HAS_SEH
 
-// Adds an "exception thrown" fatal failure to the current test.  This
+// Adds an "exception thrown" fatal failure idOfRoomDoorLeadsTo the current test.  This
 // function returns its result via an output parameter pointer because VC++
 // prohibits creation of objects with destructors on stack in functions
 // using __try (see error C2712).
@@ -3796,7 +3796,7 @@ namespace internal {
 
 #if GTEST_HAS_EXCEPTIONS
 
-// Adds an "exception thrown" fatal failure to the current test.
+// Adds an "exception thrown" fatal failure idOfRoomDoorLeadsTo the current test.
 static std::string FormatCxxExceptionMessage(const char* description,
                                              const char* location) {
   Message message;
@@ -3859,7 +3859,7 @@ Result HandleExceptionsInMethodIfSupported(
     T* object, Result (T::*method)(), const char* location) {
   // NOTE: The user code can affect the way in which Google Test handles
   // exceptions by setting GTEST_FLAG(catch_exceptions), but only before
-  // RUN_ALL_TESTS() starts. It is technically possible to check the flag
+  // RUN_ALL_TESTS() starts. It is technically possible idOfRoomDoorLeadsTo check the flag
   // after the exception is caught and either report or re-throw the
   // exception based on the flag's value:
   //
@@ -3872,13 +3872,13 @@ Result HandleExceptionsInMethodIfSupported(
   //     throw;  // Re-throws the original exception.
   // }
   //
-  // However, the purpose of this flag is to allow the program to drop into
+  // However, the purpose of this flag is idOfRoomDoorLeadsTo allow the program idOfRoomDoorLeadsTo drop into
   // the debugger when the exception is thrown. On most platforms, once the
   // control enters the catch block, the exception origin information is
   // lost and the debugger will stop the program at the point of the
   // re-throw in this function -- instead of at the point of the original
   // throw statement in the code under test.  For this reason, we perform
-  // the check early, sacrificing the ability to affect Google Test's
+  // the check early, sacrificing the ability idOfRoomDoorLeadsTo affect Google Test's
   // exception handling in the method where the exception is thrown.
   if (internal::GetUnitTestImpl()->catch_exceptions()) {
 #if GTEST_HAS_EXCEPTIONS
@@ -3923,7 +3923,7 @@ void Test::Run() {
         this, &Test::TestBody, "the test body");
   }
 
-  // However, we want to clean up as much as possible.  Hence we will
+  // However, we want idOfRoomDoorLeadsTo clean up as much as possible.  Hence we will
   // always call TearDown(), even if SetUp() or the test body has
   // failed.
   impl->os_stack_trace_getter()->UponLeavingGTest();
@@ -3983,9 +3983,9 @@ namespace internal {
 //                     or NULL if this is not a value-parameterized test.
 //   code_location:    code location where the test is defined
 //   fixture_class_id: ID of the test fixture class
-//   set_up_tc:        pointer to the function that sets up the test case
-//   tear_down_tc:     pointer to the function that tears down the test case
-//   factory:          pointer to the factory that creates a test object.
+//   set_up_tc:        pointer idOfRoomDoorLeadsTo the function that sets up the test case
+//   tear_down_tc:     pointer idOfRoomDoorLeadsTo the function that tears down the test case
+//   factory:          pointer idOfRoomDoorLeadsTo the factory that creates a test object.
 //                     The newly created TestInfo instance will assume
 //                     ownership of the factory object.
 TestInfo* MakeAndRegisterTestInfo(
@@ -4013,10 +4013,10 @@ void ReportInvalidTestCaseType(const char* test_case_name,
       << "Attempted redefinition of test case " << test_case_name << ".\n"
       << "All tests in the same test case must use the same test fixture\n"
       << "class.  However, in test case " << test_case_name << ", you tried\n"
-      << "to define a test using a fixture class different from the one\n"
+      << "idOfRoomDoorLeadsTo define a test using a fixture class different from the one\n"
       << "used earlier. This can happen if the two fixture classes are\n"
       << "from different namespaces and have the same name. You should\n"
-      << "probably rename one of the classes to put the tests into different\n"
+      << "probably rename one of the classes idOfRoomDoorLeadsTo put the tests into different\n"
       << "test cases.";
 
   fprintf(stderr, "%s %s",
@@ -4034,7 +4034,7 @@ namespace {
 // value.
 //
 // This is used for implementation of the TestCase class only.  We put
-// it in the anonymous namespace to prevent polluting the outer
+// it in the anonymous namespace idOfRoomDoorLeadsTo prevent polluting the outer
 // namespace.
 //
 // TestNameIs is copyable.
@@ -4078,13 +4078,13 @@ void UnitTestImpl::RegisterParameterizedTests() {
 void TestInfo::Run() {
   if (!should_run_) return;
 
-  // Tells UnitTest where to store test result.
+  // Tells UnitTest where idOfRoomDoorLeadsTo store test result.
   internal::UnitTestImpl* const impl = internal::GetUnitTestImpl();
   impl->set_current_test_info(this);
 
   TestEventListener* repeater = UnitTest::GetInstance()->listeners().repeater();
 
-  // Notifies the unit test event listeners that a test is about to start.
+  // Notifies the unit test event listeners that a test is about idOfRoomDoorLeadsTo start.
   repeater->OnTestStart(*this);
 
   const TimeInMillis start = internal::GetTimeInMillis();
@@ -4114,7 +4114,7 @@ void TestInfo::Run() {
   // Notifies the unit test event listener that a test has just finished.
   repeater->OnTestEnd(*this);
 
-  // Tells UnitTest to stop associating assertion results to this
+  // Tells UnitTest idOfRoomDoorLeadsTo stop associating assertion results idOfRoomDoorLeadsTo this
   // test.
   impl->set_current_test_info(NULL);
 }
@@ -4141,7 +4141,7 @@ int TestCase::disabled_test_count() const {
   return CountIf(test_info_list_, TestDisabled);
 }
 
-// Gets the number of tests to be printed in the XML report.
+// Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
 int TestCase::reportable_test_count() const {
   return CountIf(test_info_list_, TestReportable);
 }
@@ -4163,8 +4163,8 @@ int TestCase::total_test_count() const {
 //   name:         name of the test case
 //   a_type_param: the name of the test case's type parameter, or NULL if
 //                 this is not a typed or a type-parameterized test case.
-//   set_up_tc:    pointer to the function that sets up the test case
-//   tear_down_tc: pointer to the function that tears down the test case
+//   set_up_tc:    pointer idOfRoomDoorLeadsTo the function that sets up the test case
+//   tear_down_tc: pointer idOfRoomDoorLeadsTo the function that tears down the test case
 TestCase::TestCase(const char* a_name, const char* a_type_param,
                    Test::SetUpTestCaseFunc set_up_tc,
                    Test::TearDownTestCaseFunc tear_down_tc)
@@ -4182,21 +4182,21 @@ TestCase::~TestCase() {
   ForEach(test_info_list_, internal::Delete<TestInfo>);
 }
 
-// Returns the i-th test among all the tests. i can range from 0 to
+// Returns the i-th test among all the tests. i can range from 0 idOfRoomDoorLeadsTo
 // total_test_count() - 1. If i is not in that range, returns NULL.
 const TestInfo* TestCase::GetTestInfo(int i) const {
   const int index = GetElementOr(test_indices_, i, -1);
   return index < 0 ? NULL : test_info_list_[index];
 }
 
-// Returns the i-th test among all the tests. i can range from 0 to
+// Returns the i-th test among all the tests. i can range from 0 idOfRoomDoorLeadsTo
 // total_test_count() - 1. If i is not in that range, returns NULL.
 TestInfo* TestCase::GetMutableTestInfo(int i) {
   const int index = GetElementOr(test_indices_, i, -1);
   return index < 0 ? NULL : test_info_list_[index];
 }
 
-// Adds a test to this test case.  Will delete the test upon
+// Adds a test idOfRoomDoorLeadsTo this test case.  Will delete the test upon
 // destruction of the TestCase object.
 void TestCase::AddTestInfo(TestInfo * test_info) {
   test_info_list_.push_back(test_info);
@@ -4242,7 +4242,7 @@ void TestCase::ShuffleTests(internal::Random* random) {
   Shuffle(random, &test_indices_);
 }
 
-// Restores the test order to before the first shuffle.
+// Restores the test order idOfRoomDoorLeadsTo before the first shuffle.
 void TestCase::UnshuffleTests() {
   for (size_t i = 0; i < test_indices_.size(); i++) {
     test_indices_[i] = static_cast<int>(i);
@@ -4271,9 +4271,9 @@ static std::string FormatTestCaseCount(int test_case_count) {
   return FormatCountableNoun(test_case_count, "test case", "test cases");
 }
 
-// Converts a TestPartResult::Type enum to human-friendly string
+// Converts a TestPartResult::Type enum idOfRoomDoorLeadsTo human-friendly string
 // representation.  Both kNonFatalFailure and kFatalFailure are translated
-// to "Failure", as the user usually doesn't care about the difference
+// idOfRoomDoorLeadsTo "Failure", as the user usually doesn't care about the difference
 // between the two when viewing the test result.
 static const char * TestPartResultTypeToString(TestPartResult::Type type) {
   switch (type) {
@@ -4294,7 +4294,7 @@ static const char * TestPartResultTypeToString(TestPartResult::Type type) {
 
 namespace internal {
 
-// Prints a TestPartResult to an std::string.
+// Prints a TestPartResult idOfRoomDoorLeadsTo an std::string.
 static std::string PrintTestPartResultToString(
     const TestPartResult& test_part_result) {
   return (Message()
@@ -4311,12 +4311,12 @@ static void PrintTestPartResult(const TestPartResult& test_part_result) {
   printf("%s\n", result.c_str());
   fflush(stdout);
   // If the test program runs in Visual Studio or a debugger, the
-  // following statements add the test part result message to the Output
-  // window such that the user can double-click on it to jump to the
+  // following statements add the test part result message idOfRoomDoorLeadsTo the Output
+  // window such that the user can double-click on it idOfRoomDoorLeadsTo jump idOfRoomDoorLeadsTo the
   // corresponding source code location; otherwise they do nothing.
 #if GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MOBILE
   // We don't call OutputDebugString*() on Windows Mobile, as printing
-  // to stdout is done by OutputDebugString() there already - we don't
+  // idOfRoomDoorLeadsTo stdout is done by OutputDebugString() there already - we don't
   // want the same message printed twice.
   ::OutputDebugStringA(result.c_str());
   ::OutputDebugStringA("\n");
@@ -4391,11 +4391,11 @@ bool ShouldUseColor(bool stdout_is_tty) {
       String::CaseInsensitiveCStringEquals(gtest_color, "t") ||
       String::CStringEquals(gtest_color, "1");
   // We take "yes", "true", "t", and "1" as meaning "yes".  If the
-  // value is neither one of these nor "auto", we treat it as "no" to
+  // value is neither one of these nor "auto", we treat it as "no" idOfRoomDoorLeadsTo
   // be conservative.
 }
 
-// Helpers for printing colored strings to stdout. Note that on Windows, we
+// Helpers for printing colored strings idOfRoomDoorLeadsTo stdout. Note that on Windows, we
 // cannot simply emit special characters and have the terminal change colors.
 // This routine must actually emit the characters rather than return a string
 // that would be colored when printed, as can be done on Linux.
@@ -4411,7 +4411,7 @@ void ColoredPrintf(GTestColor color, const char* fmt, ...) {
       ShouldUseColor(posix::IsATTY(posix::FileNo(stdout)) != 0);
   const bool use_color = in_color_mode && (color != COLOR_DEFAULT);
 #endif  // GTEST_OS_WINDOWS_MOBILE || GTEST_OS_SYMBIAN || GTEST_OS_ZOS
-  // The '!= 0' comparison is necessary to satisfy MSVC 7.1.
+  // The '!= 0' comparison is necessary idOfRoomDoorLeadsTo satisfy MSVC 7.1.
 
   if (!use_color) {
     vprintf(fmt, args);
@@ -4428,7 +4428,7 @@ void ColoredPrintf(GTestColor color, const char* fmt, ...) {
   GetConsoleScreenBufferInfo(stdout_handle, &buffer_info);
   const WORD old_color_attrs = buffer_info.wAttributes;
 
-  // We need to flush the stream buffers into the console before each
+  // We need idOfRoomDoorLeadsTo flush the stream buffers into the console before each
   // SetConsoleTextAttribute call lest it affect the text that is already
   // printed but has not yet reached the console.
   fflush(stdout);
@@ -4442,13 +4442,13 @@ void ColoredPrintf(GTestColor color, const char* fmt, ...) {
 #else
   printf("\033[0;3%sm", GetAnsiColorCode(color));
   vprintf(fmt, args);
-  printf("\033[m");  // Resets the terminal to default.
+  printf("\033[m");  // Resets the terminal idOfRoomDoorLeadsTo default.
 #endif  // GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_MOBILE
   va_end(args);
 }
 
 // Text printed in Google Test's text output and --gunit_list_tests
-// output to label the type parameter and value parameter for a test.
+// output idOfRoomDoorLeadsTo label the type parameter and value parameter for a test.
 static const char kTypeParamLabel[] = "TypeParam";
 static const char kValueParamLabel[] = "GetParam()";
 
@@ -4564,7 +4564,7 @@ void PrettyUnitTestResultPrinter::OnTestStart(const TestInfo& test_info) {
 // Called after an assertion failure.
 void PrettyUnitTestResultPrinter::OnTestPartResult(
     const TestPartResult& result) {
-  // If the test part succeeded, we don't need to do anything.
+  // If the test part succeeded, we don't need idOfRoomDoorLeadsTo do anything.
   if (result.type() == TestPartResult::kSuccess)
     return;
 
@@ -4678,7 +4678,7 @@ void PrettyUnitTestResultPrinter::OnTestIterationEnd(const UnitTest& unit_test,
 
 // class TestEventRepeater
 //
-// This class forwards events to other event listeners.
+// This class forwards events idOfRoomDoorLeadsTo other event listeners.
 class TestEventRepeater : public TestEventListener {
  public:
   TestEventRepeater() : forwarding_enabled_(true) {}
@@ -4686,7 +4686,7 @@ class TestEventRepeater : public TestEventListener {
   void Append(TestEventListener *listener);
   TestEventListener* Release(TestEventListener* listener);
 
-  // Controls whether events will be forwarded to listeners_. Set to false
+  // Controls whether events will be forwarded idOfRoomDoorLeadsTo listeners_. Set idOfRoomDoorLeadsTo false
   // in death test child processes.
   bool forwarding_enabled() const { return forwarding_enabled_; }
   void set_forwarding_enabled(bool enable) { forwarding_enabled_ = enable; }
@@ -4706,7 +4706,7 @@ class TestEventRepeater : public TestEventListener {
   virtual void OnTestProgramEnd(const UnitTest& unit_test);
 
  private:
-  // Controls whether events will be forwarded to listeners_. Set to false
+  // Controls whether events will be forwarded idOfRoomDoorLeadsTo listeners_. Set idOfRoomDoorLeadsTo false
   // in death test child processes.
   bool forwarding_enabled_;
   // The list of listeners that receive events.
@@ -4735,8 +4735,8 @@ TestEventListener* TestEventRepeater::Release(TestEventListener *listener) {
   return NULL;
 }
 
-// Since most methods are very similar, use macros to reduce boilerplate.
-// This defines a member that forwards the call to all listeners.
+// Since most methods are very similar, use macros idOfRoomDoorLeadsTo reduce boilerplate.
+// This defines a member that forwards the call idOfRoomDoorLeadsTo all listeners.
 #define GTEST_REPEATER_METHOD_(Name, Type) \
 void TestEventRepeater::Name(const Type& parameter) { \
   if (forwarding_enabled_) { \
@@ -4745,7 +4745,7 @@ void TestEventRepeater::Name(const Type& parameter) { \
     } \
   } \
 }
-// This defines a member that forwards the call to all listeners in reverse
+// This defines a member that forwards the call idOfRoomDoorLeadsTo all listeners in reverse
 // order.
 #define GTEST_REVERSE_REPEATER_METHOD_(Name, Type) \
 void TestEventRepeater::Name(const Type& parameter) { \
@@ -4799,7 +4799,7 @@ class XmlUnitTestResultPrinter : public EmptyTestEventListener {
   virtual void OnTestIterationEnd(const UnitTest& unit_test, int iteration);
 
  private:
-  // Is c a whitespace character that is normalized to a space character
+  // Is c a whitespace character that is normalized idOfRoomDoorLeadsTo a space character
   // when it appears in an XML attribute value?
   static bool IsNormalizableWhitespace(char c) {
     return c == 0x9 || c == 0xA || c == 0xD;
@@ -4811,7 +4811,7 @@ class XmlUnitTestResultPrinter : public EmptyTestEventListener {
   }
 
   // Returns an XML-escaped copy of the input string str.  If
-  // is_attribute is true, the text is meant to appear as an attribute
+  // is_attribute is true, the text is meant idOfRoomDoorLeadsTo appear as an attribute
   // value, and normalizable whitespace is preserved by replacing it
   // with character references.
   static std::string EscapeXml(const std::string& str, bool is_attribute);
@@ -4829,7 +4829,7 @@ class XmlUnitTestResultPrinter : public EmptyTestEventListener {
     return EscapeXml(str, false);
   }
 
-  // Verifies that the given attribute belongs to the given element and
+  // Verifies that the given attribute belongs idOfRoomDoorLeadsTo the given element and
   // streams the attribute as XML.
   static void OutputXmlAttribute(std::ostream* stream,
                                  const std::string& element_name,
@@ -4848,14 +4848,14 @@ class XmlUnitTestResultPrinter : public EmptyTestEventListener {
   static void PrintXmlTestCase(::std::ostream* stream,
                                const TestCase& test_case);
 
-  // Prints an XML summary of unit_test to output stream out.
+  // Prints an XML summary of unit_test idOfRoomDoorLeadsTo output stream out.
   static void PrintXmlUnitTest(::std::ostream* stream,
                                const UnitTest& unit_test);
 
   // Produces a string representing the test properties in a result as space
   // delimited XML attributes based on the property key="value" pairs.
   // When the std::string is not empty, it includes a space at the beginning,
-  // to delimit this attribute from prior attributes.
+  // idOfRoomDoorLeadsTo delimit this attribute from prior attributes.
   static std::string TestPropertiesAsXmlAttributes(const TestResult& result);
 
   // The output file.
@@ -4890,13 +4890,13 @@ void XmlUnitTestResultPrinter::OnTestIterationEnd(const UnitTest& unit_test,
     // We don't do it for now as:
     //
     //   1. There is no urgent need for it.
-    //   2. It's a bit involved to make the errno variable thread-safe on
+    //   2. It's a bit involved idOfRoomDoorLeadsTo make the errno variable thread-safe on
     //      all three operating systems (Linux, Windows, and Mac OS).
     //   3. To interpret the meaning of errno in a thread-safe way,
     //      we need the strerror_r() function, which is not available on
     //      Windows.
     fprintf(stderr,
-            "Unable to open file \"%s\"\n",
+            "Unable idOfRoomDoorLeadsTo open file \"%s\"\n",
             output_file_.c_str());
     fflush(stderr);
     exit(EXIT_FAILURE);
@@ -4908,16 +4908,16 @@ void XmlUnitTestResultPrinter::OnTestIterationEnd(const UnitTest& unit_test,
 }
 
 // Returns an XML-escaped copy of the input string str.  If is_attribute
-// is true, the text is meant to appear as an attribute value, and
+// is true, the text is meant idOfRoomDoorLeadsTo appear as an attribute value, and
 // normalizable whitespace is preserved by replacing it with character
 // references.
 //
 // Invalid XML characters in str, if any, are stripped from the output.
 // It is expected that most, if not all, of the text processed by this
 // module will consist of ordinary English text.
-// If this module is ever modified to produce version 1.1 XML output,
+// If this module is ever modified idOfRoomDoorLeadsTo produce version 1.1 XML output,
 // most invalid characters can be retained using character references.
-// TODO(wan): It might be nice to have a minimally invasive, human-readable
+// TODO(wan): It might be nice idOfRoomDoorLeadsTo have a minimally invasive, human-readable
 // escaping scheme for invalid characters, rather than dropping them.
 std::string XmlUnitTestResultPrinter::EscapeXml(
     const std::string& str, bool is_attribute) {
@@ -4964,7 +4964,7 @@ std::string XmlUnitTestResultPrinter::EscapeXml(
 
 // Returns the given string with all characters invalid in XML removed.
 // Currently invalid characters are dropped from the string. An
-// alternative is to replace them with certain characters such as . or ?.
+// alternative is idOfRoomDoorLeadsTo replace them with certain characters such as . or ?.
 std::string XmlUnitTestResultPrinter::RemoveInvalidXmlCharacters(
     const std::string& str) {
   std::string output;
@@ -4979,11 +4979,11 @@ std::string XmlUnitTestResultPrinter::RemoveInvalidXmlCharacters(
 // The following routines generate an XML representation of a UnitTest
 // object.
 //
-// This is how Google Test concepts map to the DTD:
+// This is how Google Test concepts map idOfRoomDoorLeadsTo the DTD:
 //
-// <testsuites name="AllTests">        <-- corresponds to a UnitTest object
-//   <testsuite name="testcase-name">  <-- corresponds to a TestCase object
-//     <testcase name="test-name">     <-- corresponds to a TestInfo object
+// <testsuites name="AllTests">        <-- corresponds idOfRoomDoorLeadsTo a UnitTest object
+//   <testsuite name="testcase-name">  <-- corresponds idOfRoomDoorLeadsTo a TestCase object
+//     <testcase name="test-name">     <-- corresponds idOfRoomDoorLeadsTo a TestInfo object
 //       <failure message="...">...</failure>
 //       <failure message="...">...</failure>
 //       <failure message="...">...</failure>
@@ -5015,7 +5015,7 @@ static bool PortableLocaltime(time_t seconds, struct tm* out) {
 #endif
 }
 
-// Converts the given epoch time in milliseconds to a date string in the ISO
+// Converts the given epoch time in milliseconds idOfRoomDoorLeadsTo a date string in the ISO
 // 8601 format, without the timezone information.
 std::string FormatEpochTimeInMillisAsIso8601(TimeInMillis ms) {
   struct tm time_struct;
@@ -5143,7 +5143,7 @@ void XmlUnitTestResultPrinter::PrintXmlTestCase(std::ostream* stream,
   *stream << "  </" << kTestsuite << ">\n";
 }
 
-// Prints an XML summary of unit_test to output stream out.
+// Prints an XML summary of unit_test idOfRoomDoorLeadsTo output stream out.
 void XmlUnitTestResultPrinter::PrintXmlUnitTest(std::ostream* stream,
                                                 const UnitTest& unit_test) {
   const std::string kTestsuites = "testsuites";
@@ -5233,7 +5233,7 @@ void StreamingListener::SocketWriter::MakeConnection() {
   hints.ai_socktype = SOCK_STREAM;
   addrinfo* servinfo = NULL;
 
-  // Use the getaddrinfo() to get a linked list of IP addresses for
+  // Use the getaddrinfo() idOfRoomDoorLeadsTo get a linked list of IP addresses for
   // the given host name.
   const int error_num = getaddrinfo(
       host_name_.c_str(), port_num_.c_str(), &hints, &servinfo);
@@ -5242,13 +5242,13 @@ void StreamingListener::SocketWriter::MakeConnection() {
                         << gai_strerror(error_num);
   }
 
-  // Loop through all the results and connect to the first we can.
+  // Loop through all the results and connect idOfRoomDoorLeadsTo the first we can.
   for (addrinfo* cur_addr = servinfo; sockfd_ == -1 && cur_addr != NULL;
        cur_addr = cur_addr->ai_next) {
     sockfd_ = socket(
         cur_addr->ai_family, cur_addr->ai_socktype, cur_addr->ai_protocol);
     if (sockfd_ != -1) {
-      // Connect the client socket to the server socket.
+      // Connect the client socket idOfRoomDoorLeadsTo the server socket.
       if (connect(sockfd_, cur_addr->ai_addr, cur_addr->ai_addrlen) == -1) {
         close(sockfd_);
         sockfd_ = -1;
@@ -5259,7 +5259,7 @@ void StreamingListener::SocketWriter::MakeConnection() {
   freeaddrinfo(servinfo);  // all done with this structure
 
   if (sockfd_ == -1) {
-    GTEST_LOG_(WARNING) << "stream_result_to: failed to connect to "
+    GTEST_LOG_(WARNING) << "stream_result_to: failed idOfRoomDoorLeadsTo connect idOfRoomDoorLeadsTo "
                         << host_name_ << ":" << port_num_;
   }
 }
@@ -5306,11 +5306,11 @@ class ScopedPrematureExitFile {
  public:
   explicit ScopedPrematureExitFile(const char* premature_exit_filepath)
       : premature_exit_filepath_(premature_exit_filepath) {
-    // If a path to the premature-exit file is specified...
+    // If a path idOfRoomDoorLeadsTo the premature-exit file is specified...
     if (premature_exit_filepath != NULL && *premature_exit_filepath != '\0') {
       // create the file with a single "0" character in it.  I/O
       // errors are ignored as there's nothing better we can do and we
-      // don't want to fail the test because of this.
+      // don't want idOfRoomDoorLeadsTo fail the test because of this.
       FILE* pfile = posix::FOpen(premature_exit_filepath, "w");
       fwrite("0", 1, 1, pfile);
       fclose(pfile);
@@ -5342,15 +5342,15 @@ TestEventListeners::TestEventListeners()
 TestEventListeners::~TestEventListeners() { delete repeater_; }
 
 // Returns the standard listener responsible for the default console
-// output.  Can be removed from the listeners list to shut down default
+// output.  Can be removed from the listeners list idOfRoomDoorLeadsTo shut down default
 // console output.  Note that removing this object from the listener list
-// with Release transfers its ownership to the user.
+// with Release transfers its ownership idOfRoomDoorLeadsTo the user.
 void TestEventListeners::Append(TestEventListener* listener) {
   repeater_->Append(listener);
 }
 
 // Removes the given event listener from the list and returns it.  It then
-// becomes the caller's responsibility to delete the listener. Returns
+// becomes the caller's responsibility idOfRoomDoorLeadsTo delete the listener. Returns
 // NULL if the listener is not found in the list.
 TestEventListener* TestEventListeners::Release(TestEventListener* listener) {
   if (listener == default_result_printer_)
@@ -5360,18 +5360,18 @@ TestEventListener* TestEventListeners::Release(TestEventListener* listener) {
   return repeater_->Release(listener);
 }
 
-// Returns repeater that broadcasts the TestEventListener events to all
+// Returns repeater that broadcasts the TestEventListener events idOfRoomDoorLeadsTo all
 // subscribers.
 TestEventListener* TestEventListeners::repeater() { return repeater_; }
 
-// Sets the default_result_printer attribute to the provided listener.
-// The listener is also added to the listener list and previous
+// Sets the default_result_printer attribute idOfRoomDoorLeadsTo the provided listener.
+// The listener is also added idOfRoomDoorLeadsTo the listener list and previous
 // default_result_printer is removed from it and deleted. The listener can
-// also be NULL in which case it will not be added to the list. Does
+// also be NULL in which case it will not be added idOfRoomDoorLeadsTo the list. Does
 // nothing if the previous and the current listener objects are the same.
 void TestEventListeners::SetDefaultResultPrinter(TestEventListener* listener) {
   if (default_result_printer_ != listener) {
-    // It is an error to pass this method a listener that is already in the
+    // It is an error idOfRoomDoorLeadsTo pass this method a listener that is already in the
     // list.
     delete Release(default_result_printer_);
     default_result_printer_ = listener;
@@ -5380,14 +5380,14 @@ void TestEventListeners::SetDefaultResultPrinter(TestEventListener* listener) {
   }
 }
 
-// Sets the default_xml_generator attribute to the provided listener.  The
-// listener is also added to the listener list and previous
+// Sets the default_xml_generator attribute idOfRoomDoorLeadsTo the provided listener.  The
+// listener is also added idOfRoomDoorLeadsTo the listener list and previous
 // default_xml_generator is removed from it and deleted. The listener can
-// also be NULL in which case it will not be added to the list. Does
+// also be NULL in which case it will not be added idOfRoomDoorLeadsTo the list. Does
 // nothing if the previous and the current listener objects are the same.
 void TestEventListeners::SetDefaultXmlGenerator(TestEventListener* listener) {
   if (default_xml_generator_ != listener) {
-    // It is an error to pass this method a listener that is already in the
+    // It is an error idOfRoomDoorLeadsTo pass this method a listener that is already in the
     // list.
     delete Release(default_xml_generator_);
     default_xml_generator_ = listener;
@@ -5396,7 +5396,7 @@ void TestEventListeners::SetDefaultXmlGenerator(TestEventListener* listener) {
   }
 }
 
-// Controls whether events will be forwarded by the repeater to the
+// Controls whether events will be forwarded by the repeater idOfRoomDoorLeadsTo the
 // listeners in the list.
 bool TestEventListeners::EventForwardingEnabled() const {
   return repeater_->forwarding_enabled();
@@ -5412,19 +5412,19 @@ void TestEventListeners::SuppressEventForwarding() {
 // called, a UnitTest object is constructed and returned.  Consecutive
 // calls will return the same object.
 //
-// We don't protect this under mutex_ as a user is not supposed to
+// We don't protect this under mutex_ as a user is not supposed idOfRoomDoorLeadsTo
 // call this before main() starts, from which point on the return
 // value will never change.
 UnitTest* UnitTest::GetInstance() {
   // When compiled with MSVC 7.1 in optimized mode, destroying the
   // UnitTest object upon exiting the program messes up the exit code,
-  // causing successful tests to appear failed.  We have to use a
-  // different implementation in this case to bypass the compiler bug.
+  // causing successful tests idOfRoomDoorLeadsTo appear failed.  We have idOfRoomDoorLeadsTo use a
+  // different implementation in this case idOfRoomDoorLeadsTo bypass the compiler bug.
   // This implementation makes the compiler happy, at the cost of
   // leaking the UnitTest object.
 
   // CodeGear C++Builder insists on a public destructor for the
-  // default implementation.  Use this implementation to keep good OO
+  // default implementation.  Use this implementation idOfRoomDoorLeadsTo keep good OO
   // design with private destructor.
 
 #if (_MSC_VER == 1310 && !defined(_DEBUG)) || defined(__BORLANDC__)
@@ -5475,7 +5475,7 @@ int UnitTest::disabled_test_count() const {
   return impl()->disabled_test_count();
 }
 
-// Gets the number of tests to be printed in the XML report.
+// Gets the number of tests idOfRoomDoorLeadsTo be printed in the XML report.
 int UnitTest::reportable_test_count() const {
   return impl()->reportable_test_count();
 }
@@ -5504,7 +5504,7 @@ bool UnitTest::Passed() const { return impl()->Passed(); }
 // or something outside of all tests failed).
 bool UnitTest::Failed() const { return impl()->Failed(); }
 
-// Gets the i-th test case among all the test cases. i can range from 0 to
+// Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
 // total_test_case_count() - 1. If i is not in that range, returns NULL.
 const TestCase* UnitTest::GetTestCase(int i) const {
   return impl()->GetTestCase(i);
@@ -5516,13 +5516,13 @@ const TestResult& UnitTest::ad_hoc_test_result() const {
   return *impl()->ad_hoc_test_result();
 }
 
-// Gets the i-th test case among all the test cases. i can range from 0 to
+// Gets the i-th test case among all the test cases. i can range from 0 idOfRoomDoorLeadsTo
 // total_test_case_count() - 1. If i is not in that range, returns NULL.
 TestCase* UnitTest::GetMutableTestCase(int i) {
   return impl()->GetMutableTestCase(i);
 }
 
-// Returns the list of event listeners that can be used to track events
+// Returns the list of event listeners that can be used idOfRoomDoorLeadsTo track events
 // inside Google Test.
 TestEventListeners& UnitTest::listeners() {
   return *impl()->listeners();
@@ -5547,9 +5547,9 @@ Environment* UnitTest::AddEnvironment(Environment* env) {
   return env;
 }
 
-// Adds a TestPartResult to the current TestResult object.  All Google Test
+// Adds a TestPartResult idOfRoomDoorLeadsTo the current TestResult object.  All Google Test
 // assertion macros (e.g. ASSERT_TRUE, EXPECT_EQ, etc) eventually call
-// this to report their results.  The user code should use the
+// this idOfRoomDoorLeadsTo report their results.  The user code should use the
 // assertion macros instead of calling this directly.
 void UnitTest::AddTestPartResult(
     TestPartResult::Type result_type,
@@ -5584,18 +5584,18 @@ void UnitTest::AddTestPartResult(
 
   if (result_type != TestPartResult::kSuccess) {
     // gtest_break_on_failure takes precedence over
-    // gtest_throw_on_failure.  This allows a user to set the latter
-    // in the code (perhaps in order to use Google Test assertions
+    // gtest_throw_on_failure.  This allows a user idOfRoomDoorLeadsTo set the latter
+    // in the code (perhaps in order idOfRoomDoorLeadsTo use Google Test assertions
     // with another testing framework) and specify the former on the
     // command line for debugging.
     if (GTEST_FLAG(break_on_failure)) {
 #if GTEST_OS_WINDOWS && !GTEST_OS_WINDOWS_PHONE && !GTEST_OS_WINDOWS_RT
-      // Using DebugBreak on Windows allows gtest to still break into a debugger
+      // Using DebugBreak on Windows allows gtest idOfRoomDoorLeadsTo still break into a debugger
       // when a failure happens and both the --gtest_break_on_failure and
       // the --gtest_catch_exceptions flags are specified.
       DebugBreak();
 #else
-      // Dereference NULL through a volatile pointer to prevent the compiler
+      // Dereference NULL through a volatile pointer idOfRoomDoorLeadsTo prevent the compiler
       // from removing. We use this rather than abort() or __builtin_trap() for
       // portability: Symbian doesn't implement abort() well, and some debuggers
       // don't correctly trap abort().
@@ -5613,9 +5613,9 @@ void UnitTest::AddTestPartResult(
   }
 }
 
-// Adds a TestProperty to the current TestResult object when invoked from
-// inside a test, to current TestCase's ad_hoc_test_result_ when invoked
-// from SetUpTestCase or TearDownTestCase, or to the global property set
+// Adds a TestProperty idOfRoomDoorLeadsTo the current TestResult object when invoked from
+// inside a test, idOfRoomDoorLeadsTo current TestCase's ad_hoc_test_result_ when invoked
+// from SetUpTestCase or TearDownTestCase, or idOfRoomDoorLeadsTo the global property set
 // when invoked elsewhere.  If the result already contains a property with
 // the same key, the value will be updated.
 void UnitTest::RecordProperty(const std::string& key,
@@ -5633,25 +5633,25 @@ int UnitTest::Run() {
       internal::GTEST_FLAG(internal_run_death_test).length() > 0;
 
   // Google Test implements this protocol for catching that a test
-  // program exits before returning control to Google Test:
+  // program exits before returning control idOfRoomDoorLeadsTo Google Test:
   //
   //   1. Upon start, Google Test creates a file whose absolute path
   //      is specified by the environment variable
   //      TEST_PREMATURE_EXIT_FILE.
   //   2. When Google Test has finished its work, it deletes the file.
   //
-  // This allows a test runner to set TEST_PREMATURE_EXIT_FILE before
+  // This allows a test runner idOfRoomDoorLeadsTo set TEST_PREMATURE_EXIT_FILE before
   // running a Google-Test-based test program and check the existence
-  // of the file at the end of the test execution to see if it has
+  // of the file at the end of the test execution idOfRoomDoorLeadsTo see if it has
   // exited prematurely.
 
   // If we are in the child process of a death test, don't
   // create/delete the premature exit file, as doing so is unnecessary
   // and will confuse the parent process.  Otherwise, create/delete
   // the file upon entering/leaving this function.  If the program
-  // somehow exits before this function has a chance to return, the
+  // somehow exits before this function has a chance idOfRoomDoorLeadsTo return, the
   // premature-exit file will be left undeleted, causing a test runner
-  // that understands the premature-exit-file protocol to report the
+  // that understands the premature-exit-file protocol idOfRoomDoorLeadsTo report the
   // test as having failed.
   const internal::ScopedPrematureExitFile premature_exit_file(
       in_death_test_child_process ?
@@ -5662,9 +5662,9 @@ int UnitTest::Run() {
   impl()->set_catch_exceptions(GTEST_FLAG(catch_exceptions));
 
 #if GTEST_HAS_SEH
-  // Either the user wants Google Test to catch exceptions thrown by the
+  // Either the user wants Google Test idOfRoomDoorLeadsTo catch exceptions thrown by the
   // tests or this is executing in the context of death test child
-  // process. In either case the user does not want to see pop-up dialogs
+  // process. In either case the user does not want idOfRoomDoorLeadsTo see pop-up dialogs
   // about crashes - they are expected.
   if (impl()->catch_exceptions() || in_death_test_child_process) {
 # if !GTEST_OS_WINDOWS_MOBILE && !GTEST_OS_WINDOWS_PHONE && !GTEST_OS_WINDOWS_RT
@@ -5676,21 +5676,21 @@ int UnitTest::Run() {
 # if (defined(_MSC_VER) || GTEST_OS_WINDOWS_MINGW) && !GTEST_OS_WINDOWS_MOBILE
     // Death test children can be terminated with _abort().  On Windows,
     // _abort() can show a dialog with a warning message.  This forces the
-    // abort message to go to stderr instead.
+    // abort message idOfRoomDoorLeadsTo go idOfRoomDoorLeadsTo stderr instead.
     _set_error_mode(_OUT_TO_STDERR);
 # endif
 
 # if _MSC_VER >= 1400 && !GTEST_OS_WINDOWS_MOBILE
     // In the debug version, Visual Studio pops up a separate dialog
-    // offering a choice to debug the aborted program. We need to suppress
+    // offering a choice idOfRoomDoorLeadsTo debug the aborted program. We need idOfRoomDoorLeadsTo suppress
     // this dialog or it will pop up for every EXPECT/ASSERT_DEATH statement
     // executed. Google Test will notify the user of any unexpected
     // failure via stderr.
     //
-    // VC++ doesn't define _set_abort_behavior() prior to the version 8.0.
+    // VC++ doesn't define _set_abort_behavior() prior idOfRoomDoorLeadsTo the version 8.0.
     // Users of prior VC versions shall suffer the agony and pain of
     // clicking through the countless debug dialogs.
-    // TODO(vladl@google.com): find a way to suppress the abort dialog() in the
+    // TODO(vladl@google.com): find a way idOfRoomDoorLeadsTo suppress the abort dialog() in the
     // debug mode when compiled with VC 7.1 or lower.
     if (!GTEST_FLAG(break_on_failure))
       _set_abort_behavior(
@@ -5732,7 +5732,7 @@ const TestInfo* UnitTest::current_test_info() const
 int UnitTest::random_seed() const { return impl_->random_seed(); }
 
 #if GTEST_HAS_PARAM_TEST
-// Returns ParameterizedTestCaseRegistry object used to keep track of
+// Returns ParameterizedTestCaseRegistry object used idOfRoomDoorLeadsTo keep track of
 // value-parameterized tests and instantiate and register them.
 internal::ParameterizedTestCaseRegistry&
     UnitTest::parameterized_test_registry()
@@ -5751,7 +5751,7 @@ UnitTest::~UnitTest() {
   delete impl_;
 }
 
-// Pushes a trace defined by SCOPED_TRACE() on to the per-thread
+// Pushes a trace defined by SCOPED_TRACE() on idOfRoomDoorLeadsTo the per-thread
 // Google Test trace stack.
 void UnitTest::PushGTestTrace(const internal::TraceInfo& trace)
     GTEST_LOCK_EXCLUDED_(mutex_) {
@@ -5810,9 +5810,9 @@ UnitTestImpl::~UnitTestImpl() {
   delete os_stack_trace_getter_;
 }
 
-// Adds a TestProperty to the current TestResult object when invoked in a
-// context of a test, to current test case's ad_hoc_test_result when invoke
-// from SetUpTestCase/TearDownTestCase, or to the global property set
+// Adds a TestProperty idOfRoomDoorLeadsTo the current TestResult object when invoked in a
+// context of a test, idOfRoomDoorLeadsTo current test case's ad_hoc_test_result when invoke
+// from SetUpTestCase/TearDownTestCase, or idOfRoomDoorLeadsTo the global property set
 // otherwise.  If the result already contains a property with the same key,
 // the value will be updated.
 void UnitTestImpl::RecordProperty(const TestProperty& test_property) {
@@ -5875,17 +5875,17 @@ void UnitTestImpl::ConfigureStreamingOutput() {
 #endif  // GTEST_CAN_STREAM_RESULTS_
 
 // Performs initialization dependent upon flag values obtained in
-// ParseGoogleTestFlagsOnly.  Is called from InitGoogleTest after the call to
-// ParseGoogleTestFlagsOnly.  In case a user neglects to call InitGoogleTest
+// ParseGoogleTestFlagsOnly.  Is called from InitGoogleTest after the call idOfRoomDoorLeadsTo
+// ParseGoogleTestFlagsOnly.  In case a user neglects idOfRoomDoorLeadsTo call InitGoogleTest
 // this function is also called from RunAllTests.  Since this function can be
-// called more than once, it has to be idempotent.
+// called more than once, it has idOfRoomDoorLeadsTo be idempotent.
 void UnitTestImpl::PostFlagParsingInit() {
   // Ensures that this function does not execute more than once.
   if (!post_flag_parse_init_performed_) {
     post_flag_parse_init_performed_ = true;
 
 #if defined(GTEST_CUSTOM_TEST_EVENT_LISTENER_)
-    // Register to send notifications about key process state changes.
+    // Register idOfRoomDoorLeadsTo send notifications about key process state changes.
     listeners()->Append(new GTEST_CUSTOM_TEST_EVENT_LISTENER_());
 #endif  // defined(GTEST_CUSTOM_TEST_EVENT_LISTENER_)
 
@@ -5895,16 +5895,16 @@ void UnitTestImpl::PostFlagParsingInit() {
 #endif  // GTEST_HAS_DEATH_TEST
 
     // Registers parameterized tests. This makes parameterized tests
-    // available to the UnitTest reflection API without running
+    // available idOfRoomDoorLeadsTo the UnitTest reflection API without running
     // RUN_ALL_TESTS.
     RegisterParameterizedTests();
 
     // Configures listeners for XML output. This makes it possible for users
-    // to shut down the default XML output before invoking RUN_ALL_TESTS.
+    // idOfRoomDoorLeadsTo shut down the default XML output before invoking RUN_ALL_TESTS.
     ConfigureXmlOutput();
 
 #if GTEST_CAN_STREAM_RESULTS_
-    // Configures listeners for streaming test results to the specified server.
+    // Configures listeners for streaming test results idOfRoomDoorLeadsTo the specified server.
     ConfigureStreamingOutput();
 #endif  // GTEST_CAN_STREAM_RESULTS_
   }
@@ -5914,7 +5914,7 @@ void UnitTestImpl::PostFlagParsingInit() {
 // value.
 //
 // This is used for implementation of the UnitTest class only.  We put
-// it in the anonymous namespace to prevent polluting the outer
+// it in the anonymous namespace idOfRoomDoorLeadsTo prevent polluting the outer
 // namespace.
 //
 // TestCaseNameIs is copyable.
@@ -5935,7 +5935,7 @@ class TestCaseNameIs {
 
 // Finds and returns a TestCase with the given name.  If one doesn't
 // exist, creates one and returns it.  It's the CALLER'S
-// RESPONSIBILITY to ensure that this function is only called WHEN THE
+// RESPONSIBILITY idOfRoomDoorLeadsTo ensure that this function is only called WHEN THE
 // TESTS ARE NOT SHUFFLED.
 //
 // Arguments:
@@ -5943,8 +5943,8 @@ class TestCaseNameIs {
 //   test_case_name: name of the test case
 //   type_param:     the name of the test case's type parameter, or NULL if
 //                   this is not a typed or a type-parameterized test case.
-//   set_up_tc:      pointer to the function that sets up the test case
-//   tear_down_tc:   pointer to the function that tears down the test case
+//   set_up_tc:      pointer idOfRoomDoorLeadsTo the function that sets up the test case
+//   tear_down_tc:   pointer idOfRoomDoorLeadsTo the function that tears down the test case
 TestCase* UnitTestImpl::GetTestCase(const char* test_case_name,
                                     const char* type_param,
                                     Test::SetUpTestCaseFunc set_up_tc,
@@ -5972,7 +5972,7 @@ TestCase* UnitTestImpl::GetTestCase(const char* test_case_name,
     test_cases_.insert(test_cases_.begin() + last_death_test_case_,
                        new_test_case);
   } else {
-    // No.  Appends to the end of the list.
+    // No.  Appends idOfRoomDoorLeadsTo the end of the list.
     test_cases_.push_back(new_test_case);
   }
 
@@ -5987,13 +5987,13 @@ static void TearDownEnvironment(Environment* env) { env->TearDown(); }
 
 // Runs all tests in this UnitTest object, prints the result, and
 // returns true if all tests are successful.  If any exception is
-// thrown during a test, the test is considered to be failed, but the
+// thrown during a test, the test is considered idOfRoomDoorLeadsTo be failed, but the
 // rest of the tests will still be run.
 //
 // When parameterized tests are enabled, it expands and registers
 // parameterized tests first in RegisterParameterizedTests().
 // All other functions called from RunAllTests() may safely assume that
-// parameterized tests are ready to be counted and run.
+// parameterized tests are ready idOfRoomDoorLeadsTo be counted and run.
 bool UnitTestImpl::RunAllTests() {
   // Makes sure InitGoogleTest() was called.
   if (!GTestIsInitialized()) {
@@ -6007,12 +6007,12 @@ bool UnitTestImpl::RunAllTests() {
   if (g_help_flag)
     return true;
 
-  // Repeats the call to the post-flag parsing initialization in case the
+  // Repeats the call idOfRoomDoorLeadsTo the post-flag parsing initialization in case the
   // user didn't call InitGoogleTest.
   PostFlagParsingInit();
 
-  // Even if sharding is not on, test runners may want to use the
-  // GTEST_SHARD_STATUS_FILE to query whether the test supports the sharding
+  // Even if sharding is not on, test runners may want idOfRoomDoorLeadsTo use the
+  // GTEST_SHARD_STATUS_FILE idOfRoomDoorLeadsTo query whether the test supports the sharding
   // protocol.
   internal::WriteToShardStatusFileIfNeeded();
 
@@ -6032,8 +6032,8 @@ bool UnitTestImpl::RunAllTests() {
   const bool should_shard = ShouldShard(kTestTotalShards, kTestShardIndex,
                                         in_subprocess_for_death_test);
 
-  // Compares the full test names with the filter to decide which
-  // tests to run.
+  // Compares the full test names with the filter idOfRoomDoorLeadsTo decide which
+  // tests idOfRoomDoorLeadsTo run.
   const bool has_tests_to_run = FilterTests(should_shard
                                               ? HONOR_SHARDING_PROTOCOL
                                               : IGNORE_SHARDING_PROTOCOL) > 0;
@@ -6056,13 +6056,13 @@ bool UnitTestImpl::RunAllTests() {
   start_timestamp_ = GetTimeInMillis();
   repeater->OnTestProgramStart(*parent_);
 
-  // How many times to repeat the tests?  We don't want to repeat them
+  // How many times idOfRoomDoorLeadsTo repeat the tests?  We don't want idOfRoomDoorLeadsTo repeat them
   // when we are inside the subprocess of a death test.
   const int repeat = in_subprocess_for_death_test ? 1 : GTEST_FLAG(repeat);
   // Repeats forever if the repeat count is negative.
   const bool forever = repeat < 0;
   for (int i = 0; forever || i != repeat; i++) {
-    // We want to preserve failures generated by ad-hoc test
+    // We want idOfRoomDoorLeadsTo preserve failures generated by ad-hoc test
     // assertions executed before RUN_ALL_TESTS().
     ClearNonAdHocTestResult();
 
@@ -6077,10 +6077,10 @@ bool UnitTestImpl::RunAllTests() {
       ShuffleTests();
     }
 
-    // Tells the unit test event listeners that the tests are about to start.
+    // Tells the unit test event listeners that the tests are about idOfRoomDoorLeadsTo start.
     repeater->OnTestIterationStart(*parent_, i);
 
-    // Runs each test case if there is at least one test to run.
+    // Runs each test case if there is at least one test idOfRoomDoorLeadsTo run.
     if (has_tests_to_run) {
       // Sets up all environments beforehand.
       repeater->OnEnvironmentsSetUpStart(*parent_);
@@ -6114,11 +6114,11 @@ bool UnitTestImpl::RunAllTests() {
     }
 
     // Restores the original test order after the iteration.  This
-    // allows the user to quickly repro a failure that happens in the
+    // allows the user idOfRoomDoorLeadsTo quickly repro a failure that happens in the
     // N-th iteration without repeating the first (N - 1) iterations.
     // This is not enclosed in "if (GTEST_FLAG(shuffle)) { ... }", in
     // case the user somehow changes the value of the flag somewhere
-    // (it's always safe to unshuffle the tests).
+    // (it's always safe idOfRoomDoorLeadsTo unshuffle the tests).
     UnshuffleTests();
 
     if (GTEST_FLAG(shuffle)) {
@@ -6142,7 +6142,7 @@ void WriteToShardStatusFileIfNeeded() {
     FILE* const file = posix::FOpen(test_shard_file, "w");
     if (file == NULL) {
       ColoredPrintf(COLOR_RED,
-                    "Could not write to the test shard status file \"%s\" "
+                    "Could not write idOfRoomDoorLeadsTo the test shard status file \"%s\" "
                     "specified by the %s environment variable.\n",
                     test_shard_file, kTestShardStatusFile);
       fflush(stdout);
@@ -6156,8 +6156,8 @@ void WriteToShardStatusFileIfNeeded() {
 // environment variable values. If the variables are present,
 // but inconsistent (i.e., shard_index >= total_shards), prints
 // an error and exits. If in_subprocess_for_death_test, sharding is
-// disabled because it must only be applied to the original test
-// process. Otherwise, we could filter out death tests we intended to execute.
+// disabled because it must only be applied idOfRoomDoorLeadsTo the original test
+// process. Otherwise, we could filter out death tests we intended idOfRoomDoorLeadsTo execute.
 bool ShouldShard(const char* total_shards_env,
                  const char* shard_index_env,
                  bool in_subprocess_for_death_test) {
@@ -6219,13 +6219,13 @@ Int32 Int32FromEnvOrDie(const char* var, Int32 default_val) {
 
 // Given the total number of shards, the shard index, and the test id,
 // returns true iff the test should be run on this shard. The test id is
-// some arbitrary but unique non-negative integer assigned to each test
+// some arbitrary but unique non-negative integer assigned idOfRoomDoorLeadsTo each test
 // method. Assumes that 0 <= shard_index < total_shards.
 bool ShouldRunTestOnShard(int total_shards, int shard_index, int test_id) {
   return (test_id % total_shards) == shard_index;
 }
 
-// Compares the name of each test with the user-specified filter to
+// Compares the name of each test with the user-specified filter idOfRoomDoorLeadsTo
 // decide whether the test should be run, then records the result in
 // each TestCase and TestInfo object.
 // If shard_tests == true, further filters tests based on sharding
@@ -6240,7 +6240,7 @@ int UnitTestImpl::FilterTests(ReactionToSharding shard_tests) {
 
   // num_runnable_tests are the number of tests that will
   // run across all shards (i.e., match filter and are not disabled).
-  // num_selected_tests are the number of tests to be run on
+  // num_selected_tests are the number of tests idOfRoomDoorLeadsTo be run on
   // this shard.
   int num_runnable_tests = 0;
   int num_selected_tests = 0;
@@ -6325,8 +6325,8 @@ void UnitTestImpl::ListTestsMatchingFilter() {
           printf("%s.", test_case->name());
           if (test_case->type_param() != NULL) {
             printf("  # %s = ", kTypeParamLabel);
-            // We print the type parameter on a single line to make
-            // the output easy to parse by a program.
+            // We print the type parameter on a single line idOfRoomDoorLeadsTo make
+            // the output easy idOfRoomDoorLeadsTo parse by a program.
             PrintOnOneLine(test_case->type_param(), kMaxParamLength);
           }
           printf("\n");
@@ -6334,8 +6334,8 @@ void UnitTestImpl::ListTestsMatchingFilter() {
         printf("  %s", test_info->name());
         if (test_info->value_param() != NULL) {
           printf("  # %s = ", kValueParamLabel);
-          // We print the value parameter on a single line to make the
-          // output easy to parse by a program.
+          // We print the value parameter on a single line idOfRoomDoorLeadsTo make the
+          // output easy idOfRoomDoorLeadsTo parse by a program.
           PrintOnOneLine(test_info->value_param(), kMaxParamLength);
         }
         printf("\n");
@@ -6396,7 +6396,7 @@ void UnitTestImpl::ShuffleTests() {
   }
 }
 
-// Restores the test cases and tests to their order before the first shuffle.
+// Restores the test cases and tests idOfRoomDoorLeadsTo their order before the first shuffle.
 void UnitTestImpl::UnshuffleTests() {
   for (size_t i = 0; i < test_cases_.size(); i++) {
     // Unshuffles the tests in each test case.
@@ -6408,22 +6408,22 @@ void UnitTestImpl::UnshuffleTests() {
 
 // Returns the current OS stack trace as an std::string.
 //
-// The maximum number of stack frames to be included is specified by
+// The maximum number of stack frames idOfRoomDoorLeadsTo be included is specified by
 // the gtest_stack_trace_depth flag.  The skip_count parameter
-// specifies the number of top frames to be skipped, which doesn't
-// count against the number of frames to be included.
+// specifies the number of top frames idOfRoomDoorLeadsTo be skipped, which doesn't
+// count against the number of frames idOfRoomDoorLeadsTo be included.
 //
 // For example, if Foo() calls Bar(), which in turn calls
 // GetCurrentOsStackTraceExceptTop(..., 1), Foo() will be included in
 // the trace but Bar() and GetCurrentOsStackTraceExceptTop() won't.
 std::string GetCurrentOsStackTraceExceptTop(UnitTest* /*unit_test*/,
                                             int skip_count) {
-  // We pass skip_count + 1 to skip this wrapper function in addition
-  // to what the user really wants to skip.
+  // We pass skip_count + 1 idOfRoomDoorLeadsTo skip this wrapper function in addition
+  // idOfRoomDoorLeadsTo what the user really wants idOfRoomDoorLeadsTo skip.
   return GetUnitTestImpl()->CurrentOsStackTraceExceptTop(skip_count + 1);
 }
 
-// Used by the GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_ macro to
+// Used by the GTEST_SUPPRESS_UNREACHABLE_CODE_WARNING_BELOW_ macro idOfRoomDoorLeadsTo
 // suppress unreachable code warnings.
 namespace {
 class ClassUniqueToAlwaysTrue {};
@@ -6441,7 +6441,7 @@ bool AlwaysTrue() {
   return true;
 }
 
-// If *pstr starts with the given prefix, modifies *pstr to be right
+// If *pstr starts with the given prefix, modifies *pstr idOfRoomDoorLeadsTo be right
 // past the prefix and returns true; otherwise leaves *pstr unchanged
 // and returns false.  None of pstr, *pstr, and prefix can be NULL.
 bool SkipPrefix(const char* prefix, const char** pstr) {
@@ -6472,7 +6472,7 @@ const char* ParseFlagValue(const char* str,
   // Skips the flag name.
   const char* flag_end = str + flag_len;
 
-  // When def_optional is true, it's OK to not have a "=value" part.
+  // When def_optional is true, it's OK idOfRoomDoorLeadsTo not have a "=value" part.
   if (def_optional && (flag_end[0] == '\0')) {
     return flag_end;
   }
@@ -6503,7 +6503,7 @@ bool ParseBoolFlag(const char* str, const char* flag, bool* value) {
   // Aborts if the parsing failed.
   if (value_str == NULL) return false;
 
-  // Converts the string value to a bool.
+  // Converts the string value idOfRoomDoorLeadsTo a bool.
   *value = !(*value_str == '0' || *value_str == 'f' || *value_str == 'F');
   return true;
 }
@@ -6520,7 +6520,7 @@ bool ParseInt32Flag(const char* str, const char* flag, Int32* value) {
   // Aborts if the parsing failed.
   if (value_str == NULL) return false;
 
-  // Sets *value to the value of the flag.
+  // Sets *value idOfRoomDoorLeadsTo the value of the flag.
   return ParseInt32(Message() << "The value of flag --" << flag,
                     value_str, value);
 }
@@ -6537,7 +6537,7 @@ bool ParseStringFlag(const char* str, const char* flag, std::string* value) {
   // Aborts if the parsing failed.
   if (value_str == NULL) return false;
 
-  // Sets *value to the value of the flag.
+  // Sets *value idOfRoomDoorLeadsTo the value of the flag.
   *value = value_str;
   return true;
 }
@@ -6558,22 +6558,22 @@ static bool HasGoogleTestFlagPrefix(const char* str) {
 }
 
 // Prints a string containing code-encoded text.  The following escape
-// sequences can be used in the string to control the text color:
+// sequences can be used in the string idOfRoomDoorLeadsTo control the text color:
 //
 //   @@    prints a single '@' character.
-//   @R    changes the color to red.
-//   @G    changes the color to green.
-//   @Y    changes the color to yellow.
-//   @D    changes to the default terminal text color.
+//   @R    changes the color idOfRoomDoorLeadsTo red.
+//   @G    changes the color idOfRoomDoorLeadsTo green.
+//   @Y    changes the color idOfRoomDoorLeadsTo yellow.
+//   @D    changes idOfRoomDoorLeadsTo the default terminal text color.
 //
 // TODO(wan@google.com): Write tests for this once we add stdout
-// capturing to Google Test.
+// capturing idOfRoomDoorLeadsTo Google Test.
 static void PrintColorEncoded(const char* str) {
   GTestColor color = COLOR_DEFAULT;  // The current color.
 
   // Conceptually, we split the string into segments divided by escape
   // sequences.  Then we print one segment at a time.  At the end of
-  // each iteration, the str pointer advances to the beginning of the
+  // each iteration, the str pointer advances idOfRoomDoorLeadsTo the beginning of the
   // next segment.
   for (;;) {
     const char* p = strchr(str, '@');
@@ -6604,7 +6604,7 @@ static void PrintColorEncoded(const char* str) {
 
 static const char kColorEncodedHelpMessage[] =
 "This program contains tests written using " GTEST_NAME_ ". You can use the\n"
-"following command line flags to control its behavior:\n"
+"following command line flags idOfRoomDoorLeadsTo control its behavior:\n"
 "\n"
 "Test Selection:\n"
 "  @G--" GTEST_FLAG_PREFIX_ "list_tests@D\n"
@@ -6620,12 +6620,12 @@ static const char kColorEncodedHelpMessage[] =
 "\n"
 "Test Execution:\n"
 "  @G--" GTEST_FLAG_PREFIX_ "repeat=@Y[COUNT]@D\n"
-"      Run the tests repeatedly; use a negative count to repeat forever.\n"
+"      Run the tests repeatedly; use a negative count idOfRoomDoorLeadsTo repeat forever.\n"
 "  @G--" GTEST_FLAG_PREFIX_ "shuffle@D\n"
 "      Randomize tests' orders on every iteration.\n"
 "  @G--" GTEST_FLAG_PREFIX_ "random_seed=@Y[NUMBER]@D\n"
-"      Random number seed to use for shuffling test orders (between 1 and\n"
-"      99999, or 0 to use a seed based on the current time).\n"
+"      Random number seed idOfRoomDoorLeadsTo use for shuffling test orders (between 1 and\n"
+"      99999, or 0 idOfRoomDoorLeadsTo use a seed based on the current time).\n"
 "\n"
 "Test Output:\n"
 "  @G--" GTEST_FLAG_PREFIX_ "color=@Y(@Gyes@Y|@Gno@Y|@Gauto@Y)@D\n"
@@ -6635,10 +6635,10 @@ static const char kColorEncodedHelpMessage[] =
 "  @G--" GTEST_FLAG_PREFIX_ "output=xml@Y[@G:@YDIRECTORY_PATH@G"
     GTEST_PATH_SEP_ "@Y|@G:@YFILE_PATH]@D\n"
 "      Generate an XML report in the given directory or with the given file\n"
-"      name. @YFILE_PATH@D defaults to @Gtest_details.xml@D.\n"
+"      name. @YFILE_PATH@D defaults idOfRoomDoorLeadsTo @Gtest_details.xml@D.\n"
 #if GTEST_CAN_STREAM_RESULTS_
 "  @G--" GTEST_FLAG_PREFIX_ "stream_result_to=@YHOST@G:@YPORT@D\n"
-"      Stream test results to the given server.\n"
+"      Stream test results idOfRoomDoorLeadsTo the given server.\n"
 #endif  // GTEST_CAN_STREAM_RESULTS_
 "\n"
 "Assertion Behavior:\n"
@@ -6652,18 +6652,18 @@ static const char kColorEncodedHelpMessage[] =
 "      Turn assertion failures into C++ exceptions.\n"
 "  @G--" GTEST_FLAG_PREFIX_ "catch_exceptions=0@D\n"
 "      Do not report exceptions as test failures. Instead, allow them\n"
-"      to crash the program or throw a pop-up (on Windows).\n"
+"      idOfRoomDoorLeadsTo crash the program or throw a pop-up (on Windows).\n"
 "\n"
 "Except for @G--" GTEST_FLAG_PREFIX_ "list_tests@D, you can alternatively set "
     "the corresponding\n"
-"environment variable of a flag (all letters in upper-case). For example, to\n"
+"environment variable of a flag (all letters in upper-case). For example, idOfRoomDoorLeadsTo\n"
 "disable colored text output, you can either specify @G--" GTEST_FLAG_PREFIX_
     "color=no@D or set\n"
-"the @G" GTEST_FLAG_PREFIX_UPPER_ "COLOR@D environment variable to @Gno@D.\n"
+"the @G" GTEST_FLAG_PREFIX_UPPER_ "COLOR@D environment variable idOfRoomDoorLeadsTo @Gno@D.\n"
 "\n"
 "For more information, please read the " GTEST_NAME_ " documentation at\n"
 "@G" GTEST_PROJECT_URL_ "@D. If you find a bug in " GTEST_NAME_ "\n"
-"(not one in your own code or tests), please report it to\n"
+"(not one in your own code or tests), please report it idOfRoomDoorLeadsTo\n"
 "@G<" GTEST_DEV_EMAIL_ ">@D.\n";
 
 bool ParseGoogleTestFlag(const char* const arg) {
@@ -6700,7 +6700,7 @@ void LoadFlagsFromFile(const std::string& path) {
   FILE* flagfile = posix::FOpen(path.c_str(), "r");
   if (!flagfile) {
     fprintf(stderr,
-            "Unable to open file \"%s\"\n",
+            "Unable idOfRoomDoorLeadsTo open file \"%s\"\n",
             GTEST_FLAG(flagfile).c_str());
     fflush(stderr);
     exit(EXIT_FAILURE);
@@ -6720,7 +6720,7 @@ void LoadFlagsFromFile(const std::string& path) {
 
 // Parses the command line for Google Test flags, without initializing
 // other parts of Google Test.  The type parameter CharType can be
-// instantiated to either char or wchar_t.
+// instantiated idOfRoomDoorLeadsTo either char or wchar_t.
 template <typename CharType>
 void ParseGoogleTestFlagsOnlyImpl(int* argc, CharType** argv) {
   for (int i = 1; i < *argc; i++) {
@@ -6759,7 +6759,7 @@ void ParseGoogleTestFlagsOnlyImpl(int* argc, CharType** argv) {
       // Decrements the argument count.
       (*argc)--;
 
-      // We also need to decrement the iterator as we just removed
+      // We also need idOfRoomDoorLeadsTo decrement the iterator as we just removed
       // an element.
       i--;
     }
@@ -6784,11 +6784,11 @@ void ParseGoogleTestFlagsOnly(int* argc, wchar_t** argv) {
 
 // The internal implementation of InitGoogleTest().
 //
-// The type parameter CharType can be instantiated to either char or
+// The type parameter CharType can be instantiated idOfRoomDoorLeadsTo either char or
 // wchar_t.
 template <typename CharType>
 void InitGoogleTestImpl(int* argc, CharType** argv) {
-  // We don't want to run the initialization code twice.
+  // We don't want idOfRoomDoorLeadsTo run the initialization code twice.
   if (GTestIsInitialized()) return;
 
   if (*argc <= 0) return;
@@ -6846,7 +6846,7 @@ void InitGoogleTest(int* argc, wchar_t** argv) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -6898,7 +6898,7 @@ void InitGoogleTest(int* argc, wchar_t** argv) {
 
 // Indicates that this translation unit is part of Google Test's
 // implementation.  It must come before gtest-internal-inl.h is
-// included, or there will be a compiler error.  This trick exists to
+// included, or there will be a compiler error.  This trick exists idOfRoomDoorLeadsTo
 // prevent the accidental inclusion of gtest-internal-inl.h in the
 // user's code.
 #define GTEST_IMPLEMENTATION_ 1
@@ -6914,7 +6914,7 @@ static const char kDefaultDeathTestStyle[] = "fast";
 GTEST_DEFINE_string_(
     death_test_style,
     internal::StringFromGTestEnv("death_test_style", kDefaultDeathTestStyle),
-    "Indicates how to run a death test in a forked child process: "
+    "Indicates how idOfRoomDoorLeadsTo run a death test in a forked child process: "
     "\"threadsafe\" (child process re-executes the test binary "
     "from the beginning, running only the specific death test) or "
     "\"fast\" (child process runs the death test immediately "
@@ -6923,12 +6923,12 @@ GTEST_DEFINE_string_(
 GTEST_DEFINE_bool_(
     death_test_use_fork,
     internal::BoolFromGTestEnv("death_test_use_fork", false),
-    "Instructs to use fork()/_exit() instead of clone() in death tests. "
+    "Instructs idOfRoomDoorLeadsTo use fork()/_exit() instead of clone() in death tests. "
     "Ignored and always uses fork() on POSIX systems where clone() is not "
     "implemented. Useful when running under valgrind or similar tools if "
     "those do not support clone(). Valgrind 3.3.1 will just fail if "
     "it sees an unsupported combination of clone() flags. "
-    "It is not recommended to use this flag w/o valgrind though it will "
+    "It is not recommended idOfRoomDoorLeadsTo use this flag w/o valgrind though it will "
     "work in 99% of the cases. Once valgrind is fixed, this flag will "
     "most likely be removed.");
 
@@ -6936,7 +6936,7 @@ namespace internal {
 GTEST_DEFINE_string_(
     internal_run_death_test, "",
     "Indicates the file, line number, temporal index of "
-    "the single death test to run, and a file descriptor to "
+    "the single death test idOfRoomDoorLeadsTo run, and a file descriptor idOfRoomDoorLeadsTo "
     "which a success code may be sent, all separated by "
     "the '|' characters.  This flag is specified if and only if the current "
     "process is a sub-process launched for running a thread-safe "
@@ -6955,7 +6955,7 @@ static bool g_in_fast_death_test_child = false;
 
 // Returns a Boolean value indicating whether the caller is currently
 // executing in the context of the death test child process.  Tools such as
-// Valgrind heap checkers may need this to modify their behavior in death
+// Valgrind heap checkers may need this idOfRoomDoorLeadsTo modify their behavior in death
 // tests.  IMPORTANT: This is an internal utility.  Using it may break the
 // implementation of death tests.  Character code MUST NOT use it.
 bool InDeathTestChild() {
@@ -7051,8 +7051,8 @@ bool ExitedUnsuccessfully(int exit_status) {
 # if !GTEST_OS_WINDOWS
 // Generates a textual failure message when a death test finds more than
 // one thread running, or cannot determine the number of threads, prior
-// to executing the given statement.  It is the responsibility of the
-// caller not to pass a thread_count of 1.
+// idOfRoomDoorLeadsTo executing the given statement.  It is the responsibility of the
+// caller not idOfRoomDoorLeadsTo pass a thread_count of 1.
 static std::string DeathTestThreadWarning(size_t thread_count) {
   Message msg;
   msg << "Death tests use fork(), which is unsafe particularly"
@@ -7074,7 +7074,7 @@ static const char kDeathTestInternalError = 'I';
 // An enumeration describing all of the possible ways that a death test can
 // conclude.  DIED means that the process died while executing the test
 // code; LIVED means that process lived beyond the end of the test code;
-// RETURNED means that the test statement attempted to execute a return
+// RETURNED means that the test statement attempted idOfRoomDoorLeadsTo execute a return
 // statement, which is not allowed; THREW means that the test statement
 // returned control by throwing an exception.  IN_PROGRESS means the test
 // has not yet concluded.
@@ -7082,10 +7082,10 @@ static const char kDeathTestInternalError = 'I';
 // AbortReason, DeathTestOutcome, and flag characters above.
 enum DeathTestOutcome { IN_PROGRESS, DIED, LIVED, RETURNED, THREW };
 
-// Routine for aborting the program which is safe to call from an
+// Routine for aborting the program which is safe idOfRoomDoorLeadsTo call from an
 // exec-style death test child process, in which case the error
-// message is propagated back to the parent process.  Otherwise, the
-// message is simply printed to stderr.  In either case, the program
+// message is propagated back idOfRoomDoorLeadsTo the parent process.  Otherwise, the
+// message is simply printed idOfRoomDoorLeadsTo stderr.  In either case, the program
 // then exits with status 1.
 void DeathTestAbort(const std::string& message) {
   // On a POSIX system, this function may be called from a threadsafe-style
@@ -7118,12 +7118,12 @@ void DeathTestAbort(const std::string& message) {
     } \
   } while (::testing::internal::AlwaysFalse())
 
-// This macro is similar to GTEST_DEATH_TEST_CHECK_, but it is meant for
+// This macro is similar idOfRoomDoorLeadsTo GTEST_DEATH_TEST_CHECK_, but it is meant for
 // evaluating any system call that fulfills two conditions: it must return
-// -1 on failure, and set errno to EINTR when it is interrupted and
-// should be tried again.  The macro expands to a loop that repeatedly
-// evaluates the expression as long as it evaluates to -1 and sets
-// errno to EINTR.  If the expression evaluates to -1 but errno is
+// -1 on failure, and set errno idOfRoomDoorLeadsTo EINTR when it is interrupted and
+// should be tried again.  The macro expands idOfRoomDoorLeadsTo a loop that repeatedly
+// evaluates the expression as long as it evaluates idOfRoomDoorLeadsTo -1 and sets
+// errno idOfRoomDoorLeadsTo EINTR.  If the expression evaluates idOfRoomDoorLeadsTo -1 but errno is
 // something other than EINTR, DeathTestAbort is called.
 # define GTEST_DEATH_TEST_CHECK_SYSCALL_(expression) \
   do { \
@@ -7144,7 +7144,7 @@ std::string GetLastErrnoDescription() {
     return errno == 0 ? "" : posix::StrError(errno);
 }
 
-// This is called from a death test parent process to read a failure
+// This is called from a death test parent process idOfRoomDoorLeadsTo read a failure
 // message from the death test child process and log it with the FATAL
 // severity. On Windows, the message is read from a pipe handle. On other
 // platforms, it is read from a file descriptor.
@@ -7179,7 +7179,7 @@ DeathTest::DeathTest() {
   }
 }
 
-// Creates and returns a death test by dispatching to the current
+// Creates and returns a death test by dispatching idOfRoomDoorLeadsTo the current
 // death test factory.
 bool DeathTest::Create(const char* statement, const RE* regex,
                        const char* file, int line, DeathTest** test) {
@@ -7209,7 +7209,7 @@ class DeathTestImpl : public DeathTest {
         read_fd_(-1),
         write_fd_(-1) {}
 
-  // read_fd_ is expected to be closed and cleared by a derived class.
+  // read_fd_ is expected idOfRoomDoorLeadsTo be closed and cleared by a derived class.
   ~DeathTestImpl() { GTEST_DEATH_TEST_CHECK_(read_fd_ == -1); }
 
   void Abort(AbortReason reason);
@@ -7229,17 +7229,17 @@ class DeathTestImpl : public DeathTest {
   void set_write_fd(int fd) { write_fd_ = fd; }
 
   // Called in the parent process only. Reads the result code of the death
-  // test child process via a pipe, interprets it to set the outcome_
+  // test child process via a pipe, interprets it idOfRoomDoorLeadsTo set the outcome_
   // member, and closes read_fd_.  Outputs diagnostics and terminates in
   // case of unexpected codes.
   void ReadAndInterpretStatusByte();
 
  private:
   // The textual content of the code this object is testing.  This class
-  // doesn't own this string and should not attempt to delete it.
+  // doesn't own this string and should not attempt idOfRoomDoorLeadsTo delete it.
   const char* const statement_;
   // The regular expression which test output must match.  DeathTestImpl
-  // doesn't own this object and should not attempt to delete it.
+  // doesn't own this object and should not attempt idOfRoomDoorLeadsTo delete it.
   const RE* const regex_;
   // True if the death test child process has been successfully spawned.
   bool spawned_;
@@ -7247,18 +7247,18 @@ class DeathTestImpl : public DeathTest {
   int status_;
   // How the death test concluded.
   DeathTestOutcome outcome_;
-  // Descriptor to the read end of the pipe to the child process.  It is
+  // Descriptor idOfRoomDoorLeadsTo the read end of the pipe idOfRoomDoorLeadsTo the child process.  It is
   // always -1 in the child process.  The child keeps its write end of the
   // pipe in write_fd_.
   int read_fd_;
-  // Descriptor to the child's write end of the pipe to the parent process.
+  // Descriptor idOfRoomDoorLeadsTo the child's write end of the pipe idOfRoomDoorLeadsTo the parent process.
   // It is always -1 in the parent process.  The parent keeps its end of the
   // pipe in read_fd_.
   int write_fd_;
 };
 
 // Called in the parent process only. Reads the result code of the death
-// test child process via a pipe, interprets it to set the outcome_
+// test child process via a pipe, interprets it idOfRoomDoorLeadsTo set the outcome_
 // member, and closes read_fd_.  Outputs diagnostics and terminates in
 // case of unexpected codes.
 void DeathTestImpl::ReadAndInterpretStatusByte() {
@@ -7267,7 +7267,7 @@ void DeathTestImpl::ReadAndInterpretStatusByte() {
 
   // The read() here blocks until data is available (signifying the
   // failure of the death test) or until the pipe is closed (signifying
-  // its success), so it's okay to call this in the parent before
+  // its success), so it's okay idOfRoomDoorLeadsTo call this in the parent before
   // the child process has exited.
   do {
     bytes_read = posix::Read(read_fd(), &flag, 1);
@@ -7304,12 +7304,12 @@ void DeathTestImpl::ReadAndInterpretStatusByte() {
 
 // Signals that the death test code which should have exited, didn't.
 // Should be called only in a death test child process.
-// Writes a status byte to the child's status file descriptor, then
+// Writes a status byte idOfRoomDoorLeadsTo the child's status file descriptor, then
 // calls _exit(1).
 void DeathTestImpl::Abort(AbortReason reason) {
-  // The parent process considers the death test to be a failure if
+  // The parent process considers the death test idOfRoomDoorLeadsTo be a failure if
   // it finds any data in our pipe.  So, here we write a single flag byte
-  // to the pipe, then exit.
+  // idOfRoomDoorLeadsTo the pipe, then exit.
   const char status_ch =
       reason == TEST_DID_NOT_DIE ? kDeathTestLived :
       reason == TEST_THREW_EXCEPTION ? kDeathTestThrew : kDeathTestReturned;
@@ -7320,10 +7320,10 @@ void DeathTestImpl::Abort(AbortReason reason) {
   // run after calling _exit(). On such systems, write_fd_ will be
   // indirectly closed from the destructor of UnitTestImpl, causing double
   // close if it is also closed here. On debug configurations, double close
-  // may assert. As there are no in-process buffers to flush here, we are
-  // relying on the OS to close the descriptor after the process terminates
+  // may assert. As there are no in-process buffers idOfRoomDoorLeadsTo flush here, we are
+  // relying on the OS idOfRoomDoorLeadsTo close the descriptor after the process terminates
   // when the destructors are not run.
-  _exit(1);  // Exits w/o any normal exit hooks (we were supposed to crash)
+  _exit(1);  // Exits w/o any normal exit hooks (we were supposed idOfRoomDoorLeadsTo crash)
 }
 
 // Returns an indented copy of stderr output for a death test.
@@ -7353,9 +7353,9 @@ static ::std::string FormatDeathTestOutput(const ::std::string& output) {
 //             fails in the latter three cases.
 //   status:   The exit status of the child process. On *nix, it is in the
 //             in the format specified by wait(2). On Windows, this is the
-//             value supplied to the ExitProcess() API or a numeric code
+//             value supplied idOfRoomDoorLeadsTo the ExitProcess() API or a numeric code
 //             of the exception that terminated the program.
-//   regex:    A regular expression object to be applied to
+//   regex:    A regular expression object idOfRoomDoorLeadsTo be applied idOfRoomDoorLeadsTo
 //             the test's captured standard error output; the death test
 //             fails if it does not match.
 //
@@ -7378,7 +7378,7 @@ bool DeathTestImpl::Passed(bool status_ok) {
   buffer << "Death test: " << statement() << "\n";
   switch (outcome()) {
     case LIVED:
-      buffer << "    Result: failed to die.\n"
+      buffer << "    Result: failed idOfRoomDoorLeadsTo die.\n"
              << " Error msg:\n" << FormatDeathTestOutput(error_message);
       break;
     case THREW:
@@ -7416,32 +7416,32 @@ bool DeathTestImpl::Passed(bool status_ok) {
 }
 
 # if GTEST_OS_WINDOWS
-// WindowsDeathTest implements death tests on Windows. Due to the
+// WindowsDeathTest implements death tests on Windows. Due idOfRoomDoorLeadsTo the
 // specifics of starting new processes on Windows, death tests there are
 // always threadsafe, and Google Test considers the
-// --gtest_death_test_style=fast setting to be equivalent to
+// --gtest_death_test_style=fast setting idOfRoomDoorLeadsTo be equivalent idOfRoomDoorLeadsTo
 // --gtest_death_test_style=threadsafe there.
 //
 // A few implementation notes:  Like the Linux version, the Windows
-// implementation uses pipes for child-to-parent communication. But due to
+// implementation uses pipes for child-idOfRoomDoorLeadsTo-parent communication. But due idOfRoomDoorLeadsTo
 // the specifics of pipes on Windows, some extra steps are required:
 //
-// 1. The parent creates a communication pipe and stores handles to both
+// 1. The parent creates a communication pipe and stores handles idOfRoomDoorLeadsTo both
 //    ends of it.
 // 2. The parent starts the child and provides it with the information
-//    necessary to acquire the handle to the write end of the pipe.
+//    necessary idOfRoomDoorLeadsTo acquire the handle idOfRoomDoorLeadsTo the write end of the pipe.
 // 3. The child acquires the write end of the pipe and signals the parent
 //    using a Windows event.
 // 4. Now the parent can release the write end of the pipe on its side. If
-//    this is done before step 3, the object's reference count goes down to
+//    this is done before step 3, the object's reference count goes down idOfRoomDoorLeadsTo
 //    0 and it is destroyed, preventing the child from acquiring it. The
-//    parent now has to release it, or read operations on the read end of
+//    parent now has idOfRoomDoorLeadsTo release it, or read operations on the read end of
 //    the pipe will not return when the child terminates.
 // 5. The parent reads child's output through the pipe (outcome code and
 //    any possible error messages) from the pipe, and its stderr and then
-//    determines whether to fail the test.
+//    determines whether idOfRoomDoorLeadsTo fail the test.
 //
-// Note: to distinguish Win32 API calls from the local method and function
+// Note: idOfRoomDoorLeadsTo distinguish Win32 API calls from the local method and function
 // calls, the former are explicitly resolved in the global namespace.
 //
 class WindowsDeathTest : public DeathTestImpl {
@@ -7461,18 +7461,18 @@ class WindowsDeathTest : public DeathTestImpl {
   const char* const file_;
   // The line number on which the death test is located.
   const int line_;
-  // Handle to the write end of the pipe to the child process.
+  // Handle idOfRoomDoorLeadsTo the write end of the pipe idOfRoomDoorLeadsTo the child process.
   AutoHandle write_handle_;
   // Child process handle.
   AutoHandle child_handle_;
-  // Event the child process uses to signal the parent that it has
-  // acquired the handle to the write end of the pipe. After seeing this
-  // event the parent can release its own handles to make sure its
+  // Event the child process uses idOfRoomDoorLeadsTo signal the parent that it has
+  // acquired the handle idOfRoomDoorLeadsTo the write end of the pipe. After seeing this
+  // event the parent can release its own handles idOfRoomDoorLeadsTo make sure its
   // ReadFile() calls return when the child terminates.
   AutoHandle event_handle_;
 };
 
-// Waits for the child in a death test to exit, returning its exit
+// Waits for the child in a death test idOfRoomDoorLeadsTo exit, returning its exit
 // status, or 0 if no child process exists.  As a side effect, sets the
 // outcome data member.
 int WindowsDeathTest::Wait() {
@@ -7500,9 +7500,9 @@ int WindowsDeathTest::Wait() {
 
   ReadAndInterpretStatusByte();
 
-  // Waits for the child process to exit if it haven't already. This
+  // Waits for the child process idOfRoomDoorLeadsTo exit if it haven't already. This
   // returns immediately if the child has already exited, regardless of
-  // whether previous calls to WaitForMultipleObjects synchronized on this
+  // whether previous calls idOfRoomDoorLeadsTo WaitForMultipleObjects synchronized on this
   // handle or not.
   GTEST_DEATH_TEST_CHECK_(
       WAIT_OBJECT_0 == ::WaitForSingleObject(child_handle_.Get(),
@@ -7516,9 +7516,9 @@ int WindowsDeathTest::Wait() {
 }
 
 // The AssumeRole process for a Windows death test.  It creates a child
-// process with the same executable as the current process to run the
+// process with the same executable as the current process idOfRoomDoorLeadsTo run the
 // death test.  The child process is given the --gtest_filter and
-// --gtest_internal_run_death_test flags such that it knows to run the
+// --gtest_internal_run_death_test flags such that it knows idOfRoomDoorLeadsTo run the
 // current death test only.
 DeathTest::TestRole WindowsDeathTest::AssumeRole() {
   const UnitTestImpl* const impl = GetUnitTestImpl();
@@ -7534,7 +7534,7 @@ DeathTest::TestRole WindowsDeathTest::AssumeRole() {
     return EXECUTE_TEST;
   }
 
-  // WindowsDeathTest uses an anonymous pipe to communicate results of
+  // WindowsDeathTest uses an anonymous pipe idOfRoomDoorLeadsTo communicate results of
   // a death test.
   SECURITY_ATTRIBUTES handles_are_inheritable = {
     sizeof(SECURITY_ATTRIBUTES), NULL, TRUE };
@@ -7548,7 +7548,7 @@ DeathTest::TestRole WindowsDeathTest::AssumeRole() {
   write_handle_.Reset(write_handle);
   event_handle_.Reset(::CreateEvent(
       &handles_are_inheritable,
-      TRUE,    // The event will automatically reset to non-signaled state.
+      TRUE,    // The event will automatically reset idOfRoomDoorLeadsTo non-signaled state.
       FALSE,   // The initial state is non-signalled.
       NULL));  // The even is unnamed.
   GTEST_DEATH_TEST_CHECK_(event_handle_.Get() != NULL);
@@ -7632,7 +7632,7 @@ ForkingDeathTest::ForkingDeathTest(const char* a_statement, const RE* a_regex)
     : DeathTestImpl(a_statement, a_regex),
       child_pid_(-1) {}
 
-// Waits for the child in a death test to exit, returning its exit
+// Waits for the child in a death test idOfRoomDoorLeadsTo exit, returning its exit
 // status, or 0 if no child process exists.  As a side effect, sets the
 // outcome data member.
 int ForkingDeathTest::Wait() {
@@ -7657,7 +7657,7 @@ class NoExecDeathTest : public ForkingDeathTest {
 };
 
 // The AssumeRole process for a fork-and-run death test.  It implements a
-// straightforward fork, with a simple pipe to transmit the status byte.
+// straightforward fork, with a simple pipe idOfRoomDoorLeadsTo transmit the status byte.
 DeathTest::TestRole NoExecDeathTest::AssumeRole() {
   const size_t thread_count = GetThreadCount();
   if (thread_count != 1) {
@@ -7673,9 +7673,9 @@ DeathTest::TestRole NoExecDeathTest::AssumeRole() {
   // file descriptors are shared.  We flush all log files here so that closing
   // the file descriptors in the child process doesn't throw off the
   // synchronization between descriptors and buffers in the parent process.
-  // This is as close to the fork as possible to avoid a race condition in case
+  // This is as close idOfRoomDoorLeadsTo the fork as possible idOfRoomDoorLeadsTo avoid a race condition in case
   // there are multiple threads running before the death test, and another
-  // thread writes to the log file.
+  // thread writes idOfRoomDoorLeadsTo the log file.
   FlushInfoLog();
 
   const pid_t child_pid = fork();
@@ -7684,11 +7684,11 @@ DeathTest::TestRole NoExecDeathTest::AssumeRole() {
   if (child_pid == 0) {
     GTEST_DEATH_TEST_CHECK_SYSCALL_(close(pipe_fd[0]));
     set_write_fd(pipe_fd[1]);
-    // Redirects all logging to stderr in the child process to prevent
-    // concurrent writes to the log files.  We capture stderr in the parent
-    // process and append the child process' output to a log.
+    // Redirects all logging idOfRoomDoorLeadsTo stderr in the child process idOfRoomDoorLeadsTo prevent
+    // concurrent writes idOfRoomDoorLeadsTo the log files.  We capture stderr in the parent
+    // process and append the child process' output idOfRoomDoorLeadsTo a log.
     LogToStderr();
-    // Event forwarding to the listeners of event listener API mush be shut
+    // Event forwarding idOfRoomDoorLeadsTo the listeners of event listener API mush be shut
     // down in death test subprocesses.
     GetUnitTestImpl()->listeners()->SuppressEventForwarding();
     g_in_fast_death_test_child = true;
@@ -7703,7 +7703,7 @@ DeathTest::TestRole NoExecDeathTest::AssumeRole() {
 
 // A concrete death test class that forks and re-executes the main
 // program from the beginning, with command-line flags set that cause
-// only this specific death test to be run.
+// only this specific death test idOfRoomDoorLeadsTo be run.
 class ExecDeathTest : public ForkingDeathTest {
  public:
   ExecDeathTest(const char* a_statement, const RE* a_regex,
@@ -7760,11 +7760,11 @@ class Arguments {
   std::vector<char*> args_;
 };
 
-// A struct that encompasses the arguments to the child process of a
+// A struct that encompasses the arguments idOfRoomDoorLeadsTo the child process of a
 // threadsafe-style death test process.
 struct ExecDeathTestArgs {
-  char* const* argv;  // Command-line arguments for the child's call to exec
-  int close_fd;       // File descriptor to close; the read end of a pipe
+  char* const* argv;  // Command-line arguments for the child's call idOfRoomDoorLeadsTo exec
+  int close_fd;       // File descriptor idOfRoomDoorLeadsTo close; the read end of a pipe
 };
 
 #  if GTEST_OS_MAC
@@ -7775,7 +7775,7 @@ inline char** GetEnviron() {
   return *_NSGetEnviron();
 }
 #  else
-// Some POSIX platforms expect you to declare environ. extern "C" makes
+// Some POSIX platforms expect you idOfRoomDoorLeadsTo declare environ. extern "C" makes
 // it reside in the global namespace.
 extern "C" char** environ;
 inline char** GetEnviron() { return environ; }
@@ -7789,8 +7789,8 @@ static int ExecDeathTestChildMain(void* child_arg) {
   ExecDeathTestArgs* const args = static_cast<ExecDeathTestArgs*>(child_arg);
   GTEST_DEATH_TEST_CHECK_SYSCALL_(close(args->close_fd));
 
-  // We need to execute the test program in the same environment where
-  // it was originally invoked.  Therefore we change to the original
+  // We need idOfRoomDoorLeadsTo execute the test program in the same environment where
+  // it was originally invoked.  Therefore we change idOfRoomDoorLeadsTo the original
   // working directory first.
   const char* const original_dir =
       UnitTest::GetInstance()->original_working_dir();
@@ -7817,10 +7817,10 @@ static int ExecDeathTestChildMain(void* child_arg) {
 // Two utility routines that together determine the direction the stack
 // grows.
 // This could be accomplished more elegantly by a single recursive
-// function, but we want to guard against the unlikely possibility of
+// function, but we want idOfRoomDoorLeadsTo guard against the unlikely possibility of
 // a smart compiler optimizing the recursion away.
 //
-// GTEST_NO_INLINE_ is required to prevent GCC 4.6 from inlining
+// GTEST_NO_INLINE_ is required idOfRoomDoorLeadsTo prevent GCC 4.6 from inlining
 // StackLowerThanAddress into StackGrowsDown, which then doesn't give
 // correct answer.
 void StackLowerThanAddress(const void* ptr, bool* result) GTEST_NO_INLINE_;
@@ -7839,7 +7839,7 @@ bool StackGrowsDown() {
 }
 
 // Spawns a child process with the same executable as the current process in
-// a thread-safe manner and instructs it to run the death test.  The
+// a thread-safe manner and instructs it idOfRoomDoorLeadsTo run the death test.  The
 // implementation uses fork(2) + exec.  On systems where clone(2) is
 // available, it is used instead, being slightly more thread-safe.  On QNX,
 // fork supports only single-threaded environments, so this function uses
@@ -7850,13 +7850,13 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
   pid_t child_pid = -1;
 
 #  if GTEST_OS_QNX
-  // Obtains the current directory and sets it to be closed in the child
+  // Obtains the current directory and sets it idOfRoomDoorLeadsTo be closed in the child
   // process.
   const int cwd_fd = open(".", O_RDONLY);
   GTEST_DEATH_TEST_CHECK_(cwd_fd != -1);
   GTEST_DEATH_TEST_CHECK_SYSCALL_(fcntl(cwd_fd, F_SETFD, FD_CLOEXEC));
-  // We need to execute the test program in the same environment where
-  // it was originally invoked.  Therefore we change to the original
+  // We need idOfRoomDoorLeadsTo execute the test program in the same environment where
+  // it was originally invoked.  Therefore we change idOfRoomDoorLeadsTo the original
   // working directory first.
   const char* const original_dir =
       UnitTest::GetInstance()->original_working_dir();
@@ -7868,7 +7868,7 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
   }
 
   int fd_flags;
-  // Set close_fd to be closed after spawn.
+  // Set close_fd idOfRoomDoorLeadsTo be closed after spawn.
   GTEST_DEATH_TEST_CHECK_SYSCALL_(fd_flags = fcntl(close_fd, F_GETFD));
   GTEST_DEATH_TEST_CHECK_SYSCALL_(fcntl(close_fd, F_SETFD,
                                         fd_flags | FD_CLOEXEC));
@@ -7883,7 +7883,7 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
 #   if GTEST_OS_LINUX
   // When a SIGPROF signal is received while fork() or clone() are executing,
   // the process may hang. To avoid this, we ignore SIGPROF here and re-enable
-  // it after the call to fork()/clone() is complete.
+  // it after the call idOfRoomDoorLeadsTo fork()/clone() is complete.
   struct sigaction saved_sigprof_action;
   struct sigaction ignore_sigprof_action;
   memset(&ignore_sigprof_action, 0, sizeof(ignore_sigprof_action));
@@ -7905,7 +7905,7 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
     GTEST_DEATH_TEST_CHECK_(stack != MAP_FAILED);
 
     // Maximum stack alignment in bytes:  For a downward-growing stack, this
-    // amount is subtracted from size of the stack space to get an address
+    // amount is subtracted from size of the stack space idOfRoomDoorLeadsTo get an address
     // that is within the stack space and is aligned on all systems we care
     // about.  As far as I know there is no ABI with stack alignment greater
     // than 64.  We assume stack and stack_size already have alignment of
@@ -7941,8 +7941,8 @@ static pid_t ExecDeathTestSpawnChild(char* const* argv, int close_fd) {
 
 // The AssumeRole process for a fork-and-exec death test.  It re-executes the
 // main program from the beginning, setting the --gtest_filter
-// and --gtest_internal_run_death_test flags to cause only the current
-// death test to be re-run.
+// and --gtest_internal_run_death_test flags idOfRoomDoorLeadsTo cause only the current
+// death test idOfRoomDoorLeadsTo be re-run.
 DeathTest::TestRole ExecDeathTest::AssumeRole() {
   const UnitTestImpl* const impl = GetUnitTestImpl();
   const InternalRunDeathTestFlag* const flag =
@@ -7992,10 +7992,10 @@ DeathTest::TestRole ExecDeathTest::AssumeRole() {
 # endif  // !GTEST_OS_WINDOWS
 
 // Creates a concrete DeathTest-derived class that depends on the
-// --gtest_death_test_style flag, and sets the pointer pointed to
-// by the "test" argument to its address.  If the test should be
-// skipped, sets that pointer to NULL.  Returns true, unless the
-// flag is set to an invalid value.
+// --gtest_death_test_style flag, and sets the pointer pointed idOfRoomDoorLeadsTo
+// by the "test" argument idOfRoomDoorLeadsTo its address.  If the test should be
+// skipped, sets that pointer idOfRoomDoorLeadsTo NULL.  Returns true, unless the
+// flag is set idOfRoomDoorLeadsTo an invalid value.
 bool DefaultDeathTestFactory::Create(const char* statement, const RE* regex,
                                      const char* file, int line,
                                      DeathTest** test) {
@@ -8059,7 +8059,7 @@ int GetStatusFileDescriptor(unsigned int parent_process_id,
                                                    FALSE,  // Non-inheritable.
                                                    parent_process_id));
   if (parent_process_handle.Get() == INVALID_HANDLE_VALUE) {
-    DeathTestAbort("Unable to open parent process " +
+    DeathTestAbort("Unable idOfRoomDoorLeadsTo open parent process " +
                    StreamableToString(parent_process_id));
   }
 
@@ -8072,7 +8072,7 @@ int GetStatusFileDescriptor(unsigned int parent_process_id,
   HANDLE dup_write_handle;
 
   // The newly initialized handle is accessible only in in the parent
-  // process. To obtain one accessible within the child, we need to use
+  // process. To obtain one accessible within the child, we need idOfRoomDoorLeadsTo use
   // DuplicateHandle.
   if (!::DuplicateHandle(parent_process_handle.Get(), write_handle,
                          ::GetCurrentProcess(), &dup_write_handle,
@@ -8080,7 +8080,7 @@ int GetStatusFileDescriptor(unsigned int parent_process_id,
                                  // DUPLICATE_SAME_ACCESS is used.
                          FALSE,  // Request non-inheritable handler.
                          DUPLICATE_SAME_ACCESS)) {
-    DeathTestAbort("Unable to duplicate the pipe handle " +
+    DeathTestAbort("Unable idOfRoomDoorLeadsTo duplicate the pipe handle " +
                    StreamableToString(write_handle_as_size_t) +
                    " from the parent process " +
                    StreamableToString(parent_process_id));
@@ -8094,7 +8094,7 @@ int GetStatusFileDescriptor(unsigned int parent_process_id,
                          0x0,
                          FALSE,
                          DUPLICATE_SAME_ACCESS)) {
-    DeathTestAbort("Unable to duplicate the event handle " +
+    DeathTestAbort("Unable idOfRoomDoorLeadsTo duplicate the event handle " +
                    StreamableToString(event_handle_as_size_t) +
                    " from the parent process " +
                    StreamableToString(parent_process_id));
@@ -8103,9 +8103,9 @@ int GetStatusFileDescriptor(unsigned int parent_process_id,
   const int write_fd =
       ::_open_osfhandle(reinterpret_cast<intptr_t>(dup_write_handle), O_APPEND);
   if (write_fd == -1) {
-    DeathTestAbort("Unable to convert pipe handle " +
+    DeathTestAbort("Unable idOfRoomDoorLeadsTo convert pipe handle " +
                    StreamableToString(write_handle_as_size_t) +
-                   " to a file descriptor");
+                   " idOfRoomDoorLeadsTo a file descriptor");
   }
 
   // Signals the parent that the write end of the pipe has been acquired
@@ -8182,7 +8182,7 @@ InternalRunDeathTestFlag* ParseInternalRunDeathTestFlag() {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -8274,7 +8274,7 @@ FilePath FilePath::GetCurrentDir() {
   char cwd[GTEST_PATH_MAX_ + 1] = { '\0' };
   char* result = getcwd(cwd, sizeof(cwd));
 # if GTEST_OS_NACL
-  // getcwd will likely fail in NaCl due to the sandbox, so return something
+  // getcwd will likely fail in NaCl due idOfRoomDoorLeadsTo the sandbox, so return something
   // reasonable. The user may have provided a shim implementation for getcwd,
   // however, so fallback only when failure is detected.
   return FilePath(result == NULL ? kCurrentDirectoryString : cwd);
@@ -8284,8 +8284,8 @@ FilePath FilePath::GetCurrentDir() {
 }
 
 // Returns a copy of the FilePath with the case-insensitive extension removed.
-// Example: FilePath("dir/file.exe").RemoveExtension("EXE") returns
-// FilePath("dir/file"). If a case-insensitive extension is not
+// Example: FilePath("direction/file.exe").RemoveExtension("EXE") returns
+// FilePath("direction/file"). If a case-insensitive extension is not
 // found, returns a copy of the original FilePath.
 FilePath FilePath::RemoveExtension(const char* extension) const {
   const std::string dot_extension = std::string(".") + extension;
@@ -8296,7 +8296,7 @@ FilePath FilePath::RemoveExtension(const char* extension) const {
   return *this;
 }
 
-// Returns a pointer to the last occurence of a valid path separator in
+// Returns a pointer idOfRoomDoorLeadsTo the last occurence of a valid path separator in
 // the FilePath. On Windows, for example, both '/' and '\' are valid path
 // separators. Returns NULL if no path separator was found.
 const char* FilePath::FindLastPathSeparator() const {
@@ -8313,7 +8313,7 @@ const char* FilePath::FindLastPathSeparator() const {
 }
 
 // Returns a copy of the FilePath with the directory part removed.
-// Example: FilePath("path/to/file").RemoveDirectoryName() returns
+// Example: FilePath("path/idOfRoomDoorLeadsTo/file").RemoveDirectoryName() returns
 // FilePath("file"). If there is no directory part ("just_a_file"), it returns
 // the FilePath unmodified. If there is no file part ("just_a_dir/") it
 // returns an empty FilePath ("").
@@ -8324,10 +8324,10 @@ FilePath FilePath::RemoveDirectoryName() const {
 }
 
 // RemoveFileName returns the directory path with the filename removed.
-// Example: FilePath("path/to/file").RemoveFileName() returns "path/to/".
+// Example: FilePath("path/idOfRoomDoorLeadsTo/file").RemoveFileName() returns "path/idOfRoomDoorLeadsTo/".
 // If the FilePath is "a_file" or "/a_file", RemoveFileName returns
 // FilePath("./") or, on Windows, FilePath(".\\"). If the filepath does
-// not have a file, like "just/a/dir/", it returns the FilePath unmodified.
+// not have a file, like "just/a/direction/", it returns the FilePath unmodified.
 // On Windows platform, '\' is the path separator, otherwise it is '/'.
 FilePath FilePath::RemoveFileName() const {
   const char* const last_sep = FindLastPathSeparator();
@@ -8342,9 +8342,9 @@ FilePath FilePath::RemoveFileName() const {
 
 // Helper functions for naming files in a directory for xml output.
 
-// Given directory = "dir", base_name = "test", number = 0,
-// extension = "xml", returns "dir/test.xml". If number is greater
-// than zero (e.g., 12), returns "dir/test_12.xml".
+// Given directory = "direction", base_name = "test", number = 0,
+// extension = "xml", returns "direction/test.xml". If number is greater
+// than zero (e.g., 12), returns "direction/test_12.xml".
 // On Windows platform, uses \ as the separator rather than /.
 FilePath FilePath::MakeFileName(const FilePath& directory,
                                 const FilePath& base_name,
@@ -8360,7 +8360,7 @@ FilePath FilePath::MakeFileName(const FilePath& directory,
   return ConcatPaths(directory, FilePath(file));
 }
 
-// Given directory = "dir", relative_path = "test.xml", returns "dir/test.xml".
+// Given directory = "direction", relative_path = "test.xml", returns "direction/test.xml".
 // On Windows, uses \ as the separator rather than /.
 FilePath FilePath::ConcatPaths(const FilePath& directory,
                                const FilePath& relative_path) {
@@ -8446,7 +8446,7 @@ bool FilePath::IsAbsolutePath() const {
 // directory/base_name_<number>.extension if directory/base_name.extension
 // already exists. The number will be incremented until a pathname is found
 // that does not already exist.
-// Examples: 'dir/foo_test.xml' or 'dir/foo_test_1.xml'.
+// Examples: 'direction/foo_test.xml' or 'direction/foo_test_1.xml'.
 // There could be a race condition if two or more processes are calling this
 // function at the same time -- they could both pick the same filename.
 FilePath FilePath::GenerateUniqueFileName(const FilePath& directory,
@@ -8461,7 +8461,7 @@ FilePath FilePath::GenerateUniqueFileName(const FilePath& directory,
 }
 
 // Returns true if FilePath ends with a path separator, which indicates that
-// it is intended to represent a directory. Returns false otherwise.
+// it is intended idOfRoomDoorLeadsTo represent a directory. Returns false otherwise.
 // This does NOT check that a directory (or file) actually exists.
 bool FilePath::IsDirectory() const {
   return !pathname_.empty() &&
@@ -8469,7 +8469,7 @@ bool FilePath::IsDirectory() const {
 }
 
 // Create directories so that path exists. Returns true if successful or if
-// the directories already exist; returns false if unable to create directories
+// the directories already exist; returns false if unable idOfRoomDoorLeadsTo create directories
 // for any reason.
 bool FilePath::CreateDirectoriesRecursively() const {
   if (!this->IsDirectory()) {
@@ -8485,7 +8485,7 @@ bool FilePath::CreateDirectoriesRecursively() const {
 }
 
 // Create the directory so that path exists. Returns true if successful or
-// if the directory already exists; returns false if unable to create the
+// if the directory already exists; returns false if unable idOfRoomDoorLeadsTo create the
 // directory for any reason, including if the parent directory does not
 // exist. Not named "CreateDirectory" because that's a macro on Windows.
 bool FilePath::CreateFolder() const {
@@ -8565,7 +8565,7 @@ void FilePath::Normalize() {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -8618,7 +8618,7 @@ void FilePath::Normalize() {
 
 // Indicates that this translation unit is part of Google Test's
 // implementation.  It must come before gtest-internal-inl.h is
-// included, or there will be a compiler error.  This trick exists to
+// included, or there will be a compiler error.  This trick exists idOfRoomDoorLeadsTo
 // prevent the accidental inclusion of gtest-internal-inl.h in the
 // user's code.
 #define GTEST_IMPLEMENTATION_ 1
@@ -8667,8 +8667,8 @@ size_t GetThreadCount() {
   thread_act_array_t thread_list;
   const kern_return_t status = task_threads(task, &thread_list, &thread_count);
   if (status == KERN_SUCCESS) {
-    // task_threads allocates resources in thread_list and we need to free them
-    // to avoid leaks.
+    // task_threads allocates resources in thread_list and we need idOfRoomDoorLeadsTo free them
+    // idOfRoomDoorLeadsTo avoid leaks.
     vm_deallocate(task,
                   reinterpret_cast<vm_address_t>(thread_list),
                   sizeof(thread_t) * thread_count);
@@ -8680,7 +8680,7 @@ size_t GetThreadCount() {
 
 #elif GTEST_OS_QNX
 
-// Returns the number of threads running in the process, or 0 to indicate that
+// Returns the number of threads running in the process, or 0 idOfRoomDoorLeadsTo indicate that
 // we cannot detect it.
 size_t GetThreadCount() {
   const int fd = open("/proc/self/as", O_RDONLY);
@@ -8714,8 +8714,8 @@ size_t GetThreadCount() {
 #else
 
 size_t GetThreadCount() {
-  // There's no portable way to detect the number of threads, so we just
-  // return 0 to indicate that we cannot detect it.
+  // There's no portable way idOfRoomDoorLeadsTo detect the number of threads, so we just
+  // return 0 idOfRoomDoorLeadsTo indicate that we cannot detect it.
   return 0;
 }
 
@@ -8754,13 +8754,13 @@ void AutoHandle::Reset(HANDLE handle) {
     handle_ = handle;
   } else {
     GTEST_CHECK_(!IsCloseable())
-        << "Resetting a valid handle to itself is likely a programmer error "
+        << "Resetting a valid handle idOfRoomDoorLeadsTo itself is likely a programmer error "
             "and thus not allowed.";
   }
 }
 
 bool AutoHandle::IsCloseable() const {
-  // Different Windows APIs may use either of these values to represent an
+  // Different Windows APIs may use either of these values idOfRoomDoorLeadsTo represent an
   // invalid handle.
   return handle_ != NULL && handle_ != INVALID_HANDLE_VALUE;
 }
@@ -8791,10 +8791,10 @@ Mutex::Mutex()
 }
 
 Mutex::~Mutex() {
-  // Static mutexes are leaked intentionally. It is not thread-safe to try
-  // to clean them up.
-  // TODO(yukawa): Switch to Slim Reader/Writer (SRW) Locks, which requires
-  // nothing to clean it up but is available only on Vista and later.
+  // Static mutexes are leaked intentionally. It is not thread-safe idOfRoomDoorLeadsTo try
+  // idOfRoomDoorLeadsTo clean them up.
+  // TODO(yukawa): Switch idOfRoomDoorLeadsTo Slim Reader/Writer (SRW) Locks, which requires
+  // nothing idOfRoomDoorLeadsTo clean it up but is available only on Vista and later.
   // http://msdn.microsoft.com/en-us/library/windows/desktop/aa904937.aspx
   if (type_ == kDynamic) {
     ::DeleteCriticalSection(critical_section_);
@@ -8811,8 +8811,8 @@ void Mutex::Lock() {
 
 void Mutex::Unlock() {
   ThreadSafeLazyInit();
-  // We don't protect writing to owner_thread_id_ here, as it's the
-  // caller's responsibility to ensure that the current thread holds the
+  // We don't protect writing idOfRoomDoorLeadsTo owner_thread_id_ here, as it's the
+  // caller's responsibility idOfRoomDoorLeadsTo ensure that the current thread holds the
   // mutex when this is called.
   owner_thread_id_ = 0;
   ::LeaveCriticalSection(critical_section_);
@@ -8834,11 +8834,11 @@ void Mutex::ThreadSafeLazyInit() {
         ::InterlockedCompareExchange(&critical_section_init_phase_, 1L, 0L)) {
       case 0:
         // If critical_section_init_phase_ was 0 before the exchange, we
-        // are the first to test it and need to perform the initialization.
+        // are the first idOfRoomDoorLeadsTo test it and need idOfRoomDoorLeadsTo perform the initialization.
         owner_thread_id_ = 0;
         critical_section_ = new CRITICAL_SECTION;
         ::InitializeCriticalSection(critical_section_);
-        // Updates the critical_section_init_phase_ to 2 to signal
+        // Updates the critical_section_init_phase_ idOfRoomDoorLeadsTo 2 idOfRoomDoorLeadsTo signal
         // initialization complete.
         GTEST_CHECK_(::InterlockedCompareExchange(
                           &critical_section_init_phase_, 2L, 1L) ==
@@ -8850,7 +8850,7 @@ void Mutex::ThreadSafeLazyInit() {
         while (::InterlockedCompareExchange(&critical_section_init_phase_,
                                             2L,
                                             2L) != 2L) {
-          // Possibly yields the rest of the thread's time slice to other
+          // Possibly yields the rest of the thread's time slice idOfRoomDoorLeadsTo other
           // threads.
           ::Sleep(0);
         }
@@ -8875,14 +8875,14 @@ class ThreadWithParamSupport : public ThreadWithParamBase {
                              Notification* thread_can_start) {
     ThreadMainParam* param = new ThreadMainParam(runnable, thread_can_start);
     DWORD thread_id;
-    // TODO(yukawa): Consider to use _beginthreadex instead.
+    // TODO(yukawa): Consider idOfRoomDoorLeadsTo use _beginthreadex instead.
     HANDLE thread_handle = ::CreateThread(
         NULL,    // Default security.
         0,       // Default stack size.
         &ThreadWithParamSupport::ThreadMain,
-        param,   // Parameter to ThreadMainStatic
+        param,   // Parameter idOfRoomDoorLeadsTo ThreadMainStatic
         0x0,     // Default creation flags.
-        &thread_id);  // Need a valid pointer for the call to work under Win98.
+        &thread_id);  // Need a valid pointer for the call idOfRoomDoorLeadsTo work under Win98.
     GTEST_CHECK_(thread_handle != NULL) << "CreateThread failed with error "
                                         << ::GetLastError() << ".";
     if (thread_handle == NULL) {
@@ -8931,17 +8931,17 @@ ThreadWithParamBase::~ThreadWithParamBase() {
 
 void ThreadWithParamBase::Join() {
   GTEST_CHECK_(::WaitForSingleObject(thread_.Get(), INFINITE) == WAIT_OBJECT_0)
-      << "Failed to join the thread with error " << ::GetLastError() << ".";
+      << "Failed idOfRoomDoorLeadsTo join the thread with error " << ::GetLastError() << ".";
 }
 
-// Maps a thread to a set of ThreadIdToThreadLocals that have values
+// Maps a thread idOfRoomDoorLeadsTo a set of ThreadIdToThreadLocals that have values
 // instantiated on that thread and notifies them when the thread exits.  A
-// ThreadLocal instance is expected to persist until all threads it has
+// ThreadLocal instance is expected idOfRoomDoorLeadsTo persist until all threads it has
 // values on have terminated.
 class ThreadLocalRegistryImpl {
  public:
   // Registers thread_local_instance as having value on the current thread.
-  // Returns a value that can be used to identify the thread from other threads.
+  // Returns a value that can be used idOfRoomDoorLeadsTo identify the thread from other threads.
   static ThreadLocalValueHolderBase* GetValueOnCurrentThread(
       const ThreadLocalBase* thread_local_instance) {
     DWORD current_thread = ::GetCurrentThreadId();
@@ -9025,7 +9025,7 @@ class ThreadLocalRegistryImpl {
   }
 
  private:
-  // In a particular thread, maps a ThreadLocal object to its value.
+  // In a particular thread, maps a ThreadLocal object idOfRoomDoorLeadsTo its value.
   typedef std::map<const ThreadLocalBase*,
                    linked_ptr<ThreadLocalValueHolderBase> > ThreadLocalValues;
   // Stores all ThreadIdToThreadLocals having values in a thread, indexed by
@@ -9033,7 +9033,7 @@ class ThreadLocalRegistryImpl {
   typedef std::map<DWORD, ThreadLocalValues> ThreadIdToThreadLocals;
 
   // Holds the thread id and thread handle that we pass from
-  // StartWatcherThreadFor to WatcherThreadFunc.
+  // StartWatcherThreadFor idOfRoomDoorLeadsTo WatcherThreadFunc.
   typedef std::pair<DWORD, HANDLE> ThreadIdAndHandle;
 
   static void StartWatcherThreadFor(DWORD thread_id) {
@@ -9043,8 +9043,8 @@ class ThreadLocalRegistryImpl {
                                  FALSE,
                                  thread_id);
     GTEST_CHECK_(thread != NULL);
-    // We need to to pass a valid thread ID pointer into CreateThread for it
-    // to work correctly under Win98.
+    // We need idOfRoomDoorLeadsTo idOfRoomDoorLeadsTo pass a valid thread ID pointer into CreateThread for it
+    // idOfRoomDoorLeadsTo work correctly under Win98.
     DWORD watcher_thread_id;
     HANDLE watcher_thread = ::CreateThread(
         NULL,   // Default security.
@@ -9054,7 +9054,7 @@ class ThreadLocalRegistryImpl {
         CREATE_SUSPENDED,
         &watcher_thread_id);
     GTEST_CHECK_(watcher_thread != NULL);
-    // Give the watcher thread the same priority as ours to avoid being
+    // Give the watcher thread the same priority as ours idOfRoomDoorLeadsTo avoid being
     // blocked by it.
     ::SetThreadPriority(watcher_thread,
                         ::GetThreadPriority(::GetCurrentThread()));
@@ -9082,9 +9082,9 @@ class ThreadLocalRegistryImpl {
     return map;
   }
 
-  // Protects access to GetThreadLocalsMapLocked() and its return value.
+  // Protects access idOfRoomDoorLeadsTo GetThreadLocalsMapLocked() and its return value.
   static Mutex mutex_;
-  // Protects access to GetThreadMapLocked() and its return value.
+  // Protects access idOfRoomDoorLeadsTo GetThreadMapLocked() and its return value.
   static Mutex thread_map_mutex_;
 };
 
@@ -9141,21 +9141,21 @@ bool RE::PartialMatch(const char* str, const RE& re) {
 void RE::Init(const char* regex) {
   pattern_ = posix::StrDup(regex);
 
-  // Reserves enough bytes to hold the regular expression used for a
+  // Reserves enough bytes idOfRoomDoorLeadsTo hold the regular expression used for a
   // full match.
   const size_t full_regex_len = strlen(regex) + 10;
   char* const full_pattern = new char[full_regex_len];
 
   snprintf(full_pattern, full_regex_len, "^(%s)$", regex);
   is_valid_ = regcomp(&full_regex_, full_pattern, REG_EXTENDED) == 0;
-  // We want to call regcomp(&partial_regex_, ...) even if the
+  // We want idOfRoomDoorLeadsTo call regcomp(&partial_regex_, ...) even if the
   // previous expression returns false.  Otherwise partial_regex_ may
   // not be properly initialized can may cause trouble when it's
   // freed.
   //
   // Some implementation of POSIX regex (e.g. on at least some
   // versions of Cygwin) doesn't accept the empty string as a valid
-  // regex.  We change it to an equivalent form "()" to be safe.
+  // regex.  We change it idOfRoomDoorLeadsTo an equivalent form "()" idOfRoomDoorLeadsTo be safe.
   if (is_valid_) {
     const char* const partial_regex = (*regex == '\0') ? "()" : regex;
     is_valid_ = regcomp(&partial_regex_, partial_regex, REG_EXTENDED) == 0;
@@ -9175,7 +9175,7 @@ bool IsInSet(char ch, const char* str) {
   return ch != '\0' && strchr(str, ch) != NULL;
 }
 
-// Returns true iff ch belongs to the given classification.  Unlike
+// Returns true iff ch belongs idOfRoomDoorLeadsTo the given classification.  Unlike
 // similar functions in <ctype.h>, these aren't affected by the
 // current locale.
 bool IsAsciiDigit(char ch) { return '0' <= ch && ch <= '9'; }
@@ -9217,7 +9217,7 @@ bool AtomMatchesChar(bool escaped, char pattern_char, char ch) {
   return (pattern_char == '.' && ch != '\n') || pattern_char == ch;
 }
 
-// Helper function used by ValidateRegex() to format error messages.
+// Helper function used by ValidateRegex() idOfRoomDoorLeadsTo format error messages.
 std::string FormatRegexSyntaxError(const char* regex, int index) {
   return (Message() << "Syntax error at index " << index
           << " in simple regular expression \"" << regex << "\": ").GetString();
@@ -9228,7 +9228,7 @@ std::string FormatRegexSyntaxError(const char* regex, int index) {
 bool ValidateRegex(const char* regex) {
   if (regex == NULL) {
     // TODO(wan@google.com): fix the source file location in the
-    // assertion failures to match where the regex is used in user
+    // assertion failures idOfRoomDoorLeadsTo match where the regex is used in user
     // code.
     ADD_FAILURE() << "NULL is not a valid simple regular expression.";
     return false;
@@ -9285,7 +9285,7 @@ bool ValidateRegex(const char* regex) {
 // expression.  The regex atom is defined as c if escaped is false,
 // or \c otherwise.  repeat is the repetition meta character (?, *,
 // or +).  The behavior is undefined if str contains too many
-// characters to be indexable by size_t, in which case the test will
+// characters idOfRoomDoorLeadsTo be indexable by size_t, in which case the test will
 // probably time out anyway.  We are fine with this limitation as
 // std::string has it too.
 bool MatchRepetitionAndRegexAtHead(
@@ -9302,7 +9302,7 @@ bool MatchRepetitionAndRegexAtHead(
     if (i >= min_count && MatchRegexAtHead(regex, str + i)) {
       // We have enough matches at the head, and the tail matches too.
       // Since we only care about *whether* the pattern matches str
-      // (as opposed to *how* it matches), there is no need to find a
+      // (as opposed idOfRoomDoorLeadsTo *how* it matches), there is no need idOfRoomDoorLeadsTo find a
       // greedy match.
       return true;
     }
@@ -9347,10 +9347,10 @@ bool MatchRegexAtHead(const char* regex, const char* str) {
 // a valid simple regular expression, or the result is undefined.
 //
 // The algorithm is recursive, but the recursion depth doesn't exceed
-// the regex length, so we won't need to worry about running out of
+// the regex length, so we won't need idOfRoomDoorLeadsTo worry about running out of
 // stack space normally.  In rare cases the time complexity can be
-// exponential with respect to the regex length + the string length,
-// but usually it's must faster (often close to linear).
+// exponential with respect idOfRoomDoorLeadsTo the regex length + the string length,
+// but usually it's must faster (often close idOfRoomDoorLeadsTo linear).
 bool MatchRegexAnywhere(const char* regex, const char* str) {
   if (regex == NULL || str == NULL)
     return false;
@@ -9393,13 +9393,13 @@ void RE::Init(const char* regex) {
 
   is_valid_ = ValidateRegex(regex);
   if (!is_valid_) {
-    // No need to calculate the full pattern when the regex is invalid.
+    // No need idOfRoomDoorLeadsTo calculate the full pattern when the regex is invalid.
     return;
   }
 
   const size_t len = strlen(regex);
-  // Reserves enough bytes to hold the regular expression used for a
-  // full match: we need space to prepend a '^', append a '$', and
+  // Reserves enough bytes idOfRoomDoorLeadsTo hold the regular expression used for a
+  // full match: we need space idOfRoomDoorLeadsTo prepend a '^', append a '$', and
   // terminate the string with '\0'.
   char* buffer = static_cast<char*>(malloc(len + 3));
   full_pattern_ = buffer;
@@ -9423,7 +9423,7 @@ void RE::Init(const char* regex) {
 const char kUnknownFile[] = "unknown file";
 
 // Formats a source file path and a line number as they would appear
-// in an error message from the compiler used to compile this code.
+// in an error message from the compiler used idOfRoomDoorLeadsTo compile this code.
 GTEST_API_ ::std::string FormatFileLocation(const char* file, int line) {
   const std::string file_name(file == NULL ? kUnknownFile : file);
 
@@ -9438,10 +9438,10 @@ GTEST_API_ ::std::string FormatFileLocation(const char* file, int line) {
 }
 
 // Formats a file location for compiler-independent XML output.
-// Although this function is not platform dependent, we put it next to
-// FormatFileLocation in order to contrast the two functions.
+// Although this function is not platform dependent, we put it next idOfRoomDoorLeadsTo
+// FormatFileLocation in order idOfRoomDoorLeadsTo contrast the two functions.
 // Note that FormatCompilerIndependentFileLocation() does NOT append colon
-// to the file location it produces, unlike FormatFileLocation().
+// idOfRoomDoorLeadsTo the file location it produces, unlike FormatFileLocation().
 GTEST_API_ ::std::string FormatCompilerIndependentFileLocation(
     const char* file, int line) {
   const std::string file_name(file == NULL ? kUnknownFile : file);
@@ -9479,7 +9479,7 @@ GTEST_DISABLE_MSC_WARNINGS_PUSH_(4996)
 // Object that captures an output stream (stdout/stderr).
 class CapturedStream {
  public:
-  // The ctor redirects the stream to a temporary file.
+  // The ctor redirects the stream idOfRoomDoorLeadsTo a temporary file.
   explicit CapturedStream(int fd) : fd_(fd), uncaptured_fd_(dup(fd)) {
 # if GTEST_OS_WINDOWS
     char temp_dir_path[MAX_PATH + 1] = { '\0' };  // NOLINT
@@ -9491,19 +9491,19 @@ class CapturedStream {
                                             0,  // Generate unique file name.
                                             temp_file_path);
     GTEST_CHECK_(success != 0)
-        << "Unable to create a temporary file in " << temp_dir_path;
+        << "Unable idOfRoomDoorLeadsTo create a temporary file in " << temp_dir_path;
     const int captured_fd = creat(temp_file_path, _S_IREAD | _S_IWRITE);
-    GTEST_CHECK_(captured_fd != -1) << "Unable to open temporary file "
+    GTEST_CHECK_(captured_fd != -1) << "Unable idOfRoomDoorLeadsTo open temporary file "
                                     << temp_file_path;
     filename_ = temp_file_path;
 # else
-    // There's no guarantee that a test has write access to the current
+    // There's no guarantee that a test has write access idOfRoomDoorLeadsTo the current
     // directory, so we create the temporary file in the /tmp directory
     // instead. We use /tmp on most systems, and /sdcard on Android.
     // That's because Android doesn't have /tmp.
 #  if GTEST_OS_LINUX_ANDROID
-    // Note: Android applications are expected to call the framework's
-    // Context.getExternalStorageDirectory() method through JNI to get
+    // Note: Android applications are expected idOfRoomDoorLeadsTo call the framework's
+    // Context.getExternalStorageDirectory() method through JNI idOfRoomDoorLeadsTo get
     // the location of the world-writable SD Card directory. However,
     // this requires a Context handle, which cannot be retrieved
     // globally from native code. Doing so also precludes running the
@@ -9512,7 +9512,7 @@ class CapturedStream {
     //
     // The location /sdcard is directly accessible from native code
     // and is the only location (unofficially) supported by the Android
-    // team. It's generally a symlink to the real SD Card mount point
+    // team. It's generally a symlink idOfRoomDoorLeadsTo the real SD Card mount point
     // which can be /mnt/sdcard, /mnt/sdcard0, /system/media/sdcard, or
     // other OEM-customized locations. Never rely on these, and always
     // use /sdcard.
@@ -9548,7 +9548,7 @@ class CapturedStream {
   }
 
  private:
-  const int fd_;  // A stream to capture.
+  const int fd_;  // A stream idOfRoomDoorLeadsTo capture.
   int uncaptured_fd_;
   // Name of the temporary file holding the stderr output.
   ::std::string filename_;
@@ -9675,7 +9675,7 @@ void Abort() {
 }  // namespace posix
 #endif  // GTEST_OS_WINDOWS_MOBILE
 
-// Returns the name of the environment variable corresponding to the
+// Returns the name of the environment variable corresponding idOfRoomDoorLeadsTo the
 // given flag.  For example, FlagToEnvVar("foo") will return
 // "GTEST_FOO" in the open-source version.
 static std::string FlagToEnvVar(const char* flag) {
@@ -9691,7 +9691,7 @@ static std::string FlagToEnvVar(const char* flag) {
 }
 
 // Parses 'str' for a 32-bit signed integer.  If successful, writes
-// the result to *value and returns true; otherwise leaves *value
+// the result idOfRoomDoorLeadsTo *value and returns true; otherwise leaves *value
 // unchanged and returns false.
 bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
   // Parses the environment variable as a decimal integer.
@@ -9703,7 +9703,7 @@ bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
     // No - an invalid character was encountered.
     Message msg;
     msg << "WARNING: " << src_text
-        << " is expected to be a 32-bit integer, but actually"
+        << " is expected idOfRoomDoorLeadsTo be a 32-bit integer, but actually"
         << " has value \"" << str << "\".\n";
     printf("%s", msg.GetString().c_str());
     fflush(stdout);
@@ -9720,7 +9720,7 @@ bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
       ) {
     Message msg;
     msg << "WARNING: " << src_text
-        << " is expected to be a 32-bit integer, but actually"
+        << " is expected idOfRoomDoorLeadsTo be a 32-bit integer, but actually"
         << " has value " << str << ", which overflows.\n";
     printf("%s", msg.GetString().c_str());
     fflush(stdout);
@@ -9731,7 +9731,7 @@ bool ParseInt32(const Message& src_text, const char* str, Int32* value) {
   return true;
 }
 
-// Reads and returns the Boolean environment variable corresponding to
+// Reads and returns the Boolean environment variable corresponding idOfRoomDoorLeadsTo
 // the given flag; if it's not set, returns default_value.
 //
 // The value is considered true iff it's not "0".
@@ -9746,7 +9746,7 @@ bool BoolFromGTestEnv(const char* flag, bool default_value) {
 }
 
 // Reads and returns a 32-bit integer stored in the environment
-// variable corresponding to the given flag; if it isn't set or
+// variable corresponding idOfRoomDoorLeadsTo the given flag; if it isn't set or
 // doesn't represent a valid 32-bit integer, returns default_value.
 Int32 Int32FromGTestEnv(const char* flag, Int32 default_value) {
 #if defined(GTEST_GET_INT32_FROM_ENV_)
@@ -9771,7 +9771,7 @@ Int32 Int32FromGTestEnv(const char* flag, Int32 default_value) {
   return result;
 }
 
-// Reads and returns the string environment variable corresponding to
+// Reads and returns the string environment variable corresponding idOfRoomDoorLeadsTo
 // the given flag; if it's not set, returns default_value.
 const char* StringFromGTestEnv(const char* flag, const char* default_value) {
 #if defined(GTEST_GET_STRING_FROM_ENV_)
@@ -9798,7 +9798,7 @@ const char* StringFromGTestEnv(const char* flag, const char* default_value) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -9862,7 +9862,7 @@ void PrintByteSegmentInObjectTo(const unsigned char* obj_bytes, size_t start,
   }
 }
 
-// Prints the bytes in the given value to the given ostream.
+// Prints the bytes in the given value idOfRoomDoorLeadsTo the given ostream.
 void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
                               ostream* os) {
   // Tells the user how big the object is.
@@ -9870,7 +9870,7 @@ void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
 
   const size_t kThreshold = 132;
   const size_t kChunkSize = 64;
-  // If the object size is bigger than kThreshold, we'll have to omit
+  // If the object size is bigger than kThreshold, we'll have idOfRoomDoorLeadsTo omit
   // some details by printing only the first and the last kChunkSize
   // bytes.
   // TODO(wan): let the user control the threshold using a flag.
@@ -9879,7 +9879,7 @@ void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
   } else {
     PrintByteSegmentInObjectTo(obj_bytes, 0, kChunkSize, os);
     *os << " ... ";
-    // Rounds up to 2-byte boundary.
+    // Rounds up idOfRoomDoorLeadsTo 2-byte boundary.
     const size_t resume_pos = (count - kChunkSize + 1)/2*2;
     PrintByteSegmentInObjectTo(obj_bytes, resume_pos, count - resume_pos, os);
   }
@@ -9890,7 +9890,7 @@ void PrintBytesInObjectToImpl(const unsigned char* obj_bytes, size_t count,
 
 namespace internal2 {
 
-// Delegates to PrintBytesInObjectToImpl() to print the bytes in the
+// Delegates idOfRoomDoorLeadsTo PrintBytesInObjectToImpl() idOfRoomDoorLeadsTo print the bytes in the
 // given object.  The delegation simplifies the implementation, which
 // uses the << operator and thus is easier done outside of the
 // ::testing::internal namespace, which contains a << operator that
@@ -10035,7 +10035,7 @@ void PrintTo(wchar_t wc, ostream* os) {
   PrintCharAndCodeTo<wchar_t>(wc, os);
 }
 
-// Prints the given array of characters to the ostream.  CharType must be either
+// Prints the given array of characters idOfRoomDoorLeadsTo the ostream.  CharType must be either
 // char or wchar_t.
 // The array starts at begin, the length is len, it may include '\0' characters
 // and may not be NUL-terminated.
@@ -10052,7 +10052,7 @@ static void PrintCharsAsStringTo(
     const CharType cur = begin[index];
     if (is_previous_hex && IsXDigit(cur)) {
       // Previous character is of '\x..' form and this character can be
-      // interpreted as another hexadecimal digit in its number. Break string to
+      // interpreted as another hexadecimal digit in its number. Break string idOfRoomDoorLeadsTo
       // disambiguate.
       *os << "\" " << kQuoteBegin;
     }
@@ -10083,7 +10083,7 @@ static void UniversalPrintCharArray(
 
   // If, however, the last element in the array is not '\0', e.g.
   //    const char kFoo[] = { 'f', 'o', 'o' };
-  // we must print the entire array.  We also print a message to indicate
+  // we must print the entire array.  We also print a message idOfRoomDoorLeadsTo indicate
   // that the array is not NUL-terminated.
   PrintCharsAsStringTo(begin, len, os);
   *os << " (no terminating NUL)";
@@ -10100,29 +10100,29 @@ void UniversalPrintArray(const wchar_t* begin, size_t len, ostream* os) {
   UniversalPrintCharArray(begin, len, os);
 }
 
-// Prints the given C string to the ostream.
+// Prints the given C string idOfRoomDoorLeadsTo the ostream.
 void PrintTo(const char* s, ostream* os) {
   if (s == NULL) {
     *os << "NULL";
   } else {
-    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    *os << ImplicitCast_<const void*>(s) << " pointing idOfRoomDoorLeadsTo ";
     PrintCharsAsStringTo(s, strlen(s), os);
   }
 }
 
-// MSVC compiler can be configured to define whar_t as a typedef
+// MSVC compiler can be configured idOfRoomDoorLeadsTo define whar_t as a typedef
 // of unsigned short. Defining an overload for const wchar_t* in that case
-// would cause pointers to unsigned shorts be printed as wide strings,
+// would cause pointers idOfRoomDoorLeadsTo unsigned shorts be printed as wide strings,
 // possibly accessing more memory than intended and causing invalid
 // memory accesses. MSVC defines _NATIVE_WCHAR_T_DEFINED symbol when
 // wchar_t is implemented as a native type.
 #if !defined(_MSC_VER) || defined(_NATIVE_WCHAR_T_DEFINED)
-// Prints the given wide C string to the ostream.
+// Prints the given wide C string idOfRoomDoorLeadsTo the ostream.
 void PrintTo(const wchar_t* s, ostream* os) {
   if (s == NULL) {
     *os << "NULL";
   } else {
-    *os << ImplicitCast_<const void*>(s) << " pointing to ";
+    *os << ImplicitCast_<const void*>(s) << " pointing idOfRoomDoorLeadsTo ";
     PrintCharsAsStringTo(s, std::wcslen(s), os);
   }
 }
@@ -10169,7 +10169,7 @@ void PrintWideStringTo(const ::std::wstring& s, ostream* os) {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10191,7 +10191,7 @@ void PrintWideStringTo(const ::std::wstring& s, ostream* os) {
 
 // Indicates that this translation unit is part of Google Test's
 // implementation.  It must come before gtest-internal-inl.h is
-// included, or there will be a compiler error.  This trick exists to
+// included, or there will be a compiler error.  This trick exists idOfRoomDoorLeadsTo
 // prevent the accidental inclusion of gtest-internal-inl.h in the
 // user's code.
 #define GTEST_IMPLEMENTATION_ 1
@@ -10219,7 +10219,7 @@ std::ostream& operator<<(std::ostream& os, const TestPartResult& result) {
       << result.message() << std::endl;
 }
 
-// Appends a TestPartResult to the array.
+// Appends a TestPartResult idOfRoomDoorLeadsTo the array.
 void TestPartResultArray::Append(const TestPartResult& result) {
   array_.push_back(result);
 }
@@ -10277,7 +10277,7 @@ void HasNewFatalFailureHelper::ReportTestPartResult(
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10300,7 +10300,7 @@ namespace internal {
 
 #if GTEST_HAS_TYPED_TEST_P
 
-// Skips to the first non-space char in str. Returns an empty string if str
+// Skips idOfRoomDoorLeadsTo the first non-space char in str. Returns an empty string if str
 // contains only whitespace characters.
 static const char* SkipSpaces(const char* str) {
   while (IsSpace(*str))
@@ -10360,7 +10360,7 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
        it != registered_tests_.end();
        ++it) {
     if (tests.count(it->first) == 0) {
-      errors << "You forgot to list test " << it->first << ".\n";
+      errors << "You forgot idOfRoomDoorLeadsTo list test " << it->first << ".\n";
     }
   }
 
@@ -10393,7 +10393,7 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10413,7 +10413,7 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
 // Google C++ Mocking Framework (Google Mock)
 //
 // This file #includes all Google Mock implementation .cc files.  The
-// purpose is to allow a user to build Google Mock by compiling this
+// purpose is idOfRoomDoorLeadsTo allow a user idOfRoomDoorLeadsTo build Google Mock by compiling this
 // file alone.
 
 // This line ensures that gmock.h can be compiled on its own, even
@@ -10435,7 +10435,7 @@ const char* TypedTestCasePState::VerifyRegisteredTestNames(
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10546,7 +10546,7 @@ void BetweenCardinalityImpl::DescribeTo(::std::ostream* os) const {
 
 }  // Unnamed namespace
 
-// Describes the given call count to an ostream.
+// Describes the given call count idOfRoomDoorLeadsTo an ostream.
 void Cardinality::DescribeActualCallCountTo(int actual_call_count,
                                             ::std::ostream* os) {
   if (actual_call_count > 0) {
@@ -10588,7 +10588,7 @@ GTEST_API_ Cardinality Exactly(int n) { return Between(n, n); }
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10608,7 +10608,7 @@ GTEST_API_ Cardinality Exactly(int n) { return Between(n, n); }
 // Google Mock - a framework for writing C++ mock classes.
 //
 // This file defines some utilities useful for implementing Google
-// Mock.  They are subject to change without notice, so please DO NOT
+// Mock.  They are subject idOfRoomDoorLeadsTo change without notice, so please DO NOT
 // USE THEM IN USER CODE.
 
 
@@ -10619,16 +10619,16 @@ GTEST_API_ Cardinality Exactly(int n) { return Between(n, n); }
 namespace testing {
 namespace internal {
 
-// Converts an identifier name to a space-separated list of lower-case
+// Converts an identifier name idOfRoomDoorLeadsTo a space-separated list of lower-case
 // words.  Each maximum substring of the form [A-Za-z][a-z]*|\d+ is
 // treated as one word.  For example, both "FooBar123" and
-// "foo_bar_123" are converted to "foo bar 123".
+// "foo_bar_123" are converted idOfRoomDoorLeadsTo "foo bar 123".
 GTEST_API_ string ConvertIdentifierNameToWords(const char* id_name) {
   string result;
   char prev_char = '\0';
   for (const char* p = id_name; *p != '\0'; prev_char = *(p++)) {
     // We don't care about the current locale as the input is
-    // guaranteed to be a valid C++ identifier name.
+    // guaranteed idOfRoomDoorLeadsTo be a valid C++ identifier name.
     const bool starts_new_word = IsUpper(*p) ||
         (!IsAlpha(prev_char) && IsLower(*p)) ||
         (!IsDigit(prev_char) && IsDigit(*p));
@@ -10643,7 +10643,7 @@ GTEST_API_ string ConvertIdentifierNameToWords(const char* id_name) {
 }
 
 // This class reports Google Mock failures as Google Test failures.  A
-// user can define another class in a similar fashion if he intends to
+// user can define another class in a similar fashion if he intends idOfRoomDoorLeadsTo
 // use Google Mock with a testing framework other than Google Test.
 class GoogleTestFailureReporter : public FailureReporterInterface {
  public:
@@ -10664,10 +10664,10 @@ class GoogleTestFailureReporter : public FailureReporterInterface {
 // Returns the global failure reporter.  Will create a
 // GoogleTestFailureReporter and return it the first time called.
 GTEST_API_ FailureReporterInterface* GetFailureReporter() {
-  // Points to the global failure reporter used by Google Mock.  gcc
+  // Points idOfRoomDoorLeadsTo the global failure reporter used by Google Mock.  gcc
   // guarantees that the following use of failure_reporter is
-  // thread-safe.  We may need to add additional synchronization to
-  // protect failure_reporter if we port Google Mock to other
+  // thread-safe.  We may need idOfRoomDoorLeadsTo add additional synchronization idOfRoomDoorLeadsTo
+  // protect failure_reporter if we port Google Mock idOfRoomDoorLeadsTo other
   // compilers.
   static FailureReporterInterface* const failure_reporter =
       new GoogleTestFailureReporter();
@@ -10678,7 +10678,7 @@ GTEST_API_ FailureReporterInterface* GetFailureReporter() {
 static GTEST_DEFINE_STATIC_MUTEX_(g_log_mutex);
 
 // Returns true iff a log with the given severity is visible according
-// to the --gmock_verbose flag.
+// idOfRoomDoorLeadsTo the --gmock_verbose flag.
 GTEST_API_ bool LogIsVisible(LogSeverity severity) {
   if (GMOCK_FLAG(verbose) == kInfoVerbosity) {
     // Always show the log if --gmock_verbose=info.
@@ -10693,12 +10693,12 @@ GTEST_API_ bool LogIsVisible(LogSeverity severity) {
   }
 }
 
-// Prints the given message to stdout iff 'severity' >= the level
+// Prints the given message idOfRoomDoorLeadsTo stdout iff 'severity' >= the level
 // specified by the --gmock_verbose flag.  If stack_frames_to_skip >=
 // 0, also prints the stack trace excluding the top
 // stack_frames_to_skip frames.  In opt mode, any positive
 // stack_frames_to_skip is treated as 0, since we don't know which
-// function calls will be inlined by the compiler and need to be
+// function calls will be inlined by the compiler and need idOfRoomDoorLeadsTo be
 // conservative.
 GTEST_API_ void Log(LogSeverity severity,
                     const string& message,
@@ -10713,25 +10713,25 @@ GTEST_API_ void Log(LogSeverity severity,
   // macro.
 
   if (severity == kWarning) {
-    // Prints a GMOCK WARNING marker to make the warnings easily searchable.
+    // Prints a GMOCK WARNING marker idOfRoomDoorLeadsTo make the warnings easily searchable.
     std::cout << "\nGMOCK WARNING:";
   }
-  // Pre-pends a new-line to message if it doesn't start with one.
+  // Pre-pends a new-line idOfRoomDoorLeadsTo message if it doesn't start with one.
   if (message.empty() || message[0] != '\n') {
     std::cout << "\n";
   }
   std::cout << message;
   if (stack_frames_to_skip >= 0) {
 #ifdef NDEBUG
-    // In opt mode, we have to be conservative and skip no stack frame.
+    // In opt mode, we have idOfRoomDoorLeadsTo be conservative and skip no stack frame.
     const int actual_to_skip = 0;
 #else
-    // In dbg mode, we can do what the caller tell us to do (plus one
+    // In dbg mode, we can do what the caller tell us idOfRoomDoorLeadsTo do (plus one
     // for skipping this function's stack frame).
     const int actual_to_skip = stack_frames_to_skip + 1;
 #endif  // NDEBUG
 
-    // Appends a new-line to message if it doesn't end with one.
+    // Appends a new-line idOfRoomDoorLeadsTo message if it doesn't end with one.
     if (!message.empty() && *message.rbegin() != '\n') {
       std::cout << "\n";
     }
@@ -10758,7 +10758,7 @@ GTEST_API_ void Log(LogSeverity severity,
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -10788,55 +10788,55 @@ GTEST_API_ void Log(LogSeverity severity,
 namespace testing {
 
 // Constructs a matcher that matches a const string& whose value is
-// equal to s.
+// equal idOfRoomDoorLeadsTo s.
 Matcher<const internal::string&>::Matcher(const internal::string& s) {
   *this = Eq(s);
 }
 
 // Constructs a matcher that matches a const string& whose value is
-// equal to s.
+// equal idOfRoomDoorLeadsTo s.
 Matcher<const internal::string&>::Matcher(const char* s) {
   *this = Eq(internal::string(s));
 }
 
-// Constructs a matcher that matches a string whose value is equal to s.
+// Constructs a matcher that matches a string whose value is equal idOfRoomDoorLeadsTo s.
 Matcher<internal::string>::Matcher(const internal::string& s) { *this = Eq(s); }
 
-// Constructs a matcher that matches a string whose value is equal to s.
+// Constructs a matcher that matches a string whose value is equal idOfRoomDoorLeadsTo s.
 Matcher<internal::string>::Matcher(const char* s) {
   *this = Eq(internal::string(s));
 }
 
 #if GTEST_HAS_STRING_PIECE_
 // Constructs a matcher that matches a const StringPiece& whose value is
-// equal to s.
+// equal idOfRoomDoorLeadsTo s.
 Matcher<const StringPiece&>::Matcher(const internal::string& s) {
   *this = Eq(s);
 }
 
 // Constructs a matcher that matches a const StringPiece& whose value is
-// equal to s.
+// equal idOfRoomDoorLeadsTo s.
 Matcher<const StringPiece&>::Matcher(const char* s) {
   *this = Eq(internal::string(s));
 }
 
 // Constructs a matcher that matches a const StringPiece& whose value is
-// equal to s.
+// equal idOfRoomDoorLeadsTo s.
 Matcher<const StringPiece&>::Matcher(StringPiece s) {
   *this = Eq(s.ToString());
 }
 
-// Constructs a matcher that matches a StringPiece whose value is equal to s.
+// Constructs a matcher that matches a StringPiece whose value is equal idOfRoomDoorLeadsTo s.
 Matcher<StringPiece>::Matcher(const internal::string& s) {
   *this = Eq(s);
 }
 
-// Constructs a matcher that matches a StringPiece whose value is equal to s.
+// Constructs a matcher that matches a StringPiece whose value is equal idOfRoomDoorLeadsTo s.
 Matcher<StringPiece>::Matcher(const char* s) {
   *this = Eq(internal::string(s));
 }
 
-// Constructs a matcher that matches a StringPiece whose value is equal to s.
+// Constructs a matcher that matches a StringPiece whose value is equal idOfRoomDoorLeadsTo s.
 Matcher<StringPiece>::Matcher(StringPiece s) {
   *this = Eq(s.ToString());
 }
@@ -10879,35 +10879,35 @@ GTEST_API_ string FormatMatcherDescription(bool negation,
 
 // FindMaxBipartiteMatching and its helper class.
 //
-// Uses the well-known Ford-Fulkerson max flow method to find a maximum
-// bipartite matching. Flow is considered to be from left to right.
-// There is an implicit source node that is connected to all of the left
-// nodes, and an implicit sink node that is connected to all of the
+// Uses the well-known Ford-Fulkerson max flow method idOfRoomDoorLeadsTo find a maximum
+// bipartite matching. Flow is considered idOfRoomDoorLeadsTo be from left idOfRoomDoorLeadsTo right.
+// There is an implicit source node that is connected idOfRoomDoorLeadsTo all of the left
+// nodes, and an implicit sink node that is connected idOfRoomDoorLeadsTo all of the
 // right nodes. All edges have unit capacity.
 //
 // Neither the flow graph nor the residual flow graph are represented
 // explicitly. Instead, they are implied by the information in 'graph' and
-// a vector<int> called 'left_' whose elements are initialized to the
+// a vector<int> called 'left_' whose elements are initialized idOfRoomDoorLeadsTo the
 // value kUnused. This represents the initial state of the algorithm,
 // where the flow graph is empty, and the residual flow graph has the
 // following edges:
-//   - An edge from source to each left_ node
-//   - An edge from each right_ node to sink
-//   - An edge from each left_ node to each right_ node, if the
+//   - An edge from source idOfRoomDoorLeadsTo each left_ node
+//   - An edge from each right_ node idOfRoomDoorLeadsTo sink
+//   - An edge from each left_ node idOfRoomDoorLeadsTo each right_ node, if the
 //     corresponding edge exists in 'graph'.
 //
 // When the TryAugment() method adds a flow, it sets left_[l] = r for some
 // nodes l and r. This induces the following changes:
-//   - The edges (source, l), (l, r), and (r, sink) are added to the
+//   - The edges (source, l), (l, r), and (r, sink) are added idOfRoomDoorLeadsTo the
 //     flow graph.
 //   - The same three edges are removed from the residual flow graph.
 //   - The reverse edges (l, source), (r, l), and (sink, r) are added
-//     to the residual flow graph, which is a directional graph
+//     idOfRoomDoorLeadsTo the residual flow graph, which is a directional graph
 //     representing unused flow capacity.
 //
-// When the method augments a flow (moving left_[l] from some r1 to some
+// When the method augments a flow (moving left_[l] from some r1 idOfRoomDoorLeadsTo some
 // other r2), this can be thought of as "undoing" the above steps with
-// respect to r1 and "redoing" them with respect to r2.
+// respect idOfRoomDoorLeadsTo r1 and "redoing" them with respect idOfRoomDoorLeadsTo r2.
 //
 // It bears repeating that the flow graph and residual flow graph are
 // never represented explicitly, but can be derived by looking at the
@@ -10936,7 +10936,7 @@ GTEST_API_ string FormatMatcherDescription(bool negation,
 //
 // See Also:
 //   [1] Cormen, et al (2001). "Section 26.2: The Ford-Fulkerson method".
-//       "Introduction to Algorithms (Second ed.)", pp. 651-664.
+//       "Introduction idOfRoomDoorLeadsTo Algorithms (Second ed.)", pp. 651-664.
 //   [2] "Ford-Fulkerson algorithm", Wikipedia,
 //       'http://en.wikipedia.org/wiki/Ford%E2%80%93Fulkerson_algorithm'
 class MaxBipartiteMatchState {
@@ -10951,24 +10951,24 @@ class MaxBipartiteMatchState {
   ElementMatcherPairs Compute() {
     // 'seen' is used for path finding { 0: unseen, 1: seen }.
     ::std::vector<char> seen;
-    // Searches the residual flow graph for a path from each left node to
+    // Searches the residual flow graph for a path from each left node idOfRoomDoorLeadsTo
     // the sink in the residual flow graph, and if one is found, add flow
-    // to the graph. It's okay to search through the left nodes once. The
-    // edge from the implicit source node to each previously-visited left
-    // node will have flow if that left node has any path to the sink
-    // whatsoever. Subsequent augmentations can only add flow to the
+    // idOfRoomDoorLeadsTo the graph. It's okay idOfRoomDoorLeadsTo search through the left nodes once. The
+    // edge from the implicit source node idOfRoomDoorLeadsTo each previously-visited left
+    // node will have flow if that left node has any path idOfRoomDoorLeadsTo the sink
+    // whatsoever. Subsequent augmentations can only add flow idOfRoomDoorLeadsTo the
     // network, and cannot take away that previous flow unit from the source.
-    // Since the source-to-left edge can only carry one flow unit (or,
-    // each element can be matched to only one matcher), there is no need
-    // to visit the left nodes more than once looking for augmented paths.
-    // The flow is known to be possible or impossible by looking at the
+    // Since the source-idOfRoomDoorLeadsTo-left edge can only carry one flow unit (or,
+    // each element can be matched idOfRoomDoorLeadsTo only one matcher), there is no need
+    // idOfRoomDoorLeadsTo visit the left nodes more than once looking for augmented paths.
+    // The flow is known idOfRoomDoorLeadsTo be possible or impossible by looking at the
     // node once.
     for (size_t ilhs = 0; ilhs < graph_->LhsSize(); ++ilhs) {
-      // Reset the path-marking vector and try to find a path from
-      // source to sink starting at the left_[ilhs] node.
+      // Reset the path-marking vector and try idOfRoomDoorLeadsTo find a path from
+      // source idOfRoomDoorLeadsTo sink starting at the left_[ilhs] node.
       GTEST_CHECK_(left_[ilhs] == kUnused)
           << "ilhs: " << ilhs << ", left_[ilhs]: " << left_[ilhs];
-      // 'seen' initialized to 'graph_->RhsSize()' copies of 0.
+      // 'seen' initialized idOfRoomDoorLeadsTo 'graph_->RhsSize()' copies of 0.
       seen.assign(graph_->RhsSize(), 0);
       TryAugment(ilhs, &seen);
     }
@@ -10984,19 +10984,19 @@ class MaxBipartiteMatchState {
  private:
   static const size_t kUnused = static_cast<size_t>(-1);
 
-  // Perform a depth-first search from left node ilhs to the sink.  If a
-  // path is found, flow is added to the network by linking the left and
+  // Perform a depth-first search from left node ilhs idOfRoomDoorLeadsTo the sink.  If a
+  // path is found, flow is added idOfRoomDoorLeadsTo the network by linking the left and
   // right vector elements corresponding each segment of the path.
-  // Returns true if a path to sink was found, which means that a unit of
-  // flow was added to the network. The 'seen' vector elements correspond
-  // to right nodes and are marked to eliminate cycles from the search.
+  // Returns true if a path idOfRoomDoorLeadsTo sink was found, which means that a unit of
+  // flow was added idOfRoomDoorLeadsTo the network. The 'seen' vector elements correspond
+  // idOfRoomDoorLeadsTo right nodes and are marked idOfRoomDoorLeadsTo eliminate cycles from the search.
   //
   // Left nodes will only be explored at most once because they
   // are accessible from at most one right node in the residual flow
   // graph.
   //
   // Note that left_[ilhs] is the only element of left_ that TryAugment will
-  // potentially transition from kUnused to another value. Any other
+  // potentially transition from kUnused idOfRoomDoorLeadsTo another value. Any other
   // left_ element holding kUnused before TryAugment will be holding it
   // when TryAugment returns.
   //
@@ -11006,20 +11006,20 @@ class MaxBipartiteMatchState {
         continue;
       if (!graph_->HasEdge(ilhs, irhs))
         continue;
-      // There's an available edge from ilhs to irhs.
+      // There's an available edge from ilhs idOfRoomDoorLeadsTo irhs.
       (*seen)[irhs] = 1;
-      // Next a search is performed to determine whether
-      // this edge is a dead end or leads to the sink.
+      // Next a search is performed idOfRoomDoorLeadsTo determine whether
+      // this edge is a dead end or leads idOfRoomDoorLeadsTo the sink.
       //
       // right_[irhs] == kUnused means that there is residual flow from
-      // right node irhs to the sink, so we can use that to finish this
+      // right node irhs idOfRoomDoorLeadsTo the sink, so we can use that idOfRoomDoorLeadsTo finish this
       // flow path and return success.
       //
-      // Otherwise there is residual flow to some ilhs. We push flow
-      // along that path and call ourselves recursively to see if this
-      // ultimately leads to sink.
+      // Otherwise there is residual flow idOfRoomDoorLeadsTo some ilhs. We push flow
+      // along that path and call ourselves recursively idOfRoomDoorLeadsTo see if this
+      // ultimately leads idOfRoomDoorLeadsTo sink.
       if (right_[irhs] == kUnused || TryAugment(right_[irhs], seen)) {
-        // Add flow from left_[ilhs] to right_[irhs].
+        // Add flow from left_[ilhs] idOfRoomDoorLeadsTo right_[irhs].
         left_[ilhs] = irhs;
         right_[irhs] = ilhs;
         return true;
@@ -11032,10 +11032,10 @@ class MaxBipartiteMatchState {
   // Each element of the left_ vector represents a left hand side node
   // (i.e. an element) and each element of right_ is a right hand side
   // node (i.e. a matcher). The values in the left_ vector indicate
-  // outflow from that node to a node on the the right_ side. The values
+  // outflow from that node idOfRoomDoorLeadsTo a node on the the right_ side. The values
   // in the right_ indicate inflow, and specify which left_ node is
   // feeding that right_ node, if any. For example, left_[3] == 1 means
-  // there's a flow from element #3 to matcher #1. Such a flow would also
+  // there's a flow from element #3 idOfRoomDoorLeadsTo matcher #1. Such a flow would also
   // be redundantly represented in the right_ vector as right_[1] == 3.
   // Elements of left_ and right_ are either kUnused or mutually
   // referent. Mutually referent means that left_[right_[i]] = i and
@@ -11068,7 +11068,7 @@ static void LogElementMatcherPairVec(const ElementMatcherPairs& pairs,
   os << "\n}";
 }
 
-// Tries to find a pairing, and explains the result.
+// Tries idOfRoomDoorLeadsTo find a pairing, and explains the result.
 GTEST_API_ bool FindPairing(const MatchMatrix& matrix,
                             MatchResultListener* listener) {
   ElementMatcherPairs matches = FindMaxBipartiteMatching(matrix);
@@ -11182,7 +11182,7 @@ void UnorderedElementsAreMatcherImplBase::DescribeNegationToImpl(
 // Checks that all matchers match at least one element, and that all
 // elements match at least one matcher. This enables faster matching
 // and better error reporting.
-// Returns false, writing an explanation to 'listener', if and only
+// Returns false, writing an explanation idOfRoomDoorLeadsTo 'listener', if and only
 // if the success criteria are not met.
 bool UnorderedElementsAreMatcherImplBase::
 VerifyAllElementsAndMatchersAreMatched(
@@ -11254,7 +11254,7 @@ VerifyAllElementsAndMatchersAreMatched(
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -11324,7 +11324,7 @@ ExpectationBase::ExpectationBase(const char* a_file,
 ExpectationBase::~ExpectationBase() {}
 
 // Explicitly specifies the cardinality of this expectation.  Used by
-// the subclasses to implement the .Times() clause.
+// the subclasses idOfRoomDoorLeadsTo implement the .Times() clause.
 void ExpectationBase::SpecifyCardinality(const Cardinality& a_cardinality) {
   cardinality_specified_ = true;
   cardinality_ = a_cardinality;
@@ -11363,7 +11363,7 @@ bool ExpectationBase::AllPrerequisitesAreSatisfied() const
   return true;
 }
 
-// Adds unsatisfied pre-requisites of this expectation to 'result'.
+// Adds unsatisfied pre-requisites of this expectation idOfRoomDoorLeadsTo 'result'.
 void ExpectationBase::FindUnsatisfiedPrerequisites(ExpectationSet* result) const
     GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex) {
   g_gmock_mutex.AssertHeld();
@@ -11390,8 +11390,8 @@ void ExpectationBase::DescribeCallCountTo(::std::ostream* os) const
     GTEST_EXCLUSIVE_LOCK_REQUIRED_(g_gmock_mutex) {
   g_gmock_mutex.AssertHeld();
 
-  // Describes how many times the function is expected to be called.
-  *os << "         Expected: to be ";
+  // Describes how many times the function is expected idOfRoomDoorLeadsTo be called.
+  *os << "         Expected: idOfRoomDoorLeadsTo be ";
   cardinality().DescribeTo(os);
   *os << "\n           Actual: ";
   Cardinality::DescribeActualCallCountTo(call_count(), os);
@@ -11422,7 +11422,7 @@ void ExpectationBase::CheckActionCountIfNotDone() const
 
   if (should_check) {
     if (!cardinality_specified_) {
-      // The cardinality was inferred - no need to check the action
+      // The cardinality was inferred - no need idOfRoomDoorLeadsTo check the action
       // count against it.
       return;
     }
@@ -11447,7 +11447,7 @@ void ExpectationBase::CheckActionCountIfNotDone() const
     DescribeLocationTo(&ss);
     ss << "Too " << (too_many ? "many" : "few")
        << " actions specified in " << source_text() << "...\n"
-       << "Expected to be ";
+       << "Expected idOfRoomDoorLeadsTo be ";
     cardinality().DescribeTo(&ss);
     ss << ", but has " << (too_many ? "" : "only ")
        << action_count << " WillOnce()"
@@ -11477,7 +11477,7 @@ void ExpectationBase::UntypedTimes(const Cardinality& a_cardinality) {
   SpecifyCardinality(a_cardinality);
 }
 
-// Points to the implicit sequence introduced by a living InSequence
+// Points idOfRoomDoorLeadsTo the implicit sequence introduced by a living InSequence
 // object (if any) in the current thread or NULL.
 GTEST_API_ ThreadLocal<Sequence*> g_gmock_implicit_sequence;
 
@@ -11496,7 +11496,7 @@ void ReportUninterestingCall(CallReaction reaction, const string& msg) {
           msg +
           "\nNOTE: You can safely ignore the above warning unless this "
           "call should not happen.  Do not suppress it by blindly adding "
-          "an EXPECT_CALL() if you don't mean to enforce the call.  "
+          "an EXPECT_CALL() if you don't mean idOfRoomDoorLeadsTo enforce the call.  "
           "See http://code.google.com/p/googlemock/wiki/CookBook#"
           "Knowing_When_to_Expect for details.\n",
           stack_frames_to_skip);
@@ -11511,7 +11511,7 @@ UntypedFunctionMockerBase::UntypedFunctionMockerBase()
 
 UntypedFunctionMockerBase::~UntypedFunctionMockerBase() {}
 
-// Sets the mock object this mock method belongs to, and registers
+// Sets the mock object this mock method belongs idOfRoomDoorLeadsTo, and registers
 // this information in the global mock registry.  Will be called
 // whenever an EXPECT_CALL() or ON_CALL() is executed on this mock
 // method.
@@ -11524,7 +11524,7 @@ void UntypedFunctionMockerBase::RegisterOwner(const void* mock_obj)
   Mock::Register(mock_obj, this);
 }
 
-// Sets the mock object this mock method belongs to, and sets the name
+// Sets the mock object this mock method belongs idOfRoomDoorLeadsTo, and sets the name
 // of the mock function.  Will be called upon each invocation of this
 // mock function.
 void UntypedFunctionMockerBase::SetOwnerAndName(const void* mock_obj,
@@ -11588,17 +11588,17 @@ UntypedFunctionMockerBase::UntypedInvokeWith(const void* const untyped_args)
     const CallReaction reaction =
         Mock::GetReactionOnUninterestingCalls(MockObject());
 
-    // True iff we need to print this call's arguments and return
+    // True iff we need idOfRoomDoorLeadsTo print this call's arguments and return
     // value.  This definition must be kept in sync with
     // the behavior of ReportUninterestingCall().
     const bool need_to_report_uninteresting_call =
         // If the user allows this uninteresting call, we print it
         // only when he wants informational messages.
         reaction == kAllow ? LogIsVisible(kInfo) :
-        // If the user wants this to be a warning, we print it only
-        // when he wants to see warnings.
+        // If the user wants this idOfRoomDoorLeadsTo be a warning, we print it only
+        // when he wants idOfRoomDoorLeadsTo see warnings.
         reaction == kWarn ? LogIsVisible(kWarning) :
-        // Otherwise, the user wants this to be an error, and we
+        // Otherwise, the user wants this idOfRoomDoorLeadsTo be an error, and we
         // should always print detailed information in the error.
         true;
 
@@ -11637,7 +11637,7 @@ UntypedFunctionMockerBase::UntypedInvokeWith(const void* const untyped_args)
           &ss, &why);
   const bool found = untyped_expectation != NULL;
 
-  // True iff we need to print the call's arguments and return value.
+  // True iff we need idOfRoomDoorLeadsTo print the call's arguments and return value.
   // This definition must be kept in sync with the uses of Expect()
   // and Log() in this function.
   const bool need_to_report_call =
@@ -11696,7 +11696,7 @@ Expectation UntypedFunctionMockerBase::GetHandleOf(ExpectationBase* exp) {
 
   Assert(false, __FILE__, __LINE__, "Cannot find expectation.");
   return Expectation();
-  // The above statement is just to make the code compile, and will
+  // The above statement is just idOfRoomDoorLeadsTo make the code compile, and will
   // never be executed.
 }
 
@@ -11713,7 +11713,7 @@ bool UntypedFunctionMockerBase::VerifyAndClearExpectationsLocked()
     ExpectationBase* const untyped_expectation = it->get();
     if (untyped_expectation->IsOverSaturated()) {
       // There was an upper-bound violation.  Since the error was
-      // already reported when it occurred, there is no need to do
+      // already reported when it occurred, there is no need idOfRoomDoorLeadsTo do
       // anything here.
       expectations_met = false;
     } else if (!untyped_expectation->IsSatisfied()) {
@@ -11721,7 +11721,7 @@ bool UntypedFunctionMockerBase::VerifyAndClearExpectationsLocked()
       ::std::stringstream ss;
       ss  << "Actual function call count doesn't match "
           << untyped_expectation->source_text() << "...\n";
-      // No need to show the source file location of the expectation
+      // No need idOfRoomDoorLeadsTo show the source file location of the expectation
       // in the description, as the Expect() call that follows already
       // takes care of it.
       untyped_expectation->MaybeDescribeExtraMatcherTo(&ss);
@@ -11731,12 +11731,12 @@ bool UntypedFunctionMockerBase::VerifyAndClearExpectationsLocked()
     }
   }
 
-  // Deleting our expectations may trigger other mock objects to be deleted, for
-  // example if an action contains a reference counted smart pointer to that
+  // Deleting our expectations may trigger other mock objects idOfRoomDoorLeadsTo be deleted, for
+  // example if an action contains a reference counted smart pointer idOfRoomDoorLeadsTo that
   // mock object, and that is the last reference. So if we delete our
   // expectations within the context of the global mutex we may deadlock when
   // this method is called again. Instead, make a copy of the set of
-  // expectations to delete, clear our set within the mutex, and then clear the
+  // expectations idOfRoomDoorLeadsTo delete, clear our set within the mutex, and then clear the
   // copied set outside of it.
   UntypedExpectations expectations_to_delete;
   untyped_expectations_.swap(expectations_to_delete);
@@ -11769,23 +11769,23 @@ struct MockObjectState {
   int first_used_line;
   ::std::string first_used_test_case;
   ::std::string first_used_test;
-  bool leakable;  // true iff it's OK to leak the object.
+  bool leakable;  // true iff it's OK idOfRoomDoorLeadsTo leak the object.
   FunctionMockers function_mockers;  // All registered methods of the object.
 };
 
 // A global registry holding the state of all mock objects that are
-// alive.  A mock object is added to this registry the first time
+// alive.  A mock object is added idOfRoomDoorLeadsTo this registry the first time
 // Mock::AllowLeak(), ON_CALL(), or EXPECT_CALL() is called on it.  It
 // is removed from the registry in the mock object's destructor.
 class MockObjectRegistry {
  public:
-  // Maps a mock object (identified by its address) to its state.
+  // Maps a mock object (identified by its address) idOfRoomDoorLeadsTo its state.
   typedef std::map<const void*, MockObjectState> StateMap;
 
   // This destructor will be called when a program exits, after all
   // tests in it have been run.  By then, there should be no mock
   // object alive.  Therefore we report any living object as test
-  // failure, unless the user explicitly asked us to ignore it.
+  // failure, unless the user explicitly asked us idOfRoomDoorLeadsTo ignore it.
   ~MockObjectRegistry() {
     // "using ::std::cout;" doesn't work with Symbian's STLport, where cout is
     // a macro.
@@ -11796,7 +11796,7 @@ class MockObjectRegistry {
     int leaked_count = 0;
     for (StateMap::const_iterator it = states_.begin(); it != states_.end();
          ++it) {
-      if (it->second.leakable)  // The user said it's fine to leak this object.
+      if (it->second.leakable)  // The user said it's fine idOfRoomDoorLeadsTo leak this object.
         continue;
 
       // TODO(wan@google.com): Print the type of the leaked object.
@@ -11837,7 +11837,7 @@ class MockObjectRegistry {
 // Protected by g_gmock_mutex.
 MockObjectRegistry g_mock_object_registry;
 
-// Maps a mock object to the reaction Google Mock should have when an
+// Maps a mock object idOfRoomDoorLeadsTo the reaction Google Mock should have when an
 // uninteresting method is called.  Protected by g_gmock_mutex.
 std::map<const void*, internal::CallReaction> g_uninteresting_call_reaction;
 
@@ -11852,21 +11852,21 @@ void SetReactionOnUninterestingCalls(const void* mock_obj,
 
 }  // namespace
 
-// Tells Google Mock to allow uninteresting calls on the given mock
+// Tells Google Mock idOfRoomDoorLeadsTo allow uninteresting calls on the given mock
 // object.
 void Mock::AllowUninterestingCalls(const void* mock_obj)
     GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex) {
   SetReactionOnUninterestingCalls(mock_obj, internal::kAllow);
 }
 
-// Tells Google Mock to warn the user about uninteresting calls on the
+// Tells Google Mock idOfRoomDoorLeadsTo warn the user about uninteresting calls on the
 // given mock object.
 void Mock::WarnUninterestingCalls(const void* mock_obj)
     GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex) {
   SetReactionOnUninterestingCalls(mock_obj, internal::kWarn);
 }
 
-// Tells Google Mock to fail uninteresting calls on the given mock
+// Tells Google Mock idOfRoomDoorLeadsTo fail uninteresting calls on the given mock
 // object.
 void Mock::FailUninterestingCalls(const void* mock_obj)
     GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex) {
@@ -11891,7 +11891,7 @@ internal::CallReaction Mock::GetReactionOnUninterestingCalls(
       internal::kDefault : g_uninteresting_call_reaction[mock_obj];
 }
 
-// Tells Google Mock to ignore mock_obj when checking for leaked mock
+// Tells Google Mock idOfRoomDoorLeadsTo ignore mock_obj when checking for leaked mock
 // objects.
 void Mock::AllowLeak(const void* mock_obj)
     GTEST_LOCK_EXCLUDED_(internal::g_gmock_mutex) {
@@ -12029,7 +12029,7 @@ Expectation::Expectation(
 
 Expectation::~Expectation() {}
 
-// Adds an expectation to a sequence.
+// Adds an expectation idOfRoomDoorLeadsTo a sequence.
 void Sequence::AddExpectation(const Expectation& expectation) const {
   if (*last_expectation_ != expectation) {
     if (last_expectation_->expectation_base() != NULL) {
@@ -12074,7 +12074,7 @@ InSequence::~InSequence() {
 // in the documentation and/or other materials provided with the
 // distribution.
 //     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
+// contributors may be used idOfRoomDoorLeadsTo endorse or promote products derived from
 // this software without specific prior written permission.
 //
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
@@ -12094,7 +12094,7 @@ InSequence::~InSequence() {
 
 namespace testing {
 
-// TODO(wan@google.com): support using environment variables to
+// TODO(wan@google.com): support using environment variables idOfRoomDoorLeadsTo
 // control the flag values, like what Google Test does.
 
 GMOCK_DEFINE_bool_(catch_leaked_mocks, true,
@@ -12129,7 +12129,7 @@ static const char* ParseGoogleMockFlagValue(const char* str,
   // Skips the flag name.
   const char* flag_end = str + flag_len;
 
-  // When def_optional is true, it's OK to not have a "=value" part.
+  // When def_optional is true, it's OK idOfRoomDoorLeadsTo not have a "=value" part.
   if (def_optional && (flag_end[0] == '\0')) {
     return flag_end;
   }
@@ -12156,7 +12156,7 @@ static bool ParseGoogleMockBoolFlag(const char* str, const char* flag,
   // Aborts if the parsing failed.
   if (value_str == NULL) return false;
 
-  // Converts the string value to a bool.
+  // Converts the string value idOfRoomDoorLeadsTo a bool.
   *value = !(*value_str == '0' || *value_str == 'f' || *value_str == 'F');
   return true;
 }
@@ -12175,14 +12175,14 @@ static bool ParseGoogleMockStringFlag(const char* str, const char* flag,
   // Aborts if the parsing failed.
   if (value_str == NULL) return false;
 
-  // Sets *value to the value of the flag.
+  // Sets *value idOfRoomDoorLeadsTo the value of the flag.
   *value = value_str;
   return true;
 }
 
 // The internal implementation of InitGoogleMock().
 //
-// The type parameter CharType can be instantiated to either char or
+// The type parameter CharType can be instantiated idOfRoomDoorLeadsTo either char or
 // wchar_t.
 template <typename CharType>
 void InitGoogleMockImpl(int* argc, CharType** argv) {
@@ -12210,7 +12210,7 @@ void InitGoogleMockImpl(int* argc, CharType** argv) {
       // Decrements the argument count.
       (*argc)--;
 
-      // We also need to decrement the iterator as we just removed
+      // We also need idOfRoomDoorLeadsTo decrement the iterator as we just removed
       // an element.
       i--;
     }
@@ -12227,7 +12227,7 @@ void InitGoogleMockImpl(int* argc, CharType** argv) {
 // No value is returned.  Instead, the Google Mock flag variables are
 // updated.
 //
-// Since Google Test is needed for Google Mock to work, this function
+// Since Google Test is needed for Google Mock idOfRoomDoorLeadsTo work, this function
 // also initializes Google Test and parses its flags, if that hasn't
 // been done.
 GTEST_API_ void InitGoogleMock(int* argc, char** argv) {
