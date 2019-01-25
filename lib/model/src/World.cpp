@@ -11,7 +11,26 @@ using model::Player;
 
 namespace model {
 
-    World::World(){}
+    World::World()
+      : areas({})
+        { }
+
+    World::World(std::vector<Area> areas)
+      : areas(std::move(areas))
+        { }
+
+    //getters and setters
+    std::vector<Area> World::getAreas() {
+      return areas;
+    }
+
+    void World::setAreas(std::vector<Area> areas) {
+      this->areas = std::move(areas);
+    }
+
+    void World::addArea(Area area) {
+      areas.push_back(std::move(area));
+    }
 
     std::map<int, Player> World::getUserMap(){
         return this->usersMap;
