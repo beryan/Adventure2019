@@ -3,7 +3,7 @@
 //
 
 #include "Player.h"
-
+#include <algorithm>
 
 namespace model {
 
