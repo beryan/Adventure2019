@@ -12,6 +12,8 @@
 >
 > Use `EXPECT` when the condition should hold, but in cases where it doesn't we can still get value out of
 > continuing the test. (The test will still ultimately fail at the end, though.) [1]
+
+
 3. Add `{file-name}-test.cpp` to the `{project-root}/testing/CMakeLists.txt` file's `add_executable` function for it to build correcty
 
 ![image](/uploads/3455bcb7fa75cb81c2117410569f4d2a/image.png)
