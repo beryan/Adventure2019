@@ -17,9 +17,7 @@ namespace model {
     *  that must be contained in a character object in the application.
     */
 
-    enum class Role {
-        Admin, Builder, Default
-    };
+    enum Role { Admin, Builder, Default };
 
     struct Character {
     public:
