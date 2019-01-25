@@ -31,7 +31,7 @@ For `Mac` users, follow [this](https://coursys.sfu.ca/2019sp-cmpt-373-d1/discuss
 
 For `Windows 10` users, follow [this](https://coursys.sfu.ca/2019sp-cmpt-373-d1/discussion/topic/for-windows-users/) guideline provided by the instructor.
 
-For `Linux` environments, installing the necessary tools and libraries is easy. However, before running any commands in `bash`, make sure idOfRoomDoorLeadsTo run the command:
+For `Linux` environments, installing the necessary tools and libraries is easy. However, before running any commands in `bash`, make sure to run the command:
 
 ```
 sudo apt-get update
