@@ -11,9 +11,16 @@ namespace model {
     Player::Player(int id, std::string username, std::string password) :
         User(id),
         username(std::move(username)),
-        password(password),
+        password(std::move(password)),
         role(Role::Default)
         {}
+
+    Player::Player(int id, std::string username) :
+        User(id),
+        username(std::move(username)),
+        password("foobar"),
+        role(Role::Default)
+    {}
 
     std::string Player::getUsername() {
         return username;
