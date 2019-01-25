@@ -5,7 +5,7 @@ include_directories(
 )
 
 add_executable(runAllTests
-        user-test.cpp
+        character-test.cpp
         lib/gtest_main.cc
         lib/gmock-gtest-all.cc
         )

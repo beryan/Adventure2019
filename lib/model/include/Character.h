@@ -35,6 +35,10 @@ namespace model {
 
         void setHealth(double health);
 
+        double reduceHealth(const double &health);
+
+        double addHealth(const double &health);
+
         static constexpr double STARTING_HEALTH = 100.00;
 
         static constexpr double MAX_HEALTH = 100.00;
