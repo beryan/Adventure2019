@@ -2899,8 +2899,8 @@ class ThreadWithParam : public ThreadWithParamBase {
   }
 
  private:
-  UserThreadFunc* const func_;  // User-supplied thread function.
-  const T param_;  // User-supplied parameter to the thread function.
+  UserThreadFunc* const func_;  // Character-supplied thread function.
+  const T param_;  // Character-supplied parameter to the thread function.
   // When non-NULL, used to block execution until the controller thread
   // notifies.
   Notification* const thread_can_start_;
@@ -9348,7 +9348,7 @@ namespace internal {
 // executing in the context of the death test child process.  Tools such as
 // Valgrind heap checkers may need this to modify their behavior in death
 // tests.  IMPORTANT: This is an internal utility.  Using it may break the
-// implementation of death tests.  User code MUST NOT use it.
+// implementation of death tests.  Character code MUST NOT use it.
 GTEST_API_ bool InDeathTestChild();
 
 }  // namespace internal

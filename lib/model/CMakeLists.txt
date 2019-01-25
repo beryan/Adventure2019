@@ -1,11 +1,10 @@
 add_library(model
-        src/User.cpp
+        src/Character.cpp
         src/Player.cpp
         src/NPC.cpp
         src/Object.cpp
-        src/Item.cpp
         include/Role.h
-        src/User.cpp
+        src/Character.cpp
         src/Door.cpp
         src/Game.cpp
         src/Room.cpp

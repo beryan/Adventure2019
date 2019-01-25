@@ -2,33 +2,63 @@
 // Created by jnhkm on 2019-01-18.
 //
 
-#ifndef WEBSOCKETNETWORKING_NPC_H
-#define WEBSOCKETNETWORKING_NPC_H
+#ifndef NPC_H
+#define NPC_H
 
-#include "User.h"
+#include <vector>
+#include "Character.h"
 
 namespace model {
-    class NPC : public User {
+    /**
+    *  @class NPC
+    *
+    *  @brief A class describing an NPC.
+    *
+    *  The NPC (Non-Playing Character) class describes all the attributes of
+    *  a specific type of character in the application.
+    */
+
+    class NPC : public Character {
     public:
-        NPC(int id);
+        explicit NPC(int id);
 
-        NPC(int id, std::vector<std::string> keys, std::vector<std::string> desc, std::string shdesc, std::vector<std::string> lngdesc);
+        NPC(
+            int id,
+            std::vector<std::string> keywords,
+            std::string description,
+            std::string shortDescription,
+            std::vector<std::string> longDescription
+        );
 
-        std::string getShortDescription();
+        std::vector<std::string> getKeywords() const;
 
-        void setShortDescription(std::string desc);
+        void setKeywords(std::vector<std::string> keywords);
 
-        std::vector<std::string> getLongDescription();
+        std::string getDescription() const;
 
-        void addLongDescription(std::string desc);
+        void setDescription(std::string description);
+
+        std::string getShortDescription() const;
+
+        void setShortDescription(std::string shortDescription);
+
+        std::vector<std::string> getLongDescription() const;
+
+        void setLongDescription (std::vector<std::string> longDescription);
+
+        void addToLongDescription(std::string addToLongDescription);
+
+        static constexpr int MAX_KEYWORDS = 8;
+
     private:
-        std::string shortdesc;
+        std::vector<std::string> keywords;
 
-        std::vector<std::string> longdesc;
+        std::string description;
 
+        std::string shortDescription;
+
+        std::vector<std::string> longDescription;
     };
 }
 
-
-
-#endif //WEBSOCKETNETWORKING_NPC_H
+#endif //NPC_H
