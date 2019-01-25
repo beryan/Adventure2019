@@ -60,10 +60,10 @@ namespace model {
 
             std::ostringstream introduction;
 
-            introduction << "Welcome idOfRoomDoorLeadsTo Adventure 2019!\n"
+            introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter \"login [username] [password]\" idOfRoomDoorLeadsTo sign into an existing account\n"
-                         << "Enter \"register [username] [password]\" idOfRoomDoorLeadsTo make a new account\n";
+                         << "Enter \"login [username] [password]\" to sign into an existing account\n"
+                         << "Enter \"register [username] [password]\" to make a new account\n";
 
             results.push_back({clientId, introduction.str(), true});
 
@@ -81,7 +81,7 @@ namespace model {
                 std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
                 this->activePlayerList.erase(clientId);
 
-                std::cout << username << " has been logged out of the game due idOfRoomDoorLeadsTo disconnect\n";
+                std::cout << username << " has been logged out of the game due to disconnect\n";
             }
             /* End */
 
@@ -144,7 +144,7 @@ namespace model {
                     this->activePlayerList.emplace(clientId, currentId);
                     ++this->nextId;
 
-                    std::cout << username << " has been registered idOfRoomDoorLeadsTo the game\n";
+                    std::cout << username << " has been registered to the game\n";
                     tempMessage << "Account created!\n";
 
                     /* End */
@@ -168,7 +168,7 @@ namespace model {
                                     // Player is already being used by a client, logout associated client
                                     // and login with new client
                                     results.push_back({this->activeIdToClient.at(this->tempUserToId.at(username)),
-                                                         "You have been logged out due idOfRoomDoorLeadsTo being logged in elsewhere.\n\n",
+                                                         "You have been logged out due to being logged in elsewhere.\n\n",
                                                          true});
 
                                     this->activePlayerList.erase(this->activeIdToClient.at(this->tempUserToId.at(username)));
@@ -203,7 +203,7 @@ namespace model {
                                 << "COMMANDS:\n"
                                 << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
                                 << "  - " << COMMAND_REGISTER << " (create a new account with [username] [password])\n"
-                                << "  - " << COMMAND_LOGIN    << " (login idOfRoomDoorLeadsTo an account with [username] [password])\n"
+                                << "  - " << COMMAND_LOGIN    << " (login to an account with [username] [password])\n"
                                 << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
                                 << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
                                 << "\n";
@@ -211,8 +211,8 @@ namespace model {
                 } else {
                     tempMessage << "The word \"" << command << "\" is not a valid command.\n"
                                 << "\n"
-                                << "Enter " << "\"" << COMMAND_LOGIN << " [username] [password]\" idOfRoomDoorLeadsTo log into an existing account\n"
-                                << "Enter " << "\"" << COMMAND_REGISTER << "[username] [password]\" idOfRoomDoorLeadsTo create a new account\n"
+                                << "Enter " << "\"" << COMMAND_LOGIN << " [username] [password]\" to log into an existing account\n"
+                                << "Enter " << "\"" << COMMAND_REGISTER << "[username] [password]\" to create a new account\n"
                                 << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
 
                 }
@@ -249,7 +249,7 @@ namespace model {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                            << "  - " << COMMAND_SAY      << " [message] (sends [message] idOfRoomDoorLeadsTo other players in the game)\n"
+                            << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
                             << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
                             << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
@@ -287,7 +287,7 @@ namespace model {
 
             } else {
                 for (auto client : *this->clients) {
-                    // Send idOfRoomDoorLeadsTo public messages idOfRoomDoorLeadsTo logged in users only
+                    // Send to public messages to logged in users only
                     if (this->activePlayerList.count(client.id)) {
                         clientMessages[client.id] << entry.message;
                     }

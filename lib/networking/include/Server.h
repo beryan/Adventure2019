@@ -133,8 +133,8 @@ public:
 private:
   friend class ServerImpl;
 
-  // Hiding the template parameters of the Server class behind a pointer idOfRoomDoorLeadsTo
-  // a private interface allows us idOfRoomDoorLeadsTo refer idOfRoomDoorLeadsTo an unparameterized Server
+  // Hiding the template parameters of the Server class behind a pointer to
+  // a private interface allows us to refer to an unparameterized Server
   // object while still having the handlers of connect & disconnect be client
   // defined types. This is a form of *type erasure*.
   class ConnectionHandler {

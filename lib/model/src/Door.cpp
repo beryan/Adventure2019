@@ -1,7 +1,7 @@
 /*
 * Door.cpp
 *
-* Class Description: A class designed idOfRoomDoorLeadsTo represent exits from a room.
+* Class Description: A class designed to represent exits from a room.
 *
 * Created on: January 17, 2019
 * Author: Brittany Ryan, 301217765

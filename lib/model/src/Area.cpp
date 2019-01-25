@@ -1,7 +1,7 @@
 /*
 * Area.cpp
 *
-* Class Description: A class designed idOfRoomDoorLeadsTo represent an area.
+* Class Description: A class designed to represent an area.
 *
 * Created on: January 20, 2019
 * Author: Brittany Ryan, 301217765

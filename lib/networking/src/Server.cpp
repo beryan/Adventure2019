@@ -61,7 +61,7 @@ public:
 
 
 /////////////////////////////////////////////////////////////////////////////
-// Channels (connections private idOfRoomDoorLeadsTo the implementation)
+// Channels (connections private to the implementation)
 /////////////////////////////////////////////////////////////////////////////
 
 
@@ -215,7 +215,7 @@ HTTPSession::handleRequest() {
     boost::beast::http::async_write(socket, *sharedResponse,
       [this, session, sharedResponse] (std::error_code ec, std::size_t bytes) {
         if (ec) {
-          session->serverImpl.reportError("Error writing idOfRoomDoorLeadsTo HTTP stream");
+          session->serverImpl.reportError("Error writing to HTTP stream");
           socket.shutdown(boost::asio::ip::tcp::socket::shutdown_send);
         } else if (sharedResponse->need_eof()) {
           // This signifies a deliberate close
@@ -274,7 +274,7 @@ HTTPSession::handleRequest() {
   };
 
   if (request.method() == boost::beast::http::verb::head) {
-    // Respond idOfRoomDoorLeadsTo HEAD
+    // Respond to HEAD
     boost::beast::http::response<boost::beast::http::empty_body> result {
       boost::beast::http::status::ok,
       request.version()
@@ -283,7 +283,7 @@ HTTPSession::handleRequest() {
     send(std::move(result));
 
   } else {
-    // Respond idOfRoomDoorLeadsTo GET
+    // Respond to GET
     boost::beast::http::response<boost::beast::http::string_body> result {
       std::piecewise_construct,
       std::make_tuple(std::move(body)),
@@ -332,7 +332,7 @@ ServerImpl::reportError(std::string_view /*message*/) {
 
 void
 ServerImplDeleter::operator()(ServerImpl* serverImpl) {
-  // NOTE: This is a custom deleter used idOfRoomDoorLeadsTo help hide the impl class. Thus
+  // NOTE: This is a custom deleter used to help hide the impl class. Thus
   // it must use a raw delete.
   // NOLINTNEXTLINE (cppcoreguidelines-owning-memory)
   delete serverImpl;
@@ -385,7 +385,7 @@ Server::buildImpl(Server& server,
                   std::string httpMessage) {
   // NOTE: We are using a custom deleter here so that the impl class can be
   // hidden within the source file rather than exposed in the header. Using
-  // a custom deleter means that we need idOfRoomDoorLeadsTo use a raw `new` rather than using
+  // a custom deleter means that we need to use a raw `new` rather than using
   // `std::make_unique`.
   auto* impl = new ServerImpl(server, port, std::move(httpMessage));
   return std::unique_ptr<ServerImpl,ServerImplDeleter>(impl);

@@ -22,7 +22,7 @@ namespace model {
     }
 
     void WorldHandler::addUser(Player player){
-        std::cout << "Adding " << player.getId() << " " << player.getUsername() << " idOfRoomDoorLeadsTo users" << std::endl;
+        std::cout << "Adding " << player.getId() << " " << player.getUsername() << " to users" << std::endl;
         this->world.insertUser(player);
     }
 

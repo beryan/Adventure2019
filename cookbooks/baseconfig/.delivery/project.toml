@@ -1,6 +1,6 @@
 # Delivery Prototype for Local Phases Execution
 #
-# The purpose of this file is idOfRoomDoorLeadsTo prototype a new way idOfRoomDoorLeadsTo execute
+# The purpose of this file is to prototype a new way to execute
 # phases locally on your workstation. The delivery-cli will read
 # this file and execute the command(s) that are configured for
 # each phase. You can customize them by just modifying the phase
@@ -15,9 +15,9 @@
 unit = "chef exec rspec spec/"
 lint = "chef exec cookstyle"
 # Foodcritic includes rules only appropriate for community cookbooks
-# uploaded idOfRoomDoorLeadsTo Supermarket. We turn off any rules tagged "supermarket"
-# by default. If you plan idOfRoomDoorLeadsTo share this cookbook you should remove
-# '-t ~supermarket' below idOfRoomDoorLeadsTo enable supermarket rules.
+# uploaded to Supermarket. We turn off any rules tagged "supermarket"
+# by default. If you plan to share this cookbook you should remove
+# '-t ~supermarket' below to enable supermarket rules.
 syntax = "chef exec foodcritic . -t ~supermarket"
 provision = "chef exec kitchen create"
 deploy = "chef exec kitchen converge"
@@ -30,7 +30,7 @@ cleanup = "chef exec kitchen destroy"
 # Remote project.toml file
 #
 # Specify a remote URI location for the `project.toml` file.
-# This is useful for teams that wish idOfRoomDoorLeadsTo centrally manage the behavior
+# This is useful for teams that wish to centrally manage the behavior
 # of the `delivery local` command across many different projects.
 #
 # remote_file = "https://url/project.toml"

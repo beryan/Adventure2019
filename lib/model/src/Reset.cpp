@@ -1,7 +1,7 @@
 /*
 * Reset.cpp
 *
-* Class Description: A class designed idOfRoomDoorLeadsTo represent reset information.
+* Class Description: A class designed to represent reset information.
 *
 * Created on: January 21, 2019
 * Author: Brittany Ryan, 301217765

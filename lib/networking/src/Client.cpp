@@ -76,7 +76,7 @@ Client::ClientImpl::connect(boost::asio::ip::tcp::resolver::iterator endpoint) {
       if (!errorCode) {
         this->handshake();
       } else {
-        reportError("Unable idOfRoomDoorLeadsTo connect.");
+        reportError("Unable to connect.");
       }
     });
 }
@@ -91,7 +91,7 @@ Client::ClientImpl::handshake() {
       if (!errorCode) {
         this->readMessage();
       } else {
-        reportError("Unable idOfRoomDoorLeadsTo handshake.");
+        reportError("Unable to handshake.");
       }
     });
 }
@@ -109,7 +109,7 @@ Client::ClientImpl::readMessage() {
           this->readMessage();
         }
       } else {
-        reportError("Unable idOfRoomDoorLeadsTo read.");
+        reportError("Unable to read.");
         this->disconnect();
       }
     });
@@ -162,7 +162,7 @@ Client::send(std::string message) {
       if (!errorCode) {
         impl->writeBuffer.pop_front();
       } else {
-        impl->reportError("Unable idOfRoomDoorLeadsTo write.");
+        impl->reportError("Unable to write.");
         impl->disconnect();
       }
     });
