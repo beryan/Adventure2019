@@ -8,7 +8,6 @@
 #include <vector>
 #include <array>
 #include "Character.h"
-#include "Role.h"
 
 namespace model {
     /**
@@ -31,10 +30,6 @@ namespace model {
         std::string getPassword() const;
 
         void setPassword(std::string password);
-
-        Role getRole() const;
-
-        void setRole(Role role);
 
         std::string getAvatar() const;
 
@@ -64,8 +59,6 @@ namespace model {
         std::string username;
 
         std::string password;
-
-        Role role;
 
         std::string avatar;
 

@@ -6,7 +6,6 @@
 #define CHARACTER_H
 
 #include "Object.h"
-#include "Role.h"
 
 namespace model {
     /**
@@ -18,6 +17,10 @@ namespace model {
     *  that must be contained in a character object in the application.
     */
 
+    enum class Role {
+        Admin, Builder, Default
+    };
+
     struct Character {
     public:
         explicit Character(int id);
@@ -25,6 +28,10 @@ namespace model {
         int getId() const;
 
         void setId(int id);
+
+        Role getRole() const;
+
+        void setRole(Role role);
 
         double getHealth() const;
 

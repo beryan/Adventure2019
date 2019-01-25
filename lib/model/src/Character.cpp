@@ -20,6 +20,14 @@ namespace model {
         this->id = id;
     }
 
+    Role Character::getRole() const {
+        return this->role;
+    }
+
+    void Character::setRole(Role role) {
+        this->role = role;
+    }
+
     double Character::getHealth() const {
         return this->health;
     }

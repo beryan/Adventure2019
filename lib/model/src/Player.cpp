@@ -35,14 +35,6 @@ namespace model {
         this->password = std::move(password);
     }
 
-    Role Player::getRole() const {
-        return this->role;
-    }
-
-    void Player::setRole(Role role) {
-        this->role = role;
-    }
-
     std::string Player::getAvatar() const {
         return this->avatar;
     }
