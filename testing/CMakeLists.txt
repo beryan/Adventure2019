@@ -5,9 +5,10 @@ include_directories(
 )
 
 add_executable(runAllTests
-        character-test.cpp
         lib/gtest_main.cc
         lib/gmock-gtest-all.cc
+        character-test.cpp
+        player-test.cpp
         )
 
 target_link_libraries(runAllTests
