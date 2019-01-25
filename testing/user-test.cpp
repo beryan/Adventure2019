@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "User.h"
+#include "Character.h"
 
 TEST(UserTestSuite, UserTest) {
 
