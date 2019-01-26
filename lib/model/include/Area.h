@@ -12,12 +12,8 @@
 
 #include <string>
 #include <vector>
-#include "NPC.h"
-#include "Object.h"
 #include "Room.h"
 
-using model::NPC;
-using model::Object;
 using model::Room;
 
 namespace model {
@@ -26,8 +22,6 @@ namespace model {
 
     private:
         std::string name;
-        std::vector<NPC> npcs;
-        std::vector<Object> objects;
         std::vector<Room> rooms;
 
       	friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
@@ -36,20 +30,14 @@ namespace model {
       	//constructors
       	Area();
       	Area(std::string name);
-        Area(std::string name, std::vector<NPC> npcs, std::vector<Object> objects, std::vector<Room> rooms);
+        Area(std::string name, std::vector<Room> rooms);
 
         //getters and setters
         std::string getName();
-        std::vector<NPC> getNpcs();
-        std::vector<Object> getObjects();
         std::vector<Room> getRooms();
         void setName(std::string name);
-        void setNpcs(std::vector<NPC> npcs);
-        void setObjects(std::vector<Object> objects);
         void setRooms(std::vector<Room> rooms);
 
-        void addNPC(NPC npc);
-        void addObject(Object object);
         void addRoom(Room room);
 
     };
