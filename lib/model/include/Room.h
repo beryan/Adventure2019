@@ -18,34 +18,34 @@ using model::Door;
 
 namespace model {
 
-    class Room {
+	class Room {
 
-    private:
-      	int id;
-        std::string name;
-      	std::vector<std::string> desc;
-      	std::vector<Door> doors;
+	private:
+		int id;
+		std::string name;
+		std::vector<std::string> desc;
+		std::vector<Door> doors;
 
-      	friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
+		friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
 
-    public:
-      	//constructors
-      	Room();
-      	Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors);
+	public:
+		//constructors
+		Room();
+		Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors);
 
-        //getters and setters
-        int getId();
-        std::string getName();
-        std::vector<std::string> getDesc();
-        std::vector<Door> getDoors();
-        void setId(int id);
-        void setName(std::string name);
-        void setDesc(std::vector<std::string> desc);
-        void setDoors(std::vector<Door> doors);
+		//getters and setters
+		int getId();
+		std::string getName();
+		std::vector<std::string> getDesc();
+		std::vector<Door> getDoors();
+		void setId(int id);
+		void setName(std::string name);
+		void setDesc(std::vector<std::string> desc);
+		void setDoors(std::vector<Door> doors);
 
-        void createStub();
+		void createStub();
 
-    };
+	};
 }
 
 #endif

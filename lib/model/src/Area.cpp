@@ -10,80 +10,82 @@
 #include "Area.h"
 #include <iostream>
 
+using model::Area;
+
 namespace model {
 
-    Area::Area() :
-        name({}),
-        NPCObjects({}),
-        objects({}),
-        rooms({})
-        {}
+    //constructors
+    Area::Area()
+            : name(""),
+              npcs({}),
+              objects({}),
+              rooms({})
+    { }
 
-    Area::Area(std::string name) :
-        name(std::move(name)),
-        NPCObjects({}),
-        objects({}),
-        rooms({})
-        {}
+    Area::Area(std::string name)
+            : name(std::move(name)),
+              npcs({}),
+              objects({}),
+              rooms({})
+    { }
 
-    Area::Area(
-        std::string name,
-        std::vector<NPC> NPCObjects,
-        std::vector<Object> objects,
-        std::vector<Room> rooms
-    ) :
-        name(std::move(name)),
-        NPCObjects(std::move(NPCObjects)),
-        objects(std::move(objects)),
-        rooms(std::move(rooms))
-        {}
+    Area::Area(std::string name, std::vector<NPC> npcs, std::vector<Object> objects, std::vector<Room> rooms)
+            : name(std::move(name)),
+              npcs(std::move(npcs)),
+              objects(std::move(objects)),
+              rooms(std::move(rooms))
+    { }
 
-    std::string Area::getName() const {
-        return this->name;
+    //getters and setters
+    std::string Area::getName() {
+        return name;
+    }
+
+    std::vector<NPC> Area::getNpcs() {
+        return npcs;
+    }
+
+    std::vector<Object> Area::getObjects() {
+        return objects;
+    }
+
+    std::vector<Room> Area::getRooms() {
+        return rooms;
     }
 
     void Area::setName(std::string name) {
         this->name = std::move(name);
     }
 
-    std::vector<NPC> Area::getNPCObjects() const {
-        return this->NPCObjects;
-    }
-
-    void Area::setNPCObjects(std::vector<NPC> NPCObjects) {
-        this->NPCObjects = std::move(NPCObjects);
-    }
-
-    void Area::addNPCObject(NPC NPCObjectToAdd) {
-        this->NPCObjects.push_back(std::move(NPCObjectToAdd));
-    }
-
-    std::vector<Object> Area::getObjects() const {
-        return this->objects;
+    void Area::setNpcs(std::vector<NPC> npcs) {
+        this->npcs = std::move(npcs);
     }
 
     void Area::setObjects(std::vector<Object> objects) {
         this->objects = std::move(objects);
     }
 
-    void Area::addObject(Object objectToAdd) {
-        this->objects.push_back(std::move(objectToAdd));
-    }
-
-    std::vector<Room> Area::getRooms() const {
-        return this->rooms;
-    }
-
     void Area::setRooms(std::vector<Room> rooms) {
         this->rooms = std::move(rooms);
     }
 
-    void Area::addRoom(Room roomToAdd) {
-        this->rooms.push_back(std::move(roomToAdd));
+    void Area::addNPC(NPC npc) {
+        npcs.push_back(std::move(npc));
     }
 
-    std::ostream& operator<<(std::ostream& out, const Area& area) {
-        out << "You are in " << area.name << std::endl;
-    	return out;
+    void Area::addObject(Object object) {
+        objects.push_back(std::move(object));
     }
+
+    void Area::addRoom(Room room) {
+        rooms.push_back(std::move(room));
+    }
+
+    //print object
+    std::ostream& operator<<(std::ostream& os, const Area& rhs) {
+        os << "You are in " << rhs.name << std::endl;
+
+        return os;
+    }
+
 }
