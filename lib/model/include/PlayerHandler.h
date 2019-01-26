@@ -15,34 +15,34 @@
 using json = nlohmann::json;
 
 namespace model {
-  typedef int PlayerId;
+    typedef int PlayerId;
 
-  class PlayerHandler {
-  public:
-      PlayerHandler();
+    class PlayerHandler {
+    public:
+        PlayerHandler();
 
-      bool isLoggedIn(const uintptr_t &clientId);
+        bool isLoggedIn(const uintptr_t &clientId);
 
-      std::string registerPlayer(const uintptr_t &clientId, const std::string &param);
+        std::string registerPlayer(const uintptr_t &clientId, const std::string &param);
 
-      std::string loginPlayer(const uintptr_t &clientId, const std::string &param);
+        std::string loginPlayer(const uintptr_t &clientId, const std::string &param);
 
-      std::string logoutPlayer(const uintptr_t &clientId);
+        std::string logoutPlayer(const uintptr_t &clientId);
 
-      std::string getUsernameByClientId(const uintptr_t &clientId);
+        std::string getUsernameByClientId(const uintptr_t &clientId);
 
-      static std::vector<Player> parseJsonUsers(json);
+        static std::vector<Player> parseJsonUsers(json);
 
-      void notifyBootedClients(std::deque<Response> &responses);
+        void notifyBootedClients(std::deque<Response> &responses);
 
-  private:
-    PlayerId nextId;
-    std::map<PlayerId, Player> allPlayers;
-    std::map<std::string, Player*> usernameToPlayer;
-    std::map<PlayerId, uintptr_t> activeIdToClient;
-    std::map<uintptr_t, PlayerId> activeClientToId;
+    private:
+        PlayerId nextId;
+        std::map<PlayerId, Player> allPlayers;
+        std::map<std::string, Player*> usernameToPlayer;
+        std::map<PlayerId, uintptr_t> activeIdToClient;
+        std::map<uintptr_t, PlayerId> activeClientToId;
 
-    std::vector<uintptr_t> bootedClients;
+        std::vector<uintptr_t> bootedClients;
   };
 }
 

@@ -67,9 +67,15 @@ namespace model {
         void
         handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses);
 
+        /**
+         *  Creates a Response to commands when the client is not logged in
+         */
         Response
         executeMenuAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
 
+        /**
+         *  Creates a Response to commands when the client is logged in
+         */
         Response
         executeInGameAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
 

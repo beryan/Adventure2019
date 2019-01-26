@@ -45,8 +45,7 @@ namespace model {
           return "The username " + inputUsername + " has already been taken, please use a different username.\n";
         }
 
-        auto playerId = this->nextId;
-        ++this->nextId;
+        auto playerId = this->nextId++;
         this->allPlayers.emplace(playerId, Player(playerId, inputUsername, inputPassword));
         this->usernameToPlayer.emplace(inputUsername, &this->allPlayers.at(playerId));
 
@@ -111,7 +110,7 @@ namespace model {
         this->activeIdToClient.erase(this->activeClientToId.at(clientId));
         this->activeClientToId.erase(clientId);
 
-        return "Logged out successfully.\n\n";
+        return "Logged out successfully.\n";
     }
 
     std::string
