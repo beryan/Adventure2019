@@ -115,11 +115,11 @@ namespace model {
                 continue;
             }
 
-            std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
+            std::string command = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
             std::string parameters;
 
             if (input.text.find(' ') != std::string::npos) {
-                parameters = trimWhitespace(incomingInput.substr(input.text.find(' ') + 1));
+                parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
             if (command == COMMAND_QUIT) {
