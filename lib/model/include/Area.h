@@ -7,52 +7,65 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_AREA_H
-#define WEBSOCKETNETWORKING_AREA_H
+#ifndef AREA_H
+#define AREA_H
 
 #include <string>
 #include <vector>
 #include "NPC.h"
-#include "Object.h"
 #include "Room.h"
-
-using model::NPC;
-using model::Object;
-using model::Room;
 
 namespace model {
 
+	/**
+    *  @class Area
+    *
+    *  @brief A class describing an area.
+    *
+    *  The Area class represents a collection of Room objects.
+    */
+
     class Area {
+	public:
+		Area();
 
-    private:
+		Area(std::string name);
+
+		Area(std::string name, std::vector<NPC> NPCObjects, std::vector<Object> items, std::vector<Room> rooms);
+
+		std::string getName() const;
+
+		void setName(std::string name);
+
+		std::vector<NPC> getNPCObjects() const;
+
+		void setNPCObjects(std::vector<NPC> NPCObjects);
+
+		void addNPCObject(NPC NPCObjectToAdd);
+
+		std::vector<Object> getObjects() const;
+
+		void setObjects(std::vector<Object> items);
+
+		void addObject(Object objectToAdd);
+
+		std::vector<Room> getRooms() const;
+
+		void setRooms(std::vector<Room> rooms);
+
+		void addRoom(Room roomToAdd);
+
+		friend std::ostream& operator<<(std::ostream& out, const Area& Area);
+
+	private:
         std::string name;
-        std::vector<NPC> npcs;
+
+        std::vector<NPC> NPCObjects;
+
         std::vector<Object> objects;
+
         std::vector<Room> rooms;
-
-      	friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
-
-    public:
-      	//constructors
-      	Area();
-      	Area(std::string name);
-        Area(std::string name, std::vector<NPC> npcs, std::vector<Object> objects, std::vector<Room> rooms);
-
-        //getters and setters
-        std::string getName();
-        std::vector<NPC> getNpcs();
-        std::vector<Object> getObjects();
-        std::vector<Room> getRooms();
-        void setName(std::string name);
-        void setNpcs(std::vector<NPC> npcs);
-        void setObjects(std::vector<Object> objects);
-        void setRooms(std::vector<Room> rooms);
-
-        void addNPC(NPC npc);
-        void addObject(Object object);
-        void addRoom(Room room);
-
     };
 }
 
-#endif
+#endif // AREA_H
