@@ -2,37 +2,72 @@
 // Created by jnhkm on 2019-01-18.
 //
 
-#ifndef WEBSOCKETNETWORKING_PLAYER_H
-#define WEBSOCKETNETWORKING_PLAYER_H
+#ifndef PLAYER_H
+#define PLAYER_H
 
-#include "User.h"
-#include "Role.h"
+#include <vector>
+#include <array>
+#include "Character.h"
 
 namespace model {
-    class Player : public User {
+    /**
+    *  @class Player
+    *
+    *  @brief A struct describing a player.
+    *
+    *  The Player class describes all the attributes of
+    *  a specific type of character in the application.
+    */
+
+    class Player : public Character {
     public:
         Player(int id, std::string username, std::string password);
 
-        std::string getUsername();
+        Player(int id, std::string username);
+
+        std::string getUsername() const;
 
         void setUsername(std::string username);
 
-        std::string getPassword();
+        std::string getPassword() const;
 
         void setPassword(std::string password);
 
-        Role getRole();
+        std::string getAvatar() const;
 
-        void setRole(Role role);
+        void setAvatar(std::string avatar);
+
+        std::vector<Object> getInventoryItems() const;
+
+        void setInventoryItems(std::vector<Object> inventoryItems);
+
+        void addToInventoryItems(Object addToInventoryItems);
+
+        std::array<Object*, Slot::Count> getEquippedItems() const;
+
+        void setEquippedItems(std::array<Object*, Slot::Count> equippedItems);
+
+        void moveFromInventoryToEquippedItems(Object *itemToMove);
+
+        void moveFromEquippedToInventoryItems(Slot slotToMoveFrom);
+
+        Object* removeFromInventoryItems(Object *itemToRemove);
+
+        Object* removeFromEquippedItems(Slot slotToRemoveFrom);
+
+        bool operator==(const Player& player) const;
 
     private:
         std::string username;
 
         std::string password;
 
-        Role role;
+        std::string avatar;
+
+        std::vector<Object> inventoryItems;
+
+        std::array<Object*, Slot::Count> equippedItems;
     };
 }
 
-
-#endif //WEBSOCKETNETWORKING_PLAYER_H
+#endif //PLAYER_H

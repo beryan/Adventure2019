@@ -6957,7 +6957,7 @@ static bool g_in_fast_death_test_child = false;
 // executing in the context of the death test child process.  Tools such as
 // Valgrind heap checkers may need this to modify their behavior in death
 // tests.  IMPORTANT: This is an internal utility.  Using it may break the
-// implementation of death tests.  User code MUST NOT use it.
+// implementation of death tests.  Character code MUST NOT use it.
 bool InDeathTestChild() {
 # if GTEST_OS_WINDOWS
 
@@ -8284,8 +8284,8 @@ FilePath FilePath::GetCurrentDir() {
 }
 
 // Returns a copy of the FilePath with the case-insensitive extension removed.
-// Example: FilePath("dir/file.exe").RemoveExtension("EXE") returns
-// FilePath("dir/file"). If a case-insensitive extension is not
+// Example: FilePath("direction/file.exe").RemoveExtension("EXE") returns
+// FilePath("direction/file"). If a case-insensitive extension is not
 // found, returns a copy of the original FilePath.
 FilePath FilePath::RemoveExtension(const char* extension) const {
   const std::string dot_extension = std::string(".") + extension;
@@ -8327,7 +8327,7 @@ FilePath FilePath::RemoveDirectoryName() const {
 // Example: FilePath("path/to/file").RemoveFileName() returns "path/to/".
 // If the FilePath is "a_file" or "/a_file", RemoveFileName returns
 // FilePath("./") or, on Windows, FilePath(".\\"). If the filepath does
-// not have a file, like "just/a/dir/", it returns the FilePath unmodified.
+// not have a file, like "just/a/direction/", it returns the FilePath unmodified.
 // On Windows platform, '\' is the path separator, otherwise it is '/'.
 FilePath FilePath::RemoveFileName() const {
   const char* const last_sep = FindLastPathSeparator();
@@ -8342,9 +8342,9 @@ FilePath FilePath::RemoveFileName() const {
 
 // Helper functions for naming files in a directory for xml output.
 
-// Given directory = "dir", base_name = "test", number = 0,
-// extension = "xml", returns "dir/test.xml". If number is greater
-// than zero (e.g., 12), returns "dir/test_12.xml".
+// Given directory = "direction", base_name = "test", number = 0,
+// extension = "xml", returns "direction/test.xml". If number is greater
+// than zero (e.g., 12), returns "direction/test_12.xml".
 // On Windows platform, uses \ as the separator rather than /.
 FilePath FilePath::MakeFileName(const FilePath& directory,
                                 const FilePath& base_name,
@@ -8360,7 +8360,7 @@ FilePath FilePath::MakeFileName(const FilePath& directory,
   return ConcatPaths(directory, FilePath(file));
 }
 
-// Given directory = "dir", relative_path = "test.xml", returns "dir/test.xml".
+// Given directory = "direction", relative_path = "test.xml", returns "direction/test.xml".
 // On Windows, uses \ as the separator rather than /.
 FilePath FilePath::ConcatPaths(const FilePath& directory,
                                const FilePath& relative_path) {
@@ -8446,7 +8446,7 @@ bool FilePath::IsAbsolutePath() const {
 // directory/base_name_<number>.extension if directory/base_name.extension
 // already exists. The number will be incremented until a pathname is found
 // that does not already exist.
-// Examples: 'dir/foo_test.xml' or 'dir/foo_test_1.xml'.
+// Examples: 'direction/foo_test.xml' or 'direction/foo_test_1.xml'.
 // There could be a race condition if two or more processes are calling this
 // function at the same time -- they could both pick the same filename.
 FilePath FilePath::GenerateUniqueFileName(const FilePath& directory,

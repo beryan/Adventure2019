@@ -25,7 +25,7 @@ namespace model{
      void addArea(Area area);
 
      std::map<int, Player> getUserMap();
-//     std::map<int, User> getAreaMap();
+//     std::map<int, Character> getAreaMap();
 
     void insertUser(Player player);
 

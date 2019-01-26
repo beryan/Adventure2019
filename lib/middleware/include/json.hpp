@@ -6950,7 +6950,7 @@ class binary_reader
                 return get_cbor_string(s) and sax->string(s);
             }
 
-            // array (0x00..0x17 data items follow)
+            // array (0x00..0x17 data objects follow)
             case 0x80:
             case 0x81:
             case 0x82:
@@ -7004,7 +7004,7 @@ class binary_reader
             case 0x9F: // array (indefinite length)
                 return get_cbor_array(std::size_t(-1));
 
-            // map (0x00..0x17 pairs of data items follow)
+            // map (0x00..0x17 pairs of data objects follow)
             case 0xA0:
             case 0xA1:
             case 0xA2:

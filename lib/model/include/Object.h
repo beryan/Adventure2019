@@ -1,44 +1,60 @@
 //
-// Created by Waswa Olunga on 2019-01-17.
+// Created by Waswa Olunga on 2019-01-18.
 //
 
-#ifndef WEBSOCKETNETWORKING_OBJECT_H
-#define WEBSOCKETNETWORKING_OBJECT_H
+#ifndef OBJECT_H
+#define OBJECT_H
 
 #include <string>
 
 namespace model {
 
-/**
- *  @class Object
- *
- *  @brief A class describing an object.
- *
- *  The Object class contains all the properties of
- *  an object. These properties can be
- *  accessed and changed.
- */
+    /**
+     *  @class Object
+     *
+     *  @brief A class describing an object.
+     *
+     *  The Object class contains all the properties of
+     *  an object that is part of the inventory of a player
+     *  or an object that is part of a room.
+     */
+
+    // Count returns the length of the Slots
+    enum Slot {Head, Body, Legs, Arm, Weapon, Misc, Count};
 
     class Object {
     public:
-        Object(int id, std::string name, std::string description)
-            : id(id),
-              name(std::move(name)),
-              description(std::move(description)) {}
+        Object();
 
-        int getId();
+        Object(int id, std::string name, std::string description, Slot slot);
+
+        Object(int id, std::string name, std::string description, bool canEquip, Slot slot);
+
+        int getId() const;
 
         void setId(int id);
 
-        std::string getName();
+        std::string getName() const;
 
         void setName(std::string name);
 
-        std::string getDescription();
+        std::string getDescription() const;
 
         void setDescription(std::string description);
 
-        bool operator==(const Object& rhs) const;
+        Slot getSlot() const;
+
+        void setSlot(Slot slot);
+
+        bool canBeEquipped() const;
+
+        void setCanEquip(bool canEquip);
+
+        bool operator==(const Object& NPC) const;
+
+        static constexpr int DEFAULT_ID = -1;
+
+        static constexpr bool DEFAULT_CAN_EQUIP = false;
 
     private:
         int id;
@@ -46,7 +62,11 @@ namespace model {
         std::string name;
 
         std::string description;
+
+        bool canEquip;
+
+        Slot slot;
     };
 }
 
-#endif //WEBSOCKETNETWORKING_OBJECT_H
+#endif //OBJECT_H
