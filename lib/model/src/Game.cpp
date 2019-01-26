@@ -139,7 +139,7 @@ namespace model {
                     int currentId = this->nextId;
                     ++this->nextId;
 
-                    this->idToPlayer.emplace(this->nextId, Player(currentId, username, password));
+                    this->idToPlayer.emplace(currentId, Player(currentId, username, password));
                     Player* newPlayer = &this->idToPlayer.at(currentId);
                     
                     this->usernameToPlayer.emplace(username, newPlayer);
