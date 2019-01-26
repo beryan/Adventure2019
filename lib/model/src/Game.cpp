@@ -20,6 +20,20 @@ lowercase(std::string string) {
     return string;
 }
 
+std::string
+trimWhitespace(std::string string) {
+    string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+
+    // trim from start (in place)
+    string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), string.end());
+
+    return string;
+}
+
 namespace model {
     const char* const Game::COMMAND_SHUTDOWN = "shutdown";
     const char* const Game::COMMAND_QUIT     = "quit";
@@ -53,8 +67,8 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter \"login [username] [password]\" to sign into an existing account\n"
-                         << "Enter \"register [username] [password]\" to make a new account\n";
+                         << "Enter \"login\" to sign into an existing account\n"
+                         << "Enter \"register\" to make a new account\n";
 
             responses.push_back({clientId, introduction.str(), true});
 
@@ -80,12 +94,32 @@ namespace model {
     Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses) {
         for (const auto& input : incoming) {
             auto clientId = input.connection.id;
+            auto incomingInput = trimWhitespace(input.text);
+
+            if (this->playerHandler->isLoggingIn(clientId)) {
+                responses.push_back({
+                    clientId,
+                    this->playerHandler->processLogin(clientId, incomingInput.substr(0, incomingInput.find(' '))),
+                    true
+                });
+
+                continue;
+
+            } else if (this->playerHandler->isRegistering(clientId)) {
+                responses.push_back({
+                    clientId,
+                    this->playerHandler->processRegistration(clientId, incomingInput.substr(0, incomingInput.find(' '))),
+                    true
+                });
+
+                continue;
+            }
 
             std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
             std::string parameters;
 
             if (input.text.find(' ') != std::string::npos) {
-                parameters = input.text.substr(input.text.find(' ') + 1);
+                parameters = trimWhitespace(incomingInput.substr(input.text.find(' ') + 1));
             }
 
             if (command == COMMAND_QUIT) {
@@ -112,10 +146,10 @@ namespace model {
         std::ostringstream tempMessage;
 
         if (command == COMMAND_REGISTER) {
-            tempMessage << this->playerHandler->registerPlayer(clientId, param);
+            tempMessage << this->playerHandler->startRegistration(clientId);
 
         } else if (command == COMMAND_LOGIN) {
-            tempMessage << this->playerHandler->loginPlayer(clientId, param);
+            tempMessage << this->playerHandler->startLogin(clientId);
 
         } else if (command == COMMAND_HELP) {
             tempMessage << "\n"
@@ -125,8 +159,8 @@ namespace model {
                         << "\n"
                         << "COMMANDS:\n"
                         << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                        << "  - " << COMMAND_REGISTER << " [username] [password] (create a new account with [username] [password])\n"
-                        << "  - " << COMMAND_LOGIN    << " [username] [password] (login to an account with [username] [password])\n"
+                        << "  - " << COMMAND_REGISTER << " (create a new account)\n"
+                        << "  - " << COMMAND_LOGIN    << " (login to an existing account )\n"
                         << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
                         << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
                         << "\n";
@@ -134,8 +168,8 @@ namespace model {
         } else {
             tempMessage << "\n"
                         << "The word \"" << command << "\" is not a valid command.\n"
-                        << "Enter " << "\"" << COMMAND_LOGIN << " [username] [password]\" to log into an existing account\n"
-                        << "Enter " << "\"" << COMMAND_REGISTER << "[username] [password]\" to create a new account\n"
+                        << "Enter " << "\"" << COMMAND_LOGIN << "\" to log into an existing account\n"
+                        << "Enter " << "\"" << COMMAND_REGISTER << "\" to create a new account\n"
                         << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
 
         }
