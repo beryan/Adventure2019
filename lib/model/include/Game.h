@@ -66,33 +66,39 @@ namespace model {
          *  vector on completion.
          */
         void
-        handleConnects(std::deque<Response> &results);
+        handleConnects(std::deque<Response> &responses);
 
         /**
          *  Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
          *  associated vector on completion.
          */
         void
-        handleDisconnects(std::deque<Response> &results);
+        handleDisconnects(std::deque<Response> &responses);
 
         /**
          *  Processes client input, calling class methods based on client input and formulating appropriate responses in
          *  the form of Response objects.
          */
         void
-        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &results);
+        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses);
+
+        Response
+        executeMenuAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
+
+        Response
+        executeInGameAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
          */
         void
-        handleOutgoing(std::deque<Response> &results);
+        handleOutgoing(std::deque<Response> &responses);
 
         /**
          *  Converts a Response deque into a Message deque.
          */
         std::deque<Message>
-        formMessages(std::deque<Response> &results);
+        formMessages(std::deque<Response> &responses);
 
         /* Login/Register Code */
         void
