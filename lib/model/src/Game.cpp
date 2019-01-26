@@ -117,20 +117,18 @@ namespace model {
             if (!this->activeClientToId.count(clientId)) {
                 if (command == COMMAND_REGISTER) {
                     /* Login/Register code */
-                    std::string username = param.substr(0, param.find(' '));
-                    std::string password;
 
-                    if (param.find(' ') != std::string::npos) {
-                        password = param.substr(param.find(' ') + 1);
-
-                    } else {
+                    if (param.find(' ') == std::string::npos) {
                         tempMessage << "Missing fields for registration.\n";
                         results.push_back({clientId, tempMessage.str(), true});
                         continue;
                     }
 
-                    if (this->usernameToPlayer.count(username)) {
-                        tempMessage << "The username " << username << " has already been taken,"
+                    std::string inputUsername = param.substr(0, param.find(' '));
+                    std::string inputPassword = param.substr(param.find(' ') + 1);
+
+                    if (this->usernameToPlayer.count(inputUsername)) {
+                        tempMessage << "The username " << inputUsername << " has already been taken,"
                                     << " please use a different username.\n";
                         results.push_back(Response{clientId, tempMessage.str(), true});
                         continue;
@@ -138,54 +136,47 @@ namespace model {
 
                     int currentId = this->nextId;
                     ++this->nextId;
-
-                    this->idToPlayer.emplace(currentId, Player(currentId, username, password));
-                    Player* newPlayer = &this->idToPlayer.at(currentId);
-                    
-                    this->usernameToPlayer.emplace(username, newPlayer);
+                    this->idToPlayer.emplace(currentId, Player(currentId, inputUsername, inputPassword));
+                    this->usernameToPlayer.emplace(inputUsername, &this->idToPlayer.at(currentId));
                     this->loginPlayer(clientId, currentId);
 
-                    std::cout << username << " has been registered to the game with player ID " << newPlayer->getId() << "\n";
-                    tempMessage << "Account created!\n";
+                    std::cout << inputUsername << " has been registered to the game\n";
+                    tempMessage << "Your account has been registered successfully and you are now logged in.\n";
                     /* End */
 
                 } else if (command == COMMAND_LOGIN) {
                     /* Login/Register code */
-                    std::string username = param.substr(0, param.find(' '));
-                    std::string password;
                     bool success = false;
+                    std::string inputUsername = param.substr(0, param.find(' '));
 
-                    if (param.find(' ') != std::string::npos) {
-                        password = param.substr(param.find(' ') + 1);
+                    if (param.find(' ') != std::string::npos && this->usernameToPlayer.count(inputUsername)) {
 
-                        if (this->usernameToPlayer.count(username)) {
-                            if (this->usernameToPlayer.at(username)->getPassword() == password) {
+                        std::string inputPassword = param.substr(param.find(' ') + 1);
+                        Player* selectedPlayer = this->usernameToPlayer.at(inputUsername);
+                        IdType playerId = selectedPlayer->getId();
 
-                                IdType playerId = this->usernameToPlayer.at(username)->getId();
 
-                                if (!this->activeIdToClient.count(playerId)) {
-                                    this->loginPlayer(clientId, playerId);
+                        if ((selectedPlayer->getPassword() == inputPassword) && !this->activeIdToClient.count(playerId)) {
+                            this->loginPlayer(clientId, playerId);
 
-                                } else {
-                                    // Player is already being used by a client, logout associated client
-                                    // and login with new client
-                                    results.push_back({this->activeIdToClient.at(playerId),
-                                                         "You have been logged out due to being logged in elsewhere.\n\n",
-                                                         true});
+                        } else {
+                            // Player is already being used by a client, logout associated client
+                            // and login with new client
+                            results.push_back({this->activeIdToClient.at(playerId),
+                                               "You have been logged out due to being logged in elsewhere.\n\n",
+                                               true});
 
-                                    this->logoutPlayer(playerId);
-                                    this->loginPlayer(clientId, playerId);
+                            this->logoutPlayer(playerId);
+                            this->loginPlayer(clientId, playerId);
 
-                                    std::cout << username << " is now being used by " << clientId << "\n";
-                                }
-
-                                success = true;
-                            }
+                            std::cout << inputUsername << " is now being used by " << clientId << "\n";
                         }
+
+                        success = true;
                     }
 
                     if (success) {
-                        std::cout << username << " has entered the game\n";
+                        std::cout << inputUsername << " has entered the game\n";
                         tempMessage << "Logged in successfully!\n";
 
                     } else {
@@ -325,11 +316,8 @@ namespace model {
         std::deque<Response> results;
 
         this->handleConnects(results);
-
         this->handleDisconnects(results);
-
         this->handleIncoming(incoming, results);
-
         this->handleOutgoing(results);
 
         return this->formMessages(results);
