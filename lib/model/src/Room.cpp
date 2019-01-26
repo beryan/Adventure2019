@@ -16,82 +16,119 @@ namespace model {
 
     //constructors
     Room::Room()
-            : id(-1),
-              name(""),
-              desc({}),
-              doors({})
-    { }
+      : id(-1),
+        name(""),
+        desc({}),
+        doors({}),
+        npcs({}),
+        objects({})
+        { }
 
     Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors)
-            : id(id),
-              name(std::move(name)),
-              desc(std::move(desc)),
-              doors(std::move(doors))
-    { }
+      : id(id),
+        name(std::move(name)),
+        desc(std::move(desc)),
+        doors(std::move(doors)),
+        npcs({}),
+        objects({})
+        { }
+
+    Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
+      : id(id),
+        name(std::move(name)),
+        desc(std::move(desc)),
+        doors(std::move(doors)),
+        npcs(std::move(npcs)),
+        objects(std::move(objects))
+        { }
 
     //getters and setters
     int Room::getId() {
-        return id;
+      return id;
     }
 
     std::string Room::getName() {
-        return name;
+      return name;
     }
 
     std::vector<std::string> Room::getDesc() {
-        return desc;
+      return desc;
     }
 
     std::vector<Door> Room::getDoors() {
-        return doors;
+      return doors;
+    }
+
+    std::vector<NPC> Room::getNpcs() {
+      return npcs;
+    }
+
+    std::vector<Object> Room::getObjects() {
+      return objects;
     }
 
     void Room::setId(int id) {
-        this->id = id;
+      this->id = id;
     }
 
     void Room::setName(std::string name) {
-        this->name = std::move(name);
+      this->name = std::move(name);
     }
 
     void Room::setDesc(std::vector<std::string> desc) {
-        this->desc = std::move(desc);
+      this->desc = std::move(desc);
     }
 
     void Room::setDoors(std::vector<Door> doors) {
-        this->doors = std::move(doors);
+      this->doors = std::move(doors);
+    }
+
+    void Room::setNpcs(std::vector<NPC> npcs) {
+      this->npcs = std::move(npcs);
+    }
+
+    void Room::setObjects(std::vector<Object> objects) {
+      this->objects = std::move(objects);
+    }
+
+    void Room::addNPC(NPC npc) {
+      npcs.push_back(std::move(npc));
+    }
+
+    void Room::addObject(Object object) {
+      objects.push_back(std::move(object));
     }
 
     //create temporary room to showcase functionality based on provided mirkwood file
     void Room::createStub() {
-        this->id = 8800;
-        this->name = "Entrance to Mirkwood";
-        this->desc = {"You have entered the quasi-magical Elven forest of Mirkwood, populated by",
-                      "Sylvan Elves and their mysterious allies. Strangers are frowned upon here,",
-                      "so be on your guard. It is rumored that many different races of Elves",
-                      "actually inhabit this forest, in various parts and sometimes they are",
-                      "carefully hidden, away from the prying eyes of strangers."};
-        Door stubDoor1 = Door("north", 8801);
-        Door stubDoor2 = Door("south", {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}, 8855);
-        this->doors = {stubDoor1, stubDoor2};
+      this->id = 8800;
+      this->name = "Entrance to Mirkwood";
+      this->desc = {"You have entered the quasi-magical Elven forest of Mirkwood, populated by",
+      "Sylvan Elves and their mysterious allies. Strangers are frowned upon here,",
+      "so be on your guard. It is rumored that many different races of Elves",
+      "actually inhabit this forest, in various parts and sometimes they are",
+      "carefully hidden, away from the prying eyes of strangers."};
+      Door stubDoor1 = Door("north", 8801);
+      Door stubDoor2 = Door("south", {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}, 8855);
+      this->doors = {stubDoor1, stubDoor2};
     }
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Room& rhs) {
-        os << "\n*****" << rhs.name << "*****\n";
+      os << "\n*****" << rhs.name << "*****\n";
 
-        if (rhs.desc.size() != 0) {
-            for (std::string s : rhs.desc) {
-                os << s << std::endl;
-            }
-        }
+      if (rhs.desc.size() != 0) {
+        for (std::string s : rhs.desc) {
+      		os << s << std::endl;
+      	}
+      }
 
-        os << "\n***Exits***\n";
-        for (Door d : rhs.doors) {
-            os << d;
-        }
+      os << "\n***Exits***\n";
+    	for (Door d : rhs.doors) {
+    		os << d;
+    	}
 
-        return os;
+    	return os;
     }
 
 }

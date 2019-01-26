@@ -16,76 +16,46 @@ namespace model {
 
     //constructors
     Area::Area()
-            : name(""),
-              npcs({}),
-              objects({}),
-              rooms({})
-    { }
+      : name(""),
+        rooms({})
+        { }
 
     Area::Area(std::string name)
-            : name(std::move(name)),
-              npcs({}),
-              objects({}),
-              rooms({})
-    { }
+      : name(std::move(name)),
+        rooms({})
+        { }
 
-    Area::Area(std::string name, std::vector<NPC> npcs, std::vector<Object> objects, std::vector<Room> rooms)
-            : name(std::move(name)),
-              npcs(std::move(npcs)),
-              objects(std::move(objects)),
-              rooms(std::move(rooms))
-    { }
+    Area::Area(std::string name, std::vector<Room> rooms)
+      : name(std::move(name)),
+        rooms(std::move(rooms))
+        { }
 
     //getters and setters
     std::string Area::getName() {
-        return name;
-    }
-
-    std::vector<NPC> Area::getNpcs() {
-        return npcs;
-    }
-
-    std::vector<Object> Area::getObjects() {
-        return objects;
+      return name;
     }
 
     std::vector<Room> Area::getRooms() {
-        return rooms;
+      return rooms;
     }
 
     void Area::setName(std::string name) {
-        this->name = std::move(name);
-    }
-
-    void Area::setNpcs(std::vector<NPC> npcs) {
-        this->npcs = std::move(npcs);
-    }
-
-    void Area::setObjects(std::vector<Object> objects) {
-        this->objects = std::move(objects);
+      this->name = std::move(name);
     }
 
     void Area::setRooms(std::vector<Room> rooms) {
-        this->rooms = std::move(rooms);
-    }
-
-    void Area::addNPC(NPC npc) {
-        npcs.push_back(std::move(npc));
-    }
-
-    void Area::addObject(Object object) {
-        objects.push_back(std::move(object));
+      this->rooms = std::move(rooms);
     }
 
     void Area::addRoom(Room room) {
-        rooms.push_back(std::move(room));
+      rooms.push_back(std::move(room));
     }
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
-        os << "You are in " << rhs.name << std::endl;
+      os << "You are in " << rhs.name << std::endl;
 
-        return os;
+    	return os;
     }
 
 }
