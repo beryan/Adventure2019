@@ -2,11 +2,13 @@
 // Created by louis on 19/01/19.
 //
 
-#ifndef WEBSOCKETNETWORKING_GAME_H
-#define WEBSOCKETNETWORKING_GAME_H
+#ifndef GAME_H
+#define GAME_H
 
 #include "Server.h"
 #include "Player.h"
+#include "Response.h"
+#include "PlayerHandler.h"
 
 #include <functional>
 #include <deque>
@@ -14,18 +16,9 @@
 
 using networking::Connection;
 using networking::Message;
+using model::PlayerHandler;
 
 namespace model {
-    /**
-     *  A message to be sent from the server to client(s). Stores a boolean value for
-     *  determining if the message should be sent to only the sender or to all clients
-     */
-    struct Response {
-        uintptr_t clientId;
-        std::string message;
-        bool isLocal;
-    };
-
     /**
      *  @class Game
      *
@@ -42,6 +35,8 @@ namespace model {
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
+        std::unique_ptr<PlayerHandler> playerHandler;
+
         static const char* const COMMAND_SHUTDOWN;
         static const char* const COMMAND_QUIT;
         static const char* const COMMAND_SAY;
@@ -50,16 +45,6 @@ namespace model {
         static const char* const COMMAND_LOGIN;
         static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_INFO;
-        static const char* const COMMAND_START;
-
-        /* Login/Register member variables */
-        typedef int IdType;
-        IdType nextId;
-        std::map<std::string, Player*> usernameToPlayer;
-        std::map<IdType, Player> idToPlayer;
-        std::map<IdType, uintptr_t> activeIdToClient;
-        std::map<uintptr_t , IdType> activeClientToId;
-        /* End */
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -100,14 +85,6 @@ namespace model {
         std::deque<Message>
         formMessages(std::deque<Response> &responses);
 
-        /* Login/Register Code */
-        void
-        loginPlayer(uintptr_t clientId, IdType playerId);
-
-        void
-        logoutPlayer(IdType playerId);
-        /* End */
-
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.
@@ -129,4 +106,4 @@ namespace model {
     };
 }
 
-#endif //WEBSOCKETNETWORKING_GAME_H
+#endif //GAME_H

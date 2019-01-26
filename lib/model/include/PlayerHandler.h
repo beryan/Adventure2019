@@ -2,28 +2,48 @@
 // Created by Stephen Wanhella on 2019-01-22.
 //
 
-#ifndef WEBSOCKETNETWORKING_USERHANDLER_H
-#define WEBSOCKETNETWORKING_USERHANDLER_H
+#ifndef PLAYERHANDLER_H
+#define PLAYERHANDLER_H
+
+#include "Player.h"
+#include "Response.h"
+#include "json.hpp"
 
 #include <map>
-#include "Player.h"
-#include "json.hpp"
+#include <deque>
 
 using json = nlohmann::json;
 
 namespace model {
+  typedef int PlayerId;
+
   class PlayerHandler {
   public:
-    PlayerHandler() = default;
-    Player registerPlayer(std::string username, std::string password);
-    Player login(std::string username, std::string password);
-    bool isRegistered(std::string);
+      PlayerHandler();
 
-    static std::vector<Player> parseJsonUsers(json);
+      bool isLoggedIn(const uintptr_t &clientId);
+
+      std::string registerPlayer(const uintptr_t &clientId, const std::string &param);
+
+      std::string loginPlayer(const uintptr_t &clientId, const std::string &param);
+
+      std::string logoutPlayer(const uintptr_t &clientId);
+
+      std::string getUsernameByClientId(const uintptr_t &clientId);
+
+      static std::vector<Player> parseJsonUsers(json);
+
+      void notifyBootedClients(std::deque<Response> &responses);
+
   private:
-    std::map<std::string, int> usernameToIdMap;
-    std::map<int, Player> idToPlayerMap;
+    PlayerId nextId;
+    std::map<PlayerId, Player> allPlayers;
+    std::map<std::string, Player*> usernameToPlayer;
+    std::map<PlayerId, uintptr_t> activeIdToClient;
+    std::map<uintptr_t, PlayerId> activeClientToId;
+
+    std::vector<uintptr_t> bootedClients;
   };
 }
 
-#endif //WEBSOCKETNETWORKING_USERHANDLER_H
+#endif //PLAYERHANDLER_H
