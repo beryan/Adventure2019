@@ -89,12 +89,12 @@ namespace model {
         } else if (inFirstPasswordPrompt) {
             if (input.length() < 6) {
                 this->regPasswordFirstPrompt.erase(clientId);
-                return "Password is too short. Registration process cancelled.\n";
+                return "The password you entered is too short. Registration process cancelled.\n";
             }
 
             if (input.length() > 16) {
                 this->regPasswordFirstPrompt.erase(clientId);
-                return "Password is too long. Registration process cancelled.\n";
+                return "The password you entered is too long. Registration process cancelled.\n";
             }
 
             this->regPasswordInput.emplace(clientId, input);
@@ -107,7 +107,7 @@ namespace model {
             this->regPasswordSecondPrompt.erase(clientId);
 
             if (this->regPasswordInput.at(clientId) != input) {
-                return "Passwords do not match. Registration process cancelled.\n";
+                return "The passwords you entered do not match. Registration process cancelled.\n";
             }
 
             auto inputUsername = this->regUsernameInput.at(clientId);
