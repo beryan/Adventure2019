@@ -98,17 +98,12 @@ namespace model {
                 return;
             }
 
-            bool isLoggedIn = this->playerHandler->isLoggedIn(clientId);
-            Response response;
-
-            if (isLoggedIn) {
-                response = this->executeInGameAction(clientId, command, parameters);
+            if (!this->playerHandler->isLoggedIn(clientId)) {
+                responses.push_back(this->executeMenuAction(clientId, command, parameters));
 
             } else {
-                response = this->executeMenuAction(clientId, command, parameters);
+                responses.push_back(this->executeInGameAction(clientId, command, parameters));
             }
-
-            responses.push_back(response);
         }
     }
 
@@ -158,7 +153,7 @@ namespace model {
             tempMessage << this->playerHandler->getUsernameByClientId(clientId) << "> " << param << "\n";
 
         } else if (command == COMMAND_LOGOUT) {
-            tempMessage << playerHandler->logoutPlayer(clientId);
+            tempMessage << this->playerHandler->logoutPlayer(clientId);
 
         } else if (command == COMMAND_HELP) {
             tempMessage << "\n"
@@ -207,7 +202,7 @@ namespace model {
             } else {
                 for (const auto &client : *this->clients) {
                     // Send to public messages to logged in users only
-                    if (playerHandler->isLoggedIn(client.id)) {
+                    if (this->playerHandler->isLoggedIn(client.id)) {
                         clientMessages[client.id] << entry.message;
                     }
                 }
