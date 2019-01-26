@@ -21,19 +21,46 @@ namespace model {
     public:
         PlayerHandler();
 
-        bool isLoggedIn(const uintptr_t &clientId);
+        /**
+         *  Checks if a player is logged in (exists in the activeClientToId map)
+         */
+        bool
+        isLoggedIn(const uintptr_t &clientId);
 
-        std::string registerPlayer(const uintptr_t &clientId, const std::string &param);
+        /**
+         *  Returns the result of a registration attempt
+         */
+        std::string
+        registerPlayer(const uintptr_t &clientId, const std::string &param);
 
-        std::string loginPlayer(const uintptr_t &clientId, const std::string &param);
+        /**
+         *  Returns the result of a login attempt. Appends bootedClients if logging into a Player that is already
+         *  being accessed by another client.
+         */
+        std::string
+        loginPlayer(const uintptr_t &clientId, const std::string &param);
 
-        std::string logoutPlayer(const uintptr_t &clientId);
+        /**
+         *  Logs out the client and informs them.
+         */
+        std::string
+        logoutPlayer(const uintptr_t &clientId);
 
-        std::string getUsernameByClientId(const uintptr_t &clientId);
+        /**
+         *  Returns the username of a Player given a client ID. Used for displaying names in chat.
+         */
+        std::string
+        getUsernameByClientId(const uintptr_t &clientId);
 
-        static std::vector<Player> parseJsonUsers(json);
+        /**
+         *  Appends Responses based on clients who have been logged out do to a login by another client into the
+         *  same Player. Is to be called by the Game class' handleOutgoing() method.
+         */
+        void
+        notifyBootedClients(std::deque<Response> &responses);
 
-        void notifyBootedClients(std::deque<Response> &responses);
+        static std::vector<Player>
+        parseJsonUsers(json);
 
     private:
         PlayerId nextId;
