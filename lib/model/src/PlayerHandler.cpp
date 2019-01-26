@@ -75,6 +75,11 @@ namespace model {
                 return "No username entered. Registration process cancelled.\n";
             }
 
+            if (input.length() > 16) {
+                this->regUsernamePrompt.erase(clientId);
+                return "The username you entered is too long. Registration process cancelled.\n";
+            }
+
             if (this->usernameToPlayer.count(input)) {
                 return "Username \"" + input + "\" has already been taken, please enter a different username.\n";
             }
