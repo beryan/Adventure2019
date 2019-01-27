@@ -37,11 +37,13 @@ namespace model {
 
         void setAvatar(std::string avatar);
 
+        bool operator==(const Player& player) const;
+
+        /************ Inventory ************/
+
         std::vector<Object> getInventoryItems() const;
 
         void setInventoryItems(std::vector<Object> inventoryItems);
-
-        void addToInventoryItems(Object addToInventoryItems);
 
         std::array<Object*, Slot::Count> getEquippedItems() const;
 
@@ -49,13 +51,19 @@ namespace model {
 
         void moveFromInventoryToEquippedItems(Object *itemToMove);
 
+        bool isItemInInventoryItems(const std::vector<Object> &inventoryItems, Object *item);
+
+        void addItemToEquippedItems(Object *currentItemInSlot, Object *newItemToAdd);
+
+        bool isSlotOccupied(Object *currentItemInSlot);
+
+        void addToInventoryItems(Object addToInventoryItems);
+
         void moveFromEquippedToInventoryItems(Slot slotToMoveFrom);
 
-        Object* removeFromInventoryItems(Object *itemToRemove);
+        Object* dropFromInventoryItems(Object *itemToRemove);
 
-        Object* removeFromEquippedItems(Slot slotToRemoveFrom);
-
-        bool operator==(const Player& player) const;
+        Object* dropFromEquippedItems(Slot slotToRemoveFrom);
 
     private:
         std::string username;
@@ -64,9 +72,9 @@ namespace model {
 
         std::string avatar;
 
-        std::vector<Object> inventoryItems;
+        std::map<int, Object> inventoryItems;
 
-        std::array<Object*, Slot::Count> equippedItems;
+        std::map<int, Object> equippedItems;
     };
 }
 

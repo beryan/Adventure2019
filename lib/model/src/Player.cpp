@@ -4,15 +4,9 @@
 
 #include "Player.h"
 #include <algorithm>
+#include <map>
 
 namespace model {
-
-    bool isItemInInventoryItems(const std::vector<Object> &inventoryItems, Object *item);
-
-    void addItemToEquippedItems(Object *currentItemInSlot, Object *newItemToAdd);
-
-    bool isSlotOccupied(Object *currentItemInSlot);
-
     Player::Player(int id, std::string username, std::string password) :
         Character(id),
         username(std::move(username)),
@@ -104,14 +98,14 @@ namespace model {
         }
     }
 
-    Object* Player::removeFromInventoryItems(Object *itemToRemove) {
+    Object* Player::dropFromInventoryItems(Object *itemToRemove) {
         this->inventoryItems.erase(
             std::find(this->inventoryItems.begin(), this->inventoryItems.end(), *itemToRemove)
         );
         return itemToRemove;
     }
 
-    Object* Player::removeFromEquippedItems(Slot slotToRemoveFrom) {
+    Object* Player::dropFromEquippedItems(Slot slotToRemoveFrom) {
         Object *itemToRemove = this->equippedItems.at(slotToRemoveFrom);
         this->equippedItems.at(slotToRemoveFrom) = nullptr;
         return itemToRemove;
