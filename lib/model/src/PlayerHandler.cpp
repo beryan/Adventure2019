@@ -12,16 +12,8 @@ using json = nlohmann::json;
 using player = model::Player;
 
 namespace model {
-    std::vector<Player> PlayerHandler::parseJsonUsers(json users) {
-        std::vector<Player> players;
-
-        for (json::iterator it = users.begin(); it != users.end(); ++it) {
-          Player p (it.value().at("id"), it.value().at("username"));
-          players.push_back(p);
-        }
-
-        return players;
-    }
+    const unsigned short PlayerHandler::MIN_PASSWORD_LENGTH = 4;
+    const unsigned short PlayerHandler::MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
     PlayerHandler::PlayerHandler() {
         this->nextId = 1;
@@ -58,10 +50,13 @@ namespace model {
     std::string
     PlayerHandler::startRegistration(const uintptr_t &clientId) {
         this->regUsernamePrompt.insert(clientId);
+        std::ostringstream response;
+        response << "\n"
+                 << "Register\n"
+                 << "--------\n"
+                 << "Enter your username (maximum of " << MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
-        return "\nRegister\n"
-               "--------\n"
-               "Enter your username (maximum of 16 characters)\n";
+        return response.str();
     }
 
     std::string
@@ -75,7 +70,7 @@ namespace model {
                 return "No username entered. Registration process cancelled.\n";
             }
 
-            if (input.length() > 16) {
+            if (input.length() > MAX_USERNAME_AND_PASSWORD_LENGTH) {
                 this->regUsernamePrompt.erase(clientId);
                 return "The username you entered is too long. Registration process cancelled.\n";
             }
@@ -89,15 +84,20 @@ namespace model {
             this->regPasswordFirstPrompt.insert(clientId);
             this->regUsernamePrompt.erase(clientId);
 
-            return input + "\nEnter your password (minimum of 6 characters, maximum of 16 characters)\n";
+            std::ostringstream response;
+            response << input << "\n"
+                     << "Enter your password (minimum of " << MIN_PASSWORD_LENGTH << " characters,"
+                     << " maximum of " << MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+
+            return response.str();
 
         } else if (inFirstPasswordPrompt) {
-            if (input.length() < 6) {
+            if (input.length() < MIN_PASSWORD_LENGTH) {
                 this->regPasswordFirstPrompt.erase(clientId);
                 return "The password you entered is too short. Registration process cancelled.\n";
             }
 
-            if (input.length() > 16) {
+            if (input.length() > MAX_USERNAME_AND_PASSWORD_LENGTH) {
                 this->regPasswordFirstPrompt.erase(clientId);
                 return "The password you entered is too long. Registration process cancelled.\n";
             }
@@ -233,5 +233,17 @@ namespace model {
 
             this->bootedClients.erase(itr);
         }
+    }
+
+    std::vector<Player>
+    PlayerHandler::parseJsonUsers(json users) {
+        std::vector<Player> players;
+
+        for (json::iterator it = users.begin(); it != users.end(); ++it) {
+            Player p (it.value().at("id"), it.value().at("username"));
+            players.push_back(p);
+        }
+
+        return players;
     }
 }

@@ -29,19 +29,29 @@ using model::Response;
  *  15. Enter valid credentials in login
  *  16. Logout other client if same Player logged in by a client
  */
-uintptr_t clientIdA = 100;
-uintptr_t clientIdB = 200;
+const uintptr_t clientIdA = 100;
+const uintptr_t clientIdB = 200;
 
-const std::string validLengthString = "1234567890123456";
-const std::string longLengthString  = "12345678901234567";
-const std::string shortLengthString = "12345";
+const unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
+const unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
+
+const std::string validLengthString = "Test Input";
+const std::string longLengthString  = "Very very very long input";
+const std::string shortLengthString = "sls";
+
 
 TEST(RegisterTest, StartRegistration) {
     PlayerHandler playerHandler{};
 
     auto result = playerHandler.startRegistration(clientIdA);
 
-    EXPECT_EQ("\nRegister\n--------\nEnter your username (maximum of 16 characters)\n", result);
+    std::ostringstream expect;
+    expect << "\n"
+           << "Register\n"
+           << "--------\n"
+           << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+
+    EXPECT_EQ(expect.str(), result);
 }
 
 TEST(RegisterTest, LongUsername) {
@@ -59,7 +69,12 @@ TEST(RegisterTest, ValidUsername) {
     playerHandler.startRegistration(clientIdA);
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
 
-    EXPECT_EQ(validLengthString + "\nEnter your password (minimum of 6 characters, maximum of 16 characters)\n", result);
+    std::ostringstream expect;
+    expect << validLengthString << "\n"
+           << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
+           << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+
+    EXPECT_EQ(expect.str(), result);
 }
 
 TEST(RegisterTest, ShortPassword) {
