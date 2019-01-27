@@ -50,6 +50,11 @@ namespace model {
         bool
         isLoggedIn(const uintptr_t &clientId);
 
+        /**
+         *  Checks if a client is in the process of registering a new Player
+         */
+        bool
+        isRegistering(const uintptr_t &clientId);
 
         /**
          *  Add clients to the registration process
@@ -58,16 +63,16 @@ namespace model {
         startRegistration(const uintptr_t &clientId);
 
         /**
-         *  Checks if a client is in the process of registering a new Player
-         */
-        bool
-        isRegistering(const uintptr_t &clientId);
-
-        /**
          *  Processes and responds to the input of a registering user based on the step they are in
          */
         std::string
         processRegistration(const uintptr_t &clientId, const std::string &param);
+
+        /**
+         *  Removes client from the registration process. Used for disconnects
+         */
+        void
+        exitRegistration(const uintptr_t &clientId);
 
         /**
          *  Checks if a client is in the process of logging in
@@ -86,7 +91,13 @@ namespace model {
          *  if logging into a Player that is already being accessed by another client.
          */
         std::string
-        processLogin(const uintptr_t &clientId, const std::string &param);
+        processLogin(const uintptr_t &clientId, const std::string &input);
+
+        /**
+         *  Removes client from the login process. Used for disconnects
+         */
+        void
+        exitLogin(const uintptr_t &clientId);
 
         /**
          *  Logs out the client and informs them.

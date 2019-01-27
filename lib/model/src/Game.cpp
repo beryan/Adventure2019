@@ -81,6 +81,16 @@ namespace model {
         while (!this->disconnectedClientIds->empty()) {
             auto clientId = this->disconnectedClientIds->back();
 
+            if (this->playerHandler->isLoggingIn(clientId)) {
+                this->playerHandler->exitLogin(clientId);
+                std::cout << clientId << " has been removed from login due to disconnect\n";
+            }
+
+            if (this->playerHandler->isRegistering(clientId)) {
+                this->playerHandler->exitRegistration(clientId);
+                std::cout << clientId << " has been removed from registration due to disconnect\n";
+            }
+
             if (this->playerHandler->isLoggedIn(clientId)) {
                 this->playerHandler->logoutPlayer(clientId);
                 std::cout << clientId << " has been logged out of the game due to disconnect\n";
@@ -160,7 +170,7 @@ namespace model {
                         << "COMMANDS:\n"
                         << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
                         << "  - " << COMMAND_REGISTER << " (create a new account)\n"
-                        << "  - " << COMMAND_LOGIN    << " (login to an existing account )\n"
+                        << "  - " << COMMAND_LOGIN    << " (login to an existing account)\n"
                         << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
                         << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
                         << "\n";

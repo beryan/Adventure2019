@@ -20,14 +20,16 @@ using model::Response;
  *  6.  Enter valid password
  *  7.  Enter non-matching re-entered-password
  *  8.  Enter matching re-entered-password / Successful registration
- *  9.  Can log out after registering
+ *  9.  Logged in after registering
  *  10. Prevent registration with taken username on username input
  *  11. Prevent registration with taken username on second password input
- *  12. Start login and prompt for username
- *  13. Login prompts for password after entering username
- *  14. Enter invalid credentials in login
- *  15. Enter valid credentials in login
- *  16. Logout other client if same Player logged in by a client
+ *  12. Remove appropriate 'reg' states if client disconnects while in registration process
+ *  13. Start login and prompt for username
+ *  14. Login prompts for password after entering username
+ *  15. Enter invalid credentials in login
+ *  16. Enter valid credentials in login
+ *  17. Logout other client if same Player logged in by a client
+ *  18. Remove appropriate 'login' states if client disconnects while in login process
  */
 const uintptr_t clientIdA = 100;
 const uintptr_t clientIdB = 200;
@@ -35,9 +37,9 @@ const uintptr_t clientIdB = 200;
 const unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
 const unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
-const std::string validLengthString = "Test Input";
+const std::string validLengthString = "Valid Input";
 const std::string longLengthString  = "Very very very long input";
-const std::string shortLengthString = "sls";
+const std::string shortLengthString = "SLS";
 
 
 TEST(RegisterTest, StartRegistration) {
@@ -52,6 +54,7 @@ TEST(RegisterTest, StartRegistration) {
            << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
     EXPECT_EQ(expect.str(), result);
+    EXPECT_EQ(playerHandler.isRegistering(clientIdA), true);
 }
 
 TEST(RegisterTest, LongUsername) {
@@ -136,9 +139,9 @@ TEST(RegisterTest, LoggedInAfterRegister) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.logoutPlayer(clientIdA);
 
-    EXPECT_EQ("Logged out successfully.\n", result);
+    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
+    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
 }
 
 TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
@@ -176,12 +179,26 @@ TEST(RegisterTest, UsernameTakenOnPasswordReEntry) {
     EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
 }
 
+TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
+    PlayerHandler playerHandler{};
+
+    playerHandler.startRegistration(clientIdA);
+
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.exitRegistration(clientIdA);
+    auto result = playerHandler.isRegistering(clientIdA);
+
+    EXPECT_EQ(result, false);
+}
+
 TEST(LoginTest, StartLogin) {
     PlayerHandler playerHandler{};
 
     auto result = playerHandler.startLogin(clientIdA);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
+    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), true);
 }
 
 TEST(LoginTest, FailedLogin) {
@@ -226,4 +243,16 @@ TEST(LoginTest, LogoutClientOnOtherClientLogin) {
 
     EXPECT_EQ(clientIdA, results.front().clientId);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
+    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), false);
+    EXPECT_EQ(playerHandler.isLoggedIn(clientIdB), true);
+}
+
+TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
+    PlayerHandler playerHandler{};
+
+    playerHandler.startLogin(clientIdA);
+    playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.exitLogin(clientIdA);
+
+    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
 }

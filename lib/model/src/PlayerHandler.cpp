@@ -136,6 +136,23 @@ namespace model {
         }
     }
 
+    void
+    PlayerHandler::exitRegistration(const uintptr_t &clientId) {
+        if (this->regUsernamePrompt.count(clientId)) {
+            this->regUsernamePrompt.erase(clientId);
+        }
+
+        if (this->regPasswordFirstPrompt.count(clientId)) {
+            this->regUsernameInput.erase(clientId);
+            this->regPasswordFirstPrompt.erase(clientId);
+        }
+
+        if (this->regPasswordSecondPrompt.count(clientId)) {
+            this->regPasswordInput.erase(clientId);
+            this->regPasswordSecondPrompt.erase(clientId);
+        }
+    }
+
     bool
     PlayerHandler::isLoggingIn(const uintptr_t &clientId) {
         auto inUsernamePrompt = (bool) this->loginUsernamePrompt.count(clientId);
@@ -154,15 +171,20 @@ namespace model {
     }
 
     std::string
-    PlayerHandler::processLogin(const uintptr_t &clientId, const std::string &param) {
+    PlayerHandler::processLogin(const uintptr_t &clientId, const std::string &input) {
         auto inUsernamePrompt = (bool) this->loginUsernamePrompt.count(clientId);
         auto inPasswordPrompt = (bool) this->loginPasswordPrompt.count(clientId);
 
+        if (input.length() == 0) {
+            this->loginUsernamePrompt.erase(clientId);
+            return "No username entered. Login process cancelled.\n";
+        }
+
         if (inUsernamePrompt) {
-            this->loginUsernameInput.emplace(clientId, param);
+            this->loginUsernameInput.emplace(clientId, input);
             this->loginUsernamePrompt.erase(clientId);
             this->loginPasswordPrompt.insert(clientId);
-            return param + "\nEnter your password\n";
+            return input + "\nEnter your password\n";
 
         } else {
             if (!inPasswordPrompt) {
@@ -179,12 +201,12 @@ namespace model {
                 auto selectedPlayer = this->usernameToPlayer.at(inputUsername);
                 auto playerId = selectedPlayer->getId();
 
-                if ((selectedPlayer->getPassword() == param) && !this->activeIdToClient.count(playerId)) {
+                if ((selectedPlayer->getPassword() == input) && !this->activeIdToClient.count(playerId)) {
                     this->activeClientToId.emplace(clientId, playerId);
                     this->activeIdToClient.emplace(playerId, clientId);
                     successfulLogin = true;
 
-                } else if ((selectedPlayer->getPassword() == param) && this->activeIdToClient.count(playerId)) {
+                } else if ((selectedPlayer->getPassword() == input) && this->activeIdToClient.count(playerId)) {
                     // Player is already being used by a client, logout associated client
                     // and login with new client
                     auto otherClientId = this->activeIdToClient.at(playerId);
@@ -207,6 +229,18 @@ namespace model {
             } else {
                 return "Invalid username or password.\n";
             }
+        }
+    }
+
+    void
+    PlayerHandler::exitLogin(const uintptr_t &clientId) {
+        if (this->loginUsernamePrompt.count(clientId)) {
+            this->loginUsernamePrompt.erase(clientId);
+        }
+
+        if (this->loginPasswordPrompt.count(clientId)) {
+            this->loginUsernameInput.erase(clientId);
+            this->loginPasswordPrompt.erase(clientId);
         }
     }
 
