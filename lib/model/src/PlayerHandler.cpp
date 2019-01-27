@@ -59,9 +59,9 @@ namespace model {
     PlayerHandler::startRegistration(const uintptr_t &clientId) {
         this->regUsernamePrompt.insert(clientId);
 
-        return "\nRegister New Player\n"
-               "-------------------\n"
-               "Enter your username (Maximum 16 characters)\n";
+        return "\nRegister\n"
+               "--------\n"
+               "Enter your username (maximum of 16 characters)\n";
     }
 
     std::string
@@ -81,7 +81,7 @@ namespace model {
             }
 
             if (this->usernameToPlayer.count(input)) {
-                return "Username \"" + input + "\" has already been taken, please enter a different username.\n";
+                return "The username \"" + input + "\" has already been taken, please use a different username.\n";
             }
 
             this->regUsernameInput.emplace(clientId, input);
@@ -89,7 +89,7 @@ namespace model {
             this->regPasswordFirstPrompt.insert(clientId);
             this->regUsernamePrompt.erase(clientId);
 
-            return input + "\nEnter your password (minimum of 6 characters, maximum 16 characters)\n";
+            return input + "\nEnter your password (minimum of 6 characters, maximum of 16 characters)\n";
 
         } else if (inFirstPasswordPrompt) {
             if (input.length() < 6) {
