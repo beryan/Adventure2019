@@ -35,8 +35,30 @@ namespace model {
     void Character::setHealth(double health) {
         if (health > Character::MAX_HEALTH) {
             this->health = Character::MAX_HEALTH;
-        } else {
+        }
+        else if (health < 0){
+            this->health = 0;
+        }
+        else {
             this->health = health;
         }
+    }
+
+    double Character::reduceHealth(const double &health) {
+        this->health -= health;
+
+        if (this->health < 0)
+            this->health = 0;
+
+        return this->health;
+    }
+
+    double Character::addHealth(const double &health) {
+        this->health += health;
+
+        if (this->health > Character::MAX_HEALTH)
+            this->health = Character::MAX_HEALTH;
+
+        return this->health;
     }
 }
