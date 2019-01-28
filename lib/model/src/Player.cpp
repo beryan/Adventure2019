@@ -72,9 +72,12 @@ namespace model {
 
     void Player::equipItem(Object item) {
         if (item.canBeEquipped() && isItemInInventory(item)) {
-            unequipItem(item.getSlot());
+            if (isSlotOccupied(item.getSlot())) {
+                unequipItem(item.getSlot());
+            }
 
             equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
+            inventoryItems.erase(item.getId());
         }
     }
 
@@ -91,37 +94,24 @@ namespace model {
     }
 
     void Player::unequipItem(Slot slot) {
-        Object *temp_item = nullptr;
+        auto item = equippedItems.at(slot);
+        equippedItems.erase(slot);
 
-        if (isSlotOccupied(slot)) {
-            *temp_item = equippedItems.at(slot);
-            equippedItems.erase(slot);
-        }
-
-        if (temp_item != nullptr)
-            inventoryItems.insert(std::pair<int, Object>(temp_item->getId(), *temp_item));
+        inventoryItems.insert(std::pair<int, Object>(item.getId(), item));
     }
 
-    Object* Player::dropItemFromInventory(Object item) {
-        Object *temp_item = nullptr;
+    Object Player::dropItemFromInventory(Object item) {
+        auto temp_item = inventoryItems.at(item.getId());
+        inventoryItems.erase(item.getId());
 
-        if (isItemInInventory(item)) {
-            *temp_item = inventoryItems.at(item.getId());
-            inventoryItems.erase(item.getId());
-        }
-
-        return temp_item;
+        return std::move(temp_item);
     }
 
-    Object* Player::dropItemFromEquipped(Slot slot) {
-        Object *temp_item = nullptr;
+    Object Player::dropItemFromEquipped(Slot slot) {
+        auto temp_item = equippedItems.at(slot);
+        equippedItems.erase(slot);
 
-        if (isSlotOccupied(slot)) {
-            *temp_item = equippedItems.at(slot);
-            equippedItems.erase(slot);
-        }
-
-        return temp_item;
+        return std::move(temp_item);
     }
 
     bool Player::operator==(const model::Player &player) const {

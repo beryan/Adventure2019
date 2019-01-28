@@ -60,9 +60,9 @@ namespace model {
 
         void unequipItem(Slot slot);
 
-        Object* dropItemFromInventory(Object item);
+        Object dropItemFromInventory(Object item);
 
-        Object* dropItemFromEquipped(Slot slot);
+        Object dropItemFromEquipped(Slot slot);
 
     private:
         std::string username;
