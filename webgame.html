@@ -137,6 +137,10 @@
 
       $('#sendMessage').submit(function(e) {
         e.preventDefault();
+        if (input.value.length === 0) {
+          return;
+        }
+
         ws.send(input.value);
         input.value = "";
       });
