@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <array>
+#include <map>
 #include "Character.h"
 
 namespace model {
@@ -37,25 +38,31 @@ namespace model {
 
         void setAvatar(std::string avatar);
 
+        bool operator==(const Player& player) const;
+
+        /************ Inventory ************/
+
+        bool isItemInInventory(Object item);
+
+        bool isSlotOccupied(Slot slot);
+
         std::vector<Object> getInventoryItems() const;
 
-        void setInventoryItems(std::vector<Object> inventoryItems);
+        void mapInventoryItems(std::vector<Object> items);
 
-        void addToInventoryItems(Object addToInventoryItems);
+        std::vector<Object> getEquippedItems() const;
 
-        std::array<Object*, Slot::Count> getEquippedItems() const;
+        void mapEquippedItems(std::vector<Object> items);
 
-        void setEquippedItems(std::array<Object*, Slot::Count> equippedItems);
+        void equipItem(Object item);
 
-        void moveFromInventoryToEquippedItems(Object *itemToMove);
+        void addToInventoryItems(Object item);
 
-        void moveFromEquippedToInventoryItems(Slot slotToMoveFrom);
+        void unequipItem(Slot slot);
 
-        Object* removeFromInventoryItems(Object *itemToRemove);
+        Object dropItemFromInventory(Object item);
 
-        Object* removeFromEquippedItems(Slot slotToRemoveFrom);
-
-        bool operator==(const Player& player) const;
+        Object dropItemFromEquipped(Slot slot);
 
     private:
         std::string username;
@@ -64,9 +71,9 @@ namespace model {
 
         std::string avatar;
 
-        std::vector<Object> inventoryItems;
+        std::map<int, Object> inventoryItems;
 
-        std::array<Object*, Slot::Count> equippedItems;
+        std::map<int, Object> equippedItems;
     };
 }
 

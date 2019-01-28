@@ -5,11 +5,12 @@ include_directories(
 )
 
 add_executable(runAllTests
-        user-test.cpp
-        playerHandler-test.cpp
         lib/gtest_main.cc
         lib/gmock-gtest-all.cc
-        playerHandler-test.cpp)
+        character-test.cpp
+        player-test.cpp
+        playerHandler-test.cpp
+        )
 
 target_link_libraries(runAllTests
         model
