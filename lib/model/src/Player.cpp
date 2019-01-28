@@ -4,7 +4,6 @@
 
 #include "Player.h"
 #include <algorithm>
-#include <map>
 
 namespace model {
     Player::Player(int id, std::string username, std::string password) :
@@ -44,71 +43,85 @@ namespace model {
     }
 
     std::vector<Object> Player::getInventoryItems() const {
-        return this->inventoryItems;
+        std::vector<Object> container(inventoryItems.size());
+
+        for (auto const& [key, val] : inventoryItems)
+            container.push_back(val);
+
+        return container;
     }
 
-    void Player::setInventoryItems(std::vector<Object> inventoryItems) {
-        this->inventoryItems = std::move(inventoryItems);
+    void Player::mapInventoryItems(std::vector<Object> items) {
+        for (Object item : items)
+            inventoryItems.insert(std::pair<int, Object>(item.getId(), std::move(item)));
     }
 
-    void Player::addToInventoryItems(Object addToInventoryItems) {
-        this->inventoryItems.push_back(std::move(addToInventoryItems));
+    std::vector<Object> Player::getEquippedItems() const {
+        std::vector<Object> container(equippedItems.size());
+
+        for (auto const& [key, val] : equippedItems)
+            container.push_back(val);
+
+        return container;
     }
 
-    std::array<Object *, Slot::Count> Player::getEquippedItems() const {
-        return this->equippedItems;
+    void Player::mapEquippedItems(std::vector<Object> items) {
+        for (Object item : items)
+            equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
     }
 
-    void Player::setEquippedItems(std::array<Object*, Slot::Count> equippedItems) {
-        this->equippedItems = equippedItems;
-    }
+    void Player::equipItem(Object item) {
+        if (item.canBeEquipped() && isItemInInventory(item)) {
+            unequipItem(item.getSlot());
 
-    void Player::moveFromInventoryToEquippedItems(Object *itemToMove) {
-        if (itemToMove->canBeEquipped() &&
-            isItemInInventoryItems(this->inventoryItems, itemToMove)) {
-
-            Object* currentItemInSlot = this->equippedItems.at(itemToMove->getSlot());
-
-            addItemToEquippedItems(currentItemInSlot, itemToMove);
-
-            removeFromInventoryItems(itemToMove);
+            equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
         }
     }
 
-    bool isItemInInventoryItems(const std::vector<Object> &inventoryItems, Object *item) {
-        return (std::find(inventoryItems.begin(), inventoryItems.end(), *item) != inventoryItems.end());
+    bool Player::isItemInInventory(Object item) {
+        return inventoryItems.count(item.getId()) > 0;
     }
 
-    void addItemToEquippedItems(Object *currentItemInSlot, Object *newItemToAdd) {
-        if (isSlotOccupied(currentItemInSlot)) {
-            std::swap(*currentItemInSlot, *newItemToAdd);
-        } else {
-            *currentItemInSlot = std::move(*newItemToAdd);
+    bool Player::isSlotOccupied(Slot slot) {
+        return equippedItems.count(slot) > 0;
+    }
+
+    void Player::addToInventoryItems(Object item) {
+        inventoryItems.insert(std::pair<int, Object>(item.getId(), std::move(item)));
+    }
+
+    void Player::unequipItem(Slot slot) {
+        Object *temp_item = nullptr;
+
+        if (isSlotOccupied(slot)) {
+            *temp_item = equippedItems.at(slot);
+            equippedItems.erase(slot);
         }
+
+        if (temp_item != nullptr)
+            inventoryItems.insert(std::pair<int, Object>(temp_item->getId(), *temp_item));
     }
 
-    bool isSlotOccupied(Object *currentItemInSlot) {
-        return currentItemInSlot != nullptr;
-    }
+    Object* Player::dropItemFromInventory(Object item) {
+        Object *temp_item = nullptr;
 
-    void Player::moveFromEquippedToInventoryItems(Slot slotToMoveFrom) {
-        Object *itemToMove = removeFromEquippedItems(slotToMoveFrom);
-        if (isSlotOccupied(itemToMove)) {
-            this->inventoryItems.push_back(std::move(*itemToMove));
+        if (isItemInInventory(item)) {
+            *temp_item = inventoryItems.at(item.getId());
+            inventoryItems.erase(item.getId());
         }
+
+        return temp_item;
     }
 
-    Object* Player::dropFromInventoryItems(Object *itemToRemove) {
-        this->inventoryItems.erase(
-            std::find(this->inventoryItems.begin(), this->inventoryItems.end(), *itemToRemove)
-        );
-        return itemToRemove;
-    }
+    Object* Player::dropItemFromEquipped(Slot slot) {
+        Object *temp_item = nullptr;
 
-    Object* Player::dropFromEquippedItems(Slot slotToRemoveFrom) {
-        Object *itemToRemove = this->equippedItems.at(slotToRemoveFrom);
-        this->equippedItems.at(slotToRemoveFrom) = nullptr;
-        return itemToRemove;
+        if (isSlotOccupied(slot)) {
+            *temp_item = equippedItems.at(slot);
+            equippedItems.erase(slot);
+        }
+
+        return temp_item;
     }
 
     bool Player::operator==(const model::Player &player) const {

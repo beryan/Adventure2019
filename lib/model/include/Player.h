@@ -7,6 +7,7 @@
 
 #include <vector>
 #include <array>
+#include <map>
 #include "Character.h"
 
 namespace model {
@@ -41,29 +42,27 @@ namespace model {
 
         /************ Inventory ************/
 
+        bool isItemInInventory(Object item);
+
+        bool isSlotOccupied(Slot slot);
+
         std::vector<Object> getInventoryItems() const;
 
-        void setInventoryItems(std::vector<Object> inventoryItems);
+        void mapInventoryItems(std::vector<Object> items);
 
-        std::array<Object*, Slot::Count> getEquippedItems() const;
+        std::vector<Object> getEquippedItems() const;
 
-        void setEquippedItems(std::array<Object*, Slot::Count> equippedItems);
+        void mapEquippedItems(std::vector<Object> items);
 
-        void moveFromInventoryToEquippedItems(Object *itemToMove);
+        void equipItem(Object item);
 
-        bool isItemInInventoryItems(const std::vector<Object> &inventoryItems, Object *item);
+        void addToInventoryItems(Object item);
 
-        void addItemToEquippedItems(Object *currentItemInSlot, Object *newItemToAdd);
+        void unequipItem(Slot slot);
 
-        bool isSlotOccupied(Object *currentItemInSlot);
+        Object* dropItemFromInventory(Object item);
 
-        void addToInventoryItems(Object addToInventoryItems);
-
-        void moveFromEquippedToInventoryItems(Slot slotToMoveFrom);
-
-        Object* dropFromInventoryItems(Object *itemToRemove);
-
-        Object* dropFromEquippedItems(Slot slotToRemoveFrom);
+        Object* dropItemFromEquipped(Slot slot);
 
     private:
         std::string username;
