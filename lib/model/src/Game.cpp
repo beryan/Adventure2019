@@ -4,19 +4,33 @@
 
 #include "Game.h"
 #include "Room.h"
-#include "WorldHandler.h"
+#include "PlayerHandler.h"
 
 #include <map>
 #include <sstream>
 #include <iostream>
 
 using model::Game;
-using model::WorldHandler;
 using model::Room;
+using model::PlayerHandler;
 
 std::string
 lowercase(std::string string) {
     std::transform(string.begin(), string.end(), string.begin(), ::tolower);
+    return string;
+}
+
+std::string
+trimWhitespace(std::string string) {
+    string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
+        return !std::isspace(ch);
+    }));
+
+    // trim from start (in place)
+    string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
+        return !std::isspace(ch);
+    }).base(), string.end());
+
     return string;
 }
 
@@ -29,7 +43,6 @@ namespace model {
     const char* const Game::COMMAND_LOGIN    = "login";
     const char* const Game::COMMAND_LOGOUT   = "logout";
     const char* const Game::COMMAND_INFO     = "info";
-    const char* const Game::COMMAND_START    = "start";
 
     Game::Game(std::vector<Connection> &clients,
                std::vector<uintptr_t> &newClientIds,
@@ -42,19 +55,11 @@ namespace model {
         this->disconnect = disconnect;
         this->shutdown = shutdown;
 
-        /* Login/Register member variables */
-        this->nextId = 1;
-        this->tempUserToPass = {};
-        this->tempUserToId = {};
-        this->tempIdToPlayer = {};
-        this->activeIdToClient = {};
-        /* End */
-
-        this->activePlayerList = {};
+        this->playerHandler = std::make_unique<PlayerHandler>();
     }
 
     void
-    Game::handleConnects(std::deque<Response> &results) {
+    Game::handleConnects(std::deque<Response> &responses) {
         while (!this->newClientIds->empty()) {
             auto clientId = this->newClientIds->back();
 
@@ -62,50 +67,74 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter \"login [username] [password]\" to sign into an existing account\n"
-                         << "Enter \"register [username] [password]\" to make a new account\n";
+                         << "Enter \"login\" to sign into an existing account\n"
+                         << "Enter \"register\" to make a new account\n";
 
-            results.push_back({clientId, introduction.str(), true});
+            responses.push_back({clientId, introduction.str(), true});
 
             this->newClientIds->pop_back();
         }
     }
 
     void
-    Game::handleDisconnects(std::deque<Response> &results) {
+    Game::handleDisconnects(std::deque<Response> &responses) {
         while (!this->disconnectedClientIds->empty()) {
             auto clientId = this->disconnectedClientIds->back();
 
-            /* Login/Register code */
-            if (this->activePlayerList.count(clientId)) {
-                std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
-                this->activePlayerList.erase(clientId);
-
-                std::cout << username << " has been logged out of the game due to disconnect\n";
+            if (this->playerHandler->isLoggingIn(clientId)) {
+                this->playerHandler->exitLogin(clientId);
+                std::cout << clientId << " has been removed from login due to disconnect\n";
             }
-            /* End */
 
+            if (this->playerHandler->isRegistering(clientId)) {
+                this->playerHandler->exitRegistration(clientId);
+                std::cout << clientId << " has been removed from registration due to disconnect\n";
+            }
+
+            if (this->playerHandler->isLoggedIn(clientId)) {
+                this->playerHandler->logoutPlayer(clientId);
+                std::cout << clientId << " has been logged out of the game due to disconnect\n";
+            }
 
             this->disconnectedClientIds->pop_back();
         }
     }
 
     void
-    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &results) {
-        for (auto& input : incoming) {
-            uintptr_t clientId = input.connection.id;
+    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses) {
+        for (const auto& input : incoming) {
+            auto clientId = input.connection.id;
+            auto incomingInput = trimWhitespace(input.text);
 
-            std::ostringstream tempMessage;
-            std::string command = lowercase(input.text.substr(0, input.text.find(' ')));
-            std::string param;
-            bool isLocal = true;
+            if (this->playerHandler->isLoggingIn(clientId)) {
+                responses.push_back({
+                    clientId,
+                    this->playerHandler->processLogin(clientId, incomingInput.substr(0, incomingInput.find(' '))),
+                    true
+                });
+
+                continue;
+
+            } else if (this->playerHandler->isRegistering(clientId)) {
+                responses.push_back({
+                    clientId,
+                    this->playerHandler->processRegistration(clientId, incomingInput.substr(0, incomingInput.find(' '))),
+                    true
+                });
+
+                continue;
+            }
+
+            std::string command = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
+            std::string parameters;
 
             if (input.text.find(' ') != std::string::npos) {
-                param = input.text.substr(input.text.find(' ') + 1);
+                parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
             if (command == COMMAND_QUIT) {
                 this->disconnect(input.connection);
+                continue;
 
             } else if (command == COMMAND_SHUTDOWN) {
                 std::cout << "Shutting down.\n";
@@ -113,182 +142,111 @@ namespace model {
                 return;
             }
 
-            // Main menu commands
-            if (!this->activePlayerList.count(clientId)) {
-                if (command == COMMAND_REGISTER) {
-                    /* Login/Register code */
-                    std::string username = param.substr(0, param.find(' '));
-                    std::string password;
-
-                    if (param.find(' ') != std::string::npos) {
-                        password = param.substr(param.find(' ') + 1);
-
-                    } else {
-                        tempMessage << "Missing fields for registration.\n";
-                        results.push_back({clientId, tempMessage.str(), true});
-                        continue;
-                    }
-
-                    if (this->tempUserToId.count(username)) {
-                        tempMessage << "The username " << username << " has already been taken,"
-                                    << " please use a different username.\n";
-                        results.push_back(Response{clientId, tempMessage.str(), true});
-                        continue;
-                    }
-
-                    int currentId = this->nextId;
-                    this->tempIdToPlayer.emplace(this->nextId, Player(currentId, username, password));
-                    this->tempUserToId.emplace(username, currentId);
-                    this->tempUserToPass.emplace(username, password);
-                    this->activeIdToClient.emplace(currentId, clientId);
-                    this->activePlayerList.emplace(clientId, currentId);
-                    ++this->nextId;
-
-                    std::cout << username << " has been registered to the game\n";
-                    tempMessage << "Account created!\n";
-
-                    /* End */
-
-                } else if (command == COMMAND_LOGIN) {
-                    /* Login/Register code */
-                    std::string username = param.substr(0, param.find(' '));
-                    std::string password;
-                    bool success = false;
-
-                    if (param.find(' ') != std::string::npos) {
-                        password = param.substr(param.find(' ') + 1);
-
-                        if (this->tempUserToPass.count(username)) {
-                            if (this->tempUserToPass.at(username) == password) {
-                                if (!this->activeIdToClient.count(this->tempUserToId.at(username))) {
-                                    this->activeIdToClient.emplace(this->tempUserToId.at(username), clientId);
-                                    this->activePlayerList.emplace(clientId, this->tempUserToId.at(username));
-
-                                } else {
-                                    // Player is already being used by a client, logout associated client
-                                    // and login with new client
-                                    results.push_back({this->activeIdToClient.at(this->tempUserToId.at(username)),
-                                                         "You have been logged out due to being logged in elsewhere.\n\n",
-                                                         true});
-
-                                    this->activePlayerList.erase(this->activeIdToClient.at(this->tempUserToId.at(username)));
-                                    this->activeIdToClient.erase(this->tempUserToId.at(username));
-
-                                    this->activeIdToClient.emplace(this->tempUserToId.at(username), clientId);
-                                    this->activePlayerList.emplace(clientId, this->tempUserToId.at(username));
-
-                                    std::cout << username << " is now being used by " << clientId << ".\n";
-                                }
-
-                                success = true;
-                            }
-                        }
-                    }
-
-                    if (success) {
-                        std::cout << username << " has entered the game\n";
-                        tempMessage << "Logged in successfully!\n";
-
-                    } else {
-                        tempMessage << "Invalid username or password.\n";
-                    }
-                    /* End */
-
-                } else if (command == COMMAND_HELP) {
-                    tempMessage << "\n"
-                                << "********\n"
-                                << "* HELP *\n"
-                                << "********\n"
-                                << "\n"
-                                << "COMMANDS:\n"
-                                << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                                << "  - " << COMMAND_REGISTER << " (create a new account with [username] [password])\n"
-                                << "  - " << COMMAND_LOGIN    << " (login to an account with [username] [password])\n"
-                                << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
-                                << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
-                                << "\n";
-
-                } else {
-                    tempMessage << "The word \"" << command << "\" is not a valid command.\n"
-                                << "\n"
-                                << "Enter " << "\"" << COMMAND_LOGIN << " [username] [password]\" to log into an existing account\n"
-                                << "Enter " << "\"" << COMMAND_REGISTER << "[username] [password]\" to create a new account\n"
-                                << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
-
-                }
-
-                results.push_back({clientId, tempMessage.str(), true});
-                continue;
-            }
-
-            // In-game commands
-            if (command == COMMAND_START) {
-                WorldHandler wh;
-
-            } else if (command == COMMAND_SAY) {
-                isLocal = false;
-                tempMessage << this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername() << "> " << param << "\n";
-
-            } else if (command == COMMAND_LOGOUT) {
-                /* Login/Register code */
-                std::string username = this->tempIdToPlayer.at(this->activePlayerList.at(clientId)).getUsername();
-                this->activeIdToClient.erase(this->tempUserToId.at(username));
-                this->activePlayerList.erase(clientId);
-                this->newClientIds->push_back(clientId);
-
-                std::cout << username << " has logged out of the game\n";
-                tempMessage << "Logged out successfully.\n"
-                            << "\n";
-                /* End */
-
-            } else if (command == COMMAND_HELP) {
-                tempMessage << "\n"
-                            << "********\n"
-                            << "* HELP *\n"
-                            << "********\n"
-                            << "\n"
-                            << "COMMANDS:\n"
-                            << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                            << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
-                            << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
-                            << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
-                            << "  - " << COMMAND_INFO     << " (displays current location information)\n"
-                            << "\n";
-
-            } else if (command == COMMAND_INFO) {
-                model::Room stubRoom = model::Room();
-                stubRoom.createStub();
-                tempMessage << stubRoom;
+            if (!this->playerHandler->isLoggedIn(clientId)) {
+                responses.push_back(this->executeMenuAction(clientId, command, parameters));
 
             } else {
-                tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
+                responses.push_back(this->executeInGameAction(clientId, command, parameters));
             }
-
-            results.push_back({clientId, tempMessage.str(), isLocal});
         }
     }
 
+    Response
+    Game::executeMenuAction(const uintptr_t &clientId, const std::string &command, const std::string &param) {
+        std::ostringstream tempMessage;
+
+        if (command == COMMAND_REGISTER) {
+            tempMessage << this->playerHandler->startRegistration(clientId);
+
+        } else if (command == COMMAND_LOGIN) {
+            tempMessage << this->playerHandler->startLogin(clientId);
+
+        } else if (command == COMMAND_HELP) {
+            tempMessage << "\n"
+                        << "********\n"
+                        << "* HELP *\n"
+                        << "********\n"
+                        << "\n"
+                        << "COMMANDS:\n"
+                        << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
+                        << "  - " << COMMAND_REGISTER << " (create a new account)\n"
+                        << "  - " << COMMAND_LOGIN    << " (login to an existing account)\n"
+                        << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
+                        << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
+                        << "\n";
+
+        } else {
+            tempMessage << "\n"
+                        << "The word \"" << command << "\" is not a valid command.\n"
+                        << "Enter " << "\"" << COMMAND_LOGIN << "\" to log into an existing account\n"
+                        << "Enter " << "\"" << COMMAND_REGISTER << "\" to create a new account\n"
+                        << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
+
+        }
+
+        return {clientId, tempMessage.str(), true};
+    }
+
+    Response
+    Game::executeInGameAction(const uintptr_t &clientId, const std::string &command, const std::string &param) {
+        std::ostringstream tempMessage;
+        bool isLocal = true;
+
+        if (command == COMMAND_SAY) {
+            isLocal = false;
+            tempMessage << this->playerHandler->getUsernameByClientId(clientId) << "> " << param << "\n";
+
+        } else if (command == COMMAND_LOGOUT) {
+            tempMessage << this->playerHandler->logoutPlayer(clientId);
+
+        } else if (command == COMMAND_HELP) {
+            tempMessage << "\n"
+                        << "********\n"
+                        << "* HELP *\n"
+                        << "********\n"
+                        << "\n"
+                        << "COMMANDS:\n"
+                        << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
+                        << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
+                        << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
+                        << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
+                        << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
+                        << "  - " << COMMAND_INFO     << " (displays current location information)\n"
+                        << "\n";
+
+        } else if (command == COMMAND_INFO) {
+            model::Room stubRoom = model::Room();
+            stubRoom.createStub();
+            tempMessage << stubRoom;
+
+        } else {
+            tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
+        }
+
+        return {clientId, tempMessage.str(), isLocal};
+    }
+
+
     void
-    Game::handleOutgoing(std::deque<model::Response> &results) {
-        /*
-         * Call handler methods that push Responses without requiring user input here
-         */
+    Game::handleOutgoing(std::deque<Response> &responses) {
+
+        this->playerHandler->notifyBootedClients(responses);
+
     }
 
     std::deque<Message>
-    Game::formMessages(std::deque<Response> &results) {
+    Game::formMessages(std::deque<Response> &responses) {
         std::deque<Message> outgoing;
         std::map<uintptr_t, std::ostringstream> clientMessages;
 
-        for (const auto &entry : results) {
+        for (const auto &entry : responses) {
             if (entry.isLocal) {
                 clientMessages[entry.clientId] << entry.message;
 
             } else {
-                for (auto client : *this->clients) {
+                for (const auto &client : *this->clients) {
                     // Send to public messages to logged in users only
-                    if (this->activePlayerList.count(client.id)) {
+                    if (this->playerHandler->isLoggedIn(client.id)) {
                         clientMessages[client.id] << entry.message;
                     }
                 }
@@ -304,16 +262,13 @@ namespace model {
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        std::deque<Response> results;
+        std::deque<Response> responses;
 
-        this->handleConnects(results);
+        this->handleConnects(responses);
+        this->handleDisconnects(responses);
+        this->handleIncoming(incoming, responses);
+        this->handleOutgoing(responses);
 
-        this->handleDisconnects(results);
-
-        this->handleIncoming(incoming, results);
-
-        this->handleOutgoing(results);
-
-        return this->formMessages(results);
+        return this->formMessages(responses);
     }
 }

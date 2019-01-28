@@ -2,11 +2,13 @@
 // Created by louis on 19/01/19.
 //
 
-#ifndef WEBSOCKETNETWORKING_GAME_H
-#define WEBSOCKETNETWORKING_GAME_H
+#ifndef GAME_H
+#define GAME_H
 
 #include "Server.h"
 #include "Player.h"
+#include "Response.h"
+#include "PlayerHandler.h"
 
 #include <functional>
 #include <deque>
@@ -14,18 +16,9 @@
 
 using networking::Connection;
 using networking::Message;
+using model::PlayerHandler;
 
 namespace model {
-    /**
-     *  A message to be sent from the server to client(s). Stores a boolean value for
-     *  determining if the message should be sent to only the sender or to all clients
-     */
-    struct Response {
-        uintptr_t clientId;
-        std::string message;
-        bool isLocal;
-    };
-
     /**
      *  @class Game
      *
@@ -42,6 +35,8 @@ namespace model {
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
+        std::unique_ptr<PlayerHandler> playerHandler;
+
         static const char* const COMMAND_SHUTDOWN;
         static const char* const COMMAND_QUIT;
         static const char* const COMMAND_SAY;
@@ -50,52 +45,51 @@ namespace model {
         static const char* const COMMAND_LOGIN;
         static const char* const COMMAND_LOGOUT;
         static const char* const COMMAND_INFO;
-        static const char* const COMMAND_START;
-
-        /* Login/Register member variables */
-        typedef int IdType;
-        IdType nextId;
-
-        std::map<std::string, std::string> tempUserToPass;
-        std::map<std::string, IdType> tempUserToId;
-        std::map<IdType, Player> tempIdToPlayer;
-        std::map<IdType, uintptr_t> activeIdToClient;
-        /* End */
-
-        std::map<uintptr_t, IdType> activePlayerList;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
          *  vector on completion.
          */
         void
-        handleConnects(std::deque<Response> &results);
+        handleConnects(std::deque<Response> &responses);
 
         /**
          *  Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
          *  associated vector on completion.
          */
         void
-        handleDisconnects(std::deque<Response> &results);
+        handleDisconnects(std::deque<Response> &responses);
 
         /**
          *  Processes client input, calling class methods based on client input and formulating appropriate responses in
          *  the form of Response objects.
          */
         void
-        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &results);
+        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses);
+
+        /**
+         *  Creates a Response to commands when the client is not logged in
+         */
+        Response
+        executeMenuAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
+
+        /**
+         *  Creates a Response to commands when the client is logged in
+         */
+        Response
+        executeInGameAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
          */
         void
-        handleOutgoing(std::deque<Response> &results);
+        handleOutgoing(std::deque<Response> &responses);
 
         /**
          *  Converts a Response deque into a Message deque.
          */
         std::deque<Message>
-        formMessages(std::deque<Response> &results);
+        formMessages(std::deque<Response> &responses);
 
     public:
         /**
@@ -118,4 +112,4 @@ namespace model {
     };
 }
 
-#endif //WEBSOCKETNETWORKING_GAME_H
+#endif //GAME_H

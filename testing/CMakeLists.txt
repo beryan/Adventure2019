@@ -9,6 +9,7 @@ add_executable(runAllTests
         lib/gmock-gtest-all.cc
         character-test.cpp
         player-test.cpp
+        playerHandler-test.cpp
         )
 
 target_link_libraries(runAllTests
