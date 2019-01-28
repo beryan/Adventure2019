@@ -54,16 +54,12 @@ namespace model {
 
         static constexpr int DEFAULT_ID = -1;
 
-        static constexpr bool DEFAULT_CAN_EQUIP = false;
-
     private:
         int id;
 
         std::string name;
 
         std::string description;
-
-        bool canEquip;
 
         Slot slot;
     };

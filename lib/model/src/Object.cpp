@@ -10,23 +10,13 @@ namespace model {
         id(Object::DEFAULT_ID),
         name({}),
         description({}),
-        canEquip(DEFAULT_CAN_EQUIP),
         slot(Slot::Misc){}
-
 
     Object::Object(int id, std::string name, std::string description, Slot slot) :
         id(id),
         name(std::move(name)),
         description(std::move(description)),
-        canEquip(DEFAULT_CAN_EQUIP),
-        slot(slot) {}
-
-    Object::Object(int id, std::string name, std::string description, bool canEquip, Slot slot) :
-        id(id),
-        name(std::move(name)),
-        description(std::move(description)),
-        canEquip(canEquip),
-        slot(slot) {}
+        slot(slot){}
 
     int Object::getId() const {
         return this->id;
@@ -62,11 +52,7 @@ namespace model {
     }
 
     bool Object::canBeEquipped() const {
-        return this->canEquip;
-    }
-
-    void Object::setCanEquip(bool canEquip) {
-        this->canEquip = canEquip;
+        return this->slot >= 0 && this->slot < Slot::Misc;
     }
 
     bool Object::operator==(const Object& NPC) const {
