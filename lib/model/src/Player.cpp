@@ -43,7 +43,8 @@ namespace model {
     }
 
     std::vector<Object> Player::getInventoryItems() const {
-        std::vector<Object> container(inventoryItems.size());
+        std::vector<Object> container;
+        container.reserve(inventoryItems.size());
 
         for (auto const& [key, val] : inventoryItems)
             container.push_back(val);
@@ -57,7 +58,8 @@ namespace model {
     }
 
     std::vector<Object> Player::getEquippedItems() const {
-        std::vector<Object> container(equippedItems.size());
+        std::vector<Object> container;
+        container.reserve(equippedItems.size());
 
         for (auto const& [key, val] : equippedItems)
             container.push_back(val);
