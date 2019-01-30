@@ -32,13 +32,14 @@ namespace model {
 
       json t = json::parse(ifs);
 
+      bool wasFound = false;
       auto iterator = t.find(propertyName);
       if (iterator != t.end()) {
         result = *iterator;
-        return true;
+        wasFound = true;
       }
 
-      return false;
+      return wasFound;
     }
 
   private:
