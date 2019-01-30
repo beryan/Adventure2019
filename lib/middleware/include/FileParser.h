@@ -7,7 +7,15 @@
 
 #include <string>
 
+#include "json.hpp"
+
+using json = nlohmann::json;
+
 const std::string JSON_EXTENSION = ".json";
+
+namespace {
+    void parseJson(std::string filePath);
+}
 
 void ParseDataFile(std::string filePath);
 
