@@ -14,7 +14,7 @@ namespace {
     std::string expected = "my test string";
     std::string key = "test_string_property";
     std::string res;
-    bool hasProp = PropertiesManager::getStringProperty(key, res);
+    bool hasProp = PropertiesManager::getProperty(key, res);
     EXPECT_TRUE(hasProp);
     EXPECT_EQ(expected, res);
   }
@@ -23,7 +23,7 @@ namespace {
     int expected = 420;
     int result;
     std::string key = "test_int_property";
-    bool hasProp = PropertiesManager::getIntProperty(key, result);
+    bool hasProp = PropertiesManager::getProperty(key, result);
     EXPECT_TRUE(hasProp);
     EXPECT_EQ(expected, result);
   }
@@ -32,7 +32,7 @@ namespace {
     bool expected = true;
     std::string key = "test_bool_property";
     bool result;
-    bool hasProp = PropertiesManager::getBoolProperty(key, result);
+    bool hasProp = PropertiesManager::getProperty(key, result);
     EXPECT_TRUE(hasProp);
     EXPECT_EQ(expected, result);
   }
@@ -40,21 +40,21 @@ namespace {
   TEST(PropertiesManagerTestSuite, canNotGetEmptyStringProperty) {
     std::string key = "test_not_exist";
     std::string result;
-    bool hasProp = PropertiesManager::getStringProperty(key, result);
+    bool hasProp = PropertiesManager::getProperty(key, result);
     EXPECT_FALSE(hasProp);
   }
 
   TEST(PropertiesManagerTestSuite, canNotGetEmptyIntProperty) {
     std::string key = "test_not_exist";
     int result;
-    bool hasProp = PropertiesManager::getIntProperty(key, result);
+    bool hasProp = PropertiesManager::getProperty(key, result);
     EXPECT_FALSE(hasProp);
   }
 
   TEST(PropertiesManagerTestSuite, canNotGetEmptyBoolProperty) {
     std::string key = "test_not_exist";
     bool result;
-    bool hasProp = PropertiesManager::getBoolProperty(key, result);
+    bool hasProp = PropertiesManager::getProperty(key, result);
     EXPECT_FALSE(hasProp);
   }
 }
