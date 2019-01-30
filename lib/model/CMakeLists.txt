@@ -10,7 +10,7 @@ add_library(model
         src/Reset.cpp
         src/World.cpp
         src/WorldHandler.cpp
-        src/PlayerHandler.cpp)
+        src/PlayerHandler.cpp include/Types.h)
 
 target_include_directories(model
         PUBLIC
