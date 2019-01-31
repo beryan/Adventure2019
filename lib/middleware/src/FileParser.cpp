@@ -94,6 +94,25 @@ namespace {
 
         return doors;
     }
+
+    std::vector<Room> createRoomsFromJson(json roomsJson) {
+        std::vector<Room> rooms;
+        for(json::iterator it = roomsJson.begin(); it != roomsJson.end(); ++it) {
+            std::vector<std::string> desc;
+            for(json j : it.value().at("desc")){
+                desc.push_back(j);
+            }
+
+            std::vector<Door> doors = createDoorsFromJson(it.value().at("doors"));
+
+            Room r (it.value().at("id"), it.value().at("name"), desc, doors);
+            rooms.push_back(r);
+        }
+
+        return rooms;
+    }
+
+
     void parseJson(std::string filePath) {
 
         std::ifstream ifs(filePath);
@@ -101,7 +120,7 @@ namespace {
         json t = json::parse(ifs);
 
         json areasJson;
-        json roomJson;
+        json roomsJson;
         json npcsJson;
         json objectsJson;
 //        json helpsJson;
@@ -112,8 +131,8 @@ namespace {
         for (json::iterator it = t.begin(); it != t.end(); ++it) {
             if (it.key() == "AREAS") {
                 areasJson = it.value();
-            } else if (it.key() == "ROOM") {
-                roomJson = it.value();
+            } else if (it.key() == "ROOMS") {
+                roomsJson = it.value();
             } else if (it.key() == "NPCS") {
                 npcsJson = it.value();
             } else if (it.key() == "OBJECTS") {
@@ -126,16 +145,30 @@ namespace {
 //                shopsJson = it.value();
             }
         }
-
+        
         std::vector<NPC> npcs = createNPCsFromJson(npcsJson);
+        std::cout << "Printing NPCs: " << std::endl;
         for(NPC n : npcs){
             std::cout << n;
         }
+        std::cout << std::endl;
+
 
         std::vector<Object> objects = createObjectsFromJson(objectsJson);
+        std::cout << "Printing Objects: " << std::endl;
         for(Object o : objects){
             std::cout << o;
         }
+        std::cout << std::endl;
+
+
+        std::vector<Room> rooms = createRoomsFromJson(roomsJson);
+        std::cout << "Printing Rooms: " << std::endl;
+        std::cout << "size of rooms: " << rooms.size() << std::endl;
+        for(Room r : rooms) {
+            std::cout << r;
+        }
+        std::cout << std::endl;
 
     }
 } // namespace

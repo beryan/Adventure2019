@@ -19,6 +19,8 @@ namespace {
     std::vector<model::NPC> createNPCsFromJson(json npcsJson);
     std::vector<Object> createObjectsFromJson(json objectsJson);
     std::vector<Door> createDoorsFromJson(json doorsJson);
+    std::vector<Room> createRoomsFromJson(json roomsJson);
+
     void parseJson(std::string filePath);
 }
 
