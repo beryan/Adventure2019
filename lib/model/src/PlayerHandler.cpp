@@ -274,7 +274,7 @@ namespace model {
         std::vector<Player> players;
 
         for (json::iterator it = users.begin(); it != users.end(); ++it) {
-            Player p (it.value().at("id"), it.value().at("username"));
+            Player p (it.value().at("id"), it.value().at("username"), "");
             players.push_back(p);
         }
 

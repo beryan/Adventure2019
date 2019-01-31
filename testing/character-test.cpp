@@ -18,7 +18,7 @@ namespace {
     }
 
     TEST(CharacterTestSuite, canReturnCorrectHealthAfterReducing) {
-        int damage = 30.0;
+        double damage = 30.0;
         int expected_id = 12345;
         double expected_health = Character::STARTING_HEALTH - damage;
 
