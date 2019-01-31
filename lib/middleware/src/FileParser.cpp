@@ -3,16 +3,9 @@
 //
 
 #include "FileParser.h"
-#include "json.hpp"
-#include "NPC.h"
-#include "Object.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
-
-using json = nlohmann::json;
-using NPC = model::NPC;
-using Object = model::Object;
 
 namespace {
 
