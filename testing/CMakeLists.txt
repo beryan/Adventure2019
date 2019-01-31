@@ -10,7 +10,7 @@ add_executable(runAllTests
         character-test.cpp
         player-test.cpp
         playerHandler-test.cpp
-        )
+        propertiesManager-test.cpp)
 
 target_link_libraries(runAllTests
         model

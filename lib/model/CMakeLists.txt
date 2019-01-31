@@ -11,8 +11,8 @@ add_library(model
         src/World.cpp
         src/WorldHandler.cpp
         src/PlayerHandler.cpp
-        )
-        
+        src/PropertiesManager.cpp)
+
 target_include_directories(model
         PUBLIC
         $<INSTALL_INTERFACE:include>
