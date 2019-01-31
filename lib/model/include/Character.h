@@ -6,6 +6,7 @@
 #define CHARACTER_H
 
 #include "Object.h"
+#include "Types.h"
 
 namespace model {
     /**
@@ -21,11 +22,11 @@ namespace model {
 
     struct Character {
     public:
-        explicit Character(int id);
+        explicit Character(model::ID id);
 
-        int getId() const;
+        model::ID getId() const;
 
-        void setId(int id);
+        void setId(model::ID id);
 
         Role getRole() const;
 
@@ -44,7 +45,7 @@ namespace model {
         static constexpr double MAX_HEALTH = 100.00;
 
     private:
-        int id;
+        model::ID id;
 
         Role role;
 

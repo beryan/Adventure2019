@@ -16,18 +16,17 @@
 using json = nlohmann::json;
 
 namespace model {
-    typedef int PlayerId;
 
     class PlayerHandler {
     private:
         static const unsigned short MIN_PASSWORD_LENGTH;
         static const unsigned short MAX_USERNAME_AND_PASSWORD_LENGTH;
 
-        PlayerId nextId;
-        std::map<PlayerId, Player> allPlayers;
+        model::ID nextId;
+        std::map<model::ID, Player> allPlayers;
         std::map<std::string, Player*> usernameToPlayer;
-        std::map<PlayerId, uintptr_t> activeIdToClient;
-        std::map<uintptr_t, PlayerId> activeClientToId;
+        std::map<model::ID, uintptr_t> activeIdToClient;
+        std::map<uintptr_t, model::ID> activeClientToId;
 
         std::map<uintptr_t, std::string> regUsernameInput;
         std::map<uintptr_t, std::string> regPasswordInput;

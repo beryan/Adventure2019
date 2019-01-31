@@ -6,16 +6,10 @@
 #include <algorithm>
 
 namespace model {
-    Player::Player(int id, std::string username, std::string password) :
+    Player::Player(model::ID id, std::string username, std::string password) :
         Character(id),
         username(std::move(username)),
         password(std::move(password))
-        {}
-
-    Player::Player(int id, std::string username) :
-        Character(id),
-        username(std::move(username)),
-        password("foobar")
         {}
 
     std::string Player::getUsername() const {
@@ -54,7 +48,7 @@ namespace model {
 
     void Player::mapInventoryItems(std::vector<Object> items) {
         for (Object item : items)
-            inventoryItems.insert(std::pair<int, Object>(item.getId(), std::move(item)));
+            inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
     }
 
     std::vector<Object> Player::getEquippedItems() const {
@@ -92,14 +86,14 @@ namespace model {
     }
 
     void Player::addToInventoryItems(Object item) {
-        inventoryItems.insert(std::pair<int, Object>(item.getId(), std::move(item)));
+        inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
     }
 
     void Player::unequipItem(Slot slot) {
         auto item = equippedItems.at(slot);
         equippedItems.erase(slot);
 
-        inventoryItems.insert(std::pair<int, Object>(item.getId(), item));
+        inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), item));
     }
 
     Object Player::dropItemFromInventory(Object item) {
