@@ -60,9 +60,7 @@ namespace model {
 
     void
     Game::handleConnects(std::deque<Response> &responses) {
-        while (!this->newClientIds->empty()) {
-            auto clientId = this->newClientIds->back();
-
+        for (auto newClient : *this->newClientIds) {
             std::ostringstream introduction;
 
             introduction << "Welcome to Adventure 2019!\n"
@@ -70,34 +68,32 @@ namespace model {
                          << "Enter \"login\" to sign into an existing account\n"
                          << "Enter \"register\" to make a new account\n";
 
-            responses.push_back({clientId, introduction.str(), true});
-
-            this->newClientIds->pop_back();
+            responses.push_back({newClient, introduction.str(), true});
         }
+
+        this->newClientIds->clear();
     }
 
     void
     Game::handleDisconnects(std::deque<Response> &responses) {
-        while (!this->disconnectedClientIds->empty()) {
-            auto clientId = this->disconnectedClientIds->back();
-
-            if (this->playerHandler->isLoggingIn(clientId)) {
-                this->playerHandler->exitLogin(clientId);
-                std::cout << clientId << " has been removed from login due to disconnect\n";
+        for (auto disconnectedClient : *this->disconnectedClientIds) {
+            if (this->playerHandler->isLoggingIn(disconnectedClient)) {
+                this->playerHandler->exitLogin(disconnectedClient);
+                std::cout << disconnectedClient<< " has been removed from login due to disconnect\n";
             }
 
-            if (this->playerHandler->isRegistering(clientId)) {
-                this->playerHandler->exitRegistration(clientId);
-                std::cout << clientId << " has been removed from registration due to disconnect\n";
+            if (this->playerHandler->isRegistering(disconnectedClient)) {
+                this->playerHandler->exitRegistration(disconnectedClient);
+                std::cout << disconnectedClient << " has been removed from registration due to disconnect\n";
             }
 
-            if (this->playerHandler->isLoggedIn(clientId)) {
-                this->playerHandler->logoutPlayer(clientId);
-                std::cout << clientId << " has been logged out of the game due to disconnect\n";
+            if (this->playerHandler->isLoggedIn(disconnectedClient)) {
+                this->playerHandler->logoutPlayer(disconnectedClient);
+                std::cout << disconnectedClient<< " has been logged out of the game due to disconnect\n";
             }
-
-            this->disconnectedClientIds->pop_back();
         }
+
+        this->disconnectedClientIds->clear();
     }
 
     void
@@ -156,10 +152,10 @@ namespace model {
         std::ostringstream tempMessage;
 
         if (command == COMMAND_REGISTER) {
-            tempMessage << this->playerHandler->startRegistration(clientId);
+            tempMessage << this->playerHandler->processRegistration(clientId);
 
         } else if (command == COMMAND_LOGIN) {
-            tempMessage << this->playerHandler->startLogin(clientId);
+            tempMessage << this->playerHandler->processLogin(clientId);
 
         } else if (command == COMMAND_HELP) {
             tempMessage << "\n"

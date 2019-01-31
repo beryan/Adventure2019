@@ -22,6 +22,9 @@ namespace model {
         static const unsigned short MIN_PASSWORD_LENGTH;
         static const unsigned short MAX_USERNAME_AND_PASSWORD_LENGTH;
 
+        enum class RegisterStage{USERNAME, PASSWORD, CONFIRM_PASSWORD};
+        enum class LoginStage{USERNAME, PASSWORD};
+
         model::ID nextId;
         std::map<model::ID, Player> allPlayers;
         std::map<std::string, Player*> usernameToPlayer;
@@ -30,13 +33,10 @@ namespace model {
 
         std::map<uintptr_t, std::string> regUsernameInput;
         std::map<uintptr_t, std::string> regPasswordInput;
-        std::unordered_set<uintptr_t> regUsernamePrompt;
-        std::unordered_set<uintptr_t> regPasswordFirstPrompt;
-        std::unordered_set<uintptr_t> regPasswordSecondPrompt;
+        std::map<uintptr_t, RegisterStage> clientRegisterStage;
 
         std::map<uintptr_t, std::string> loginUsernameInput;
-        std::unordered_set<uintptr_t> loginUsernamePrompt;
-        std::unordered_set<uintptr_t> loginPasswordPrompt;
+        std::map<uintptr_t, LoginStage> clientLoginStage;
 
         std::vector<uintptr_t> bootedClients;
 
@@ -56,16 +56,10 @@ namespace model {
         isRegistering(const uintptr_t &clientId);
 
         /**
-         *  Add clients to the registration process
-         */
-        std::string
-        startRegistration(const uintptr_t &clientId);
-
-        /**
          *  Processes and responds to the input of a registering user based on the step they are in
          */
         std::string
-        processRegistration(const uintptr_t &clientId, const std::string &param);
+        processRegistration(const uintptr_t &clientId, const std::string &input = "");
 
         /**
          *  Removes client from the registration process. Used for disconnects
@@ -80,17 +74,11 @@ namespace model {
         isLoggingIn(const uintptr_t &clientId);
 
         /**
-         *  Add clients to the login process
-         */
-        std::string
-        startLogin(const uintptr_t &clientId);
-
-        /**
          *  Processes and responds to the input of user logging in based on the step they are in. Appends bootedClients
          *  if logging into a Player that is already being accessed by another client.
          */
         std::string
-        processLogin(const uintptr_t &clientId, const std::string &input);
+        processLogin(const uintptr_t &clientId, const std::string &input = "");
 
         /**
          *  Removes client from the login process. Used for disconnects
@@ -119,7 +107,7 @@ namespace model {
 
         static std::vector<Player>
         parseJsonUsers(json);
-  };
+    };
 }
 
 #endif //PLAYERHANDLER_H

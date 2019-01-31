@@ -45,7 +45,7 @@ const std::string shortLengthString = "SLS";
 TEST(RegisterTest, StartRegistration) {
     PlayerHandler playerHandler{};
 
-    auto result = playerHandler.startRegistration(clientIdA);
+    auto result = playerHandler.processRegistration(clientIdA);
 
     std::ostringstream expect;
     expect << "\n"
@@ -60,7 +60,7 @@ TEST(RegisterTest, StartRegistration) {
 TEST(RegisterTest, LongUsername) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     auto result = playerHandler.processRegistration(clientIdA, longLengthString);
 
     EXPECT_EQ("The username you entered is too long. Registration process cancelled.\n", result);
@@ -69,7 +69,7 @@ TEST(RegisterTest, LongUsername) {
 TEST(RegisterTest, ValidUsername) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
 
     std::ostringstream expect;
@@ -83,7 +83,7 @@ TEST(RegisterTest, ValidUsername) {
 TEST(RegisterTest, ShortPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result = playerHandler.processRegistration(clientIdA, shortLengthString);
 
@@ -93,7 +93,7 @@ TEST(RegisterTest, ShortPassword) {
 TEST(RegisterTest, LongPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result = playerHandler.processRegistration(clientIdA, longLengthString);
 
@@ -103,7 +103,7 @@ TEST(RegisterTest, LongPassword) {
 TEST(RegisterTest, ValidPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result =  playerHandler.processRegistration(clientIdA, validLengthString);
 
@@ -113,7 +113,7 @@ TEST(RegisterTest, ValidPassword) {
 TEST(RegisterTest, NonMatchingPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result = playerHandler.processRegistration(clientIdA, "notMatch");
@@ -124,7 +124,7 @@ TEST(RegisterTest, NonMatchingPassword) {
 TEST(RegisterTest, SuccessfulRegistration) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
@@ -135,7 +135,7 @@ TEST(RegisterTest, SuccessfulRegistration) {
 TEST(RegisterTest, LoggedInAfterRegister) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
@@ -147,12 +147,12 @@ TEST(RegisterTest, LoggedInAfterRegister) {
 TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
 
-    playerHandler.startRegistration(clientIdB);
+    playerHandler.processRegistration(clientIdB);
     auto result = playerHandler.processRegistration(clientIdB, validLengthString);
 
     EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
@@ -161,8 +161,9 @@ TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
 TEST(RegisterTest, UsernameTakenOnPasswordReEntry) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
-    playerHandler.startRegistration(clientIdB);
+    // Start registration process
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdB);
 
     // Enters usernames
     playerHandler.processRegistration(clientIdA, validLengthString);
@@ -182,8 +183,7 @@ TEST(RegisterTest, UsernameTakenOnPasswordReEntry) {
 TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
-
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.exitRegistration(clientIdA);
@@ -195,7 +195,7 @@ TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
 TEST(LoginTest, StartLogin) {
     PlayerHandler playerHandler{};
 
-    auto result = playerHandler.startLogin(clientIdA);
+    auto result = playerHandler.processLogin(clientIdA);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
     EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), true);
@@ -204,7 +204,7 @@ TEST(LoginTest, StartLogin) {
 TEST(LoginTest, FailedLogin) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startLogin(clientIdA);
+    playerHandler.processLogin(clientIdA);
     playerHandler.processLogin(clientIdA, validLengthString);
     auto result = playerHandler.processLogin(clientIdA, validLengthString);
 
@@ -214,13 +214,13 @@ TEST(LoginTest, FailedLogin) {
 TEST(LoginTest, SuccessfulLogin) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.logoutPlayer(clientIdA);
 
-    playerHandler.startLogin(clientIdA);
+    playerHandler.processLogin(clientIdA);
     playerHandler.processLogin(clientIdA, validLengthString);
     auto result = playerHandler.processLogin(clientIdA, validLengthString);
 
@@ -230,12 +230,12 @@ TEST(LoginTest, SuccessfulLogin) {
 TEST(LoginTest, LogoutClientOnOtherClientLogin) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
 
-    playerHandler.startLogin(clientIdB);
+    playerHandler.processLogin(clientIdB);
     playerHandler.processLogin(clientIdB, validLengthString);
     playerHandler.processLogin(clientIdB, validLengthString);
     std::deque<Response> results = {};
@@ -250,7 +250,7 @@ TEST(LoginTest, LogoutClientOnOtherClientLogin) {
 TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
     PlayerHandler playerHandler{};
 
-    playerHandler.startLogin(clientIdA);
+    playerHandler.processLogin(clientIdA);
     playerHandler.processLogin(clientIdA, validLengthString);
     playerHandler.exitLogin(clientIdA);
 
