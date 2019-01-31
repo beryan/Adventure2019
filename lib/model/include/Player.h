@@ -24,8 +24,6 @@ namespace model {
     public:
         Player(model::ID id, std::string username, std::string password);
 
-        Player(model::ID id, std::string username);
-
         std::string getUsername() const;
 
         void setUsername(std::string username);
