@@ -5,12 +5,14 @@
 #include "FileParser.h"
 #include "json.hpp"
 #include "NPC.h"
+#include "Object.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
 
 using json = nlohmann::json;
 using NPC = model::NPC;
+using Object = model::Object;
 
 namespace {
 
@@ -40,6 +42,35 @@ namespace {
             npcs.push_back(n);
         }
         return npcs;
+    }
+
+    std::vector<Object> createObjectsFromJson(json objectsJson) {
+        std::vector<Object> objects;
+
+        for (json::iterator it = objectsJson.begin(); it != objectsJson.end(); ++it) {
+
+            std::vector<std::string> keywords;
+            for (std::string keyword : it.value().at("keywords")) {
+                keywords.push_back(keyword);
+            }
+
+            std::vector<std::string> longdesc;
+            for (json j : it.value().at("longdesc")) {
+                longdesc.push_back(j);
+            }
+
+//            std::vector<std::string> extras;
+//            for (json j : it.value().at("extra")) {
+//                extras.push_back(j);
+//            }
+
+            // Object is missing some fields
+            Object o (it.value().at("id"), it.value().at("shortdesc"), it.value().at("longdesc").at(0), model::Weapon);
+            objects.push_back(o);
+
+        }
+
+        return objects;
     }
 
     void parseJson(std::string filePath) {
@@ -78,6 +109,11 @@ namespace {
         std::vector<NPC> npcs = createNPCsFromJson(npcsJson);
         for(NPC n : npcs){
             std::cout << n;
+        }
+
+        std::vector<Object> objects = createObjectsFromJson(objectsJson);
+        for(Object o : objects){
+            std::cout << o;
         }
 
     }

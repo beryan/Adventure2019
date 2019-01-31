@@ -17,6 +17,7 @@ const std::string JSON_EXTENSION = ".json";
 
 namespace {
     std::vector<model::NPC> createNPCsFromJson(json npcsJson);
+    std::vector<Object> createObjectsFromJson(json objectsJson);
     void parseJson(std::string filePath);
 }
 
