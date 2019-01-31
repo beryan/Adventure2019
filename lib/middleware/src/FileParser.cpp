@@ -4,13 +4,43 @@
 
 #include "FileParser.h"
 #include "json.hpp"
+#include "NPC.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
 
 using json = nlohmann::json;
+using NPC = model::NPC;
 
 namespace {
+
+    std::vector<NPC> createNPCsFromJson(json npcsJson){
+        std::vector<NPC> npcs;
+        for (json::iterator it = npcsJson.begin(); it != npcsJson.end(); ++it) {
+
+            std::vector<std::string> keywords;
+            for(std::string keyword : it.value().at("keywords")){
+                keywords.push_back(keyword);
+            }
+
+// use this when NPC.description type is changed to vector
+//            std::vector<std::string> desc;
+//            for(json j : it.value().at("description")){
+//                desc.push_back(j);
+//            }
+
+            std::string desc = it.value().at("description").at(0);
+
+            std::vector<std::string> longdesc;
+            for(json j : it.value().at("longdesc")){
+                longdesc.push_back(j);
+            }
+
+            NPC n (it.value().at("id"), keywords, desc, it.value().at("shortdesc"), longdesc);
+            npcs.push_back(n);
+        }
+        return npcs;
+    }
 
     void parseJson(std::string filePath) {
 
@@ -44,6 +74,12 @@ namespace {
 //                shopsJson = it.value();
             }
         }
+
+        std::vector<NPC> npcs = createNPCsFromJson(npcsJson);
+        for(NPC n : npcs){
+            std::cout << n;
+        }
+
     }
 } // namespace
 

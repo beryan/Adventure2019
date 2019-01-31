@@ -6,7 +6,9 @@
 #define WEBSOCKETNETWORKING_FILEPARSER_H
 
 #include <string>
+#include <vector>
 
+#include "NPC.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -14,6 +16,7 @@ using json = nlohmann::json;
 const std::string JSON_EXTENSION = ".json";
 
 namespace {
+    std::vector<model::NPC> createNPCsFromJson(json npcsJson);
     void parseJson(std::string filePath);
 }
 
