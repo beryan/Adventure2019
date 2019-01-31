@@ -25,7 +25,7 @@ namespace model {
     class Room {
 
     private:
-      	int id;
+		model::ID id;
         std::string name;
       	std::vector<std::string> desc;
       	std::vector<Door> doors;
@@ -37,17 +37,17 @@ namespace model {
     public:
       	//constructors
       	Room();
-      	Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors);
-        Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
+      	Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors);
+        Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
-        int getId();
+		model::ID getId();
         std::string getName();
         std::vector<std::string> getDesc();
         std::vector<Door> getDoors();
         std::vector<NPC> getNpcs();
         std::vector<Object> getObjects();
-        void setId(int id);
+        void setId(model::ID id);
         void setName(std::string name);
         void setDesc(std::vector<std::string> desc);
         void setDoors(std::vector<Door> doors);

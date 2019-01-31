@@ -6,6 +6,7 @@
 #define OBJECT_H
 
 #include <string>
+#include "Types.h"
 
 namespace model {
 
@@ -26,13 +27,13 @@ namespace model {
     public:
         Object();
 
-        Object(int id, std::string name, std::string description, Slot slot);
+        Object(model::ID id, std::string name, std::string description, Slot slot);
 
-        Object(int id, std::string name, std::string description, bool canEquip, Slot slot);
+        Object(model::ID id, std::string name, std::string description, bool canEquip, Slot slot);
 
-        int getId() const;
+        model::ID getId() const;
 
-        void setId(int id);
+        void setId(model::ID id);
 
         std::string getName() const;
 
@@ -48,14 +49,12 @@ namespace model {
 
         bool canBeEquipped() const;
 
-        void setCanEquip(bool canEquip);
-
         bool operator==(const Object& NPC) const;
 
-        static constexpr int DEFAULT_ID = -1;
+        static constexpr model::ID DEFAULT_ID = -1;
 
     private:
-        int id;
+        model::ID id;
 
         std::string name;
 

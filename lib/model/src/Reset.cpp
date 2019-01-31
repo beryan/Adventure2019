@@ -22,7 +22,7 @@ namespace model {
         slot(-1)
         { }
 
-    Reset::Reset(std::string action, int id, int limit, int room, int slot)
+    Reset::Reset(std::string action, model::ID id, int limit, int room, int slot)
       : action(std::move(action)),
         id(id),
         limit(limit),
@@ -35,7 +35,7 @@ namespace model {
       return action;
     }
 
-    int Reset::getId() {
+    model::ID Reset::getId() {
       return id;
     }
 
@@ -55,7 +55,7 @@ namespace model {
       this->action = std::move(action);
     }
 
-    void Reset::setId(int id) {
+    void Reset::setId(model::ID id) {
       this->id = id;
     }
 

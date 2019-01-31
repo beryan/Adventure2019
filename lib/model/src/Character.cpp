@@ -6,17 +6,17 @@
 
 namespace model {
 
-    Character::Character(int id) :
+    Character::Character(model::ID id) :
         id(id),
         role(Role::Default),
         health(Character::STARTING_HEALTH)
         {}
 
-    int Character::getId() const {
+    model::ID Character::getId() const {
         return this->id;
     }
 
-    void Character::setId(int id) {
+    void Character::setId(model::ID id) {
         this->id = id;
     }
 

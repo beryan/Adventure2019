@@ -12,6 +12,7 @@
 
 #include <string>
 #include <vector>
+#include "Types.h"
 
 namespace model {
 
@@ -21,25 +22,25 @@ namespace model {
 		std::string dir; //direction
 		std::vector<std::string> desc;
 		std::vector<std::string> keywords;
-		int to; //id of room door leads to
+		model::ID to; //id of room door leads to
 
 		friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
 
 	public:
 		//constructors
 		Door();
-		Door(std::string dir, int to);
-		Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, int to);
+		Door(std::string dir, model::ID to);
+		Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, model::ID to);
 
 		//getters and setters
 		std::string getDir();
 		std::vector<std::string> getDesc();
 		std::vector<std::string> getKeywords();
-		int getTo();
+		model::ID getTo();
 		void setDir(std::string dir);
 		void setDesc(std::vector<std::string> desc);
 		void setKeywords(std::vector<std::string> keywords);
-		void setTo(int to);
+		void setTo(model::ID to);
 
 	};
 }
