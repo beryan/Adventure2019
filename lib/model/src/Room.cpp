@@ -24,7 +24,7 @@ namespace model {
         objects({})
         { }
 
-    Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors)
+    Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors)
       : id(id),
         name(std::move(name)),
         desc(std::move(desc)),
@@ -33,7 +33,7 @@ namespace model {
         objects({})
         { }
 
-    Room::Room(int id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
+    Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
       : id(id),
         name(std::move(name)),
         desc(std::move(desc)),
@@ -43,7 +43,7 @@ namespace model {
         { }
 
     //getters and setters
-    int Room::getId() {
+    model::ID Room::getId() {
       return id;
     }
 
@@ -67,7 +67,7 @@ namespace model {
       return objects;
     }
 
-    void Room::setId(int id) {
+    void Room::setId(model::ID id) {
       this->id = id;
     }
 

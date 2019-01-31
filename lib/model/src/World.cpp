@@ -32,15 +32,15 @@ namespace model {
       areas.push_back(std::move(area));
     }
 
-    std::map<int, Player> World::getUserMap(){
+    std::map<model::ID, Player> World::getUserMap(){
         return this->usersMap;
     }
 
     void World::insertUser(Player player){
-        usersMap.insert(std::pair<int,Player>(player.getId(), player));
+        usersMap.insert(std::pair<model::ID,Player>(player.getId(), player));
     }
 
-//    std::map<int, Area> World::getAreaMap(){
+//    std::map<model::ID, Area> World::getAreaMap(){
 //        return this->areasMap;
 //    }
 

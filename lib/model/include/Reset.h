@@ -11,6 +11,7 @@
 #define WEBSOCKETNETWORKING_RESET_H
 
 #include <string>
+#include "Types.h"
 
 namespace model {
 
@@ -18,7 +19,7 @@ namespace model {
 
     private:
         std::string action;
-        int id;
+        model::ID id;
         int limit;
         int room;
         int slot;
@@ -26,16 +27,16 @@ namespace model {
     public:
       	//constructors
       	Reset();
-        Reset(std::string action, int id, int limit, int room, int slot);
+        Reset(std::string action, model::ID id, int limit, int room, int slot);
 
         //getters and setters
         std::string getAction();
-        int getId();
+        model::ID getId();
         int getLimit();
         int getRoom();
         int getSlot();
         void setAction(std::string action);
-        void setId(int id);
+        void setId(model::ID id);
         void setLimit(int limit);
         void setRoom(int room);
         void setSlot(int slot);
