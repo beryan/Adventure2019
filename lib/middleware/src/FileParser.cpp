@@ -73,6 +73,27 @@ namespace {
         return objects;
     }
 
+    std::vector<Door> createDoorsFromJson(json doorsJson) {
+        std::vector<Door> doors;
+
+        for(json::iterator it = doorsJson.begin(); it != doorsJson.end(); ++it) {
+
+            std::vector<std::string> desc;
+            for (json j : it.value().at("desc")) {
+                desc.push_back(j);
+            }
+
+            std::vector<std::string> keywords;
+            for (std::string keyword : it.value().at("keywords")) {
+                keywords.push_back(keyword);
+            }
+
+            Door d (it.value().at("dir"), desc, keywords, it.value().at("to"));
+            doors.push_back(d);
+        }
+
+        return doors;
+    }
     void parseJson(std::string filePath) {
 
         std::ifstream ifs(filePath);
