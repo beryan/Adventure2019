@@ -30,8 +30,8 @@ namespace model {
     class Game {
     private:
         const std::vector<Connection>* clients;
-        std::vector<uintptr_t >* newClientIds;
-        std::vector<uintptr_t >* disconnectedClientIds;
+        std::vector<Connection>* newClientIds;
+        std::vector<Connection>* disconnectedClientIds;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
@@ -71,13 +71,13 @@ namespace model {
          *  Creates a Response to commands when the client is not logged in
          */
         Response
-        executeMenuAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
+        executeMenuAction(const Connection &clientId, const std::string &command, const std::string &param);
 
         /**
          *  Creates a Response to commands when the client is logged in
          */
         Response
-        executeInGameAction(const uintptr_t &clientId, const std::string &command, const std::string &param);
+        executeInGameAction(const Connection &clientId, const std::string &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
@@ -98,8 +98,8 @@ namespace model {
          *  new client ID and disconnected client ID vectors, respectively.
          */
         Game(std::vector<Connection> &clients,
-             std::vector<uintptr_t > &newClientIds,
-             std::vector<uintptr_t > &disconnectedClientIds,
+             std::vector<Connection> &newClientIds,
+             std::vector<Connection> &disconnectedClientIds,
              std::function<void(Connection)> &disconnect,
              std::function<void()> &shutdown);
 

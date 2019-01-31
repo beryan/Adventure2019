@@ -2,14 +2,15 @@
 // Created by Stephen Wanhella on 2019-01-22.
 //
 
-#include <PlayerHandler.h>
 #include <iostream>
 #include <sstream>
 
 #include "PlayerHandler.h"
+#include "Server.h"
 
 using json = nlohmann::json;
 using player = model::Player;
+using networking::Connection;
 
 namespace model {
     const unsigned short PlayerHandler::MIN_PASSWORD_LENGTH = 4;
@@ -33,17 +34,17 @@ namespace model {
     }
 
     bool
-    PlayerHandler::isLoggedIn(const uintptr_t &clientId) {
+    PlayerHandler::isLoggedIn(const Connection &clientId) {
         return (bool) activeClientToId.count(clientId);
     }
 
     bool
-    PlayerHandler::isRegistering(const uintptr_t &clientId) {
+    PlayerHandler::isRegistering(const Connection &clientId) {
         return (bool) this->clientRegisterStage.count(clientId);
     }
 
     std::string
-    PlayerHandler::processRegistration(const uintptr_t &clientId, const std::string &input) {
+    PlayerHandler::processRegistration(const Connection &clientId, const std::string &input) {
 
         if (!this->clientRegisterStage.count(clientId)) {
             // Start registration process
@@ -137,23 +138,23 @@ namespace model {
     }
 
     void
-    PlayerHandler::exitRegistration(const uintptr_t &clientId) {
+    PlayerHandler::exitRegistration(const Connection &clientId) {
         this->clientRegisterStage.erase(clientId);
         this->regUsernameInput.erase(clientId);
         this->regPasswordInput.erase(clientId);
     }
 
     bool
-    PlayerHandler::isLoggingIn(const uintptr_t &clientId) {
+    PlayerHandler::isLoggingIn(const Connection &clientId) {
         return (bool) this->clientLoginStage.count(clientId);
     }
 
     std::string
-    PlayerHandler::processLogin(const uintptr_t &clientId, const std::string &input) {
+    PlayerHandler::processLogin(const Connection &client, const std::string &input) {
 
-        if (!this->clientLoginStage.count(clientId)) {
+        if (!this->clientLoginStage.count(client)) {
             // Start login process
-            this->clientLoginStage.emplace(clientId, LoginStage::USERNAME);
+            this->clientLoginStage.emplace(client, LoginStage::USERNAME);
 
             return "\n"
                    "Login\n"
@@ -161,27 +162,27 @@ namespace model {
                    "Enter your username\n";
         }
 
-        switch (this->clientLoginStage.at(clientId)) {
+        switch (this->clientLoginStage.at(client)) {
             case LoginStage::USERNAME: {
                 if (input.length() == 0) {
-                    this->clientLoginStage.erase(clientId);
+                    this->clientLoginStage.erase(client);
                     return "No username entered. Login process cancelled.\n";
                 }
 
-                this->loginUsernameInput.emplace(clientId, input);
-                this->clientLoginStage.at(clientId) = LoginStage::PASSWORD;
+                this->loginUsernameInput.emplace(client, input);
+                this->clientLoginStage.at(client) = LoginStage::PASSWORD;
 
                 return input + "\nEnter your password\n";
             }
 
             case LoginStage::PASSWORD: {
-                this->clientLoginStage.erase(clientId);
+                this->clientLoginStage.erase(client);
 
                 auto successMessage = "Logged in successfully!\n";
                 auto failMessage = "Invalid username or password.\n";
 
-                auto inputUsername = this->loginUsernameInput.at(clientId);
-                this->loginUsernameInput.erase(clientId);
+                auto inputUsername = this->loginUsernameInput.at(client);
+                this->loginUsernameInput.erase(client);
 
                 auto playerExists = this->usernameToPlayer.count(inputUsername);
 
@@ -207,15 +208,15 @@ namespace model {
                     this->activeClientToId.erase(otherClientId);
                     this->activeIdToClient.erase(playerId);
 
-                    this->activeClientToId.emplace(clientId, playerId);
-                    this->activeIdToClient.emplace(playerId, clientId);
+                    this->activeClientToId.emplace(client, playerId);
+                    this->activeIdToClient.emplace(playerId, client);
 
-                    std::cout << inputUsername << " is now being used by " << clientId << "\n";
+                    std::cout << inputUsername << " is now being used by " << client.id << "\n";
                     return successMessage;
 
                 } else {
-                    this->activeClientToId.emplace(clientId, playerId);
-                    this->activeIdToClient.emplace(playerId, clientId);
+                    this->activeClientToId.emplace(client, playerId);
+                    this->activeIdToClient.emplace(playerId, client);
 
                     return successMessage;
                 }
@@ -227,13 +228,13 @@ namespace model {
     }
 
     void
-    PlayerHandler::exitLogin(const uintptr_t &clientId) {
+    PlayerHandler::exitLogin(const Connection &clientId) {
         this->clientLoginStage.erase(clientId);
         this->loginUsernameInput.erase(clientId);
     }
 
     std::string
-    PlayerHandler::logoutPlayer(const uintptr_t &clientId) {
+    PlayerHandler::logoutPlayer(const Connection &clientId) {
         this->activeIdToClient.erase(this->activeClientToId.at(clientId));
         this->activeClientToId.erase(clientId);
 
@@ -241,7 +242,7 @@ namespace model {
     }
 
     std::string
-    PlayerHandler::getUsernameByClientId(const uintptr_t &clientId) {
+    PlayerHandler::getUsernameByClientId(const Connection &clientId) {
         return this->allPlayers.at(this->activeClientToId.at(clientId)).getUsername();
     }
 
