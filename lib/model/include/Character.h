@@ -6,6 +6,7 @@
 #define CHARACTER_H
 
 #include "Object.h"
+#include <string_view>
 #include "Types.h"
 
 namespace model {
