@@ -24,8 +24,8 @@ namespace model{
 
      void addArea(Area area);
 
-     std::map<int, Player> getUserMap();
-//     std::map<int, Character> getAreaMap();
+     std::map<model::ID, Player> getUserMap();
+//     std::map<model::ID, Character> getAreaMap();
 
     void insertUser(Player player);
 
@@ -33,8 +33,8 @@ namespace model{
 
  private:
      std::vector<Area> areas;
-     std::map<int, Player> usersMap;
-     //std::map<int, Area> areasMap;
+     std::map<model::ID, Player> usersMap;
+     //std::map<model::ID, Area> areasMap;
 
  };
 }

@@ -7,7 +7,7 @@
 
 namespace model {
 
-    NPC::NPC(int id) :
+    NPC::NPC(model::ID id) :
         Character(id),
         keywords({}),
         description({}),
@@ -16,7 +16,7 @@ namespace model {
         {}
 
     NPC::NPC(
-        int id,
+        model::ID id,
         std::vector<std::string> keywords,
         std::string description,
         std::string shortDescription,

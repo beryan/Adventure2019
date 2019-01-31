@@ -22,14 +22,14 @@ namespace model {
               to(-1)
     { }
 
-    Door::Door(std::string dir, int to)
+    Door::Door(std::string dir, model::ID to)
             : dir(std::move(dir)),
               desc({}),
               keywords({}),
               to(to)
     { }
 
-    Door::Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, int to)
+    Door::Door(std::string dir, std::vector<std::string> desc, std::vector<std::string> keywords, model::ID to)
             : dir(std::move(dir)),
               desc(std::move(desc)),
               keywords(std::move(keywords)),
@@ -49,7 +49,7 @@ namespace model {
         return keywords;
     }
 
-    int Door::getTo() {
+    model::ID Door::getTo() {
         return to;
     }
 
@@ -65,7 +65,7 @@ namespace model {
         this->keywords = std::move(keywords);
     }
 
-    void Door::setTo(int to) {
+    void Door::setTo(model::ID to) {
         this->to = to;
     }
 

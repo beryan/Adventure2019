@@ -12,17 +12,17 @@ namespace model {
         description({}),
         slot(Slot::Misc){}
 
-    Object::Object(int id, std::string name, std::string description, Slot slot) :
+    Object::Object(model::ID id, std::string name, std::string description, Slot slot) :
         id(id),
         name(std::move(name)),
         description(std::move(description)),
         slot(slot){}
 
-    int Object::getId() const {
+    model::ID Object::getId() const {
         return this->id;
     }
 
-    void Object::setId(int id){
+    void Object::setId(model::ID id){
         this->id = id;
     }
 

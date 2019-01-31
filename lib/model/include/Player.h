@@ -22,7 +22,7 @@ namespace model {
 
     class Player : public Character {
     public:
-        Player(int id, std::string username, std::string password);
+        Player(model::ID id, std::string username, std::string password);
 
         std::string getUsername() const;
 
@@ -69,7 +69,7 @@ namespace model {
 
         std::string avatar;
 
-        std::map<int, Object> inventoryItems;
+        std::map<model::ID, Object> inventoryItems;
 
         std::map<int, Object> equippedItems;
     };

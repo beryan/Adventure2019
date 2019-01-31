@@ -20,10 +20,10 @@ namespace model {
 
     class NPC : public Character {
     public:
-        explicit NPC(int id);
+        explicit NPC(model::ID id);
 
         NPC(
-            int id,
+            model::ID id,
             std::vector<std::string> keywords,
             std::string description,
             std::string shortDescription,
