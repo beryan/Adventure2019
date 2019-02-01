@@ -10,6 +10,9 @@ namespace model {
         id(Object::DEFAULT_ID),
         name({}),
         description({}),
+        shortDescription({}),
+        longDescription({}),
+        keywords({}),
         slot(Slot::Misc),
         extraObjectInfo({}){}
 
@@ -17,11 +20,17 @@ namespace model {
         model::ID id,
         std::string name,
         std::string description,
+        std::string shortDescription,
+        std::vector<std::string> longDescription,
+        std::vector<std::string> keywords,
         Slot slot
     ) :
         id(id),
         name(std::move(name)),
         description(std::move(description)),
+        shortDescription(std::move(shortDescription)),
+        longDescription(std::move(longDescription)),
+        keywords(std::move(keywords)),
         slot(slot),
         extraObjectInfo({}){}
 
@@ -29,12 +38,18 @@ namespace model {
         model::ID id,
         std::string name,
         std::string description,
+        std::string shortDescription,
+        std::vector<std::string> longDescription,
+        std::vector<std::string> keywords,
         Slot slot,
         ExtraObjectInfo extraObjectInfo
     ) :
         id(id),
         name(std::move(name)),
         description(std::move(description)),
+        shortDescription(std::move(shortDescription)),
+        longDescription(std::move(longDescription)),
+        keywords(std::move(keywords)),
         slot(slot),
         extraObjectInfo(std::move(extraObjectInfo)){}
 

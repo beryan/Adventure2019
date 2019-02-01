@@ -33,6 +33,9 @@ namespace model {
             model::ID id,
             std::string name,
             std::string description,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
             Slot slot
         );
 
@@ -40,6 +43,9 @@ namespace model {
             model::ID id,
             std::string name,
             std::string description,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
             Slot slot,
             ExtraObjectInfo extraObjectInfo
         );
