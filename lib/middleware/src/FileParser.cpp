@@ -4,8 +4,19 @@
 
 #include "FileParser.h"
 
+#include "Door.h"
+#include "NPC.h"
+#include "Object.h"
+#include "Room.h"
+
 #include <boost/filesystem.hpp>
 #include <iostream>
+
+using json = nlohmann::json;
+using Door = model::Door;
+using NPC = model::NPC;
+using Object = model::Object;
+using Room = model::Room;
 
 namespace {
 
