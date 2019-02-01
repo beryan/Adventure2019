@@ -11,6 +11,7 @@
 
 const std::string JSON_EXTENSION = ".json";
 
-void ParseDataFile(std::string filePath);
-
+namespace DataManager {
+    void ParseDataFile(std::string filePath);
+}
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H
