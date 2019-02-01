@@ -30,7 +30,6 @@ namespace model {
         Object(
             model::ID id,
             std::string name,
-            std::string description,
             std::string shortDescription,
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
@@ -40,7 +39,6 @@ namespace model {
         Object(
             model::ID id,
             std::string name,
-            std::string description,
             std::string shortDescription,
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
@@ -55,10 +53,6 @@ namespace model {
         std::string getName() const;
 
         void setName(std::string name);
-
-        std::string getDescription() const;
-
-        void setDescription(std::string description);
 
         std::string getShortDescription() const;
 
@@ -86,8 +80,6 @@ namespace model {
         model::ID id;
 
         std::string name;
-
-        std::string description;
 
         std::string shortDescription;
 

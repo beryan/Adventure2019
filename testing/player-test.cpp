@@ -33,7 +33,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
         std::vector<Object> items = player.getInventoryItems();
@@ -48,7 +48,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -69,7 +69,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -87,7 +87,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -106,7 +106,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -123,7 +123,7 @@ namespace {
 
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{rand()%220, "test", "test", Slot::Head};
+            Object item{rand()%220, "test", "test", {}, {}, Slot::Head};
             player.addToInventoryItems(item);
         }
 

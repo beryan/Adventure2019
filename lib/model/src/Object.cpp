@@ -9,7 +9,6 @@ namespace model {
     Object::Object() :
         id(Object::DEFAULT_ID),
         name({}),
-        description({}),
         shortDescription({}),
         longDescription({}),
         keywords({}),
@@ -19,7 +18,6 @@ namespace model {
     Object::Object(
         model::ID id,
         std::string name,
-        std::string description,
         std::string shortDescription,
         std::vector<std::string> longDescription,
         std::vector<std::string> keywords,
@@ -27,7 +25,6 @@ namespace model {
     ) :
         id(id),
         name(std::move(name)),
-        description(std::move(description)),
         shortDescription(std::move(shortDescription)),
         longDescription(std::move(longDescription)),
         keywords(std::move(keywords)),
@@ -37,7 +34,6 @@ namespace model {
     Object::Object(
         model::ID id,
         std::string name,
-        std::string description,
         std::string shortDescription,
         std::vector<std::string> longDescription,
         std::vector<std::string> keywords,
@@ -46,7 +42,6 @@ namespace model {
     ) :
         id(id),
         name(std::move(name)),
-        description(std::move(description)),
         shortDescription(std::move(shortDescription)),
         longDescription(std::move(longDescription)),
         keywords(std::move(keywords)),
@@ -67,14 +62,6 @@ namespace model {
 
     void Object::setName(std::string name){
         this->name = std::move(name);
-    }
-
-    std::string Object::getDescription() const {
-        return this->description;
-    }
-
-    void Object::setDescription(std::string description) {
-        this->description = std::move(description);
     }
 
     std::string Object::getShortDescription() const {
