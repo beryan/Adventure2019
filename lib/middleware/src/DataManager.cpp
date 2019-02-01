@@ -92,35 +92,15 @@ namespace DataManager {
         void parseJson(std::string filePath) {
 
             std::ifstream ifs(filePath);
-
             json t = json::parse(ifs);
 
-            json areasJson;
-            json roomsJson;
-            json npcsJson;
-            json objectsJson;
-//        json helpsJson;
-            json resetsJson;
-//        json shopsJson;
-
-
-            for (json::iterator it = t.begin(); it != t.end(); ++it) {
-                if (it.key() == "AREAS") {
-                    areasJson = it.value();
-                } else if (it.key() == "ROOMS") {
-                    roomsJson = it.value();
-                } else if (it.key() == "NPCS") {
-                    npcsJson = it.value();
-                } else if (it.key() == "OBJECTS") {
-                    objectsJson = it.value();
-                } else if (it.key() == "HELPS") {
-//                helpsJson = it.value();
-                } else if (it.key() == "RESETS") {
-                    resetsJson = it.value();
-                } else if (it.key() == "SHOPS") {
-//                shopsJson = it.value();
-                }
-            }
+            json areasJson = t["AREAS"];
+            json roomsJson = t["ROOMS"];
+            json npcsJson = t["NPCS"];
+            json objectsJson = t["OBJECTS"];
+//        json helpsJson = t["HELPS"];
+            json resetsJson = t["RESETS"];
+//        json shopsJson = t["SHOPS"];
 
             std::vector<NPC> npcs = createNPCsFromJson(npcsJson);
             std::cout << "Printing NPCs: " << std::endl;
