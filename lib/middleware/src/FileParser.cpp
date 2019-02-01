@@ -24,23 +24,12 @@ namespace {
         std::vector<NPC> npcs;
         for(auto it : npcsJson.items()){
 
-            std::vector<std::string> keywords;
-            for(std::string keyword : it.value().at("keywords")){
-                keywords.push_back(keyword);
-            }
+            std::vector<std::string> keywords = it.value()["keywords"];
 
-// use this when NPC.description type is changed to vector
-//            std::vector<std::string> desc;
-//            for(json j : it.value().at("description")){
-//                desc.push_back(j);
-//            }
-
+            //TODO change to vector parse when NPC updated
             std::string desc = it.value().at("description").at(0);
 
-            std::vector<std::string> longdesc;
-            for(json j : it.value().at("longdesc")){
-                longdesc.push_back(j);
-            }
+            std::vector<std::string> longdesc = it.value()["longdesc"];
 
             NPC n (it.value().at("id"), keywords, desc, it.value().at("shortdesc"), longdesc);
             npcs.push_back(n);
@@ -53,22 +42,12 @@ namespace {
 
         for (auto it : objectsJson.items()) {
 
-            std::vector<std::string> keywords;
-            for (std::string keyword : it.value().at("keywords")) {
-                keywords.push_back(keyword);
-            }
+            std::vector<std::string> keywords = it.value()["keywords"];
 
-            std::vector<std::string> longdesc;
-            for (json j : it.value().at("longdesc")) {
-                longdesc.push_back(j);
-            }
+            std::vector<std::string> longdesc = it.value()["longdesc"];
 
-//            std::vector<std::string> extras;
-//            for (json j : it.value().at("extra")) {
-//                extras.push_back(j);
-//            }
+            //TODO parse missing fields
 
-            // Object is missing some fields
             Object o (it.value().at("id"), it.value().at("shortdesc"), it.value().at("longdesc").at(0), model::Weapon);
             objects.push_back(o);
 
@@ -82,15 +61,9 @@ namespace {
 
         for(auto it : doorsJson.items()) {
 
-            std::vector<std::string> desc;
-            for (json j : it.value().at("desc")) {
-                desc.push_back(j);
-            }
+            std::vector<std::string> desc = it.value()["desc"];
 
-            std::vector<std::string> keywords;
-            for (std::string keyword : it.value().at("keywords")) {
-                keywords.push_back(keyword);
-            }
+            std::vector<std::string> keywords = it.value()["keywords"];
 
             Door d (it.value().at("dir"), desc, keywords, it.value().at("to"));
             doors.push_back(d);
@@ -102,10 +75,7 @@ namespace {
     std::vector<Room> createRoomsFromJson(json roomsJson) {
         std::vector<Room> rooms;
         for(auto it : roomsJson.items()) {
-            std::vector<std::string> desc;
-            for(json j : it.value().at("desc")){
-                desc.push_back(j);
-            }
+            std::vector<std::string> desc = it.value()["desc"];
 
             std::vector<Door> doors = createDoorsFromJson(it.value().at("doors"));
 
