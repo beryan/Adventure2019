@@ -10,13 +10,33 @@ namespace model {
         id(Object::DEFAULT_ID),
         name({}),
         description({}),
-        slot(Slot::Misc){}
+        slot(Slot::Misc),
+        extraObjectInfo({}){}
 
-    Object::Object(model::ID id, std::string name, std::string description, Slot slot) :
+    Object::Object(
+        model::ID id,
+        std::string name,
+        std::string description,
+        Slot slot
+    ) :
         id(id),
         name(std::move(name)),
         description(std::move(description)),
-        slot(slot){}
+        slot(slot),
+        extraObjectInfo({}){}
+
+    Object::Object(
+        model::ID id,
+        std::string name,
+        std::string description,
+        Slot slot,
+        ExtraObjectInfo extraObjectInfo
+    ) :
+        id(id),
+        name(std::move(name)),
+        description(std::move(description)),
+        slot(slot),
+        extraObjectInfo(std::move(extraObjectInfo)){}
 
     model::ID Object::getId() const {
         return this->id;
@@ -48,6 +68,14 @@ namespace model {
 
     void Object::setShortDescription(std::string shortDescription) {
         this->shortDescription = std::move(shortDescription);
+    }
+
+    std::vector<std::string> Object::getLongDescription() const {
+        return this->longDescription;
+    }
+
+    void Object::setLongDescription(std::vector<std::string> longDescription){
+        this->longDescription = std::move(longDescription);
     }
 
     std::vector<std::string> Object::getKeywords() const {

@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 #include "Types.h"
+#include "ExtraObjectInfo.h"
 
 namespace model {
 
@@ -28,7 +29,20 @@ namespace model {
     public:
         Object();
 
-        Object(model::ID id, std::string name, std::string description, Slot slot);
+        Object(
+            model::ID id,
+            std::string name,
+            std::string description,
+            Slot slot
+        );
+
+        Object(
+            model::ID id,
+            std::string name,
+            std::string description,
+            Slot slot,
+            ExtraObjectInfo extraObjectInfo
+        );
 
         model::ID getId() const;
 
@@ -46,9 +60,9 @@ namespace model {
 
         void setShortDescription(std::string shortDescription);
 
-        std::string getLongDescription() const;
+        std::vector<std::string> getLongDescription() const;
 
-        void setLongDescription(std::string longDescription);
+        void setLongDescription(std::vector<std::string> longDescription);
 
         std::vector<std::string> getKeywords() const;
 
@@ -73,11 +87,13 @@ namespace model {
 
         std::string shortDescription;
 
-        std::string longDescription;
+        std::vector<std::string> longDescription;
 
         std::vector<std::string> keywords;
 
         Slot slot;
+
+        ExtraObjectInfo extraObjectInfo;
     };
 }
 
