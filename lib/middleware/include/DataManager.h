@@ -8,10 +8,14 @@
 #include <string>
 
 #include "json.hpp"
+#include "World.h"
+
+using model::World;
 
 const std::string JSON_EXTENSION = ".json";
 
 namespace DataManager {
     void ParseDataFile(std::string filePath);
+    void ParseUsersFile(std::string filePath, World& world);
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H

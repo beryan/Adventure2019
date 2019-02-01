@@ -7,6 +7,7 @@
 #include "Door.h"
 #include "NPC.h"
 #include "Object.h"
+#include "Player.h"
 #include "Room.h"
 
 #include <boost/filesystem.hpp>
@@ -16,6 +17,7 @@ using json = nlohmann::json;
 using Door = model::Door;
 using NPC = model::NPC;
 using Object = model::Object;
+using Player = model::Player;
 using Room = model::Room;
 
 
@@ -89,7 +91,7 @@ namespace DataManager {
         }
 
 
-        void parseJson(std::string filePath) {
+        void parseDataJson(std::string filePath) {
 
             std::ifstream ifs(filePath);
             json t = json::parse(ifs);
@@ -127,15 +129,37 @@ namespace DataManager {
             std::cout << std::endl;
 
         }
+
+        void parseUsersJson(std::string filePath, World& world) {
+            std::ifstream ifs(filePath);
+
+            json usersJson = json::parse(ifs);
+            json users = usersJson["USERS"];
+
+            // TODO: Refactor this to be a ranged for loop
+            for (json::iterator it = users.begin(); it != users.end(); ++it) {
+                Player p (it.value().at("id"), it.value().at("username"), "");
+                world.insertUser(p);
+            }
+        }
+
     } // anonymous namespace
 
     void ParseDataFile(std::string filePath){
 
         std::string extension = boost::filesystem::extension(filePath);
         if(extension == JSON_EXTENSION){
-            parseJson(filePath);
+            parseDataJson(filePath);
         }
-
     }
-}
+
+    void ParseUsersFile(std::string filePath, World& world){
+        std::string extension = boost::filesystem::extension(filePath);
+        std::vector<Player> users;
+
+        if(extension == JSON_EXTENSION){
+            parseUsersJson(filePath, world);
+        }
+    }
+} // DataManager namespace
 

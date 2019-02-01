@@ -63,7 +63,7 @@ namespace model{
 
         void parseJSON();
 
-        void createUsersFromJSON(json user);
+        void parseUserData();
 
     private:
         World world;
