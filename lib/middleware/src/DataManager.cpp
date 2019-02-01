@@ -28,7 +28,6 @@ namespace DataManager {
         std::vector<NPC> createNPCsFromJson(json npcsJson){
             std::vector<NPC> npcs;
             for(auto it : npcsJson.items()){
-
                 std::vector<std::string> keywords = it.value()["keywords"];
 
                 //TODO change to vector parse when NPC updated
@@ -45,9 +44,7 @@ namespace DataManager {
             std::vector<Object> objects;
 
             for (auto it : objectsJson.items()) {
-
                 std::vector<std::string> keywords = it.value()["keywords"];
-
                 std::vector<std::string> longdesc = it.value()["longdesc"];
 
                 //TODO parse missing fields
@@ -64,9 +61,7 @@ namespace DataManager {
             std::vector<Door> doors;
 
             for(auto it : doorsJson.items()) {
-
                 std::vector<std::string> desc = it.value()["desc"];
-
                 std::vector<std::string> keywords = it.value()["keywords"];
 
                 Door d (it.value().at("dir"), desc, keywords, it.value().at("to"));
@@ -78,9 +73,9 @@ namespace DataManager {
 
         std::vector<Room> createRoomsFromJson(json roomsJson) {
             std::vector<Room> rooms;
+            
             for(auto it : roomsJson.items()) {
                 std::vector<std::string> desc = it.value()["desc"];
-
                 std::vector<Door> doors = createDoorsFromJson(it.value().at("doors"));
 
                 Room r (it.value().at("id"), it.value().at("name"), desc, doors);
@@ -89,7 +84,6 @@ namespace DataManager {
 
             return rooms;
         }
-
 
         void parseDataJson(std::string filePath) {
 
@@ -111,7 +105,6 @@ namespace DataManager {
             }
             std::cout << std::endl;
 
-
             std::vector<Object> objects = createObjectsFromJson(objectsJson);
             std::cout << "Printing Objects: " << std::endl;
             for(Object o : objects){
@@ -119,10 +112,8 @@ namespace DataManager {
             }
             std::cout << std::endl;
 
-
             std::vector<Room> rooms = createRoomsFromJson(roomsJson);
             std::cout << "Printing Rooms: " << std::endl;
-            std::cout << "size of rooms: " << rooms.size() << std::endl;
             for(Room r : rooms) {
                 std::cout << r;
             }
@@ -146,8 +137,8 @@ namespace DataManager {
     } // anonymous namespace
 
     void ParseDataFile(std::string filePath){
-
         std::string extension = boost::filesystem::extension(filePath);
+
         if(extension == JSON_EXTENSION){
             parseDataJson(filePath);
         }
@@ -155,7 +146,6 @@ namespace DataManager {
 
     void ParseUsersFile(std::string filePath, World& world){
         std::string extension = boost::filesystem::extension(filePath);
-        std::vector<Player> users;
 
         if(extension == JSON_EXTENSION){
             parseUsersJson(filePath, world);
