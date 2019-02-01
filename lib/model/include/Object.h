@@ -29,8 +29,6 @@ namespace model {
 
         Object(model::ID id, std::string name, std::string description, Slot slot);
 
-        Object(model::ID id, std::string name, std::string description, bool canEquip, Slot slot);
-
         model::ID getId() const;
 
         void setId(model::ID id);
