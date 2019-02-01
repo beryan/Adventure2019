@@ -15,15 +15,6 @@ namespace model {
         slot(Slot::Misc),
         extraObjectInfo({}){}
 
-    Object::Object(model::ID id) :
-            id(id),
-            name({}),
-            shortDescription({}),
-            longDescription({}),
-            keywords({}),
-            slot(Slot::Misc),
-            extraObjectInfo({}){}
-
     Object::Object(
         model::ID id,
         std::string name,
