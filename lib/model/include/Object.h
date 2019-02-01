@@ -5,8 +5,6 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <string>
-#include <vector>
 #include "Types.h"
 #include "ExtraObjectInfo.h"
 
