@@ -27,6 +27,8 @@ namespace model {
     public:
         Object();
 
+        Object(model::ID id);
+
         Object(
             model::ID id,
             std::string name,
