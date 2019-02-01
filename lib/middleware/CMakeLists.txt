@@ -12,7 +12,7 @@ target_include_directories(json
 find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
 
 add_library(fileparser
-        src/FileParser.cpp)
+        src/DataManager.cpp)
 
 target_include_directories(fileparser
         PRIVATE

@@ -2,7 +2,7 @@
 // Created by arehal on 1/30/19.
 //
 
-#include "FileParser.h"
+#include "DataManager.h"
 
 #include "Door.h"
 #include "NPC.h"

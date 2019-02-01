@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "WorldHandler.h"
+#include "DataManager.h"
 
 using model::WorldHandler;
 
