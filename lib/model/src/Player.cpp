@@ -6,7 +6,7 @@
 #include <algorithm>
 
 namespace model {
-    Player::Player(model::ID id, std::string username, std::string password) :
+    Player::Player(model::ID id, std::string_view username, std::string_view password) :
         Character(id),
         username(std::move(username)),
         password(std::move(password))
@@ -16,7 +16,7 @@ namespace model {
         return this->username;
     }
 
-    void Player::setUsername(std::string username) {
+    void Player::setUsername(std::string_view username) {
         this->username = std::move(username);
     }
 
@@ -24,7 +24,7 @@ namespace model {
         return password;
     }
 
-    void Player::setPassword(std::string password) {
+    void Player::setPassword(std::string_view password) {
         this->password = std::move(password);
     }
 
@@ -32,7 +32,7 @@ namespace model {
         return this->avatar;
     }
 
-    void Player::setAvatar(std::string avatar) {
+    void Player::setAvatar(std::string_view avatar) {
         this->avatar = std::move(avatar);
     }
 
@@ -46,7 +46,7 @@ namespace model {
         return container;
     }
 
-    void Player::mapInventoryItems(std::vector<Object> items) {
+    void Player::mapInventoryItems(std::vector<Object> &items) {
         for (Object item : items)
             inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
     }
@@ -61,7 +61,7 @@ namespace model {
         return container;
     }
 
-    void Player::mapEquippedItems(std::vector<Object> items) {
+    void Player::mapEquippedItems(std::vector<Object> &items) {
         for (Object item : items)
             equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
     }
@@ -77,11 +77,11 @@ namespace model {
         }
     }
 
-    bool Player::isItemInInventory(Object item) {
+    bool Player::isItemInInventory(const Object &item) {
         return inventoryItems.count(item.getId()) > 0;
     }
 
-    bool Player::isSlotOccupied(Slot slot) {
+    bool Player::isSlotOccupied(const Slot &slot) {
         return equippedItems.count(slot) > 0;
     }
 
@@ -89,7 +89,7 @@ namespace model {
         inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
     }
 
-    void Player::unequipItem(Slot slot) {
+    void Player::unequipItem(const Slot &slot) {
         auto item = equippedItems.at(slot);
         equippedItems.erase(slot);
 

@@ -22,41 +22,41 @@ namespace model {
 
     class Player : public Character {
     public:
-        Player(model::ID id, std::string username, std::string password);
+        Player(model::ID id, std::string_view username, std::string_view password);
 
         std::string getUsername() const;
 
-        void setUsername(std::string username);
+        void setUsername(std::string_view username);
 
         std::string getPassword() const;
 
-        void setPassword(std::string password);
+        void setPassword(std::string_view password);
 
         std::string getAvatar() const;
 
-        void setAvatar(std::string avatar);
+        void setAvatar(std::string_view avatar);
 
         bool operator==(const Player& player) const;
 
         /************ Inventory ************/
 
-        bool isItemInInventory(Object item);
+        bool isItemInInventory(const Object &item);
 
-        bool isSlotOccupied(Slot slot);
+        bool isSlotOccupied(const Slot &slot);
 
         std::vector<Object> getInventoryItems() const;
 
-        void mapInventoryItems(std::vector<Object> items);
+        void mapInventoryItems(std::vector<Object> &items);
 
         std::vector<Object> getEquippedItems() const;
 
-        void mapEquippedItems(std::vector<Object> items);
+        void mapEquippedItems(std::vector<Object> &items);
 
         void equipItem(Object item);
 
         void addToInventoryItems(Object item);
 
-        void unequipItem(Slot slot);
+        void unequipItem(const Slot &slot);
 
         Object dropItemFromInventory(Object item);
 
