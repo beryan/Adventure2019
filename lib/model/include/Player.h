@@ -62,6 +62,12 @@ namespace model {
 
         Object dropItemFromEquipped(Slot slot);
 
+        /************ ROOM ************/
+
+        model::ID getCurrRoomID();
+
+        void setCurrRoomId(const model::ID &id);
+
     private:
         std::string username;
 
@@ -72,6 +78,8 @@ namespace model {
         std::map<model::ID, Object> inventoryItems;
 
         std::map<int, Object> equippedItems;
+
+        mode::currRoomID;
     };
 }
 
