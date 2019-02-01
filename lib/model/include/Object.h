@@ -6,6 +6,7 @@
 #define OBJECT_H
 
 #include <string>
+#include <vector>
 #include "Types.h"
 
 namespace model {
@@ -41,6 +42,18 @@ namespace model {
 
         void setDescription(std::string description);
 
+        std::string getShortDescription() const;
+
+        void setShortDescription(std::string shortDescription);
+
+        std::string getLongDescription() const;
+
+        void setLongDescription(std::string longDescription);
+
+        std::vector<std::string> getKeywords() const;
+
+        void setKeywords(std::vector<std::string> keywords);
+
         Slot getSlot() const;
 
         void setSlot(Slot slot);
@@ -57,6 +70,12 @@ namespace model {
         std::string name;
 
         std::string description;
+
+        std::string shortDescription;
+
+        std::string longDescription;
+
+        std::vector<std::string> keywords;
 
         Slot slot;
     };

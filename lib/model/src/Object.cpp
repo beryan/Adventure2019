@@ -42,6 +42,22 @@ namespace model {
         this->description = std::move(description);
     }
 
+    std::string Object::getShortDescription() const {
+        return this->shortDescription;
+    }
+
+    void Object::setShortDescription(std::string shortDescription) {
+        this->shortDescription = std::move(shortDescription);
+    }
+
+    std::vector<std::string> Object::getKeywords() const {
+        return this->keywords;
+    }
+
+    void Object::setKeywords(std::vector<std::string> keywords) {
+        this->keywords = std::move(keywords);
+    }
+
 
     Slot Object::getSlot() const {
         return this->slot;
