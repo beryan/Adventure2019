@@ -71,13 +71,13 @@ namespace model {
          *  Creates a Response to commands when the client is not logged in
          */
         Response
-        executeMenuAction(const Connection &clientId, const std::string &command, const std::string &param);
+        executeMenuAction(const Connection &client, const std::string &command, const std::string &param);
 
         /**
          *  Creates a Response to commands when the client is logged in
          */
         Response
-        executeInGameAction(const Connection &clientId, const std::string &command, const std::string &param);
+        executeInGameAction(const Connection &client, const std::string &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.

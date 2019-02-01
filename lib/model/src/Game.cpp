@@ -148,14 +148,14 @@ namespace model {
     }
 
     Response
-    Game::executeMenuAction(const Connection &clientId, const std::string &command, const std::string &param) {
+    Game::executeMenuAction(const Connection &client, const std::string &command, const std::string &param) {
         std::ostringstream tempMessage;
 
         if (command == COMMAND_REGISTER) {
-            tempMessage << this->playerHandler->processRegistration(clientId);
+            tempMessage << this->playerHandler->processRegistration(client);
 
         } else if (command == COMMAND_LOGIN) {
-            tempMessage << this->playerHandler->processLogin(clientId);
+            tempMessage << this->playerHandler->processLogin(client);
 
         } else if (command == COMMAND_HELP) {
             tempMessage << "\n"
@@ -180,20 +180,20 @@ namespace model {
 
         }
 
-        return {clientId, tempMessage.str(), true};
+        return {client, tempMessage.str(), true};
     }
 
     Response
-    Game::executeInGameAction(const Connection &clientId, const std::string &command, const std::string &param) {
+    Game::executeInGameAction(const Connection &client, const std::string &command, const std::string &param) {
         std::ostringstream tempMessage;
         bool isLocal = true;
 
         if (command == COMMAND_SAY) {
             isLocal = false;
-            tempMessage << this->playerHandler->getUsernameByClientId(clientId) << "> " << param << "\n";
+            tempMessage << this->playerHandler->getUsernameByClientId(client) << "> " << param << "\n";
 
         } else if (command == COMMAND_LOGOUT) {
-            tempMessage << this->playerHandler->logoutPlayer(clientId);
+            tempMessage << this->playerHandler->logoutPlayer(client);
 
         } else if (command == COMMAND_HELP) {
             tempMessage << "\n"
@@ -219,7 +219,7 @@ namespace model {
             tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
         }
 
-        return {clientId, tempMessage.str(), isLocal};
+        return {client, tempMessage.str(), isLocal};
     }
 
 
@@ -249,8 +249,8 @@ namespace model {
             }
         }
 
-        for (auto const& [clientId, message] : clientMessages) {
-            outgoing.push_back({{clientId}, message.str()});
+        for (auto const& [client, message] : clientMessages) {
+            outgoing.push_back({client, message.str()});
         }
 
         return outgoing;

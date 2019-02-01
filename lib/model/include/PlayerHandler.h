@@ -49,31 +49,31 @@ namespace model {
          *  Checks if a player is logged in (exists in the activeClientToId map)
          */
         bool
-        isLoggedIn(const Connection &clientId);
+        isLoggedIn(const Connection &client);
 
         /**
          *  Checks if a client is in the process of registering a new Player
          */
         bool
-        isRegistering(const Connection &clientId);
+        isRegistering(const Connection &client);
 
         /**
          *  Processes and responds to the input of a registering user based on the step they are in
          */
         std::string
-        processRegistration(const Connection &clientId, const std::string &input = "");
+        processRegistration(const Connection &client, const std::string &input = "");
 
         /**
          *  Removes client from the registration process. Used for disconnects
          */
         void
-        exitRegistration(const Connection &clientId);
+        exitRegistration(const Connection &client);
 
         /**
          *  Checks if a client is in the process of logging in
          */
         bool
-        isLoggingIn(const Connection &clientId);
+        isLoggingIn(const Connection &client);
 
         /**
          *  Processes and responds to the input of user logging in based on the step they are in. Appends bootedClients
@@ -86,19 +86,19 @@ namespace model {
          *  Removes client from the login process. Used for disconnects
          */
         void
-        exitLogin(const Connection &clientId);
+        exitLogin(const Connection &client);
 
         /**
          *  Logs out the client and informs them.
          */
         std::string
-        logoutPlayer(const Connection &clientId);
+        logoutPlayer(const Connection &client);
 
         /**
          *  Returns the username of a Player given a client ID. Used for displaying names in chat.
          */
         std::string
-        getUsernameByClientId(const Connection &clientId);
+        getUsernameByClientId(const Connection &client);
 
         /**
          *  Appends Responses based on clients who have been logged out due to a login by another client into the
