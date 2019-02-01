@@ -14,7 +14,7 @@
 #include <vector>
 #include "Door.h"
 #include "NPC.h"
-#include "Object.h"
+#include "Player.h"
 
 using model::Door;
 using model::NPC;
