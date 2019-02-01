@@ -6,9 +6,11 @@
 #include "lib/gmock/gmock.h"
 #include "PlayerHandler.h"
 #include "Response.h"
+#include "Server.h"
 
 using model::PlayerHandler;
 using model::Response;
+using networking::Connection;
 
 /*
  *  Cases to test:
@@ -31,8 +33,8 @@ using model::Response;
  *  17. Logout other client if same Player logged in by a client
  *  18. Remove appropriate 'login' states if client disconnects while in login process
  */
-const uintptr_t clientIdA = 100;
-const uintptr_t clientIdB = 200;
+const Connection clientIdA = {100};
+const Connection clientIdB = {200};
 
 const unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
 const unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
@@ -241,7 +243,7 @@ TEST(LoginTest, LogoutClientOnOtherClientLogin) {
     std::deque<Response> results = {};
     playerHandler.notifyBootedClients(results);
 
-    EXPECT_EQ(clientIdA, results.front().clientId);
+    EXPECT_EQ(clientIdA, results.front().client);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
     EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), false);
     EXPECT_EQ(playerHandler.isLoggedIn(clientIdB), true);
