@@ -27,31 +27,8 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canAddItemToInventory) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
-
-
         Player player{152, "hello", "20000"};
-        Object item{
-            expected_id,
-            expected_name,
-            expected_short_description,
-            expected_long_description,
-            expected_keywords,
-            expected_slot
-        };
+        Object item{};
 
         player.addToInventoryItems(item);
         std::vector<Object> items = player.getInventoryItems();
@@ -60,30 +37,8 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canEquipItemFromInventory) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
-
         Player player{152, "hello", "20000"};
-        Object item{
-                expected_id,
-                expected_name,
-                expected_short_description,
-                expected_long_description,
-                expected_keywords,
-                expected_slot
-        };
+        Object item{};
 
         player.addToInventoryItems(item);
 
@@ -98,30 +53,8 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canDropItemFromInventory) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
-
         Player player{152, "hello", "20000"};
-        Object item{
-            expected_id,
-            expected_name,
-            expected_short_description,
-            expected_long_description,
-            expected_keywords,
-            expected_slot,
-        };
+        Object item{};
 
         player.addToInventoryItems(item);
 
@@ -133,30 +66,8 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canDropEquippedItem) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
-
         Player player{152, "hello", "20000"};
-        Object item{
-            expected_id,
-            expected_name,
-            expected_short_description,
-            expected_long_description,
-            expected_keywords,
-            expected_slot
-        };
+        Object item{};
 
         player.addToInventoryItems(item);
 
@@ -169,30 +80,8 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canUnequipItem) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
-
         Player player{152, "hello", "20000"};
-        Object item{
-            expected_id,
-            expected_name,
-            expected_short_description,
-            expected_long_description,
-            expected_keywords,
-            expected_slot
-        };
+        Object item{};
 
         player.addToInventoryItems(item);
 
@@ -206,30 +95,10 @@ namespace {
 
     TEST(PlayerTestSuite, canReturnCollectionOfItems) {
         Player player{1294, "Cindy", "iPoopOnPizzas"};
-        std::string expected_name = "The Executioner";
-        std::string expected_short_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        std::vector<std::string> expected_long_description = {
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back",
-                "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back"
-        };
-        std::vector<std::string> expected_keywords = {
-                "Apple",
-                "Facebook",
-                "Microsoft"
-        };
-        Slot expected_slot = Slot::Head;
 
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{
-                    rand()%220,
-                    expected_name,
-                    expected_short_description,
-                    expected_long_description,
-                    expected_keywords,
-                    expected_slot
-            };
+            Object item{};
             player.addToInventoryItems(item);
         }
 
