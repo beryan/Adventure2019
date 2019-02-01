@@ -22,7 +22,7 @@ namespace {
 
     std::vector<NPC> createNPCsFromJson(json npcsJson){
         std::vector<NPC> npcs;
-        for (json::iterator it = npcsJson.begin(); it != npcsJson.end(); ++it) {
+        for(auto it : npcsJson.items()){
 
             std::vector<std::string> keywords;
             for(std::string keyword : it.value().at("keywords")){
@@ -51,7 +51,7 @@ namespace {
     std::vector<Object> createObjectsFromJson(json objectsJson) {
         std::vector<Object> objects;
 
-        for (json::iterator it = objectsJson.begin(); it != objectsJson.end(); ++it) {
+        for (auto it : objectsJson.items()) {
 
             std::vector<std::string> keywords;
             for (std::string keyword : it.value().at("keywords")) {
@@ -80,7 +80,7 @@ namespace {
     std::vector<Door> createDoorsFromJson(json doorsJson) {
         std::vector<Door> doors;
 
-        for(json::iterator it = doorsJson.begin(); it != doorsJson.end(); ++it) {
+        for(auto it : doorsJson.items()) {
 
             std::vector<std::string> desc;
             for (json j : it.value().at("desc")) {
@@ -101,7 +101,7 @@ namespace {
 
     std::vector<Room> createRoomsFromJson(json roomsJson) {
         std::vector<Room> rooms;
-        for(json::iterator it = roomsJson.begin(); it != roomsJson.end(); ++it) {
+        for(auto it : roomsJson.items()) {
             std::vector<std::string> desc;
             for(json j : it.value().at("desc")){
                 desc.push_back(j);
