@@ -24,6 +24,8 @@ namespace model {
     public:
         Player(model::ID id, std::string_view username, std::string_view password);
 
+        Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID);
+
         std::string getUsername() const;
 
         void setUsername(std::string_view username);
@@ -66,7 +68,7 @@ namespace model {
 
         model::ID getCurrRoomID();
 
-        void setCurrRoomId(const model::ID &id);
+        void setCurrRoomID(const model::ID &id);
 
     private:
         std::string username;
@@ -79,7 +81,7 @@ namespace model {
 
         std::map<int, Object> equippedItems;
 
-        mode::currRoomID;
+        model::ID currRoomID;
     };
 }
 

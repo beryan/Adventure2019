@@ -15,6 +15,15 @@ namespace model {
         currRoomID(-1)
         {}
 
+    Player::Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID) :
+        Character(id),
+        username(std::move(username)),
+        password(std::move(password)),
+        inventoryItems({}),
+        equippedItems({}),
+        currRoomID(roomID)
+        {}
+
     std::string Player::getUsername() const {
         return this->username;
     }
@@ -114,7 +123,7 @@ namespace model {
     }
 
     model::ID Player::getCurrRoomID() {
-        this->currRoomID;
+        return this->currRoomID;
     }
 
     void Player::setCurrRoomID(const model::ID &id) {
