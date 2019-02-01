@@ -120,7 +120,7 @@ namespace {
             expected_short_description,
             expected_long_description,
             expected_keywords,
-            expected_slot
+            expected_slot,
         };
 
         player.addToInventoryItems(item);
