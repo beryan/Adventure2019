@@ -39,12 +39,13 @@ namespace DataManager {
             std::vector<Object> objects;
 
             for (auto it : objectsJson.items()) {
+
+                // objects dont have a name field, will use shortdesc as name for now
+                std::string objName = it.value().at("shortdesc");
                 std::vector<std::string> keywords = it.value()["keywords"];
                 std::vector<std::string> longdesc = it.value()["longdesc"];
 
-                //TODO parse missing fields
-
-                Object o (it.value().at("id"), it.value().at("shortdesc"), it.value().at("longdesc").at(0), model::Weapon);
+                Object o (it.value().at("id"), objName, it.value().at("shortdesc"), longdesc, keywords, model::Weapon);
                 objects.push_back(o);
 
             }
