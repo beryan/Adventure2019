@@ -60,7 +60,7 @@ namespace DataManager {
                 std::vector<std::string> desc = it.value()["desc"];
                 std::vector<std::string> keywords = it.value()["keywords"];
 
-                Door d (it.value().at("dir"), desc, keywords, it.value().at("to"));
+                Door d {it.value().at("dir"), it.value().at("to"), desc, keywords};
                 doors.push_back(d);
             }
 
@@ -74,7 +74,7 @@ namespace DataManager {
                 std::vector<std::string> desc = it.value()["desc"];
                 std::vector<Door> doors = createDoorsFromJson(it.value().at("doors"));
 
-                Room r (it.value().at("id"), it.value().at("name"), desc, doors);
+                Room r (it.value().at("id"), it.value().at("name"), desc);
                 rooms.push_back(r);
             }
 
