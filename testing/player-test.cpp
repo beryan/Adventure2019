@@ -156,6 +156,20 @@ namespace {
         std::vector<Object> items = player.getInventoryItems();
 
         EXPECT_EQ(items.size(), itemsToCreate);
+    }
 
+    TEST(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
+        model::ID expected_roomID = 41;
+        Player player{1234, "poopy", "mcpoop", expected_roomID};
+
+        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+    }
+
+    TEST(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
+        model::ID expected_roomID = 41;
+        Player player{1234, "poopy", "mcpoop"};
+        player.setCurrRoomID(expected_roomID);
+
+        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
     }
 }

@@ -9,6 +9,7 @@
 
 #include "Room.h"
 #include <iostream>
+#include <algorithm>
 
 using model::Room;
 
@@ -67,6 +68,10 @@ namespace model {
       return objects;
     }
 
+    std::vector<model::ID> Room::getPlayersInRoom() {
+      return playersInRoom;
+    }
+
     void Room::setId(model::ID id) {
       this->id = id;
     }
@@ -91,12 +96,24 @@ namespace model {
       this->objects = std::move(objects);
     }
 
+    void Room::setPlayersInRoom(std::vector<model::ID> playersInRoom) {
+      this->playersInRoom = std::move(playersInRoom);
+    }
+
     void Room::addNPC(NPC npc) {
       npcs.push_back(std::move(npc));
     }
 
     void Room::addObject(Object object) {
       objects.push_back(std::move(object));
+    }
+
+    void Room::addPlayerToRoom(model::ID playerId) {
+      playersInRoom.push_back(playerId);
+    }
+
+    void Room::removePlayerFromRoom(model::ID playerId) {
+      playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
 
     //create temporary room to showcase functionality based on provided mirkwood file

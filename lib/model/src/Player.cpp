@@ -9,7 +9,19 @@ namespace model {
     Player::Player(model::ID id, std::string_view username, std::string_view password) :
         Character(id),
         username(std::move(username)),
-        password(std::move(password))
+        password(std::move(password)),
+        inventoryItems({}),
+        equippedItems({}),
+        currRoomID(-1)
+        {}
+
+    Player::Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID) :
+        Character(id),
+        username(std::move(username)),
+        password(std::move(password)),
+        inventoryItems({}),
+        equippedItems({}),
+        currRoomID(roomID)
         {}
 
     std::string Player::getUsername() const {
@@ -108,6 +120,14 @@ namespace model {
         equippedItems.erase(slot);
 
         return std::move(temp_item);
+    }
+
+    model::ID Player::getCurrRoomID() {
+        return this->currRoomID;
+    }
+
+    void Player::setCurrRoomID(const model::ID &id) {
+        this->currRoomID = id;
     }
 
     bool Player::operator==(const model::Player &player) const {
