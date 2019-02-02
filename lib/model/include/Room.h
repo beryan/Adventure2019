@@ -25,12 +25,13 @@ namespace model {
     class Room {
 
     private:
-		model::ID id;
+		    model::ID id;
         std::string name;
       	std::vector<std::string> desc;
       	std::vector<Door> doors;
         std::vector<NPC> npcs;
         std::vector<Object> objects;
+        std::vector<model::ID> playersInRoom;
 
       	friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
 
@@ -41,21 +42,25 @@ namespace model {
         Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
-		model::ID getId();
+		    model::ID getId();
         std::string getName();
         std::vector<std::string> getDesc();
         std::vector<Door> getDoors();
         std::vector<NPC> getNpcs();
         std::vector<Object> getObjects();
+        std::vector<model::ID> getPlayersInRoom();
         void setId(model::ID id);
         void setName(std::string name);
         void setDesc(std::vector<std::string> desc);
         void setDoors(std::vector<Door> doors);
         void setNpcs(std::vector<NPC> npcs);
         void setObjects(std::vector<Object> objects);
+        void setPlayersInRoom(std::vector<model::ID> playersInRoom);
 
         void addNPC(NPC npc);
         void addObject(Object object);
+        void addPlayerToRoom(model::ID playerId);
+        void removePlayerFromRoom(model::ID playerId);
 
         void createStub();
 
