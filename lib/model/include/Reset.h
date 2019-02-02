@@ -40,7 +40,7 @@ namespace model {
         void setLimit(int limit);
         void setRoom(int room);
         void setSlot(int slot);
-
+        friend std::ostream& operator<<(std::ostream& os, const Reset& r);
     };
 }
 

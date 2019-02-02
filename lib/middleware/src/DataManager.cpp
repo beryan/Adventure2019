@@ -4,6 +4,7 @@
 
 #include "DataManager.h"
 #include "World.h"
+#include "Reset.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
@@ -13,6 +14,7 @@ using Door = model::Door;
 using NPC = model::NPC;
 using Object = model::Object;
 using Player = model::Player;
+using Reset = model::Reset;
 using Room = model::Room;
 
 
@@ -81,6 +83,35 @@ namespace DataManager {
             return rooms;
         }
 
+        std::vector<Reset> createResetsFromJson(json resetsJson) {
+            std::vector<Reset> resets;
+
+            for(auto it : resetsJson.items()) {
+                Reset r;
+                r.setAction(it.value().at("action"));
+                r.setId(it.value().at("id"));
+
+                if(it.value().find("limit") != it.value().end())
+                {
+                    r.setLimit(it.value().at("limit"));
+                }
+
+                if(it.value().find("room") != it.value().end())
+                {
+                    r.setLimit(it.value().at("room"));
+                }
+
+                if(it.value().find("slot") != it.value().end())
+                {
+                    r.setLimit(it.value().at("slot"));
+                }
+
+                resets.push_back(r);
+            }
+
+            return resets;
+        }
+
         void parseDataJson(std::string filePath) {
 
             std::ifstream ifs(filePath);
@@ -113,6 +144,15 @@ namespace DataManager {
             for(Room r : rooms) {
                 std::cout << r;
             }
+            std::cout << std::endl;
+
+            std::vector<Reset> resets = createResetsFromJson(resetsJson);
+            std::cout << "Printing Resets: " << std::endl;
+            for(Reset r : resets) {
+                std::cout << r;
+            }
+
+
             std::cout << std::endl;
 
         }
