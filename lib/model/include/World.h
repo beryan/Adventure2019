@@ -7,7 +7,6 @@
 
 #include <map>
 #include <vector>
-#include "Player.h"
 #include "Area.h"
 
 using model::Area;

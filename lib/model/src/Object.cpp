@@ -9,14 +9,44 @@ namespace model {
     Object::Object() :
         id(Object::DEFAULT_ID),
         name({}),
-        description({}),
-        slot(Slot::Misc){}
+        shortDescription({}),
+        longDescription({}),
+        keywords({}),
+        slot(Slot::Misc),
+        extraObjectInfo({}){}
 
-    Object::Object(model::ID id, std::string name, std::string description, Slot slot) :
+    Object::Object(
+        model::ID id,
+        std::string name,
+        std::string shortDescription,
+        std::vector<std::string> longDescription,
+        std::vector<std::string> keywords,
+        Slot slot
+    ) :
         id(id),
         name(std::move(name)),
-        description(std::move(description)),
-        slot(slot){}
+        shortDescription(std::move(shortDescription)),
+        longDescription(std::move(longDescription)),
+        keywords(std::move(keywords)),
+        slot(slot),
+        extraObjectInfo({}){}
+
+    Object::Object(
+        model::ID id,
+        std::string name,
+        std::string shortDescription,
+        std::vector<std::string> longDescription,
+        std::vector<std::string> keywords,
+        Slot slot,
+        ExtraObjectInfo extraObjectInfo
+    ) :
+        id(id),
+        name(std::move(name)),
+        shortDescription(std::move(shortDescription)),
+        longDescription(std::move(longDescription)),
+        keywords(std::move(keywords)),
+        slot(slot),
+        extraObjectInfo(std::move(extraObjectInfo)){}
 
     model::ID Object::getId() const {
         return this->id;
@@ -34,12 +64,28 @@ namespace model {
         this->name = std::move(name);
     }
 
-    std::string Object::getDescription() const {
-        return this->description;
+    std::string Object::getShortDescription() const {
+        return this->shortDescription;
     }
 
-    void Object::setDescription(std::string description) {
-        this->description = std::move(description);
+    void Object::setShortDescription(std::string shortDescription) {
+        this->shortDescription = std::move(shortDescription);
+    }
+
+    std::vector<std::string> Object::getLongDescription() const {
+        return this->longDescription;
+    }
+
+    void Object::setLongDescription(std::vector<std::string> longDescription){
+        this->longDescription = std::move(longDescription);
+    }
+
+    std::vector<std::string> Object::getKeywords() const {
+        return this->keywords;
+    }
+
+    void Object::setKeywords(std::vector<std::string> keywords) {
+        this->keywords = std::move(keywords);
     }
 
 

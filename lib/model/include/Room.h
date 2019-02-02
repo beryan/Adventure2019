@@ -13,7 +13,7 @@
 #include <string>
 #include <vector>
 #include "NPC.h"
-#include "Object.h"
+#include "Player.h"
 
 using model::NPC;
 using model::Object;

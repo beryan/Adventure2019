@@ -3,6 +3,7 @@ add_library(model
         src/Player.cpp
         src/NPC.cpp
         src/Object.cpp
+        src/ExtraObjectInfo.cpp
         src/Game.cpp
         src/Room.cpp
         src/Area.cpp
@@ -10,7 +11,8 @@ add_library(model
         src/World.cpp
         src/WorldHandler.cpp
         src/PlayerHandler.cpp
-        src/PropertiesManager.cpp)
+        src/PropertiesManager.cpp
+        )
 
 target_include_directories(model
         PUBLIC
