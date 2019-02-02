@@ -25,13 +25,10 @@ namespace model {
         objects({})
         { }
 
-    Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors)
+    Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
       : id(id),
         name(std::move(name)),
-        desc(std::move(desc)),
-        doors(std::move(doors)),
-        npcs({}),
-        objects({})
+        desc(std::move(desc))
         { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
