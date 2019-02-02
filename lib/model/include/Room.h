@@ -70,6 +70,8 @@ namespace model {
 
         void createStub();
 
+        bool operator==(const Room& room) const;
+
     };
 }
 

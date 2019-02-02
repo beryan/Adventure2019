@@ -133,6 +133,10 @@ namespace model {
       this->doors.push_back({"south", 8855, {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}});
     }
 
+    bool Room::operator==(const Room& Room) const {
+      return this->id == Room.getId();
+    }
+
     //print object
     std::ostream& operator<<(std::ostream& os, const Room& rhs) {
       os << "\n*****" << rhs.name << "*****\n";
