@@ -3,12 +3,7 @@
 //
 
 #include "DataManager.h"
-
-#include "Door.h"
-#include "NPC.h"
-#include "Object.h"
-#include "Player.h"
-#include "Room.h"
+#include "World.h"
 
 #include <boost/filesystem.hpp>
 #include <iostream>
