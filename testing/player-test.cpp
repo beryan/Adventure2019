@@ -33,7 +33,7 @@ namespace {
         Slot expected_slot = Slot::Head;
 
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
         std::vector<Object> items = player.getInventoryItems();
@@ -41,14 +41,14 @@ namespace {
         EXPECT_EQ(player.isItemInInventory(item), true);
     }
 
-    TEST(PlayerTestSuite, canEquipItemFromInventory) {
+    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
+        Player player{152, "hello", "20000"};
+
         int expected_id = 12345;
         std::string expected_name = "The Executioner";
         std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
         Slot expected_slot = Slot::Head;
-
-        Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -62,14 +62,40 @@ namespace {
         EXPECT_EQ(player.isSlotOccupied(item.getSlot()), true);
     }
 
+    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
+        Player player{152, "hello", "20000"};
+
+        int expected_id = 12345;
+        std::string expected_name = "The Executioner";
+        Slot expected_slot = Slot::Head;
+        Object item{expected_id, expected_name, "", {}, {}, expected_slot};
+
+        int expected_equipped_id = 15;
+        std::string expected_equipped_name = "The Punisher";
+        Object equippedItem{expected_equipped_id, expected_equipped_name, "", {}, {}, expected_slot};
+
+        player.addToInventoryItems(equippedItem);
+        player.equipItem(item);
+
+        player.addToInventoryItems(item);
+
+        std::vector<Object> items = player.getInventoryItems();
+
+        player.equipItem(item);
+
+        EXPECT_FALSE(player.isItemInInventory(item));
+        EXPECT_TRUE(player.isItemInInventory(equippedItem));
+        EXPECT_TRUE(player.isSlotOccupied(item.getSlot()));
+    }
+
     TEST(PlayerTestSuite, canDropItemFromInventory) {
+        Player player{152, "hello", "20000"};
+
         int expected_id = 12345;
         std::string expected_name = "The Executioner";
         std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
         Slot expected_slot = Slot::Head;
-
-        Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -81,13 +107,13 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canDropEquippedItem) {
+        Player player{152, "hello", "20000"};
+
         int expected_id = 12345;
         std::string expected_name = "The Executioner";
         std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
         Slot expected_slot = Slot::Head;
-
-        Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -100,13 +126,13 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canUnequipItem) {
+        Player player{152, "hello", "20000"};
+
         int expected_id = 12345;
         std::string expected_name = "The Executioner";
         std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
         Slot expected_slot = Slot::Head;
-
-        Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, expected_slot};
+        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
 
         player.addToInventoryItems(item);
 
@@ -123,7 +149,7 @@ namespace {
 
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{rand()%220, "test", "test", Slot::Head};
+            Object item{rand()%220, "test", "test", {}, {}, Slot::Head};
             player.addToInventoryItems(item);
         }
 

@@ -5,8 +5,8 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <string>
 #include "Types.h"
+#include "ExtraObjectInfo.h"
 
 namespace model {
 
@@ -27,9 +27,24 @@ namespace model {
     public:
         Object();
 
-        Object(model::ID id, std::string name, std::string description, Slot slot);
+        Object(
+            model::ID id,
+            std::string name,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
+            Slot slot
+        );
 
-        Object(model::ID id, std::string name, std::string description, bool canEquip, Slot slot);
+        Object(
+            model::ID id,
+            std::string name,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
+            Slot slot,
+            ExtraObjectInfo extraObjectInfo
+        );
 
         model::ID getId() const;
 
@@ -39,9 +54,17 @@ namespace model {
 
         void setName(std::string name);
 
-        std::string getDescription() const;
+        std::string getShortDescription() const;
 
-        void setDescription(std::string description);
+        void setShortDescription(std::string shortDescription);
+
+        std::vector<std::string> getLongDescription() const;
+
+        void setLongDescription(std::vector<std::string> longDescription);
+
+        std::vector<std::string> getKeywords() const;
+
+        void setKeywords(std::vector<std::string> keywords);
 
         Slot getSlot() const;
 
@@ -58,9 +81,15 @@ namespace model {
 
         std::string name;
 
-        std::string description;
+        std::string shortDescription;
+
+        std::vector<std::string> longDescription;
+
+        std::vector<std::string> keywords;
 
         Slot slot;
+
+        ExtraObjectInfo extraObjectInfo;
     };
 }
 
