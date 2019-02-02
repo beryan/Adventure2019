@@ -100,6 +100,10 @@ namespace model {
       this->playersInRoom = std::move(playersInRoom);
     }
 
+    void Room::addDoor(Door door) {
+      doors.push_back(std::move(door));
+    }
+
     void Room::addNPC(NPC npc) {
       npcs.push_back(std::move(npc));
     }
@@ -125,9 +129,8 @@ namespace model {
       "so be on your guard. It is rumored that many different races of Elves",
       "actually inhabit this forest, in various parts and sometimes they are",
       "carefully hidden, away from the prying eyes of strangers."};
-      Door stubDoor1 = Door("north", 8801);
-      Door stubDoor2 = Door("south", {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}, 8855);
-      this->doors = {stubDoor1, stubDoor2};
+      this->doors.push_back({"north",8801});
+      this->doors.push_back({"south", 8855, {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}});
     }
 
     //print object
@@ -139,11 +142,6 @@ namespace model {
       		os << s << std::endl;
       	}
       }
-
-      os << "\n***Exits***\n";
-    	for (Door d : rhs.doors) {
-    		os << d;
-    	}
 
     	return os;
     }

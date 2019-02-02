@@ -12,15 +12,20 @@
 
 #include <string>
 #include <vector>
-#include "Door.h"
 #include "NPC.h"
 #include "Object.h"
 
-using model::Door;
 using model::NPC;
 using model::Object;
 
 namespace model {
+
+    struct Door {
+      std::string dir; //direction
+      model::ID leadsTo; //id of room door leads to
+      std::vector<std::string> desc;
+      std::vector<std::string> keywords;
+    };
 
     class Room {
 
@@ -57,6 +62,7 @@ namespace model {
         void setObjects(std::vector<Object> objects);
         void setPlayersInRoom(std::vector<model::ID> playersInRoom);
 
+        void addDoor(Door door);
         void addNPC(NPC npc);
         void addObject(Object object);
         void addPlayerToRoom(model::ID playerId);
