@@ -43,7 +43,7 @@ namespace model {
     public:
       	//constructors
       	Room();
-      	Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors);
+      	Room(model::ID id, std::string name, std::vector<std::string> desc);
         Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
