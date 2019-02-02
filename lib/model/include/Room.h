@@ -12,15 +12,20 @@
 
 #include <string>
 #include <vector>
-#include "Door.h"
 #include "NPC.h"
 #include "Player.h"
 
-using model::Door;
 using model::NPC;
 using model::Object;
 
 namespace model {
+
+    struct Door {
+      std::string dir; //direction
+      model::ID leadsTo; //id of room door leads to
+      std::vector<std::string> desc;
+      std::vector<std::string> keywords;
+    };
 
     class Room {
 
@@ -42,13 +47,13 @@ namespace model {
         Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
-		    model::ID getId();
-        std::string getName();
-        std::vector<std::string> getDesc();
-        std::vector<Door> getDoors();
-        std::vector<NPC> getNpcs();
-        std::vector<Object> getObjects();
-        std::vector<model::ID> getPlayersInRoom();
+		    model::ID getId() const;
+        std::string getName() const;
+        std::vector<std::string> getDesc() const;
+        std::vector<Door> getDoors() const;
+        std::vector<NPC> getNpcs() const;
+        std::vector<Object> getObjects() const;
+        std::vector<model::ID> getPlayersInRoom() const;
         void setId(model::ID id);
         void setName(std::string name);
         void setDesc(std::vector<std::string> desc);
@@ -57,12 +62,15 @@ namespace model {
         void setObjects(std::vector<Object> objects);
         void setPlayersInRoom(std::vector<model::ID> playersInRoom);
 
+        void addDoor(Door door);
         void addNPC(NPC npc);
         void addObject(Object object);
         void addPlayerToRoom(model::ID playerId);
         void removePlayerFromRoom(model::ID playerId);
 
         void createStub();
+
+        bool operator==(const Room& room) const;
 
     };
 }

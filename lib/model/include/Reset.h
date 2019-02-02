@@ -30,11 +30,11 @@ namespace model {
         Reset(std::string action, model::ID id, int limit, int room, int slot);
 
         //getters and setters
-        std::string getAction();
-        model::ID getId();
-        int getLimit();
-        int getRoom();
-        int getSlot();
+        std::string getAction() const;
+        model::ID getId() const;
+        int getLimit() const;
+        int getRoom() const;
+        int getSlot() const;
         void setAction(std::string action);
         void setId(model::ID id);
         void setLimit(int limit);

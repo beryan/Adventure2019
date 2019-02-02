@@ -4,7 +4,6 @@ add_library(model
         src/NPC.cpp
         src/Object.cpp
         src/ExtraObjectInfo.cpp
-        src/Door.cpp
         src/Game.cpp
         src/Room.cpp
         src/Area.cpp

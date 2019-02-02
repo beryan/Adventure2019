@@ -31,23 +31,23 @@ namespace model {
         { }
 
     //getters and setters
-    std::string Reset::getAction() {
+    std::string Reset::getAction() const {
       return action;
     }
 
-    model::ID Reset::getId() {
+    model::ID Reset::getId() const {
       return id;
     }
 
-    int Reset::getLimit() {
+    int Reset::getLimit() const {
       return limit;
     }
 
-    int Reset::getRoom() {
+    int Reset::getRoom() const {
       return room;
     }
 
-    int Reset::getSlot() {
+    int Reset::getSlot() const {
       return slot;
     }
 
