@@ -33,8 +33,8 @@ namespace model {
         Area(std::string name, std::vector<Room> rooms);
 
         //getters and setters
-        std::string getName();
-        std::vector<Room> getRooms();
+        std::string getName() const;
+        std::vector<Room> getRooms() const;
         void setName(std::string name);
         void setRooms(std::vector<Room> rooms);
 

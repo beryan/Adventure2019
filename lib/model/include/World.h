@@ -19,7 +19,7 @@ namespace model{
      World(std::vector<Area> areas);
 
      //getters and setters
-     std::vector<Area> getAreas();
+     std::vector<Area> getAreas() const;
      void setAreas(std::vector<Area> areas);
 
      void addArea(Area area);

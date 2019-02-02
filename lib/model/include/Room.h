@@ -47,13 +47,13 @@ namespace model {
         Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
-		    model::ID getId();
-        std::string getName();
-        std::vector<std::string> getDesc();
-        std::vector<Door> getDoors();
-        std::vector<NPC> getNpcs();
-        std::vector<Object> getObjects();
-        std::vector<model::ID> getPlayersInRoom();
+		    model::ID getId() const;
+        std::string getName() const;
+        std::vector<std::string> getDesc() const;
+        std::vector<Door> getDoors() const;
+        std::vector<NPC> getNpcs() const;
+        std::vector<Object> getObjects() const;
+        std::vector<model::ID> getPlayersInRoom() const;
         void setId(model::ID id);
         void setName(std::string name);
         void setDesc(std::vector<std::string> desc);

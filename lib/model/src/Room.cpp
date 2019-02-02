@@ -44,31 +44,31 @@ namespace model {
         { }
 
     //getters and setters
-    model::ID Room::getId() {
+    model::ID Room::getId() const {
       return id;
     }
 
-    std::string Room::getName() {
+    std::string Room::getName() const {
       return name;
     }
 
-    std::vector<std::string> Room::getDesc() {
+    std::vector<std::string> Room::getDesc() const {
       return desc;
     }
 
-    std::vector<Door> Room::getDoors() {
+    std::vector<Door> Room::getDoors() const {
       return doors;
     }
 
-    std::vector<NPC> Room::getNpcs() {
+    std::vector<NPC> Room::getNpcs() const {
       return npcs;
     }
 
-    std::vector<Object> Room::getObjects() {
+    std::vector<Object> Room::getObjects() const {
       return objects;
     }
 
-    std::vector<model::ID> Room::getPlayersInRoom() {
+    std::vector<model::ID> Room::getPlayersInRoom() const {
       return playersInRoom;
     }
 

@@ -31,11 +31,11 @@ namespace model {
         { }
 
     //getters and setters
-    std::string Area::getName() {
+    std::string Area::getName() const {
       return name;
     }
 
-    std::vector<Room> Area::getRooms() {
+    std::vector<Room> Area::getRooms() const {
       return rooms;
     }
 
