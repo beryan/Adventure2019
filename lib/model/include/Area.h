@@ -40,6 +40,8 @@ namespace model {
 
         void addRoom(Room room);
 
+        bool operator==(const Area& area) const;
+
     };
 }
 

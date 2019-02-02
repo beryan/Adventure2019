@@ -51,6 +51,10 @@ namespace model {
       rooms.push_back(std::move(room));
     }
 
+    bool Area::operator==(const Area& area) const {
+      return this->name == area.getName();
+    }
+
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
       os << "You are in " << rhs.name << std::endl;
