@@ -12,12 +12,18 @@ using model::Area;
 namespace {
 
     TEST(WorldTestSuite, canConstructWorld) {
-        std::vector<Area> expected_areas;
-        expected_areas.push_back({"area1"});
-        expected_areas.push_back({"area2"});
+        std::vector<Area> expected_areas = {{"area1"},{"area2"}};
         World world{expected_areas};
 
         EXPECT_EQ(world.getAreas().size(), expected_areas.size());
+    }
+
+    TEST(WorldTestSuite, canAddArea) {
+      World world{};
+      size_t sizeBefore = world.getAreas().size();
+
+      world.addArea({});
+      EXPECT_EQ(world.getAreas().size(), sizeBefore + 1);
     }
 
 }
