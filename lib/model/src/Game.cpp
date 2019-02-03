@@ -26,7 +26,6 @@ trimWhitespace(std::string string) {
         return !std::isspace(ch);
     }));
 
-    // trim from start (in place)
     string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
         return !std::isspace(ch);
     }).base(), string.end());
@@ -35,23 +34,15 @@ trimWhitespace(std::string string) {
 }
 
 namespace model {
-    const char* const Game::COMMAND_SHUTDOWN = "shutdown";
-    const char* const Game::COMMAND_QUIT     = "quit";
-    const char* const Game::COMMAND_SAY      = "say";
-    const char* const Game::COMMAND_HELP     = "help";
-    const char* const Game::COMMAND_REGISTER = "register";
-    const char* const Game::COMMAND_LOGIN    = "login";
-    const char* const Game::COMMAND_LOGOUT   = "logout";
-    const char* const Game::COMMAND_INFO     = "info";
-
     Game::Game(std::vector<Connection> &clients,
-               std::vector<Connection> &newClientIds,
-               std::vector<Connection> &disconnectedClientIds,
+               std::vector<Connection> &newClients,
+               std::vector<Connection> &disconnectedClients,
                std::function<void(Connection)> &disconnect,
                std::function<void()> &shutdown) {
         this->clients = &clients;
-        this->newClientIds = &newClientIds;
-        this->disconnectedClientIds = &disconnectedClientIds;
+        this->newClients = &newClients;
+        this->disconnectedClients = &disconnectedClients;
+
         this->disconnect = disconnect;
         this->shutdown = shutdown;
 
@@ -60,7 +51,7 @@ namespace model {
 
     void
     Game::handleConnects(std::deque<Response> &responses) {
-        for (auto newClient : *this->newClientIds) {
+        for (auto &newClient : *this->newClients) {
             std::ostringstream introduction;
 
             introduction << "Welcome to Adventure 2019!\n"
@@ -68,15 +59,16 @@ namespace model {
                          << "Enter \"login\" to sign into an existing account\n"
                          << "Enter \"register\" to make a new account\n";
 
-            responses.push_back({newClient, introduction.str(), true});
+            responses.push_back({newClient, introduction.str()});
         }
 
-        this->newClientIds->clear();
+        this->newClients->clear();
     }
 
     void
     Game::handleDisconnects(std::deque<Response> &responses) {
-        for (auto disconnectedClient : *this->disconnectedClientIds) {
+
+        for (auto &disconnectedClient : *this->disconnectedClients) {
             if (this->playerHandler->isLoggingIn(disconnectedClient)) {
                 this->playerHandler->exitLogin(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from login due to disconnect\n";
@@ -93,7 +85,7 @@ namespace model {
             }
         }
 
-        this->disconnectedClientIds->clear();
+        this->disconnectedClients->clear();
     }
 
     void
@@ -106,36 +98,48 @@ namespace model {
                 responses.push_back({
                     client,
                     this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' '))),
-                    true
                 });
-
                 continue;
 
             } else if (this->playerHandler->isRegistering(client)) {
                 responses.push_back({
                     client,
                     this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' '))),
-                    true
                 });
-
                 continue;
             }
 
-            std::string command = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
+            std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
+
+            if (!this->commandMap.count(commandString)) {
+                std::ostringstream tempMessage;
+                tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
+                responses.push_back({client, tempMessage.str()});
+                continue;
+            }
+
             std::string parameters;
 
             if (input.text.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
-            if (command == COMMAND_QUIT) {
-                this->disconnect(input.connection);
-                continue;
+            Command command = this->commandMap.at(commandString);
 
-            } else if (command == COMMAND_SHUTDOWN) {
-                std::cout << "Shutting down.\n";
-                this->shutdown();
-                return;
+            switch (command) {
+                case Command::QUIT: {
+                    this->disconnect(input.connection);
+                    continue;
+                }
+
+                case Command::SHUTDOWN: {
+                    std::cout << "Shutting down.\n";
+                    this->shutdown();
+                    return;
+                }
+
+                default:
+                    break;
             }
 
             if (!this->playerHandler->isLoggedIn(client)) {
@@ -148,75 +152,89 @@ namespace model {
     }
 
     Response
-    Game::executeMenuAction(const Connection &client, const std::string &command, const std::string &param) {
+    Game::executeMenuAction(const Connection &client,
+                            const Command &command,
+                            const std::string &param) {
         std::ostringstream tempMessage;
 
-        if (command == COMMAND_REGISTER) {
-            tempMessage << this->playerHandler->processRegistration(client);
+        switch (command) {
+            case Command::REGISTER:
+                tempMessage << this->playerHandler->processRegistration(client);
+                break;
 
-        } else if (command == COMMAND_LOGIN) {
-            tempMessage << this->playerHandler->processLogin(client);
+            case Command::LOGIN:
+                tempMessage << this->playerHandler->processLogin(client);
+                break;
 
-        } else if (command == COMMAND_HELP) {
-            tempMessage << "\n"
-                        << "********\n"
-                        << "* HELP *\n"
-                        << "********\n"
-                        << "\n"
-                        << "COMMANDS:\n"
-                        << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                        << "  - " << COMMAND_REGISTER << " (create a new account)\n"
-                        << "  - " << COMMAND_LOGIN    << " (login to an existing account)\n"
-                        << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
-                        << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
-                        << "\n";
+            case Command::HELP:
+                tempMessage << "\n"
+                            << "********\n"
+                            << "* HELP *\n"
+                            << "********\n"
+                            << "\n"
+                            << "COMMANDS:\n"
+                            << "  - " << this->getCommandWords(Command::HELP) << " (shows this help interface)\n"
+                            << "  - " << this->getCommandWords(Command::REGISTER) << " (create a new account)\n"
+                            << "  - " << this->getCommandWords(Command::LOGIN) << " (login to an existing account)\n"
+                            << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
+                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
+                            << "\n";
+                break;
 
-        } else {
-            tempMessage << "\n"
-                        << "The word \"" << command << "\" is not a valid command.\n"
-                        << "Enter " << "\"" << COMMAND_LOGIN << "\" to log into an existing account\n"
-                        << "Enter " << "\"" << COMMAND_REGISTER << "\" to create a new account\n"
-                        << "Enter " << "\"" << COMMAND_HELP << "\" for a full list of commands.\n";
-
+            default:
+                tempMessage << "Enter " << "\"" << this->getCommandWords(Command::LOGIN) << "\" to log into an existing account\n"
+                            << "Enter " << "\"" << this->getCommandWords(Command::REGISTER) << "\" to create a new account\n"
+                            << "Enter " << "\"" << this->getCommandWords(Command::HELP) << "\" for a full list of commands.\n";
+                break;
         }
 
-        return {client, tempMessage.str(), true};
+        return {client, tempMessage.str()};
     }
 
+
     Response
-    Game::executeInGameAction(const Connection &client, const std::string &command, const std::string &param) {
+    Game::executeInGameAction(const Connection &client,
+                              const Command &command,
+                              const std::string &param) {
         std::ostringstream tempMessage;
         bool isLocal = true;
 
-        if (command == COMMAND_SAY) {
-            isLocal = false;
-            tempMessage << this->playerHandler->getUsernameByClientId(client) << "> " << param << "\n";
+        switch (command) {
+            case Command::SAY: {
+                isLocal = false;
+                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                break;
+            }
 
-        } else if (command == COMMAND_LOGOUT) {
-            tempMessage << this->playerHandler->logoutPlayer(client);
+            case Command::LOGOUT:
+                tempMessage << this->playerHandler->logoutPlayer(client);
+                break;
 
-        } else if (command == COMMAND_HELP) {
-            tempMessage << "\n"
-                        << "********\n"
-                        << "* HELP *\n"
-                        << "********\n"
-                        << "\n"
-                        << "COMMANDS:\n"
-                        << "  - " << COMMAND_HELP     << " (shows this help interface)\n"
-                        << "  - " << COMMAND_SAY      << " [message] (sends [message] to other players in the game)\n"
-                        << "  - " << COMMAND_LOGOUT   << " (logs you out of the server)\n"
-                        << "  - " << COMMAND_QUIT     << " (disconnects you from the game server)\n"
-                        << "  - " << COMMAND_SHUTDOWN << " (shuts down the game server)\n"
-                        << "  - " << COMMAND_INFO     << " (displays current location information)\n"
-                        << "\n";
+            case Command::HELP:
+                tempMessage << "\n"
+                            << "********\n"
+                            << "* HELP *\n"
+                            << "********\n"
+                            << "\n"
+                            << "COMMANDS:\n"
+                            << "  - " << this->getCommandWords(Command::HELP) << " (shows this help interface)\n"
+                            << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the server)\n"
+                            << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
+                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
+                            << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
+                            << "\n";
+                break;
 
-        } else if (command == COMMAND_INFO) {
-            model::Room stubRoom = model::Room();
-            stubRoom.createStub();
-            tempMessage << stubRoom;
+            case Command::LOOK: {
+                model::Room stubRoom = model::Room();
+                stubRoom.createStub();
+                tempMessage << stubRoom;
+                break;
+            }
 
-        } else {
-            tempMessage << "The word \"" << command << "\" is not a valid command. Enter \"help\" for a list of commands.\n";
+            default:
+                break;
         }
 
         return {client, tempMessage.str(), isLocal};
@@ -229,6 +247,7 @@ namespace model {
         this->playerHandler->notifyBootedClients(responses);
 
     }
+
 
     std::deque<Message>
     Game::formMessages(std::deque<Response> &responses) {
@@ -255,6 +274,24 @@ namespace model {
 
         return outgoing;
     }
+
+
+    std::string
+    Game::getCommandWords(Command command) {
+        std::vector<std::string> words = this->commandWordsMap.at(command);
+        std::ostringstream tempMessage;
+
+        for (unsigned int i = 0; i < words.size(); ++i) {
+            tempMessage << words[i];
+
+            if (i < (words.size() - 1)) {
+                tempMessage << ", ";
+            }
+        }
+
+        return tempMessage.str();
+    }
+
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {

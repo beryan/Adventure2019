@@ -242,7 +242,7 @@ namespace model {
     }
 
     std::string
-    PlayerHandler::getUsernameByClientId(const Connection &client) {
+    PlayerHandler::getUsernameByClient(const Connection &client) {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 

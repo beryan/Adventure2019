@@ -98,7 +98,7 @@ namespace model {
          *  Returns the username of a Player given a client ID. Used for displaying names in chat.
          */
         std::string
-        getUsernameByClientId(const Connection &client);
+        getUsernameByClient(const Connection &client);
 
         /**
          *  Appends Responses based on clients who have been logged out due to a login by another client into the
