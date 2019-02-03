@@ -22,13 +22,18 @@ namespace model {
         desc({}),
         doors({}),
         npcs({}),
-        objects({})
+        objects({}),
+        playersInRoom({})
         { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
       : id(id),
         name(std::move(name)),
-        desc(std::move(desc))
+        desc(std::move(desc)),
+        doors({}),
+        npcs({}),
+        objects({}),
+        playersInRoom({})
         { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
@@ -37,7 +42,8 @@ namespace model {
         desc(std::move(desc)),
         doors(std::move(doors)),
         npcs(std::move(npcs)),
-        objects(std::move(objects))
+        objects(std::move(objects)),
+        playersInRoom({})
         { }
 
     //getters and setters
