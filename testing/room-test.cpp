@@ -33,7 +33,7 @@ namespace {
       Room room{};
       size_t sizeBefore = room.getNpcs().size();
 
-      room.addNPC({1,{},"","",{}});
+      room.addNPC(NPC{1});
       EXPECT_EQ(room.getNpcs().size(), sizeBefore + 1);
     }
 
