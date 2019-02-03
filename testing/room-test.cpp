@@ -5,10 +5,8 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "Room.h"
-#include "Object.h"
 
 using model::Room;
-using model::Object;
 
 namespace {
 
@@ -43,8 +41,7 @@ namespace {
       Room room{};
       size_t sizeBefore = room.getObjects().size();
 
-      model::Slot slot = model::Slot::Head;
-      room.addObject({1,"helmit","a bike helmet",{},{},slot});
+      room.addObject({});
       EXPECT_EQ(room.getObjects().size(), sizeBefore + 1);
     }
 
