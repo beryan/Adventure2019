@@ -20,7 +20,7 @@ namespace model {
     struct Response {
         Connection client;
         std::string message;
-        bool isLocal;
+        bool isLocal = true;
     };
 }
 

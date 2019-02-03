@@ -29,22 +29,47 @@ namespace model {
      */
     class Game {
     private:
-        const std::vector<Connection>* clients;
-        std::vector<Connection>* newClientIds;
-        std::vector<Connection>* disconnectedClientIds;
+        std::vector<Connection>* clients;
+        std::vector<Connection>* newClients;
+        std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
         std::unique_ptr<PlayerHandler> playerHandler;
 
-        static const char* const COMMAND_SHUTDOWN;
-        static const char* const COMMAND_QUIT;
-        static const char* const COMMAND_SAY;
-        static const char* const COMMAND_HELP;
-        static const char* const COMMAND_REGISTER;
-        static const char* const COMMAND_LOGIN;
-        static const char* const COMMAND_LOGOUT;
-        static const char* const COMMAND_INFO;
+        enum class Command {
+            HELP,
+            LOGIN,
+            LOGOUT,
+            LOOK,
+            QUIT,
+            REGISTER,
+            SAY,
+            SHUTDOWN
+        };
+
+        std::map<std::string, Command> commandMap = {
+            {"help", Command::HELP},
+            {"login", Command::LOGIN},
+            {"logout", Command::LOGOUT},
+            {"look", Command::LOOK},
+            {"info", Command::LOOK},
+            {"quit", Command::QUIT},
+            {"register", Command::REGISTER},
+            {"say", Command::SAY},
+            {"shutdown", Command::SHUTDOWN}
+        };
+
+        std::map<Command, std::vector<std::string>> commandWordsMap = {
+            {Command::HELP, {"help"}},
+            {Command::LOGIN, {"login"}},
+            {Command::LOGOUT, {"logout"}},
+            {Command::LOOK, {"look", "info"}},
+            {Command::QUIT, {"quit"}},
+            {Command::REGISTER, {"register"}},
+            {Command::SAY, {"say"}},
+            {Command::SHUTDOWN, {"shutdown"}}
+        };
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -71,13 +96,13 @@ namespace model {
          *  Creates a Response to commands when the client is not logged in
          */
         Response
-        executeMenuAction(const Connection &client, const std::string &command, const std::string &param);
+        executeMenuAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Creates a Response to commands when the client is logged in
          */
         Response
-        executeInGameAction(const Connection &client, const std::string &command, const std::string &param);
+        executeInGameAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
@@ -91,6 +116,13 @@ namespace model {
         std::deque<Message>
         formMessages(std::deque<Response> &responses);
 
+        /**
+         *  Returns the words associated with a command in the form of a comma-separated string.
+         *  Used to display commands in the help display.
+         */
+         std::string
+         getCommandWords(Command command);
+
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.
@@ -98,8 +130,8 @@ namespace model {
          *  new client ID and disconnected client ID vectors, respectively.
          */
         Game(std::vector<Connection> &clients,
-             std::vector<Connection> &newClientIds,
-             std::vector<Connection> &disconnectedClientIds,
+             std::vector<Connection> &newClients,
+             std::vector<Connection> &disconnectedClients,
              std::function<void(Connection)> &disconnect,
              std::function<void()> &shutdown);
 
