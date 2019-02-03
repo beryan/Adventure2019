@@ -17,4 +17,12 @@ namespace {
         EXPECT_EQ(area.getName(), expected_name);
     }
 
+    TEST(AreaTestSuite, canAddRoom) {
+      Area area{};
+      size_t sizeBefore = area.getRooms().size();
+
+      area.addRoom({});
+      EXPECT_EQ(area.getRooms().size(), sizeBefore + 1);
+    }
+
 }
