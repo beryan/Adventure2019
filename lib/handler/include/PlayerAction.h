@@ -1,0 +1,14 @@
+//
+// Created by jnhkm on 2019-02-04.
+//
+
+#ifndef WEBSOCKETNETWORKING_PLAYERACTION_H
+#define WEBSOCKETNETWORKING_PLAYERACTION_H
+
+
+class PlayerAction {
+
+};
+
+
+#endif //WEBSOCKETNETWORKING_PLAYERACTION_H
