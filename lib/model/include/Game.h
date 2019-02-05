@@ -45,7 +45,8 @@ namespace model {
             QUIT,
             REGISTER,
             SAY,
-            SHUTDOWN
+            SHUTDOWN,
+            TELL
         };
 
         std::map<std::string, Command> commandMap = {
@@ -57,18 +58,20 @@ namespace model {
             {"quit", Command::QUIT},
             {"register", Command::REGISTER},
             {"say", Command::SAY},
-            {"shutdown", Command::SHUTDOWN}
+            {"shutdown", Command::SHUTDOWN},
+            {"tell", Command::TELL}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
             {Command::HELP, {"help"}},
             {Command::LOGIN, {"login"}},
             {Command::LOGOUT, {"logout"}},
-            {Command::LOOK, {"look", "info"}},
+            {Command::LOOK, {"look"}},
             {Command::QUIT, {"quit"}},
             {Command::REGISTER, {"register"}},
             {Command::SAY, {"say"}},
-            {Command::SHUTDOWN, {"shutdown"}}
+            {Command::SHUTDOWN, {"shutdown"}},
+            {Command::TELL, {"tell"}}
         };
 
         /**
@@ -101,7 +104,7 @@ namespace model {
         /**
          *  Creates a Response to commands when the client is logged in
          */
-        Response
+        std::vector<Response>
         executeInGameAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
