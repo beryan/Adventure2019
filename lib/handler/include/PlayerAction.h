@@ -20,8 +20,6 @@ namespace action {
 
         static void unequipSlot(Player &player, const Slot &slot);
 
-        static void swapItems(Object item1, Object item2);
-
         static void addToInventoryItems(Player &player, Object item);
 
         static Object dropItemFromInventory(Player &player, Object item);
