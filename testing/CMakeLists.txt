@@ -17,6 +17,8 @@ add_executable(runAllTests
 
 target_link_libraries(runAllTests
         model
+        logic
+        handler
         pthread
         ${CMAKE_THREAD_LIBS_INIT}
         )

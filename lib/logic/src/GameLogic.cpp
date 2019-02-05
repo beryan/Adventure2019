@@ -2,3 +2,24 @@
 // Created by jnhkm on 2019-02-04.
 //
 
+#include "GameLogic.h"
+
+using logic::PlayerLogic;
+
+namespace logic {
+    bool PlayerLogic::canEquipItem(const std::map<model::ID, Object> &items, const Object &item) {
+        return item.canBeEquipped() && isItemInInventory(items, item);
+    }
+
+    bool PlayerLogic::isItemInInventory(const std::map<model::ID, Object> &items, const Object &item) {
+        return items.count(item.getId()) > 0;
+    }
+
+    bool PlayerLogic::isItemEquipped(const std::map<int, Object> &items, const Object &item) {
+        return  isSlotOccupied(items, item.getSlot()) && items.at(item.getSlot()).getId() == item.getId();
+    }
+
+    bool PlayerLogic::isSlotOccupied(const std::map<int, Object> &items, const Slot &slot) {
+        return items.count(slot) > 0;
+    }
+}

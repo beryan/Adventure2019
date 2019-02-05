@@ -58,6 +58,14 @@ namespace model {
         return container;
     }
 
+    std::map<model::ID, Object>& Player::getMappedInventoryItems() {
+        return this->inventoryItems;
+    }
+
+    std::map<int, Object>& Player::getMappedEquippedItems() {
+        return this->equippedItems;
+    }
+
     void Player::mapInventoryItems(std::vector<Object> &items) {
         for (Object item : items)
             inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
@@ -76,50 +84,6 @@ namespace model {
     void Player::mapEquippedItems(std::vector<Object> &items) {
         for (Object item : items)
             equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
-    }
-
-    void Player::equipItem(Object item) {
-        if (item.canBeEquipped() && isItemInInventory(item)) {
-            if (isSlotOccupied(item.getSlot())) {
-                unequipItem(item.getSlot());
-            }
-
-            equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
-            inventoryItems.erase(item.getId());
-        }
-    }
-
-    bool Player::isItemInInventory(const Object &item) {
-        return inventoryItems.count(item.getId()) > 0;
-    }
-
-    bool Player::isSlotOccupied(const Slot &slot) {
-        return equippedItems.count(slot) > 0;
-    }
-
-    void Player::addToInventoryItems(Object item) {
-        inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
-    }
-
-    void Player::unequipItem(const Slot &slot) {
-        auto item = equippedItems.at(slot);
-        equippedItems.erase(slot);
-
-        inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), item));
-    }
-
-    Object Player::dropItemFromInventory(Object item) {
-        auto temp_item = inventoryItems.at(item.getId());
-        inventoryItems.erase(item.getId());
-
-        return std::move(temp_item);
-    }
-
-    Object Player::dropItemFromEquipped(Slot slot) {
-        auto temp_item = equippedItems.at(slot);
-        equippedItems.erase(slot);
-
-        return std::move(temp_item);
     }
 
     model::ID Player::getCurrRoomID() {
