@@ -42,17 +42,25 @@ namespace model {
 
         /************ Inventory ************/
 
-        std::map<model::ID, Object>& getMappedInventoryItems();
+        std::map<model::ID, Object> getMappedInventoryItems();
 
         std::vector<Object> getInventoryItems() const;
 
         void mapInventoryItems(std::vector<Object> &items);
 
-        std::map<int, Object>& getMappedEquippedItems();
+        std::map<int, Object> getMappedEquippedItems();
 
         std::vector<Object> getEquippedItems() const;
 
         void mapEquippedItems(std::vector<Object> &items);
+
+        void addToInventoryItems(Object object);
+
+        void addToEquippedItems(Object object);
+
+        Object removeInventoryItem(Object object);
+
+        Object removeEquippedItem(Slot slot);
 
         /************ ROOM ************/
 

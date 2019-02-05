@@ -5,6 +5,8 @@
 #include "Player.h"
 #include <algorithm>
 
+using model::Object;
+
 namespace model {
     Player::Player(model::ID id, std::string_view username, std::string_view password) :
         Character(id),
@@ -58,11 +60,11 @@ namespace model {
         return container;
     }
 
-    std::map<model::ID, Object>& Player::getMappedInventoryItems() {
+    std::map<model::ID, Object> Player::getMappedInventoryItems() {
         return this->inventoryItems;
     }
 
-    std::map<int, Object>& Player::getMappedEquippedItems() {
+    std::map<int, Object> Player::getMappedEquippedItems() {
         return this->equippedItems;
     }
 
@@ -92,6 +94,28 @@ namespace model {
 
     void Player::setCurrRoomID(const model::ID &id) {
         this->currRoomID = id;
+    }
+
+    void Player::addToInventoryItems(Object object) {
+        this->inventoryItems.insert(std::pair<model::ID, Object>(object.getId(), std::move(object)));
+    }
+
+    void Player::addToEquippedItems(Object object) {
+        this->equippedItems.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
+    }
+
+    Object Player::removeInventoryItem(Object object) {
+        Object temp = std::move(this->inventoryItems.at(object.getId()));
+        this->inventoryItems.erase(object.getId());
+
+        return std::move(temp);
+    }
+
+    Object Player::removeEquippedItem(Slot slot) {
+        Object temp = std::move(this->equippedItems.at(slot));
+        this->equippedItems.erase(slot);
+
+        return std::move(temp);
     }
 
     bool Player::operator==(const model::Player &player) const {
