@@ -123,17 +123,22 @@ namespace model {
       playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
 
-    //create temporary room to showcase functionality based on provided mirkwood file
-    void Room::createStub() {
-      this->id = 8800;
-      this->name = "Entrance to Mirkwood";
-      this->desc = {"You have entered the quasi-magical Elven forest of Mirkwood, populated by",
-      "Sylvan Elves and their mysterious allies. Strangers are frowned upon here,",
-      "so be on your guard. It is rumored that many different races of Elves",
-      "actually inhabit this forest, in various parts and sometimes they are",
-      "carefully hidden, away from the prying eyes of strangers."};
-      this->doors.push_back({"north",8801});
-      this->doors.push_back({"south", 8855, {"You see an old archway.", "It is covered in spider webs."}, {"archway","webs"}});
+    bool Room::isValidDirection(std::string dir) {
+        for (Door door : doors) {
+            if (door.dir == dir) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    model::ID Room::getDestination(std::string dir) {
+        for (Door door : doors) {
+            if (door.dir == dir) {
+                return door.leadsTo;
+            }
+        }
+        return -1;
     }
 
     bool Room::operator==(const Room& Room) const {
@@ -148,6 +153,17 @@ namespace model {
         for (std::string s : rhs.desc) {
       		os << s << std::endl;
       	}
+      }
+
+      for (Door door : rhs.getDoors()) {
+        os << door.dir;
+        if (door.desc.size() != 0) {
+          os << ": ";
+          for (std::string s : door.desc) {
+        		os << s;
+        	}
+        }
+        os << std::endl;
       }
 
     	return os;

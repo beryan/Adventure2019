@@ -68,7 +68,8 @@ namespace model {
         void addPlayerToRoom(model::ID playerId);
         void removePlayerFromRoom(model::ID playerId);
 
-        void createStub();
+        bool isValidDirection(std::string dir);
+        model::ID getDestination(std::string dir);
 
         bool operator==(const Room& room) const;
 

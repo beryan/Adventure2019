@@ -70,6 +70,8 @@ namespace model {
 
         void setCurrRoomID(const model::ID &id);
 
+        static constexpr model::ID STARTING_LOCATION = 1;
+
     private:
         std::string username;
 

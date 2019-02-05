@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Response.h"
 #include "PlayerHandler.h"
+#include "WorldHandler.h"
 
 #include <functional>
 #include <deque>
@@ -17,6 +18,7 @@
 using networking::Connection;
 using networking::Message;
 using model::PlayerHandler;
+using model::WorldHandler;
 
 namespace model {
     /**
@@ -36,12 +38,14 @@ namespace model {
         std::function<void()> shutdown;
 
         std::unique_ptr<PlayerHandler> playerHandler;
+        std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {
             HELP,
             LOGIN,
             LOGOUT,
             LOOK,
+            MOVE,
             QUIT,
             REGISTER,
             SAY,
@@ -55,6 +59,7 @@ namespace model {
             {"logout", Command::LOGOUT},
             {"look", Command::LOOK},
             {"info", Command::LOOK},
+            {"move", Command::MOVE},
             {"quit", Command::QUIT},
             {"register", Command::REGISTER},
             {"say", Command::SAY},
@@ -67,6 +72,7 @@ namespace model {
             {Command::LOGIN, {"login"}},
             {Command::LOGOUT, {"logout"}},
             {Command::LOOK, {"look"}},
+            {Command::MOVE, {"move"}},
             {Command::QUIT, {"quit"}},
             {Command::REGISTER, {"register"}},
             {Command::SAY, {"say"}},

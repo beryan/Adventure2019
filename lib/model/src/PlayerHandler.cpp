@@ -246,6 +246,21 @@ namespace model {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
+    model::ID
+    PlayerHandler::getPlayerIdByClient(const Connection &client) {
+        return this->activeClientToId.at(client);
+    }
+
+    model::ID
+    PlayerHandler::getRoomIdByClient(const Connection &client) {
+        return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+    }
+
+    void
+    PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
+        this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
+    }
+
     void
     PlayerHandler::notifyBootedClients(std::deque<Response> &responses) {
         for (auto bootedClient : this->bootedClients) {
