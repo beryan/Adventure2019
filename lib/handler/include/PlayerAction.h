@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#ifndef WEBSOCKETNETWORKING_PLAYERACTION_H
-#define WEBSOCKETNETWORKING_PLAYERACTION_H
+#ifndef PLAYERACTION_H
+#define PLAYERACTION_H
 
 #include "Player.h"
 
@@ -28,4 +28,4 @@ namespace action {
     };
 }
 
-#endif //WEBSOCKETNETWORKING_PLAYERACTION_H
+#endif //PLAYERACTION_H

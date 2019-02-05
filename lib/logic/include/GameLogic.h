@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#ifndef WEBSOCKETNETWORKING_GAMELOGIC_H
-#define WEBSOCKETNETWORKING_GAMELOGIC_H
+#ifndef GAMELOGIC_H
+#define GAMELOGIC_H
 
 #include "World.h"
 
@@ -25,4 +25,4 @@ namespace logic {
     };
 }
 
-#endif //WEBSOCKETNETWORKING_GAMELOGIC_H
+#endif //GAMELOGIC_H
