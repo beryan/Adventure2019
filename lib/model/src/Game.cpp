@@ -126,6 +126,13 @@ namespace model {
 
             Command command = this->commandMap.at(commandString);
 
+            if (command == Command::TELL && parameters.find(' ') == std::string::npos) {
+                std::ostringstream tempMessage;
+                tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+                responses.push_back({client, tempMessage.str()});
+                continue;
+            }
+
             switch (command) {
                 case Command::QUIT: {
                     this->disconnect(input.connection);
@@ -146,7 +153,10 @@ namespace model {
                 responses.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
-                responses.push_back(this->executeInGameAction(client, command, parameters));
+                auto responseList = this->executeInGameAction(client, command, parameters);
+                for (auto response : responseList) {
+                    responses.push_back(response);
+                }
             }
         }
     }
@@ -192,7 +202,7 @@ namespace model {
     }
 
 
-    Response
+    std::vector<Response>
     Game::executeInGameAction(const Connection &client,
                               const Command &command,
                               const std::string &param) {
@@ -200,12 +210,6 @@ namespace model {
         bool isLocal = true;
 
         switch (command) {
-            case Command::SAY: {
-                isLocal = false;
-                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                break;
-            }
-
             case Command::LOGOUT:
                 tempMessage << this->playerHandler->logoutPlayer(client);
                 break;
@@ -219,12 +223,39 @@ namespace model {
                             << "COMMANDS:\n"
                             << "  - " << this->getCommandWords(Command::HELP) << " (shows this help interface)\n"
                             << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->getCommandWords(Command::TELL) << " [username] [message] (sends [message] to [username] in the game)\n"
+                            << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
                             << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the server)\n"
                             << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
                             << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
-                            << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
                             << "\n";
                 break;
+
+            case Command::SAY: {
+                isLocal = false;
+                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                break;
+            }
+
+            case Command::TELL: {
+                std::vector<Response> responses = {};
+                auto username = param.substr(0, param.find(' '));
+                auto message = param.substr(param.find(' ') + 1);
+                for (auto connection: *this->clients) {
+                    auto receiver = this->playerHandler->getUsernameByClient(connection);
+                    if (receiver == username)  {
+                        auto sender = this->playerHandler->getUsernameByClient(client);
+                        std::ostringstream toMessage, fromMessage;
+                        toMessage << "To " << receiver << "> " << message << "\n";
+                        fromMessage << "From " + sender + "> " << message << "\n";;
+                        responses.push_back({client, toMessage.str(), isLocal});
+                        responses.push_back({connection, fromMessage.str(), isLocal});
+                        return responses;
+                    }
+                }
+                tempMessage << "Unable to find online user \"" << username << "\".\n";
+                break;
+            }
 
             case Command::LOOK: {
                 model::Room stubRoom = model::Room();
@@ -237,9 +268,8 @@ namespace model {
                 break;
         }
 
-        return {client, tempMessage.str(), isLocal};
+        return {{client, tempMessage.str(), isLocal}};
     }
-
 
     void
     Game::handleOutgoing(std::deque<Response> &responses) {
