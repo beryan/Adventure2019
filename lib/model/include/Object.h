@@ -21,29 +21,31 @@ namespace model {
      */
 
     // Count returns the length of the Slots
-    enum Slot {Head, Body, Legs, Arm, Weapon, Misc, Count};
+    enum Slot {
+        Head, Body, Legs, Arm, Weapon, Misc, Count
+    };
 
     class Object {
     public:
         Object();
 
         Object(
-            model::ID id,
-            std::string name,
-            std::string shortDescription,
-            std::vector<std::string> longDescription,
-            std::vector<std::string> keywords,
-            Slot slot
+                model::ID id,
+                std::string name,
+                std::string shortDescription,
+                std::vector<std::string> longDescription,
+                std::vector<std::string> keywords,
+                Slot slot
         );
 
         Object(
-            model::ID id,
-            std::string name,
-            std::string shortDescription,
-            std::vector<std::string> longDescription,
-            std::vector<std::string> keywords,
-            Slot slot,
-            ExtraObjectInfo extraObjectInfo
+                model::ID id,
+                std::string name,
+                std::string shortDescription,
+                std::vector<std::string> longDescription,
+                std::vector<std::string> keywords,
+                Slot slot,
+                ExtraObjectInfo extraObjectInfo
         );
 
         model::ID getId() const;
@@ -70,9 +72,13 @@ namespace model {
 
         void setSlot(Slot slot);
 
+        ExtraObjectInfo getExtraObjectInfo() const;
+
+        void setExtraObjectInfo(ExtraObjectInfo extraObjectInfo);
+
         bool canBeEquipped() const;
 
-        bool operator==(const Object& NPC) const;
+        bool operator==(const Object &NPC) const;
 
         static constexpr model::ID DEFAULT_ID = -1;
 
