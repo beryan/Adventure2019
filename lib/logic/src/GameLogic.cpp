@@ -12,7 +12,7 @@ namespace logic {
     }
 
     bool PlayerLogic::isItemInInventory(const std::map<model::ID, Object> &items, const Object &item) {
-        return items.count(item.getId()) > 0;
+        return static_cast<bool>(items.count(item.getId()));
     }
 
     bool PlayerLogic::isItemEquipped(const std::map<int, Object> &items, const Object &item) {
@@ -20,6 +20,6 @@ namespace logic {
     }
 
     bool PlayerLogic::isSlotOccupied(const std::map<int, Object> &items, const Slot &slot) {
-        return items.count(slot) > 0;
+        return static_cast<bool>(items.count(slot));
     }
 }
