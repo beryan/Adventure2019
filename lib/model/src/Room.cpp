@@ -140,28 +140,36 @@ namespace model {
       return this->id == Room.getId();
     }
 
-    //print object
-    std::ostream& operator<<(std::ostream& os, const Room& rhs) {
-      os << "\n*****" << rhs.name << "*****\n";
-
-      if (rhs.desc.size() != 0) {
-        for (std::string s : rhs.desc) {
-      		os << s << std::endl;
-      	}
-      }
-
-      for (Door door : rhs.getDoors()) {
-        os << door.dir;
-        if (door.desc.size() != 0) {
-          os << ": ";
-          for (std::string s : door.desc) {
-        		os << s;
-        	}
+    //print door
+    std::ostream& operator<<(std::ostream& os, const Door& rhs) {
+        os << rhs.dir;
+        if (rhs.desc.size() > 0) {
+            os << ": ";
+            for (std::string s : rhs.desc) {
+                os << s << std::endl;
+            }
+        } else {
+            os << std::endl;
         }
-        os << std::endl;
-      }
 
-    	return os;
+        return os;
+    }
+
+    //print room
+    std::ostream& operator<<(std::ostream& os, const Room& rhs) {
+        os << "\n***" << rhs.name << "***\n";
+
+        if (rhs.desc.size() > 0) {
+            for (std::string s : rhs.desc) {
+        		    os << s << std::endl;
+        	  }
+        }
+
+        for (Door door : rhs.getDoors()) {
+            os << door;
+        }
+
+    	  return os;
     }
 
 }

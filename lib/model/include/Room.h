@@ -38,6 +38,7 @@ namespace model {
         std::vector<Object> objects;
         std::vector<model::ID> playersInRoom;
 
+        friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
       	friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
 
     public:
