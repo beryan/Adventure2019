@@ -30,6 +30,8 @@ namespace model{
 
      void printUsers();
 
+     void createStub();
+
  private:
      std::vector<Area> areas;
      std::map<model::ID, Player> usersMap;
