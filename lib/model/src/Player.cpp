@@ -70,23 +70,25 @@ namespace model {
     }
 
     void Player::mapInventoryItems(std::vector<Object> &items) {
-        for (Object item : items)
-            inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), std::move(item)));
+        for (Object& item : items) {
+            inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), item));
+        }
     }
 
     std::vector<Object> Player::getEquippedItems() const {
         std::vector<Object> container;
         container.reserve(equippedItems.size());
 
-        for (auto const& [key, val] : equippedItems)
+        for (auto const& [key, val] : equippedItems) {
             container.push_back(val);
+        }
 
         return container;
     }
 
     void Player::mapEquippedItems(std::vector<Object> &items) {
-        for (Object item : items) {
-            equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
+        for (Object& item : items) {
+            equippedItems.insert(std::pair<int, Object>(item.getSlot(), item));
         }
     }
 
