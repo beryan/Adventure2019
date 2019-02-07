@@ -17,9 +17,43 @@ using json = nlohmann::json;
 
 namespace model {
 
-    WorldHandler::WorldHandler(){
-        std::cout << "WorldHandler Created" << std::endl;
-        parseJSON();
+    WorldHandler::WorldHandler() {
+        //create temporary world
+        this->world = World();
+        this->world.createStub();
+        //parseJSON();
+    }
+
+    Room
+    WorldHandler::findRoom(const model::ID &roomID) {
+        for (Area area : this->world.getAreas()) {
+            std::vector<Room> rooms = area.getRooms();
+            auto it = std::find_if(rooms.begin(), rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+            if (it != rooms.end()) {
+                return *it;
+            }
+        }
+        throw std::runtime_error("Error: tried to find room that does not exist");
+    }
+
+    bool
+    WorldHandler::isValidDirection(const model::ID &roomID, const std::string &dir) {
+        Room room = findRoom(roomID);
+        return room.isValidDirection(dir);
+    }
+
+    model::ID
+    WorldHandler::getDestination(const model::ID &roomID, const std::string &dir) {
+        Room room = findRoom(roomID);
+        return room.getDestination(dir);
+    }
+
+    void
+    WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
+        Room source = findRoom(sourceID);
+        Room destination = findRoom(destinationID);
+        source.removePlayerFromRoom(playerID);
+        destination.addPlayerToRoom(playerID);
     }
 
     void WorldHandler::addUser(Player player){

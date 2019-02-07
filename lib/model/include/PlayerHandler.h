@@ -101,6 +101,24 @@ namespace model {
         getUsernameByClient(const Connection &client);
 
         /**
+         *  Returns the player ID of a Player given a client ID.
+         */
+        model::ID
+        getPlayerIdByClient(const Connection &client);
+
+        /**
+         *  Returns the room ID of a Player given a client ID.
+         */
+        model::ID
+        getRoomIdByClient(const Connection &client);
+
+        /**
+         *  Sets the room ID of a Player given a client ID.
+         */
+        void
+        setRoomIdByClient(const Connection &client, const model::ID &roomID);
+
+        /**
          *  Appends Responses based on clients who have been logged out due to a login by another client into the
          *  same Player. Is to be called by the Game class' handleOutgoing() method.
          */

@@ -38,6 +38,7 @@ namespace model {
         std::vector<Object> objects;
         std::vector<model::ID> playersInRoom;
 
+        friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
       	friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
 
     public:
@@ -68,7 +69,8 @@ namespace model {
         void addPlayerToRoom(model::ID playerId);
         void removePlayerFromRoom(model::ID playerId);
 
-        void createStub();
+        bool isValidDirection(const std::string &dir);
+        model::ID getDestination(const std::string &dir);
 
         bool operator==(const Room& room) const;
 

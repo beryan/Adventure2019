@@ -16,6 +16,30 @@ namespace model{
     public:
         WorldHandler();
 
+        /**
+         *  Finds room based on room ID
+         */
+        Room
+        findRoom(const model::ID &roomID);
+
+        /**
+         *  Determines if you can move from a room in a specified direction
+         */
+        bool
+        isValidDirection(const model::ID &roomID, const std::string &dir);
+
+        /**
+         *  Gets resulting room id when you move from a room in a specified direction
+         */
+        model::ID
+        getDestination(const model::ID &roomID, const std::string &dir);
+
+        /**
+         *  Removes player ID from playersInRoom vector of current room and adds it to playerInRoom vector of destination room
+         */
+        void
+        movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID);
+
         void addUser(Player player);
         void removeUser(Player player);
 

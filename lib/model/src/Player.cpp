@@ -14,7 +14,7 @@ namespace model {
         password(std::move(password)),
         inventoryItems({}),
         equippedItems({}),
-        currRoomID(-1)
+        currRoomID(STARTING_LOCATION)
         {}
 
     Player::Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID) :

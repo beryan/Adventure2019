@@ -246,6 +246,28 @@ namespace model {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
+    model::ID
+    PlayerHandler::getPlayerIdByClient(const Connection &client) {
+        return this->activeClientToId.at(client);
+    }
+
+    model::ID
+    PlayerHandler::getRoomIdByClient(const Connection &client) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+            return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+        }
+        throw std::runtime_error("Error: usernameToPlayer map does not contain username");
+    }
+
+    void
+    PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+            this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
+        } else {
+            throw std::runtime_error("Error: usernameToPlayer map does not contain username");
+        }
+    }
+
     void
     PlayerHandler::notifyBootedClients(std::deque<Response> &responses) {
         for (auto bootedClient : this->bootedClients) {

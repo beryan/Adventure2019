@@ -4,7 +4,6 @@
 
 #include "Game.h"
 #include "Room.h"
-#include "PlayerHandler.h"
 
 #include <map>
 #include <sstream>
@@ -13,6 +12,7 @@
 using model::Game;
 using model::Room;
 using model::PlayerHandler;
+using model::WorldHandler;
 
 std::string
 lowercase(std::string string) {
@@ -47,6 +47,7 @@ namespace model {
         this->shutdown = shutdown;
 
         this->playerHandler = std::make_unique<PlayerHandler>();
+        this->worldHandler = std::make_unique<WorldHandler>();
     }
 
     void
@@ -225,6 +226,7 @@ namespace model {
                             << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << this->getCommandWords(Command::TELL) << " [username] [message] (sends [message] to [username] in the game)\n"
                             << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
+                            << "  - " << this->getCommandWords(Command::MOVE) << " [direction] (moves you in the direction specified)\n"
                             << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the server)\n"
                             << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
                             << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
@@ -258,9 +260,22 @@ namespace model {
             }
 
             case Command::LOOK: {
-                model::Room stubRoom = model::Room();
-                stubRoom.createStub();
-                tempMessage << stubRoom;
+                auto roomID = this->playerHandler->getRoomIdByClient(client);
+                tempMessage << this->worldHandler->findRoom(roomID);
+                break;
+            }
+
+            case Command::MOVE: {
+                auto roomID = this->playerHandler->getRoomIdByClient(client);
+                if (this->worldHandler->isValidDirection(roomID, param)) {
+                    auto playerID = this->playerHandler->getPlayerIdByClient(client);
+                    auto destinationID = this->worldHandler->getDestination(roomID, param);
+                    this->worldHandler->movePlayer(playerID, roomID, destinationID);
+                    this->playerHandler->setRoomIdByClient(client, destinationID);
+                    tempMessage << this->worldHandler->findRoom(destinationID);
+                } else {
+                    tempMessage << "You can't move that way!\n";
+                }
                 break;
             }
 
