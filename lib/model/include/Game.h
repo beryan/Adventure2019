@@ -50,7 +50,8 @@ namespace model {
             REGISTER,
             SAY,
             SHUTDOWN,
-            TELL
+            TELL,
+						YELL
         };
 
         std::map<std::string, Command> commandMap = {
@@ -64,7 +65,8 @@ namespace model {
             {"register", Command::REGISTER},
             {"say", Command::SAY},
             {"shutdown", Command::SHUTDOWN},
-            {"tell", Command::TELL}
+            {"tell", Command::TELL},
+						{"yell", Command::YELL}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
@@ -77,7 +79,8 @@ namespace model {
             {Command::REGISTER, {"register"}},
             {Command::SAY, {"say"}},
             {Command::SHUTDOWN, {"shutdown"}},
-            {Command::TELL, {"tell"}}
+            {Command::TELL, {"tell"}},
+						{Command::YELL, {"yell"}}
         };
 
         /**

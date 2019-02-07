@@ -223,19 +223,19 @@ namespace model {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << this->getCommandWords(Command::HELP) << " (shows this help interface)\n"
-                            << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to close by players in the game)\n"
                             << "  - " << this->getCommandWords(Command::TELL) << " [username] [message] (sends [message] to [username] in the game)\n"
+														<< "  - " << this->getCommandWords(Command::YELL) << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
                             << "  - " << this->getCommandWords(Command::MOVE) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the server)\n"
+                            << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the game)\n"
                             << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
                             << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
                             << "\n";
                 break;
 
             case Command::SAY: {
-                isLocal = false;
-                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                tempMessage << "Not yet implemented\n";
                 break;
             }
 
@@ -256,6 +256,12 @@ namespace model {
                     }
                 }
                 tempMessage << "Unable to find online user \"" << username << "\".\n";
+                break;
+            }
+
+						case Command::YELL: {
+                isLocal = false;
+                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
                 break;
             }
 
