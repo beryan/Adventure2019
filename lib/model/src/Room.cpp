@@ -48,79 +48,79 @@ namespace model {
 
     //getters and setters
     model::ID Room::getId() const {
-      return id;
+        return id;
     }
 
     std::string Room::getName() const {
-      return name;
+        return name;
     }
 
     std::vector<std::string> Room::getDesc() const {
-      return desc;
+        return desc;
     }
 
     std::vector<Door> Room::getDoors() const {
-      return doors;
+        return doors;
     }
 
     std::vector<NPC> Room::getNpcs() const {
-      return npcs;
+        return npcs;
     }
 
     std::vector<Object> Room::getObjects() const {
-      return objects;
+        return objects;
     }
 
     std::vector<model::ID> Room::getPlayersInRoom() const {
-      return playersInRoom;
+        return playersInRoom;
     }
 
     void Room::setId(model::ID id) {
-      this->id = id;
+        this->id = id;
     }
 
     void Room::setName(std::string name) {
-      this->name = std::move(name);
+        this->name = std::move(name);
     }
 
     void Room::setDesc(std::vector<std::string> desc) {
-      this->desc = std::move(desc);
+        this->desc = std::move(desc);
     }
 
     void Room::setDoors(std::vector<Door> doors) {
-      this->doors = std::move(doors);
+        this->doors = std::move(doors);
     }
 
     void Room::setNpcs(std::vector<NPC> npcs) {
-      this->npcs = std::move(npcs);
+        this->npcs = std::move(npcs);
     }
 
     void Room::setObjects(std::vector<Object> objects) {
-      this->objects = std::move(objects);
+        this->objects = std::move(objects);
     }
 
     void Room::setPlayersInRoom(std::vector<model::ID> playersInRoom) {
-      this->playersInRoom = std::move(playersInRoom);
+        this->playersInRoom = std::move(playersInRoom);
     }
 
     void Room::addDoor(Door door) {
-      doors.push_back(std::move(door));
+        doors.push_back(std::move(door));
     }
 
     void Room::addNPC(NPC npc) {
-      npcs.push_back(std::move(npc));
+        npcs.push_back(std::move(npc));
     }
 
     void Room::addObject(Object object) {
-      objects.push_back(std::move(object));
+        objects.push_back(std::move(object));
     }
 
     void Room::addPlayerToRoom(model::ID playerId) {
-      playersInRoom.push_back(playerId);
+        playersInRoom.push_back(playerId);
     }
 
     void Room::removePlayerFromRoom(model::ID playerId) {
-      playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
+        playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
 
     bool Room::isValidDirection(const std::string &dir) {
@@ -137,7 +137,7 @@ namespace model {
     }
 
     bool Room::operator==(const Room& Room) const {
-      return this->id == Room.getId();
+        return this->id == Room.getId();
     }
 
     //print door
@@ -169,7 +169,7 @@ namespace model {
             os << door;
         }
 
-    	  return os;
+        return os;
     }
 
 }
