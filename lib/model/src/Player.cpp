@@ -54,8 +54,9 @@ namespace model {
         std::vector<Object> container;
         container.reserve(inventoryItems.size());
 
-        for (auto const& [key, val] : inventoryItems)
+        for (auto const& [key, val] : inventoryItems) {
             container.push_back(val);
+        }
 
         return container;
     }
@@ -84,8 +85,9 @@ namespace model {
     }
 
     void Player::mapEquippedItems(std::vector<Object> &items) {
-        for (Object item : items)
+        for (Object item : items) {
             equippedItems.insert(std::pair<int, Object>(item.getSlot(), std::move(item)));
+        }
     }
 
     model::ID Player::getCurrRoomID() {

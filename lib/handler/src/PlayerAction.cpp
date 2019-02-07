@@ -11,8 +11,9 @@ using logic::PlayerLogic;
 namespace action {
     void PlayerAction::equipItem(Player &player, Object item) {
         if (PlayerLogic::canEquipItem(player.getMappedInventoryItems(), item)) {
-            if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), item.getSlot()))
+            if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
                 unequipSlot(player, item.getSlot());
+            }
 
             player.addToEquippedItems(item);
             player.removeInventoryItem(item);
