@@ -25,31 +25,31 @@ namespace model {
     }
 
     Room
-    WorldHandler::findRoom(model::ID roomID) {
+    WorldHandler::findRoom(const model::ID &roomID) {
         for (Area area : this->world.getAreas()) {
-            for (Room room : area.getRooms()) {
-                if (room.getId() == roomID) {
-                    return room;
-                }
+            std::vector<Room> rooms = area.getRooms();
+            auto it = std::find_if(rooms.begin(), rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+            if (it != rooms.end()) {
+                return *it;
             }
         }
-        return {};
+        throw std::runtime_error("Error: tried to find room that does not exist");
     }
 
     bool
-    WorldHandler::isValidDirection(model::ID roomID, std::string dir) {
+    WorldHandler::isValidDirection(const model::ID &roomID, const std::string &dir) {
         Room room = findRoom(roomID);
         return room.isValidDirection(dir);
     }
 
     model::ID
-    WorldHandler::getDestination(model::ID roomID, std::string dir) {
+    WorldHandler::getDestination(const model::ID &roomID, const std::string &dir) {
         Room room = findRoom(roomID);
         return room.getDestination(dir);
     }
 
     void
-    WorldHandler::movePlayer(model::ID playerID, model::ID sourceID, model::ID destinationID) {
+    WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
         Room source = findRoom(sourceID);
         Room destination = findRoom(destinationID);
         source.removePlayerFromRoom(playerID);

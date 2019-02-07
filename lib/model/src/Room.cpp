@@ -123,22 +123,17 @@ namespace model {
       playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
 
-    bool Room::isValidDirection(std::string dir) {
-        for (Door door : doors) {
-            if (door.dir == dir) {
-                return true;
-            }
-        }
-        return false;
+    bool Room::isValidDirection(const std::string &dir) {
+        auto it = std::find_if(this->doors.begin(), this->doors.end(), [&dir](const Door &door) {return door.dir == dir;});
+        return (it != this->doors.end());
     }
 
-    model::ID Room::getDestination(std::string dir) {
-        for (Door door : doors) {
-            if (door.dir == dir) {
-                return door.leadsTo;
-            }
+    model::ID Room::getDestination(const std::string &dir) {
+        auto it = std::find_if(this->doors.begin(), this->doors.end(), [&dir](const Door &door) {return door.dir == dir;});
+        if (it != this->doors.end()) {
+            return it->leadsTo;
         }
-        return -1;
+        throw std::runtime_error("Tried to get destination with illegal direction");
     }
 
     bool Room::operator==(const Room& Room) const {

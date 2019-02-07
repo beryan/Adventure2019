@@ -20,25 +20,25 @@ namespace model{
          *  Finds room based on room ID
          */
         Room
-        findRoom(model::ID roomID);
+        findRoom(const model::ID &roomID);
 
         /**
          *  Determines if you can move from a room in a specified direction
          */
         bool
-        isValidDirection(model::ID roomID, std::string dir);
+        isValidDirection(const model::ID &roomID, const std::string &dir);
 
         /**
          *  Gets resulting room id when you move from a room in a specified direction
          */
         model::ID
-        getDestination(model::ID roomID, std::string dir);
+        getDestination(const model::ID &roomID, const std::string &dir);
 
         /**
          *  Removes player ID from playersInRoom vector of current room and adds it to playerInRoom vector of destination room
          */
         void
-        movePlayer(model::ID playerID, model::ID sourceID, model::ID destinationID);
+        movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID);
 
         void addUser(Player player);
         void removeUser(Player player);
