@@ -38,6 +38,8 @@ namespace model {
 
         bool operator==(const ExtraObjectInfo &other) const;
 
+        bool operator!=(const ExtraObjectInfo &other) const;
+
     private:
         std::vector<std::string> extraKeywords;
 
