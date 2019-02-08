@@ -22,35 +22,6 @@ namespace DataManager {
 
     namespace {
 
-        std::vector<Reset> createResetsFromJson(json resetsJson) {
-            std::vector<Reset> resets;
-
-            for(auto it : resetsJson.items()) {
-                Reset r;
-                r.setAction(it.value().at("action"));
-                r.setId(it.value().at("id"));
-
-                if(it.value().find("limit") != it.value().end())
-                {
-                    r.setLimit(it.value().at("limit"));
-                }
-
-                if(it.value().find("room") != it.value().end())
-                {
-                    r.setLimit(it.value().at("room"));
-                }
-
-                if(it.value().find("slot") != it.value().end())
-                {
-                    r.setLimit(it.value().at("slot"));
-                }
-
-                resets.push_back(r);
-            }
-
-            return resets;
-        }
-
         void parseDataJson(std::string filePath) {
 
             std::ifstream ifs(filePath);
@@ -58,7 +29,6 @@ namespace DataManager {
 
             json areasJson = t["AREAS"];
 //        json helpsJson = t["HELPS"];
-            json resetsJson = t["RESETS"];
 //        json shopsJson = t["SHOPS"];
 
             std::vector<NPC> npcs = t.at("NPCS").get<std::vector<NPC>>();
@@ -82,7 +52,7 @@ namespace DataManager {
             }
             std::cout << std::endl;
 
-            std::vector<Reset> resets = createResetsFromJson(resetsJson);
+            std::vector<Reset> resets = t.at("RESETS").get<std::vector<Reset>>();
             std::cout << "Printing Resets: " << std::endl;
             for(Reset r : resets) {
                 std::cout << r;
