@@ -27,41 +27,67 @@ namespace DataManager {
             std::ifstream ifs(filePath);
             json t = json::parse(ifs);
 
-//        json helpsJson = t["HELPS"];
-//        json shopsJson = t["SHOPS"];
 
-            Area area = t.at("AREA").get<Area>();
+            Area area;
+            std::vector<Room> rooms;
+            std::vector<NPC> npcs;
+            std::vector<Object> objects;
+            std::vector<Reset> resets;
 
-            std::vector<NPC> npcs = t.at("NPCS").get<std::vector<NPC>>();
-            std::cout << "Printing NPCs: " << std::endl;
-            for(NPC n : npcs){
-                std::cout << n;
-            }
-            std::cout << std::endl;
 
-            std::vector<Object> objects = t.at("OBJECTS").get<std::vector<Object>>();
-            std::cout << "Printing Objects: " << std::endl;
-            for(Object o : objects) {
-                std::cout << o;
-            }
-            std::cout << std::endl;
-
-            std::vector<Room> rooms = t.at("ROOMS").get<std::vector<Room>>();
-            std::cout << "Printing Rooms: " << std::endl;
-            for(Room r : rooms) {
-                std::cout << r;
-            }
-            std::cout << std::endl;
-
-            std::vector<Reset> resets = t.at("RESETS").get<std::vector<Reset>>();
-            std::cout << "Printing Resets: " << std::endl;
-            for(Reset r : resets) {
-                std::cout << r;
+            if(t.find("AREA") != t.end()){
+                area = t.at("AREA").get<Area>();
             }
 
+            if(t.find("ROOMS") != t.end()){
+                rooms = t.at("ROOMS").get<std::vector<Room>>();
 
-            std::cout << std::endl;
+                std::cout << "Printing Rooms: " << std::endl;
+                for(Room r : rooms) {
+                    std::cout << r;
+                }
+                std::cout << std::endl;
+            }
 
+            if(t.find("RESETS") != t.end()){
+                resets = t.at("RESETS").get<std::vector<Reset>>();
+
+                std::cout << "Printing Resets: " << std::endl;
+                for(Reset r : resets) {
+                    std::cout << r;
+                }
+                std::cout << std::endl;
+            }
+
+            if(t.find("NPCS") != t.end()){
+                npcs = t.at("NPCS").get<std::vector<NPC>>();
+
+                std::cout << "Printing NPCs: " << std::endl;
+                for(NPC n : npcs){
+                    std::cout << n;
+                }
+                std::cout << std::endl;
+            }
+
+            if(t.find("OBJECTS") != t.end()){
+                objects = t.at("OBJECTS").get<std::vector<Object>>();
+
+                std::cout << "Printing Objects: " << std::endl;
+                for(Object o : objects) {
+                    std::cout << o;
+                }
+                std::cout << std::endl;
+            }
+
+            if(t.find("HELPS") != t.end()){
+                // HELPS field if empty in all json sample data
+            }
+
+            if(t.find("SHOPS") != t.end()){
+                // SHOPS field if empty in all json sample data
+            }
+
+            area.setRooms(rooms);
         }
 
         void parseUsersJson(std::string filePath, World& world) {
