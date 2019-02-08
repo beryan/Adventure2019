@@ -9,6 +9,8 @@
 #include <boost/filesystem.hpp>
 #include <iostream>
 
+namespace filesystem = boost::filesystem;
+
 using json = nlohmann::json;
 using Door = model::Door;
 using NPC = model::NPC;
@@ -106,9 +108,7 @@ namespace DataManager {
     } // anonymous namespace
 
     void ParseDataFile(const std::string& filePath){
-        std::string extension = boost::filesystem::extension(filePath);
-
-        if(extension == JSON_EXTENSION){
+        if(filesystem::extension(filePath) == JSON_EXTENSION){
             parseDataJson(filePath);
         }
     }
