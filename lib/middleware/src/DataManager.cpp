@@ -22,25 +22,6 @@ namespace DataManager {
 
     namespace {
 
-
-        std::vector<Object> createObjectsFromJson(json objectsJson) {
-            std::vector<Object> objects;
-
-            for (auto it : objectsJson.items()) {
-
-                // objects dont have a name field, will use shortdesc as name for now
-                std::string objName = it.value().at("shortdesc");
-                std::vector<std::string> keywords = it.value()["keywords"];
-                std::vector<std::string> longdesc = it.value()["longdesc"];
-
-                Object o (it.value().at("id"), objName, it.value().at("shortdesc"), longdesc, keywords, model::Weapon);
-                objects.push_back(o);
-
-            }
-
-            return objects;
-        }
-
         std::vector<Door> createDoorsFromJson(json doorsJson) {
             std::vector<Door> doors;
 
@@ -105,7 +86,6 @@ namespace DataManager {
 
             json areasJson = t["AREAS"];
             json roomsJson = t["ROOMS"];
-            json objectsJson = t["OBJECTS"];
 //        json helpsJson = t["HELPS"];
             json resetsJson = t["RESETS"];
 //        json shopsJson = t["SHOPS"];
@@ -117,9 +97,9 @@ namespace DataManager {
             }
             std::cout << std::endl;
 
-            std::vector<Object> objects = createObjectsFromJson(objectsJson);
+            std::vector<Object> objects = t.at("OBJECTS").get<std::vector<Object>>();
             std::cout << "Printing Objects: " << std::endl;
-            for(Object o : objects){
+            for(Object o : objects) {
                 std::cout << o;
             }
             std::cout << std::endl;
