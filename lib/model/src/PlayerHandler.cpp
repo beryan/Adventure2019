@@ -48,7 +48,7 @@ namespace model {
 
         if (!this->clientRegisterStage.count(client)) {
             // Start registration process
-            this->clientRegisterStage.emplace(client, RegisterStage::USERNAME);
+            this->clientRegisterStage.emplace(client, RegisterStage::Username);
             std::ostringstream response;
             response << "\n"
                      << "Register\n"
@@ -59,7 +59,7 @@ namespace model {
         }
 
         switch (this->clientRegisterStage.at(client)) {
-            case RegisterStage::USERNAME: {
+            case RegisterStage::Username: {
                 if (input.length() == 0) {
                     this->clientRegisterStage.erase(client);
                     return "No username entered. Registration process cancelled.\n";
@@ -76,7 +76,7 @@ namespace model {
 
                 this->regUsernameInput.emplace(client, input);
 
-                this->clientRegisterStage.at(client) = RegisterStage::PASSWORD;
+                this->clientRegisterStage.at(client) = RegisterStage::Password;
 
                 std::ostringstream response;
                 response << input << "\n"
@@ -86,7 +86,7 @@ namespace model {
                 return response.str();
             }
 
-            case RegisterStage::PASSWORD: {
+            case RegisterStage::Password: {
                 if (input.length() < MIN_PASSWORD_LENGTH) {
                     this->clientRegisterStage.erase(client);
                     return "The password you entered is too short. Registration process cancelled.\n";
@@ -98,12 +98,12 @@ namespace model {
                 }
 
                 this->regPasswordInput.emplace(client, input);
-                this->clientRegisterStage.at(client) = RegisterStage::CONFIRM_PASSWORD;
+                this->clientRegisterStage.at(client) = RegisterStage::ConfirmPassword;
 
                 return "Re-enter your password\n";
             }
 
-            case RegisterStage::CONFIRM_PASSWORD: {
+            case RegisterStage::ConfirmPassword: {
                 this->clientRegisterStage.erase(client);
 
                 if (this->regPasswordInput.at(client) != input) {
@@ -154,7 +154,7 @@ namespace model {
 
         if (!this->clientLoginStage.count(client)) {
             // Start login process
-            this->clientLoginStage.emplace(client, LoginStage::USERNAME);
+            this->clientLoginStage.emplace(client, LoginStage::Username);
 
             return "\n"
                    "Login\n"
@@ -163,19 +163,19 @@ namespace model {
         }
 
         switch (this->clientLoginStage.at(client)) {
-            case LoginStage::USERNAME: {
+            case LoginStage::Username: {
                 if (input.length() == 0) {
                     this->clientLoginStage.erase(client);
                     return "No username entered. Login process cancelled.\n";
                 }
 
                 this->loginUsernameInput.emplace(client, input);
-                this->clientLoginStage.at(client) = LoginStage::PASSWORD;
+                this->clientLoginStage.at(client) = LoginStage::Password;
 
                 return input + "\nEnter your password\n";
             }
 
-            case LoginStage::PASSWORD: {
+            case LoginStage::Password: {
                 this->clientLoginStage.erase(client);
 
                 auto successMessage = "Logged in successfully!\n";

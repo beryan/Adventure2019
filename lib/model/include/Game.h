@@ -41,43 +41,43 @@ namespace model {
         std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {
-            HELP,
-            LOGIN,
-            LOGOUT,
-            LOOK,
-            MOVE,
-            QUIT,
-            REGISTER,
-            SAY,
-            SHUTDOWN,
-            TELL
+            Help,
+            Login,
+            Logout,
+            Look,
+            Move,
+            Quit,
+            Register,
+            Say,
+            Shutdown,
+            Tell
         };
 
         std::map<std::string, Command> commandMap = {
-            {"help", Command::HELP},
-            {"login", Command::LOGIN},
-            {"logout", Command::LOGOUT},
-            {"look", Command::LOOK},
-            {"info", Command::LOOK},
-            {"move", Command::MOVE},
-            {"quit", Command::QUIT},
-            {"register", Command::REGISTER},
-            {"say", Command::SAY},
-            {"shutdown", Command::SHUTDOWN},
-            {"tell", Command::TELL}
+            {"help", Command::Help},
+            {"login", Command::Login},
+            {"logout", Command::Logout},
+            {"look", Command::Look},
+            {"info", Command::Look},
+            {"move", Command::Move},
+            {"quit", Command::Quit},
+            {"register", Command::Register},
+            {"say", Command::Say},
+            {"shutdown", Command::Shutdown},
+            {"tell", Command::Tell}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
-            {Command::HELP, {"help"}},
-            {Command::LOGIN, {"login"}},
-            {Command::LOGOUT, {"logout"}},
-            {Command::LOOK, {"look"}},
-            {Command::MOVE, {"move"}},
-            {Command::QUIT, {"quit"}},
-            {Command::REGISTER, {"register"}},
-            {Command::SAY, {"say"}},
-            {Command::SHUTDOWN, {"shutdown"}},
-            {Command::TELL, {"tell"}}
+            {Command::Help, {"help"}},
+            {Command::Login, {"login"}},
+            {Command::Logout, {"logout"}},
+            {Command::Look, {"look"}},
+            {Command::Move, {"move"}},
+            {Command::Quit, {"quit"}},
+            {Command::Register, {"register"}},
+            {Command::Say, {"say"}},
+            {Command::Shutdown, {"shutdown"}},
+            {Command::Tell, {"tell"}}
         };
 
         /**
