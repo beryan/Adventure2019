@@ -9,14 +9,14 @@ add_executable(runAllTests
         lib/gmock-gtest-all.cc
         area-test.cpp
         character-test.cpp
+        game-test.cpp
         player-test.cpp
         playerHandler-test.cpp
         propertiesManager-test.cpp
         room-test.cpp
         world-test.cpp
         extraObjectInfo-test.cpp
-        object-test.cpp
-        )
+        object-test.cpp)
 
 target_link_libraries(runAllTests
         model
