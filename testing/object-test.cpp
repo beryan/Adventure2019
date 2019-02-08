@@ -9,11 +9,14 @@ namespace {
     TEST(ObjectTestSuite, canUseNoArgConstructor) {
         model::Object myObject;
         model::ExtraObjectInfo myExtraInfo;
+        std::string expected_string;
+        unsigned int expected_size = 0;
+
         EXPECT_EQ(model::Object::DEFAULT_ID, myObject.getId());
-        EXPECT_EQ("", myObject.getName());
-        EXPECT_EQ("", myObject.getShortDescription());
-        EXPECT_EQ(0, myObject.getLongDescription().size());
-        EXPECT_EQ(0, myObject.getKeywords().size());
+        EXPECT_EQ(expected_string, myObject.getName());
+        EXPECT_EQ(expected_string, myObject.getShortDescription());
+        EXPECT_EQ(expected_size, myObject.getLongDescription().size());
+        EXPECT_EQ(expected_size, myObject.getKeywords().size());
         EXPECT_EQ(model::Slot::Misc, myObject.getSlot());
         EXPECT_EQ(myExtraInfo, myObject.getExtraObjectInfo());
     }
