@@ -33,8 +33,8 @@ using networking::Connection;
  *  17. Logout other client if same Player logged in by a client
  *  18. Remove appropriate 'login' states if client disconnects while in login process
  */
-const Connection clientIdA = {100};
-const Connection clientIdB = {200};
+const Connection CLIENT_A = {100};
+const Connection CLIENT_B = {200};
 
 const unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
 const unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
@@ -44,10 +44,10 @@ const std::string longLengthString  = "Very very very long input";
 const std::string shortLengthString = "SLS";
 
 
-TEST(RegisterTest, StartRegistration) {
+TEST(PlayerHandlerTestSuite, canStartRegistration) {
     PlayerHandler playerHandler{};
 
-    auto result = playerHandler.processRegistration(clientIdA);
+    auto result = playerHandler.processRegistration(CLIENT_A);
 
     std::ostringstream expect;
     expect << "\n"
@@ -56,23 +56,23 @@ TEST(RegisterTest, StartRegistration) {
            << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
     EXPECT_EQ(expect.str(), result);
-    EXPECT_EQ(playerHandler.isRegistering(clientIdA), true);
+    EXPECT_EQ(playerHandler.isRegistering(CLIENT_A), true);
 }
 
-TEST(RegisterTest, LongUsername) {
+TEST(PlayerHandlerTestSuite, canPreventLongUsername) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    auto result = playerHandler.processRegistration(clientIdA, longLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    auto result = playerHandler.processRegistration(CLIENT_A, longLengthString);
 
     EXPECT_EQ("The username you entered is too long. Registration process cancelled.\n", result);
 }
 
-TEST(RegisterTest, ValidUsername) {
+TEST(PlayerHandlerTestSuite, canUseValidUsername) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    auto result = playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    auto result = playerHandler.processRegistration(CLIENT_A, validLengthString);
 
     std::ostringstream expect;
     expect << validLengthString << "\n"
@@ -82,179 +82,179 @@ TEST(RegisterTest, ValidUsername) {
     EXPECT_EQ(expect.str(), result);
 }
 
-TEST(RegisterTest, ShortPassword) {
+TEST(PlayerHandlerTestSuite, canPreventShortPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdA, shortLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, shortLengthString);
 
     EXPECT_EQ("The password you entered is too short. Registration process cancelled.\n", result);
 }
 
-TEST(RegisterTest, LongPassword) {
+TEST(PlayerHandlerTestSuite, canPreventLongPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdA, longLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, longLengthString);
 
     EXPECT_EQ("The password you entered is too long. Registration process cancelled.\n", result);
 }
 
-TEST(RegisterTest, ValidPassword) {
+TEST(PlayerHandlerTestSuite, canUseValidPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result =  playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result =  playerHandler.processRegistration(CLIENT_A, validLengthString);
 
     EXPECT_EQ("Re-enter your password\n", result);
 }
 
-TEST(RegisterTest, NonMatchingPassword) {
+TEST(PlayerHandlerTestSuite, canDetectNonMatchingPassword) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdA, "notMatch");
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, "notMatch");
 
     EXPECT_EQ("The passwords you entered do not match. Registration process cancelled.\n", result);
 }
 
-TEST(RegisterTest, SuccessfulRegistration) {
+TEST(PlayerHandlerTestSuite, canRegisterSuccessfully) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, validLengthString);
 
     EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n\n", result);
 }
 
-TEST(RegisterTest, LoggedInAfterRegister) {
+TEST(PlayerHandlerTestSuite, isLoggedInAfterRegister) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
+    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_A), true);
 }
 
-TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
+TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
 
-    playerHandler.processRegistration(clientIdB);
-    auto result = playerHandler.processRegistration(clientIdB, validLengthString);
+    playerHandler.processRegistration(CLIENT_B);
+    auto result = playerHandler.processRegistration(CLIENT_B, validLengthString);
 
     EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
 }
 
-TEST(RegisterTest, UsernameTakenOnPasswordReEntry) {
+TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     PlayerHandler playerHandler{};
 
     // Start registration process
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdB);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_B);
 
     // Enters usernames
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdB, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_B, validLengthString);
 
     // Enters passwords
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdB, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_B, validLengthString);
 
     // Re-enters passwords
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdB, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_B, validLengthString);
 
     EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
 }
 
-TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
+TEST(PlayerHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.exitRegistration(clientIdA);
-    auto result = playerHandler.isRegistering(clientIdA);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.exitRegistration(CLIENT_A);
+    auto result = playerHandler.isRegistering(CLIENT_A);
 
     EXPECT_EQ(result, false);
 }
 
-TEST(LoginTest, StartLogin) {
+TEST(PlayerHandlerTestSuite, canStartLogin) {
     PlayerHandler playerHandler{};
 
-    auto result = playerHandler.processLogin(clientIdA);
+    auto result = playerHandler.processLogin(CLIENT_A);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), true);
+    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), true);
 }
 
-TEST(LoginTest, FailedLogin) {
+TEST(PlayerHandlerTestSuite, canDetectFailedLogin) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processLogin(clientIdA);
-    playerHandler.processLogin(clientIdA, validLengthString);
-    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.processLogin(CLIENT_A);
+    playerHandler.processLogin(CLIENT_A, validLengthString);
+    auto result = playerHandler.processLogin(CLIENT_A, validLengthString);
 
     EXPECT_EQ("Invalid username or password.\n", result);
 }
 
-TEST(LoginTest, SuccessfulLogin) {
+TEST(PlayerHandlerTestSuite, canLogInSuccessfully) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.logoutPlayer(clientIdA);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.logoutPlayer(CLIENT_A);
 
-    playerHandler.processLogin(clientIdA);
-    playerHandler.processLogin(clientIdA, validLengthString);
-    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.processLogin(CLIENT_A);
+    playerHandler.processLogin(CLIENT_A, validLengthString);
+    auto result = playerHandler.processLogin(CLIENT_A, validLengthString);
 
     EXPECT_EQ("Logged in successfully!\n", result);
 }
 
-TEST(LoginTest, LogoutClientOnOtherClientLogin) {
+TEST(PlayerHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, validLengthString);
 
-    playerHandler.processLogin(clientIdB);
-    playerHandler.processLogin(clientIdB, validLengthString);
-    playerHandler.processLogin(clientIdB, validLengthString);
+    playerHandler.processLogin(CLIENT_B);
+    playerHandler.processLogin(CLIENT_B, validLengthString);
+    playerHandler.processLogin(CLIENT_B, validLengthString);
     std::deque<Response> results = {};
     playerHandler.notifyBootedClients(results);
 
-    EXPECT_EQ(clientIdA, results.front().client);
+    EXPECT_EQ(CLIENT_A, results.front().client);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdB), true);
+    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_A), false);
+    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_B), true);
 }
 
-TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
+TEST(PlayerHandlerTestSuite, canRemoveClientFromLoginOnDisconnect) {
     PlayerHandler playerHandler{};
 
-    playerHandler.processLogin(clientIdA);
-    playerHandler.processLogin(clientIdA, validLengthString);
-    playerHandler.exitLogin(clientIdA);
+    playerHandler.processLogin(CLIENT_A);
+    playerHandler.processLogin(CLIENT_A, validLengthString);
+    playerHandler.exitLogin(CLIENT_A);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
+    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
 }
