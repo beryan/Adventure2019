@@ -269,9 +269,9 @@ namespace model {
     }
 
     void
-    PlayerHandler::notifyBootedClients(std::deque<Response> &responses) {
+    PlayerHandler::notifyBootedClients(std::deque<Message> &messages) {
         for (auto bootedClient : this->bootedClients) {
-            responses.push_back({bootedClient, "You have been logged out due to being logged in elsewhere.\n", true});
+            messages.push_back({bootedClient, "You have been logged out due to being logged in elsewhere.\n"});
         }
 
         this->bootedClients.clear();

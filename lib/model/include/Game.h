@@ -7,7 +7,6 @@
 
 #include "Server.h"
 #include "Player.h"
-#include "Response.h"
 #include "PlayerHandler.h"
 #include "WorldHandler.h"
 
@@ -85,45 +84,39 @@ namespace model {
          *  vector on completion.
          */
         void
-        handleConnects(std::deque<Response> &responses);
+        handleConnects(std::deque<Message> &responses);
 
         /**
          *  Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
          *  associated vector on completion.
          */
         void
-        handleDisconnects(std::deque<Response> &responses);
+        handleDisconnects(std::deque<Message> &responses);
 
         /**
          *  Processes client input, calling class methods based on client input and formulating appropriate responses in
          *  the form of Response objects.
          */
         void
-        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses);
+        handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages);
 
         /**
          *  Creates a Response to commands when the client is not logged in
          */
-        Response
+        Message
         executeMenuAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Creates a Response to commands when the client is logged in
          */
-        std::vector<Response>
+        std::vector<Message>
         executeInGameAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
          */
         void
-        handleOutgoing(std::deque<Response> &responses);
-
-        /**
-         *  Converts a Response deque into a Message deque.
-         */
-        std::deque<Message>
-        formMessages(std::deque<Response> &responses);
+        handleOutgoing(std::deque<Message> &messages);
 
         /**
          *  Returns the words associated with a command in the form of a comma-separated string.
