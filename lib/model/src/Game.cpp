@@ -98,14 +98,14 @@ namespace model {
             if (this->playerHandler->isLoggingIn(client)) {
                 responses.push_back({
                     client,
-                    this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' '))),
+                    this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
                 continue;
 
             } else if (this->playerHandler->isRegistering(client)) {
                 responses.push_back({
                     client,
-                    this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' '))),
+                    this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
                 continue;
             }
