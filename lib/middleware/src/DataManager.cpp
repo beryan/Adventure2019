@@ -22,34 +22,6 @@ namespace DataManager {
 
     namespace {
 
-        std::vector<Door> createDoorsFromJson(json doorsJson) {
-            std::vector<Door> doors;
-
-            for(auto it : doorsJson.items()) {
-                std::vector<std::string> desc = it.value()["desc"];
-                std::vector<std::string> keywords = it.value()["keywords"];
-
-                Door d {it.value().at("dir"), it.value().at("to"), desc, keywords};
-                doors.push_back(d);
-            }
-
-            return doors;
-        }
-
-        std::vector<Room> createRoomsFromJson(json roomsJson) {
-            std::vector<Room> rooms;
-            
-            for(auto it : roomsJson.items()) {
-                std::vector<std::string> desc = it.value()["desc"];
-                std::vector<Door> doors = createDoorsFromJson(it.value().at("doors"));
-
-                Room r (it.value().at("id"), it.value().at("name"), desc);
-                rooms.push_back(r);
-            }
-
-            return rooms;
-        }
-
         std::vector<Reset> createResetsFromJson(json resetsJson) {
             std::vector<Reset> resets;
 
@@ -85,7 +57,6 @@ namespace DataManager {
             json t = json::parse(ifs);
 
             json areasJson = t["AREAS"];
-            json roomsJson = t["ROOMS"];
 //        json helpsJson = t["HELPS"];
             json resetsJson = t["RESETS"];
 //        json shopsJson = t["SHOPS"];
@@ -104,7 +75,7 @@ namespace DataManager {
             }
             std::cout << std::endl;
 
-            std::vector<Room> rooms = createRoomsFromJson(roomsJson);
+            std::vector<Room> rooms = t.at("ROOMS").get<std::vector<Room>>();
             std::cout << "Printing Rooms: " << std::endl;
             for(Room r : rooms) {
                 std::cout << r;
