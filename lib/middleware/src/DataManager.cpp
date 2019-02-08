@@ -27,9 +27,10 @@ namespace DataManager {
             std::ifstream ifs(filePath);
             json t = json::parse(ifs);
 
-            json areasJson = t["AREAS"];
 //        json helpsJson = t["HELPS"];
 //        json shopsJson = t["SHOPS"];
+
+            Area area = t.at("AREA").get<Area>();
 
             std::vector<NPC> npcs = t.at("NPCS").get<std::vector<NPC>>();
             std::cout << "Printing NPCs: " << std::endl;
