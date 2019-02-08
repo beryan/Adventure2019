@@ -35,12 +35,12 @@ namespace model {
 
     bool
     PlayerHandler::isLoggedIn(const Connection &client) {
-        return (bool) activeClientToId.count(client);
+        return static_cast<bool> (activeClientToId.count(client));
     }
 
     bool
     PlayerHandler::isRegistering(const Connection &client) {
-        return (bool) this->clientRegisterStage.count(client);
+        return static_cast<bool> (this->clientRegisterStage.count(client));
     }
 
     std::string
@@ -146,7 +146,7 @@ namespace model {
 
     bool
     PlayerHandler::isLoggingIn(const Connection &client) {
-        return (bool) this->clientLoginStage.count(client);
+        return static_cast<bool> (this->clientLoginStage.count(client));
     }
 
     std::string
@@ -197,7 +197,7 @@ namespace model {
                 }
 
                 auto playerId = this->usernameToPlayer.at(inputUsername)->getId();
-                auto isOnline = (bool) this->activeIdToClient.count(playerId);
+                auto isOnline = static_cast<bool> (this->activeIdToClient.count(playerId));
 
                 if (isOnline) {
                     // Player is already being used by a client, logout associated client
