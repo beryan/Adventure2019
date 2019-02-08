@@ -22,7 +22,7 @@ namespace DataManager {
 
     namespace {
 
-        void parseDataJson(std::string filePath) {
+        void parseDataJson(const std::string& filePath) {
 
             std::ifstream ifs(filePath);
             json t = json::parse(ifs);
@@ -90,7 +90,7 @@ namespace DataManager {
             area.setRooms(rooms);
         }
 
-        void parseUsersJson(std::string filePath, World& world) {
+        void parseUsersJson(const std::string& filePath, World& world) {
             std::ifstream ifs(filePath);
 
             json usersJson = json::parse(ifs);
@@ -105,7 +105,7 @@ namespace DataManager {
 
     } // anonymous namespace
 
-    void ParseDataFile(std::string filePath){
+    void ParseDataFile(const std::string& filePath){
         std::string extension = boost::filesystem::extension(filePath);
 
         if(extension == JSON_EXTENSION){
@@ -113,7 +113,7 @@ namespace DataManager {
         }
     }
 
-    void ParseUsersFile(std::string filePath, World& world){
+    void ParseUsersFile(const std::string& filePath, World& world){
         std::string extension = boost::filesystem::extension(filePath);
 
         if(extension == JSON_EXTENSION){
