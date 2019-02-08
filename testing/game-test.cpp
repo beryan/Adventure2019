@@ -20,9 +20,9 @@ using networking::Message;
  *  3. Pass-by-reference disconnect function works
  *  4. Pass-by-reference shutdown function works
  */
-const Connection CLIENT_A = {100};
-const std::string DISCONNECT_COMMAND = "quit";
-const std::string SHUTDOWN_COMMAND = "shutdown";
+constexpr Connection CLIENT_A = {100};
+constexpr auto DISCONNECT_COMMAND = "quit";
+constexpr auto SHUTDOWN_COMMAND = "shutdown";
 
 TEST(GameTestSuite, canConstructGameInstance) {
     std::vector<Connection> clients;

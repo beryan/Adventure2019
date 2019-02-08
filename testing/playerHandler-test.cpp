@@ -33,15 +33,15 @@ using networking::Connection;
  *  17. Logout other client if same Player logged in by a client
  *  18. Remove appropriate 'login' states if client disconnects while in login process
  */
-const Connection CLIENT_A = {100};
-const Connection CLIENT_B = {200};
+constexpr Connection CLIENT_A = {100};
+constexpr Connection CLIENT_B = {200};
 
-const unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
-const unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
+constexpr unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
+constexpr unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
-const std::string validLengthString = "Valid Input";
-const std::string longLengthString  = "Very very very long input";
-const std::string shortLengthString = "SLS";
+constexpr auto VALID_LENGTH_STRING = "Valid Input";
+constexpr auto LONG_LENGTH_STRING = "Very very very long input";
+constexpr auto SHORT_LENGTH_STRING = "SLS";
 
 
 TEST(PlayerHandlerTestSuite, canStartRegistration) {
@@ -63,7 +63,7 @@ TEST(PlayerHandlerTestSuite, canPreventLongUsername) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    auto result = playerHandler.processRegistration(CLIENT_A, longLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, LONG_LENGTH_STRING);
 
     EXPECT_EQ("The username you entered is too long. Registration process cancelled.\n", result);
 }
@@ -72,10 +72,10 @@ TEST(PlayerHandlerTestSuite, canUseValidUsername) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    auto result = playerHandler.processRegistration(CLIENT_A, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     std::ostringstream expect;
-    expect << validLengthString << "\n"
+    expect << VALID_LENGTH_STRING << "\n"
            << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
            << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
@@ -86,8 +86,8 @@ TEST(PlayerHandlerTestSuite, canPreventShortPassword) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    auto result = playerHandler.processRegistration(CLIENT_A, shortLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processRegistration(CLIENT_A, SHORT_LENGTH_STRING);
 
     EXPECT_EQ("The password you entered is too short. Registration process cancelled.\n", result);
 }
@@ -96,8 +96,8 @@ TEST(PlayerHandlerTestSuite, canPreventLongPassword) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    auto result = playerHandler.processRegistration(CLIENT_A, longLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processRegistration(CLIENT_A, LONG_LENGTH_STRING);
 
     EXPECT_EQ("The password you entered is too long. Registration process cancelled.\n", result);
 }
@@ -106,8 +106,8 @@ TEST(PlayerHandlerTestSuite, canUseValidPassword) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    auto result =  playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result =  playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     EXPECT_EQ("Re-enter your password\n", result);
 }
@@ -116,8 +116,8 @@ TEST(PlayerHandlerTestSuite, canDetectNonMatchingPassword) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     auto result = playerHandler.processRegistration(CLIENT_A, "notMatch");
 
     EXPECT_EQ("The passwords you entered do not match. Registration process cancelled.\n", result);
@@ -127,9 +127,9 @@ TEST(PlayerHandlerTestSuite, canRegisterSuccessfully) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    auto result = playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n\n", result);
 }
@@ -138,9 +138,9 @@ TEST(PlayerHandlerTestSuite, isLoggedInAfterRegister) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
     EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_A), true);
@@ -150,14 +150,14 @@ TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     playerHandler.processRegistration(CLIENT_B);
-    auto result = playerHandler.processRegistration(CLIENT_B, validLengthString);
+    auto result = playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
 
-    EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
+    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_LENGTH_STRING) + "\" has already been taken, please use a different username.\n", result);
 }
 
 TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
@@ -168,26 +168,26 @@ TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     playerHandler.processRegistration(CLIENT_B);
 
     // Enters usernames
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_B, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
 
     // Enters passwords
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_B, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
 
     // Re-enters passwords
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    auto result = playerHandler.processRegistration(CLIENT_B, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
 
-    EXPECT_EQ("The username \"" + validLengthString + "\" has already been taken, please use a different username.\n", result);
+    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_LENGTH_STRING) + "\" has already been taken, please use a different username.\n", result);
 }
 
 TEST(PlayerHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.exitRegistration(CLIENT_A);
     auto result = playerHandler.isRegistering(CLIENT_A);
 
@@ -207,8 +207,8 @@ TEST(PlayerHandlerTestSuite, canDetectFailedLogin) {
     PlayerHandler playerHandler{};
 
     playerHandler.processLogin(CLIENT_A);
-    playerHandler.processLogin(CLIENT_A, validLengthString);
-    auto result = playerHandler.processLogin(CLIENT_A, validLengthString);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
 
     EXPECT_EQ("Invalid username or password.\n", result);
 }
@@ -217,14 +217,14 @@ TEST(PlayerHandlerTestSuite, canLogInSuccessfully) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.logoutPlayer(CLIENT_A);
 
     playerHandler.processLogin(CLIENT_A);
-    playerHandler.processLogin(CLIENT_A, validLengthString);
-    auto result = playerHandler.processLogin(CLIENT_A, validLengthString);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
 
     EXPECT_EQ("Logged in successfully!\n", result);
 }
@@ -233,13 +233,13 @@ TEST(PlayerHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
-    playerHandler.processRegistration(CLIENT_A, validLengthString);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
     playerHandler.processLogin(CLIENT_B);
-    playerHandler.processLogin(CLIENT_B, validLengthString);
-    playerHandler.processLogin(CLIENT_B, validLengthString);
+    playerHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
+    playerHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
     std::deque<Response> results = {};
     playerHandler.notifyBootedClients(results);
 
@@ -253,7 +253,7 @@ TEST(PlayerHandlerTestSuite, canRemoveClientFromLoginOnDisconnect) {
     PlayerHandler playerHandler{};
 
     playerHandler.processLogin(CLIENT_A);
-    playerHandler.processLogin(CLIENT_A, validLengthString);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.exitLogin(CLIENT_A);
 
     EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
