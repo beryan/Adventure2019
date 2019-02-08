@@ -7,6 +7,9 @@
 
 #include <vector>
 #include "Character.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
     /**
@@ -21,6 +24,8 @@ namespace model {
     class NPC : public Character {
     public:
         explicit NPC(model::ID id);
+
+        NPC();
 
         NPC(
             model::ID id,
@@ -59,6 +64,14 @@ namespace model {
 
         std::vector<std::string> longDescription;
     };
+
+    inline void from_json(const json &j, NPC &n) {
+        n.setId(j.at("id").get<model::ID>());
+        n.setKeywords(j.at("keywords").get<std::vector<std::string>>());
+        n.setDescription(j.at("description").get<std::vector<std::string>>());
+        n.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
+        n.setShortDescription(j.at("shortdesc").get<std::string>());
+    }
 }
 
 #endif //NPC_H

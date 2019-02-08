@@ -3,10 +3,21 @@
 //
 
 #include "NPC.h"
+#include "json.hpp"
+#include <iostream>
 
+using json = nlohmann::json;
 
 namespace model {
 
+    NPC::NPC() :
+            Character(0),
+            keywords({}),
+            description({}),
+            shortDescription({}),
+            longDescription({})
+    {}
+    
     NPC::NPC(model::ID id) :
         Character(id),
         keywords({}),

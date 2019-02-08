@@ -22,20 +22,6 @@ namespace DataManager {
 
     namespace {
 
-        std::vector<NPC> createNPCsFromJson(json npcsJson){
-            std::vector<NPC> npcs;
-            for(auto it : npcsJson.items()){
-                std::vector<std::string> keywords = it.value()["keywords"];
-
-                //TODO change to vector parse when NPC updated
-                std::string desc = it.value().at("description").at(0);
-                std::vector<std::string> longdesc = it.value()["longdesc"];
-
-                NPC n (it.value().at("id"), keywords, desc, it.value().at("shortdesc"), longdesc);
-                npcs.push_back(n);
-            }
-            return npcs;
-        }
 
         std::vector<Object> createObjectsFromJson(json objectsJson) {
             std::vector<Object> objects;
@@ -119,13 +105,12 @@ namespace DataManager {
 
             json areasJson = t["AREAS"];
             json roomsJson = t["ROOMS"];
-            json npcsJson = t["NPCS"];
             json objectsJson = t["OBJECTS"];
 //        json helpsJson = t["HELPS"];
             json resetsJson = t["RESETS"];
 //        json shopsJson = t["SHOPS"];
 
-            std::vector<NPC> npcs = createNPCsFromJson(npcsJson);
+            std::vector<NPC> npcs = t.at("NPCS").get<std::vector<NPC>>();
             std::cout << "Printing NPCs: " << std::endl;
             for(NPC n : npcs){
                 std::cout << n;
