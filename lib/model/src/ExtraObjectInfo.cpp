@@ -6,18 +6,18 @@
 #include <vector>
 #include <ExtraObjectInfo.h>
 
-namespace  model {
+namespace model {
 
     ExtraObjectInfo::ExtraObjectInfo() :
-        extraKeywords({}),
-        extraDescriptions({}){}
+            extraKeywords({}),
+            extraDescriptions({}) {}
 
     ExtraObjectInfo::ExtraObjectInfo(
-        std::vector<std::string> extraKeywords,
-        std::vector<std::string> extraDescriptions
+            std::vector<std::string> extraKeywords,
+            std::vector<std::string> extraDescriptions
     ) :
-        extraKeywords(std::move(extraKeywords)),
-        extraDescriptions(std::move(extraDescriptions)){}
+            extraKeywords(std::move(extraKeywords)),
+            extraDescriptions(std::move(extraDescriptions)) {}
 
     std::vector<std::string> ExtraObjectInfo::getExtraKeywords() const {
         return this->extraKeywords;
@@ -33,6 +33,15 @@ namespace  model {
 
     void ExtraObjectInfo::setExtraDescriptions(std::vector<std::string> extraDescriptions) {
         this->extraDescriptions = std::move(extraDescriptions);
+    }
+
+    bool ExtraObjectInfo::operator==(const ExtraObjectInfo &other) const {
+        return this->getExtraKeywords() == other.getExtraKeywords() &&
+               this->getExtraDescriptions() == other.getExtraDescriptions();
+    }
+
+    bool ExtraObjectInfo::operator!=(const ExtraObjectInfo &other) const {
+        return !(*this == other);
     }
 
 }

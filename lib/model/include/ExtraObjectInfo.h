@@ -24,8 +24,8 @@ namespace model {
         ExtraObjectInfo();
 
         ExtraObjectInfo(
-            std::vector<std::string> extraKeywords,
-            std::vector<std::string> extraDescriptions
+                std::vector<std::string> extraKeywords,
+                std::vector<std::string> extraDescriptions
         );
 
         std::vector<std::string> getExtraKeywords() const;
@@ -35,6 +35,10 @@ namespace model {
         std::vector<std::string> getExtraDescriptions() const;
 
         void setExtraDescriptions(std::vector<std::string> extraDescriptions);
+
+        bool operator==(const ExtraObjectInfo &other) const;
+
+        bool operator!=(const ExtraObjectInfo &other) const;
 
     private:
         std::vector<std::string> extraKeywords;
