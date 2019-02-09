@@ -9,6 +9,7 @@
 
 #include "Area.h"
 #include <iostream>
+#include <algorithm>
 
 using model::Area;
 
@@ -51,14 +52,32 @@ namespace model {
       rooms.push_back(std::move(room));
     }
 
+		bool Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+				std::vector<Room>::iterator it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+				if (it != this->rooms.end()) {
+						it->removePlayerFromRoom(playerID);
+				}
+				return (it != this->rooms.end());
+		}
+
+		bool Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+				auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+				if (it != this->rooms.end()) {
+						it->addPlayerToRoom(playerID);
+				}
+				return (it != this->rooms.end());
+		}
+
     bool Area::operator==(const Area& area) const {
       return this->name == area.getName();
     }
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
-      os << "You are in " << rhs.name << std::endl;
-
+      os << "area: " << rhs.name << std::endl;
+			for (auto room : rhs.rooms) {
+					os << room;
+			}
     	return os;
     }
 

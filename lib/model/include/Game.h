@@ -132,8 +132,20 @@ namespace model {
          *  Returns the words associated with a command in the form of a comma-separated string.
          *  Used to display commands in the help display.
          */
-         std::string
-         getCommandWords(Command command);
+        std::string
+        getCommandWords(Command command);
+
+				/**
+         *  Update game state to include connections that are in game.
+         */
+				void
+				addClientToGame(Connection client);
+
+				/**
+         *  Update game state to not include connections that are no longer in game.
+         */
+				void
+				removeClientFromGame(Connection client);
 
     public:
         /**

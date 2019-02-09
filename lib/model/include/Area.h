@@ -40,6 +40,9 @@ namespace model {
 
         void addRoom(Room room);
 
+				bool removePlayer(const model::ID &playerID, const model::ID &roomID);
+				bool addPlayer(const model::ID &playerID, const model::ID &roomID);
+
         bool operator==(const Area& area) const;
 
     };

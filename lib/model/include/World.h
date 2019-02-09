@@ -23,6 +23,9 @@ namespace model{
 
      void addArea(Area area);
 
+		 void removePlayer(const model::ID &playerID, const model::ID &roomID);
+		 void addPlayer(const model::ID &playerID, const model::ID &roomID);
+
      std::map<model::ID, Player> getUserMap();
 //     std::map<model::ID, Character> getAreaMap();
 
@@ -37,6 +40,7 @@ namespace model{
      std::map<model::ID, Player> usersMap;
      //std::map<model::ID, Area> areasMap;
 
+		 friend std::ostream& operator<<(std::ostream& os, const World& rhs);
  };
 }
 

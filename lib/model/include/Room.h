@@ -63,14 +63,15 @@ namespace model {
         void setObjects(std::vector<Object> objects);
         void setPlayersInRoom(std::vector<model::ID> playersInRoom);
 
-        void addDoor(Door door);
-        void addNPC(NPC npc);
-        void addObject(Object object);
-        void addPlayerToRoom(model::ID playerId);
-        void removePlayerFromRoom(model::ID playerId);
+        void addDoor(const Door &door);
+        void addNPC(const NPC &npc);
+        void addObject(const Object &object);
+        void addPlayerToRoom(const model::ID &playerId);
+        void removePlayerFromRoom(const model::ID &playerId);
 
         bool isValidDirection(const std::string &dir);
         model::ID getDestination(const std::string &dir);
+				std::vector<model::ID> getNearbyRoomIds();
 
         bool operator==(const Room& room) const;
 
