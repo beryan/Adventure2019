@@ -147,6 +147,12 @@ namespace model {
 				void
 				removeClientFromGame(Connection client);
 
+				/**
+         *  Checks if parameters are incorrect format for in game command.
+         */
+				bool
+				isInvalidFormat(const Command &command, const std::string &parameters);
+
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.

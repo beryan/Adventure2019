@@ -20,15 +20,21 @@ lowercase(std::string string) {
 
 std::string
 trimWhitespace(std::string string) {
-    string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
-        return !std::isspace(ch);
-    }));
+    //string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
+    //    return !std::isspace(ch);
+    //}));
 
-    string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
-        return !std::isspace(ch);
-    }).base(), string.end());
-
-    return string;
+    //string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
+    //    return !std::isspace(ch);
+    //}).base(), string.end());
+		std::string whitespace = " \t";
+		auto start = string.find_first_not_of(whitespace);
+		if (start == std::string::npos) {
+				return "";
+		}
+		auto end = string.find_last_not_of(whitespace);
+		auto size = end - start + 1;
+    return string.substr(start, size);
 }
 
 namespace model {
@@ -130,19 +136,13 @@ namespace model {
                 continue;
             }
 
-            std::string parameters;
+            std::string parameters = "";
 
-            if (input.text.find(' ') != std::string::npos) {
+            if (incomingInput.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
             Command command = this->commandMap.at(commandString);
-
-            if (command == Command::TELL && parameters.find(' ') == std::string::npos) {
-                tempMessage << "Invalid format for command \"" << commandString << "\".\n";
-                responses.push_back({client, tempMessage.str()});
-                continue;
-            }
 
             switch (command) {
                 case Command::QUIT: {
@@ -165,6 +165,11 @@ namespace model {
                 responses.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
+								if (isInvalidFormat(command, parameters)) {
+										tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+										responses.push_back({client, tempMessage.str()});
+										continue;
+								}
                 auto responseList = this->executeInGameAction(client, command, parameters);
                 for (auto response : responseList) {
                     responses.push_back(response);
@@ -262,7 +267,7 @@ namespace model {
             case Command::TELL: {
                 std::vector<Response> responses;
                 auto username = param.substr(0, param.find(' '));
-                auto message = param.substr(param.find(' ') + 1);
+                auto message = trimWhitespace(param.substr(param.find(' ') + 1));
                 for (auto connection: *this->clients) {
                     auto receiver = this->playerHandler->getUsernameByClient(connection);
                     if (receiver == username)  {
@@ -376,6 +381,12 @@ namespace model {
 				this->worldHandler->removePlayer(playerID, roomID);
 		}
 
+		bool
+		Game::isInvalidFormat(const Command &command, const std::string &parameters) {
+				bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
+				bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
+				return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
+		}
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
