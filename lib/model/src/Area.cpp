@@ -53,7 +53,7 @@ namespace model {
     }
 
     bool Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
-        std::vector<Room>::iterator it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+        auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
         if (it != this->rooms.end()) {
             it->removePlayerFromRoom(playerID);
         }
@@ -75,7 +75,7 @@ namespace model {
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
         os << "area: " << rhs.name << std::endl;
-        for (auto room : rhs.rooms) {
+        for (const auto &room : rhs.rooms) {
             os << room;
         }
         return os;

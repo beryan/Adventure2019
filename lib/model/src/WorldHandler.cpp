@@ -31,7 +31,7 @@ namespace model {
 
     Room
     WorldHandler::findRoom(const model::ID &roomID) {
-        for (Area area : this->world.getAreas()) {
+        for (const Area &area : this->world.getAreas()) {
             std::vector<Room> rooms = area.getRooms();
             auto it = std::find_if(rooms.begin(), rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
             if (it != rooms.end()) {
@@ -71,12 +71,10 @@ namespace model {
 
     std::vector<model::ID>
     WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
-        std::vector<model::ID> playerIds;
         Room room = findRoom(roomId);
-        auto playersInRoom = room.getPlayersInRoom();
-        playerIds.insert(playerIds.end(), playersInRoom.begin(), playersInRoom.end());
+        std::vector<model::ID> playerIds = room.getPlayersInRoom();
         auto nearbyRoomIds = room.getNearbyRoomIds();
-        for (auto nearbyRoomId : nearbyRoomIds) {
+        for (const auto &nearbyRoomId : nearbyRoomIds) {
             Room nearbyRoom = findRoom(nearbyRoomId);
             auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
             playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());

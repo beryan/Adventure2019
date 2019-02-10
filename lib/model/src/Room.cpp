@@ -104,21 +104,21 @@ namespace model {
     }
 
     void Room::addDoor(const Door &door) {
-        doors.push_back(door);
+        this->doors.push_back(door);
     }
 
     void Room::addNPC(const NPC &npc) {
-        npcs.push_back(npc);
+        this->npcs.push_back(npc);
     }
 
     void Room::addObject(const Object &object) {
-        objects.push_back(object);
+        this->objects.push_back(object);
     }
 
     void Room::addPlayerToRoom(const model::ID &playerId) {
         auto it = std::find(this->playersInRoom.begin(), this->playersInRoom.end(), playerId);
         if (it == this->playersInRoom.end()) {
-            playersInRoom.push_back(playerId);
+            this->playersInRoom.push_back(playerId);
         }
     }
 
@@ -154,9 +154,9 @@ namespace model {
     //print door
     std::ostream& operator<<(std::ostream& os, const Door& rhs) {
         os << rhs.dir;
-        if (rhs.desc.size() > 0) {
+        if (!rhs.desc.empty()) {
             os << ": ";
-            for (std::string s : rhs.desc) {
+            for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
         } else {
@@ -170,13 +170,13 @@ namespace model {
     std::ostream& operator<<(std::ostream& os, const Room& rhs) {
         os << "\n***" << rhs.name << "***\n";
 
-        if (rhs.desc.size() > 0) {
-            for (std::string s : rhs.desc) {
+        if (!rhs.desc.empty()) {
+            for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
         }
 
-        for (auto door : rhs.doors) {
+        for (const auto &door : rhs.doors) {
             os << door;
         }
 

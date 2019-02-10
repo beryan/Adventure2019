@@ -150,8 +150,8 @@ namespace model {
         /**
          *  Checks if parameters are incorrect format for in game command.
          */
-         bool
-         isInvalidFormat(const Command &command, const std::string &parameters);
+        bool
+        isInvalidFormat(const Command &command, const std::string &parameters);
 
     public:
         /**

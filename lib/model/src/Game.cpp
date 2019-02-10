@@ -78,7 +78,7 @@ namespace model {
             }
 
             if (this->playerHandler->isLoggedIn(disconnectedClient)) {
-								removeClientFromGame(disconnectedClient);
+                removeClientFromGame(disconnectedClient);
                 this->playerHandler->logoutPlayer(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
@@ -92,7 +92,7 @@ namespace model {
         for (const auto& input : incoming) {
             auto client = input.connection;
             auto incomingInput = trimWhitespace(input.text);
-						std::ostringstream tempMessage;
+            std::ostringstream tempMessage;
 
             if (this->playerHandler->isLoggingIn(client)) {
                 responses.push_back({

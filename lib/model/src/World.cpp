@@ -87,7 +87,7 @@ namespace model {
     //print world
     std::ostream& operator<<(std::ostream& os, const World& rhs) {
         os << "\nWorld state:\n";
-        for (auto area : rhs.areas) {
+        for (const auto &area : rhs.areas) {
             os << area;
         }
         return os;
