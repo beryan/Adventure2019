@@ -20,13 +20,6 @@ lowercase(std::string string) {
 
 std::string
 trimWhitespace(std::string string) {
-    //string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
-    //    return !std::isspace(ch);
-    //}));
-
-    //string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
-    //    return !std::isspace(ch);
-    //}).base(), string.end());
 		std::string whitespace = " \t";
 		auto start = string.find_first_not_of(whitespace);
 		if (start == std::string::npos) {
