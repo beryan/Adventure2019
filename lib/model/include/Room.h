@@ -21,34 +21,34 @@ using model::Object;
 namespace model {
 
     struct Door {
-      std::string dir; //direction
-      model::ID leadsTo; //id of room door leads to
-      std::vector<std::string> desc;
-      std::vector<std::string> keywords;
+        std::string dir; //direction
+        model::ID leadsTo; //id of room door leads to
+        std::vector<std::string> desc;
+        std::vector<std::string> keywords;
     };
 
     class Room {
 
     private:
-		    model::ID id;
+        model::ID id;
         std::string name;
-      	std::vector<std::string> desc;
-      	std::vector<Door> doors;
+        std::vector<std::string> desc;
+        std::vector<Door> doors;
         std::vector<NPC> npcs;
         std::vector<Object> objects;
         std::vector<model::ID> playersInRoom;
 
         friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
-      	friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
+        friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
 
     public:
-      	//constructors
-      	Room();
-      	Room(model::ID id, std::string name, std::vector<std::string> desc);
+        //constructors
+        Room();
+        Room(model::ID id, std::string name, std::vector<std::string> desc);
         Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects);
 
         //getters and setters
-		    model::ID getId() const;
+        model::ID getId() const;
         std::string getName() const;
         std::vector<std::string> getDesc() const;
         std::vector<Door> getDoors() const;
@@ -63,14 +63,15 @@ namespace model {
         void setObjects(std::vector<Object> objects);
         void setPlayersInRoom(std::vector<model::ID> playersInRoom);
 
-        void addDoor(Door door);
-        void addNPC(NPC npc);
-        void addObject(Object object);
-        void addPlayerToRoom(model::ID playerId);
-        void removePlayerFromRoom(model::ID playerId);
+        void addDoor(const Door &door);
+        void addNPC(const NPC &npc);
+        void addObject(const Object &object);
+        void addPlayerToRoom(const model::ID &playerId);
+        void removePlayerFromRoom(const model::ID &playerId);
 
         bool isValidDirection(const std::string &dir);
         model::ID getDestination(const std::string &dir);
+        std::vector<model::ID> getNearbyRoomIds();
 
         bool operator==(const Room& room) const;
 

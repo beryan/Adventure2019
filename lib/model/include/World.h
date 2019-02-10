@@ -12,32 +12,36 @@
 using model::Area;
 
 namespace model{
- class World{
- public:
-     World();
-     World(std::vector<Area> areas);
+    class World{
+    public:
+        World();
+        World(std::vector<Area> areas);
 
-     //getters and setters
-     std::vector<Area> getAreas() const;
-     void setAreas(std::vector<Area> areas);
+        //getters and setters
+        std::vector<Area> getAreas() const;
+        void setAreas(std::vector<Area> areas);
 
-     void addArea(Area area);
+        void addArea(Area area);
 
-     std::map<model::ID, Player> getUserMap();
-//     std::map<model::ID, Character> getAreaMap();
+        void removePlayer(const model::ID &playerID, const model::ID &roomID);
+        void addPlayer(const model::ID &playerID, const model::ID &roomID);
 
-    void insertUser(Player player);
+        std::map<model::ID, Player> getUserMap();
+        //std::map<model::ID, Character> getAreaMap();
 
-     void printUsers();
+        void insertUser(Player player);
 
-     void createStub();
+        void printUsers();
 
- private:
-     std::vector<Area> areas;
-     std::map<model::ID, Player> usersMap;
-     //std::map<model::ID, Area> areasMap;
+        void createStub();
 
- };
+    private:
+        std::vector<Area> areas;
+        std::map<model::ID, Player> usersMap;
+        //std::map<model::ID, Area> areasMap;
+
+        friend std::ostream& operator<<(std::ostream& os, const World& rhs);
+    };
 }
 
 #endif //WEBSOCKETNETWORKING_WORLD_H

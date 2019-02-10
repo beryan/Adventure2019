@@ -50,7 +50,8 @@ namespace model {
             Register,
             Say,
             Shutdown,
-            Tell
+            Tell,
+            Yell
         };
 
         std::map<std::string, Command> commandMap = {
@@ -64,7 +65,8 @@ namespace model {
             {"register", Command::Register},
             {"say", Command::Say},
             {"shutdown", Command::Shutdown},
-            {"tell", Command::Tell}
+            {"tell", Command::Tell},
+            {"yell", Command::Yell}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
@@ -77,7 +79,8 @@ namespace model {
             {Command::Register, {"register"}},
             {Command::Say, {"say"}},
             {Command::Shutdown, {"shutdown"}},
-            {Command::Tell, {"tell"}}
+            {Command::Tell, {"tell"}},
+            {Command::Yell, {"yell"}}
         };
 
         /**
@@ -129,8 +132,26 @@ namespace model {
          *  Returns the words associated with a command in the form of a comma-separated string.
          *  Used to display commands in the help display.
          */
-         std::string
-         getCommandWords(Command command);
+        std::string
+        getCommandWords(Command command);
+
+        /**
+         *  Update game state to include connections that are in game.
+         */
+        void
+        addClientToGame(Connection client);
+
+        /**
+         *  Update game state to not include connections that are no longer in game.
+         */
+        void
+        removeClientFromGame(Connection client);
+
+        /**
+         *  Checks if parameters are incorrect format for in game command.
+         */
+        bool
+        isInvalidFormat(const Command &command, const std::string &parameters);
 
     public:
         /**
