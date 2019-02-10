@@ -268,7 +268,7 @@ namespace model {
         }
     }
 
-		Connection
+    Connection
     PlayerHandler::getClientByPlayerId(const model::ID &playerId) {
         return this->activeIdToClient.at(playerId);
     }

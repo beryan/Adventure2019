@@ -75,10 +75,10 @@ namespace model {
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
         os << "area: " << rhs.name << std::endl;
-			for (auto room : rhs.rooms) {
-				os << room;
-			}
-    	return os;
+        for (auto room : rhs.rooms) {
+            os << room;
+        }
+        return os;
     }
 
 }
