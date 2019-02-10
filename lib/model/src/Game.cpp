@@ -20,13 +20,13 @@ lowercase(std::string string) {
 
 std::string
 trimWhitespace(std::string string) {
-		std::string whitespace = " \t";
-		auto start = string.find_first_not_of(whitespace);
-		if (start == std::string::npos) {
-				return "";
-		}
-		auto end = string.find_last_not_of(whitespace);
-		auto size = end - start + 1;
+    std::string whitespace = " \t";
+    auto start = string.find_first_not_of(whitespace);
+    if (start == std::string::npos) {
+        return "";
+    }
+    auto end = string.find_last_not_of(whitespace);
+    auto size = end - start + 1;
     return string.substr(start, size);
 }
 
@@ -99,12 +99,12 @@ namespace model {
                     client,
                     this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' '))),
                 });
-								if (this->playerHandler->isLoggedIn(client)) {
-										addClientToGame(client);
-										auto roomID = this->playerHandler->getRoomIdByClient(client);
-		                tempMessage << this->worldHandler->findRoom(roomID);
-										responses.push_back({client, tempMessage.str()});
-								}
+                if (this->playerHandler->isLoggedIn(client)) {
+                    addClientToGame(client);
+                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    tempMessage << this->worldHandler->findRoom(roomID);
+                    responses.push_back({client, tempMessage.str()});
+                }
                 continue;
 
             } else if (this->playerHandler->isRegistering(client)) {
@@ -112,12 +112,12 @@ namespace model {
                     client,
                     this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' '))),
                 });
-								if (this->playerHandler->isLoggedIn(client)) {
-										addClientToGame(client);
-										auto roomID = this->playerHandler->getRoomIdByClient(client);
-		                tempMessage << this->worldHandler->findRoom(roomID);
-										responses.push_back({client, tempMessage.str()});
-								}
+                if (this->playerHandler->isLoggedIn(client)) {
+                    addClientToGame(client);
+                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    tempMessage << this->worldHandler->findRoom(roomID);
+                    responses.push_back({client, tempMessage.str()});
+                }
                 continue;
             }
 
@@ -139,7 +139,7 @@ namespace model {
 
             switch (command) {
                 case Command::QUIT: {
-										removeClientFromGame(client);
+                    removeClientFromGame(client);
                     this->disconnect(input.connection);
                     continue;
                 }
@@ -158,11 +158,11 @@ namespace model {
                 responses.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
-								if (isInvalidFormat(command, parameters)) {
-										tempMessage << "Invalid format for command \"" << commandString << "\".\n";
-										responses.push_back({client, tempMessage.str()});
-										continue;
-								}
+                if (isInvalidFormat(command, parameters)) {
+                    tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+                    responses.push_back({client, tempMessage.str()});
+                    continue;
+                }
                 auto responseList = this->executeInGameAction(client, command, parameters);
                 for (auto response : responseList) {
                     responses.push_back(response);
@@ -220,10 +220,10 @@ namespace model {
 
         switch (command) {
             case Command::LOGOUT: {
-								removeClientFromGame(client);
+				removeClientFromGame(client);
                 tempMessage << this->playerHandler->logoutPlayer(client);
                 break;
-						}
+            }
 
             case Command::HELP:
                 tempMessage << "\n"
@@ -244,17 +244,16 @@ namespace model {
                 break;
 
             case Command::SAY: {
-								std::vector<Response> responses;
-								auto roomId = this->playerHandler->getRoomIdByClient(client);
-								auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
-								for (auto playerId : playerIds) {
-										auto connection = this->playerHandler->getClientByPlayerId(playerId);
-										std::ostringstream sayMessage;
-										sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-										responses.push_back({connection, sayMessage.str(), isLocal});
-								}
-								return responses;
-								break;
+                std::vector<Response> responses;
+                auto roomId = this->playerHandler->getRoomIdByClient(client);
+                auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
+                for (auto playerId : playerIds) {
+                    auto connection = this->playerHandler->getClientByPlayerId(playerId);
+                    std::ostringstream sayMessage;
+                    sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    responses.push_back({connection, sayMessage.str(), isLocal});
+                }
+                return responses;
             }
 
             case Command::TELL: {
@@ -277,7 +276,7 @@ namespace model {
                 break;
             }
 
-						case Command::YELL: {
+			case Command::YELL: {
                 isLocal = false;
                 tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
                 break;
@@ -362,23 +361,23 @@ namespace model {
 
 		void
 		Game::addClientToGame(Connection client) {
-				auto playerID = this->playerHandler->getPlayerIdByClient(client);
-				auto roomID = this->playerHandler->getRoomIdByClient(client);
-				this->worldHandler->addPlayer(playerID, roomID);
+            auto playerID = this->playerHandler->getPlayerIdByClient(client);
+            auto roomID = this->playerHandler->getRoomIdByClient(client);
+            this->worldHandler->addPlayer(playerID, roomID);
 		}
 
 		void
 		Game::removeClientFromGame(Connection client) {
-				auto playerID = this->playerHandler->getPlayerIdByClient(client);
-				auto roomID = this->playerHandler->getRoomIdByClient(client);
-				this->worldHandler->removePlayer(playerID, roomID);
+            auto playerID = this->playerHandler->getPlayerIdByClient(client);
+            auto roomID = this->playerHandler->getRoomIdByClient(client);
+            this->worldHandler->removePlayer(playerID, roomID);
 		}
 
 		bool
 		Game::isInvalidFormat(const Command &command, const std::string &parameters) {
-				bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
-				bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
-				return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
+            bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
+            bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
+            return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
 		}
 
     std::deque<Message>

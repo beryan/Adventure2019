@@ -116,10 +116,10 @@ namespace model {
     }
 
     void Room::addPlayerToRoom(const model::ID &playerId) {
-				auto it = std::find(this->playersInRoom.begin(), this->playersInRoom.end(), playerId);
-				if (it == this->playersInRoom.end()) {
-						playersInRoom.push_back(playerId);
-				}
+        auto it = std::find(this->playersInRoom.begin(), this->playersInRoom.end(), playerId);
+        if (it == this->playersInRoom.end()) {
+            playersInRoom.push_back(playerId);
+        }
     }
 
     void Room::removePlayerFromRoom(const model::ID &playerId) {
@@ -139,13 +139,13 @@ namespace model {
         throw std::runtime_error("Tried to get destination with illegal direction");
     }
 
-		std::vector<model::ID> Room::getNearbyRoomIds() {
-				std::vector<model::ID> ids;
-				for (Door door : this->doors) {
-						ids.push_back(door.leadsTo);
-				}
-				return ids;
-		}
+    std::vector<model::ID> Room::getNearbyRoomIds() {
+        std::vector<model::ID> ids;
+        for (Door door : this->doors) {
+                ids.push_back(door.leadsTo);
+        }
+        return ids;
+    }
 
     bool Room::operator==(const Room& Room) const {
         return this->id == Room.getId();
@@ -172,8 +172,8 @@ namespace model {
 
         if (rhs.desc.size() > 0) {
             for (std::string s : rhs.desc) {
-        		    os << s << std::endl;
-        	  }
+                os << s << std::endl;
+            }
         }
 
         for (auto door : rhs.doors) {

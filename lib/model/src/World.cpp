@@ -21,32 +21,32 @@ namespace model {
 
     //getters and setters
     std::vector<Area> World::getAreas() const {
-      return areas;
+        return areas;
     }
 
     void World::setAreas(std::vector<Area> areas) {
-      this->areas = std::move(areas);
+        this->areas = std::move(areas);
     }
 
     void World::addArea(Area area) {
-      areas.push_back(std::move(area));
+        areas.push_back(std::move(area));
     }
 
-		void World::removePlayer(const model::ID &playerID, const model::ID &roomID) {
-				for (auto &area : this->areas) {
-						if (area.removePlayer(playerID, roomID)) {
-								return;
-						}
-				}
-		}
+    void World::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+        for (auto &area : this->areas) {
+            if (area.removePlayer(playerID, roomID)) {
+                    return;
+            }
+        }
+    }
 
-		void World::addPlayer(const model::ID &playerID, const model::ID &roomID) {
-				for (auto &area : this->areas) {
-						if (area.addPlayer(playerID, roomID)) {
-								return;
-						}
-				}
-		}
+    void World::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+        for (auto &area : this->areas) {
+            if (area.addPlayer(playerID, roomID)) {
+                    return;
+            }
+        }
+    }
 
     std::map<model::ID, Player> World::getUserMap(){
         return this->usersMap;
@@ -84,13 +84,13 @@ namespace model {
         this->addArea(area1);
     }
 
-		//print world
-		std::ostream& operator<<(std::ostream& os, const World& rhs) {
-				os << "\nWorld state:\n";
-				for (auto area : rhs.areas) {
-						os << area;
-				}
-				return os;
-		}
+    //print world
+    std::ostream& operator<<(std::ostream& os, const World& rhs) {
+        os << "\nWorld state:\n";
+        for (auto area : rhs.areas) {
+            os << area;
+        }
+        return os;
+    }
 
 }

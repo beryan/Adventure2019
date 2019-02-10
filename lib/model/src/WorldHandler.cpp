@@ -53,36 +53,36 @@ namespace model {
         return room.getDestination(dir);
     }
 
-		void
-		WorldHandler::addPlayer(const model::ID &playerID, const model::ID &roomID) {
-				this->world.addPlayer(playerID, roomID);
-		}
-
-		void
-		WorldHandler::removePlayer(const model::ID &playerID, const model::ID &roomID) {
-				this->world.removePlayer(playerID, roomID);
-		}
-
-		void
-    WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
-				this->world.removePlayer(playerID, sourceID);
-				this->world.addPlayer(playerID, destinationID);
+    void
+    WorldHandler::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+        this->world.addPlayer(playerID, roomID);
     }
 
-		std::vector<model::ID>
-		WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
-				std::vector<model::ID> playerIds;
-				Room room = findRoom(roomId);
-				auto playersInRoom = room.getPlayersInRoom();
-				playerIds.insert(playerIds.end(), playersInRoom.begin(), playersInRoom.end());
-				auto nearbyRoomIds = room.getNearbyRoomIds();
-				for (auto nearbyRoomId : nearbyRoomIds) {
-						Room nearbyRoom = findRoom(nearbyRoomId);
-						auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
-						playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());
-				}
-				return playerIds;
-		}
+    void
+    WorldHandler::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+        this->world.removePlayer(playerID, roomID);
+    }
+
+    void
+    WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
+        this->world.removePlayer(playerID, sourceID);
+        this->world.addPlayer(playerID, destinationID);
+    }
+
+    std::vector<model::ID>
+    WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
+        std::vector<model::ID> playerIds;
+        Room room = findRoom(roomId);
+        auto playersInRoom = room.getPlayersInRoom();
+        playerIds.insert(playerIds.end(), playersInRoom.begin(), playersInRoom.end());
+        auto nearbyRoomIds = room.getNearbyRoomIds();
+        for (auto nearbyRoomId : nearbyRoomIds) {
+            Room nearbyRoom = findRoom(nearbyRoomId);
+            auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
+            playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());
+        }
+        return playerIds;
+    }
 
     void WorldHandler::addUser(Player player){
         std::cout << "Adding " << player.getId() << " " << player.getUsername() << " to users" << std::endl;

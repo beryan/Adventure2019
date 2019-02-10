@@ -135,23 +135,23 @@ namespace model {
         std::string
         getCommandWords(Command command);
 
-				/**
+		/**
          *  Update game state to include connections that are in game.
          */
-				void
-				addClientToGame(Connection client);
+		void
+		addClientToGame(Connection client);
 
-				/**
+		/**
          *  Update game state to not include connections that are no longer in game.
          */
-				void
-				removeClientFromGame(Connection client);
+		void
+		removeClientFromGame(Connection client);
 
-				/**
+		/**
          *  Checks if parameters are incorrect format for in game command.
          */
-				bool
-				isInvalidFormat(const Command &command, const std::string &parameters);
+		bool
+		isInvalidFormat(const Command &command, const std::string &parameters);
 
     public:
         /**
