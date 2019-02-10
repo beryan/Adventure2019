@@ -84,8 +84,8 @@ namespace model {
     World::printUsers() {
         std::cout << "Users:" << std::endl;
 
-        for (auto& [key, value]: usersMap) {
-            std::cout << value.getId() << ". " <<  value.getUsername() << std::endl;
+        for (auto& user: usersMap) {
+            std::cout << user.second.getId() << ". " <<  user.second.getUsername() << std::endl;
         }
     }
 
