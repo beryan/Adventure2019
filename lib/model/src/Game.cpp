@@ -19,14 +19,17 @@ lowercase(std::string string) {
 }
 
 std::string
-trimWhitespace(std::string string) {
+trimWhitespace(const std::string &string) {
     std::string whitespace = " \t";
     auto start = string.find_first_not_of(whitespace);
+
     if (start == std::string::npos) {
         return "";
     }
+
     auto end = string.find_last_not_of(whitespace);
     auto size = end - start + 1;
+
     return string.substr(start, size);
 }
 
@@ -164,7 +167,7 @@ namespace model {
                     continue;
                 }
                 auto responseList = this->executeInGameAction(client, command, parameters);
-                for (auto response : responseList) {
+                for (auto &response : responseList) {
                     responses.push_back(response);
                 }
             }
