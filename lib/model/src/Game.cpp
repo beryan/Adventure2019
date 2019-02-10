@@ -3,14 +3,12 @@
 //
 
 #include "Game.h"
-#include "Room.h"
 
 #include <map>
 #include <sstream>
 #include <iostream>
 
 using model::Game;
-using model::Room;
 using model::PlayerHandler;
 using model::WorldHandler;
 
@@ -22,15 +20,14 @@ lowercase(std::string string) {
 
 std::string
 trimWhitespace(std::string string) {
-    string.erase(string.begin(), std::find_if(string.begin(), string.end(), [](int ch) {
-        return !std::isspace(ch);
-    }));
-
-    string.erase(std::find_if(string.rbegin(), string.rend(), [](int ch) {
-        return !std::isspace(ch);
-    }).base(), string.end());
-
-    return string;
+    std::string whitespace = " \t";
+    auto start = string.find_first_not_of(whitespace);
+    if (start == std::string::npos) {
+        return "";
+    }
+    auto end = string.find_last_not_of(whitespace);
+    auto size = end - start + 1;
+    return string.substr(start, size);
 }
 
 namespace model {
@@ -57,8 +54,8 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter \"login\" to sign into an existing account\n"
-                         << "Enter \"register\" to make a new account\n";
+                         << "Enter \"login\" to login to an existing account\n"
+                         << "Enter \"register\" to create a new account\n";
 
             responses.push_back({newClient, introduction.str()});
         }
@@ -81,6 +78,7 @@ namespace model {
             }
 
             if (this->playerHandler->isLoggedIn(disconnectedClient)) {
+                removeClientFromGame(disconnectedClient);
                 this->playerHandler->logoutPlayer(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
@@ -94,12 +92,19 @@ namespace model {
         for (const auto& input : incoming) {
             auto client = input.connection;
             auto incomingInput = trimWhitespace(input.text);
+            std::ostringstream tempMessage;
 
             if (this->playerHandler->isLoggingIn(client)) {
                 responses.push_back({
                     client,
                     this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' '))),
                 });
+                if (this->playerHandler->isLoggedIn(client)) {
+                    addClientToGame(client);
+                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    tempMessage << this->worldHandler->findRoom(roomID);
+                    responses.push_back({client, tempMessage.str()});
+                }
                 continue;
 
             } else if (this->playerHandler->isRegistering(client)) {
@@ -107,35 +112,34 @@ namespace model {
                     client,
                     this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' '))),
                 });
+                if (this->playerHandler->isLoggedIn(client)) {
+                    addClientToGame(client);
+                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    tempMessage << this->worldHandler->findRoom(roomID);
+                    responses.push_back({client, tempMessage.str()});
+                }
                 continue;
             }
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
 
             if (!this->commandMap.count(commandString)) {
-                std::ostringstream tempMessage;
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 responses.push_back({client, tempMessage.str()});
                 continue;
             }
 
-            std::string parameters;
+            std::string parameters = "";
 
-            if (input.text.find(' ') != std::string::npos) {
+            if (incomingInput.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
             Command command = this->commandMap.at(commandString);
 
-            if (command == Command::TELL && parameters.find(' ') == std::string::npos) {
-                std::ostringstream tempMessage;
-                tempMessage << "Invalid format for command \"" << commandString << "\".\n";
-                responses.push_back({client, tempMessage.str()});
-                continue;
-            }
-
             switch (command) {
                 case Command::QUIT: {
+                    removeClientFromGame(client);
                     this->disconnect(input.connection);
                     continue;
                 }
@@ -154,6 +158,11 @@ namespace model {
                 responses.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
+                if (isInvalidFormat(command, parameters)) {
+                    tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+                    responses.push_back({client, tempMessage.str()});
+                    continue;
+                }
                 auto responseList = this->executeInGameAction(client, command, parameters);
                 for (auto response : responseList) {
                     responses.push_back(response);
@@ -188,14 +197,13 @@ namespace model {
                             << "  - " << this->getCommandWords(Command::REGISTER) << " (create a new account)\n"
                             << "  - " << this->getCommandWords(Command::LOGIN) << " (login to an existing account)\n"
                             << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
-                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
-                            << "\n";
+                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n";
                 break;
 
             default:
-                tempMessage << "Enter " << "\"" << this->getCommandWords(Command::LOGIN) << "\" to log into an existing account\n"
+                tempMessage << "\nEnter " << "\"" << this->getCommandWords(Command::LOGIN) << "\" to login to an existing account\n"
                             << "Enter " << "\"" << this->getCommandWords(Command::REGISTER) << "\" to create a new account\n"
-                            << "Enter " << "\"" << this->getCommandWords(Command::HELP) << "\" for a full list of commands.\n";
+                            << "Enter " << "\"" << this->getCommandWords(Command::HELP) << "\" for a full list of commands\n";
                 break;
         }
 
@@ -211,9 +219,11 @@ namespace model {
         bool isLocal = true;
 
         switch (command) {
-            case Command::LOGOUT:
+            case Command::LOGOUT: {
+                removeClientFromGame(client);
                 tempMessage << this->playerHandler->logoutPlayer(client);
                 break;
+            }
 
             case Command::HELP:
                 tempMessage << "\n"
@@ -223,26 +233,33 @@ namespace model {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << this->getCommandWords(Command::HELP) << " (shows this help interface)\n"
-                            << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->getCommandWords(Command::SAY) << " [message] (sends [message] to close by players in the game)\n"
                             << "  - " << this->getCommandWords(Command::TELL) << " [username] [message] (sends [message] to [username] in the game)\n"
+														<< "  - " << this->getCommandWords(Command::YELL) << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << this->getCommandWords(Command::LOOK) << " (displays current location information)\n"
                             << "  - " << this->getCommandWords(Command::MOVE) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the server)\n"
+                            << "  - " << this->getCommandWords(Command::LOGOUT) << " (logs you out of the game)\n"
                             << "  - " << this->getCommandWords(Command::QUIT) << " (disconnects you from the game server)\n"
-                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n"
-                            << "\n";
+                            << "  - " << this->getCommandWords(Command::SHUTDOWN) << " (shuts down the game server)\n";
                 break;
 
             case Command::SAY: {
-                isLocal = false;
-                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                break;
+                std::vector<Response> responses;
+                auto roomId = this->playerHandler->getRoomIdByClient(client);
+                auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
+                for (auto playerId : playerIds) {
+                    auto connection = this->playerHandler->getClientByPlayerId(playerId);
+                    std::ostringstream sayMessage;
+                    sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    responses.push_back({connection, sayMessage.str(), isLocal});
+                }
+                return responses;
             }
 
             case Command::TELL: {
-                std::vector<Response> responses = {};
+                std::vector<Response> responses;
                 auto username = param.substr(0, param.find(' '));
-                auto message = param.substr(param.find(' ') + 1);
+                auto message = trimWhitespace(param.substr(param.find(' ') + 1));
                 for (auto connection: *this->clients) {
                     auto receiver = this->playerHandler->getUsernameByClient(connection);
                     if (receiver == username)  {
@@ -256,6 +273,12 @@ namespace model {
                     }
                 }
                 tempMessage << "Unable to find online user \"" << username << "\".\n";
+                break;
+            }
+
+            case Command::YELL: {
+                isLocal = false;
+                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
                 break;
             }
 
@@ -280,6 +303,7 @@ namespace model {
             }
 
             default:
+                tempMessage << "\nEnter " << "\"" << this->getCommandWords(Command::HELP) << "\" for a full list of commands\n";
                 break;
         }
 
@@ -288,9 +312,7 @@ namespace model {
 
     void
     Game::handleOutgoing(std::deque<Response> &responses) {
-
         this->playerHandler->notifyBootedClients(responses);
-
     }
 
 
@@ -337,6 +359,26 @@ namespace model {
         return tempMessage.str();
     }
 
+    void
+    Game::addClientToGame(Connection client) {
+        auto playerID = this->playerHandler->getPlayerIdByClient(client);
+        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        this->worldHandler->addPlayer(playerID, roomID);
+    }
+
+    void
+    Game::removeClientFromGame(Connection client) {
+        auto playerID = this->playerHandler->getPlayerIdByClient(client);
+        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        this->worldHandler->removePlayer(playerID, roomID);
+    }
+
+    bool
+    Game::isInvalidFormat(const Command &command, const std::string &parameters) {
+        bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
+        bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
+        return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
+    }
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {

@@ -24,9 +24,14 @@ namespace model {
         //parseJSON();
     }
 
+    World
+    WorldHandler::getWorld() const {
+        return world;
+    }
+
     Room
     WorldHandler::findRoom(const model::ID &roomID) {
-        for (Area area : this->world.getAreas()) {
+        for (const Area &area : this->world.getAreas()) {
             std::vector<Room> rooms = area.getRooms();
             auto it = std::find_if(rooms.begin(), rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
             if (it != rooms.end()) {
@@ -49,11 +54,32 @@ namespace model {
     }
 
     void
+    WorldHandler::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+        this->world.addPlayer(playerID, roomID);
+    }
+
+    void
+    WorldHandler::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+        this->world.removePlayer(playerID, roomID);
+    }
+
+    void
     WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
-        Room source = findRoom(sourceID);
-        Room destination = findRoom(destinationID);
-        source.removePlayerFromRoom(playerID);
-        destination.addPlayerToRoom(playerID);
+        this->world.removePlayer(playerID, sourceID);
+        this->world.addPlayer(playerID, destinationID);
+    }
+
+    std::vector<model::ID>
+    WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
+        Room room = findRoom(roomId);
+        std::vector<model::ID> playerIds = room.getPlayersInRoom();
+        auto nearbyRoomIds = room.getNearbyRoomIds();
+        for (const auto &nearbyRoomId : nearbyRoomIds) {
+            Room nearbyRoom = findRoom(nearbyRoomId);
+            auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
+            playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());
+        }
+        return playerIds;
     }
 
     void WorldHandler::addUser(Player player){

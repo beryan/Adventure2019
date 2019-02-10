@@ -131,7 +131,7 @@ TEST(RegisterTest, SuccessfulRegistration) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
 
-    EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n\n", result);
+    EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
 }
 
 TEST(RegisterTest, LoggedInAfterRegister) {

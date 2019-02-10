@@ -128,7 +128,7 @@ namespace model {
                 this->activeIdToClient.emplace(playerId, client);
 
                 std::cout << inputUsername << " has been registered to the game\n";
-                return "Your account has been successfully registered and you are now logged in.\n\n";
+                return "Your account has been successfully registered and you are now logged in.\n";
             }
 
             default: {
@@ -266,6 +266,11 @@ namespace model {
         } else {
             throw std::runtime_error("Error: usernameToPlayer map does not contain username");
         }
+    }
+
+    Connection
+    PlayerHandler::getClientByPlayerId(const model::ID &playerId) {
+        return this->activeIdToClient.at(playerId);
     }
 
     void
