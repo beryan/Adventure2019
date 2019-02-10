@@ -13,7 +13,10 @@ add_executable(runAllTests
         playerHandler-test.cpp
         propertiesManager-test.cpp
         room-test.cpp
-        world-test.cpp)
+        world-test.cpp
+        extraObjectInfo-test.cpp
+        object-test.cpp
+        )
 
 target_link_libraries(runAllTests
         model

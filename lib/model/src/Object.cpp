@@ -7,52 +7,52 @@
 namespace model {
 
     Object::Object() :
-        id(Object::DEFAULT_ID),
-        name({}),
-        shortDescription({}),
-        longDescription({}),
-        keywords({}),
-        slot(Slot::Misc),
-        extraObjectInfo({}){}
+            id(Object::DEFAULT_ID),
+            name({}),
+            shortDescription({}),
+            longDescription({}),
+            keywords({}),
+            slot(Slot::Misc),
+            extraObjectInfo({}) {}
 
     Object::Object(
-        model::ID id,
-        std::string name,
-        std::string shortDescription,
-        std::vector<std::string> longDescription,
-        std::vector<std::string> keywords,
-        Slot slot
+            model::ID id,
+            std::string name,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
+            Slot slot
     ) :
-        id(id),
-        name(std::move(name)),
-        shortDescription(std::move(shortDescription)),
-        longDescription(std::move(longDescription)),
-        keywords(std::move(keywords)),
-        slot(slot),
-        extraObjectInfo({}){}
+            id(id),
+            name(std::move(name)),
+            shortDescription(std::move(shortDescription)),
+            longDescription(std::move(longDescription)),
+            keywords(std::move(keywords)),
+            slot(slot),
+            extraObjectInfo({}) {}
 
     Object::Object(
-        model::ID id,
-        std::string name,
-        std::string shortDescription,
-        std::vector<std::string> longDescription,
-        std::vector<std::string> keywords,
-        Slot slot,
-        ExtraObjectInfo extraObjectInfo
+            model::ID id,
+            std::string name,
+            std::string shortDescription,
+            std::vector<std::string> longDescription,
+            std::vector<std::string> keywords,
+            Slot slot,
+            ExtraObjectInfo extraObjectInfo
     ) :
-        id(id),
-        name(std::move(name)),
-        shortDescription(std::move(shortDescription)),
-        longDescription(std::move(longDescription)),
-        keywords(std::move(keywords)),
-        slot(slot),
-        extraObjectInfo(std::move(extraObjectInfo)){}
+            id(id),
+            name(std::move(name)),
+            shortDescription(std::move(shortDescription)),
+            longDescription(std::move(longDescription)),
+            keywords(std::move(keywords)),
+            slot(slot),
+            extraObjectInfo(std::move(extraObjectInfo)) {}
 
     model::ID Object::getId() const {
         return this->id;
     }
 
-    void Object::setId(model::ID id){
+    void Object::setId(model::ID id) {
         this->id = id;
     }
 
@@ -60,7 +60,7 @@ namespace model {
         return this->name;
     }
 
-    void Object::setName(std::string name){
+    void Object::setName(std::string name) {
         this->name = std::move(name);
     }
 
@@ -76,7 +76,7 @@ namespace model {
         return this->longDescription;
     }
 
-    void Object::setLongDescription(std::vector<std::string> longDescription){
+    void Object::setLongDescription(std::vector<std::string> longDescription) {
         this->longDescription = std::move(longDescription);
     }
 
@@ -97,11 +97,19 @@ namespace model {
         this->slot = slot;
     }
 
+    ExtraObjectInfo Object::getExtraObjectInfo() const {
+        return extraObjectInfo;
+    }
+
+    void Object::setExtraObjectInfo(ExtraObjectInfo extraObjectInfo) {
+        Object::extraObjectInfo = std::move(extraObjectInfo);
+    }
+
     bool Object::canBeEquipped() const {
         return this->slot >= 0 && this->slot < Slot::Misc;
     }
 
-    bool Object::operator==(const Object& NPC) const {
+    bool Object::operator==(const Object &NPC) const {
         return this->id == NPC.id;
     }
 }
