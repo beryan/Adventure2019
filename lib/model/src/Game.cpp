@@ -314,6 +314,23 @@ namespace model {
     }
 
 
+    std::deque<Message>
+    Game::formMessages(std::deque<Message> &messages) {
+        std::deque<Message> outgoing;
+        std::map<Connection, std::ostringstream> clientMessages;
+
+        for (const auto &message : messages) {
+            clientMessages[message.connection] << message.text;
+        }
+
+        for (auto const& [client, message] : clientMessages) {
+            outgoing.push_back({client, message.str()});
+        }
+
+        return outgoing;
+    }
+
+
     std::string
     Game::getCommandWords(Command command) {
         std::vector<std::string> words = this->commandWordsMap.at(command);
@@ -333,13 +350,13 @@ namespace model {
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        std::deque<Message> responses;
+        std::deque<Message> messages;
 
-        this->handleConnects(responses);
-        this->handleDisconnects(responses);
-        this->handleIncoming(incoming, responses);
-        this->handleOutgoing(responses);
+        this->handleConnects(messages);
+        this->handleDisconnects(messages);
+        this->handleIncoming(incoming, messages);
+        this->handleOutgoing(messages);
 
-        return responses;
+        return this->formMessages(messages);
     }
 }

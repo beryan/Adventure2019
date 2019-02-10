@@ -118,6 +118,13 @@ namespace model {
         void
         handleOutgoing(std::deque<Message> &messages);
 
+
+        /**
+         *  Combines messages such that all clients will receive one message at most per game cycle.
+         */
+        std::deque<Message>
+        formMessages(std::deque<Message> &messages);
+
         /**
          *  Returns the words associated with a command in the form of a comma-separated string.
          *  Used to display commands in the help display.
