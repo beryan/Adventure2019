@@ -58,8 +58,8 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter \"login\" to login to an existing account\n"
-                         << "Enter \"register\" to create a new account\n";
+                         << "Enter " << "\"" << this->getCommandWords(Command::Login) << "\" to login to an existing account\n"
+                         << "Enter " << "\"" << this->getCommandWords(Command::Register) << "\" to create a new account\n";
 
             responses.push_back({newClient, introduction.str()});
         }

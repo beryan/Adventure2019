@@ -23,6 +23,8 @@ using networking::Message;
 constexpr Connection CLIENT_A = {100};
 constexpr auto DISCONNECT_COMMAND = "quit";
 constexpr auto SHUTDOWN_COMMAND = "shutdown";
+constexpr auto LOGIN_COMMAND = "login";
+constexpr auto REGISTER_COMMAND = "register";
 
 TEST(GameTestSuite, canConstructGameInstance) {
     std::vector<Connection> clients;
@@ -53,8 +55,8 @@ TEST(GameTestSuite, canGetGreetingOnConnect) {
     std::ostringstream introduction;
     introduction << "Welcome to Adventure 2019!\n"
                  << "\n"
-                 << "Enter \"login\" to sign into an existing account\n"
-                 << "Enter \"register\" to make a new account\n";
+                 << "Enter \"" << LOGIN_COMMAND << "\" to login to an existing account\n"
+                 << "Enter \"" << REGISTER_COMMAND << "\" to create a new account\n";
 
     Message expectedMessage = {CLIENT_A, introduction.str()};
     unsigned int expectedNewClientsSize = 0;
