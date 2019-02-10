@@ -118,7 +118,7 @@ namespace model {
         void
         setRoomIdByClient(const Connection &client, const model::ID &roomID);
 
-				/**
+        /**
          *  Returns the client ID of a Player given a player ID.
          */
         Connection

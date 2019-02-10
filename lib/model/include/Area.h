@@ -24,12 +24,12 @@ namespace model {
         std::string name;
         std::vector<Room> rooms;
 
-      	friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
+        friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
 
     public:
-      	//constructors
-      	Area();
-      	Area(std::string name);
+        //constructors
+        Area();
+        Area(std::string name);
         Area(std::string name, std::vector<Room> rooms);
 
         //getters and setters
@@ -40,8 +40,8 @@ namespace model {
 
         void addRoom(Room room);
 
-		bool removePlayer(const model::ID &playerID, const model::ID &roomID);
-		bool addPlayer(const model::ID &playerID, const model::ID &roomID);
+        bool removePlayer(const model::ID &playerID, const model::ID &roomID);
+        bool addPlayer(const model::ID &playerID, const model::ID &roomID);
 
         bool operator==(const Area& area) const;
 

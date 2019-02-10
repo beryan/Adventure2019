@@ -35,7 +35,7 @@ namespace model {
     void World::removePlayer(const model::ID &playerID, const model::ID &roomID) {
         for (auto &area : this->areas) {
             if (area.removePlayer(playerID, roomID)) {
-                    return;
+                return;
             }
         }
     }
@@ -43,7 +43,7 @@ namespace model {
     void World::addPlayer(const model::ID &playerID, const model::ID &roomID) {
         for (auto &area : this->areas) {
             if (area.addPlayer(playerID, roomID)) {
-                    return;
+                return;
             }
         }
     }

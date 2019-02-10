@@ -16,8 +16,8 @@ namespace model{
     public:
         WorldHandler();
 
-		World
-		getWorld() const;
+        World
+        getWorld() const;
 
         /**
          *  Finds room based on room ID
@@ -37,11 +37,11 @@ namespace model{
         model::ID
         getDestination(const model::ID &roomID, const std::string &dir);
 
-		void
-		addPlayer(const model::ID &playerID, const model::ID &roomID);
+        void
+        addPlayer(const model::ID &playerID, const model::ID &roomID);
 
-		void
-		removePlayer(const model::ID &playerID, const model::ID &roomID);
+        void
+        removePlayer(const model::ID &playerID, const model::ID &roomID);
 
         /**
          *  Removes player ID from playersInRoom vector of current room and adds it to playerInRoom vector of destination room
@@ -49,11 +49,11 @@ namespace model{
         void
         movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID);
 
-		/**
+        /**
          *  Gets player IDs in current and adjacent rooms given current room ID
          */
-		std::vector<model::ID>
-		getNearbyPlayerIds(const model::ID &roomId);
+        std::vector<model::ID>
+        getNearbyPlayerIds(const model::ID &roomId);
 
         void addUser(Player player);
         void removeUser(Player player);

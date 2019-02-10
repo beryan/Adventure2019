@@ -220,7 +220,7 @@ namespace model {
 
         switch (command) {
             case Command::LOGOUT: {
-				removeClientFromGame(client);
+                removeClientFromGame(client);
                 tempMessage << this->playerHandler->logoutPlayer(client);
                 break;
             }
@@ -276,7 +276,7 @@ namespace model {
                 break;
             }
 
-			case Command::YELL: {
+            case Command::YELL: {
                 isLocal = false;
                 tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
                 break;
@@ -359,26 +359,26 @@ namespace model {
         return tempMessage.str();
     }
 
-		void
-		Game::addClientToGame(Connection client) {
-            auto playerID = this->playerHandler->getPlayerIdByClient(client);
-            auto roomID = this->playerHandler->getRoomIdByClient(client);
-            this->worldHandler->addPlayer(playerID, roomID);
-		}
+    void
+    Game::addClientToGame(Connection client) {
+        auto playerID = this->playerHandler->getPlayerIdByClient(client);
+        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        this->worldHandler->addPlayer(playerID, roomID);
+    }
 
-		void
-		Game::removeClientFromGame(Connection client) {
-            auto playerID = this->playerHandler->getPlayerIdByClient(client);
-            auto roomID = this->playerHandler->getRoomIdByClient(client);
-            this->worldHandler->removePlayer(playerID, roomID);
-		}
+    void
+    Game::removeClientFromGame(Connection client) {
+        auto playerID = this->playerHandler->getPlayerIdByClient(client);
+        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        this->worldHandler->removePlayer(playerID, roomID);
+    }
 
-		bool
-		Game::isInvalidFormat(const Command &command, const std::string &parameters) {
-            bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
-            bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
-            return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
-		}
+    bool
+    Game::isInvalidFormat(const Command &command, const std::string &parameters) {
+        bool wrongTellFormat = (command == Command::TELL && parameters.find(' ') == std::string::npos);
+        bool isCommandWithParam = (command == Command::MOVE || command == Command::SAY  || command == Command::YELL);
+        return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
+    }
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {

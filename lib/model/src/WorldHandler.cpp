@@ -25,8 +25,8 @@ namespace model {
     }
 
     World
-		WorldHandler::getWorld() const {
-      	return world;
+    WorldHandler::getWorld() const {
+        return world;
     }
 
     Room

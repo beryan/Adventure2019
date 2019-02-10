@@ -142,7 +142,7 @@ namespace model {
     std::vector<model::ID> Room::getNearbyRoomIds() {
         std::vector<model::ID> ids;
         for (Door door : this->doors) {
-                ids.push_back(door.leadsTo);
+            ids.push_back(door.leadsTo);
         }
         return ids;
     }
