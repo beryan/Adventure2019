@@ -27,7 +27,10 @@ namespace model {
      *  @brief A class for containing the game's logic
      *
      *  This class manages the components necessary to gather, process, and output
-     *  information that is to be exchanged between the server and clients.
+     *  information that is to be exchanged between the server and clients. This
+     *  class expects the server to keep track of newly connected and disconnected
+     *  clients by adding the Connection object to the respective vector. The Game
+     *  instance will remove the Connections from the vectors after reading them.
      */
     class Game {
     private:

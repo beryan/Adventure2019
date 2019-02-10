@@ -33,15 +33,18 @@ namespace model {
         this->bootedClients = {};
     }
 
+
     bool
     PlayerHandler::isLoggedIn(const Connection &client) {
         return static_cast<bool> (activeClientToId.count(client));
     }
 
+
     bool
     PlayerHandler::isRegistering(const Connection &client) {
         return static_cast<bool> (this->clientRegisterStage.count(client));
     }
+
 
     std::string
     PlayerHandler::processRegistration(const Connection &client, const std::string &input) {
@@ -137,6 +140,7 @@ namespace model {
         }
     }
 
+
     void
     PlayerHandler::exitRegistration(const Connection &client) {
         this->clientRegisterStage.erase(client);
@@ -144,10 +148,12 @@ namespace model {
         this->regPasswordInput.erase(client);
     }
 
+
     bool
     PlayerHandler::isLoggingIn(const Connection &client) {
         return static_cast<bool> (this->clientLoginStage.count(client));
     }
+
 
     std::string
     PlayerHandler::processLogin(const Connection &client, const std::string &input) {
@@ -227,11 +233,13 @@ namespace model {
         }
     }
 
+
     void
     PlayerHandler::exitLogin(const Connection &client) {
         this->clientLoginStage.erase(client);
         this->loginUsernameInput.erase(client);
     }
+
 
     std::string
     PlayerHandler::logoutPlayer(const Connection &client) {
@@ -241,15 +249,18 @@ namespace model {
         return "Logged out successfully.\n";
     }
 
+
     std::string
     PlayerHandler::getUsernameByClient(const Connection &client) {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
+
     model::ID
     PlayerHandler::getPlayerIdByClient(const Connection &client) {
         return this->activeClientToId.at(client);
     }
+
 
     model::ID
     PlayerHandler::getRoomIdByClient(const Connection &client) {
@@ -258,6 +269,7 @@ namespace model {
         }
         throw std::runtime_error("Error: usernameToPlayer map does not contain username");
     }
+
 
     void
     PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
@@ -268,10 +280,12 @@ namespace model {
         }
     }
 
+
     Connection
     PlayerHandler::getClientByPlayerId(const model::ID &playerId) {
         return this->activeIdToClient.at(playerId);
     }
+
 
     void
     PlayerHandler::notifyBootedClients(std::deque<Response> &responses) {
@@ -281,6 +295,7 @@ namespace model {
 
         this->bootedClients.clear();
     }
+
 
     std::vector<Player>
     PlayerHandler::parseJsonUsers(json users) {
