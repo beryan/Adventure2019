@@ -166,7 +166,7 @@ namespace model {
         switch (this->clientLoginStage.at(client)) {
             case LoginStage::USERNAME: {
                 if (input.length() == 0) {
-                    this->clientLoginStage.erase(client);
+                    this->exitLogin(client);
                     return "No username entered. Login process cancelled.\n";
                 }
 
@@ -177,8 +177,6 @@ namespace model {
             }
 
             case LoginStage::PASSWORD: {
-                this->clientLoginStage.erase(client);
-
                 auto successMessage = "Logged in successfully!\n";
                 auto failMessage = "Invalid username or password.\n";
 
@@ -188,12 +186,14 @@ namespace model {
                 auto playerExists = this->usernameToPlayer.count(inputUsername);
 
                 if (!playerExists) {
+                    this->exitLogin(client);
                     return failMessage;
                 }
 
                 auto passwordMatches = (this->usernameToPlayer.at(inputUsername)->getPassword() == input);
 
                 if (!passwordMatches) {
+                    this->exitLogin(client);
                     return failMessage;
                 }
 
@@ -212,12 +212,16 @@ namespace model {
                     this->activeClientToId.emplace(client, playerId);
                     this->activeIdToClient.emplace(playerId, client);
 
+                    this->exitLogin(client);
+
                     std::cout << inputUsername << " is now being used by " << client.id << "\n";
                     return successMessage;
 
                 } else {
                     this->activeClientToId.emplace(client, playerId);
                     this->activeIdToClient.emplace(playerId, client);
+
+                    this->exitLogin(client);
 
                     return successMessage;
                 }
