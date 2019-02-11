@@ -22,6 +22,7 @@ using networking::Connection;
  *  6.  Enter valid password
  *  7.  Enter non-matching re-entered-password
  *  8.  Enter matching re-entered-password / Successful registration
+ *  9.  Verify registration state is cleared on failure
  *  9.  Logged in after registering
  *  10. Prevent registration with taken username on username input
  *  11. Prevent registration with taken username on second password input
@@ -132,6 +133,29 @@ TEST(RegisterTest, SuccessfulRegistration) {
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
 
     EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
+}
+
+TEST(RegisterTest, StateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Fail the registration after storing a username and Foobar in state
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, "test");
+    playerHandler.processRegistration(clientIdA, "Foobar");
+    playerHandler.processRegistration(clientIdA, "f");
+
+    // Perform a registration with valid input and the same client
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, "Foobar");
+    playerHandler.processRegistration(clientIdA, "test");
+    playerHandler.processRegistration(clientIdA, "test");
+
+    // Registration should be successful (stored password state cleared on failure)
+    ASSERT_EQ(playerHandler.isRegistering(clientIdA), false);
+    ASSERT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+
+    // Client should have intended username (stored username state cleared on failure)
+    EXPECT_EQ(playerHandler.getUsernameByClient(clientIdA), "Foobar");
 }
 
 TEST(RegisterTest, LoggedInAfterRegister) {
