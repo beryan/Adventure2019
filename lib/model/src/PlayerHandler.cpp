@@ -61,12 +61,12 @@ namespace model {
         switch (this->clientRegisterStage.at(client)) {
             case RegisterStage::USERNAME: {
                 if (input.length() == 0) {
-                    this->clientRegisterStage.erase(client);
+                    this->exitRegistration(client);
                     return "No username entered. Registration process cancelled.\n";
                 }
 
                 if (input.length() > MAX_USERNAME_AND_PASSWORD_LENGTH) {
-                    this->clientRegisterStage.erase(client);
+                    this->exitRegistration(client);
                     return "The username you entered is too long. Registration process cancelled.\n";
                 }
 
@@ -88,12 +88,12 @@ namespace model {
 
             case RegisterStage::PASSWORD: {
                 if (input.length() < MIN_PASSWORD_LENGTH) {
-                    this->clientRegisterStage.erase(client);
+                    this->exitRegistration(client);
                     return "The password you entered is too short. Registration process cancelled.\n";
                 }
 
                 if (input.length() > MAX_USERNAME_AND_PASSWORD_LENGTH) {
-                    this->clientRegisterStage.erase(client);
+                    this->exitRegistration(client);
                     return "The password you entered is too long. Registration process cancelled.\n";
                 }
 
@@ -107,6 +107,7 @@ namespace model {
                 this->clientRegisterStage.erase(client);
 
                 if (this->regPasswordInput.at(client) != input) {
+                    this->exitRegistration(client);
                     return "The passwords you entered do not match. Registration process cancelled.\n";
                 }
 
