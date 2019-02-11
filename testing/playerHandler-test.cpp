@@ -31,8 +31,9 @@ using networking::Connection;
  *  14. Login prompts for password after entering username
  *  15. Enter invalid credentials in login
  *  16. Enter valid credentials in login
- *  17. Logout other client if same Player logged in by a client
- *  18. Remove appropriate 'login' states if client disconnects while in login process
+ *  17. Verify login state is cleared on failure
+ *  18. Logout other client if same Player logged in by a client
+ *  19. Remove appropriate 'login' states if client disconnects while in login process
  */
 const Connection clientIdA = {100};
 const Connection clientIdB = {200};
@@ -135,7 +136,7 @@ TEST(RegisterTest, SuccessfulRegistration) {
     EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
 }
 
-TEST(RegisterTest, StateClearsOnFail) {
+TEST(RegisterTest, RegisterStateClearsOnFail) {
     PlayerHandler playerHandler{};
 
     // Fail the registration after storing a username and Foobar in state
@@ -251,6 +252,31 @@ TEST(LoginTest, SuccessfulLogin) {
     auto result = playerHandler.processLogin(clientIdA, validLengthString);
 
     EXPECT_EQ("Logged in successfully!\n", result);
+}
+
+TEST(LoginTest, LoginStateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Create an account, then logout
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.logoutPlayer(clientIdA);
+
+    // Attempt to login with incorrect username
+    playerHandler.processLogin(clientIdA);
+    playerHandler.processLogin(clientIdA, "invalid name");
+    playerHandler.processLogin(clientIdA, validLengthString);
+
+    // Login with correct username and password
+    playerHandler.processLogin(clientIdA);
+    playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.processLogin(clientIdA, validLengthString);
+
+    // Login should be successful (stored username state cleared on failure)
+    ASSERT_EQ(playerHandler.isLoggingIn(clientIdA), false);
+    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
 }
 
 TEST(LoginTest, LogoutClientOnOtherClientLogin) {
