@@ -22,16 +22,18 @@ using networking::Connection;
  *  6.  Enter valid password
  *  7.  Enter non-matching re-entered-password
  *  8.  Enter matching re-entered-password / Successful registration
- *  9.  Logged in after registering
- *  10. Prevent registration with taken username on username input
- *  11. Prevent registration with taken username on second password input
- *  12. Remove appropriate 'reg' states if client disconnects while in registration process
- *  13. Start login and prompt for username
- *  14. Login prompts for password after entering username
- *  15. Enter invalid credentials in login
- *  16. Enter valid credentials in login
- *  17. Logout other client if same Player logged in by a client
- *  18. Remove appropriate 'login' states if client disconnects while in login process
+ *  9.  Verify registration state is cleared on failure
+ *  10.  Logged in after registering
+ *  11. Prevent registration with taken username on username input
+ *  12. Prevent registration with taken username on second password input
+ *  13. Remove appropriate 'reg' states if client disconnects while in registration process
+ *  14. Start login and prompt for username
+ *  15. Login prompts for password after entering username
+ *  16. Enter invalid credentials in login
+ *  17. Enter valid credentials in login
+ *  18. Verify login state is cleared on failure
+ *  19. Logout other client if same Player logged in by a client
+ *  20. Remove appropriate 'login' states if client disconnects while in login process
  */
 const Connection clientIdA = {100};
 const Connection clientIdB = {200};
@@ -56,7 +58,7 @@ TEST(RegisterTest, StartRegistration) {
            << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
     EXPECT_EQ(expect.str(), result);
-    EXPECT_EQ(playerHandler.isRegistering(clientIdA), true);
+    EXPECT_TRUE(playerHandler.isRegistering(clientIdA));
 }
 
 TEST(RegisterTest, LongUsername) {
@@ -127,11 +129,41 @@ TEST(RegisterTest, SuccessfulRegistration) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(clientIdA);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    playerHandler.processRegistration(clientIdA, validLengthString);
-    auto result = playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
 
-    EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
+
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
+
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_FALSE(playerHandler.isRegistering(clientIdA));
+
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
+}
+
+TEST(RegisterTest, RegisterStateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Fail the registration after storing a username and Foobar in state
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, "test");
+    playerHandler.processRegistration(clientIdA, "Foobar");
+    playerHandler.processRegistration(clientIdA, "f");
+
+    // Perform a registration with valid input and the same client
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, "Foobar");
+    playerHandler.processRegistration(clientIdA, "test");
+    playerHandler.processRegistration(clientIdA, "test");
+
+    // Registration should be successful (stored password state cleared on failure)
+    ASSERT_FALSE(playerHandler.isRegistering(clientIdA));
+    ASSERT_TRUE(playerHandler.isLoggedIn(clientIdA));
+
+    // Client should have intended username (stored username state cleared on failure)
+    EXPECT_EQ(playerHandler.getUsernameByClient(clientIdA), "Foobar");
 }
 
 TEST(RegisterTest, LoggedInAfterRegister) {
@@ -142,8 +174,8 @@ TEST(RegisterTest, LoggedInAfterRegister) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+    EXPECT_FALSE(playerHandler.isLoggingIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
@@ -189,9 +221,8 @@ TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.exitRegistration(clientIdA);
-    auto result = playerHandler.isRegistering(clientIdA);
 
-    EXPECT_EQ(result, false);
+    EXPECT_FALSE(playerHandler.isRegistering(clientIdA));
 }
 
 TEST(LoginTest, StartLogin) {
@@ -200,7 +231,7 @@ TEST(LoginTest, StartLogin) {
     auto result = playerHandler.processLogin(clientIdA);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), true);
+    EXPECT_TRUE(playerHandler.isLoggingIn(clientIdA));
 }
 
 TEST(LoginTest, FailedLogin) {
@@ -223,10 +254,40 @@ TEST(LoginTest, SuccessfulLogin) {
     playerHandler.logoutPlayer(clientIdA);
 
     playerHandler.processLogin(clientIdA);
-    playerHandler.processLogin(clientIdA, validLengthString);
-    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isLoggingIn(clientIdA));
 
-    EXPECT_EQ("Logged in successfully!\n", result);
+    playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isLoggingIn(clientIdA));
+
+    playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_FALSE(playerHandler.isLoggingIn(clientIdA));
+
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
+}
+
+TEST(LoginTest, LoginStateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Create an account, then logout
+    playerHandler.processRegistration(clientIdA);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.logoutPlayer(clientIdA);
+
+    // Attempt to login with incorrect username
+    playerHandler.processLogin(clientIdA);
+    playerHandler.processLogin(clientIdA, "invalid name");
+    playerHandler.processLogin(clientIdA, validLengthString);
+
+    // Login with correct username and password
+    playerHandler.processLogin(clientIdA);
+    playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.processLogin(clientIdA, validLengthString);
+
+    // Login should be successful (stored username state cleared on failure)
+    ASSERT_FALSE(playerHandler.isLoggingIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(LoginTest, LogoutClientOnOtherClientLogin) {
@@ -245,8 +306,8 @@ TEST(LoginTest, LogoutClientOnOtherClientLogin) {
 
     EXPECT_EQ(clientIdA, results.front().client);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdB), true);
+    EXPECT_FALSE(playerHandler.isLoggedIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdB));
 }
 
 TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
@@ -256,5 +317,5 @@ TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
     playerHandler.processLogin(clientIdA, validLengthString);
     playerHandler.exitLogin(clientIdA);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
+    EXPECT_FALSE(playerHandler.isLoggingIn(clientIdA));
 }
