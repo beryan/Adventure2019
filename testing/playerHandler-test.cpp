@@ -23,17 +23,17 @@ using networking::Connection;
  *  7.  Enter non-matching re-entered-password
  *  8.  Enter matching re-entered-password / Successful registration
  *  9.  Verify registration state is cleared on failure
- *  9.  Logged in after registering
- *  10. Prevent registration with taken username on username input
- *  11. Prevent registration with taken username on second password input
- *  12. Remove appropriate 'reg' states if client disconnects while in registration process
- *  13. Start login and prompt for username
- *  14. Login prompts for password after entering username
- *  15. Enter invalid credentials in login
- *  16. Enter valid credentials in login
- *  17. Verify login state is cleared on failure
- *  18. Logout other client if same Player logged in by a client
- *  19. Remove appropriate 'login' states if client disconnects while in login process
+ *  10.  Logged in after registering
+ *  11. Prevent registration with taken username on username input
+ *  12. Prevent registration with taken username on second password input
+ *  13. Remove appropriate 'reg' states if client disconnects while in registration process
+ *  14. Start login and prompt for username
+ *  15. Login prompts for password after entering username
+ *  16. Enter invalid credentials in login
+ *  17. Enter valid credentials in login
+ *  18. Verify login state is cleared on failure
+ *  19. Logout other client if same Player logged in by a client
+ *  20. Remove appropriate 'login' states if client disconnects while in login process
  */
 const Connection clientIdA = {100};
 const Connection clientIdB = {200};
