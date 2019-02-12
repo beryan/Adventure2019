@@ -212,9 +212,9 @@ namespace model {
                     this->activeClientToId.emplace(client, playerId);
                     this->activeIdToClient.emplace(playerId, client);
 
-                    this->exitLogin(client);
-
                     std::cout << inputUsername << " is now being used by " << client.id << "\n";
+
+                    this->exitLogin(client);
                     return successMessage;
 
                 } else {
@@ -222,7 +222,6 @@ namespace model {
                     this->activeIdToClient.emplace(playerId, client);
 
                     this->exitLogin(client);
-
                     return successMessage;
                 }
             }

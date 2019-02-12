@@ -129,9 +129,16 @@ TEST(RegisterTest, SuccessfulRegistration) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(clientIdA);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
+
     playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
+
     playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
+
     auto result = playerHandler.processRegistration(clientIdA, validLengthString);
+    ASSERT_FALSE(playerHandler.isRegistering(clientIdA));
 
     EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
 }
@@ -248,10 +255,15 @@ TEST(LoginTest, SuccessfulLogin) {
     playerHandler.logoutPlayer(clientIdA);
 
     playerHandler.processLogin(clientIdA);
-    playerHandler.processLogin(clientIdA, validLengthString);
-    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isLoggingIn(clientIdA));
 
-    EXPECT_EQ("Logged in successfully!\n", result);
+    playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_TRUE(playerHandler.isLoggingIn(clientIdA));
+
+    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    ASSERT_FALSE(playerHandler.isLoggingIn(clientIdA));
+
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(LoginTest, LoginStateClearsOnFail) {
