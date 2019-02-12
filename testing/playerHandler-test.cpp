@@ -58,7 +58,7 @@ TEST(RegisterTest, StartRegistration) {
            << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
     EXPECT_EQ(expect.str(), result);
-    EXPECT_EQ(playerHandler.isRegistering(clientIdA), true);
+    EXPECT_TRUE(playerHandler.isRegistering(clientIdA));
 }
 
 TEST(RegisterTest, LongUsername) {
@@ -137,10 +137,10 @@ TEST(RegisterTest, SuccessfulRegistration) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     ASSERT_TRUE(playerHandler.isRegistering(clientIdA));
 
-    auto result = playerHandler.processRegistration(clientIdA, validLengthString);
+    playerHandler.processRegistration(clientIdA, validLengthString);
     ASSERT_FALSE(playerHandler.isRegistering(clientIdA));
 
-    EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(RegisterTest, RegisterStateClearsOnFail) {
@@ -159,8 +159,8 @@ TEST(RegisterTest, RegisterStateClearsOnFail) {
     playerHandler.processRegistration(clientIdA, "test");
 
     // Registration should be successful (stored password state cleared on failure)
-    ASSERT_EQ(playerHandler.isRegistering(clientIdA), false);
-    ASSERT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+    ASSERT_FALSE(playerHandler.isRegistering(clientIdA));
+    ASSERT_TRUE(playerHandler.isLoggedIn(clientIdA));
 
     // Client should have intended username (stored username state cleared on failure)
     EXPECT_EQ(playerHandler.getUsernameByClient(clientIdA), "Foobar");
@@ -174,8 +174,8 @@ TEST(RegisterTest, LoggedInAfterRegister) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+    EXPECT_FALSE(playerHandler.isLoggingIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(RegisterTest, UsernameTakenOnUsernameEntry) {
@@ -221,9 +221,8 @@ TEST(RegisterTest, RemoveClientFromRegisteringOnDisconnect) {
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.processRegistration(clientIdA, validLengthString);
     playerHandler.exitRegistration(clientIdA);
-    auto result = playerHandler.isRegistering(clientIdA);
 
-    EXPECT_EQ(result, false);
+    EXPECT_FALSE(playerHandler.isRegistering(clientIdA));
 }
 
 TEST(LoginTest, StartLogin) {
@@ -232,7 +231,7 @@ TEST(LoginTest, StartLogin) {
     auto result = playerHandler.processLogin(clientIdA);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), true);
+    EXPECT_TRUE(playerHandler.isLoggingIn(clientIdA));
 }
 
 TEST(LoginTest, FailedLogin) {
@@ -260,7 +259,7 @@ TEST(LoginTest, SuccessfulLogin) {
     playerHandler.processLogin(clientIdA, validLengthString);
     ASSERT_TRUE(playerHandler.isLoggingIn(clientIdA));
 
-    auto result = playerHandler.processLogin(clientIdA, validLengthString);
+    playerHandler.processLogin(clientIdA, validLengthString);
     ASSERT_FALSE(playerHandler.isLoggingIn(clientIdA));
 
     EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
@@ -287,8 +286,8 @@ TEST(LoginTest, LoginStateClearsOnFail) {
     playerHandler.processLogin(clientIdA, validLengthString);
 
     // Login should be successful (stored username state cleared on failure)
-    ASSERT_EQ(playerHandler.isLoggingIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), true);
+    ASSERT_FALSE(playerHandler.isLoggingIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdA));
 }
 
 TEST(LoginTest, LogoutClientOnOtherClientLogin) {
@@ -307,8 +306,8 @@ TEST(LoginTest, LogoutClientOnOtherClientLogin) {
 
     EXPECT_EQ(clientIdA, results.front().client);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdA), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(clientIdB), true);
+    EXPECT_FALSE(playerHandler.isLoggedIn(clientIdA));
+    EXPECT_TRUE(playerHandler.isLoggedIn(clientIdB));
 }
 
 TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
@@ -318,5 +317,5 @@ TEST(LoginTest, RemoveClientFromLoginOnDisconnect) {
     playerHandler.processLogin(clientIdA, validLengthString);
     playerHandler.exitLogin(clientIdA);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(clientIdA), false);
+    EXPECT_FALSE(playerHandler.isLoggingIn(clientIdA));
 }
