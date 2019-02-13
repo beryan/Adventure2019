@@ -244,20 +244,18 @@ namespace model {
                 break;
 
             case Command::SAY: {
-                std::vector<Message> responses;
                 auto roomId = this->playerHandler->getRoomIdByClient(client);
                 auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
                 for (auto playerId : playerIds) {
                     auto connection = this->playerHandler->getClientByPlayerId(playerId);
                     std::ostringstream sayMessage;
                     sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                    responses.push_back({connection, sayMessage.str()});
+                    messages.push_back({connection, sayMessage.str()});
                 }
-                return responses;
+                return messages;
             }
 
             case Command::TELL: {
-                std::vector<Message> responses;
                 auto username = param.substr(0, param.find(' '));
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
                 for (auto connection: *this->clients) {
@@ -284,8 +282,13 @@ namespace model {
             }
 
             case Command::YELL: {
-                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                break;
+                for (auto connection : *this->clients) {
+                    std::ostringstream yellMessage;
+                    yellMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    messages.push_back({connection, yellMessage.str()});
+                }
+
+                return messages;
             }
 
             case Command::LOOK: {
