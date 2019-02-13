@@ -22,16 +22,18 @@ using networking::Connection;
  *  6.  Enter valid password
  *  7.  Enter non-matching re-entered-password
  *  8.  Enter matching re-entered-password / Successful registration
- *  9.  Logged in after registering
- *  10. Prevent registration with taken username on username input
- *  11. Prevent registration with taken username on second password input
- *  12. Remove appropriate 'reg' states if client disconnects while in registration process
- *  13. Start login and prompt for username
- *  14. Login prompts for password after entering username
- *  15. Enter invalid credentials in login
- *  16. Enter valid credentials in login
- *  17. Logout other client if same Player logged in by a client
- *  18. Remove appropriate 'login' states if client disconnects while in login process
+ *  9.  Verify registration state is cleared on failure
+ *  10.  Logged in after registering
+ *  11. Prevent registration with taken username on username input
+ *  12. Prevent registration with taken username on second password input
+ *  13. Remove appropriate 'reg' states if client disconnects while in registration process
+ *  14. Start login and prompt for username
+ *  15. Login prompts for password after entering username
+ *  16. Enter invalid credentials in login
+ *  17. Enter valid credentials in login
+ *  18. Verify login state is cleared on failure
+ *  19. Logout other client if same Player logged in by a client
+ *  20. Remove appropriate 'login' states if client disconnects while in login process
  */
 constexpr Connection CLIENT_A = {100};
 constexpr Connection CLIENT_B = {200};
@@ -56,7 +58,7 @@ TEST(PlayerHandlerTestSuite, canStartRegistration) {
            << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
     EXPECT_EQ(expect.str(), result);
-    EXPECT_EQ(playerHandler.isRegistering(CLIENT_A), true);
+    EXPECT_TRUE(playerHandler.isRegistering(CLIENT_A));
 }
 
 TEST(PlayerHandlerTestSuite, canPreventLongUsername) {
@@ -127,11 +129,41 @@ TEST(PlayerHandlerTestSuite, canRegisterSuccessfully) {
     PlayerHandler playerHandler{};
 
     playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    auto result = playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_TRUE(playerHandler.isRegistering(CLIENT_A));
 
-    EXPECT_EQ("Your account has been successfully registered and you are now logged in.\n", result);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_TRUE(playerHandler.isRegistering(CLIENT_A));
+
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_TRUE(playerHandler.isRegistering(CLIENT_A));
+
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_FALSE(playerHandler.isRegistering(CLIENT_A));
+
+    EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_A));
+}
+
+TEST(RegisterTest, RegisterStateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Fail the registration after storing a username and Foobar in state
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, "test");
+    playerHandler.processRegistration(CLIENT_A, "Foobar");
+    playerHandler.processRegistration(CLIENT_A, "f");
+
+    // Perform a registration with valid input and the same client
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, "Foobar");
+    playerHandler.processRegistration(CLIENT_A, "test");
+    playerHandler.processRegistration(CLIENT_A, "test");
+
+    // Registration should be successful (stored password state cleared on failure)
+    ASSERT_FALSE(playerHandler.isRegistering(CLIENT_A));
+    ASSERT_TRUE(playerHandler.isLoggedIn(CLIENT_A));
+
+    // Client should have intended username (stored username state cleared on failure)
+    EXPECT_EQ(playerHandler.getUsernameByClient(CLIENT_A), "Foobar");
 }
 
 TEST(PlayerHandlerTestSuite, isLoggedInAfterRegister) {
@@ -142,8 +174,8 @@ TEST(PlayerHandlerTestSuite, isLoggedInAfterRegister) {
     playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_A), true);
+    EXPECT_FALSE(playerHandler.isLoggingIn(CLIENT_A));
+    EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_A));
 }
 
 TEST(PlayerHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
@@ -191,7 +223,7 @@ TEST(PlayerHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     playerHandler.exitRegistration(CLIENT_A);
     auto result = playerHandler.isRegistering(CLIENT_A);
 
-    EXPECT_EQ(result, false);
+    EXPECT_FALSE(playerHandler.isRegistering(CLIENT_A));
 }
 
 TEST(PlayerHandlerTestSuite, canStartLogin) {
@@ -200,7 +232,7 @@ TEST(PlayerHandlerTestSuite, canStartLogin) {
     auto result = playerHandler.processLogin(CLIENT_A);
 
     EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
-    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), true);
+    EXPECT_TRUE(playerHandler.isLoggingIn(CLIENT_A));
 }
 
 TEST(PlayerHandlerTestSuite, canDetectFailedLogin) {
@@ -223,10 +255,40 @@ TEST(PlayerHandlerTestSuite, canLogInSuccessfully) {
     playerHandler.logoutPlayer(CLIENT_A);
 
     playerHandler.processLogin(CLIENT_A);
-    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
-    auto result = playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_TRUE(playerHandler.isLoggingIn(CLIENT_A));
 
-    EXPECT_EQ("Logged in successfully!\n", result);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_TRUE(playerHandler.isLoggingIn(CLIENT_A));
+
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    ASSERT_FALSE(playerHandler.isLoggingIn(CLIENT_A));
+
+    EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_A));
+}
+
+TEST(LoginTest, LoginStateClearsOnFail) {
+    PlayerHandler playerHandler{};
+
+    // Create an account, then logout
+    playerHandler.processRegistration(CLIENT_A);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.logoutPlayer(CLIENT_A);
+
+    // Attempt to login with incorrect username
+    playerHandler.processLogin(CLIENT_A);
+    playerHandler.processLogin(CLIENT_A, "invalid name");
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+
+    // Login with correct username and password
+    playerHandler.processLogin(CLIENT_A);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+
+    // Login should be successful (stored username state cleared on failure)
+    ASSERT_FALSE(playerHandler.isLoggingIn(CLIENT_A));
+    EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_A));
 }
 
 TEST(PlayerHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
@@ -245,8 +307,8 @@ TEST(PlayerHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
 
     EXPECT_EQ(CLIENT_A, results.front().client);
     EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
-    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_A), false);
-    EXPECT_EQ(playerHandler.isLoggedIn(CLIENT_B), true);
+    EXPECT_FALSE(playerHandler.isLoggedIn(CLIENT_A));
+    EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_B));
 }
 
 TEST(PlayerHandlerTestSuite, canRemoveClientFromLoginOnDisconnect) {
@@ -256,5 +318,5 @@ TEST(PlayerHandlerTestSuite, canRemoveClientFromLoginOnDisconnect) {
     playerHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.exitLogin(CLIENT_A);
 
-    EXPECT_EQ(playerHandler.isLoggingIn(CLIENT_A), false);
+    EXPECT_FALSE(playerHandler.isLoggingIn(CLIENT_A));
 }
