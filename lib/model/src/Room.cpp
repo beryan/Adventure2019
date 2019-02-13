@@ -103,23 +103,26 @@ namespace model {
         this->playersInRoom = std::move(playersInRoom);
     }
 
-    void Room::addDoor(Door door) {
-        doors.push_back(std::move(door));
+    void Room::addDoor(const Door &door) {
+        this->doors.push_back(door);
     }
 
-    void Room::addNPC(NPC npc) {
-        npcs.push_back(std::move(npc));
+    void Room::addNPC(const NPC &npc) {
+        this->npcs.push_back(npc);
     }
 
-    void Room::addObject(Object object) {
-        objects.push_back(std::move(object));
+    void Room::addObject(const Object &object) {
+        this->objects.push_back(object);
     }
 
-    void Room::addPlayerToRoom(model::ID playerId) {
-        playersInRoom.push_back(playerId);
+    void Room::addPlayerToRoom(const model::ID &playerId) {
+        auto it = std::find(this->playersInRoom.begin(), this->playersInRoom.end(), playerId);
+        if (it == this->playersInRoom.end()) {
+            this->playersInRoom.push_back(playerId);
+        }
     }
 
-    void Room::removePlayerFromRoom(model::ID playerId) {
+    void Room::removePlayerFromRoom(const model::ID &playerId) {
         playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
 
@@ -136,6 +139,14 @@ namespace model {
         throw std::runtime_error("Tried to get destination with illegal direction");
     }
 
+    std::vector<model::ID> Room::getNearbyRoomIds() {
+        std::vector<model::ID> ids;
+        for (Door door : this->doors) {
+            ids.push_back(door.leadsTo);
+        }
+        return ids;
+    }
+
     bool Room::operator==(const Room& Room) const {
         return this->id == Room.getId();
     }
@@ -143,9 +154,9 @@ namespace model {
     //print door
     std::ostream& operator<<(std::ostream& os, const Door& rhs) {
         os << rhs.dir;
-        if (rhs.desc.size() > 0) {
+        if (!rhs.desc.empty()) {
             os << ": ";
-            for (std::string s : rhs.desc) {
+            for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
         } else {
@@ -159,13 +170,13 @@ namespace model {
     std::ostream& operator<<(std::ostream& os, const Room& rhs) {
         os << "\n***" << rhs.name << "***\n";
 
-        if (rhs.desc.size() > 0) {
-            for (std::string s : rhs.desc) {
-        		    os << s << std::endl;
-        	  }
+        if (!rhs.desc.empty()) {
+            for (const auto &s : rhs.desc) {
+                os << s << std::endl;
+            }
         }
 
-        for (Door door : rhs.getDoors()) {
+        for (const auto &door : rhs.doors) {
             os << door;
         }
 
