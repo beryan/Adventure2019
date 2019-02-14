@@ -16,6 +16,7 @@ add_executable(runAllTests
         world-test.cpp
         extraObjectInfo-test.cpp
         object-test.cpp
+        worldHandler-test.cpp
         )
 
 target_link_libraries(runAllTests
