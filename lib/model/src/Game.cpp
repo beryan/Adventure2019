@@ -129,7 +129,7 @@ namespace model {
                 continue;
             }
 
-            std::string parameters = "";
+            std::string parameters;
 
             if (incomingInput.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));

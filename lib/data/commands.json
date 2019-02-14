@@ -1,0 +1,15 @@
+{
+  "Default": {
+    "COMMAND_HELP": "help",
+    "COMMAND_LOGIN": "login",
+    "COMMAND_LOGOUT": "logout",
+    "COMMAND_LOOK": "look",
+    "COMMAND_MOVE": "move",
+    "COMMAND_QUIT": "quit",
+    "COMMAND_REGISTER": "register",
+    "COMMAND_SAY": "say",
+    "COMMAND_SHUTDOWN": "shutdown",
+    "COMMAND_TELL": "tell",
+    "COMMAND_YELL": "yell"
+  }
+}

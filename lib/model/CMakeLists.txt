@@ -12,6 +12,7 @@ add_library(model
         src/WorldHandler.cpp
         src/PlayerHandler.cpp
         src/PropertiesManager.cpp
+        src/CommandHandler.cpp
         )
 
 target_include_directories(model

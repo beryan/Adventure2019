@@ -10,6 +10,8 @@
 #include "Response.h"
 #include "PlayerHandler.h"
 #include "WorldHandler.h"
+#include "Command.h"
+#include "CommandHandler.h"
 
 #include <functional>
 #include <deque>
@@ -19,6 +21,7 @@ using networking::Connection;
 using networking::Message;
 using model::PlayerHandler;
 using model::WorldHandler;
+using model::Command;
 
 namespace model {
     /**
@@ -36,23 +39,10 @@ namespace model {
         std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
+        model::CommandHandler commandHandler;
 
         std::unique_ptr<PlayerHandler> playerHandler;
         std::unique_ptr<WorldHandler> worldHandler;
-
-        enum class Command {
-            HELP,
-            LOGIN,
-            LOGOUT,
-            LOOK,
-            MOVE,
-            QUIT,
-            REGISTER,
-            SAY,
-            SHUTDOWN,
-            TELL,
-            YELL
-        };
 
         std::map<std::string, Command> commandMap = {
             {"help", Command::HELP},
