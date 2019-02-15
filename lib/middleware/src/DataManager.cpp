@@ -19,6 +19,14 @@ using Player = model::Player;
 using Reset = model::Reset;
 using Room = model::Room;
 
+const std::string AREA = "AREA";
+const std::string ROOMS = "ROOMS";
+const std::string RESETS = "RESETS";
+const std::string NPCS = "NPCS";
+const std::string OBJECTS = "OBJECTS";
+const std::string HELPS = "HELPS";
+const std::string SHOPS = "SHOPS";
+const std::string USERS = "USERS";
 
 namespace DataManager {
 
@@ -78,33 +86,33 @@ namespace DataManager {
             std::vector<Reset> resets;
 
 
-            if(t.find("AREA") != t.end()){
-                area = t.at("AREA").get<Area>();
+            if(t.find(AREA) != t.end()){
+                area = t.at(AREA).get<Area>();
             }
 
-            if(t.find("ROOMS") != t.end()){
-                rooms = t.at("ROOMS").get<std::vector<Room>>();
+            if(t.find(ROOMS) != t.end()){
+                rooms = t.at(ROOMS).get<std::vector<Room>>();
             }
 
-            if(t.find("RESETS") != t.end()){
-                resets = t.at("RESETS").get<std::vector<Reset>>();
+            if(t.find(RESETS) != t.end()){
+                resets = t.at(RESETS).get<std::vector<Reset>>();
             }
 
-            if(t.find("NPCS") != t.end()){
-                npcs = t.at("NPCS").get<std::vector<NPC>>();
+            if(t.find(NPCS) != t.end()){
+                npcs = t.at(NPCS).get<std::vector<NPC>>();
                 addNPCsToRooms(rooms, npcs, resets);
             }
 
-            if(t.find("OBJECTS") != t.end()){
-                objects = t.at("OBJECTS").get<std::vector<Object>>();
+            if(t.find(OBJECTS) != t.end()){
+                objects = t.at(OBJECTS).get<std::vector<Object>>();
                 addObjectsToRooms(rooms, objects, resets);
             }
 
-            if(t.find("HELPS") != t.end()){
+            if(t.find(HELPS) != t.end()){
                 // HELPS field if empty in all json sample data
             }
 
-            if(t.find("SHOPS") != t.end()){
+            if(t.find(SHOPS) != t.end()){
                 // SHOPS field if empty in all json sample data
             }
 
@@ -116,7 +124,7 @@ namespace DataManager {
             std::ifstream ifs(filePath);
 
             json usersJson = json::parse(ifs);
-            json users = usersJson["USERS"];
+            json users = usersJson[USERS];
 
             // TODO: Refactor this to be a ranged for loop
             for (json::iterator it = users.begin(); it != users.end(); ++it) {
