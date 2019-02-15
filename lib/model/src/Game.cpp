@@ -302,6 +302,47 @@ namespace model {
                 break;
             }
 
+            case Command::CAST: {
+
+                auto spellName = lowercase(param.substr(0, param.find(' ')));
+
+                if (spellName.empty()) {
+                    tempMessage << "You need to specify the name of the spell to be cast.\n";
+                    break;
+                }
+
+                if (spellName == "swap") {
+                    auto sourceUsername = this->playerHandler->getUsernameByClient(client);
+                    auto targetUsername = trimWhitespace(param.substr(param.find(' ') + 1));
+
+                    if (param.find(' ') == std::string::npos) {
+                        tempMessage << "You need to specify the name of the person to cast swap on.\n";
+                        break;
+                    }
+
+                    auto swapSuccessful = this->playerHandler->swapPlayerClients(sourceUsername, targetUsername);
+
+                    if (swapSuccessful) {
+                        std::vector<Response> responses;
+
+                        responses.push_back({client, "You have successfully swapped bodies with " + targetUsername + "\n"});
+                        responses.push_back({
+                            this->playerHandler->getClientByUsername(sourceUsername),
+                            sourceUsername + " cast swap on you!\n"
+                        });
+
+                        return responses;
+                    } else {
+                        tempMessage << "There is no one here with the name " << targetUsername << "\n";
+                    }
+
+                } else {
+                    tempMessage << "There is no spell named " << spellName << "\n";
+                }
+
+                break;
+            }
+
             default:
                 tempMessage << "\nEnter " << "\"" << this->getCommandWords(Command::HELP) << "\" for a full list of commands\n";
                 break;

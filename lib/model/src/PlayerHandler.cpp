@@ -250,6 +250,14 @@ namespace model {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
+    Connection
+    PlayerHandler::getClientByUsername(const std::string &username) {
+        auto player = this->usernameToPlayer.at(username);
+        auto client = this->activeIdToClient.at(player->getId());
+
+        return client;
+    }
+
     model::ID
     PlayerHandler::getPlayerIdByClient(const Connection &client) {
         return this->activeClientToId.at(client);
@@ -284,6 +292,27 @@ namespace model {
         }
 
         this->bootedClients.clear();
+    }
+
+    bool
+    PlayerHandler::swapPlayerClients(const std::string &sourceUsername, const std::string &targetUsername) {
+        try {
+            auto sourcePlayer = this->usernameToPlayer.at(sourceUsername);
+            auto sourceClient = this->activeIdToClient.at(sourcePlayer->getId());
+
+            auto targetPlayer = this->usernameToPlayer.at(targetUsername);
+            auto targetClient = this->activeIdToClient.at(targetPlayer->getId());
+
+            this->activeIdToClient.at(sourcePlayer->getId()) = targetClient;
+            this->activeClientToId.at(sourceClient) = targetPlayer->getId();
+
+            this->activeIdToClient.at(targetPlayer->getId()) = sourceClient;
+            this->activeClientToId.at(targetClient) = sourcePlayer->getId();
+            return true;
+
+        } catch(const std::out_of_range &error) {
+            return false;
+        }
     }
 
     std::vector<Player>

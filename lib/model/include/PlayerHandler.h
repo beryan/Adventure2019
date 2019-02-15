@@ -101,6 +101,12 @@ namespace model {
         getUsernameByClient(const Connection &client);
 
         /**
+         *  Returns the client of a Player with the specified username
+         */
+        Connection
+        getClientByUsername(const std::string &username);
+
+        /**
          *  Returns the player ID of a Player given a client ID.
          */
         model::ID
@@ -130,6 +136,12 @@ namespace model {
          */
         void
         notifyBootedClients(std::deque<Response> &responses);
+
+        /**
+         *  Swaps the clients of two active players. Returns true if successful.
+         */
+        bool
+        swapPlayerClients(const std::string &sourceUsername, const std::string &targetUsername);
 
         static std::vector<Player>
         parseJsonUsers(json);
