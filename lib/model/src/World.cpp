@@ -7,7 +7,6 @@
 #include "World.h"
 
 using model::World;
-using model::Player;
 
 namespace model {
 
@@ -45,26 +44,6 @@ namespace model {
             if (area.addPlayer(playerID, roomID)) {
                 return;
             }
-        }
-    }
-
-    std::map<model::ID, Player> World::getUserMap(){
-        return this->usersMap;
-    }
-
-    void World::insertUser(Player player){
-        usersMap.insert(std::pair<model::ID,Player>(player.getId(), player));
-    }
-
-//    std::map<model::ID, Area> World::getAreaMap(){
-//        return this->areasMap;
-//    }
-
-    void World::printUsers() {
-        std::cout << "Users:" << std::endl;
-
-        for (auto& [key, value]: usersMap) {
-            std::cout << value.getId() << ". " <<  value.getUsername() << std::endl;
         }
     }
 
