@@ -44,21 +44,6 @@ namespace model {
         std::unique_ptr<PlayerHandler> playerHandler;
         std::unique_ptr<WorldHandler> worldHandler;
 
-        std::map<std::string, Command> commandMap = {
-            {"help", Command::HELP},
-            {"login", Command::LOGIN},
-            {"logout", Command::LOGOUT},
-            {"look", Command::LOOK},
-            {"info", Command::LOOK},
-            {"move", Command::MOVE},
-            {"quit", Command::QUIT},
-            {"register", Command::REGISTER},
-            {"say", Command::SAY},
-            {"shutdown", Command::SHUTDOWN},
-            {"tell", Command::TELL},
-            {"yell", Command::YELL}
-        };
-
         std::map<Command, std::vector<std::string>> commandWordsMap = {
             {Command::HELP, {"help"}},
             {Command::LOGIN, {"login"}},

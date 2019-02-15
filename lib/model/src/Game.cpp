@@ -122,8 +122,10 @@ namespace model {
             }
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
+            Command command = this->commandHandler.getCommand(commandString,
+                                                              this->playerHandler->getUsernameByClient(client));
 
-            if (!this->commandMap.count(commandString)) {
+            if (command == Command::INVALID_COMMAND) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 responses.push_back({client, tempMessage.str()});
                 continue;
@@ -134,8 +136,6 @@ namespace model {
             if (incomingInput.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
-
-            Command command = this->commandMap.at(commandString);
 
             switch (command) {
                 case Command::QUIT: {
