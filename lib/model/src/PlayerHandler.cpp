@@ -259,7 +259,6 @@ namespace model {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
-<<<<<<< HEAD
     Connection
     PlayerHandler::getClientByUsername(const std::string &username) {
         auto player = this->usernameToPlayer.at(username);
@@ -267,8 +266,6 @@ namespace model {
 
         return client;
     }
-=======
->>>>>>> 39f2b9eb8322a21a70580edcbc88682f9d359f1a
 
     model::ID
     PlayerHandler::getPlayerIdByClient(const Connection &client) {
@@ -278,7 +275,7 @@ namespace model {
 
     model::ID
     PlayerHandler::getRoomIdByClient(const Connection &client) {
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
         }
         throw std::runtime_error("Error: usernameToPlayer map does not contain username");
@@ -287,8 +284,9 @@ namespace model {
 
     void
     PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
+
         } else {
             throw std::runtime_error("Error: usernameToPlayer map does not contain username");
         }
@@ -324,6 +322,12 @@ namespace model {
 
             this->activeIdToClient.at(targetPlayer->getId()) = sourceClient;
             this->activeClientToId.at(targetClient) = sourcePlayer->getId();
+
+            std::cout << sourceClient.id << " (now " << targetPlayer->getUsername() << ")"
+                      <<" swapped Players with "
+                      << targetClient.id << " (now " << sourcePlayer->getUsername() << ")"
+                      << "\n";
+
             return true;
 
         } catch(const std::out_of_range &error) {

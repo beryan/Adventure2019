@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "PlayerHandler.h"
 #include "WorldHandler.h"
+#include "MagicHandler.h"
 
 #include <functional>
 #include <deque>
@@ -18,6 +19,7 @@ using networking::Connection;
 using networking::Message;
 using model::PlayerHandler;
 using model::WorldHandler;
+using model::MagicHandler;
 
 namespace model {
     /**
@@ -41,6 +43,7 @@ namespace model {
 
         std::unique_ptr<PlayerHandler> playerHandler;
         std::unique_ptr<WorldHandler> worldHandler;
+        std::unique_ptr<MagicHandler> magicHandler;
 
         enum class Command {
             Help,

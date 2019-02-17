@@ -68,11 +68,14 @@ namespace model {
         Room room = findRoom(roomId);
         std::vector<model::ID> playerIds = room.getPlayersInRoom();
         auto nearbyRoomIds = room.getNearbyRoomIds();
+
         for (const auto &nearbyRoomId : nearbyRoomIds) {
             Room nearbyRoom = findRoom(nearbyRoomId);
             auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
+
             playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());
         }
+
         return playerIds;
     }
 

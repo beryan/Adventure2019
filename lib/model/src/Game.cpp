@@ -48,6 +48,7 @@ namespace model {
 
         this->playerHandler = std::make_unique<PlayerHandler>();
         this->worldHandler = std::make_unique<WorldHandler>();
+        this->magicHandler = std::make_unique<MagicHandler>(this->playerHandler.get());
     }
 
 
@@ -82,7 +83,9 @@ namespace model {
                 std::cout << disconnectedClient.id << " has been removed from registration due to disconnect\n";
             }
 
+
             if (this->playerHandler->isLoggedIn(disconnectedClient)) {
+                this->magicHandler->handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
                 this->playerHandler->logoutPlayer(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
@@ -231,6 +234,7 @@ namespace model {
 
         switch (command) {
             case Command::Logout: {
+                this->magicHandler->handleLogout(client);
                 this->removeClientFromGame(client);
                 tempMessage << this->playerHandler->logoutPlayer(client);
                 break;
@@ -258,10 +262,13 @@ namespace model {
                 auto roomId = this->playerHandler->getRoomIdByClient(client);
                 auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
 
+
                 for (auto playerId : playerIds) {
                     auto connection = this->playerHandler->getClientByPlayerId(playerId);
+
                     std::ostringstream sayMessage;
                     sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+
                     messages.push_back({connection, sayMessage.str()});
                 }
 
@@ -329,8 +336,7 @@ namespace model {
                 break;
             }
 
-            case Command::CAST: {
-
+            case Command::Cast: {
                 auto spellName = lowercase(param.substr(0, param.find(' ')));
 
                 if (spellName.empty()) {
@@ -338,36 +344,9 @@ namespace model {
                     break;
                 }
 
-                if (spellName == "swap") {
-                    auto sourceUsername = this->playerHandler->getUsernameByClient(client);
-                    auto targetUsername = trimWhitespace(param.substr(param.find(' ') + 1));
+                auto targetName = trimWhitespace(param.substr(param.find(' ') + 1));
 
-                    if (param.find(' ') == std::string::npos) {
-                        tempMessage << "You need to specify the name of the person to cast swap on.\n";
-                        break;
-                    }
-
-                    auto swapSuccessful = this->playerHandler->swapPlayerClients(sourceUsername, targetUsername);
-
-                    if (swapSuccessful) {
-                        std::vector<Response> responses;
-
-                        responses.push_back({client, "You have successfully swapped bodies with " + targetUsername + "\n"});
-                        responses.push_back({
-                            this->playerHandler->getClientByUsername(sourceUsername),
-                            sourceUsername + " cast swap on you!\n"
-                        });
-
-                        return responses;
-                    } else {
-                        tempMessage << "There is no one here with the name " << targetUsername << "\n";
-                    }
-
-                } else {
-                    tempMessage << "There is no spell named " << spellName << "\n";
-                }
-
-                break;
+                return this->magicHandler->castSpell(client, spellName, targetName);
             }
 
             default:
@@ -384,6 +363,7 @@ namespace model {
     void
     Game::handleOutgoing(std::deque<Message> &messages) {
         this->playerHandler->notifyBootedClients(messages);
+        this->magicHandler->processCycle(messages);
     }
 
 
@@ -434,6 +414,7 @@ namespace model {
     Game::removeClientFromGame(Connection client) {
         auto playerID = this->playerHandler->getPlayerIdByClient(client);
         auto roomID = this->playerHandler->getRoomIdByClient(client);
+
         this->worldHandler->removePlayer(playerID, roomID);
     }
 
