@@ -7,13 +7,18 @@
 #include "CommandHandler.h"
 #include "Command.h"
 #include "json.hpp"
+#include <boost/bimap.hpp>
 
 using json = nlohmann::json;
 using model::Command;
 using model::CommandHandler;
 
+CommandHandler::CommandHandler() {
+    this->defaultCommands.insert(bm_type::value_type("help", Command::Help));
+}
+
 Command CommandHandler::getCommand(const std::string &commandStr) {
-    return Command::INVALID_COMMAND;
+    return Command::InvalidCommand;
 }
 
 Command CommandHandler::getCommand(const std::string &commandStr, const std::string &username) {
@@ -21,20 +26,20 @@ Command CommandHandler::getCommand(const std::string &commandStr, const std::str
 
     // check if user has aliased commands
 
-    return Command::INVALID_COMMAND;
+    return Command::InvalidCommand;
 }
 
 Command convert(const std::string str) {
-    if (str == "HELP") return Command::HELP;
-    if (str == "LOGIN") return Command::LOGIN;
-    if (str == "LOGOUT") return Command::LOGOUT;
-    if (str == "LOOK") return Command::LOOK;
-    if (str == "MOVE") return Command::MOVE;
-    if (str == "QUIT") return Command::QUIT;
-    if (str == "REGISTER") return Command::REGISTER;
-    if (str == "SAY") return Command::SAY;
-    if (str == "SHUTDOWN") return Command::SHUTDOWN;
-    if (str == "TELL") return Command::TELL;
-    if (str == "YELL") return Command::YELL;
-    return Command::INVALID_COMMAND;
+    if (str == "HELP") return Command::Help;
+    if (str == "LOGIN") return Command::Login;
+    if (str == "LOGOUT") return Command::Logout;
+    if (str == "LOOK") return Command::Look;
+    if (str == "MOVE") return Command::Move;
+    if (str == "QUIT") return Command::Quit;
+    if (str == "REGISTER") return Command::Register;
+    if (str == "SAY") return Command::Say;
+    if (str == "SHUTDOWN") return Command::Shutdown;
+    if (str == "TELL") return Command::Tell;
+    if (str == "YELL") return Command::Yell;
+    return Command::InvalidCommand;
 }

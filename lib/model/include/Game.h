@@ -45,17 +45,17 @@ namespace model {
         std::unique_ptr<WorldHandler> worldHandler;
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
-            {Command::HELP, {"help"}},
-            {Command::LOGIN, {"login"}},
-            {Command::LOGOUT, {"logout"}},
-            {Command::LOOK, {"look"}},
-            {Command::MOVE, {"move"}},
-            {Command::QUIT, {"quit"}},
-            {Command::REGISTER, {"register"}},
-            {Command::SAY, {"say"}},
-            {Command::SHUTDOWN, {"shutdown"}},
-            {Command::TELL, {"tell"}},
-            {Command::YELL, {"yell"}}
+            {Command::Help, {"help"}},
+            {Command::Login, {"login"}},
+            {Command::Logout, {"logout"}},
+            {Command::Look, {"look"}},
+            {Command::Move, {"move"}},
+            {Command::Quit, {"quit"}},
+            {Command::Register, {"register"}},
+            {Command::Say, {"say"}},
+            {Command::Shutdown, {"shutdown"}},
+            {Command::Tell, {"tell"}},
+            {Command::Yell, {"yell"}}
         };
 
         /**

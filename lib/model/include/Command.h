@@ -6,18 +6,18 @@
 #define COMMAND_H
 namespace model {
     enum class Command {
-        HELP,
-        LOGIN,
-        LOGOUT,
-        LOOK,
-        MOVE,
-        QUIT,
-        REGISTER,
-        SAY,
-        SHUTDOWN,
-        TELL,
-        YELL,
-        INVALID_COMMAND
+        Help,
+        Login,
+        Logout,
+        Look,
+        Move,
+        Quit,
+        Register,
+        Say,
+        Shutdown,
+        Tell,
+        Yell,
+        InvalidCommand
     };
 }
 

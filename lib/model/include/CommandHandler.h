@@ -8,11 +8,14 @@
 #include "Command.h"
 #include "Player.h"
 #include <string>
+#include <boost/bimap.hpp>
+
+typedef boost::bimap<std::string,model::Command> bm_type;
 
 namespace model {
     class CommandHandler {
     public:
-        CommandHandler() = default;
+        CommandHandler();
 
         /**
          * Gets default command from string
@@ -28,6 +31,9 @@ namespace model {
          * @return Command from string, INVALID_COMMAND if no matching command
          */
         model::Command getCommand(const std::string &commandStr, const std::string &username);
+
+    private:
+        bm_type defaultCommands;
     };
 }
 
