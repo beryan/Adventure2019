@@ -27,7 +27,10 @@ namespace model {
      *  @brief A class for containing the game's logic
      *
      *  This class manages the components necessary to gather, process, and output
-     *  information that is to be exchanged between the server and clients.
+     *  information that is to be exchanged between the server and clients. This
+     *  class expects the server to keep track of newly connected and disconnected
+     *  clients by adding the Connection object to the respective vector. The Game
+     *  instance will remove the Connections from the vectors after reading them.
      */
     class Game {
     private:
@@ -41,46 +44,46 @@ namespace model {
         std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {
-            HELP,
-            LOGIN,
-            LOGOUT,
-            LOOK,
-            MOVE,
-            QUIT,
-            REGISTER,
-            SAY,
-            SHUTDOWN,
-            TELL,
-            YELL
+            Help,
+            Login,
+            Logout,
+            Look,
+            Move,
+            Quit,
+            Register,
+            Say,
+            Shutdown,
+            Tell,
+            Yell
         };
 
         std::map<std::string, Command> commandMap = {
-            {"help", Command::HELP},
-            {"login", Command::LOGIN},
-            {"logout", Command::LOGOUT},
-            {"look", Command::LOOK},
-            {"info", Command::LOOK},
-            {"move", Command::MOVE},
-            {"quit", Command::QUIT},
-            {"register", Command::REGISTER},
-            {"say", Command::SAY},
-            {"shutdown", Command::SHUTDOWN},
-            {"tell", Command::TELL},
-            {"yell", Command::YELL}
+            {"help", Command::Help},
+            {"login", Command::Login},
+            {"logout", Command::Logout},
+            {"look", Command::Look},
+            {"info", Command::Look},
+            {"move", Command::Move},
+            {"quit", Command::Quit},
+            {"register", Command::Register},
+            {"say", Command::Say},
+            {"shutdown", Command::Shutdown},
+            {"tell", Command::Tell},
+            {"yell", Command::Yell}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
-            {Command::HELP, {"help"}},
-            {Command::LOGIN, {"login"}},
-            {Command::LOGOUT, {"logout"}},
-            {Command::LOOK, {"look"}},
-            {Command::MOVE, {"move"}},
-            {Command::QUIT, {"quit"}},
-            {Command::REGISTER, {"register"}},
-            {Command::SAY, {"say"}},
-            {Command::SHUTDOWN, {"shutdown"}},
-            {Command::TELL, {"tell"}},
-            {Command::YELL, {"yell"}}
+            {Command::Help, {"help"}},
+            {Command::Login, {"login"}},
+            {Command::Logout, {"logout"}},
+            {Command::Look, {"look"}},
+            {Command::Move, {"move"}},
+            {Command::Quit, {"quit"}},
+            {Command::Register, {"register"}},
+            {Command::Say, {"say"}},
+            {Command::Shutdown, {"shutdown"}},
+            {Command::Tell, {"tell"}},
+            {Command::Yell, {"yell"}}
         };
 
         /**
