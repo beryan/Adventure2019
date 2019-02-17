@@ -4,14 +4,13 @@
 
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
-#include "Player.h"
-#include "Object.h"
+#include "PlayerAction.h"
+#include "GameLogic.h"
 #include <stdlib.h>
 #include <iostream>
 
-using model::Player;
-using model::Slot;
-using model::Object;
+using action::PlayerAction;
+using logic::PlayerLogic;
 
 namespace {
     TEST(PlayerTestSuite, canConstructPlayer) {
@@ -27,121 +26,83 @@ namespace {
     }
 
     TEST(PlayerTestSuite, canAddItemToInventory) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-
         Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        player.addToInventoryItems(item);
-        std::vector<Object> items = player.getInventoryItems();
+        PlayerAction::addToInventoryItems(player, item);
 
-        EXPECT_EQ(player.isItemInInventory(item), true);
-    }
-
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
-        Player player{152, "hello", "20000"};
-
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
-
-        player.addToInventoryItems(item);
-
-        ASSERT_EQ(player.isItemInInventory(item), true);
-
-        std::vector<Object> items = player.getInventoryItems();
-
-        player.equipItem(item);
-
-        EXPECT_EQ(player.isItemInInventory(item), false);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), true);
-    }
-
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
-        Player player{152, "hello", "20000"};
-
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, "", {}, {}, expected_slot};
-
-        int expected_equipped_id = 15;
-        std::string expected_equipped_name = "The Punisher";
-        Object equippedItem{expected_equipped_id, expected_equipped_name, "", {}, {}, expected_slot};
-
-        player.addToInventoryItems(equippedItem);
-        player.equipItem(item);
-
-        player.addToInventoryItems(item);
-
-        std::vector<Object> items = player.getInventoryItems();
-
-        player.equipItem(item);
-
-        EXPECT_FALSE(player.isItemInInventory(item));
-        EXPECT_TRUE(player.isItemInInventory(equippedItem));
-        EXPECT_TRUE(player.isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
     }
 
     TEST(PlayerTestSuite, canDropItemFromInventory) {
         Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        PlayerAction::addToInventoryItems(player, item);
+        PlayerAction::dropItemFromInventory(player, item);
 
-        player.addToInventoryItems(item);
+        EXPECT_FALSE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
+    }
 
-        player.dropItemFromInventory(item);
+    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
+        Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        std::vector<Object> items = player.getInventoryItems();
+        PlayerAction::addToInventoryItems(player, item);
+        PlayerAction::equipItem(player, item);
 
-        EXPECT_EQ(player.isItemInInventory(item), false);
+        EXPECT_TRUE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
+    }
+
+    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
+        Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        PlayerAction::addToInventoryItems(player, item);
+        PlayerAction::equipItem(player, item);
+
+        Object item2{121, "Hello", "world", {}, {}, Slot::Head};
+
+        PlayerAction::addToInventoryItems(player, item2);
+        PlayerAction::equipItem(player, item2);
+
+        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
+        EXPECT_TRUE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item2));
+    }
+
+    TEST(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
+        Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        PlayerAction::equipItem(player, item);
+
+        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
     }
 
     TEST(PlayerTestSuite, canDropEquippedItem) {
         Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        PlayerAction::addToInventoryItems(player, item);
+        PlayerAction::equipItem(player, item);
 
-        player.addToInventoryItems(item);
+        Object droppedItem = PlayerAction::dropItemFromEquipped(player, item.getSlot());
 
-        player.equipItem(item);
-
-        player.dropItemFromEquipped(item.getSlot());
-
-        EXPECT_EQ(player.isItemInInventory(item), false);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), false);
+        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
+        EXPECT_EQ(droppedItem.getId(), item.getId());
     }
 
     TEST(PlayerTestSuite, canUnequipItem) {
         Player player{152, "hello", "20000"};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        PlayerAction::addToInventoryItems(player, item);
+        PlayerAction::equipItem(player, item);
 
-        player.addToInventoryItems(item);
+        PlayerAction::unequipSlot(player, Slot::Head);
 
-        player.equipItem(item);
-
-        player.unequipItem(item.getSlot());
-
-        EXPECT_EQ(player.isItemInInventory(item), true);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), false);
+        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
+        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
     }
 
     TEST(PlayerTestSuite, canReturnCollectionOfItems) {
@@ -149,8 +110,8 @@ namespace {
 
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{rand()%220, "test", "test", {}, {}, Slot::Head};
-            player.addToInventoryItems(item);
+            Object item{rand() % 220, "test", "test", {}, {}, Slot::Head};
+            PlayerAction::addToInventoryItems(player, item);
         }
 
         std::vector<Object> items = player.getInventoryItems();
