@@ -17,67 +17,90 @@ namespace model {
 
     //constructors
     Area::Area()
-      : name(""),
-        rooms({})
-        { }
+        : name(""),
+            rooms({})
+            { }
 
     Area::Area(std::string name)
-      : name(std::move(name)),
-        rooms({})
-        { }
+        : name(std::move(name)),
+            rooms({})
+            { }
 
     Area::Area(std::string name, std::vector<Room> rooms)
       : name(std::move(name)),
         rooms(std::move(rooms))
         { }
 
+
     //getters and setters
-    std::string Area::getName() const {
+    std::string
+    Area::getName() const {
         return name;
     }
 
-    std::vector<Room> Area::getRooms() const {
+
+    std::vector<Room>
+    Area::getRooms() const {
         return rooms;
     }
 
-    void Area::setName(std::string name) {
+
+    void
+    Area::setName(std::string name) {
         this->name = std::move(name);
     }
 
-    void Area::setRooms(std::vector<Room> rooms) {
+
+    void
+    Area::setRooms(std::vector<Room> rooms) {
         this->rooms = std::move(rooms);
     }
 
-    void Area::addRoom(Room room) {
+
+    void
+    Area::addRoom(Room room) {
         rooms.push_back(std::move(room));
     }
 
-    bool Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+
+    bool
+    Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
         auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+
         if (it != this->rooms.end()) {
             it->removePlayerFromRoom(playerID);
         }
+
         return (it != this->rooms.end());
     }
 
-    bool Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+
+    bool
+    Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
         auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+
         if (it != this->rooms.end()) {
             it->addPlayerToRoom(playerID);
         }
+
         return (it != this->rooms.end());
     }
 
-    bool Area::operator==(const Area& area) const {
+
+    bool
+    Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }
+
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& rhs) {
         os << "area: " << rhs.name << std::endl;
+
         for (const auto &room : rhs.rooms) {
             os << room;
         }
+
         return os;
     }
 

@@ -22,14 +22,14 @@ using networking::Message;
 using model::Game;
 
 std::vector<Connection> clients;
-std::vector<Connection> newClientIds;
-std::vector<Connection> disconnectedClientIds;
+std::vector<Connection> newClients;
+std::vector<Connection> disconnectedClients;
 
 void
 onConnect(Connection c) {
   std::cout << "New connection found: " << c.id << "\n";
   clients.push_back(c);
-  newClientIds.push_back(c);
+  newClients.push_back(c);
 }
 
 
@@ -38,7 +38,7 @@ onDisconnect(Connection c) {
   std::cout << "Connection lost: " << c.id << "\n";
   auto eraseBegin = std::remove(std::begin(clients), std::end(clients), c);
   clients.erase(eraseBegin, std::end(clients));
-  disconnectedClientIds.push_back(c);
+  disconnectedClients.push_back(c);
 }
 
 
@@ -77,7 +77,7 @@ main(int argc, char* argv[]) {
       done = true;
   };
 
-  Game game(clients, newClientIds, disconnectedClientIds, disconnect, shutdown);
+  Game game(clients, newClients, disconnectedClients, disconnect, shutdown);
 
   while (!done) {
     try {
@@ -90,8 +90,7 @@ main(int argc, char* argv[]) {
     }
 
     std::deque<Message> incoming = server.receive();
-    std::deque<Message> result = game.processCycle(incoming);
-    server.send(result);
+    server.send(game.processCycle(incoming));
 
     sleep(1);
   }

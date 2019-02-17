@@ -7,7 +7,6 @@
 
 #include "Server.h"
 #include "Player.h"
-#include "Response.h"
 #include "PlayerHandler.h"
 #include "WorldHandler.h"
 
@@ -27,7 +26,10 @@ namespace model {
      *  @brief A class for containing the game's logic
      *
      *  This class manages the components necessary to gather, process, and output
-     *  information that is to be exchanged between the server and clients.
+     *  information that is to be exchanged between the server and clients. This
+     *  class expects the server to keep track of newly connected and disconnected
+     *  clients by adding the Connection object to the respective vector. The Game
+     *  instance will remove the Connections from the vectors after reading them.
      */
     class Game {
     private:
@@ -41,49 +43,49 @@ namespace model {
         std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {
-            HELP,
-            LOGIN,
-            LOGOUT,
-            LOOK,
-            MOVE,
-            QUIT,
-            REGISTER,
-            SAY,
-            SHUTDOWN,
-            TELL,
-            YELL,
-            CAST
+            Help,
+            Login,
+            Logout,
+            Look,
+            Move,
+            Quit,
+            Register,
+            Say,
+            Shutdown,
+            Tell,
+            Yell,
+            Cast
         };
 
         std::map<std::string, Command> commandMap = {
-            {"help", Command::HELP},
-            {"login", Command::LOGIN},
-            {"logout", Command::LOGOUT},
-            {"look", Command::LOOK},
-            {"info", Command::LOOK},
-            {"move", Command::MOVE},
-            {"quit", Command::QUIT},
-            {"register", Command::REGISTER},
-            {"say", Command::SAY},
-            {"shutdown", Command::SHUTDOWN},
-            {"tell", Command::TELL},
-            {"yell", Command::YELL},
-            {"cast", Command::CAST},
+            {"help", Command::Help},
+            {"login", Command::Login},
+            {"logout", Command::Logout},
+            {"look", Command::Look},
+            {"info", Command::Look},
+            {"move", Command::Move},
+            {"quit", Command::Quit},
+            {"register", Command::Register},
+            {"say", Command::Say},
+            {"shutdown", Command::Shutdown},
+            {"tell", Command::Tell},
+            {"yell", Command::Yell},
+            {"cast", Command::Cast}
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
-            {Command::HELP, {"help"}},
-            {Command::LOGIN, {"login"}},
-            {Command::LOGOUT, {"logout"}},
-            {Command::LOOK, {"look"}},
-            {Command::MOVE, {"move"}},
-            {Command::QUIT, {"quit"}},
-            {Command::REGISTER, {"register"}},
-            {Command::SAY, {"say"}},
-            {Command::SHUTDOWN, {"shutdown"}},
-            {Command::TELL, {"tell"}},
-            {Command::YELL, {"yell"}},
-            {Command::CAST, {"cast"}}
+            {Command::Help, {"help"}},
+            {Command::Login, {"login"}},
+            {Command::Logout, {"logout"}},
+            {Command::Look, {"look"}},
+            {Command::Move, {"move"}},
+            {Command::Quit, {"quit"}},
+            {Command::Register, {"register"}},
+            {Command::Say, {"say"}},
+            {Command::Shutdown, {"shutdown"}},
+            {Command::Tell, {"tell"}},
+            {Command::Yell, {"yell"}},
+            {Command::Cast, {"cast"}}
         };
 
         /**
@@ -91,45 +93,46 @@ namespace model {
          *  vector on completion.
          */
         void
-        handleConnects(std::deque<Response> &responses);
+        handleConnects(std::deque<Message> &responses);
 
         /**
          *  Calls handler class methods that manage disconnected users here. Empties disconnected client IDs from the
          *  associated vector on completion.
          */
         void
-        handleDisconnects(std::deque<Response> &responses);
+        handleDisconnects(std::deque<Message> &responses);
 
         /**
          *  Processes client input, calling class methods based on client input and formulating appropriate responses in
          *  the form of Response objects.
          */
         void
-        handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses);
+        handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages);
 
         /**
          *  Creates a Response to commands when the client is not logged in
          */
-        Response
+        Message
         executeMenuAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Creates a Response to commands when the client is logged in
          */
-        std::vector<Response>
+        std::vector<Message>
         executeInGameAction(const Connection &client, const Command &command, const std::string &param);
 
         /**
          *  Calls handler class methods that return responses and are not dependent on user input.
          */
         void
-        handleOutgoing(std::deque<Response> &responses);
+        handleOutgoing(std::deque<Message> &messages);
+
 
         /**
-         *  Converts a Response deque into a Message deque.
+         *  Combines messages such that all clients will receive one message at most per game cycle.
          */
         std::deque<Message>
-        formMessages(std::deque<Response> &responses);
+        formMessages(std::deque<Message> &messages);
 
         /**
          *  Returns the words associated with a command in the form of a comma-separated string.

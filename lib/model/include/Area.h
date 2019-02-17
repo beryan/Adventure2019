@@ -29,22 +29,35 @@ namespace model {
     public:
         //constructors
         Area();
+
         Area(std::string name);
+
         Area(std::string name, std::vector<Room> rooms);
 
         //getters and setters
-        std::string getName() const;
-        std::vector<Room> getRooms() const;
-        void setName(std::string name);
-        void setRooms(std::vector<Room> rooms);
+        std::string
+        getName() const;
 
-        void addRoom(Room room);
+        std::vector<Room>
+        getRooms() const;
 
-        bool removePlayer(const model::ID &playerID, const model::ID &roomID);
-        bool addPlayer(const model::ID &playerID, const model::ID &roomID);
+        void
+        setName(std::string name);
 
-        bool operator==(const Area& area) const;
+        void
+        setRooms(std::vector<Room> rooms);
 
+        void
+        addRoom(Room room);
+
+        bool
+        removePlayer(const model::ID &playerID, const model::ID &roomID);
+
+        bool
+        addPlayer(const model::ID &playerID, const model::ID &roomID);
+
+        bool
+        operator==(const Area& area) const;
     };
 }
 
