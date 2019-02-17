@@ -24,8 +24,8 @@ namespace model {
         static const unsigned short MIN_PASSWORD_LENGTH;
         static const unsigned short MAX_USERNAME_AND_PASSWORD_LENGTH;
 
-        enum class RegisterStage{USERNAME, PASSWORD, CONFIRM_PASSWORD};
-        enum class LoginStage{USERNAME, PASSWORD};
+        enum class RegisterStage{Username, Password, ConfirmPassword};
+        enum class LoginStage{Username, Password};
 
         model::ID nextId;
         std::map<model::ID, Player> allPlayers;
