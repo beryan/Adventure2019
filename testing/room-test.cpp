@@ -73,8 +73,7 @@ namespace {
 
     TEST(RoomTestSuite, canCheckValidDirection) {
         std::string dir1 = "north";
-        int expected_id1 = 1000;
-        Door door1{dir1, expected_id1, {}, {}};
+        Door door1{dir1};
 
         std::string dir2 = "south";
 
@@ -87,12 +86,12 @@ namespace {
 
     TEST(RoomTestSuite, canGetDestination) {
         std::string dir1 = "north";
-        int expected_id1 = 1000;
-        Door door1{dir1, expected_id1, {}, {}};
+        model::ID expected_id1 = 1000;
+        Door door1{dir1, expected_id1};
 
         std::string dir2 = "south";
-        int expected_id2 = 2000;
-        Door door2{dir2, expected_id2, {}, {}};
+        model::ID expected_id2 = 2000;
+        Door door2{dir2, expected_id2};
 
         std::vector<Door> doors = {door1, door2};
 
@@ -104,16 +103,14 @@ namespace {
     }
 
     TEST(RoomTestSuite, canGetNearbyRoomIds) {
-        std::string dir1 = "north";
-        int expected_id1 = 1000;
-        Door door1{dir1, expected_id1, {}, {}};
+        model::ID expected_id1 = 1000;
+        Door door1{"north", expected_id1};
 
-        std::string dir2 = "south";
-        int expected_id2 = 2000;
-        Door door2{dir2, expected_id2, {}, {}};
+        model::ID expected_id2 = 2000;
+        Door door2{"south", expected_id2};
 
         std::vector<Door> doors = {door1, door2};
-        std::vector<int> expected_ids = {expected_id1, expected_id2};
+        std::vector<model::ID> expected_ids = {expected_id1, expected_id2};
 
         Room room{};
         room.setDoors(doors);

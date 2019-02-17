@@ -14,7 +14,7 @@ namespace {
     TEST(WorldTestSuite, canConstructWorld) {
         Area expected_area1{"area1"};
         Area expected_area2{"area2"};
-        std::vector<Area> areas = {expected_area1,expected_area2};
+        std::vector<Area> areas = {expected_area1, expected_area2};
         size_t expected_size = areas.size();
 
         World world{areas};
