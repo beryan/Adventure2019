@@ -5,11 +5,9 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "PlayerHandler.h"
-#include "Response.h"
 #include "Server.h"
 
 using model::PlayerHandler;
-using model::Response;
 using networking::Connection;
 
 /*
@@ -302,11 +300,11 @@ TEST(PlayerHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     playerHandler.processLogin(CLIENT_B);
     playerHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
     playerHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
-    std::deque<Response> results = {};
+    std::deque<Message> results = {};
     playerHandler.notifyBootedClients(results);
 
-    EXPECT_EQ(CLIENT_A, results.front().client);
-    EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().message);
+    EXPECT_EQ(CLIENT_A, results.front().connection);
+    EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().text);
     EXPECT_FALSE(playerHandler.isLoggedIn(CLIENT_A));
     EXPECT_TRUE(playerHandler.isLoggedIn(CLIENT_B));
 }

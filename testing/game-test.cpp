@@ -5,11 +5,9 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "Game.h"
-#include "Response.h"
 #include "Server.h"
 
 using model::Game;
-using model::Response;
 using networking::Connection;
 using networking::Message;
 

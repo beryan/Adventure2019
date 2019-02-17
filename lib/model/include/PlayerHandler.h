@@ -6,7 +6,6 @@
 #define PLAYERHANDLER_H
 
 #include "Player.h"
-#include "Response.h"
 #include "Server.h"
 #include "json.hpp"
 
@@ -16,6 +15,7 @@
 
 using json = nlohmann::json;
 using networking::Connection;
+using networking::Message;
 
 namespace model {
 
@@ -129,7 +129,7 @@ namespace model {
          *  same Player. Is to be called by the Game class' handleOutgoing() method.
          */
         void
-        notifyBootedClients(std::deque<Response> &responses);
+        notifyBootedClients(std::deque<Message> &messages);
 
         static std::vector<Player>
         parseJsonUsers(json);

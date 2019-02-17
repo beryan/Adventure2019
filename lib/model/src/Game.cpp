@@ -52,7 +52,7 @@ namespace model {
 
 
     void
-    Game::handleConnects(std::deque<Response> &responses) {
+    Game::handleConnects(std::deque<Message> &messages) {
         for (auto &newClient : *this->newClients) {
             std::ostringstream introduction;
 
@@ -61,7 +61,7 @@ namespace model {
                          << "Enter " << "\"" << this->getCommandWords(Command::Login) << "\" to login to an existing account\n"
                          << "Enter " << "\"" << this->getCommandWords(Command::Register) << "\" to create a new account\n";
 
-            responses.push_back({newClient, introduction.str()});
+            messages.push_back({newClient, introduction.str()});
         }
 
         this->newClients->clear();
@@ -69,7 +69,7 @@ namespace model {
 
 
     void
-    Game::handleDisconnects(std::deque<Response> &responses) {
+    Game::handleDisconnects(std::deque<Message> &messages) {
 
         for (auto &disconnectedClient : *this->disconnectedClients) {
             if (this->playerHandler->isLoggingIn(disconnectedClient)) {
@@ -94,14 +94,14 @@ namespace model {
 
 
     void
-    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Response> &responses) {
+    Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages) {
         for (const auto& input : incoming) {
             auto client = input.connection;
             auto incomingInput = trimWhitespace(input.text);
             std::ostringstream tempMessage;
 
             if (this->playerHandler->isLoggingIn(client)) {
-                responses.push_back({
+                messages.push_back({
                     client,
                     this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
@@ -110,13 +110,13 @@ namespace model {
                     this->addClientToGame(client);
                     auto roomID = this->playerHandler->getRoomIdByClient(client);
                     tempMessage << this->worldHandler->findRoom(roomID);
-                    responses.push_back({client, tempMessage.str()});
+                    messages.push_back({client, tempMessage.str()});
                 }
 
                 continue;
 
             } else if (this->playerHandler->isRegistering(client)) {
-                responses.push_back({
+                messages.push_back({
                     client,
                     this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
@@ -125,7 +125,7 @@ namespace model {
                     this->addClientToGame(client);
                     auto roomID = this->playerHandler->getRoomIdByClient(client);
                     tempMessage << this->worldHandler->findRoom(roomID);
-                    responses.push_back({client, tempMessage.str()});
+                    messages.push_back({client, tempMessage.str()});
                 }
 
                 continue;
@@ -135,7 +135,7 @@ namespace model {
 
             if (!this->commandMap.count(commandString)) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
-                responses.push_back({client, tempMessage.str()});
+                messages.push_back({client, tempMessage.str()});
                 continue;
             }
 
@@ -164,24 +164,24 @@ namespace model {
             }
 
             if (!this->playerHandler->isLoggedIn(client)) {
-                responses.push_back(this->executeMenuAction(client, command, parameters));
+                messages.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
                 if (this->isInvalidFormat(command, parameters)) {
                     tempMessage << "Invalid format for command \"" << commandString << "\".\n";
-                    responses.push_back({client, tempMessage.str()});
+                    messages.push_back({client, tempMessage.str()});
                     continue;
                 }
                 auto responseList = this->executeInGameAction(client, command, parameters);
+
                 for (auto &response : responseList) {
-                    responses.push_back(response);
+                    messages.push_back(response);
                 }
             }
         }
     }
 
-
-    Response
+    Message
     Game::executeMenuAction(const Connection &client,
                             const Command &command,
                             const std::string &param) {
@@ -222,12 +222,12 @@ namespace model {
     }
 
 
-    std::vector<Response>
+    std::vector<Message>
     Game::executeInGameAction(const Connection &client,
                               const Command &command,
                               const std::string &param) {
+        std::vector<Message> messages = {};
         std::ostringstream tempMessage;
-        bool isLocal = true;
 
         switch (command) {
             case Command::Logout: {
@@ -255,7 +255,6 @@ namespace model {
                 break;
 
             case Command::Say: {
-                std::vector<Response> responses;
                 auto roomId = this->playerHandler->getRoomIdByClient(client);
                 auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
 
@@ -263,14 +262,13 @@ namespace model {
                     auto connection = this->playerHandler->getClientByPlayerId(playerId);
                     std::ostringstream sayMessage;
                     sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                    responses.push_back({connection, sayMessage.str(), isLocal});
+                    messages.push_back({connection, sayMessage.str()});
                 }
 
-                return responses;
+                return messages;
             }
 
             case Command::Tell: {
-                std::vector<Response> responses;
                 auto username = param.substr(0, param.find(' '));
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
 
@@ -279,26 +277,33 @@ namespace model {
 
                     if (receiver == username)  {
                         auto sender = this->playerHandler->getUsernameByClient(client);
-                        std::ostringstream toMessage, fromMessage;
+
+                        std::ostringstream toMessage;
+                        std::ostringstream fromMessage;
 
                         toMessage << "To " << receiver << "> " << message << "\n";
                         fromMessage << "From " + sender + "> " << message << "\n";;
 
-                        responses.push_back({client, toMessage.str(), isLocal});
-                        responses.push_back({connection, fromMessage.str(), isLocal});
+                        messages.push_back({client, toMessage.str()});
+                        messages.push_back({connection, fromMessage.str()});
 
-                        return responses;
+                        return messages;
                     }
                 }
 
                 tempMessage << "Unable to find online user \"" << username << "\".\n";
+
                 break;
             }
 
             case Command::Yell: {
-                isLocal = false;
-                tempMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
-                break;
+                for (auto connection : *this->clients) {
+                    std::ostringstream yellMessage;
+                    yellMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    messages.push_back({connection, yellMessage.str()});
+                }
+
+                return messages;
             }
 
             case Command::Look: {
@@ -329,33 +334,25 @@ namespace model {
                 break;
         }
 
-        return {{client, tempMessage.str(), isLocal}};
+        messages.push_back({client, tempMessage.str()});
+        
+        return messages;
     }
 
 
     void
-    Game::handleOutgoing(std::deque<Response> &responses) {
-        this->playerHandler->notifyBootedClients(responses);
+    Game::handleOutgoing(std::deque<Message> &messages) {
+        this->playerHandler->notifyBootedClients(messages);
     }
 
 
     std::deque<Message>
-    Game::formMessages(std::deque<Response> &responses) {
+    Game::formMessages(std::deque<Message> &messages) {
         std::deque<Message> outgoing;
         std::map<Connection, std::ostringstream> clientMessages;
 
-        for (const auto &entry : responses) {
-            if (entry.isLocal) {
-                clientMessages[entry.client] << entry.message;
-
-            } else {
-                for (const auto &client : *this->clients) {
-                    // Send to public messages to logged in users only
-                    if (this->playerHandler->isLoggedIn(client)) {
-                        clientMessages[client] << entry.message;
-                    }
-                }
-            }
+        for (const auto &message : messages) {
+            clientMessages[message.connection] << message.text;
         }
 
         for (auto const& [client, message] : clientMessages) {
@@ -411,13 +408,13 @@ namespace model {
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {
-        std::deque<Response> responses;
+        std::deque<Message> messages;
 
-        this->handleConnects(responses);
-        this->handleDisconnects(responses);
-        this->handleIncoming(incoming, responses);
-        this->handleOutgoing(responses);
+        this->handleConnects(messages);
+        this->handleDisconnects(messages);
+        this->handleIncoming(incoming, messages);
+        this->handleOutgoing(messages);
 
-        return this->formMessages(responses);
+        return this->formMessages(messages);
     }
 }

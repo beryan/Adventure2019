@@ -90,8 +90,7 @@ main(int argc, char* argv[]) {
     }
 
     std::deque<Message> incoming = server.receive();
-    std::deque<Message> result = game.processCycle(incoming);
-    server.send(result);
+    server.send(game.processCycle(incoming));
 
     sleep(1);
   }
