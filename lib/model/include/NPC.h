@@ -63,6 +63,8 @@ namespace model {
         std::string shortDescription;
 
         std::vector<std::string> longDescription;
+
+        friend std::ostream& operator<<(std::ostream& os, const NPC& npc);
     };
 
     inline void from_json(const json &j, NPC &n) {

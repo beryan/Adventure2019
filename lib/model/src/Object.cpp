@@ -2,6 +2,7 @@
 // Created by Waswa Olunga on 2019-01-18.
 //
 
+#include <iostream>
 #include <Object.h>
 
 namespace model {
@@ -112,4 +113,10 @@ namespace model {
     bool Object::operator==(const Object &NPC) const {
         return this->id == NPC.id;
     }
+
+    std::ostream&operator<<(std::ostream& os, const Object& obj){
+        os << obj.id << ". " << obj.name << std::endl;
+        return os;
+    }
+
 }

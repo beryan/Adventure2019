@@ -80,4 +80,10 @@ namespace model {
     void NPC::addToLongDescription(std::string addToLongDescription) {
         this->longDescription.push_back(std::move(addToLongDescription));
     }
+
+    //print object
+    std::ostream& operator<<(std::ostream& os, const NPC& npc) {
+        os << npc.getId() << ". " << npc.getShortDescription() << std::endl;
+        return os;
+    }
 }

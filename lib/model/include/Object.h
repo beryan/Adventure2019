@@ -99,6 +99,8 @@ namespace model {
         Slot slot;
 
         ExtraObjectInfo extraObjectInfo;
+
+        friend std::ostream&operator<<(std::ostream& os, const Object& obj);
     };
 
     inline void from_json(const json &j, Object &o) {

@@ -223,18 +223,34 @@ namespace model {
 
 
     //print room
-    std::ostream&
-    operator<<(std::ostream& os, const Room& rhs) {
-        os << "\n***" << rhs.name << "***\n";
+    std::ostream& operator<<(std::ostream& os, const Room& room) {
+        os << "\n*****" << room.id << ". " << room.name << "*****\n";
 
-        if (!rhs.desc.empty()) {
-            for (const auto &s : rhs.desc) {
+        if (!room.desc.empty()) {
+            for (const auto &s : room.desc) {
                 os << s << std::endl;
             }
         }
 
-        for (const auto &door : rhs.doors) {
-            os << door;
+        if(!room.doors.empty()) {
+            os << "Doors:" << std::endl;
+            for (const auto &door : room.doors) {
+                os << door;
+            }
+        }
+
+        if(!room.npcs.empty()) {
+            os << "NPCS:" << std::endl;
+            for (const auto &npc : room.npcs) {
+                os << npc;
+            }
+        }
+
+        if(!room.objects.empty()) {
+            os << "Objects:" << std::endl;
+            for (const auto &obj : room.objects) {
+                os << obj;
+            }
         }
 
         return os;
