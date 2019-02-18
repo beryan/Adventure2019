@@ -29,7 +29,7 @@ namespace model {
     NPC::NPC(
         model::ID id,
         std::vector<std::string> keywords,
-        std::string description,
+        std::vector<std::string>description,
         std::string shortDescription,
         std::vector<std::string> longDescription
     ) :
@@ -40,11 +40,11 @@ namespace model {
         longDescription(std::move(longDescription))
         {}
 
-    std::string NPC::getDescription() const {
+    std::vector<std::string> NPC::getDescription() const {
         return this->description;
     }
 
-    void NPC::setDescription(std::string description) {
+    void NPC::setDescription(std::vector<std::string>description) {
         this->description = std::move(description);
     }
 

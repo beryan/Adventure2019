@@ -30,7 +30,7 @@ namespace model {
         NPC(
             model::ID id,
             std::vector<std::string> keywords,
-            std::string description,
+            std::vector<std::string> description,
             std::string shortDescription,
             std::vector<std::string> longDescription
         );
@@ -39,9 +39,9 @@ namespace model {
 
         void setKeywords(std::vector<std::string> keywords);
 
-        std::string getDescription() const;
+        std::vector<std::string> getDescription() const;
 
-        void setDescription(std::string description);
+        void setDescription(std::vector<std::string> description);
 
         std::string getShortDescription() const;
 
@@ -58,7 +58,7 @@ namespace model {
     private:
         std::vector<std::string> keywords;
 
-        std::string description;
+        std::vector<std::string> description;
 
         std::string shortDescription;
 
