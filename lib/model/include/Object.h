@@ -7,6 +7,9 @@
 
 #include "Types.h"
 #include "ExtraObjectInfo.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
 
@@ -96,7 +99,19 @@ namespace model {
         Slot slot;
 
         ExtraObjectInfo extraObjectInfo;
+
+        friend std::ostream&operator<<(std::ostream& os, const Object& obj);
     };
+
+    inline void from_json(const json &j, Object &o) {
+        o.setId(j.at("id").get<model::ID>());
+        o.setName(j.at("shortdesc").get<std::string>());
+        o.setShortDescription(j.at("shortdesc").get<std::string>());
+        o.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
+        o.setKeywords(j.at("keywords").get<std::vector<std::string>>());
+        o.setSlot(model::Weapon);
+    }
+
 }
 
 #endif //OBJECT_H

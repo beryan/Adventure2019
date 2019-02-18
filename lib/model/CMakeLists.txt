@@ -23,7 +23,7 @@ target_include_directories(model
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(model networking json)
+target_link_libraries(model networking json fileparser)
 
 set_target_properties(model
         PROPERTIES

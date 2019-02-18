@@ -5,17 +5,20 @@
 #include <iostream>
 
 #include "WorldHandler.h"
+#include "DataManager.h"
 
 using model::WorldHandler;
-
 using json = nlohmann::json;
+
+const std::string DATA_JSON_PATH = "lib/data/mirkwood.json";
 
 namespace model {
 
     WorldHandler::WorldHandler() {
         //create temporary world
         this->world = World();
-        this->world.createStub();
+//        this->world.createStub();
+        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
     }
 
     World
@@ -68,14 +71,11 @@ namespace model {
         Room room = findRoom(roomId);
         std::vector<model::ID> playerIds = room.getPlayersInRoom();
         auto nearbyRoomIds = room.getNearbyRoomIds();
-
         for (const auto &nearbyRoomId : nearbyRoomIds) {
             Room nearbyRoom = findRoom(nearbyRoomId);
             auto playersInNearbyRoom = nearbyRoom.getPlayersInRoom();
-
             playerIds.insert(playerIds.end(), playersInNearbyRoom.begin(), playersInNearbyRoom.end());
         }
-
         return playerIds;
     }
 
