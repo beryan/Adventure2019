@@ -15,7 +15,7 @@ using model::World;
 const std::string JSON_EXTENSION = ".json";
 
 namespace DataManager {
-    void ParseDataFile(const std::string& filePath);
+    Area ParseDataFile(const std::string& filePath);
     void ParseUsersFile(const std::string& filePath, World& world);
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H

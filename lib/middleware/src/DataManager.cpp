@@ -45,7 +45,6 @@ namespace DataManager {
 
                     if(room != rooms.end() && npc != npcs.end()) {
                         room->addNPC(*npc);
-                        std::cout << "NPC " << npc->getId() << " added to Room " << room->getId() << std::endl;
                     }
 
                 }
@@ -65,7 +64,6 @@ namespace DataManager {
 
                     if(room != rooms.end() && object != objects.end()) {
                         room->addObject(*object);
-                        std::cout << "Object " << object->getId() << " added to Room " << room->getId() << std::endl;
                     }
 
                 }
@@ -73,11 +71,10 @@ namespace DataManager {
         }
 
 
-        void parseDataJson(const std::string& filePath) {
+        Area parseDataJson(const std::string& filePath) {
 
             std::ifstream ifs(filePath);
             json t = json::parse(ifs);
-
 
             Area area;
             std::vector<Room> rooms;
@@ -117,7 +114,7 @@ namespace DataManager {
             }
 
             area.setRooms(rooms);
-            std::cout << area << std::endl;
+            return area;
         }
 
         void parseUsersJson(const std::string& filePath, World& world) {
@@ -135,10 +132,12 @@ namespace DataManager {
 
     } // anonymous namespace
 
-    void ParseDataFile(const std::string& filePath){
+    Area ParseDataFile(const std::string& filePath){
+        Area a;
         if(filesystem::extension(filePath) == JSON_EXTENSION){
-            parseDataJson(filePath);
+            a = parseDataJson(filePath);
         }
+        return a;
     }
 
     void ParseUsersFile(const std::string& filePath, World& world){
