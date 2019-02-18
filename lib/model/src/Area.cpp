@@ -94,11 +94,14 @@ namespace model {
 
 
     //print object
-    std::ostream& operator<<(std::ostream& os, const Area& rhs) {
-        os << "area: " << rhs.name << std::endl;
+    std::ostream& operator<<(std::ostream& os, const Area& area) {
+        os << "You are in " << area.name << std::endl;
 
-        for (const auto &room : rhs.rooms) {
-            os << room;
+        if(area.rooms.size() > 0){
+            os << "Rooms:";
+            for(Room r : area.getRooms()) {
+                os << "\t" << r << std::endl;
+            }
         }
 
         return os;

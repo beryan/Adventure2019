@@ -76,6 +76,20 @@ namespace model {
         bool operator==(const Room& room) const;
 
     };
+
+    inline void from_json(const json &j, Door &d) {
+        j.at("dir").get_to(d.dir);
+        j.at("to").get_to(d.leadsTo);
+        j.at("desc").get_to(d.desc);
+        j.at("keywords").get_to(d.keywords);
+    }
+
+    inline void from_json(const json &j, Room &r) {
+        r.setId(j.at("id").get<model::ID>());
+        r.setName(j.at("name").get<std::string>());
+        r.setDesc(j.at("desc").get<std::vector<std::string>>());
+        r.setDoors(j.at("doors").get<std::vector<Door>>());
+    }
 }
 
 #endif
