@@ -117,17 +117,16 @@ namespace DataManager {
             return area;
         }
 
-        void parseUsersJson(const std::string& filePath, World& world) {
+        std::vector<Player> parseUsersJson(const std::string& filePath) {
             std::ifstream ifs(filePath);
-
             json usersJson = json::parse(ifs);
-            json users = usersJson[USERS];
 
-            // TODO: Refactor this to be a ranged for loop
-            for (json::iterator it = users.begin(); it != users.end(); ++it) {
-                Player p (it.value().at("id"), it.value().at("username"), "");
-                world.insertUser(p);
+            std::vector<Player> players;
+
+            if(usersJson.find(USERS) != usersJson.end()){
+                players = usersJson.at(USERS).get<std::vector<Player>>();
             }
+            return players;
         }
 
     } // anonymous namespace
@@ -140,12 +139,12 @@ namespace DataManager {
         return a;
     }
 
-    void ParseUsersFile(const std::string& filePath, World& world){
-        std::string extension = boost::filesystem::extension(filePath);
-
-        if(extension == JSON_EXTENSION){
-            parseUsersJson(filePath, world);
+    std::vector<Player> ParseUsersFile(const std::string& filePath){
+        std::vector<Player> players;
+        if(filesystem::extension(filePath) == JSON_EXTENSION){
+            players = parseUsersJson(filePath);
         }
+        return players;
     }
 } // DataManager namespace
 

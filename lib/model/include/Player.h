@@ -22,6 +22,8 @@ namespace model {
 
     class Player : public Character {
     public:
+        Player();
+
         Player(model::ID id, std::string_view username, std::string_view password);
 
         Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID);
@@ -83,6 +85,11 @@ namespace model {
 
         model::ID currRoomID;
     };
+
+    inline void from_json(const json &j, Player &p) {
+        p.setUsername(j.at("username").get<std::string>());
+        p.setPassword(j.at("password").get<std::string>());
+    }
 }
 
 #endif //PLAYER_H

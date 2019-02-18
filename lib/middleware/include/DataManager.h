@@ -11,11 +11,12 @@
 #include "World.h"
 
 using model::World;
+using model::Player;
 
 const std::string JSON_EXTENSION = ".json";
 
 namespace DataManager {
     Area ParseDataFile(const std::string& filePath);
-    void ParseUsersFile(const std::string& filePath, World& world);
+    std::vector<Player> ParseUsersFile(const std::string& filePath);
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H
