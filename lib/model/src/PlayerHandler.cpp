@@ -275,21 +275,21 @@ namespace model {
 
     model::ID
     PlayerHandler::getRoomIdByClient(const Connection &client) {
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
-            return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+        if (!this->usernameToPlayer.count(this->getUsernameByClient(client))) {
+            throw std::out_of_range("Error: usernameToPlayer map does not contain username");
         }
-        throw std::runtime_error("Error: usernameToPlayer map does not contain username");
+
+        return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
     }
 
 
     void
     PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
-            this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
-
-        } else {
-            throw std::runtime_error("Error: usernameToPlayer map does not contain username");
+        if (!this->usernameToPlayer.count(this->getUsernameByClient(client))) {
+            throw std::out_of_range("Error: usernameToPlayer map does not contain username");
         }
+
+        this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
     }
 
 

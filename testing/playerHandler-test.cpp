@@ -219,7 +219,6 @@ TEST(PlayerHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     playerHandler.exitRegistration(CLIENT_A);
-    auto result = playerHandler.isRegistering(CLIENT_A);
 
     EXPECT_FALSE(playerHandler.isRegistering(CLIENT_A));
 }

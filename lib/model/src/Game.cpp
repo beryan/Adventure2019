@@ -265,9 +265,14 @@ namespace model {
 
                 for (auto playerId : playerIds) {
                     auto connection = this->playerHandler->getClientByPlayerId(playerId);
+                    auto message = param;
+
+                    if (this->magicHandler->isConfused(client)) {
+                        message = this->magicHandler->confuseSpeech(client, message);
+                    }
 
                     std::ostringstream sayMessage;
-                    sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << message << "\n";
 
                     messages.push_back({connection, sayMessage.str()});
                 }
@@ -278,6 +283,10 @@ namespace model {
             case Command::Tell: {
                 auto username = param.substr(0, param.find(' '));
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
+
+                if (this->magicHandler->isConfused(client)) {
+                    message = this->magicHandler->confuseSpeech(client, message);
+                }
 
                 for (auto connection: *this->clients) {
                     auto receiver = this->playerHandler->getUsernameByClient(connection);
@@ -304,9 +313,15 @@ namespace model {
             }
 
             case Command::Yell: {
+                auto message = param;
+
+                if (this->magicHandler->isConfused(client)) {
+                    message = this->magicHandler->confuseSpeech(client, message);
+                }
+
                 for (auto connection : *this->clients) {
                     std::ostringstream yellMessage;
-                    yellMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    yellMessage << this->playerHandler->getUsernameByClient(client) << "> " << message << "\n";
                     messages.push_back({connection, yellMessage.str()});
                 }
 

@@ -9,7 +9,12 @@ namespace model {
     class MagicHandler {
     private:
         PlayerHandler* playerHandler;
+        PlayerHandler* worldHandler;
         std::vector<std::pair<std::pair<std::string, std::string>, unsigned int>> swapTracker;
+        std::vector<std::pair<ID, unsigned int>> confuseTracker;
+
+        static constexpr unsigned int SWAP_DURATION = 50;
+        static constexpr unsigned int CONFUSE_DURATION = 50;
 
         enum class Spell {
             Swap,
@@ -43,6 +48,12 @@ namespace model {
 
         std::vector<Message>
         castSpell(const Connection &client, const std::string &param, const std::string &targetName = "");
+
+        bool
+        isConfused(const Connection &client);
+
+        std::string
+        confuseSpeech(const Connection &client, std::string message);
 
         void
         handleLogout(const Connection &client);
