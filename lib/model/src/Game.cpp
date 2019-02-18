@@ -122,8 +122,8 @@ namespace model {
             }
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
-            Command command = this->commandHandler.getCommand(commandString,
-                                                              this->playerHandler->getUsernameByClient(client));
+            Command command = this->commandHandler.getCommandForUser(commandString,
+                                                                     this->playerHandler->getUsernameByClient(client));
 
             if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";

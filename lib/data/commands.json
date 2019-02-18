@@ -1,28 +1,18 @@
 {
-  "Default": {
-    "HELP": "help",
-    "LOGIN": "login",
-    "LOGOUT": "logout",
-    "LOOK": "look",
-    "MOVE": "move",
-    "QUIT": "quit",
-    "REGISTER": "register",
-    "SAY": "say",
-    "SHUTDOWN": "shutdown",
-    "TELL": "tell",
-    "YELL": "yell"
+  "global_aliases": {
+
   },
   "testuser": {
-    "HELP": "test_help",
-    "LOGIN": "test_login",
-    "LOGOUT": "test_logout",
-    "LOOK": "test_look",
-    "MOVE": "test_move",
-    "QUIT": "test_quit",
-    "REGISTER": "test_register",
-    "SAY": "test_say",
-    "SHUTDOWN": "test_shutdown",
-    "TELL": "test_tell",
-    "YELL": "test_yell"
+    "test_help":  "help",
+    "test_login": "login",
+    "test_logout":  "logout",
+    "test_look": "look",
+    "test_move":  "move",
+    "test_quit": "quit",
+    "test_register":  "register",
+    "test_say": "say",
+    "test_shutdown":  "shutdown",
+    "test_tell": "tell",
+    "test_yell": "yell"
   }
 }

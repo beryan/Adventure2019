@@ -9,53 +9,53 @@
 namespace {
     TEST(CommandHandlerTestSuite, canGetCommandsFromStrings) {
         model::CommandHandler commandHandler;
-        EXPECT_EQ(model::Command::Help, commandHandler.getCommand("help"));
-        EXPECT_EQ(model::Command::Login, commandHandler.getCommand("login"));
-        EXPECT_EQ(model::Command::Logout, commandHandler.getCommand("logout"));
-        EXPECT_EQ(model::Command::Look, commandHandler.getCommand("look"));
-        EXPECT_EQ(model::Command::Move, commandHandler.getCommand("move"));
-        EXPECT_EQ(model::Command::Quit, commandHandler.getCommand("quit"));
-        EXPECT_EQ(model::Command::Register, commandHandler.getCommand("register"));
-        EXPECT_EQ(model::Command::Say, commandHandler.getCommand("say"));
-        EXPECT_EQ(model::Command::Shutdown, commandHandler.getCommand("shutdown"));
-        EXPECT_EQ(model::Command::Tell, commandHandler.getCommand("tell"));
-        EXPECT_EQ(model::Command::Yell, commandHandler.getCommand("yell"));
+        EXPECT_EQ(model::Command::Help, commandHandler.getDefaultCommand("help"));
+        EXPECT_EQ(model::Command::Login, commandHandler.getDefaultCommand("login"));
+        EXPECT_EQ(model::Command::Logout, commandHandler.getDefaultCommand("logout"));
+        EXPECT_EQ(model::Command::Look, commandHandler.getDefaultCommand("look"));
+        EXPECT_EQ(model::Command::Move, commandHandler.getDefaultCommand("move"));
+        EXPECT_EQ(model::Command::Quit, commandHandler.getDefaultCommand("quit"));
+        EXPECT_EQ(model::Command::Register, commandHandler.getDefaultCommand("register"));
+        EXPECT_EQ(model::Command::Say, commandHandler.getDefaultCommand("say"));
+        EXPECT_EQ(model::Command::Shutdown, commandHandler.getDefaultCommand("shutdown"));
+        EXPECT_EQ(model::Command::Tell, commandHandler.getDefaultCommand("tell"));
+        EXPECT_EQ(model::Command::Yell, commandHandler.getDefaultCommand("yell"));
     }
 
     TEST(CommandHandlerTestSuite, canGetInvalidCommand) {
         model::CommandHandler commandHandler;
-        EXPECT_EQ(model::Command::InvalidCommand, commandHandler.getCommand("asdfasdfasdf"));
+        EXPECT_EQ(model::Command::InvalidCommand, commandHandler.getDefaultCommand("asdfasdfasdf"));
     }
 
     TEST(CommandHandlerTestSuite, canGetAliasedCommands) {
         model::CommandHandler commandHandler;
         std::string testUser = "testuser";
-        EXPECT_EQ(model::Command::Help, commandHandler.getCommand("test_help", testUser));
-        EXPECT_EQ(model::Command::Login, commandHandler.getCommand("test_login", testUser));
-        EXPECT_EQ(model::Command::Logout, commandHandler.getCommand("test_logout", testUser));
-        EXPECT_EQ(model::Command::Look, commandHandler.getCommand("test_look", testUser));
-        EXPECT_EQ(model::Command::Move, commandHandler.getCommand("test_move", testUser));
-        EXPECT_EQ(model::Command::Quit, commandHandler.getCommand("test_quit", testUser));
-        EXPECT_EQ(model::Command::Register, commandHandler.getCommand("test_register", testUser));
-        EXPECT_EQ(model::Command::Say, commandHandler.getCommand("test_say", testUser));
-        EXPECT_EQ(model::Command::Shutdown, commandHandler.getCommand("test_shutdown", testUser));
-        EXPECT_EQ(model::Command::Tell, commandHandler.getCommand("test_tell", testUser));
-        EXPECT_EQ(model::Command::Yell, commandHandler.getCommand("test_yell", testUser));
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser("test_help", testUser));
+        EXPECT_EQ(model::Command::Login, commandHandler.getCommandForUser("test_login", testUser));
+        EXPECT_EQ(model::Command::Logout, commandHandler.getCommandForUser("test_logout", testUser));
+        EXPECT_EQ(model::Command::Look, commandHandler.getCommandForUser("test_look", testUser));
+        EXPECT_EQ(model::Command::Move, commandHandler.getCommandForUser("test_move", testUser));
+        EXPECT_EQ(model::Command::Quit, commandHandler.getCommandForUser("test_quit", testUser));
+        EXPECT_EQ(model::Command::Register, commandHandler.getCommandForUser("test_register", testUser));
+        EXPECT_EQ(model::Command::Say, commandHandler.getCommandForUser("test_say", testUser));
+        EXPECT_EQ(model::Command::Shutdown, commandHandler.getCommandForUser("test_shutdown", testUser));
+        EXPECT_EQ(model::Command::Tell, commandHandler.getCommandForUser("test_tell", testUser));
+        EXPECT_EQ(model::Command::Yell, commandHandler.getCommandForUser("test_yell", testUser));
     }
 
     TEST(CommandHandlerTestSuite, aliasedCommandsFallBackToDefault) {
         model::CommandHandler commandHandler;
         std::string testUser = "testuser_no_aliases";
-        EXPECT_EQ(model::Command::Help, commandHandler.getCommand("help", testUser));
-        EXPECT_EQ(model::Command::Login, commandHandler.getCommand("login", testUser));
-        EXPECT_EQ(model::Command::Logout, commandHandler.getCommand("logout", testUser));
-        EXPECT_EQ(model::Command::Look, commandHandler.getCommand("look", testUser));
-        EXPECT_EQ(model::Command::Move, commandHandler.getCommand("move", testUser));
-        EXPECT_EQ(model::Command::Quit, commandHandler.getCommand("quit", testUser));
-        EXPECT_EQ(model::Command::Register, commandHandler.getCommand("register", testUser));
-        EXPECT_EQ(model::Command::Say, commandHandler.getCommand("say", testUser));
-        EXPECT_EQ(model::Command::Shutdown, commandHandler.getCommand("shutdown", testUser));
-        EXPECT_EQ(model::Command::Tell, commandHandler.getCommand("tell", testUser));
-        EXPECT_EQ(model::Command::Yell, commandHandler.getCommand("yell", testUser));
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser("help", testUser));
+        EXPECT_EQ(model::Command::Login, commandHandler.getCommandForUser("login", testUser));
+        EXPECT_EQ(model::Command::Logout, commandHandler.getCommandForUser("logout", testUser));
+        EXPECT_EQ(model::Command::Look, commandHandler.getCommandForUser("look", testUser));
+        EXPECT_EQ(model::Command::Move, commandHandler.getCommandForUser("move", testUser));
+        EXPECT_EQ(model::Command::Quit, commandHandler.getCommandForUser("quit", testUser));
+        EXPECT_EQ(model::Command::Register, commandHandler.getCommandForUser("register", testUser));
+        EXPECT_EQ(model::Command::Say, commandHandler.getCommandForUser("say", testUser));
+        EXPECT_EQ(model::Command::Shutdown, commandHandler.getCommandForUser("shutdown", testUser));
+        EXPECT_EQ(model::Command::Tell, commandHandler.getCommandForUser("tell", testUser));
+        EXPECT_EQ(model::Command::Yell, commandHandler.getCommandForUser("yell", testUser));
     }
 }

@@ -2,44 +2,55 @@
 // Created by Stephen Wanhella on 2019-02-14.
 //
 
-#include <CommandHandler.h>
-
+#include <fstream>
 #include "CommandHandler.h"
 #include "Command.h"
 #include "json.hpp"
-#include <boost/bimap.hpp>
 
-using json = nlohmann::json;
+using nlohmann::json;
 using model::Command;
 using model::CommandHandler;
 
-CommandHandler::CommandHandler() {
-    this->defaultCommands.insert(bm_type::value_type("help", Command::Help));
+const std::string COMMANDS_FILE_PATH = "lib/data/commands.json";
+const std::string GLOBAL_ALIAS_USER = "global_aliases";
+
+Command CommandHandler::getDefaultCommand(const std::string &commandStr) {
+    Command res = Command::InvalidCommand;
+    auto it = this->commands.find(commandStr);
+    if (it != this->commands.end()) {
+        res = it->second;
+    }
+
+    return res;
 }
 
-Command CommandHandler::getCommand(const std::string &commandStr) {
-    return Command::InvalidCommand;
+Command CommandHandler::getCommandForUser(const std::string &commandStr, const std::string &username) {
+    Command result;
+    if (!findAliasedCommand(commandStr, username, result) && !findAliasedCommand(commandStr, GLOBAL_ALIAS_USER, result)) {
+        result = getDefaultCommand(commandStr);
+    }
+    return result;
 }
 
-Command CommandHandler::getCommand(const std::string &commandStr, const std::string &username) {
-    // todo: use file api
+bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result) {
+    // todo: use file access abstraction layer
+    std::ifstream ifs(COMMANDS_FILE_PATH);
+    json t = json::parse(ifs);
 
-    // check if user has aliased commands
+    bool wasFound = false;
+    auto username_iterator = t.find(username);
+    if (username_iterator != t.end()) {
+        auto aliasedCommands = username_iterator->get<std::unordered_map<std::string, std::string>>();
+        auto command_iterator = aliasedCommands.find(commandStr);
+        if (command_iterator != aliasedCommands.end()) {
+            std::string command = command_iterator->second;
+            auto it = this->commands.find(command);
+            if (it != this->commands.end()) {
+                result = it->second;
+                wasFound = true;
+            }
+        }
+    }
 
-    return Command::InvalidCommand;
-}
-
-Command convert(const std::string str) {
-    if (str == "HELP") return Command::Help;
-    if (str == "LOGIN") return Command::Login;
-    if (str == "LOGOUT") return Command::Logout;
-    if (str == "LOOK") return Command::Look;
-    if (str == "MOVE") return Command::Move;
-    if (str == "QUIT") return Command::Quit;
-    if (str == "REGISTER") return Command::Register;
-    if (str == "SAY") return Command::Say;
-    if (str == "SHUTDOWN") return Command::Shutdown;
-    if (str == "TELL") return Command::Tell;
-    if (str == "YELL") return Command::Yell;
-    return Command::InvalidCommand;
+    return wasFound;
 }
