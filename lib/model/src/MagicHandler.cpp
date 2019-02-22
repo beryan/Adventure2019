@@ -4,6 +4,8 @@
 
 #include "MagicHandler.h"
 #include <sstream>
+#include <boost/algorithm/string/case_conv.hpp>
+#include <boost/algorithm/string/trim.hpp>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/find_format.hpp>
@@ -20,13 +22,26 @@ namespace model {
 
 
     std::vector<Message>
-    MagicHandler::castSpell(const Connection &client, const std::string &spellName, const std::string &targetName) {
+    MagicHandler::castSpell(const Connection &client, const std::string &param) {
+        std::vector<std::string> arguments;
+        boost::algorithm::split(arguments, param, boost::is_any_of(" "), boost::token_compress_on);
+
+        auto spellName = boost::algorithm::to_lower_copy(arguments.at(0));
+        if (spellName.empty()) {
+            return {{client, "You need to specify the name of the spell to be cast.\n"}};
+        }
+
+        std::string targetName;
+        if (arguments.size() > 1) {
+            targetName = arguments.at(1);
+        }
+
         std::vector<Message> responses;
         bool isValidSpellName = static_cast<bool>(this->spellMap.count(spellName));
 
         if (!isValidSpellName) {
             std::ostringstream responseMessage;
-            responseMessage << "There are no spells with the name of " << spellName << "\n";
+            responseMessage << "There are no spells with the name of \"" << spellName << "\"\n";
 
             return {{client, responseMessage.str()}};
         }
@@ -112,6 +127,10 @@ namespace model {
 
     std::vector<Message>
     MagicHandler::confuse(const Connection &client, const std::string &targetName) {
+        if (targetName.empty()) {
+            return {{client, "You need to specify the name of the person to cast swap on.\n"}};
+        }
+
         std::vector<Message> responses;
 
         try {

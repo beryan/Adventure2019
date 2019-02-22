@@ -352,16 +352,7 @@ namespace model {
             }
 
             case Command::Cast: {
-                auto spellName = lowercase(param.substr(0, param.find(' ')));
-
-                if (spellName.empty()) {
-                    tempMessage << "You need to specify the name of the spell to be cast.\n";
-                    break;
-                }
-
-                auto targetName = trimWhitespace(param.substr(param.find(' ') + 1));
-
-                return this->magicHandler->castSpell(client, spellName, targetName);
+                return this->magicHandler->castSpell(client, param);
             }
 
             default:
