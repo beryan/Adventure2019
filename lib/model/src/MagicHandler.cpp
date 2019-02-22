@@ -98,6 +98,7 @@ namespace model {
                 return {{client, casterMessage.str()}};
             }
 
+            this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
             this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
 
             casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
@@ -142,7 +143,7 @@ namespace model {
             auto targetRoomId = this->playerHandler->getRoomIdByClient(targetClient);
 
             if (casterRoomId != targetRoomId) {
-                return {{client, "There is no player with the name \"" + targetName + "\"\n"}};
+                return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
             }
 
             this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
@@ -163,7 +164,7 @@ namespace model {
             responses.push_back({targetClient, targetMessage.str()});
 
         } catch (std::out_of_range &error) {
-            responses.push_back({client, "There is no player with the name \"" + targetName + "\"\n"});
+            responses.push_back({client, "There is no player here with the name \"" + targetName + "\"\n"});
         }
 
         return responses;
@@ -245,8 +246,8 @@ namespace model {
                ++swapInstance;
 
            } else {
-               auto casterPlayerId= swapInstance->casterPlayerId;
-               auto targetPlayerId= swapInstance->targetPlayerId;
+               auto casterPlayerId = swapInstance->casterPlayerId;
+               auto targetPlayerId = swapInstance->targetPlayerId;
 
                this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
 
