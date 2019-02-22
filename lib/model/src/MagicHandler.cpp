@@ -2,8 +2,8 @@
 // Created by louis on 16/02/19.
 //
 
-#include <sstream>
 #include "MagicHandler.h"
+#include <sstream>
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/find_format.hpp>
@@ -12,40 +12,6 @@
 using model::MagicHandler;
 
 namespace model {
-
-    // Formatter for boost::find_format
-    template<typename SeqT>
-    struct formatPigLatin {
-    private:
-        typedef SeqT result_type;
-        typedef typename SeqT::value_type value_type;
-
-    public:
-        template<typename ReplaceT>
-        result_type operator()(const ReplaceT& Replace) const {
-            std::ostringstream result;
-            std::string temp(Replace.begin(), Replace.end());
-
-            auto firstVowelIndex = temp.find_first_of("aeiouAEIOU");
-
-            if (firstVowelIndex != std::string::npos && firstVowelIndex != 0) {
-                // Word starts with consonant(s)
-                result << temp.substr(firstVowelIndex) << temp.substr(0, firstVowelIndex) << "ay";
-
-            } else if (firstVowelIndex != std::string::npos) {
-                // Word starts with a vowel
-                result << temp.substr(firstVowelIndex) << temp.substr(0, firstVowelIndex) << "way";
-
-            } else {
-                // Word's letters are all consonants
-                result << temp << "ay";
-            }
-
-            return result.str();
-        }
-    };
-
-
     MagicHandler::MagicHandler(PlayerHandler* playerHandler) {
         this->playerHandler = playerHandler;
         this->swapTracker = {};
@@ -68,8 +34,8 @@ namespace model {
         auto spell = this->spellMap.at(spellName);
 
         switch (spell) {
-            case (Spell::Swap):
-                responses = this->swap(client, targetName);
+            case (Spell::BodySwap):
+                responses = this->bodySwap(client, targetName);
                 break;
 
             case (Spell::Decoy):
@@ -89,10 +55,11 @@ namespace model {
 
 
     std::vector<Message>
-    MagicHandler::swap(const Connection &client, const std::string &targetName) {
+    MagicHandler::bodySwap(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
 
         auto casterUsername = this->playerHandler->getUsernameByClient(client);
+        auto casterPlayerId = this->playerHandler->getPlayerIdByClient(client);
 
         if (targetName.empty()) {
             return {{client, "You need to specify the name of the person to cast swap on.\n"}};
@@ -107,6 +74,7 @@ namespace model {
 
         try {
             auto targetClient = this->playerHandler->getClientByUsername(targetName);
+            auto targetPlayerId = this->playerHandler->getPlayerIdByClient(targetClient);
             auto targetRoomId = this->playerHandler->getRoomIdByClient(targetClient);
             auto casterRoomId = this->playerHandler->getRoomIdByClient(client);
 
@@ -115,7 +83,7 @@ namespace model {
                 return {{client, casterMessage.str()}};
             }
 
-            this->swapTracker.push_back({{casterUsername, targetName}, SWAP_DURATION});
+            this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
 
             casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
             targetMessage << casterUsername << " cast swap on you!\n";
@@ -147,6 +115,7 @@ namespace model {
         std::vector<Message> responses;
 
         try {
+            auto casterPlayerId = this->playerHandler->getPlayerIdByClient(client);
             auto targetClient = this->playerHandler->getClientByUsername(targetName);
             auto targetPlayerId = this->playerHandler->getPlayerIdByClient(targetClient);
 
@@ -154,10 +123,10 @@ namespace model {
             auto targetRoomId = this->playerHandler->getRoomIdByClient(targetClient);
 
             if (casterRoomId != targetRoomId) {
-                return{{client, "There is no player with the name \"" + targetName + "\"\n"}};
+                return {{client, "There is no player with the name \"" + targetName + "\"\n"}};
             }
 
-            this->confuseTracker.emplace_back(targetPlayerId, CONFUSE_DURATION);
+            this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
             auto casterUsername = this->playerHandler->getUsernameByClient(client);
 
@@ -188,8 +157,8 @@ namespace model {
         auto it_confuse = std::find_if(
                 this->confuseTracker.begin(),
                 this->confuseTracker.end(),
-                [&playerId](const std::pair<ID, unsigned int> &confuseInstance) {
-                    return playerId == confuseInstance.first;
+                [&playerId](const SpellInstance &confuseInstance) {
+                    return playerId == confuseInstance.targetPlayerId;
                 }
         );
 
@@ -198,11 +167,11 @@ namespace model {
 
 
     std::string
-    MagicHandler::confuseSpeech(const Connection &client, std::string message) {
+    MagicHandler::confuseSpeech(std::string message) {
         boost::find_format_all(
             message,
             boost::token_finder((boost::is_alpha() || boost::is_any_of("'")), boost::token_compress_on),
-            formatPigLatin<std::string>()
+            PigLatinFormatter<std::string>()
         );
 
         return message;
@@ -212,20 +181,20 @@ namespace model {
     void
     MagicHandler::handleLogout(const Connection &client) {
         // Swap back players if client is under Swap spell effects
-        auto clientUsername = this->playerHandler->getUsernameByClient(client);
+        auto clientPlayerId = this->playerHandler->getPlayerIdByClient(client);
         auto it_swap = std::find_if(
             this->swapTracker.begin(),
             this->swapTracker.end(),
-            [&clientUsername](const std::pair<std::pair<std::string, std::string>, unsigned int> &swapInstance) {
-                return (clientUsername == swapInstance.first.first || clientUsername == swapInstance.first.second);
+            [&clientPlayerId](const SpellInstance &swapInstance) {
+                return (clientPlayerId == swapInstance.casterPlayerId || clientPlayerId == swapInstance.targetPlayerId);
             }
         );
 
         if (it_swap != this->swapTracker.end()) {
-            auto casterUsername = it_swap->first.first;
-            auto targetUsername = it_swap->first.second;
+            auto casterPlayerId= it_swap->casterPlayerId;
+            auto targetPlayerId = it_swap->targetPlayerId;
 
-            this->playerHandler->swapPlayerClients(casterUsername, targetUsername);
+            this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
             this->swapTracker.erase(it_swap);
         }
 
@@ -234,8 +203,8 @@ namespace model {
         auto it_confuse = std::find_if(
             this->confuseTracker.begin(),
             this->confuseTracker.end(),
-            [&playerId](const std::pair<ID, unsigned int> &confuseInstance) {
-                return playerId == confuseInstance.first;
+            [&playerId](const SpellInstance &confuseInstance) {
+                return playerId == confuseInstance.targetPlayerId;
             }
         );
 
@@ -252,18 +221,18 @@ namespace model {
        auto swapInstance = this->swapTracker.begin();
 
        while (swapInstance != this->swapTracker.end()) {
-           if (swapInstance->second > 0) {
-               --swapInstance->second;
+           if (swapInstance->cyclesRemaining > 0) {
+               --swapInstance->cyclesRemaining;
                ++swapInstance;
 
            } else {
-               auto casterUsername = swapInstance->first.first;
-               auto targetUsername = swapInstance->first.second;
+               auto casterPlayerId= swapInstance->casterPlayerId;
+               auto targetPlayerId= swapInstance->targetPlayerId;
 
-               this->playerHandler->swapPlayerClients(casterUsername, targetUsername);
+               this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
 
-               auto casterClient = this->playerHandler->getClientByUsername(casterUsername);
-               auto targetClient = this->playerHandler->getClientByUsername(targetUsername);
+               auto casterClient = this->playerHandler->getClientByPlayerId(casterPlayerId);
+               auto targetClient = this->playerHandler->getClientByPlayerId(targetPlayerId);
 
                std::string message = "The effects of Swap has worn off and you return to your original body.\n";
                messages.push_back({casterClient, message});
@@ -277,12 +246,12 @@ namespace model {
        auto confuseInstance = this->confuseTracker.begin();
 
        while (confuseInstance != this->confuseTracker.end()) {
-           if (confuseInstance->second > 0) {
-               --confuseInstance->second;
+           if (confuseInstance->cyclesRemaining > 0) {
+               --confuseInstance->cyclesRemaining;
                ++confuseInstance;
 
            } else {
-               auto targetClient = this->playerHandler->getClientByPlayerId(confuseInstance->first);
+               auto targetClient = this->playerHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
 
                std::string message = "The effects of Confuse has worn off and your speech returns to normal.\n";
                messages.push_back({targetClient, message});

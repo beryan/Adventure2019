@@ -309,23 +309,24 @@ namespace model {
     }
 
     bool
-    PlayerHandler::swapPlayerClients(const std::string &sourceUsername, const std::string &targetUsername) {
+    PlayerHandler::swapPlayerClientsByPlayerId(const ID &sourceId, const ID &targetId) {
         try {
-            auto sourcePlayer = this->usernameToPlayer.at(sourceUsername);
-            auto sourceClient = this->activeIdToClient.at(sourcePlayer->getId());
+            auto sourceClient = this->activeIdToClient.at(sourceId);
+            auto targetClient = this->activeIdToClient.at(targetId);
 
-            auto targetPlayer = this->usernameToPlayer.at(targetUsername);
-            auto targetClient = this->activeIdToClient.at(targetPlayer->getId());
+            auto sourceUsername = this->getUsernameByClient(sourceClient);
+            auto targetUsername = this->getUsernameByClient(targetClient);
 
-            this->activeIdToClient.at(sourcePlayer->getId()) = targetClient;
-            this->activeClientToId.at(sourceClient) = targetPlayer->getId();
+            this->activeIdToClient.at(sourceId) = targetClient;
+            this->activeClientToId.at(sourceClient) = targetId;
 
-            this->activeIdToClient.at(targetPlayer->getId()) = sourceClient;
-            this->activeClientToId.at(targetClient) = sourcePlayer->getId();
+            this->activeIdToClient.at(targetId) = sourceClient;
+            this->activeClientToId.at(targetClient) = sourceId;
 
-            std::cout << sourceClient.id << " (now " << targetPlayer->getUsername() << ")"
+
+            std::cout << sourceClient.id << " (now " << targetUsername << ")"
                       <<" swapped Players with "
-                      << targetClient.id << " (now " << sourcePlayer->getUsername() << ")"
+                      << targetClient.id << " (now " << sourceUsername << ")"
                       << "\n";
 
             return true;

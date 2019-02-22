@@ -268,7 +268,7 @@ namespace model {
                     auto message = param;
 
                     if (this->magicHandler->isConfused(client)) {
-                        message = this->magicHandler->confuseSpeech(client, message);
+                        message = this->magicHandler->confuseSpeech(message);
                     }
 
                     std::ostringstream sayMessage;
@@ -285,7 +285,7 @@ namespace model {
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
 
                 if (this->magicHandler->isConfused(client)) {
-                    message = this->magicHandler->confuseSpeech(client, message);
+                    message = this->magicHandler->confuseSpeech(message);
                 }
 
                 for (auto connection: *this->clients) {
@@ -316,7 +316,7 @@ namespace model {
                 auto message = param;
 
                 if (this->magicHandler->isConfused(client)) {
-                    message = this->magicHandler->confuseSpeech(client, message);
+                    message = this->magicHandler->confuseSpeech(message);
                 }
 
                 for (auto connection : *this->clients) {
