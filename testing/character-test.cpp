@@ -18,7 +18,7 @@ namespace {
     }
 
     TEST(CharacterTestSuite, canReturnCorrectHealthAfterReducing) {
-        int damage = 30.0;
+        int damage = 30;
         int expected_id = 12345;
         int expected_health = Character::STARTING_HEALTH - damage;
 
@@ -30,7 +30,7 @@ namespace {
     }
 
     TEST(CharacterTestSuite, canReturnCorrectHealthAfterIncreasingWithDamagedHealth) {
-        int heal = 30.0;
+        int heal = 30;
         int expected_id = 12345;
         int expected_health = 80;
 
@@ -43,7 +43,7 @@ namespace {
     }
 
     TEST(CharacterTestSuite, canReturnCorrectHealthAfterIncreasingWithFullHealth) {
-        int heal = 30.0;
+        int heal = 30;
         int expected_id = 12345;
         int expected_health = Character::STARTING_HEALTH + heal;
 
