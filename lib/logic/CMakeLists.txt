@@ -1,5 +1,6 @@
 add_library(logic
-        src/GameLogic.cpp
+        src/PlayerLogic.cpp
+        src/CharacterLogic.cpp
         )
 
 target_include_directories(logic

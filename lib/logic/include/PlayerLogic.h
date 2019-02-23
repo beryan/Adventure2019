@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#ifndef GAMELOGIC_H
-#define GAMELOGIC_H
+#ifndef PLAYERLOGIC_H
+#define PLAYERLOGIC_H
 
 #include "World.h"
 
@@ -23,6 +23,7 @@ namespace logic {
 
         static bool isSlotOccupied(const std::map<int, Object> &items, const Slot &slot);
     };
+
 }
 
-#endif //GAMELOGIC_H
+#endif //PLAYERLOGIC_H

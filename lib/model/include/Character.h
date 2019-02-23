@@ -32,24 +32,20 @@ namespace model {
 
         void setRole(Role role);
 
-        double getHealth() const;
+        int getHealth() const;
 
-        void setHealth(double health);
+        void setHealth(int health);
 
-        double reduceHealth(const double &health);
+        static constexpr int STARTING_HEALTH = 100;
 
-        double addHealth(const double &health);
-
-        static constexpr double STARTING_HEALTH = 100.00;
-
-        static constexpr double MAX_HEALTH = 100.00;
+        static constexpr int MAX_HEALTH = 100;
 
     private:
         model::ID id;
 
         Role role;
 
-        double health;
+        int health;
     };
 }
 
