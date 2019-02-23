@@ -5,7 +5,7 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "PlayerAction.h"
-#include "GameLogic.h"
+#include "PlayerLogic.h"
 #include <stdlib.h>
 #include <iostream>
 

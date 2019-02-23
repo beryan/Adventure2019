@@ -1,5 +1,6 @@
 add_library(handler
         src/PlayerAction.cpp
+        src/CharacterHandler.cpp
         )
 
 target_include_directories(handler
