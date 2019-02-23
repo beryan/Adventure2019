@@ -21,6 +21,7 @@ namespace model {
     enum Role { Admin, Builder, Default };
 
     struct Character {
+
     public:
         explicit Character(model::ID id);
 
@@ -32,24 +33,18 @@ namespace model {
 
         void setRole(Role role);
 
-        double getHealth() const;
+        int getHealth() const;
 
-        void setHealth(double health);
+        void setHealth(int health);
 
-        double reduceHealth(const double &health);
-
-        double addHealth(const double &health);
-
-        static constexpr double STARTING_HEALTH = 100.00;
-
-        static constexpr double MAX_HEALTH = 100.00;
-
+        static constexpr int STARTING_HEALTH = 100;
     private:
+
         model::ID id;
 
         Role role;
 
-        double health;
+        int health;
     };
 }
 
