@@ -10,30 +10,30 @@ namespace action {
     PlayerAction::PlayerAction() {}
 
     void PlayerAction::equipItem(Player &player, Object item) {
-        if (logic.canEquipItem(player.getMappedInventoryItems(), item)) {
-            if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
+        if (logic.canEquipItem(player.getInventory().getMappedInventory(), item)) {
+            if (logic.isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
                 unequipSlot(player, item.getSlot());
             }
 
             player.addToEquippedItems(item);
-            player.removeInventoryItem(item);
+            player.getInventory().removeItemFromInventory(item);
         }
     }
 
     void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
         if (logic.isSlotOccupied(player.getMappedEquippedItems(), slot)) {
-            player.addToInventoryItems(player.getMappedEquippedItems().at(slot));
+            player.getInventory().addItemToInventory(player.getMappedEquippedItems().at(slot));
 
             player.removeEquippedItem(slot);
         }
     }
 
     void PlayerAction::addToInventoryItems(Player &player, Object item) {
-        player.addToInventoryItems(item);
+        player.getInventory().addItemToInventory(item);
     }
 
     Object PlayerAction::dropItemFromInventory(Player &player, Object item) {
-        auto temp_item = player.removeInventoryItem(item);
+        auto temp_item = player.getInventory().removeItemFromInventory(item);
 
         return std::move(temp_item);
     }

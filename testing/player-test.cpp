@@ -5,28 +5,24 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "PlayerAction.h"
-#include "PlayerLogic.h"
 #include <stdlib.h>
 #include <iostream>
 
 using action::PlayerAction;
-using logic::PlayerLogic;
 
 namespace {
-    TEST(PlayerTestSuite, canConstructPlayer) {
+    class PlayerTestSuite : public ::testing::Test {
+    private:
         int expected_id = 12345;
         std::string expected_username = "hello";
-        std::string expected_password = "zombie";
-
-        Player player{expected_id, expected_username, expected_password};
-
-        EXPECT_EQ(player.getId(), expected_id);
-        EXPECT_EQ(player.getUsername(), expected_username);
-        EXPECT_EQ(player.getPassword(), expected_password);
-    }
-
+        std::string expected_password = "world";
+    protected:
+        void SetUp() override {
+            Player player{expected_id, expected_username, expected_password};
+        }
+    };
+/*
     TEST(PlayerTestSuite, canAddItemToInventory) {
-        Player player{152, "hello", "20000"};
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
         PlayerAction::addToInventoryItems(player, item);
@@ -132,5 +128,5 @@ namespace {
         player.setCurrRoomID(expected_roomID);
 
         EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
-    }
+    }*/
 }

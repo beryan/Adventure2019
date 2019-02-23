@@ -9,6 +9,9 @@
 #include <array>
 #include <map>
 #include "Character.h"
+#include "Inventory.h"
+
+using model::Inventory;
 
 namespace model {
     /**
@@ -44,11 +47,7 @@ namespace model {
 
         /************ Inventory ************/
 
-        std::map<model::ID, Object> getMappedInventoryItems();
-
-        std::vector<Object> getInventoryItems() const;
-
-        void mapInventoryItems(std::vector<Object> &items);
+        Inventory getInventory();
 
         std::map<int, Object> getMappedEquippedItems();
 
@@ -56,11 +55,7 @@ namespace model {
 
         void mapEquippedItems(std::vector<Object> &items);
 
-        void addToInventoryItems(Object object);
-
         void addToEquippedItems(Object object);
-
-        Object removeInventoryItem(Object object);
 
         Object removeEquippedItem(Slot slot);
 
@@ -79,7 +74,7 @@ namespace model {
 
         std::string avatar;
 
-        std::map<model::ID, Object> inventoryItems;
+        Inventory inventory;
 
         std::map<int, Object> equippedItems;
 
