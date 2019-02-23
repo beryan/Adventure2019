@@ -23,7 +23,7 @@ namespace action {
             character.setHealth(character.getHealth() + change);
         }
         else {
-            character.setHealth(Character::MAX_HEALTH);
+            character.setHealth(CharacterLogic::MAX_HEALTH);
         }
     }
 }

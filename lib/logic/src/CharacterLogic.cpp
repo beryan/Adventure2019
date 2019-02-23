@@ -12,6 +12,6 @@ namespace logic {
     }
 
     bool CharacterLogic::canIncreaseHealth(int health, int change) {
-        return health + change < Character::MAX_HEALTH;
+        return health + change < MAX_HEALTH;
     }
 }

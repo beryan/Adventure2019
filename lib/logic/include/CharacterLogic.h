@@ -13,7 +13,10 @@ namespace logic {
     class CharacterLogic {
     private:
         CharacterLogic();
+
     public:
+        static constexpr int MAX_HEALTH = 100;
+
         static bool canReduceHealth(int health, int change);
 
         static bool canIncreaseHealth(int health, int change);

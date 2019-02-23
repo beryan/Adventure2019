@@ -14,9 +14,9 @@ namespace action {
     private:
         CharacterHandler();
     public:
-        void reduceHealth(Character &character, int change);
+        static void reduceHealth(Character &character, int change);
 
-        void addHealth(Character &character, int change);
+        static void addHealth(Character &character, int change);
     };
 }
 
