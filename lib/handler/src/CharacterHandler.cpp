@@ -3,27 +3,27 @@
 //
 
 #include "CharacterHandler.h"
-#include "CharacterLogic.h"
 
 using action::CharacterHandler;
-using logic::CharacterLogic;
 
 namespace action {
+    CharacterHandler::CharacterHandler() {};
+
     void CharacterHandler::reduceHealth(Character &character, int change) {
-        if (CharacterLogic::canReduceHealth(character.getHealth(), change)) {
+        if (logic.canReduceHealth(character.getHealth(), change)) {
             character.setHealth(character.getHealth() - change);
         }
         else {
-            character.setHealth(0);
+            character.setHealth(logic.getMinHealth());
         }
     }
 
     void CharacterHandler::addHealth(Character &character, int change) {
-        if (CharacterLogic::canIncreaseHealth(character.getHealth(), change)) {
+        if (logic.canIncreaseHealth(character.getHealth(), change)) {
             character.setHealth(character.getHealth() + change);
         }
         else {
-            character.setHealth(CharacterLogic::MAX_HEALTH);
+            character.setHealth(logic.getMaxHealth());
         }
     }
 }

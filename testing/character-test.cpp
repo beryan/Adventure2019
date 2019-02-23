@@ -23,7 +23,8 @@ namespace {
         int expected_health = Character::STARTING_HEALTH - damage;
 
         Character character{expected_id};
-        CharacterHandler::reduceHealth(character, damage);
+        CharacterHandler handler{};
+        handler.reduceHealth(character, damage);
 
         EXPECT_EQ(character.getHealth(), expected_health);
     }
@@ -35,7 +36,8 @@ namespace {
 
         Character character{expected_id};
         character.setHealth(50);
-        CharacterHandler::addHealth(character, heal);
+        CharacterHandler handler{};
+        handler.addHealth(character, heal);
 
         EXPECT_EQ(character.getHealth(), expected_health);
     }
@@ -46,7 +48,8 @@ namespace {
         int expected_health = Character::STARTING_HEALTH + heal;
 
         Character character{expected_id};
-        CharacterHandler::addHealth(character, heal);
+        CharacterHandler handler{};
+        handler.addHealth(character, heal);
 
         EXPECT_EQ(character.getHealth(), Character::STARTING_HEALTH);
         EXPECT_NE(character.getHealth(), expected_health);

@@ -12,14 +12,22 @@ using model::Character;
 namespace logic {
     class CharacterLogic {
     private:
-        CharacterLogic();
-
+        int minHealth;
+        int maxHealth;
     public:
-        static constexpr int MAX_HEALTH = 100;
+        CharacterLogic(int maxHealth, int minHealth);
 
-        static bool canReduceHealth(int health, int change);
+        void setMaxHealth(int health);
 
-        static bool canIncreaseHealth(int health, int change);
+        void setMinHealth(int health);
+
+        int getMaxHealth();
+
+        int getMinHealth();
+
+        bool canReduceHealth(int health, int change);
+
+        bool canIncreaseHealth(int health, int change);
     };
 }
 

@@ -6,17 +6,21 @@
 #define CHARACTERHANDLER_H
 
 #include "Character.h"
+#include "CharacterLogic.h"
 
 using model::Character;
+using logic::CharacterLogic;
 
 namespace action {
     class CharacterHandler {
     private:
-        CharacterHandler();
+        CharacterLogic logic{0, 100};
     public:
-        static void reduceHealth(Character &character, int change);
+        CharacterHandler();
 
-        static void addHealth(Character &character, int change);
+        void reduceHealth(Character &character, int change);
+
+        void addHealth(Character &character, int change);
     };
 }
 
