@@ -13,15 +13,16 @@ using model::Object;
 namespace logic {
     class PlayerLogic {
     private:
-        PlayerLogic();
     public:
-        static bool canEquipItem(const std::map<model::ID, Object> &items, const Object &item);
+        PlayerLogic();
 
-        static bool isItemInInventory(const std::map<model::ID, Object> &items, const Object &item);
+        bool canEquipItem(const std::map<model::ID, Object> &items, const Object &item);
 
-        static bool isItemEquipped(const std::map<int, Object> &items, const Object &item);
+        bool isItemInInventory(const std::map<model::ID, Object> &items, const Object &item);
 
-        static bool isSlotOccupied(const std::map<int, Object> &items, const Slot &slot);
+        bool isItemEquipped(const std::map<int, Object> &items, const Object &item);
+
+        bool isSlotOccupied(const std::map<int, Object> &items, const Slot &slot);
     };
 
 }

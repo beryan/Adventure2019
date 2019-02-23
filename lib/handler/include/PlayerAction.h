@@ -6,25 +6,29 @@
 #define PLAYERACTION_H
 
 #include "Player.h"
+#include "PlayerLogic.h"
 
 using model::Player;
 using model::Object;
 using model::Slot;
+using logic::PlayerLogic;
 
 namespace action {
     class PlayerAction {
     private:
-        PlayerAction();
+        PlayerLogic logic{};
     public:
-        static void equipItem(Player &player, Object item);
+        PlayerAction();
 
-        static void unequipSlot(Player &player, const Slot &slot);
+        void equipItem(Player &player, Object item);
 
-        static void addToInventoryItems(Player &player, Object item);
+        void unequipSlot(Player &player, const Slot &slot);
 
-        static Object dropItemFromInventory(Player &player, Object item);
+        void addToInventoryItems(Player &player, Object item);
 
-        static Object dropItemFromEquipped(Player &player, Slot slot);
+        Object dropItemFromInventory(Player &player, Object item);
+
+        Object dropItemFromEquipped(Player &player, Slot slot);
     };
 }
 

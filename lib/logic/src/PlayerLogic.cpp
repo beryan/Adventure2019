@@ -7,6 +7,8 @@
 using logic::PlayerLogic;
 
 namespace logic {
+    PlayerLogic::PlayerLogic() {}
+
     bool PlayerLogic::canEquipItem(const std::map<model::ID, Object> &items, const Object &item) {
         return item.canBeEquipped() && isItemInInventory(items, item);
     }

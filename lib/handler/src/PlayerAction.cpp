@@ -3,14 +3,14 @@
 //
 
 #include "PlayerAction.h"
-#include "PlayerLogic.h"
 
 using action::PlayerAction;
-using logic::PlayerLogic;
 
 namespace action {
+    PlayerAction::PlayerAction() {}
+
     void PlayerAction::equipItem(Player &player, Object item) {
-        if (PlayerLogic::canEquipItem(player.getMappedInventoryItems(), item)) {
+        if (logic.canEquipItem(player.getMappedInventoryItems(), item)) {
             if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
                 unequipSlot(player, item.getSlot());
             }
@@ -21,7 +21,7 @@ namespace action {
     }
 
     void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
-        if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), slot)) {
+        if (logic.isSlotOccupied(player.getMappedEquippedItems(), slot)) {
             player.addToInventoryItems(player.getMappedEquippedItems().at(slot));
 
             player.removeEquippedItem(slot);
