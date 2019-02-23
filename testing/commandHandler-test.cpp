@@ -58,4 +58,32 @@ namespace {
         EXPECT_EQ(model::Command::Tell, commandHandler.getCommandForUser("tell", testUser));
         EXPECT_EQ(model::Command::Yell, commandHandler.getCommandForUser("yell", testUser));
     }
+
+    TEST(CommandHandlerTestSuite, canMakeAndDeleteGlobalAliases) {
+        model::CommandHandler commandHandler;
+        std::string testUser = "testuser";
+        std::string testUser_noAliases = "asdf_user";
+        std::string global_help_alias = "hAlP";
+
+        commandHandler.setGlobalAlias(model::Command::Help, global_help_alias);
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser("test_help", testUser));
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser(global_help_alias, testUser_noAliases));
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser("help", testUser_noAliases));
+        commandHandler.clearGlobalAlias(model::Command::Help);
+        EXPECT_EQ(model::Command::InvalidCommand, commandHandler.getCommandForUser(global_help_alias, testUser_noAliases));
+    }
+
+    TEST(CommandHandlerTestSuite, canMakeAndDeleteUserAliases) {
+        model::CommandHandler commandHandler;
+        std::string testUser = "new_test_user";
+        std::string testUser_noAliases = "asdf_user";
+        std::string user_help_alias = "hAlP";
+
+        commandHandler.setUserAlias(model::Command::Help, user_help_alias, testUser);
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser(user_help_alias, testUser));
+        EXPECT_NE(model::Command::Help, commandHandler.getCommandForUser(user_help_alias, testUser_noAliases));
+        EXPECT_EQ(model::Command::Help, commandHandler.getCommandForUser("help", testUser));
+        commandHandler.clearUserAlias(model::Command::Help, testUser);
+        EXPECT_EQ(model::Command::InvalidCommand, commandHandler.getCommandForUser(user_help_alias, testUser));
+    }
 }

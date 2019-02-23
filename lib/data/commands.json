@@ -1,17 +1,15 @@
 {
-  "global_aliases": {
-
-  },
+  "global_aliases": {},
   "testuser": {
-    "test_help":  "help",
+    "test_help": "help",
     "test_login": "login",
-    "test_logout":  "logout",
+    "test_logout": "logout",
     "test_look": "look",
-    "test_move":  "move",
+    "test_move": "move",
     "test_quit": "quit",
-    "test_register":  "register",
+    "test_register": "register",
     "test_say": "say",
-    "test_shutdown":  "shutdown",
+    "test_shutdown": "shutdown",
     "test_tell": "tell",
     "test_yell": "yell"
   }
