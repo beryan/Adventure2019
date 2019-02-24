@@ -10,8 +10,8 @@ namespace action {
     PlayerAction::PlayerAction() {}
 
     void PlayerAction::equipItem(Player &player, Object item) {
-        if (logic.canEquipItem(player.getInventory().getMappedInventory(), item)) {
-            if (logic.isSlotOccupied(player.getEquipments().getMappedEquipments(), item.getSlot())) {
+        if (logic.canEquipItem(player.getInventory(), item)) {
+            if (player.getEquipments().isSlotOccupied(item.getSlot())) {
                 unequipSlot(player, item.getSlot());
             }
 
@@ -21,7 +21,7 @@ namespace action {
     }
 
     void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
-        if (logic.isSlotOccupied(player.getEquipments().getMappedEquipments(), slot)) {
+        if (player.getEquipments().isSlotOccupied(slot)) {
             player.getInventory().addItemToInventory(player.getEquipments().getMappedEquipments().at(slot));
 
             player.getEquipments().unequipSlot(slot);

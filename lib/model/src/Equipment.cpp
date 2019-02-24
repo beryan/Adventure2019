@@ -40,4 +40,8 @@ namespace model {
 
         return std::move(temp);
     }
+
+    bool Equipment::isSlotOccupied(const Slot &slot) {
+        return static_cast<bool>(equipments.count(slot));
+    }
 }

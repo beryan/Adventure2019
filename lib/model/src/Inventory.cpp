@@ -40,4 +40,8 @@ namespace model {
             inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
         }
     }
+
+    bool Inventory::isItemInInventory(const Object &item) {
+        return static_cast<bool>(inventory.count(item.getId()));
+    }
 }

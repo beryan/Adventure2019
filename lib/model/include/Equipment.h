@@ -25,6 +25,8 @@ namespace model {
         void equipItem(Object object);
 
         Object unequipSlot(Slot slot);
+
+        bool isSlotOccupied(const Slot &slot);
     };
 }
 

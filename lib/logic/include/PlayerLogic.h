@@ -16,13 +16,9 @@ namespace logic {
     public:
         PlayerLogic();
 
-        bool canEquipItem(const std::map<model::ID, Object> &items, const Object &item);
+        bool canEquipItem(Inventory items, const Object &item) const;
 
-        bool isItemInInventory(const std::map<model::ID, Object> &items, const Object &item);
-
-        bool isItemEquipped(const std::map<int, Object> &items, const Object &item);
-
-        bool isSlotOccupied(const std::map<int, Object> &items, const Slot &slot);
+        bool isItemEquipped(Equipment items, const Object &item) const;
     };
 
 }

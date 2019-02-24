@@ -25,6 +25,8 @@ namespace model {
         Object removeItemFromInventory(Object object);
 
         void mapInventory(std::vector<Object> &items);
+
+        bool isItemInInventory(const Object &item);
     };
 }
 
