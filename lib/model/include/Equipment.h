@@ -18,7 +18,7 @@ namespace model {
 
         std::map<int, Object> getMappedEquipments();
 
-        std::vector<Object> getEquipments() const;
+        std::vector<Object> getVectorEquipments() const;
 
         void mapEquipments(std::vector<Object> &items);
 
@@ -27,6 +27,8 @@ namespace model {
         Object unequipSlot(Slot slot);
 
         bool isSlotOccupied(const Slot &slot);
+
+        bool isItemEquipped(const Object &item);
     };
 }
 

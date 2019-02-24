@@ -69,11 +69,11 @@ namespace model {
         this->currRoomID = id;
     }
 
-    Inventory Player::getInventory() {
+    Inventory &Player::getInventory() {
         return inventory;
     }
 
-    Equipment Player::getEquipments() {
+    Equipment &Player::getEquipments() {
         return equipments;
     }
 

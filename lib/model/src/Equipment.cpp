@@ -13,7 +13,7 @@ namespace model {
         return this->equipments;
     }
 
-    std::vector<Object> Equipment::getEquipments() const {
+    std::vector<Object> Equipment::getVectorEquipments() const {
         std::vector<Object> container;
         container.reserve(equipments.size());
 
@@ -43,5 +43,10 @@ namespace model {
 
     bool Equipment::isSlotOccupied(const Slot &slot) {
         return static_cast<bool>(equipments.count(slot));
+    }
+
+    bool Equipment::isItemEquipped(const Object &item) {
+        return  isSlotOccupied(item.getSlot()) &&
+                equipments.at(item.getSlot()).getId() == item.getId();
     }
 }

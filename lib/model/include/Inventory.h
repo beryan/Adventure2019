@@ -18,7 +18,7 @@ namespace model {
 
         std::map<model::ID, Object> getMappedInventory();
 
-        std::vector<Object> getInventory() const;
+        std::vector<Object> getVectorInventory() const;
 
         void addItemToInventory(Object object);
 

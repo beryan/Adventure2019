@@ -49,9 +49,9 @@ namespace model {
 
         /************ Inventory ************/
 
-        Inventory getInventory();
+        Inventory &getInventory();
 
-        Equipment getEquipments();
+        Equipment &getEquipments();
 
         /************ ROOM ************/
 
