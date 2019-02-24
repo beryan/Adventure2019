@@ -2,6 +2,7 @@ add_library(model
         src/Object.cpp
         src/ExtraObjectInfo.cpp
         src/Inventory.cpp
+        src/Equipment.cpp
         src/Character.cpp
         src/Player.cpp
         src/NPC.cpp

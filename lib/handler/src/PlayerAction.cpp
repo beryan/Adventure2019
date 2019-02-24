@@ -11,20 +11,20 @@ namespace action {
 
     void PlayerAction::equipItem(Player &player, Object item) {
         if (logic.canEquipItem(player.getInventory().getMappedInventory(), item)) {
-            if (logic.isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
+            if (logic.isSlotOccupied(player.getEquipments().getMappedEquipments(), item.getSlot())) {
                 unequipSlot(player, item.getSlot());
             }
 
-            player.addToEquippedItems(item);
+            player.getEquipments().equipItem(item);
             player.getInventory().removeItemFromInventory(item);
         }
     }
 
     void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
-        if (logic.isSlotOccupied(player.getMappedEquippedItems(), slot)) {
-            player.getInventory().addItemToInventory(player.getMappedEquippedItems().at(slot));
+        if (logic.isSlotOccupied(player.getEquipments().getMappedEquipments(), slot)) {
+            player.getInventory().addItemToInventory(player.getEquipments().getMappedEquipments().at(slot));
 
-            player.removeEquippedItem(slot);
+            player.getEquipments().unequipSlot(slot);
         }
     }
 
@@ -39,7 +39,7 @@ namespace action {
     }
 
     Object PlayerAction::dropItemFromEquipped(Player &player, Slot slot) {
-        auto temp_item = player.removeEquippedItem(slot);
+        auto temp_item = player.getEquipments().unequipSlot(slot);
 
         return std::move(temp_item);
     }

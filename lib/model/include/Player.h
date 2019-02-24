@@ -10,8 +10,10 @@
 #include <map>
 #include "Character.h"
 #include "Inventory.h"
+#include "Equipment.h"
 
 using model::Inventory;
+using model::Equipment;
 
 namespace model {
     /**
@@ -49,15 +51,7 @@ namespace model {
 
         Inventory getInventory();
 
-        std::map<int, Object> getMappedEquippedItems();
-
-        std::vector<Object> getEquippedItems() const;
-
-        void mapEquippedItems(std::vector<Object> &items);
-
-        void addToEquippedItems(Object object);
-
-        Object removeEquippedItem(Slot slot);
+        Equipment getEquipments();
 
         /************ ROOM ************/
 
@@ -76,7 +70,7 @@ namespace model {
 
         Inventory inventory;
 
-        std::map<int, Object> equippedItems;
+        Equipment equipments;
 
         model::ID currRoomID;
     };
