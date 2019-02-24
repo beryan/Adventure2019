@@ -35,6 +35,19 @@ namespace {
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
+    TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        action.addToInventoryItems(player, item);
+        action.dropItemFromInventory(player, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+
+        action.addToInventoryItems(player, item);
+
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+    }
+
     TEST_F(PlayerTestSuite, canDropItemFromInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
@@ -42,6 +55,39 @@ namespace {
         action.dropItemFromInventory(player, item);
 
         EXPECT_FALSE(player.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canPickupItemFromRoomInventory) {
+        Inventory inventory{};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Body};
+        unsigned int expected_size = 0;
+
+        inventory.addItemToInventory(item);
+
+        ASSERT_TRUE(inventory.isItemInInventory(item));
+
+        action.addToInventoryItems(player, inventory.removeItemFromInventory(item));
+
+        ASSERT_FALSE(inventory.isItemInInventory(item));
+        EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canEquipTwoDifferentSlotItemsFromInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item2{22345, "Zooboo", "Danga", {}, {}, Slot::Body};
+
+        action.addToInventoryItems(player, item);
+        action.addToInventoryItems(player, item2);
+
+        action.equipItem(player, item);
+        action.equipItem(player, item2);
+
+        EXPECT_TRUE(player.getEquipments().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item.getSlot()));
+
+        EXPECT_TRUE(player.getEquipments().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item2.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
@@ -88,7 +134,7 @@ namespace {
 
         EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
-        EXPECT_EQ(droppedItem.getId(), item.getId());
+        EXPECT_TRUE(droppedItem.getId() == item.getId());
     }
 
     TEST_F(PlayerTestSuite, canUnequipItem) {
@@ -115,12 +161,12 @@ namespace {
 
         ASSERT_EQ(items.size(), itemsToCreate);
         for (Object object : items) {
-            EXPECT_EQ(object.getSlot(), Slot::Head);
+            EXPECT_TRUE(object.getSlot() == Slot::Head);
         }
     }
 
     TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
-        EXPECT_EQ(player.getCurrRoomID(), 41);
+        EXPECT_EQ(41, player.getCurrRoomID());
     }
 
     TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
@@ -128,6 +174,6 @@ namespace {
 
         player.setCurrRoomID(expected_roomID);
 
-        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+        EXPECT_EQ(expected_roomID, player.getCurrRoomID());
     }
 }

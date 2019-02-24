@@ -15,8 +15,7 @@ namespace action {
                 unequipSlot(player, item.getSlot());
             }
 
-            player.getEquipments().equipItem(item);
-            player.getInventory().removeItemFromInventory(item);
+            player.getEquipments().equipItem(player.getInventory().removeItemFromInventory(item));
         }
     }
 
