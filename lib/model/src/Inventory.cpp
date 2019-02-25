@@ -17,8 +17,8 @@ namespace model {
         std::vector<Object> container;
         container.reserve(inventory.size());
 
-        for (auto const& [key, val] : inventory) {
-            container.push_back(val);
+        for (auto const& item : inventory) {
+            container.push_back(item.second);
         }
 
         return container;
