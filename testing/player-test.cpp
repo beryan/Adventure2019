@@ -134,7 +134,7 @@ namespace {
 
         EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
-        EXPECT_TRUE(droppedItem.getId() == item.getId());
+        EXPECT_TRUE(droppedItem == item);
     }
 
     TEST_F(PlayerTestSuite, canUnequipItem) {
