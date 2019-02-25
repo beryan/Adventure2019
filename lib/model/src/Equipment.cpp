@@ -15,9 +15,9 @@ namespace model {
 
     std::vector<Object> Equipment::getVectorEquipment() const {
         std::vector<Object> container;
-        container.reserve(equipment.size());
+        container.reserve(this->equipment.size());
 
-        for (auto const& item : equipment) {
+        for (auto const& item : this->equipment) {
             container.push_back(item.second);
         }
 
@@ -26,7 +26,7 @@ namespace model {
 
     void Equipment::mapEquipment(std::vector<Object> &items) {
         for (Object& item : items) {
-            equipment.insert(std::pair<int, Object>(item.getSlot(), item));
+            this->equipment.insert(std::pair<int, Object>(item.getSlot(), item));
         }
     }
 
@@ -51,11 +51,11 @@ namespace model {
     }
 
     bool Equipment::isSlotOccupied(const Slot &slot) {
-        return static_cast<bool>(equipment.count(slot));
+        return static_cast<bool>(this->equipment.count(slot));
     }
 
     bool Equipment::isItemEquipped(const Object &item) {
         return  isSlotOccupied(item.getSlot()) &&
-                equipment.at(item.getSlot()).getId() == item.getId();
+                this->equipment.at(item.getSlot()).getId() == item.getId();
     }
 }

@@ -15,9 +15,9 @@ namespace model {
 
     std::vector<Object> Inventory::getVectorInventory() const {
         std::vector<Object> container;
-        container.reserve(inventory.size());
+        container.reserve(this->inventory.size());
 
-        for (auto const& item : inventory) {
+        for (auto const& item : this->inventory) {
             container.push_back(item.second);
         }
 
@@ -37,11 +37,11 @@ namespace model {
 
     void Inventory::mapInventory(std::vector<Object> &items) {
         for (Object& item : items) {
-            inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
+            this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
         }
     }
 
     bool Inventory::isItemInInventory(const Object &item) {
-        return static_cast<bool>(inventory.count(item.getId()));
+        return static_cast<bool>(this->inventory.count(item.getId()));
     }
 }
