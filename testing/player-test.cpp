@@ -30,7 +30,7 @@ namespace {
     TEST_F(PlayerTestSuite, canAddItemToInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
 
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
@@ -38,12 +38,12 @@ namespace {
     TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.dropItemFromInventory(player, item);
 
         ASSERT_FALSE(player.getInventory().isItemInInventory(item));
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
 
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
@@ -51,7 +51,7 @@ namespace {
     TEST_F(PlayerTestSuite, canDropItemFromInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.dropItemFromInventory(player, item);
 
         EXPECT_FALSE(player.getInventory().isItemInInventory(item));
@@ -66,7 +66,7 @@ namespace {
 
         ASSERT_TRUE(inventory.isItemInInventory(item));
 
-        action.addToInventoryItems(player, inventory.removeItemFromInventory(item));
+        action.pickupItem(player, inventory.removeItemFromInventory(item));
 
         ASSERT_FALSE(inventory.isItemInInventory(item));
         EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
@@ -77,8 +77,8 @@ namespace {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
         Object item2{22345, "Zooboo", "Danga", {}, {}, Slot::Body};
 
-        action.addToInventoryItems(player, item);
-        action.addToInventoryItems(player, item2);
+        action.pickupItem(player, item);
+        action.pickupItem(player, item2);
 
         action.equipItem(player, item);
         action.equipItem(player, item2);
@@ -93,7 +93,7 @@ namespace {
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.equipItem(player, item);
 
         EXPECT_TRUE(player.getEquipments().isItemEquipped(item));
@@ -103,12 +103,12 @@ namespace {
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.equipItem(player, item);
 
         Object item2{121, "Hello", "world", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item2);
+        action.pickupItem(player, item2);
         action.equipItem(player, item2);
 
         EXPECT_TRUE(player.getEquipments().isItemEquipped(item2));
@@ -127,7 +127,7 @@ namespace {
     TEST_F(PlayerTestSuite, canDropEquippedItem) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.equipItem(player, item);
 
         Object droppedItem = action.dropItemFromEquipped(player, item.getSlot());
@@ -140,7 +140,7 @@ namespace {
     TEST_F(PlayerTestSuite, canUnequipItem) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        action.addToInventoryItems(player, item);
+        action.pickupItem(player, item);
         action.equipItem(player, item);
 
         action.unequipSlot(player, item.getSlot());
@@ -154,7 +154,7 @@ namespace {
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
             Object item{rand() % 220, "test", "test", {}, {}, Slot::Head};
-            action.addToInventoryItems(player, item);
+            action.pickupItem(player, item);
         }
 
         std::vector<Object> items = player.getInventory().getVectorInventory();

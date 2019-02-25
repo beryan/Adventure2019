@@ -27,7 +27,7 @@ namespace action {
         }
     }
 
-    void PlayerAction::addToInventoryItems(Player &player, Object item) {
+    void PlayerAction::pickupItem(Player &player, Object item) {
         player.getInventory().addItemToInventory(item);
     }
 

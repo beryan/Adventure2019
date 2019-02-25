@@ -24,7 +24,7 @@ namespace action {
 
         void unequipSlot(Player &player, const Slot &slot);
 
-        void addToInventoryItems(Player &player, Object item);
+        void pickupItem(Player &player, Object item);
 
         Object dropItemFromInventory(Player &player, Object item);
 
