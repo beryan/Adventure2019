@@ -46,7 +46,7 @@ namespace model {
     }
 
     std::string Player::getPassword() const {
-        return password;
+        return this->password;
     }
 
     void Player::setPassword(std::string_view password) {
@@ -70,11 +70,11 @@ namespace model {
     }
 
     Inventory &Player::getInventory() {
-        return inventory;
+        return this->inventory;
     }
 
     Equipment &Player::getEquipment() {
-        return equipment;
+        return this->equipment;
     }
 
     bool Player::operator==(const model::Player &player) const {
