@@ -22,7 +22,7 @@ namespace action {
 
         void equipItem(Player &player, Object item);
 
-        void unequipSlot(Player &player, const Slot &slot);
+        void unequipItem(Player &player, Object &item);
 
         void pickupItem(Player &player, Object item);
 

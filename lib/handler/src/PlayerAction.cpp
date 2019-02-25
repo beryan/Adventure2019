@@ -12,18 +12,16 @@ namespace action {
     void PlayerAction::equipItem(Player &player, Object item) {
         if (logic.canEquipItem(player.getInventory(), item)) {
             if (player.getEquipments().isSlotOccupied(item.getSlot())) {
-                unequipSlot(player, item.getSlot());
+                player.getEquipments().unequipSlot(item.getSlot());
             }
 
             player.getEquipments().equipItem(player.getInventory().removeItemFromInventory(item));
         }
     }
 
-    void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
-        if (player.getEquipments().isSlotOccupied(slot)) {
-            player.getInventory().addItemToInventory(player.getEquipments().getMappedEquipments().at(slot));
-
-            player.getEquipments().unequipSlot(slot);
+    void PlayerAction::unequipItem(Player &player, Object &item) {
+        if (player.getEquipments().isItemEquipped(item)) {
+            player.getInventory().addItemToInventory(player.getEquipments().unequipItem(item));
         }
     }
 

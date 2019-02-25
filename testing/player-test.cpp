@@ -143,7 +143,7 @@ namespace {
         action.pickupItem(player, item);
         action.equipItem(player, item);
 
-        action.unequipSlot(player, item.getSlot());
+        action.unequipItem(player, item);
 
         EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
