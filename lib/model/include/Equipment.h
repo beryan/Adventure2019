@@ -12,7 +12,7 @@ using model::Object;
 namespace model {
     class Equipment {
     private:
-        std::map<int, Object> equipment;
+        std::map<model::ID, Object> equipment;
     public:
         Equipment();
 
