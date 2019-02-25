@@ -17,8 +17,6 @@ namespace logic {
         PlayerLogic();
 
         bool canEquipItem(Inventory items, const Object &item) const;
-
-        bool isItemEquipped(Equipment items, const Object &item) const;
     };
 
 }
