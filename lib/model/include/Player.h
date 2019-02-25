@@ -51,7 +51,7 @@ namespace model {
 
         Inventory &getInventory();
 
-        Equipment &getEquipments();
+        Equipment &getEquipment();
 
         /************ ROOM ************/
 
@@ -70,7 +70,7 @@ namespace model {
 
         Inventory inventory;
 
-        Equipment equipments;
+        Equipment equipment;
 
         model::ID currRoomID;
     };

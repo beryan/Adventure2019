@@ -11,17 +11,17 @@ namespace action {
 
     void PlayerAction::equipItem(Player &player, Object item) {
         if (logic.canEquipItem(player.getInventory(), item)) {
-            if (player.getEquipments().isSlotOccupied(item.getSlot())) {
-                player.getEquipments().unequipSlot(item.getSlot());
+            if (player.getEquipment().isSlotOccupied(item.getSlot())) {
+                player.getEquipment().unequipSlot(item.getSlot());
             }
 
-            player.getEquipments().equipItem(player.getInventory().removeItemFromInventory(item));
+            player.getEquipment().equipItem(player.getInventory().removeItemFromInventory(item));
         }
     }
 
     void PlayerAction::unequipItem(Player &player, Object &item) {
-        if (player.getEquipments().isItemEquipped(item)) {
-            player.getInventory().addItemToInventory(player.getEquipments().unequipItem(item));
+        if (player.getEquipment().isItemEquipped(item)) {
+            player.getInventory().addItemToInventory(player.getEquipment().unequipItem(item));
         }
     }
 
@@ -35,8 +35,8 @@ namespace action {
         if (player.getInventory().isItemInInventory(item)) {
             temp_item = player.getInventory().removeItemFromInventory(item);
         }
-        else if (player.getEquipments().isItemEquipped(item)) {
-            temp_item = player.getEquipments().unequipItem(item);
+        else if (player.getEquipment().isItemEquipped(item)) {
+            temp_item = player.getEquipment().unequipItem(item);
         }
 
         return std::move(temp_item);

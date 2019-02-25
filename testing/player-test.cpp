@@ -83,11 +83,11 @@ namespace {
         action.equipItem(player, item);
         action.equipItem(player, item2);
 
-        EXPECT_TRUE(player.getEquipments().isItemEquipped(item));
-        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
 
-        EXPECT_TRUE(player.getEquipments().isItemEquipped(item2));
-        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item2.getSlot()));
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
@@ -96,8 +96,8 @@ namespace {
         action.pickupItem(player, item);
         action.equipItem(player, item);
 
-        EXPECT_TRUE(player.getEquipments().isItemEquipped(item));
-        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
@@ -111,8 +111,8 @@ namespace {
         action.pickupItem(player, item2);
         action.equipItem(player, item2);
 
-        EXPECT_TRUE(player.getEquipments().isItemEquipped(item2));
-        EXPECT_TRUE(player.getEquipments().isSlotOccupied(item2.getSlot()));
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
@@ -120,8 +120,8 @@ namespace {
 
         action.equipItem(player, item);
 
-        EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canDropEquippedItem) {
@@ -132,8 +132,8 @@ namespace {
 
         Object droppedItem = action.dropItem(player, item);
 
-        EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
         EXPECT_TRUE(droppedItem.getId() == item.getId());
     }
 
@@ -145,8 +145,8 @@ namespace {
 
         action.unequipItem(player, item);
 
-        EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 

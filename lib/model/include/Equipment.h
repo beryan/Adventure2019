@@ -12,15 +12,15 @@ using model::Object;
 namespace model {
     class Equipment {
     private:
-        std::map<int, Object> equipments;
+        std::map<int, Object> equipment;
     public:
         Equipment();
 
-        std::map<int, Object> getMappedEquipments();
+        std::map<int, Object> getMappedEquipment();
 
-        std::vector<Object> getVectorEquipments() const;
+        std::vector<Object> getVectorEquipment() const;
 
-        void mapEquipments(std::vector<Object> &items);
+        void mapEquipment(std::vector<Object> &items);
 
         void equipItem(Object object);
 

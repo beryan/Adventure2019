@@ -14,7 +14,7 @@ namespace model {
             username({}),
             password({}),
             inventory({}),
-            equipments({}),
+            equipment({}),
             currRoomID(STARTING_LOCATION)
             {}
 
@@ -24,7 +24,7 @@ namespace model {
         username(std::move(username)),
         password(std::move(password)),
         inventory({}),
-        equipments({}),
+        equipment({}),
         currRoomID(STARTING_LOCATION)
         {}
 
@@ -33,7 +33,7 @@ namespace model {
         username(std::move(username)),
         password(std::move(password)),
         inventory({}),
-        equipments({}),
+        equipment({}),
         currRoomID(roomID)
         {}
 
@@ -73,8 +73,8 @@ namespace model {
         return inventory;
     }
 
-    Equipment &Player::getEquipments() {
-        return equipments;
+    Equipment &Player::getEquipment() {
+        return equipment;
     }
 
     bool Player::operator==(const model::Player &player) const {

@@ -9,34 +9,34 @@ using model::Equipment;
 namespace model {
     Equipment::Equipment() {}
 
-    std::map<int, Object> Equipment::getMappedEquipments() {
-        return this->equipments;
+    std::map<int, Object> Equipment::getMappedEquipment() {
+        return this->equipment;
     }
 
-    std::vector<Object> Equipment::getVectorEquipments() const {
+    std::vector<Object> Equipment::getVectorEquipment() const {
         std::vector<Object> container;
-        container.reserve(equipments.size());
+        container.reserve(equipment.size());
 
-        for (auto const& [key, val] : equipments) {
+        for (auto const& [key, val] : equipment) {
             container.push_back(val);
         }
 
         return container;
     }
 
-    void Equipment::mapEquipments(std::vector<Object> &items) {
+    void Equipment::mapEquipment(std::vector<Object> &items) {
         for (Object& item : items) {
-            equipments.insert(std::pair<int, Object>(item.getSlot(), item));
+            equipment.insert(std::pair<int, Object>(item.getSlot(), item));
         }
     }
 
     void Equipment::equipItem(Object object) {
-        this->equipments.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
+        this->equipment.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
     }
 
     Object Equipment::unequipItem(Object &item) {
         Object temp;
-        if (item.getId() == this->equipments.at(item.getSlot()).getId()) {
+        if (item.getId() == this->equipment.at(item.getSlot()).getId()) {
             temp = unequipSlot(item.getSlot());
         }
 
@@ -44,18 +44,18 @@ namespace model {
     }
 
     Object Equipment::unequipSlot(Slot slot) {
-        Object temp = std::move(this->equipments.at(slot));
-        this->equipments.erase(slot);
+        Object temp = std::move(this->equipment.at(slot));
+        this->equipment.erase(slot);
 
         return std::move(temp);
     }
 
     bool Equipment::isSlotOccupied(const Slot &slot) {
-        return static_cast<bool>(equipments.count(slot));
+        return static_cast<bool>(equipment.count(slot));
     }
 
     bool Equipment::isItemEquipped(const Object &item) {
         return  isSlotOccupied(item.getSlot()) &&
-                equipments.at(item.getSlot()).getId() == item.getId();
+                equipment.at(item.getSlot()).getId() == item.getId();
     }
 }
