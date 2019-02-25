@@ -1,6 +1,7 @@
+file(GLOB SOURCES "src/*.cpp")
+
 add_library(logic
-        src/PlayerLogic.cpp
-        src/CharacterLogic.cpp
+        ${SOURCES}
         )
 
 target_include_directories(logic
