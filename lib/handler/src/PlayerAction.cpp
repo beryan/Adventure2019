@@ -31,14 +31,15 @@ namespace action {
         player.getInventory().addItemToInventory(item);
     }
 
-    Object PlayerAction::dropItemFromInventory(Player &player, Object item) {
-        auto temp_item = player.getInventory().removeItemFromInventory(item);
+    Object PlayerAction::dropItem(Player &player, Object item) {
+        Object temp_item;
 
-        return std::move(temp_item);
-    }
-
-    Object PlayerAction::dropItemFromEquipped(Player &player, Slot slot) {
-        auto temp_item = player.getEquipments().unequipSlot(slot);
+        if (player.getInventory().isItemInInventory(item)) {
+            temp_item = player.getInventory().removeItemFromInventory(item);
+        }
+        else if (player.getEquipments().isItemEquipped(item)) {
+            temp_item = player.getEquipments().unequipItem(item);
+        }
 
         return std::move(temp_item);
     }

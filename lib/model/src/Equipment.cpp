@@ -34,6 +34,15 @@ namespace model {
         this->equipments.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
     }
 
+    Object Equipment::unequipItem(Object &item) {
+        Object temp;
+        if (item.getId() == this->equipments.at(item.getSlot()).getId()) {
+            temp = unequipSlot(item.getSlot());
+        }
+
+        return std::move(temp);
+    }
+
     Object Equipment::unequipSlot(Slot slot) {
         Object temp = std::move(this->equipments.at(slot));
         this->equipments.erase(slot);

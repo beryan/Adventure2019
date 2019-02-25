@@ -26,9 +26,7 @@ namespace action {
 
         void pickupItem(Player &player, Object item);
 
-        Object dropItemFromInventory(Player &player, Object item);
-
-        Object dropItemFromEquipped(Player &player, Slot slot);
+        Object dropItem(Player &player, Object item);
     };
 }
 

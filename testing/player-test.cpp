@@ -39,7 +39,7 @@ namespace {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
-        action.dropItemFromInventory(player, item);
+        action.dropItem(player, item);
 
         ASSERT_FALSE(player.getInventory().isItemInInventory(item));
 
@@ -52,7 +52,7 @@ namespace {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
-        action.dropItemFromInventory(player, item);
+        action.dropItem(player, item);
 
         EXPECT_FALSE(player.getInventory().isItemInInventory(item));
     }
@@ -130,7 +130,7 @@ namespace {
         action.pickupItem(player, item);
         action.equipItem(player, item);
 
-        Object droppedItem = action.dropItemFromEquipped(player, item.getSlot());
+        Object droppedItem = action.dropItem(player, item);
 
         EXPECT_FALSE(player.getEquipments().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipments().isSlotOccupied(item.getSlot()));
