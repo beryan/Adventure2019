@@ -1,6 +1,7 @@
+file(GLOB SOURCES "src/*.cpp")
+
 add_library(handler
-        src/PlayerAction.cpp
-        src/CharacterHandler.cpp
+        ${SOURCES}
         )
 
 target_include_directories(handler

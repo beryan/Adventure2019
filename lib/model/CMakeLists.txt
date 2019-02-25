@@ -1,17 +1,7 @@
+file(GLOB SOURCES "src/*.cpp")
+
 add_library(model
-        src/Character.cpp
-        src/Player.cpp
-        src/NPC.cpp
-        src/Object.cpp
-        src/ExtraObjectInfo.cpp
-        src/Game.cpp
-        src/Room.cpp
-        src/Area.cpp
-        src/Reset.cpp
-        src/World.cpp
-        src/WorldHandler.cpp
-        src/PlayerHandler.cpp
-        src/PropertiesManager.cpp
+        ${SOURCES}
         )
 
 target_include_directories(model
