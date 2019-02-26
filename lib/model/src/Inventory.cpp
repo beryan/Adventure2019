@@ -31,13 +31,13 @@ namespace model {
         }
     }
 
-    void Inventory::addItemToInventory(const Object &object) {
-        this->inventory.insert(std::pair<model::ID, Object>(object.getId(), object));
+    void Inventory::addItemToInventory(const Object &item) {
+        this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
     }
 
-    Object Inventory::removeItemFromInventory(const Object &object) {
-        Object temp = std::move(this->inventory.at(object.getId()));
-        this->inventory.erase(object.getId());
+    Object Inventory::removeItemFromInventory(const Object &item) {
+        Object temp = std::move(this->inventory.at(item.getId()));
+        this->inventory.erase(item.getId());
 
         return std::move(temp);
     }

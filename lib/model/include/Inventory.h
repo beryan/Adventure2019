@@ -16,16 +16,41 @@ namespace model {
     public:
         Inventory();
 
+        /**
+         * @return The immutable unordered map of Inventory
+         */
         std::unordered_map<model::ID, Object> getMappedInventory();
 
+        /**
+         * @return The immutable vector form of Inventory
+         */
         std::vector<Object> getVectorInventory() const;
 
+        /**
+         * Maps a list of items into the Inventory
+         * @param items: Items to be mapped
+         */
         void mapInventory(std::vector<Object> items);
 
-        void addItemToInventory(const Object &object);
+        /**
+         * Adds an item to the Inventory
+         * @param item: Object to be added to the Inventory
+         */
+        void addItemToInventory(const Object &item);
 
-        Object removeItemFromInventory(const Object &object);
+        /**
+         * Removes an item from the inventory which is synonymous
+         * with the higher-level method of droppingItem
+         * @param item: Item to be dropped from Inventory
+         * @return The ownership of the item that was dropped
+         */
+        Object removeItemFromInventory(const Object &item);
 
+        /**
+         * Checks if the item exists in Inventory
+         * @param item: Item to be found
+         * @return True if the item was found, False if not
+         */
         bool isItemInInventory(const Object &item);
     };
 }
