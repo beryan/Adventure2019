@@ -5,18 +5,18 @@
 #include <iostream>
 #include <sstream>
 
-#include "PlayerHandler.h"
+#include "AccountHandler.h"
 #include "Server.h"
 
+using model::AccountHandler;
 using json = nlohmann::json;
-using player = model::Player;
 using networking::Connection;
 
 namespace model {
-    const unsigned short PlayerHandler::MIN_PASSWORD_LENGTH = 4;
-    const unsigned short PlayerHandler::MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
+    const unsigned short AccountHandler::MIN_PASSWORD_LENGTH = 4;
+    const unsigned short AccountHandler::MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
-    PlayerHandler::PlayerHandler() {
+    AccountHandler::AccountHandler() {
         this->nextId = 1;
         this->allPlayers = {};
         this->usernameToPlayer = {};
@@ -35,19 +35,19 @@ namespace model {
 
 
     bool
-    PlayerHandler::isLoggedIn(const Connection &client) {
+    AccountHandler::isLoggedIn(const Connection &client) {
         return static_cast<bool> (activeClientToId.count(client));
     }
 
 
     bool
-    PlayerHandler::isRegistering(const Connection &client) {
+    AccountHandler::isRegistering(const Connection &client) {
         return static_cast<bool> (this->clientRegisterStage.count(client));
     }
 
 
     std::string
-    PlayerHandler::processRegistration(const Connection &client, const std::string &input) {
+    AccountHandler::processRegistration(const Connection &client, const std::string &input) {
 
         if (!this->clientRegisterStage.count(client)) {
             // Start registration process
@@ -143,7 +143,7 @@ namespace model {
 
 
     void
-    PlayerHandler::exitRegistration(const Connection &client) {
+    AccountHandler::exitRegistration(const Connection &client) {
         this->clientRegisterStage.erase(client);
         this->regUsernameInput.erase(client);
         this->regPasswordInput.erase(client);
@@ -151,13 +151,13 @@ namespace model {
 
 
     bool
-    PlayerHandler::isLoggingIn(const Connection &client) {
+    AccountHandler::isLoggingIn(const Connection &client) {
         return static_cast<bool> (this->clientLoginStage.count(client));
     }
 
 
     std::string
-    PlayerHandler::processLogin(const Connection &client, const std::string &input) {
+    AccountHandler::processLogin(const Connection &client, const std::string &input) {
 
         if (!this->clientLoginStage.count(client)) {
             // Start login process
@@ -239,14 +239,14 @@ namespace model {
 
 
     void
-    PlayerHandler::exitLogin(const Connection &client) {
+    AccountHandler::exitLogin(const Connection &client) {
         this->clientLoginStage.erase(client);
         this->loginUsernameInput.erase(client);
     }
 
 
     std::string
-    PlayerHandler::logoutPlayer(const Connection &client) {
+    AccountHandler::logoutClient(const Connection &client) {
         this->activeIdToClient.erase(this->activeClientToId.at(client));
         this->activeClientToId.erase(client);
 
@@ -255,19 +255,19 @@ namespace model {
 
 
     std::string
-    PlayerHandler::getUsernameByClient(const Connection &client) {
+    AccountHandler::getUsernameByClient(const Connection &client) {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
 
     model::ID
-    PlayerHandler::getPlayerIdByClient(const Connection &client) {
+    AccountHandler::getPlayerIdByClient(const Connection &client) {
         return this->activeClientToId.at(client);
     }
 
 
     model::ID
-    PlayerHandler::getRoomIdByClient(const Connection &client) {
+    AccountHandler::getRoomIdByClient(const Connection &client) {
         if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
             return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
         }
@@ -276,7 +276,7 @@ namespace model {
 
 
     void
-    PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
+    AccountHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
         if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
             this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
         } else {
@@ -286,13 +286,13 @@ namespace model {
 
 
     Connection
-    PlayerHandler::getClientByPlayerId(const model::ID &playerId) {
+    AccountHandler::getClientByPlayerId(const model::ID &playerId) {
         return this->activeIdToClient.at(playerId);
     }
 
 
     void
-    PlayerHandler::notifyBootedClients(std::deque<Message> &messages) {
+    AccountHandler::notifyBootedClients(std::deque<Message> &messages) {
         for (auto bootedClient : this->bootedClients) {
             messages.push_back({bootedClient, "You have been logged out due to being logged in elsewhere.\n"});
         }
@@ -302,7 +302,7 @@ namespace model {
 
 
     std::vector<Player>
-    PlayerHandler::parseJsonUsers(json users) {
+    AccountHandler::parseJsonUsers(json users) {
         std::vector<Player> players;
 
         for (json::iterator it = users.begin(); it != users.end(); ++it) {

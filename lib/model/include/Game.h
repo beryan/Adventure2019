@@ -7,7 +7,7 @@
 
 #include "Server.h"
 #include "Player.h"
-#include "PlayerHandler.h"
+#include "AccountHandler.h"
 #include "WorldHandler.h"
 
 #include <functional>
@@ -16,7 +16,7 @@
 
 using networking::Connection;
 using networking::Message;
-using model::PlayerHandler;
+using model::AccountHandler;
 using model::WorldHandler;
 
 namespace model {
@@ -39,7 +39,7 @@ namespace model {
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
-        std::unique_ptr<PlayerHandler> playerHandler;
+        std::unique_ptr<AccountHandler> accountHandler;
         std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {

@@ -9,7 +9,7 @@
 #include <iostream>
 
 using model::Game;
-using model::PlayerHandler;
+using model::AccountHandler;
 using model::WorldHandler;
 
 std::string
@@ -46,7 +46,7 @@ namespace model {
         this->disconnect = disconnect;
         this->shutdown = shutdown;
 
-        this->playerHandler = std::make_unique<PlayerHandler>();
+        this->accountHandler = std::make_unique<AccountHandler>();
         this->worldHandler = std::make_unique<WorldHandler>();
     }
 
@@ -72,19 +72,19 @@ namespace model {
     Game::handleDisconnects(std::deque<Message> &messages) {
 
         for (auto &disconnectedClient : *this->disconnectedClients) {
-            if (this->playerHandler->isLoggingIn(disconnectedClient)) {
-                this->playerHandler->exitLogin(disconnectedClient);
+            if (this->accountHandler->isLoggingIn(disconnectedClient)) {
+                this->accountHandler->exitLogin(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from login due to disconnect\n";
             }
 
-            if (this->playerHandler->isRegistering(disconnectedClient)) {
-                this->playerHandler->exitRegistration(disconnectedClient);
+            if (this->accountHandler->isRegistering(disconnectedClient)) {
+                this->accountHandler->exitRegistration(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from registration due to disconnect\n";
             }
 
-            if (this->playerHandler->isLoggedIn(disconnectedClient)) {
+            if (this->accountHandler->isLoggedIn(disconnectedClient)) {
                 this->removeClientFromGame(disconnectedClient);
-                this->playerHandler->logoutPlayer(disconnectedClient);
+                this->accountHandler->logoutClient(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
         }
@@ -100,30 +100,30 @@ namespace model {
             auto incomingInput = trimWhitespace(input.text);
             std::ostringstream tempMessage;
 
-            if (this->playerHandler->isLoggingIn(client)) {
+            if (this->accountHandler->isLoggingIn(client)) {
                 messages.push_back({
                     client,
-                    this->playerHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
+                    this->accountHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
 
-                if (this->playerHandler->isLoggedIn(client)) {
+                if (this->accountHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    auto roomID = this->accountHandler->getRoomIdByClient(client);
                     tempMessage << this->worldHandler->findRoom(roomID);
                     messages.push_back({client, tempMessage.str()});
                 }
 
                 continue;
 
-            } else if (this->playerHandler->isRegistering(client)) {
+            } else if (this->accountHandler->isRegistering(client)) {
                 messages.push_back({
                     client,
-                    this->playerHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
+                    this->accountHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
                 });
 
-                if (this->playerHandler->isLoggedIn(client)) {
+                if (this->accountHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->playerHandler->getRoomIdByClient(client);
+                    auto roomID = this->accountHandler->getRoomIdByClient(client);
                     tempMessage << this->worldHandler->findRoom(roomID);
                     messages.push_back({client, tempMessage.str()});
                 }
@@ -163,7 +163,7 @@ namespace model {
                     break;
             }
 
-            if (!this->playerHandler->isLoggedIn(client)) {
+            if (!this->accountHandler->isLoggedIn(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
@@ -189,11 +189,11 @@ namespace model {
 
         switch (command) {
             case Command::Register:
-                tempMessage << this->playerHandler->processRegistration(client);
+                tempMessage << this->accountHandler->processRegistration(client);
                 break;
 
             case Command::Login:
-                tempMessage << this->playerHandler->processLogin(client);
+                tempMessage << this->accountHandler->processLogin(client);
                 break;
 
             case Command::Help:
@@ -232,7 +232,7 @@ namespace model {
         switch (command) {
             case Command::Logout: {
                 this->removeClientFromGame(client);
-                tempMessage << this->playerHandler->logoutPlayer(client);
+                tempMessage << this->accountHandler->logoutClient(client);
                 break;
             }
 
@@ -255,13 +255,13 @@ namespace model {
                 break;
 
             case Command::Say: {
-                auto roomId = this->playerHandler->getRoomIdByClient(client);
+                auto roomId = this->accountHandler->getRoomIdByClient(client);
                 auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
 
                 for (auto playerId : playerIds) {
-                    auto connection = this->playerHandler->getClientByPlayerId(playerId);
+                    auto connection = this->accountHandler->getClientByPlayerId(playerId);
                     std::ostringstream sayMessage;
-                    sayMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    sayMessage << this->accountHandler->getUsernameByClient(client) << "> " << param << "\n";
                     messages.push_back({connection, sayMessage.str()});
                 }
 
@@ -273,10 +273,10 @@ namespace model {
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
 
                 for (auto connection: *this->clients) {
-                    auto receiver = this->playerHandler->getUsernameByClient(connection);
+                    auto receiver = this->accountHandler->getUsernameByClient(connection);
 
                     if (receiver == username)  {
-                        auto sender = this->playerHandler->getUsernameByClient(client);
+                        auto sender = this->accountHandler->getUsernameByClient(client);
 
                         std::ostringstream toMessage;
                         std::ostringstream fromMessage;
@@ -299,7 +299,7 @@ namespace model {
             case Command::Yell: {
                 for (auto connection : *this->clients) {
                     std::ostringstream yellMessage;
-                    yellMessage << this->playerHandler->getUsernameByClient(client) << "> " << param << "\n";
+                    yellMessage << this->accountHandler->getUsernameByClient(client) << "> " << param << "\n";
                     messages.push_back({connection, yellMessage.str()});
                 }
 
@@ -307,19 +307,19 @@ namespace model {
             }
 
             case Command::Look: {
-                auto roomID = this->playerHandler->getRoomIdByClient(client);
+                auto roomID = this->accountHandler->getRoomIdByClient(client);
                 tempMessage << this->worldHandler->findRoom(roomID);
                 break;
             }
 
             case Command::Move: {
-                auto roomID = this->playerHandler->getRoomIdByClient(client);
+                auto roomID = this->accountHandler->getRoomIdByClient(client);
 
                 if (this->worldHandler->isValidDirection(roomID, param)) {
-                    auto playerID = this->playerHandler->getPlayerIdByClient(client);
+                    auto playerID = this->accountHandler->getPlayerIdByClient(client);
                     auto destinationID = this->worldHandler->getDestination(roomID, param);
                     this->worldHandler->movePlayer(playerID, roomID, destinationID);
-                    this->playerHandler->setRoomIdByClient(client, destinationID);
+                    this->accountHandler->setRoomIdByClient(client, destinationID);
                     tempMessage << this->worldHandler->findRoom(destinationID);
 
                 } else {
@@ -342,7 +342,7 @@ namespace model {
 
     void
     Game::handleOutgoing(std::deque<Message> &messages) {
-        this->playerHandler->notifyBootedClients(messages);
+        this->accountHandler->notifyBootedClients(messages);
     }
 
 
@@ -382,8 +382,8 @@ namespace model {
 
     void
     Game::addClientToGame(Connection client) {
-        auto playerID = this->playerHandler->getPlayerIdByClient(client);
-        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        auto playerID = this->accountHandler->getPlayerIdByClient(client);
+        auto roomID = this->accountHandler->getRoomIdByClient(client);
 
         this->worldHandler->addPlayer(playerID, roomID);
     }
@@ -391,8 +391,8 @@ namespace model {
 
     void
     Game::removeClientFromGame(Connection client) {
-        auto playerID = this->playerHandler->getPlayerIdByClient(client);
-        auto roomID = this->playerHandler->getRoomIdByClient(client);
+        auto playerID = this->accountHandler->getPlayerIdByClient(client);
+        auto roomID = this->accountHandler->getRoomIdByClient(client);
         this->worldHandler->removePlayer(playerID, roomID);
     }
 

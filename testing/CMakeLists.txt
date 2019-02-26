@@ -11,7 +11,7 @@ add_executable(runAllTests
         character-test.cpp
         game-test.cpp
         player-test.cpp
-        playerHandler-test.cpp
+        accountHandler-test.cpp
         propertiesManager-test.cpp
         room-test.cpp
         world-test.cpp
