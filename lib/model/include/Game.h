@@ -93,13 +93,6 @@ namespace model {
         formMessages(std::deque<Message> &messages);
 
         /**
-         *  Returns the words associated with a command in the form of a comma-separated string.
-         *  Used to display commands in the help display.
-         */
-        std::string
-        getCommandWords(Command command);
-
-        /**
          *  Update game state to include connections that are in game.
          */
         void
