@@ -3,43 +3,41 @@
 //
 
 #include "PlayerAction.h"
-#include "PlayerLogic.h"
 
 using action::PlayerAction;
-using logic::PlayerLogic;
 
 namespace action {
+    PlayerAction::PlayerAction() {}
+
     void PlayerAction::equipItem(Player &player, Object item) {
-        if (PlayerLogic::canEquipItem(player.getMappedInventoryItems(), item)) {
-            if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), item.getSlot())) {
-                unequipSlot(player, item.getSlot());
+        if (logic.canEquipItem(player.getInventory(), item)) {
+            if (player.getEquipment().isSlotOccupied(item.getSlot())) {
+                player.getEquipment().unequipSlot(item.getSlot());
             }
 
-            player.addToEquippedItems(item);
-            player.removeInventoryItem(item);
+            player.getEquipment().equipItem(player.getInventory().removeItemFromInventory(item));
         }
     }
 
-    void PlayerAction::unequipSlot(Player &player, const Slot &slot) {
-        if (PlayerLogic::isSlotOccupied(player.getMappedEquippedItems(), slot)) {
-            player.addToInventoryItems(player.getMappedEquippedItems().at(slot));
-
-            player.removeEquippedItem(slot);
+    void PlayerAction::unequipItem(Player &player, Object &item) {
+        if (player.getEquipment().isItemEquipped(item)) {
+            player.getInventory().addItemToInventory(player.getEquipment().unequipItem(item));
         }
     }
 
-    void PlayerAction::addToInventoryItems(Player &player, Object item) {
-        player.addToInventoryItems(item);
+    void PlayerAction::pickupItem(Player &player, Object item) {
+        player.getInventory().addItemToInventory(item);
     }
 
-    Object PlayerAction::dropItemFromInventory(Player &player, Object item) {
-        auto temp_item = player.removeInventoryItem(item);
+    Object PlayerAction::dropItem(Player &player, Object item) {
+        Object temp_item;
 
-        return std::move(temp_item);
-    }
-
-    Object PlayerAction::dropItemFromEquipped(Player &player, Slot slot) {
-        auto temp_item = player.removeEquippedItem(slot);
+        if (player.getInventory().isItemInInventory(item)) {
+            temp_item = player.getInventory().removeItemFromInventory(item);
+        }
+        else if (player.getEquipment().isItemEquipped(item)) {
+            temp_item = player.getEquipment().unequipItem(item);
+        }
 
         return std::move(temp_item);
     }

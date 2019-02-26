@@ -13,8 +13,8 @@ namespace model {
             Character({}),
             username({}),
             password({}),
-            inventoryItems({}),
-            equippedItems({}),
+            inventory({}),
+            equipment({}),
             currRoomID(STARTING_LOCATION)
             {}
 
@@ -23,8 +23,8 @@ namespace model {
         Character(id),
         username(std::move(username)),
         password(std::move(password)),
-        inventoryItems({}),
-        equippedItems({}),
+        inventory({}),
+        equipment({}),
         currRoomID(STARTING_LOCATION)
         {}
 
@@ -32,8 +32,8 @@ namespace model {
         Character(id),
         username(std::move(username)),
         password(std::move(password)),
-        inventoryItems({}),
-        equippedItems({}),
+        inventory({}),
+        equipment({}),
         currRoomID(roomID)
         {}
 
@@ -46,7 +46,7 @@ namespace model {
     }
 
     std::string Player::getPassword() const {
-        return password;
+        return this->password;
     }
 
     void Player::setPassword(std::string_view password) {
@@ -61,48 +61,6 @@ namespace model {
         this->avatar = std::move(avatar);
     }
 
-    std::vector<Object> Player::getInventoryItems() const {
-        std::vector<Object> container;
-        container.reserve(inventoryItems.size());
-
-        for (auto const& [key, val] : inventoryItems) {
-            container.push_back(val);
-        }
-
-        return container;
-    }
-
-    std::map<model::ID, Object> Player::getMappedInventoryItems() {
-        return this->inventoryItems;
-    }
-
-    std::map<int, Object> Player::getMappedEquippedItems() {
-        return this->equippedItems;
-    }
-
-    void Player::mapInventoryItems(std::vector<Object> &items) {
-        for (Object& item : items) {
-            inventoryItems.insert(std::pair<model::ID, Object>(item.getId(), item));
-        }
-    }
-
-    std::vector<Object> Player::getEquippedItems() const {
-        std::vector<Object> container;
-        container.reserve(equippedItems.size());
-
-        for (auto const& [key, val] : equippedItems) {
-            container.push_back(val);
-        }
-
-        return container;
-    }
-
-    void Player::mapEquippedItems(std::vector<Object> &items) {
-        for (Object& item : items) {
-            equippedItems.insert(std::pair<int, Object>(item.getSlot(), item));
-        }
-    }
-
     model::ID Player::getCurrRoomID() {
         return this->currRoomID;
     }
@@ -111,26 +69,12 @@ namespace model {
         this->currRoomID = id;
     }
 
-    void Player::addToInventoryItems(Object object) {
-        this->inventoryItems.insert(std::pair<model::ID, Object>(object.getId(), std::move(object)));
+    Inventory &Player::getInventory() {
+        return this->inventory;
     }
 
-    void Player::addToEquippedItems(Object object) {
-        this->equippedItems.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
-    }
-
-    Object Player::removeInventoryItem(Object object) {
-        Object temp = std::move(this->inventoryItems.at(object.getId()));
-        this->inventoryItems.erase(object.getId());
-
-        return std::move(temp);
-    }
-
-    Object Player::removeEquippedItem(Slot slot) {
-        Object temp = std::move(this->equippedItems.at(slot));
-        this->equippedItems.erase(slot);
-
-        return std::move(temp);
+    Equipment &Player::getEquipment() {
+        return this->equipment;
     }
 
     bool Player::operator==(const model::Player &player) const {
