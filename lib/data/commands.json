@@ -1,5 +1,6 @@
 {
   "global_aliases": {},
+  "new_test_user": {},
   "testuser": {
     "test_help": "help",
     "test_login": "login",
