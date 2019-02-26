@@ -41,11 +41,11 @@ Command CommandHandler::getCommandForUser(const std::string &commandStr, const s
 bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(COMMANDS_FILE_PATH);
-    json t = json::parse(ifs);
+    json commands_json = json::parse(ifs);
 
     bool wasFound = false;
-    auto username_iterator = t.find(username);
-    if (username_iterator != t.end()) {
+    auto username_iterator = commands_json.find(username);
+    if (username_iterator != commands_json.end()) {
         auto aliasedCommands = username_iterator->get<std::unordered_map<std::string, std::string>>();
         auto command_iterator = aliasedCommands.find(commandStr);
         if (command_iterator != aliasedCommands.end()) {
@@ -72,53 +72,53 @@ void CommandHandler::clearGlobalAlias(Command command) {
 void model::CommandHandler::setUserAlias(Command command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
-    json t = json::parse(inFile);
+    json commands_json = json::parse(inFile);
 
-    auto username_iterator = t.find(username);
-    if (username_iterator != t.end()) {
+    auto username_iterator = commands_json.find(username);
+    if (username_iterator != commands_json.end()) {
         std::string commandStr = getStringForCommand(command);
         json newAlias = {{alias, commandStr}};
         username_iterator->update(newAlias);
     } else {
         std::string commandStr = getStringForCommand(command);
-        t[username] = {{alias, commandStr}};
+        commands_json[username] = {{alias, commandStr}};
     }
 
     inFile.close();
 
-    writeJson(t);
+    writeJson(commands_json);
 }
 
 void model::CommandHandler::clearUserAlias(Command command, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
-    json t = json::parse(inFile);
+    json commands_json = json::parse(inFile);
 
-    auto username_iterator = t.find(username);
-    if (username_iterator != t.end()) {
+    auto username_iterator = commands_json.find(username);
+    if (username_iterator != commands_json.end()) {
         std::string commandStr = getStringForCommand(command);
-        auto m = username_iterator->get<std::unordered_map<std::string, std::string>>();
-        auto it = m.begin();
-        while (it != m.end() && it->second != commandStr) {
+        auto user_aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
+        auto it = user_aliases.begin();
+        while (it != user_aliases.end() && it->second != commandStr) {
             it++;
         }
         if (it->second == commandStr) {
-            m.erase(it);
-            json j(m);
+            user_aliases.erase(it);
+            json j(user_aliases);
             *username_iterator = j;
         }
     }
 
     inFile.close();
 
-    writeJson(t);
+    writeJson(commands_json);
 }
 
 std::string CommandHandler::getStringForCommand(Command command) {
     std::string res;
-    for (const auto &kv : this->commands) {
-        if (kv.second == command) {
-            res = kv.first;
+    for (const auto &kv_pair : this->commands) {
+        if (kv_pair.second == command) {
+            res = kv_pair.first;
         }
     }
 
