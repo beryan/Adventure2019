@@ -15,7 +15,7 @@ using model::Command;
 using model::CommandHandler;
 
 const std::string COMMANDS_FILE_PATH = "lib/data/commands.json";
-const std::string GLOBAL_ALIAS_USER = "global_aliases";
+const std::string GLOBAL_ALIASES_USER = "global_aliases";
 
 void writeJson(json j);
 
@@ -32,7 +32,7 @@ Command CommandHandler::getDefaultCommand(const std::string &commandStr) {
 Command CommandHandler::getCommandForUser(const std::string &commandStr, const std::string &username) {
     Command result;
     if (!findAliasedCommand(commandStr, username, result) &&
-        !findAliasedCommand(commandStr, GLOBAL_ALIAS_USER, result)) {
+        !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {
         result = getDefaultCommand(commandStr);
     }
     return result;
@@ -62,11 +62,11 @@ bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std
 }
 
 void CommandHandler::setGlobalAlias(Command command, const std::string &alias) {
-    setUserAlias(command, alias, GLOBAL_ALIAS_USER);
+    setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
 void CommandHandler::clearGlobalAlias(Command command) {
-    clearUserAlias(command, GLOBAL_ALIAS_USER);
+    clearUserAlias(command, GLOBAL_ALIASES_USER);
 }
 
 void model::CommandHandler::setUserAlias(Command command, const std::string &alias, const std::string &username) {
@@ -76,11 +76,11 @@ void model::CommandHandler::setUserAlias(Command command, const std::string &ali
 
     auto username_iterator = t.find(username);
     if (username_iterator != t.end()) {
-        std::string commandStr = getStringFromCommand(command);
+        std::string commandStr = getStringForCommand(command);
         json newAlias = {{alias, commandStr}};
         username_iterator->update(newAlias);
     } else {
-        std::string commandStr = getStringFromCommand(command);
+        std::string commandStr = getStringForCommand(command);
         t[username] = {{alias, commandStr}};
     }
 
@@ -96,7 +96,7 @@ void model::CommandHandler::clearUserAlias(Command command, const std::string &u
 
     auto username_iterator = t.find(username);
     if (username_iterator != t.end()) {
-        std::string commandStr = getStringFromCommand(command);
+        std::string commandStr = getStringForCommand(command);
         auto m = username_iterator->get<std::unordered_map<std::string, std::string>>();
         auto it = m.begin();
         while (it != m.end() && it->second != commandStr) {
@@ -114,7 +114,7 @@ void model::CommandHandler::clearUserAlias(Command command, const std::string &u
     writeJson(t);
 }
 
-std::string CommandHandler::getStringFromCommand(Command command) {
+std::string CommandHandler::getStringForCommand(Command command) {
     std::string res;
     for (const auto &kv : this->commands) {
         if (kv.second == command) {

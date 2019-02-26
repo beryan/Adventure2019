@@ -10,7 +10,7 @@ namespace {
 
     TEST(ExtraObjectInfoTestSuite, canUseDefaultConstructor) {
         model::ExtraObjectInfo myInfo;
-        int expected_size = 0;
+        unsigned int expected_size = 0;
         EXPECT_EQ(expected_size, myInfo.getExtraKeywords().size());
         EXPECT_EQ(expected_size, myInfo.getExtraDescriptions().size());
     }
@@ -20,7 +20,7 @@ namespace {
         std::string myDescription = "test_description";
         model::ExtraObjectInfo myInfo{{myKeyword},
                                       {myDescription}};
-        int expected_size = 1;
+        unsigned int expected_size = 1;
         EXPECT_EQ(expected_size, myInfo.getExtraKeywords().size());
         EXPECT_EQ(expected_size, myInfo.getExtraDescriptions().size());
         EXPECT_EQ(myKeyword, myInfo.getExtraKeywords().at(0));
@@ -31,7 +31,7 @@ namespace {
         std::vector<std::string> keywords = {"test1", "test2"};
         model::ExtraObjectInfo myInfo;
 
-        int expected_size1 = 0;
+        unsigned int expected_size1 = 0;
         EXPECT_EQ(expected_size1, myInfo.getExtraKeywords().size());
 
         unsigned long expected_size2 = keywords.size();
@@ -49,7 +49,7 @@ namespace {
         std::vector<std::string> descriptions = {"test1", "test2"};
         model::ExtraObjectInfo myInfo;
 
-        int expected_size1 = 0;
+        unsigned int expected_size1 = 0;
         EXPECT_EQ(expected_size1, myInfo.getExtraDescriptions().size());
 
         unsigned long expected_size2 = descriptions.size();

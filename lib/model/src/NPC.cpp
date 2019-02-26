@@ -3,10 +3,21 @@
 //
 
 #include "NPC.h"
+#include "json.hpp"
+#include <iostream>
 
+using json = nlohmann::json;
 
 namespace model {
 
+    NPC::NPC() :
+            Character(0),
+            keywords({}),
+            description({}),
+            shortDescription({}),
+            longDescription({})
+    {}
+    
     NPC::NPC(model::ID id) :
         Character(id),
         keywords({}),
@@ -18,7 +29,7 @@ namespace model {
     NPC::NPC(
         model::ID id,
         std::vector<std::string> keywords,
-        std::string description,
+        std::vector<std::string>description,
         std::string shortDescription,
         std::vector<std::string> longDescription
     ) :
@@ -29,11 +40,11 @@ namespace model {
         longDescription(std::move(longDescription))
         {}
 
-    std::string NPC::getDescription() const {
+    std::vector<std::string> NPC::getDescription() const {
         return this->description;
     }
 
-    void NPC::setDescription(std::string description) {
+    void NPC::setDescription(std::vector<std::string>description) {
         this->description = std::move(description);
     }
 
@@ -68,5 +79,11 @@ namespace model {
 
     void NPC::addToLongDescription(std::string addToLongDescription) {
         this->longDescription.push_back(std::move(addToLongDescription));
+    }
+
+    //print object
+    std::ostream& operator<<(std::ostream& os, const NPC& npc) {
+        os << npc.getId() << ". " << npc.getShortDescription() << std::endl;
+        return os;
     }
 }

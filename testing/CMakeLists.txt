@@ -9,6 +9,7 @@ add_executable(runAllTests
         lib/gmock-gtest-all.cc
         area-test.cpp
         character-test.cpp
+        game-test.cpp
         player-test.cpp
         playerHandler-test.cpp
         propertiesManager-test.cpp
@@ -21,6 +22,8 @@ add_executable(runAllTests
 
 target_link_libraries(runAllTests
         model
+        logic
+        handler
         pthread
         ${CMAKE_THREAD_LIBS_INIT}
         )

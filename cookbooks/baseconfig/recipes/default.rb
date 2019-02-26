@@ -46,7 +46,7 @@ bash 'install_boost' do
   wget -nv https://dl.bintray.com/boostorg/release/1.69.0/source/boost_1_69_0.tar.gz
   tar -zxf boost_1_69_0.tar.gz
   cd boost_1_69_0
-  sudo ./bootstrap.sh --with-libraries=system --libdir=/usr/local/lib --includedir=/usr/include
+  sudo ./bootstrap.sh --with-libraries=system,filesystem --libdir=/usr/local/lib --includedir=/usr/include
   sudo ./b2 install toolset=gcc-7
   EOH
 end

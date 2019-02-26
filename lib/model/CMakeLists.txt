@@ -1,18 +1,7 @@
+file(GLOB SOURCES "src/*.cpp")
+
 add_library(model
-        src/Character.cpp
-        src/Player.cpp
-        src/NPC.cpp
-        src/Object.cpp
-        src/ExtraObjectInfo.cpp
-        src/Game.cpp
-        src/Room.cpp
-        src/Area.cpp
-        src/Reset.cpp
-        src/World.cpp
-        src/WorldHandler.cpp
-        src/PlayerHandler.cpp
-        src/PropertiesManager.cpp
-        src/CommandHandler.cpp
+        ${SOURCES}
         )
 
 find_package(Boost 1.68 COMPONENTS system REQUIRED)
@@ -26,8 +15,7 @@ target_include_directories(model
             ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(model networking json ${Boost_LIBRARIES}
-        )
+target_link_libraries(model networking json fileparser ${Boost_LIBRARIES})
 
 set_target_properties(model
         PROPERTIES

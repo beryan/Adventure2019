@@ -58,6 +58,13 @@ namespace model {
          */
         void clearUserAlias(Command command, const std::string &username);
 
+        /**
+         * Returns the default string that represents a command
+         * @param command command to get the string for
+         * @return the default string for a command
+         */
+        std::string getStringForCommand(Command command);
+
     private:
         /**
          * Checks for an aliased command for user {username} and sets it to the result.
@@ -73,8 +80,6 @@ namespace model {
          * @return true if command was found, false otherwise
          */
         bool findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result);
-
-        std::string getStringFromCommand(Command command);
 
         std::unordered_map<std::string, model::Command> commands = {
                 {"help",     Command::Help},
