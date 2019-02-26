@@ -20,11 +20,11 @@ namespace model {
 
         std::vector<Object> getVectorInventory() const;
 
-        void addItemToInventory(Object object);
+        void mapInventory(std::vector<Object> items);
 
-        Object removeItemFromInventory(Object object);
+        void addItemToInventory(const Object &object);
 
-        void mapInventory(std::vector<Object> &items);
+        Object removeItemFromInventory(const Object &object);
 
         bool isItemInInventory(const Object &item);
     };

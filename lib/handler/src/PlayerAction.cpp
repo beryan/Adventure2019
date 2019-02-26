@@ -19,7 +19,7 @@ namespace action {
         }
     }
 
-    void PlayerAction::unequipItem(Player &player, Object &item) {
+    void PlayerAction::unequipItem(Player &player, Object item) {
         if (player.getEquipment().isItemEquipped(item)) {
             player.getInventory().addItemToInventory(player.getEquipment().unequipItem(item));
         }

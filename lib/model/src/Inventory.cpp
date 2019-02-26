@@ -24,22 +24,22 @@ namespace model {
         return container;
     }
 
-    void Inventory::addItemToInventory(Object object) {
-        this->inventory.insert(std::pair<model::ID, Object>(object.getId(), std::move(object)));
+    void Inventory::mapInventory(std::vector<Object> items) {
+        this->inventory.clear();
+        for (Object item : items) {
+            this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
+        }
     }
 
-    Object Inventory::removeItemFromInventory(Object object) {
+    void Inventory::addItemToInventory(const Object &object) {
+        this->inventory.insert(std::pair<model::ID, Object>(object.getId(), object));
+    }
+
+    Object Inventory::removeItemFromInventory(const Object &object) {
         Object temp = std::move(this->inventory.at(object.getId()));
         this->inventory.erase(object.getId());
 
         return std::move(temp);
-    }
-
-    void Inventory::mapInventory(std::vector<Object> &items) {
-        this->inventory.clear();
-        for (Object& item : items) {
-            this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
-        }
     }
 
     bool Inventory::isItemInInventory(const Object &item) {

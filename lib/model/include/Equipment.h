@@ -12,7 +12,11 @@ using model::Object;
 namespace model {
     class Equipment {
     private:
-        std::unordered_map<model::ID, Object> equipment;
+        /**
+         * int: Numbers indicate which slot the item is in
+         * Object: Item that is equipped
+         */
+        std::unordered_map<int, Object> equipment;
     public:
         Equipment();
 
@@ -20,13 +24,13 @@ namespace model {
 
         std::vector<Object> getVectorEquipment() const;
 
-        void mapEquipment(std::vector<Object> &items);
+        void mapEquipment(std::vector<Object> items);
 
-        void equipItem(Object object);
+        void equipItem(const Object &object);
 
-        Object unequipItem(Object &item);
+        Object unequipItem(const Object &item);
 
-        Object unequipSlot(Slot slot);
+        Object unequipSlot(const Slot &slot);
 
         bool isSlotOccupied(const Slot &slot);
 
