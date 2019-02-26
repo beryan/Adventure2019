@@ -9,7 +9,7 @@ using model::Equipment;
 namespace model {
     Equipment::Equipment() {}
 
-    std::map<int, Object> Equipment::getMappedEquipment() {
+    std::unordered_map<int, Object> Equipment::getMappedEquipment() {
         return this->equipment;
     }
 
@@ -25,6 +25,7 @@ namespace model {
     }
 
     void Equipment::mapEquipment(std::vector<Object> &items) {
+        this->equipment.clear();
         for (Object& item : items) {
             this->equipment.insert(std::pair<int, Object>(item.getSlot(), item));
         }
@@ -56,6 +57,6 @@ namespace model {
 
     bool Equipment::isItemEquipped(const Object &item) {
         return  isSlotOccupied(item.getSlot()) &&
-                this->equipment.at(item.getSlot()).getId() == item.getId();
+                this->equipment.at(item.getSlot()) == item;
     }
 }

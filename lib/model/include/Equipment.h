@@ -12,11 +12,11 @@ using model::Object;
 namespace model {
     class Equipment {
     private:
-        std::map<model::ID, Object> equipment;
+        std::unordered_map<model::ID, Object> equipment;
     public:
         Equipment();
 
-        std::map<int, Object> getMappedEquipment();
+        std::unordered_map<int, Object> getMappedEquipment();
 
         std::vector<Object> getVectorEquipment() const;
 

@@ -9,7 +9,7 @@ using model::Inventory;
 namespace model {
     Inventory::Inventory() {}
 
-    std::map<model::ID, Object> Inventory::getMappedInventory() {
+    std::unordered_map<model::ID, Object> Inventory::getMappedInventory() {
         return this->inventory;
     }
 
@@ -36,6 +36,7 @@ namespace model {
     }
 
     void Inventory::mapInventory(std::vector<Object> &items) {
+        this->inventory.clear();
         for (Object& item : items) {
             this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
         }
