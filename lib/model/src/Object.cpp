@@ -110,12 +110,12 @@ namespace model {
         return this->slot >= 0 && this->slot < Slot::Misc;
     }
 
-    bool Object::operator==(const Object &NPC) const {
-        return this->id == NPC.id;
+    bool Object::operator==(const Object &object) const {
+        return (this->name.compare(object.getName()) == 0);
     }
 
     std::ostream&operator<<(std::ostream& os, const Object& obj){
-        os << obj.id << ". " << obj.name << std::endl;
+        os << obj.getId() << ". " << obj.getName() << std::endl;
         return os;
     }
 

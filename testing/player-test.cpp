@@ -5,132 +5,175 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "PlayerAction.h"
-#include "PlayerLogic.h"
 #include <stdlib.h>
 #include <iostream>
 
 using action::PlayerAction;
-using logic::PlayerLogic;
 
 namespace {
-    TEST(PlayerTestSuite, canConstructPlayer) {
-        int expected_id = 12345;
-        std::string expected_username = "hello";
-        std::string expected_password = "zombie";
+    class PlayerTestSuite : public ::testing::Test {
+    protected:
+        Player player;
+        PlayerAction action;
 
-        Player player{expected_id, expected_username, expected_password};
+        virtual void SetUp() override {
+            int expected_id = 12345;
+            std::string expected_username = "hello";
+            std::string expected_password = "world";
+            model::ID expected_roomID = 41;
 
-        EXPECT_EQ(player.getId(), expected_id);
-        EXPECT_EQ(player.getUsername(), expected_username);
-        EXPECT_EQ(player.getPassword(), expected_password);
-    }
+            player = {expected_id, expected_username, expected_password, expected_roomID};
+            action = {};
+        }
+    };
 
-    TEST(PlayerTestSuite, canAddItemToInventory) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canAddItemToInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
+        action.pickupItem(player, item);
 
-        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canDropItemFromInventory) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
-        PlayerAction::dropItemFromInventory(player, item);
+        action.pickupItem(player, item);
+        action.dropItem(player, item);
 
-        EXPECT_FALSE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+
+        action.pickupItem(player, item);
+
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canDropItemFromInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
-        PlayerAction::equipItem(player, item);
+        action.pickupItem(player, item);
+        action.dropItem(player, item);
 
-        EXPECT_TRUE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
+        EXPECT_FALSE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canPickupItemFromRoomInventory) {
+        Inventory inventory{};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Body};
+        unsigned int expected_size = 0;
+
+        inventory.addItemToInventory(item);
+
+        ASSERT_TRUE(inventory.isItemInInventory(item));
+
+        action.pickupItem(player, inventory.removeItemFromInventory(item));
+
+        ASSERT_FALSE(inventory.isItemInInventory(item));
+        EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canEquipTwoDifferentSlotItemsFromInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item2{22345, "Zooboo", "Danga", {}, {}, Slot::Body};
+
+        action.pickupItem(player, item);
+        action.pickupItem(player, item2);
+
+        action.equipItem(player, item);
+        action.equipItem(player, item2);
+
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
+
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
+    }
+
+    TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
-        PlayerAction::equipItem(player, item);
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
+
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
+    }
+
+    TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
 
         Object item2{121, "Hello", "world", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item2);
-        PlayerAction::equipItem(player, item2);
+        action.pickupItem(player, item2);
+        action.equipItem(player, item2);
 
-        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
-        EXPECT_TRUE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item2));
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
     }
 
-    TEST(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::equipItem(player, item);
+        action.equipItem(player, item);
 
-        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
     }
 
-    TEST(PlayerTestSuite, canDropEquippedItem) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canDropEquippedItem) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
-        PlayerAction::equipItem(player, item);
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
 
-        Object droppedItem = PlayerAction::dropItemFromEquipped(player, item.getSlot());
+        Object droppedItem = action.dropItem(player, item);
 
-        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
-        EXPECT_EQ(droppedItem.getId(), item.getId());
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(droppedItem == item);
     }
 
-    TEST(PlayerTestSuite, canUnequipItem) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canUnequipItem) {
         Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        PlayerAction::addToInventoryItems(player, item);
-        PlayerAction::equipItem(player, item);
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
 
-        PlayerAction::unequipSlot(player, Slot::Head);
+        action.unequipItem(player, item);
 
-        EXPECT_FALSE(PlayerLogic::isItemEquipped(player.getMappedEquippedItems(), item));
-        EXPECT_TRUE(PlayerLogic::isItemInInventory(player.getMappedInventoryItems(), item));
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canReturnCollectionOfItems) {
-        Player player{1294, "Cindy", "iPoopOnPizzas"};
-
+    TEST_F(PlayerTestSuite, canReturnCollectionOfItems) {
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
             Object item{rand() % 220, "test", "test", {}, {}, Slot::Head};
-            PlayerAction::addToInventoryItems(player, item);
+            action.pickupItem(player, item);
         }
 
-        std::vector<Object> items = player.getInventoryItems();
+        std::vector<Object> items = player.getInventory().getVectorInventory();
 
-        EXPECT_EQ(items.size(), itemsToCreate);
+        ASSERT_EQ(items.size(), itemsToCreate);
+        for (Object object : items) {
+            EXPECT_TRUE(object.getSlot() == Slot::Head);
+        }
     }
 
-    TEST(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
-        model::ID expected_roomID = 41;
-        Player player{1234, "poopy", "mcpoop", expected_roomID};
-
-        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+    TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
+        EXPECT_EQ(41, player.getCurrRoomID());
     }
 
-    TEST(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
-        model::ID expected_roomID = 41;
-        Player player{1234, "poopy", "mcpoop"};
+    TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
+        model::ID expected_roomID = 61;
+
         player.setCurrRoomID(expected_roomID);
 
-        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+        EXPECT_EQ(expected_roomID, player.getCurrRoomID());
     }
 }
