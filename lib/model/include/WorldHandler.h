@@ -11,8 +11,8 @@
 
 using json = nlohmann::json;
 
-namespace model{
-    class WorldHandler{
+namespace model {
+    class WorldHandler {
     public:
         WorldHandler();
 
@@ -54,16 +54,6 @@ namespace model{
          */
         std::vector<model::ID>
         getNearbyPlayerIds(const model::ID &roomId);
-
-        void addUser(Player player);
-        void removeUser(Player player);
-
-//        void addArea(Area area);
-//        void removeArea(Area area);
-
-        void parseJSON();
-
-        void parseUserData();
 
     private:
         World world;
