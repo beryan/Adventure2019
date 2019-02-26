@@ -33,22 +33,25 @@ namespace model {
         this->bootedClients = {};
     }
 
+
     bool
     PlayerHandler::isLoggedIn(const Connection &client) {
-        return (bool) activeClientToId.count(client);
+        return static_cast<bool> (activeClientToId.count(client));
     }
+
 
     bool
     PlayerHandler::isRegistering(const Connection &client) {
-        return (bool) this->clientRegisterStage.count(client);
+        return static_cast<bool> (this->clientRegisterStage.count(client));
     }
+
 
     std::string
     PlayerHandler::processRegistration(const Connection &client, const std::string &input) {
 
         if (!this->clientRegisterStage.count(client)) {
             // Start registration process
-            this->clientRegisterStage.emplace(client, RegisterStage::USERNAME);
+            this->clientRegisterStage.emplace(client, RegisterStage::Username);
             std::ostringstream response;
             response << "\n"
                      << "Register\n"
@@ -59,7 +62,7 @@ namespace model {
         }
 
         switch (this->clientRegisterStage.at(client)) {
-            case RegisterStage::USERNAME: {
+            case RegisterStage::Username: {
                 if (input.length() == 0) {
                     this->exitRegistration(client);
                     return "No username entered. Registration process cancelled.\n";
@@ -76,7 +79,7 @@ namespace model {
 
                 this->regUsernameInput.emplace(client, input);
 
-                this->clientRegisterStage.at(client) = RegisterStage::PASSWORD;
+                this->clientRegisterStage.at(client) = RegisterStage::Password;
 
                 std::ostringstream response;
                 response << input << "\n"
@@ -86,7 +89,7 @@ namespace model {
                 return response.str();
             }
 
-            case RegisterStage::PASSWORD: {
+            case RegisterStage::Password: {
                 if (input.length() < MIN_PASSWORD_LENGTH) {
                     this->exitRegistration(client);
                     return "The password you entered is too short. Registration process cancelled.\n";
@@ -98,12 +101,12 @@ namespace model {
                 }
 
                 this->regPasswordInput.emplace(client, input);
-                this->clientRegisterStage.at(client) = RegisterStage::CONFIRM_PASSWORD;
+                this->clientRegisterStage.at(client) = RegisterStage::ConfirmPassword;
 
                 return "Re-enter your password\n";
             }
 
-            case RegisterStage::CONFIRM_PASSWORD: {
+            case RegisterStage::ConfirmPassword: {
                 this->clientRegisterStage.erase(client);
 
                 if (this->regPasswordInput.at(client) != input) {
@@ -138,6 +141,7 @@ namespace model {
         }
     }
 
+
     void
     PlayerHandler::exitRegistration(const Connection &client) {
         this->clientRegisterStage.erase(client);
@@ -145,17 +149,19 @@ namespace model {
         this->regPasswordInput.erase(client);
     }
 
+
     bool
     PlayerHandler::isLoggingIn(const Connection &client) {
-        return (bool) this->clientLoginStage.count(client);
+        return static_cast<bool> (this->clientLoginStage.count(client));
     }
+
 
     std::string
     PlayerHandler::processLogin(const Connection &client, const std::string &input) {
 
         if (!this->clientLoginStage.count(client)) {
             // Start login process
-            this->clientLoginStage.emplace(client, LoginStage::USERNAME);
+            this->clientLoginStage.emplace(client, LoginStage::Username);
 
             return "\n"
                    "Login\n"
@@ -164,19 +170,19 @@ namespace model {
         }
 
         switch (this->clientLoginStage.at(client)) {
-            case LoginStage::USERNAME: {
+            case LoginStage::Username: {
                 if (input.length() == 0) {
                     this->exitLogin(client);
                     return "No username entered. Login process cancelled.\n";
                 }
 
                 this->loginUsernameInput.emplace(client, input);
-                this->clientLoginStage.at(client) = LoginStage::PASSWORD;
+                this->clientLoginStage.at(client) = LoginStage::Password;
 
                 return input + "\nEnter your password\n";
             }
 
-            case LoginStage::PASSWORD: {
+            case LoginStage::Password: {
                 auto successMessage = "Logged in successfully!\n";
                 auto failMessage = "Invalid username or password.\n";
 
@@ -198,7 +204,7 @@ namespace model {
                 }
 
                 auto playerId = this->usernameToPlayer.at(inputUsername)->getId();
-                auto isOnline = (bool) this->activeIdToClient.count(playerId);
+                auto isOnline = static_cast<bool> (this->activeIdToClient.count(playerId));
 
                 if (isOnline) {
                     // Player is already being used by a client, logout associated client
@@ -231,11 +237,13 @@ namespace model {
         }
     }
 
+
     void
     PlayerHandler::exitLogin(const Connection &client) {
         this->clientLoginStage.erase(client);
         this->loginUsernameInput.erase(client);
     }
+
 
     std::string
     PlayerHandler::logoutPlayer(const Connection &client) {
@@ -245,15 +253,18 @@ namespace model {
         return "Logged out successfully.\n";
     }
 
+
     std::string
     PlayerHandler::getUsernameByClient(const Connection &client) {
         return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
     }
 
+
     model::ID
     PlayerHandler::getPlayerIdByClient(const Connection &client) {
         return this->activeClientToId.at(client);
     }
+
 
     model::ID
     PlayerHandler::getRoomIdByClient(const Connection &client) {
@@ -262,6 +273,7 @@ namespace model {
         }
         throw std::runtime_error("Error: usernameToPlayer map does not contain username");
     }
+
 
     void
     PlayerHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
@@ -272,19 +284,22 @@ namespace model {
         }
     }
 
+
     Connection
     PlayerHandler::getClientByPlayerId(const model::ID &playerId) {
         return this->activeIdToClient.at(playerId);
     }
 
+
     void
-    PlayerHandler::notifyBootedClients(std::deque<Response> &responses) {
+    PlayerHandler::notifyBootedClients(std::deque<Message> &messages) {
         for (auto bootedClient : this->bootedClients) {
-            responses.push_back({bootedClient, "You have been logged out due to being logged in elsewhere.\n", true});
+            messages.push_back({bootedClient, "You have been logged out due to being logged in elsewhere.\n"});
         }
 
         this->bootedClients.clear();
     }
+
 
     std::vector<Player>
     PlayerHandler::parseJsonUsers(json users) {

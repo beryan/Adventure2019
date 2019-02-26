@@ -9,6 +9,11 @@
 #include <array>
 #include <map>
 #include "Character.h"
+#include "Inventory.h"
+#include "Equipment.h"
+
+using model::Inventory;
+using model::Equipment;
 
 namespace model {
     /**
@@ -22,6 +27,8 @@ namespace model {
 
     class Player : public Character {
     public:
+        Player();
+
         Player(model::ID id, std::string_view username, std::string_view password);
 
         Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID);
@@ -42,27 +49,9 @@ namespace model {
 
         /************ Inventory ************/
 
-        bool isItemInInventory(const Object &item);
+        Inventory &getInventory();
 
-        bool isSlotOccupied(const Slot &slot);
-
-        std::vector<Object> getInventoryItems() const;
-
-        void mapInventoryItems(std::vector<Object> &items);
-
-        std::vector<Object> getEquippedItems() const;
-
-        void mapEquippedItems(std::vector<Object> &items);
-
-        void equipItem(Object item);
-
-        void addToInventoryItems(Object item);
-
-        void unequipItem(const Slot &slot);
-
-        Object dropItemFromInventory(Object item);
-
-        Object dropItemFromEquipped(Slot slot);
+        Equipment &getEquipment();
 
         /************ ROOM ************/
 
@@ -70,7 +59,7 @@ namespace model {
 
         void setCurrRoomID(const model::ID &id);
 
-        static constexpr model::ID STARTING_LOCATION = 1;
+        static constexpr model::ID STARTING_LOCATION = 8810;
 
     private:
         std::string username;
@@ -79,12 +68,17 @@ namespace model {
 
         std::string avatar;
 
-        std::map<model::ID, Object> inventoryItems;
+        Inventory inventory;
 
-        std::map<int, Object> equippedItems;
+        Equipment equipment;
 
         model::ID currRoomID;
     };
+
+    inline void from_json(const json &j, Player &p) {
+        p.setUsername(j.at("username").get<std::string>());
+        p.setPassword(j.at("password").get<std::string>());
+    }
 }
 
 #endif //PLAYER_H

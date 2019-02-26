@@ -4,172 +4,176 @@
 
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
-#include "Player.h"
-#include "Object.h"
+#include "PlayerAction.h"
 #include <stdlib.h>
 #include <iostream>
 
-using model::Player;
-using model::Slot;
-using model::Object;
+using action::PlayerAction;
 
 namespace {
-    TEST(PlayerTestSuite, canConstructPlayer) {
-        int expected_id = 12345;
-        std::string expected_username = "hello";
-        std::string expected_password = "zombie";
+    class PlayerTestSuite : public ::testing::Test {
+    protected:
+        Player player;
+        PlayerAction action;
 
-        Player player{expected_id, expected_username, expected_password};
+        virtual void SetUp() override {
+            int expected_id = 12345;
+            std::string expected_username = "hello";
+            std::string expected_password = "world";
+            model::ID expected_roomID = 41;
 
-        EXPECT_EQ(player.getId(), expected_id);
-        EXPECT_EQ(player.getUsername(), expected_username);
-        EXPECT_EQ(player.getPassword(), expected_password);
+            player = {expected_id, expected_username, expected_password, expected_roomID};
+            action = {};
+        }
+    };
+
+    TEST_F(PlayerTestSuite, canAddItemToInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        action.pickupItem(player, item);
+
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canAddItemToInventory) {
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
+    TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        Player player{152, "hello", "20000"};
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        action.pickupItem(player, item);
+        action.dropItem(player, item);
 
-        player.addToInventoryItems(item);
-        std::vector<Object> items = player.getInventoryItems();
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
 
-        EXPECT_EQ(player.isItemInInventory(item), true);
+        action.pickupItem(player, item);
+
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canDropItemFromInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        action.pickupItem(player, item);
+        action.dropItem(player, item);
 
-        player.addToInventoryItems(item);
-
-        ASSERT_EQ(player.isItemInInventory(item), true);
-
-        std::vector<Object> items = player.getInventoryItems();
-
-        player.equipItem(item);
-
-        EXPECT_EQ(player.isItemInInventory(item), false);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), true);
+        EXPECT_FALSE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canPickupItemFromRoomInventory) {
+        Inventory inventory{};
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Body};
+        unsigned int expected_size = 0;
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, "", {}, {}, expected_slot};
+        inventory.addItemToInventory(item);
 
-        int expected_equipped_id = 15;
-        std::string expected_equipped_name = "The Punisher";
-        Object equippedItem{expected_equipped_id, expected_equipped_name, "", {}, {}, expected_slot};
+        ASSERT_TRUE(inventory.isItemInInventory(item));
 
-        player.addToInventoryItems(equippedItem);
-        player.equipItem(item);
+        action.pickupItem(player, inventory.removeItemFromInventory(item));
 
-        player.addToInventoryItems(item);
-
-        std::vector<Object> items = player.getInventoryItems();
-
-        player.equipItem(item);
-
-        EXPECT_FALSE(player.isItemInInventory(item));
-        EXPECT_TRUE(player.isItemInInventory(equippedItem));
-        EXPECT_TRUE(player.isSlotOccupied(item.getSlot()));
+        ASSERT_FALSE(inventory.isItemInInventory(item));
+        EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
 
-    TEST(PlayerTestSuite, canDropItemFromInventory) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canEquipTwoDifferentSlotItemsFromInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item2{22345, "Zooboo", "Danga", {}, {}, Slot::Body};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        action.pickupItem(player, item);
+        action.pickupItem(player, item2);
 
-        player.addToInventoryItems(item);
+        action.equipItem(player, item);
+        action.equipItem(player, item2);
 
-        player.dropItemFromInventory(item);
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
 
-        std::vector<Object> items = player.getInventoryItems();
-
-        EXPECT_EQ(player.isItemInInventory(item), false);
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
     }
 
-    TEST(PlayerTestSuite, canDropEquippedItem) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
 
-        player.addToInventoryItems(item);
-
-        player.equipItem(item);
-
-        player.dropItemFromEquipped(item.getSlot());
-
-        EXPECT_EQ(player.isItemInInventory(item), false);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), false);
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
     }
 
-    TEST(PlayerTestSuite, canUnequipItem) {
-        Player player{152, "hello", "20000"};
+    TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
-        int expected_id = 12345;
-        std::string expected_name = "The Executioner";
-        std::string expected_description = "Assigns the player with the title 'Sumner' and immediately assigns the enemy 2 readings back to back";
-        Slot expected_slot = Slot::Head;
-        Object item{expected_id, expected_name, expected_description, {}, {}, expected_slot};
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
 
-        player.addToInventoryItems(item);
+        Object item2{121, "Hello", "world", {}, {}, Slot::Head};
 
-        player.equipItem(item);
+        action.pickupItem(player, item2);
+        action.equipItem(player, item2);
 
-        player.unequipItem(item.getSlot());
-
-        EXPECT_EQ(player.isItemInInventory(item), true);
-        EXPECT_EQ(player.isSlotOccupied(item.getSlot()), false);
+        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
     }
 
-    TEST(PlayerTestSuite, canReturnCollectionOfItems) {
-        Player player{1294, "Cindy", "iPoopOnPizzas"};
+    TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
 
+        action.equipItem(player, item);
+
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+    }
+
+    TEST_F(PlayerTestSuite, canDropEquippedItem) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
+
+        Object droppedItem = action.dropItem(player, item);
+
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(droppedItem == item);
+    }
+
+    TEST_F(PlayerTestSuite, canUnequipItem) {
+        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
+
+        action.unequipItem(player, item);
+
+        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canReturnCollectionOfItems) {
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{rand()%220, "test", "test", {}, {}, Slot::Head};
-            player.addToInventoryItems(item);
+            Object item{rand() % 220, "test", "test", {}, {}, Slot::Head};
+            action.pickupItem(player, item);
         }
 
-        std::vector<Object> items = player.getInventoryItems();
+        std::vector<Object> items = player.getInventory().getVectorInventory();
 
-        EXPECT_EQ(items.size(), itemsToCreate);
+        ASSERT_EQ(items.size(), itemsToCreate);
+        for (Object object : items) {
+            EXPECT_TRUE(object.getSlot() == Slot::Head);
+        }
     }
 
-    TEST(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
-        model::ID expected_roomID = 41;
-        Player player{1234, "poopy", "mcpoop", expected_roomID};
-
-        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+    TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithConstructor) {
+        EXPECT_EQ(41, player.getCurrRoomID());
     }
 
-    TEST(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
-        model::ID expected_roomID = 41;
-        Player player{1234, "poopy", "mcpoop"};
+    TEST_F(PlayerTestSuite, canSetCurrentRoomIDwithSetter) {
+        model::ID expected_roomID = 61;
+
         player.setCurrRoomID(expected_roomID);
 
-        EXPECT_EQ(player.getCurrRoomID(), expected_roomID);
+        EXPECT_EQ(expected_roomID, player.getCurrRoomID());
     }
 }

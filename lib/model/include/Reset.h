@@ -12,6 +12,9 @@
 
 #include <string>
 #include "Types.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
 
@@ -40,8 +43,24 @@ namespace model {
         void setLimit(int limit);
         void setRoom(int room);
         void setSlot(int slot);
-
+        friend std::ostream& operator<<(std::ostream& os, const Reset& r);
     };
+
+    inline void from_json(const json &j, Reset &r) {
+        r.setId(j.at("id").get<model::ID>());
+        r.setAction(j.at("action").get<std::string>());
+        if(j.find("limit") != j.end()) {
+            r.setLimit(j.at("limit").get<int>());
+        }
+        if(j.find("room") != j.end()) {
+            r.setRoom(j.at("room").get<int>());
+        }
+        if(j.find("slot") != j.end()){
+            r.setSlot(j.at("slot").get<int>());
+        }
+
+    }
+
 }
 
 #endif

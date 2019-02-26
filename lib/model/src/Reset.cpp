@@ -8,6 +8,7 @@
 */
 
 #include "Reset.h"
+#include <iostream>
 
 using model::Reset;
 
@@ -69,6 +70,11 @@ namespace model {
 
     void Reset::setSlot(int slot) {
       this->slot = slot;
+    }
+
+    std::ostream& operator<<(std::ostream& os, const Reset& r) {
+        os << r.getAction() << " " << r.getId() << std::endl;
+        return os;
     }
 
 }

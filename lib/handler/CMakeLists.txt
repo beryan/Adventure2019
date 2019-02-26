@@ -1,10 +1,10 @@
 file(GLOB SOURCES "src/*.cpp")
 
-add_library(model
+add_library(handler
         ${SOURCES}
         )
 
-target_include_directories(model
+target_include_directories(handler
         PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -12,14 +12,14 @@ target_include_directories(model
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(model networking json fileparser)
+target_link_libraries(handler logic)
 
-set_target_properties(model
+set_target_properties(handler
         PROPERTIES
         LINKER_LANGUAGE CXX
         CXX_STANDARD 17
         )
 
-install(TARGETS model
+install(TARGETS handler
         ARCHIVE DESTINATION lib
         )

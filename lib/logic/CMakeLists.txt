@@ -1,10 +1,10 @@
 file(GLOB SOURCES "src/*.cpp")
 
-add_library(model
+add_library(logic
         ${SOURCES}
         )
 
-target_include_directories(model
+target_include_directories(logic
         PUBLIC
         $<INSTALL_INTERFACE:include>
         $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -12,7 +12,7 @@ target_include_directories(model
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-target_link_libraries(model networking json fileparser)
+target_link_libraries(logic model)
 
 set_target_properties(model
         PROPERTIES
@@ -20,6 +20,6 @@ set_target_properties(model
         CXX_STANDARD 17
         )
 
-install(TARGETS model
+install(TARGETS logic
         ARCHIVE DESTINATION lib
         )
