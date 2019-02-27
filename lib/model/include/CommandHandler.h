@@ -35,13 +35,13 @@ namespace model {
          * @param command command to alias
          * @param alias alias for the command
          */
-        void setGlobalAlias(Command command, const std::string &alias);
+        void setGlobalAlias(const Command &command, const std::string &alias);
 
         /**
          * Deletes a global alias for a command
          * @param command command to delete the alias for
          */
-        void clearGlobalAlias(Command command);
+        void clearGlobalAlias(const Command &command);
 
         /**
          * Sets an alias for a command for a particular user
@@ -49,21 +49,21 @@ namespace model {
          * @param alias alias for the command
          * @param username user to set the alias for
          */
-        void setUserAlias(Command command, const std::string &alias, const std::string &username);
+        void setUserAlias(const Command &command, const std::string &alias, const std::string &username);
 
         /**
          * Deletes an alias for a user
          * @param command command to clear the alias for
          * @param username user to clear the alias for
          */
-        void clearUserAlias(Command command, const std::string &username);
+        void clearUserAlias(const Command &command, const std::string &username);
 
         /**
          * Returns the default string that represents a command
          * @param command command to get the string for
          * @return the default string for a command
          */
-        std::string getStringForCommand(Command command);
+        std::string getStringForCommand(const Command &command);
 
     private:
         /**

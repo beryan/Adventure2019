@@ -18,5 +18,6 @@ const std::string JSON_EXTENSION = ".json";
 namespace DataManager {
     Area ParseDataFile(const std::string& filePath);
     std::vector<Player> ParseUsersFile(const std::string& filePath);
+    void writeJson(json j, std::string filePath);
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H

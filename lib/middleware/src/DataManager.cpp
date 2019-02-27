@@ -8,6 +8,7 @@
 
 #include <boost/filesystem.hpp>
 #include <iostream>
+#include <iomanip>
 
 namespace filesystem = boost::filesystem;
 
@@ -145,6 +146,11 @@ namespace DataManager {
             players = parseUsersJson(filePath);
         }
         return players;
+    }
+
+    void writeJson(json j, std::string filePath) {
+        std::ofstream outFile(filePath);
+        outFile << std::setw(2) << j;
     }
 } // DataManager namespace
 

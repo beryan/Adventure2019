@@ -2,22 +2,20 @@
 // Created by Stephen Wanhella on 2019-02-14.
 //
 
-#include <fstream>
 #include "CommandHandler.h"
-#include "Command.h"
-#include "json.hpp"
-#include <iomanip>
-#include <CommandHandler.h>
+#include "DataManager.h"
+
+#include <fstream>
 
 
 using nlohmann::json;
 using model::Command;
 using model::CommandHandler;
+using DataManager::writeJson;
 
 constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
 constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
-void writeJson(json j);
 
 Command CommandHandler::getDefaultCommand(const std::string &commandStr) {
     Command res = Command::InvalidCommand;
@@ -38,7 +36,8 @@ Command CommandHandler::getCommandForUser(const std::string &commandStr, const s
     return result;
 }
 
-bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result) {
+bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std::string &username,
+                                        Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(COMMANDS_FILE_PATH);
     json commands_json = json::parse(ifs);
@@ -61,15 +60,16 @@ bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std
     return wasFound;
 }
 
-void CommandHandler::setGlobalAlias(Command command, const std::string &alias) {
+void CommandHandler::setGlobalAlias(const Command &command, const std::string &alias) {
     setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
-void CommandHandler::clearGlobalAlias(Command command) {
+void CommandHandler::clearGlobalAlias(const Command &command) {
     clearUserAlias(command, GLOBAL_ALIASES_USER);
 }
 
-void model::CommandHandler::setUserAlias(Command command, const std::string &alias, const std::string &username) {
+void
+model::CommandHandler::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
     json commands_json = json::parse(inFile);
@@ -86,10 +86,10 @@ void model::CommandHandler::setUserAlias(Command command, const std::string &ali
 
     inFile.close();
 
-    writeJson(commands_json);
+    writeJson(commands_json, COMMANDS_FILE_PATH);
 }
 
-void model::CommandHandler::clearUserAlias(Command command, const std::string &username) {
+void model::CommandHandler::clearUserAlias(const Command &command, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
     json commands_json = json::parse(inFile);
@@ -111,10 +111,10 @@ void model::CommandHandler::clearUserAlias(Command command, const std::string &u
 
     inFile.close();
 
-    writeJson(commands_json);
+    writeJson(commands_json, COMMANDS_FILE_PATH);
 }
 
-std::string CommandHandler::getStringForCommand(Command command) {
+std::string CommandHandler::getStringForCommand(const Command &command) {
     std::string res;
     for (const auto &kv_pair : this->commands) {
         if (kv_pair.second == command) {
@@ -123,9 +123,4 @@ std::string CommandHandler::getStringForCommand(Command command) {
     }
 
     return res;
-}
-
-void writeJson(json j) {
-    std::ofstream outFile(COMMANDS_FILE_PATH);
-    outFile << std::setw(2) << j;
 }
