@@ -34,7 +34,7 @@ namespace model {
          * Maps a list of items into the Inventory
          * @param items: Items to be mapped
          */
-        void mapInventory(std::vector<Object> items);
+        void mapInventory(const std::vector<Object> &items);
 
         /**
          * Adds an item to the Inventory

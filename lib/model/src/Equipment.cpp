@@ -24,7 +24,7 @@ namespace model {
         return container;
     }
 
-    void Equipment::mapEquipment(std::vector<Object> items) {
+    void Equipment::mapEquipment(const std::vector<Object> &items) {
         this->equipment.clear();
         for (Object item : items) {
             this->equipment.insert(std::pair<int, Object>(item.getSlot(), item));

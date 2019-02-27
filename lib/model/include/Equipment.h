@@ -34,7 +34,7 @@ namespace model {
          * Maps the list of items into Equipment
          * @param items: Items to be mapped
          */
-        void mapEquipment(std::vector<Object> items);
+        void mapEquipment(const std::vector<Object> &items);
 
         /**
          * Equips an item

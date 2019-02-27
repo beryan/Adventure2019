@@ -26,7 +26,7 @@ namespace model {
         return container;
     }
 
-    void Inventory::mapInventory(std::vector<Object> items) {
+    void Inventory::mapInventory(const std::vector<Object> &items) {
         this->inventory.clear();
         for (Object item : items) {
             addItemToInventory(item);
