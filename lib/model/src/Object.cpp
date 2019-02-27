@@ -112,14 +112,14 @@ namespace model {
 
     bool Object::operator==(const Object &object) const {
         return  this->id == object.getId() &&
-                this->name.compare(object.getName()) == 0 ;
+                this->name.compare(object.getName()) == 0;
     }
 
     bool Object::operator<(const Object &object) const {
         return (this->id < object.getId());
     }
 
-    Object& Object::operator=(const Object &object){
+    Object& Object::operator=(const Object &object) {
         this->id = object.getId();
         this->name = object.getName();
         this->shortDescription = object.getShortDescription();
@@ -131,7 +131,7 @@ namespace model {
         return *this;
     }
 
-    std::ostream&operator<<(std::ostream& os, const Object& obj){
+    std::ostream&operator<<(std::ostream& os, const Object& obj) {
         os << obj.getId() << ". " << obj.getName() << std::endl;
         return os;
     }
