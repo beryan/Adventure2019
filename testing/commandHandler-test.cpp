@@ -33,17 +33,67 @@ namespace {
     TEST(CommandHandlerTestSuite, canGetAliasedCommands) {
         CommandHandler commandHandler;
         std::string testUser = "testuser";
-        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser("test_help", testUser));
-        EXPECT_EQ(Command::Login, commandHandler.getCommandForUser("test_login", testUser));
-        EXPECT_EQ(Command::Logout, commandHandler.getCommandForUser("test_logout", testUser));
-        EXPECT_EQ(Command::Look, commandHandler.getCommandForUser("test_look", testUser));
-        EXPECT_EQ(Command::Move, commandHandler.getCommandForUser("test_move", testUser));
-        EXPECT_EQ(Command::Quit, commandHandler.getCommandForUser("test_quit", testUser));
-        EXPECT_EQ(Command::Register, commandHandler.getCommandForUser("test_register", testUser));
-        EXPECT_EQ(Command::Say, commandHandler.getCommandForUser("test_say", testUser));
-        EXPECT_EQ(Command::Shutdown, commandHandler.getCommandForUser("test_shutdown", testUser));
-        EXPECT_EQ(Command::Tell, commandHandler.getCommandForUser("test_tell", testUser));
-        EXPECT_EQ(Command::Yell, commandHandler.getCommandForUser("test_yell", testUser));
+
+        std::string testHelp = "test_help";
+        std::string testLogin = "test_login";
+        std::string testLogout = "test_logout";
+        std::string testLook = "test_look";
+        std::string testMove = "test_move";
+        std::string testQuit = "test_quit";
+        std::string registerAlias = "test_register";
+        std::string sayAlias = "test_say";
+        std::string shutdownAlias = "test_shutdown";
+        std::string tellAlias = "test_tell";
+        std::string yellAlias = "test_yell";
+
+        commandHandler.setUserAlias(Command::Help, testHelp, testUser);
+        commandHandler.setUserAlias(Command::Login, testLogin, testUser);
+        commandHandler.setUserAlias(Command::Logout, testLogout, testUser);
+        commandHandler.setUserAlias(Command::Look, testLook, testUser);
+        commandHandler.setUserAlias(Command::Move, testMove, testUser);
+        commandHandler.setUserAlias(Command::Quit, testQuit, testUser);
+        commandHandler.setUserAlias(Command::Register, registerAlias, testUser);
+        commandHandler.setUserAlias(Command::Say, sayAlias, testUser);
+        commandHandler.setUserAlias(Command::Shutdown, shutdownAlias, testUser);
+        commandHandler.setUserAlias(Command::Tell, tellAlias, testUser);
+        commandHandler.setUserAlias(Command::Yell, yellAlias, testUser);
+
+
+        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(testHelp, testUser));
+        EXPECT_EQ(Command::Login, commandHandler.getCommandForUser(testLogin, testUser));
+        EXPECT_EQ(Command::Logout, commandHandler.getCommandForUser(testLogout, testUser));
+        EXPECT_EQ(Command::Look, commandHandler.getCommandForUser(testLook, testUser));
+        EXPECT_EQ(Command::Move, commandHandler.getCommandForUser(testMove, testUser));
+        EXPECT_EQ(Command::Quit, commandHandler.getCommandForUser(testQuit, testUser));
+        EXPECT_EQ(Command::Register, commandHandler.getCommandForUser(registerAlias, testUser));
+        EXPECT_EQ(Command::Say, commandHandler.getCommandForUser(sayAlias, testUser));
+        EXPECT_EQ(Command::Shutdown, commandHandler.getCommandForUser(shutdownAlias, testUser));
+        EXPECT_EQ(Command::Tell, commandHandler.getCommandForUser(tellAlias, testUser));
+        EXPECT_EQ(Command::Yell, commandHandler.getCommandForUser(yellAlias, testUser));
+
+        commandHandler.clearUserAlias(Command::Help, testUser);
+        commandHandler.clearUserAlias(Command::Login, testUser);
+        commandHandler.clearUserAlias(Command::Logout, testUser);
+        commandHandler.clearUserAlias(Command::Look, testUser);
+        commandHandler.clearUserAlias(Command::Move, testUser);
+        commandHandler.clearUserAlias(Command::Quit, testUser);
+        commandHandler.clearUserAlias(Command::Register, testUser);
+        commandHandler.clearUserAlias(Command::Say, testUser);
+        commandHandler.clearUserAlias(Command::Shutdown, testUser);
+        commandHandler.clearUserAlias(Command::Tell, testUser);
+        commandHandler.clearUserAlias(Command::Yell, testUser);
+
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testHelp, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testLogin, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testLogout, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testLook, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testMove, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(testQuit, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(registerAlias, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(sayAlias, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(shutdownAlias, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(tellAlias, testUser));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(yellAlias, testUser));
     }
 
     TEST(CommandHandlerTestSuite, aliasedCommandsFallBackToDefault) {
@@ -67,12 +117,21 @@ namespace {
         std::string testUser = "testuser";
         std::string testUser_noAliases = "asdf_user";
         std::string global_help_alias = "hAlP";
+        std::string helpAlias = "test_help";
+        std::string helpDefault = commandHandler.getStringForCommand(Command::Help);
 
         commandHandler.setGlobalAlias(Command::Help, global_help_alias);
-        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser("test_help", testUser));
+        commandHandler.setUserAlias(Command::Help, helpAlias, testUser);
+
+        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(helpDefault, testUser));
+        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(helpAlias, testUser));
+        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(global_help_alias, testUser));
+
+        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(helpDefault, testUser_noAliases));
+        EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(helpAlias, testUser_noAliases));
         EXPECT_EQ(Command::Help, commandHandler.getCommandForUser(global_help_alias, testUser_noAliases));
-        EXPECT_EQ(Command::Help, commandHandler.getCommandForUser("help", testUser_noAliases));
         commandHandler.clearGlobalAlias(Command::Help);
+        commandHandler.clearUserAlias(Command::Help, testUser);
         EXPECT_EQ(Command::InvalidCommand, commandHandler.getCommandForUser(global_help_alias, testUser_noAliases));
     }
 
