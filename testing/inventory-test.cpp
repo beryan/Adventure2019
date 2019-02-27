@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <iostream>
 
+using model::Inventory;
+using model::Slot;
+
 namespace {
     class InventoryTestSuite : public ::testing::Test {
     protected:
@@ -18,7 +21,7 @@ namespace {
         }
     };
 
-    TEST_F(InventoryTestSuite, canMappInventory) {
+    TEST_F(InventoryTestSuite, canMapInventory) {
         Object obj1{};
         Object obj2{};
 
@@ -31,5 +34,54 @@ namespace {
 
         inventory.mapInventory(vec);
         EXPECT_EQ(map, inventory.getMappedInventory());
+    }
+
+    TEST_F(InventoryTestSuite, canAddTwoSameItemsToInventory) {
+        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+
+        inventory.addItemToInventory(obj);
+        inventory.addItemToInventory(obj);
+
+        EXPECT_EQ(2, inventory.getMappedInventory().at(obj));
+    }
+
+    TEST_F(InventoryTestSuite, canCompletelyRemoveItemFromInventory) {
+        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        unsigned int expected = 0;
+
+        inventory.addItemToInventory(obj);
+
+        inventory.removeItemFromInventory(obj);
+
+        EXPECT_EQ(expected, inventory.getMappedInventory().count(obj));
+    }
+
+    TEST_F(InventoryTestSuite, canAddTwoSameItemsToInventoryAndRemoveOne) {
+        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+
+        inventory.addItemToInventory(obj);
+        inventory.addItemToInventory(obj);
+
+        inventory.removeItemFromInventory(obj);
+
+        EXPECT_EQ(1, inventory.getMappedInventory().at(obj));
+    }
+
+    TEST_F(InventoryTestSuite, canCheckExistingItemIsInInventory) {
+        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+
+        inventory.addItemToInventory(obj);
+
+        EXPECT_TRUE(inventory.isItemInInventory(obj));
+    }
+
+    TEST_F(InventoryTestSuite, canCheckNotExistingItemIsNotInInventory) {
+        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+
+        inventory.addItemToInventory(obj);
+
+        inventory.removeItemFromInventory(obj);
+
+        EXPECT_FALSE(inventory.isItemInInventory(obj));
     }
 }

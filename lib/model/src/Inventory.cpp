@@ -47,7 +47,7 @@ namespace model {
         Object temp;
 
         if (inventory.count(item) > 0) {
-            newQuantity = this->inventory.at(item) - 1;
+            newQuantity = --this->inventory.at(item);
             temp = item;
 
             if (newQuantity == 0) {
