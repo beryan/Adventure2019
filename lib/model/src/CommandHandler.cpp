@@ -111,11 +111,10 @@ void model::CommandHandler::clearUserAlias(const Command &command, const std::st
     if (username_iterator != commands_json.end()) {
         std::string commandStr = getStringForCommand(command);
         auto user_aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
-        auto it = user_aliases.begin();
-        while (it != user_aliases.end() && it->second != commandStr) {
-            it++;
-        }
-        if (it->second == commandStr) {
+        auto it = std::find_if(user_aliases.begin(), user_aliases.end(), [commandStr](auto alias) {
+            return alias.second == commandStr;
+        });
+        if (it != user_aliases.end()) {
             user_aliases.erase(it);
             json j(user_aliases);
             *username_iterator = j;
