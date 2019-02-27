@@ -38,6 +38,8 @@ namespace model {
 
         bool operator==(const ExtraObjectInfo &other) const;
 
+        ExtraObjectInfo& operator=(const ExtraObjectInfo &other);
+
         bool operator!=(const ExtraObjectInfo &other) const;
 
     private:

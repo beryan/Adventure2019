@@ -111,12 +111,28 @@ namespace model {
     }
 
     bool Object::operator==(const Object &object) const {
-        return (this->name.compare(object.getName()) == 0);
+        return  this->id == object.getId() &&
+                this->name.compare(object.getName()) == 0;
     }
 
-    std::ostream&operator<<(std::ostream& os, const Object& obj){
+    bool Object::operator<(const Object &object) const {
+        return (this->id < object.getId());
+    }
+
+    Object& Object::operator=(const Object &object) {
+        this->id = object.getId();
+        this->name = object.getName();
+        this->shortDescription = object.getShortDescription();
+        this->longDescription = object.getLongDescription();
+        this->keywords = object.getKeywords();
+        this->slot = object.getSlot();
+        this->extraObjectInfo = object.getExtraObjectInfo();
+
+        return *this;
+    }
+
+    std::ostream&operator<<(std::ostream& os, const Object& obj) {
         os << obj.getId() << ". " << obj.getName() << std::endl;
         return os;
     }
-
 }
