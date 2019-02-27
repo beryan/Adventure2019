@@ -119,6 +119,10 @@ void model::CommandHandler::clearUserAlias(const Command &command, const std::st
             json j(user_aliases);
             *username_iterator = j;
         }
+
+        if (username_iterator->empty()) {
+            commands_json.erase(username_iterator);
+        }
     }
 
     inFile.close();
