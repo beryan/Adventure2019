@@ -121,7 +121,7 @@ namespace model {
 
     Object& Object::operator=(const Object &object){
         this->id = object.getId();
-        this->name = object.getId();
+        this->name = object.getName();
         this->shortDescription = object.getShortDescription();
         this->longDescription = object.getLongDescription();
         this->keywords = object.getKeywords();

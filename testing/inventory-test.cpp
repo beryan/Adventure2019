@@ -51,9 +51,10 @@ namespace {
 
         inventory.addItemToInventory(obj);
 
-        inventory.removeItemFromInventory(obj);
+        Object dropped = inventory.removeItemFromInventory(obj);
 
         EXPECT_EQ(expected, inventory.getMappedInventory().count(obj));
+        EXPECT_EQ(dropped, obj);
     }
 
     TEST_F(InventoryTestSuite, canAddTwoSameItemsToInventoryAndRemoveOne) {
@@ -62,9 +63,10 @@ namespace {
         inventory.addItemToInventory(obj);
         inventory.addItemToInventory(obj);
 
-        inventory.removeItemFromInventory(obj);
+        Object dropped = inventory.removeItemFromInventory(obj);
 
         EXPECT_EQ(1, inventory.getMappedInventory().at(obj));
+        EXPECT_EQ(dropped, obj);
     }
 
     TEST_F(InventoryTestSuite, canCheckExistingItemIsInInventory) {
