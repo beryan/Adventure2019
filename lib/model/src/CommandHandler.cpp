@@ -14,8 +14,8 @@ using nlohmann::json;
 using model::Command;
 using model::CommandHandler;
 
-const std::string COMMANDS_FILE_PATH = "lib/data/commands.json";
-const std::string GLOBAL_ALIASES_USER = "global_aliases";
+constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
+constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
 void writeJson(json j);
 
