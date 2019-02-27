@@ -13,7 +13,7 @@
 using model::World;
 using model::Player;
 
-const std::string JSON_EXTENSION = ".json";
+constexpr auto JSON_EXTENSION = ".json";
 
 namespace DataManager {
     Area ParseDataFile(const std::string& filePath);
