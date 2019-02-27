@@ -9,16 +9,18 @@ using model::Inventory;
 namespace model {
     Inventory::Inventory() {}
 
-    std::unordered_map<model::ID, Object> Inventory::getMappedInventory() {
+    std::map<Object, int> Inventory::getMappedInventory() {
         return this->inventory;
     }
 
-    std::vector<Object> Inventory::getVectorInventory() const {
+    std::vector<Object> Inventory::getVectorInventory(){
         std::vector<Object> container;
         container.reserve(this->inventory.size());
 
-        for (auto const& item : this->inventory) {
-            container.push_back(item.second);
+        for (auto const& [key, value] : this->inventory) {
+            for (int i = 0; i < value; i++) {
+                container.push_back(key);
+            }
         }
 
         return container;
@@ -27,22 +29,36 @@ namespace model {
     void Inventory::mapInventory(std::vector<Object> items) {
         this->inventory.clear();
         for (Object item : items) {
-            this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
+            addItemToInventory(item);
         }
     }
 
     void Inventory::addItemToInventory(const Object &item) {
-        this->inventory.insert(std::pair<model::ID, Object>(item.getId(), item));
+        if (inventory.count(item) > 0) {
+            this->inventory.at(item)++;
+        }
+        else {
+            this->inventory.insert(std::pair<Object, int>(item, 1));
+        }
     }
 
     Object Inventory::removeItemFromInventory(const Object &item) {
-        Object temp = std::move(this->inventory.at(item.getId()));
-        this->inventory.erase(item.getId());
+        int newQuantity = -1;
+        Object temp;
 
-        return std::move(temp);
+        if (inventory.count(item) > 0) {
+            newQuantity = this->inventory.at(item) - 1;
+            temp = item;
+
+            if (newQuantity == 0) {
+                this->inventory.erase(item);
+            }
+        }
+
+        return temp;
     }
 
     bool Inventory::isItemInInventory(const Object &item) {
-        return static_cast<bool>(this->inventory.count(item.getId()));
+        return static_cast<bool>(this->inventory.count(item));
     }
 }

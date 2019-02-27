@@ -12,19 +12,23 @@ using model::Object;
 namespace model {
     class Inventory {
     private:
-        std::unordered_map<model::ID, Object> inventory;
+        /**
+         * Object: Object being stored
+         * int: Quantity of the object
+         */
+        std::map<Object, int> inventory;
     public:
         Inventory();
 
         /**
          * @return The immutable unordered map of Inventory
          */
-        std::unordered_map<model::ID, Object> getMappedInventory();
+        std::map<Object, int> getMappedInventory();
 
         /**
          * @return The immutable vector form of Inventory
          */
-        std::vector<Object> getVectorInventory() const;
+        std::vector<Object> getVectorInventory();
 
         /**
          * Maps a list of items into the Inventory

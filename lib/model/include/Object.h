@@ -12,7 +12,6 @@
 using json = nlohmann::json;
 
 namespace model {
-
     /**
      *  @class Object
      *
@@ -82,6 +81,10 @@ namespace model {
         bool canBeEquipped() const;
 
         bool operator==(const Object &NPC) const;
+
+        bool operator<(const Object &object) const;
+
+        Object& operator=(const Object &object);
 
         static constexpr model::ID DEFAULT_ID = -1;
 
