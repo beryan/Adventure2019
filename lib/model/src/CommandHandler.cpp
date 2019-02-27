@@ -129,10 +129,13 @@ void model::CommandHandler::clearUserAlias(const Command &command, const std::st
 
 std::string CommandHandler::getStringForCommand(const Command &command) {
     std::string res;
-    for (const auto &kv_pair : this->commands) {
-        if (kv_pair.second == command) {
-            res = kv_pair.first;
-        }
+    auto it = std::find_if(this->commands.begin(), this->commands.end(),
+                           [command](const std::pair<std::string, Command> &pair) {
+                               return pair.second == command;
+                           });
+
+    if (it != this->commands.end()) {
+        res = it->first;
     }
 
     return res;
