@@ -150,6 +150,10 @@ namespace DataManager {
 
     void writeJson(json j, std::string filePath) {
         std::ofstream outFile(filePath);
+        if (!outFile.is_open()) {
+            throw std::runtime_error("Could not open file: " + filePath);
+        }
+
         outFile << std::setw(2) << j;
     }
 } // DataManager namespace

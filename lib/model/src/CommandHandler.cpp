@@ -40,6 +40,11 @@ bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std
                                         Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(COMMANDS_FILE_PATH);
+
+    if (!ifs.is_open()) {
+        throw std::runtime_error("Could not open commands file");
+    }
+
     json commands_json = json::parse(ifs);
 
     bool wasFound = false;
@@ -72,6 +77,10 @@ void
 model::CommandHandler::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
+    if (!inFile.is_open()) {
+        throw std::runtime_error("Could not open commands file");
+    }
+
     json commands_json = json::parse(inFile);
 
     auto username_iterator = commands_json.find(username);
@@ -91,6 +100,10 @@ model::CommandHandler::setUserAlias(const Command &command, const std::string &a
 
 void model::CommandHandler::clearUserAlias(const Command &command, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
+
+    if (!inFile.is_open()) {
+        throw std::runtime_error("Could not open commands file");
+    }
 
     json commands_json = json::parse(inFile);
 
