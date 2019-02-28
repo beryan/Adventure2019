@@ -43,6 +43,7 @@ namespace model {
         std::unique_ptr<WorldHandler> worldHandler;
 
         enum class Command {
+            Debug,
             Help,
             Login,
             Logout,
@@ -57,6 +58,7 @@ namespace model {
         };
 
         std::map<std::string, Command> commandMap = {
+            {"debug", Command::Debug},
             {"help", Command::Help},
             {"login", Command::Login},
             {"logout", Command::Logout},
@@ -72,6 +74,7 @@ namespace model {
         };
 
         std::map<Command, std::vector<std::string>> commandWordsMap = {
+            {Command::Debug, {"debug"}},
             {Command::Help, {"help"}},
             {Command::Login, {"login"}},
             {Command::Logout, {"logout"}},

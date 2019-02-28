@@ -244,7 +244,7 @@ namespace model {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << this->getCommandWords(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->getCommandWords(Command::Say) << " [message] (sends [message] to close by players in the game)\n"
+                            << "  - " << this->getCommandWords(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
                             << "  - " << this->getCommandWords(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
                             << "  - " << this->getCommandWords(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << this->getCommandWords(Command::Look) << " (displays current location information)\n"
@@ -326,6 +326,11 @@ namespace model {
                     tempMessage << "You can't move that way!\n";
                 }
 
+                break;
+            }
+
+            case Command::Debug: {
+                tempMessage << this->worldHandler->getWorld();
                 break;
             }
 

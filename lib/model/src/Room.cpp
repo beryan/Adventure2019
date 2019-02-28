@@ -18,35 +18,35 @@ namespace model {
     //constructors
     Room::Room()
         : id(-1),
-            name(""),
-            desc({}),
-            doors({}),
-            npcs({}),
-            objects({}),
-            playersInRoom({})
-            { }
+          name(""),
+          desc({}),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({})
+          { }
 
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
         : id(id),
-            name(std::move(name)),
-            desc(std::move(desc)),
-            doors({}),
-            npcs({}),
-            objects({}),
-            playersInRoom({})
-            { }
+          name(std::move(name)),
+          desc(std::move(desc)),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({})
+          { }
 
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
         : id(id),
-            name(std::move(name)),
-            desc(std::move(desc)),
-            doors(std::move(doors)),
-            npcs(std::move(npcs)),
-            objects(std::move(objects)),
-            playersInRoom({})
-            { }
+          name(std::move(name)),
+          desc(std::move(desc)),
+          doors(std::move(doors)),
+          npcs(std::move(npcs)),
+          objects(std::move(objects)),
+          playersInRoom({})
+          { }
 
 
     //getters and setters
@@ -210,7 +210,7 @@ namespace model {
         os << rhs.dir;
 
         if (!rhs.desc.empty()) {
-            os << ": ";
+            os << ", ";
             for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
@@ -224,7 +224,7 @@ namespace model {
 
     //print room
     std::ostream& operator<<(std::ostream& os, const Room& room) {
-        os << "\n*****" << room.id << ". " << room.name << "*****\n";
+        os << "\n***" << room.id << ". " << room.name << "***\n";
 
         if (!room.desc.empty()) {
             for (const auto &s : room.desc) {
@@ -233,7 +233,7 @@ namespace model {
         }
 
         if(!room.doors.empty()) {
-            os << "Doors:" << std::endl;
+            os << "Exits:" << std::endl;
             for (const auto &door : room.doors) {
                 os << door;
             }
