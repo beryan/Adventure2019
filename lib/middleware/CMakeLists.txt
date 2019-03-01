@@ -4,6 +4,8 @@ target_sources(json
         INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/include/json.hpp")
 
+find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
+
 target_include_directories(json
         INTERFACE
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
