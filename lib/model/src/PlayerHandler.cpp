@@ -256,13 +256,23 @@ namespace model {
 
     std::string
     PlayerHandler::getUsernameByClient(const Connection &client) {
-        return this->allPlayers.at(this->activeClientToId.at(client)).getUsername();
+        std::string username;
+        auto it = this->allPlayers.find(getPlayerIdByClient(client));
+        if (it != this->allPlayers.end()) {
+            username = it->second.getUsername();
+        }
+        return username;
     }
 
 
     model::ID
     PlayerHandler::getPlayerIdByClient(const Connection &client) {
-        return this->activeClientToId.at(client);
+        model::ID result = -1;
+        auto it = this->activeClientToId.find(client);
+        if (it != this->activeClientToId.end()) {
+            result = it->second;
+        }
+        return result;
     }
 
 

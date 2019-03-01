@@ -58,8 +58,8 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter " << "\"" << this->getCommandWords(Command::Login) << "\" to login to an existing account\n"
-                         << "Enter " << "\"" << this->getCommandWords(Command::Register) << "\" to create a new account\n";
+                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
+                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n";
 
             messages.push_back({newClient, introduction.str()});
         }
@@ -109,7 +109,7 @@ namespace model {
                 if (this->playerHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->playerHandler->getRoomIdByClient(client);
-                    tempMessage << this->worldHandler->findRoom(roomID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -124,7 +124,7 @@ namespace model {
                 if (this->playerHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->playerHandler->getRoomIdByClient(client);
-                    tempMessage << this->worldHandler->findRoom(roomID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -132,8 +132,10 @@ namespace model {
             }
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
+            std::string username = this->playerHandler->getUsernameByClient(client);
+            Command command = this->commandHandler.getCommandForUser(commandString, username);
 
-            if (!this->commandMap.count(commandString)) {
+            if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 messages.push_back({client, tempMessage.str()});
                 continue;
@@ -144,8 +146,6 @@ namespace model {
             if (incomingInput.find(' ') != std::string::npos) {
                 parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
             }
-
-            Command command = this->commandMap.at(commandString);
 
             switch (command) {
                 case Command::Quit: {
@@ -203,18 +203,18 @@ namespace model {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->getCommandWords(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->getCommandWords(Command::Register) << " (create a new account)\n"
-                            << "  - " << this->getCommandWords(Command::Login) << " (login to an existing account)\n"
-                            << "  - " << this->getCommandWords(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->getCommandWords(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Register) << " (create a new account)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Login) << " (login to an existing account)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
                 break;
 
             default:
                 tempMessage << "\n"
-                            << "Enter " << "\"" << this->getCommandWords(Command::Login) << "\" to login to an existing account\n"
-                            << "Enter " << "\"" << this->getCommandWords(Command::Register) << "\" to create a new account\n"
-                            << "Enter " << "\"" << this->getCommandWords(Command::Help) << "\" for a full list of commands\n";
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n"
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
                 break;
         }
 
@@ -243,15 +243,18 @@ namespace model {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->getCommandWords(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->getCommandWords(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
-                            << "  - " << this->getCommandWords(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
-                            << "  - " << this->getCommandWords(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << this->getCommandWords(Command::Look) << " (displays current location information)\n"
-                            << "  - " << this->getCommandWords(Command::Move) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->getCommandWords(Command::Logout) << " (logs you out of the game)\n"
-                            << "  - " << this->getCommandWords(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->getCommandWords(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Look) << " (displays current location description)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Info) << " (displays current location information)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+
                 break;
 
             case Command::Say: {
@@ -308,7 +311,19 @@ namespace model {
 
             case Command::Look: {
                 auto roomID = this->playerHandler->getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
+                break;
+            }
+
+            case Command::Info: {
+                auto roomID = this->playerHandler->getRoomIdByClient(client);
                 tempMessage << this->worldHandler->findRoom(roomID);
+                break;
+            }
+
+            case Command::Exits: {
+                auto roomID = this->playerHandler->getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler->findRoom(roomID).doorsToString();
                 break;
             }
 
@@ -320,7 +335,7 @@ namespace model {
                     auto destinationID = this->worldHandler->getDestination(roomID, param);
                     this->worldHandler->movePlayer(playerID, roomID, destinationID);
                     this->playerHandler->setRoomIdByClient(client, destinationID);
-                    tempMessage << this->worldHandler->findRoom(destinationID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(destinationID).descToString();
 
                 } else {
                     tempMessage << "You can't move that way!\n";
@@ -335,12 +350,12 @@ namespace model {
             }
 
             default:
-                tempMessage << "\nEnter " << "\"" << this->getCommandWords(Command::Help) << "\" for a full list of commands\n";
+                tempMessage << "\nEnter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
                 break;
         }
 
         messages.push_back({client, tempMessage.str()});
-        
+
         return messages;
     }
 
@@ -365,23 +380,6 @@ namespace model {
         }
 
         return outgoing;
-    }
-
-
-    std::string
-    Game::getCommandWords(Command command) {
-        std::vector<std::string> words = this->commandWordsMap.at(command);
-        std::ostringstream tempMessage;
-
-        for (unsigned int i = 0; i < words.size(); ++i) {
-            tempMessage << words[i];
-
-            if (i < (words.size() - 1)) {
-                tempMessage << ", ";
-            }
-        }
-
-        return tempMessage.str();
     }
 
 
