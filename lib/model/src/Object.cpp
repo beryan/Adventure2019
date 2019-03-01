@@ -132,7 +132,7 @@ namespace model {
     }
 
     std::ostream&operator<<(std::ostream& os, const Object& obj) {
-        os << obj.getId() << ". " << obj.getName() << std::endl;
+        os << obj.id << ". " << obj.name << std::endl;
         return os;
     }
 }

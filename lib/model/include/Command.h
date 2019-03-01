@@ -6,7 +6,10 @@
 #define COMMAND_H
 namespace model {
     enum class Command {
+        Debug,
+        Exits,
         Help,
+        Info,
         Login,
         Logout,
         Look,

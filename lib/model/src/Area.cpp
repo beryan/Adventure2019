@@ -18,18 +18,18 @@ namespace model {
     //constructors
     Area::Area()
         : name(""),
-            rooms({})
-            { }
+          rooms({})
+          { }
 
     Area::Area(std::string name)
         : name(std::move(name)),
-            rooms({})
-            { }
+          rooms({})
+          { }
 
     Area::Area(std::string name, std::vector<Room> rooms)
-      : name(std::move(name)),
-        rooms(std::move(rooms))
-        { }
+        : name(std::move(name)),
+          rooms(std::move(rooms))
+          { }
 
 
     //getters and setters
@@ -95,12 +95,11 @@ namespace model {
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << "You are in " << area.name << std::endl;
+        os << "Area: " << area.name << std::endl;
 
-        if(area.rooms.size() > 0){
-            os << "Rooms:";
-            for(Room r : area.getRooms()) {
-                os << "\t" << r << std::endl;
+        if (area.rooms.size()) {
+            for (const auto &room : area.rooms) {
+                os << room;
             }
         }
 

@@ -82,7 +82,10 @@ namespace model {
         bool findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result);
 
         std::unordered_map<std::string, model::Command> commands = {
+                {"debug",    Command::Debug},
+                {"exits",    Command::Exits},
                 {"help",     Command::Help},
+                {"info",     Command::Info},
                 {"login",    Command::Login},
                 {"logout",   Command::Logout},
                 {"look",     Command::Look},
