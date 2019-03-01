@@ -4,7 +4,7 @@ add_library(model
         ${SOURCES}
         )
 
-find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
+#[[find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)]]
 
 target_include_directories(model
         PUBLIC

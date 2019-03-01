@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 project(WebSocketNetworking)
 
+find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
+
 if (ENABLE_COVERAGE)
     # NOTE: Coverage only works/makes sense with debug builds
     set(CMAKE_BUILD_TYPE "Debug")
