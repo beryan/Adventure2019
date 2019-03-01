@@ -25,3 +25,8 @@ target_link_libraries(fileparser
         PRIVATE
         ${Boost_LIBRARIES}
         )
+
+set_target_properties(json
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )

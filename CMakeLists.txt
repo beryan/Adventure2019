@@ -1,6 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 project(WebSocketNetworking)
 
+if (ENABLE_COVERAGE)
+    # NOTE: Coverage only works/makes sense with debug builds
+    set(CMAKE_BUILD_TYPE "Debug")
+
+    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
+        set(CXX_COVERAGE_FLAGS "-fprofile-instr-generate -fcoverage-mapping")
+    else()
+        message(FATAL_ERROR "Coverage generation is only supported for clang")
+    endif()
+    message("Enabling coverage instrumentation with:\n ${CXX_COVERAGE_FLAGS}")
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

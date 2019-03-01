@@ -30,3 +30,7 @@ install(TARGETS networking
   ARCHIVE DESTINATION lib
 )
 
+set_target_properties(networking
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )
