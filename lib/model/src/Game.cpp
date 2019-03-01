@@ -38,18 +38,13 @@ namespace model {
                std::vector<Connection> &newClients,
                std::vector<Connection> &disconnectedClients,
                std::function<void(Connection)> &disconnect,
-               std::function<void()> &shutdown) {
-        this->clients = &clients;
-        this->newClients = &newClients;
-        this->disconnectedClients = &disconnectedClients;
-
-        this->disconnect = disconnect;
-        this->shutdown = shutdown;
-
-        this->accountHandler = std::make_unique<AccountHandler>();
-        this->worldHandler = std::make_unique<WorldHandler>();
-        this->magicHandler = std::make_unique<MagicHandler>(this->accountHandler.get());
-    }
+               std::function<void()> &shutdown) :
+        clients(&clients),
+        newClients(&newClients),
+        disconnectedClients(&disconnectedClients),
+        disconnect(disconnect),
+        shutdown(shutdown),
+        magicHandler(this->accountHandler) {};
 
 
     void
@@ -59,8 +54,10 @@ namespace model {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n";
+                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login)
+                         << "\" to login to an existing account\n"
+                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register)
+                         << "\" to create a new account\n";
 
             messages.push_back({newClient, introduction.str()});
         }
@@ -73,20 +70,20 @@ namespace model {
     Game::handleDisconnects(std::deque<Message> &messages) {
 
         for (auto &disconnectedClient : *this->disconnectedClients) {
-            if (this->accountHandler->isLoggingIn(disconnectedClient)) {
-                this->accountHandler->exitLogin(disconnectedClient);
+            if (this->accountHandler.isLoggingIn(disconnectedClient)) {
+                this->accountHandler.exitLogin(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from login due to disconnect\n";
             }
 
-            if (this->accountHandler->isRegistering(disconnectedClient)) {
-                this->accountHandler->exitRegistration(disconnectedClient);
+            if (this->accountHandler.isRegistering(disconnectedClient)) {
+                this->accountHandler.exitRegistration(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from registration due to disconnect\n";
             }
 
-            if (this->accountHandler->isLoggedIn(disconnectedClient)) {
-                this->magicHandler->handleLogout(disconnectedClient);
+            if (this->accountHandler.isLoggedIn(disconnectedClient)) {
+                this->magicHandler.handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
-                this->accountHandler->logoutClient(disconnectedClient);
+                this->accountHandler.logoutClient(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
         }
@@ -97,36 +94,40 @@ namespace model {
 
     void
     Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages) {
-        for (const auto& input : incoming) {
+        for (const auto &input : incoming) {
             auto client = input.connection;
             auto incomingInput = trimWhitespace(input.text);
             std::ostringstream tempMessage;
 
-            if (this->accountHandler->isLoggingIn(client)) {
+            if (this->accountHandler.isLoggingIn(client)) {
                 messages.push_back({
-                    client,
-                    this->accountHandler->processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
-                });
+                                           client,
+                                           this->accountHandler.processLogin(client, incomingInput.substr(0,
+                                                                                                          incomingInput.find(
+                                                                                                                  ' ')))
+                                   });
 
-                if (this->accountHandler->isLoggedIn(client)) {
+                if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->accountHandler->getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
+                    auto roomID = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
                 continue;
 
-            } else if (this->accountHandler->isRegistering(client)) {
+            } else if (this->accountHandler.isRegistering(client)) {
                 messages.push_back({
-                    client,
-                    this->accountHandler->processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
-                });
+                                           client,
+                                           this->accountHandler.processRegistration(client, incomingInput.substr(0,
+                                                                                                                 incomingInput.find(
+                                                                                                                         ' ')))
+                                   });
 
-                if (this->accountHandler->isLoggedIn(client)) {
+                if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->accountHandler->getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
+                    auto roomID = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -134,7 +135,7 @@ namespace model {
             }
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
-            std::string username = this->accountHandler->getUsernameByClient(client);
+            std::string username = this->accountHandler.getUsernameByClient(client);
             Command command = this->commandHandler.getCommandForUser(commandString, username);
 
             if (command == Command::InvalidCommand) {
@@ -165,7 +166,7 @@ namespace model {
                     break;
             }
 
-            if (!this->accountHandler->isLoggedIn(client)) {
+            if (!this->accountHandler.isLoggedIn(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
@@ -191,11 +192,11 @@ namespace model {
 
         switch (command) {
             case Command::Register:
-                tempMessage << this->accountHandler->processRegistration(client);
+                tempMessage << this->accountHandler.processRegistration(client);
                 break;
 
             case Command::Login:
-                tempMessage << this->accountHandler->processLogin(client);
+                tempMessage << this->accountHandler.processLogin(client);
                 break;
 
             case Command::Help:
@@ -205,18 +206,26 @@ namespace model {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Register) << " (create a new account)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Login) << " (login to an existing account)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Help)
+                            << " (shows this help interface)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Register)
+                            << " (create a new account)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Login)
+                            << " (login to an existing account)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit)
+                            << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown)
+                            << " (shuts down the game server)\n";
                 break;
 
             default:
                 tempMessage << "\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login)
+                            << "\" to login to an existing account\n"
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register)
+                            << "\" to create a new account\n"
+                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Help)
+                            << "\" for a full list of commands\n";
                 break;
         }
 
@@ -233,9 +242,9 @@ namespace model {
 
         switch (command) {
             case Command::Logout: {
-                this->magicHandler->handleLogout(client);
+                this->magicHandler.handleLogout(client);
                 this->removeClientFromGame(client);
-                tempMessage << this->accountHandler->logoutClient(client);
+                tempMessage << this->accountHandler.logoutClient(client);
                 break;
             }
 
@@ -246,34 +255,45 @@ namespace model {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Look) << " (displays current location description)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Info) << " (displays current location information)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Help)
+                            << " (shows this help interface)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Say)
+                            << " [message] (sends [message] to nearby players in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Tell)
+                            << " [username] [message] (sends [message] to [username] in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Yell)
+                            << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Look)
+                            << " (displays current location description)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Info)
+                            << " (displays current location information)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Exits)
+                            << " (displays exits from current location)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Move)
+                            << " [direction] (moves you in the direction specified)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Logout)
+                            << " (logs you out of the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit)
+                            << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown)
+                            << " (shuts down the game server)\n";
                 break;
 
             case Command::Say: {
-                auto roomId = this->accountHandler->getRoomIdByClient(client);
-                auto playerIds = this->worldHandler->getNearbyPlayerIds(roomId);
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto playerIds = this->worldHandler.getNearbyPlayerIds(roomId);
 
 
                 for (const auto &playerId : playerIds) {
-                    auto connection = this->accountHandler->getClientByPlayerId(playerId);
+                    auto connection = this->accountHandler.getClientByPlayerId(playerId);
                     auto message = param;
 
-                    if (this->magicHandler->isConfused(client)) {
-                        message = this->magicHandler->confuseSpeech(message);
+                    if (this->magicHandler.isConfused(client)) {
+                        message = this->magicHandler.confuseSpeech(message);
                     }
 
                     std::ostringstream sayMessage;
-                    sayMessage << this->accountHandler->getUsernameByClient(client) << "> " << message << "\n";
+                    sayMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
 
                     messages.push_back({connection, sayMessage.str()});
                 }
@@ -285,15 +305,15 @@ namespace model {
                 auto username = param.substr(0, param.find(' '));
                 auto message = trimWhitespace(param.substr(param.find(' ') + 1));
 
-                if (this->magicHandler->isConfused(client)) {
-                    message = this->magicHandler->confuseSpeech(message);
+                if (this->magicHandler.isConfused(client)) {
+                    message = this->magicHandler.confuseSpeech(message);
                 }
 
                 for (auto connection: *this->clients) {
-                    auto receiver = this->accountHandler->getUsernameByClient(connection);
+                    auto receiver = this->accountHandler.getUsernameByClient(connection);
 
-                    if (receiver == username)  {
-                        auto sender = this->accountHandler->getUsernameByClient(client);
+                    if (receiver == username) {
+                        auto sender = this->accountHandler.getUsernameByClient(client);
 
                         std::ostringstream toMessage;
                         std::ostringstream fromMessage;
@@ -316,13 +336,13 @@ namespace model {
             case Command::Yell: {
                 auto message = param;
 
-                if (this->magicHandler->isConfused(client)) {
-                    message = this->magicHandler->confuseSpeech(message);
+                if (this->magicHandler.isConfused(client)) {
+                    message = this->magicHandler.confuseSpeech(message);
                 }
 
                 for (auto connection : *this->clients) {
                     std::ostringstream yellMessage;
-                    yellMessage << this->accountHandler->getUsernameByClient(client) << "> " << message << "\n";
+                    yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
                     messages.push_back({connection, yellMessage.str()});
                 }
 
@@ -330,32 +350,32 @@ namespace model {
             }
 
             case Command::Look: {
-                auto roomID = this->accountHandler->getRoomIdByClient(client);
-                tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
+                auto roomID = this->accountHandler.getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
                 break;
             }
 
             case Command::Info: {
-                auto roomID = this->accountHandler->getRoomIdByClient(client);
-                tempMessage << this->worldHandler->findRoom(roomID);
+                auto roomID = this->accountHandler.getRoomIdByClient(client);
+                tempMessage << this->worldHandler.findRoom(roomID);
                 break;
             }
 
             case Command::Exits: {
-                auto roomID = this->accountHandler->getRoomIdByClient(client);
-                tempMessage << "\n" << this->worldHandler->findRoom(roomID).doorsToString();
+                auto roomID = this->accountHandler.getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler.findRoom(roomID).doorsToString();
                 break;
             }
 
             case Command::Move: {
-                auto roomID = this->accountHandler->getRoomIdByClient(client);
+                auto roomID = this->accountHandler.getRoomIdByClient(client);
 
-                if (this->worldHandler->isValidDirection(roomID, param)) {
-                    auto playerID = this->accountHandler->getPlayerIdByClient(client);
-                    auto destinationID = this->worldHandler->getDestination(roomID, param);
-                    this->worldHandler->movePlayer(playerID, roomID, destinationID);
-                    this->accountHandler->setRoomIdByClient(client, destinationID);
-                    tempMessage << "\n" << this->worldHandler->findRoom(destinationID).descToString();
+                if (this->worldHandler.isValidDirection(roomID, param)) {
+                    auto playerID = this->accountHandler.getPlayerIdByClient(client);
+                    auto destinationID = this->worldHandler.getDestination(roomID, param);
+                    this->worldHandler.movePlayer(playerID, roomID, destinationID);
+                    this->accountHandler.setRoomIdByClient(client, destinationID);
+                    tempMessage << "\n" << this->worldHandler.findRoom(destinationID).descToString();
 
                 } else {
                     tempMessage << "You can't move that way!\n";
@@ -365,16 +385,17 @@ namespace model {
             }
 
             case Command::Cast: {
-                return this->magicHandler->castSpell(client, param);
+                return this->magicHandler.castSpell(client, param);
             }
 
             case Command::Debug: {
-                tempMessage << this->worldHandler->getWorld();
+                tempMessage << this->worldHandler.getWorld();
                 break;
             }
 
             default:
-                tempMessage << "\nEnter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
+                tempMessage << "\nEnter " << "\"" << this->commandHandler.getStringForCommand(Command::Help)
+                            << "\" for a full list of commands\n";
                 break;
         }
 
@@ -386,8 +407,8 @@ namespace model {
 
     void
     Game::handleOutgoing(std::deque<Message> &messages) {
-        this->accountHandler->notifyBootedClients(messages);
-        this->magicHandler->processCycle(messages);
+        this->accountHandler.notifyBootedClients(messages);
+        this->magicHandler.processCycle(messages);
     }
 
 
@@ -400,7 +421,7 @@ namespace model {
             clientMessages[message.connection] << message.text;
         }
 
-        for (auto const& [client, message] : clientMessages) {
+        for (auto const&[client, message] : clientMessages) {
             outgoing.push_back({client, message.str()});
         }
 
@@ -410,25 +431,25 @@ namespace model {
 
     void
     Game::addClientToGame(Connection client) {
-        auto playerID = this->accountHandler->getPlayerIdByClient(client);
-        auto roomID = this->accountHandler->getRoomIdByClient(client);
+        auto playerID = this->accountHandler.getPlayerIdByClient(client);
+        auto roomID = this->accountHandler.getRoomIdByClient(client);
 
-        this->worldHandler->addPlayer(playerID, roomID);
+        this->worldHandler.addPlayer(playerID, roomID);
     }
 
 
     void
     Game::removeClientFromGame(Connection client) {
-        auto playerID = this->accountHandler->getPlayerIdByClient(client);
-        auto roomID = this->accountHandler->getRoomIdByClient(client);
-        this->worldHandler->removePlayer(playerID, roomID);
+        auto playerID = this->accountHandler.getPlayerIdByClient(client);
+        auto roomID = this->accountHandler.getRoomIdByClient(client);
+        this->worldHandler.removePlayer(playerID, roomID);
     }
 
 
     bool
     Game::isInvalidFormat(const Command &command, const std::string &parameters) {
         bool wrongTellFormat = (command == Command::Tell && parameters.find(' ') == std::string::npos);
-        bool isCommandWithParam = (command == Command::Move || command == Command::Say  || command == Command::Yell);
+        bool isCommandWithParam = (command == Command::Move || command == Command::Say || command == Command::Yell);
 
         return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
     }

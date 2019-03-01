@@ -63,7 +63,7 @@ AccountHandler createAccountHandler() {
 
 TEST(MagicHandlerTestSuite, rejectInvalidSpellName) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     auto spellName = "invalid_spell_name";
     auto result = magicHandler.castSpell(CLIENT_A, spellName).back();
@@ -77,7 +77,7 @@ TEST(MagicHandlerTestSuite, rejectInvalidSpellName) {
 
 TEST(MagicHandlerTestSuite, canCastConfuseOnSelf) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
@@ -98,7 +98,7 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnSelf) {
 
 TEST(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
@@ -127,7 +127,7 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
 
 TEST(MagicHandlerTestSuite, cannotCastConfuseOnOtherPlayerInDifferentRoom) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     accountHandler.setRoomIdByClient(CLIENT_B, 42);
     ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
@@ -147,7 +147,7 @@ TEST(MagicHandlerTestSuite, cannotCastConfuseOnOtherPlayerInDifferentRoom) {
 
 TEST(MagicHandlerTestSuite, canConvertMessageToPigLatin) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     auto result = magicHandler.confuseSpeech("Hello, how are you?");
 
@@ -160,7 +160,7 @@ TEST(MagicHandlerTestSuite, canConvertMessageToPigLatin) {
 
 TEST(MagicHandlerTestSuite, canWaitUntilConfuseExpires) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
@@ -179,7 +179,7 @@ TEST(MagicHandlerTestSuite, canWaitUntilConfuseExpires) {
 
 TEST(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_A;
@@ -198,7 +198,7 @@ TEST(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
 
 TEST(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
@@ -227,7 +227,7 @@ TEST(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
 
 TEST(MagicHandlerTestSuite, cannotCastBodySwapOnOtherPlayerInDifferentRoom) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     accountHandler.setRoomIdByClient(CLIENT_B, 42);
     ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
@@ -247,7 +247,7 @@ TEST(MagicHandlerTestSuite, cannotCastBodySwapOnOtherPlayerInDifferentRoom) {
 
 TEST(MagicHandlerTestSuite, canWaitUntilBodySwapExpires) {
     AccountHandler accountHandler = createAccountHandler();
-    MagicHandler magicHandler(&accountHandler);
+    MagicHandler magicHandler(accountHandler);
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;

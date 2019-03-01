@@ -14,11 +14,8 @@
 using model::MagicHandler;
 
 namespace model {
-    MagicHandler::MagicHandler(AccountHandler* playerHandler) {
-        this->accountHandler = playerHandler;
-        this->swapTracker = {};
-        this->confuseTracker = {};
-    }
+    MagicHandler::MagicHandler(AccountHandler &accountHandler) :
+        accountHandler(&accountHandler){}
 
 
     std::vector<Message>

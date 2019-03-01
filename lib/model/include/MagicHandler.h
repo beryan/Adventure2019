@@ -111,7 +111,7 @@ namespace model {
          *  Constructs a MagicHandler instance with a pointer to the
          *  PlayerHandler instance used by the Game class.
          */
-        explicit MagicHandler(AccountHandler* accountHandler);
+        explicit MagicHandler(AccountHandler &accountHandler);
 
         /**
          *  Casts a spell if the spell name is valid

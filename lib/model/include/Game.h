@@ -20,6 +20,7 @@
 using networking::Connection;
 using networking::Message;
 using model::AccountHandler;
+using model::CommandHandler;
 using model::WorldHandler;
 using model::MagicHandler;
 using model::Command;
@@ -43,11 +44,11 @@ namespace model {
         std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
-        model::CommandHandler commandHandler;
 
-        std::unique_ptr<AccountHandler> accountHandler;
-        std::unique_ptr<WorldHandler> worldHandler;
-        std::unique_ptr<MagicHandler> magicHandler;
+        AccountHandler accountHandler;
+        CommandHandler commandHandler;
+        WorldHandler worldHandler;
+        MagicHandler magicHandler;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
