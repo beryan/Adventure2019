@@ -9,8 +9,6 @@ target_include_directories(json
         "${CMAKE_CURRENT_SOURCE_DIR}/include"
         )
 
-find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
-
 add_library(fileparser
         src/DataManager.cpp)
 
