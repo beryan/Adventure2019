@@ -2,7 +2,7 @@ image: nsumner/cmpt373:projectbase
 
 before_script:
   - apt-get update --yes
-  - apt-get install --yes libboost-all-dev
+  - apt-get install --yes libboost-filesystem-dev
 
 stages:
   - build
