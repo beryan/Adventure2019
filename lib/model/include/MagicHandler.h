@@ -63,10 +63,10 @@ namespace model {
     class MagicHandler {
     private:
         AccountHandler* accountHandler;
-        std::vector<SpellInstance> swapTracker;
+        std::vector<SpellInstance> bodySwapTracker;
         std::vector<SpellInstance> confuseTracker;
 
-        static constexpr unsigned int SWAP_DURATION = 50;
+        static constexpr unsigned int BODY_SWAP_DURATION = 50;
         static constexpr unsigned int CONFUSE_DURATION = 50;
 
         enum class Spell {
@@ -118,6 +118,12 @@ namespace model {
          */
         std::vector<Message>
         castSpell(const Connection &client, const std::string &param);
+
+        /**
+         *  Returns true if the client's Player is under the effects of the Body Swap spell
+         */
+        bool
+        isBodySwapped(const Connection &client);
 
         /**
          *  Returns true if the client's Player is under the effects of the Confuse spell

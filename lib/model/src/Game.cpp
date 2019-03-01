@@ -44,7 +44,7 @@ namespace model {
         disconnectedClients(&disconnectedClients),
         disconnect(disconnect),
         shutdown(shutdown),
-        magicHandler(this->accountHandler) {};
+        magicHandler(this->accountHandler){};
 
 
     void
@@ -68,7 +68,6 @@ namespace model {
 
     void
     Game::handleDisconnects(std::deque<Message> &messages) {
-
         for (auto &disconnectedClient : *this->disconnectedClients) {
             if (this->accountHandler.isLoggingIn(disconnectedClient)) {
                 this->accountHandler.exitLogin(disconnectedClient);
@@ -101,11 +100,9 @@ namespace model {
 
             if (this->accountHandler.isLoggingIn(client)) {
                 messages.push_back({
-                                           client,
-                                           this->accountHandler.processLogin(client, incomingInput.substr(0,
-                                                                                                          incomingInput.find(
-                                                                                                                  ' ')))
-                                   });
+                    client,
+                    this->accountHandler.processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
+                });
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
@@ -118,11 +115,9 @@ namespace model {
 
             } else if (this->accountHandler.isRegistering(client)) {
                 messages.push_back({
-                                           client,
-                                           this->accountHandler.processRegistration(client, incomingInput.substr(0,
-                                                                                                                 incomingInput.find(
-                                                                                                                         ' ')))
-                                   });
+                    client,
+                    this->accountHandler.processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
+                });
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);

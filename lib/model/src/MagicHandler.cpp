@@ -69,6 +69,10 @@ namespace model {
     MagicHandler::bodySwap(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
 
+        if (this->isBodySwapped(client)) {
+            return {{client, "You can't cast Body Swap while already under the effects of the spell!\n"}};
+        }
+
         if (targetName.empty()) {
             return {{client, "You need to specify the name of the person to cast Body Swap on.\n"}};
         }
@@ -77,7 +81,7 @@ namespace model {
         auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
         auto casterUsername = this->accountHandler->getUsernameByClient(client);
         if (casterUsername == targetName) {
-            return {{client, "You can't cast Swap on yourself!\n"}};
+            return {{client, "You can't cast Body Swap on yourself!\n"}};
         }
 
         std::ostringstream casterMessage;
@@ -95,9 +99,14 @@ namespace model {
             return {{client, casterMessage.str()}};
         }
 
+        if (this->isBodySwapped(targetClient)) {
+            casterMessage << targetName << " is already under the effects of the Body Swap spell!\n";
+            return {{client, casterMessage.str()}};
+        }
+
         auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
         this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
-        this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
+        this->bodySwapTracker.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
         casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
         targetMessage << casterUsername << " cast swap on you!\n";
@@ -135,23 +144,30 @@ namespace model {
             return {{client, "You cast Confuse on yourself.\n"}};
         }
 
+        std::ostringstream casterMessage;
+        std::ostringstream targetMessage;
+
         auto targetClient = this->accountHandler->getClientByUsername(targetName);
         if (targetClient.id == 0) {
-            return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
+            casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
+            return {{client, casterMessage.str()}};
         }
 
         auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
         auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
         if (casterRoomId != targetRoomId) {
-            return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
+            casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        if (isConfused(targetClient)) {
+            casterMessage << targetName << " is already under the effects of the Confuse spell!\n";
+            return {{client, casterMessage.str()}};
         }
 
         this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
-        std::ostringstream casterMessage;
         casterMessage << "You cast Confuse on " << targetName << "\n";
-
-        std::ostringstream targetMessage;
         targetMessage << casterUsername << " cast Confuse on you!" << "\n";
 
         responses.push_back({client, casterMessage.str()});
@@ -159,6 +175,23 @@ namespace model {
 
         return responses;
     }
+
+
+    bool
+    MagicHandler::isBodySwapped(const Connection &client) {
+        auto playerId = this->accountHandler->getPlayerIdByClient(client);
+
+        auto it_swap = std::find_if(
+                this->bodySwapTracker.begin(),
+                this->bodySwapTracker.end(),
+                [&playerId](const SpellInstance &swapInstance) {
+                    return (playerId == swapInstance.casterPlayerId) || (playerId == swapInstance.targetPlayerId);
+                }
+        );
+
+        return it_swap != this->bodySwapTracker.end();
+    }
+
 
     bool
     MagicHandler::isConfused(const Connection &client) {
@@ -193,19 +226,19 @@ namespace model {
         // Swap back players if client is under Swap spell effects
         auto clientPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto it_swap = std::find_if(
-            this->swapTracker.begin(),
-            this->swapTracker.end(),
+            this->bodySwapTracker.begin(),
+            this->bodySwapTracker.end(),
             [&clientPlayerId](const SpellInstance &swapInstance) {
                 return (clientPlayerId == swapInstance.casterPlayerId || clientPlayerId == swapInstance.targetPlayerId);
             }
         );
 
-        if (it_swap != this->swapTracker.end()) {
+        if (it_swap != this->bodySwapTracker.end()) {
             auto casterPlayerId= it_swap->casterPlayerId;
             auto targetPlayerId = it_swap->targetPlayerId;
 
             this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
-            this->swapTracker.erase(it_swap);
+            this->bodySwapTracker.erase(it_swap);
         }
 
         // Remove Confuse spell effect from player
@@ -227,9 +260,9 @@ namespace model {
     void
     MagicHandler::processCycle(std::deque<Message> &messages) {
        // Handle swap spell expiration
-       auto swapInstance = this->swapTracker.begin();
+       auto swapInstance = this->bodySwapTracker.begin();
 
-       while (swapInstance != this->swapTracker.end()) {
+       while (swapInstance != this->bodySwapTracker.end()) {
            if (swapInstance->cyclesRemaining > 0) {
                --swapInstance->cyclesRemaining;
                ++swapInstance;
@@ -247,7 +280,7 @@ namespace model {
                messages.push_back({casterClient, message});
                messages.push_back({targetClient, message});
 
-               this->swapTracker.erase(swapInstance);
+               this->bodySwapTracker.erase(swapInstance);
            }
        }
 
