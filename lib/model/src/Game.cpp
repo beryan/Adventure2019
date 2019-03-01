@@ -254,7 +254,6 @@ namespace model {
                             << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
-
                 break;
 
             case Command::Say: {

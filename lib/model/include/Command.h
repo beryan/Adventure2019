@@ -16,7 +16,6 @@ namespace model {
         Move,
         Quit,
         Register,
-        Room,
         Say,
         Shutdown,
         Tell,

@@ -23,7 +23,7 @@ namespace model {
         model::Command getDefaultCommand(const std::string &commandStr);
 
         /**
-         * Gets the appropriate command for a user from string, checking first if user has aliased a command
+         * Get the appropriate command for a user from string, checking first if user has aliased a command
          * @param commandStr command string to parse
          * @param username username to check for command alias
          * @return Command from commandStr, InvalidCommand if no matching command
