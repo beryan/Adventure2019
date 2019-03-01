@@ -1,5 +1,9 @@
 image: nsumner/cmpt373:projectbase
 
+before_script:
+  - apt-get update --yes
+  - apt-get install --yes libboost-all-dev
+
 stages:
   - build
   - analyze
@@ -10,7 +14,6 @@ build:
   script:
     - mkdir build
     - cd build
-    - sudo apt-get install libboost-all-dev
     - cmake -DCMAKE_CXX_COMPILER=clang++ -DENABLE_COVERAGE=True -DCMAKE_EXPORT_COMPILE_COMMANDS=True ../
     - make
   artifacts:
