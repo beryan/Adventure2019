@@ -9,6 +9,7 @@
 
 #include "Room.h"
 #include <iostream>
+#include <sstream>
 #include <algorithm>
 
 using model::Room;
@@ -18,35 +19,35 @@ namespace model {
     //constructors
     Room::Room()
         : id(-1),
-            name(""),
-            desc({}),
-            doors({}),
-            npcs({}),
-            objects({}),
-            playersInRoom({})
-            { }
+          name(""),
+          desc({}),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({})
+          { }
 
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
         : id(id),
-            name(std::move(name)),
-            desc(std::move(desc)),
-            doors({}),
-            npcs({}),
-            objects({}),
-            playersInRoom({})
-            { }
+          name(std::move(name)),
+          desc(std::move(desc)),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({})
+          { }
 
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
         : id(id),
-            name(std::move(name)),
-            desc(std::move(desc)),
-            doors(std::move(doors)),
-            npcs(std::move(npcs)),
-            objects(std::move(objects)),
-            playersInRoom({})
-            { }
+          name(std::move(name)),
+          desc(std::move(desc)),
+          doors(std::move(doors)),
+          npcs(std::move(npcs)),
+          objects(std::move(objects)),
+          playersInRoom({})
+          { }
 
 
     //getters and setters
@@ -168,14 +169,14 @@ namespace model {
 
 
     bool
-    Room::isValidDirection(const std::string &dir) {
+    Room::isValidDirection(const std::string &dir) const {
         auto it = std::find_if(this->doors.begin(), this->doors.end(), [&dir](const Door &door) {return door.dir == dir;});
         return (it != this->doors.end());
     }
 
 
     model::ID
-    Room::getDestination(const std::string &dir) {
+    Room::getDestination(const std::string &dir) const {
         auto it = std::find_if(this->doors.begin(), this->doors.end(), [&dir](const Door &door) {return door.dir == dir;});
 
         if (it != this->doors.end()) {
@@ -187,10 +188,10 @@ namespace model {
 
 
     std::vector<model::ID>
-    Room::getNearbyRoomIds() {
+    Room::getNearbyRoomIds() const {
         std::vector<model::ID> ids;
 
-        for (Door door : this->doors) {
+        for (const auto &door : this->doors) {
             ids.push_back(door.leadsTo);
         }
 
@@ -210,7 +211,7 @@ namespace model {
         os << rhs.dir;
 
         if (!rhs.desc.empty()) {
-            os << ": ";
+            os << ", ";
             for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
@@ -222,22 +223,38 @@ namespace model {
     }
 
 
-    //print room
-    std::ostream& operator<<(std::ostream& os, const Room& room) {
-        os << "\n*****" << room.id << ". " << room.name << "*****\n";
-
-        if (!room.desc.empty()) {
-            for (const auto &s : room.desc) {
+    std::string
+    Room::descToString() const {
+        std::ostringstream os;
+        if (!this->desc.empty()) {
+            for (const auto &s : this->desc) {
                 os << s << std::endl;
             }
         }
+        return os.str();
+    }
 
-        if(!room.doors.empty()) {
-            os << "Doors:" << std::endl;
-            for (const auto &door : room.doors) {
+
+    std::string
+    Room::doorsToString() const {
+        std::ostringstream os;
+        if(!this->doors.empty()) {
+            os << "Exits:" << std::endl;
+            for (const auto &door : this->doors) {
                 os << door;
             }
         }
+        return os.str();
+    }
+
+
+    //print room
+    std::ostream& operator<<(std::ostream& os, const Room& room) {
+        os << "\n" << room.id << ". " << room.name << "\n";
+
+        os << room.descToString();
+
+        os << room.doorsToString();
 
         if(!room.npcs.empty()) {
             os << "NPCS:" << std::endl;

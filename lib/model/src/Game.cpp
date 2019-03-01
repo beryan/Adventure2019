@@ -109,7 +109,7 @@ namespace model {
                 if (this->accountHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler->getRoomIdByClient(client);
-                    tempMessage << this->worldHandler->findRoom(roomID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -124,7 +124,7 @@ namespace model {
                 if (this->accountHandler->isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler->getRoomIdByClient(client);
-                    tempMessage << this->worldHandler->findRoom(roomID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -244,10 +244,12 @@ namespace model {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Say) << " [message] (sends [message] to close by players in the game)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Look) << " (displays current location information)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Look) << " (displays current location description)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Info) << " (displays current location information)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
@@ -308,7 +310,19 @@ namespace model {
 
             case Command::Look: {
                 auto roomID = this->accountHandler->getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler->findRoom(roomID).descToString();
+                break;
+            }
+
+            case Command::Info: {
+                auto roomID = this->accountHandler->getRoomIdByClient(client);
                 tempMessage << this->worldHandler->findRoom(roomID);
+                break;
+            }
+
+            case Command::Exits: {
+                auto roomID = this->accountHandler->getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler->findRoom(roomID).doorsToString();
                 break;
             }
 
@@ -320,12 +334,17 @@ namespace model {
                     auto destinationID = this->worldHandler->getDestination(roomID, param);
                     this->worldHandler->movePlayer(playerID, roomID, destinationID);
                     this->accountHandler->setRoomIdByClient(client, destinationID);
-                    tempMessage << this->worldHandler->findRoom(destinationID);
+                    tempMessage << "\n" << this->worldHandler->findRoom(destinationID).descToString();
 
                 } else {
                     tempMessage << "You can't move that way!\n";
                 }
 
+                break;
+            }
+
+            case Command::Debug: {
+                tempMessage << this->worldHandler->getWorld();
                 break;
             }
 

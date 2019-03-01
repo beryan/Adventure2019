@@ -55,16 +55,6 @@ namespace model{
         std::vector<model::ID>
         getNearbyPlayerIds(const model::ID &roomId);
 
-        void addUser(Player player);
-        void removeUser(Player player);
-
-//        void addArea(Area area);
-//        void removeArea(Area area);
-
-        void parseJSON();
-
-        void parseUserData();
-
     private:
         World world;
     };
