@@ -44,7 +44,6 @@ namespace model {
         }
 
         auto spell = this->spellMap.at(spellName);
-
         switch (spell) {
             case (Spell::BodySwap):
                 responses = this->bodySwap(client, targetName);
@@ -70,13 +69,13 @@ namespace model {
     MagicHandler::bodySwap(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
 
-        auto casterUsername = this->accountHandler->getUsernameByClient(client);
-        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
-
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast swap on.\n"}};
+            return {{client, "You need to specify the name of the person to cast Body Swap on.\n"}};
         }
 
+        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
+        auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
+        auto casterUsername = this->accountHandler->getUsernameByClient(client);
         if (casterUsername == targetName) {
             return {{client, "You can't cast Swap on yourself!\n"}};
         }
@@ -84,30 +83,27 @@ namespace model {
         std::ostringstream casterMessage;
         std::ostringstream targetMessage;
 
-        try {
-            auto targetClient = this->accountHandler->getClientByUsername(targetName);
-            auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
-            auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
-            auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
-
-            if (targetRoomId != casterRoomId) {
-                casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
-                return {{client, casterMessage.str()}};
-            }
-
-            this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
-            this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
-
-            casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
-            targetMessage << casterUsername << " cast swap on you!\n";
-
-            responses.push_back({targetClient, targetMessage.str()});
-            responses.push_back({client, casterMessage.str()});
-
-        } catch (std::out_of_range &error) {
+        auto targetClient = this->accountHandler->getClientByUsername(targetName);
+        if (targetClient.id == 0) {
             casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
-            responses.push_back({client, casterMessage.str()});
+            return {{client, casterMessage.str()}};
         }
+
+        auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
+        if (targetRoomId != casterRoomId) {
+            casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
+        this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+        this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
+
+        casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
+        targetMessage << casterUsername << " cast swap on you!\n";
+
+        responses.push_back({targetClient, targetMessage.str()});
+        responses.push_back({client, casterMessage.str()});
 
         return responses;
     }
@@ -125,44 +121,41 @@ namespace model {
 
     std::vector<Message>
     MagicHandler::confuse(const Connection &client, const std::string &targetName) {
-        if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast swap on.\n"}};
-        }
-
         std::vector<Message> responses;
 
-        try {
-            auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
-            auto targetClient = this->accountHandler->getClientByUsername(targetName);
-            auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
-
-            auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
-            auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
-
-            if (casterRoomId != targetRoomId) {
-                return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
-            }
-
-            this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
-
-            auto casterUsername = this->accountHandler->getUsernameByClient(client);
-
-            if (casterUsername == targetName) {
-                return {{client, "You cast Confuse on yourself.\n"}};
-            }
-
-            std::ostringstream casterMessage;
-            std::ostringstream targetMessage;
-
-            casterMessage << "You cast Confuse on " << targetName << "\n";
-            targetMessage << casterUsername << " cast Confuse on you!" << "\n";
-
-            responses.push_back({client, casterMessage.str()});
-            responses.push_back({targetClient, targetMessage.str()});
-
-        } catch (std::out_of_range &error) {
-            responses.push_back({client, "There is no player here with the name \"" + targetName + "\"\n"});
+        if (targetName.empty()) {
+            return {{client, "You need to specify the name of the person to cast Confuse on.\n"}};
         }
+
+        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
+        auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
+        auto casterUsername = this->accountHandler->getUsernameByClient(client);
+        if (casterUsername == targetName) {
+            this->confuseTracker.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
+            return {{client, "You cast Confuse on yourself.\n"}};
+        }
+
+        auto targetClient = this->accountHandler->getClientByUsername(targetName);
+        if (targetClient.id == 0) {
+            return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
+        }
+
+        auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
+        auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
+        if (casterRoomId != targetRoomId) {
+            return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
+        }
+
+        this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
+
+        std::ostringstream casterMessage;
+        casterMessage << "You cast Confuse on " << targetName << "\n";
+
+        std::ostringstream targetMessage;
+        targetMessage << casterUsername << " cast Confuse on you!" << "\n";
+
+        responses.push_back({client, casterMessage.str()});
+        responses.push_back({targetClient, targetMessage.str()});
 
         return responses;
     }
@@ -233,7 +226,6 @@ namespace model {
 
     void
     MagicHandler::processCycle(std::deque<Message> &messages) {
-
        // Handle swap spell expiration
        auto swapInstance = this->swapTracker.begin();
 

@@ -266,10 +266,17 @@ namespace model {
 
     Connection
     AccountHandler::getClientByUsername(const std::string &username) {
-        auto player = this->usernameToPlayer.at(username);
-        auto client = this->activeIdToClient.at(player->getId());
+        if (!this->usernameToPlayer.count(username)) {
+            return {0};
+        }
 
-        return client;
+        auto player = this->usernameToPlayer.at(username);
+
+        if (!this->activeIdToClient.count(player->getId())) {
+            return {0};
+        }
+
+        return this->activeIdToClient.at(player->getId());
     }
 
     model::ID
