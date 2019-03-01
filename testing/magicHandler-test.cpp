@@ -18,15 +18,16 @@ using networking::Connection;
  *  2. A player can cast Confuse on themselves
  *  3. A player can cast Confuse on another player in the same room
  *  4. A player cannot cast Confuse on another player in a different room
- *  5. A player cannot cast Confuse on an already Confused player
- *  6. The confuseSpeech() method can convert a string into Pig Latin
- *  7. Confuse spell instance will expire after a certain number of cycles
- *  8. A player cannot cast Body Swap on themselves
- *  9. A player can cast Body Swap on another player in the same room
- * 10. A player cannot cast Body Swap on another player in a different room
- * 11. A player cannot cast Body Swap if they are under the Body Swap spell's effects
- * 12. A player cannot cast Body Swap on an already Body Swapped player
- * 13. Body Swap spell instance will expire after a certain number of cycles
+ *  5. A player cannot cast Confuse on themselves if they are already Confused
+ *  6. A player cannot cast Confuse on an already Confused player
+ *  7. The confuseSpeech() method can convert a string into Pig Latin
+ *  8. Confuse spell instance will expire after a certain number of cycles
+ *  9. A player cannot cast Body Swap on themselves
+ * 10. A player can cast Body Swap on another player in the same room
+ * 11. A player cannot cast Body Swap on another player in a different room
+ * 12. A player cannot cast Body Swap if they are under the Body Swap spell's effects
+ * 13. A player cannot cast Body Swap on an already Body Swapped player
+ * 14. Body Swap spell instance will expire after a certain number of cycles
  */
 
 constexpr Connection CLIENT_A = {100};
@@ -71,10 +72,11 @@ TEST(MagicHandlerTestSuite, rejectInvalidSpellName) {
     auto spellName = "invalid_spell_name";
     auto result = magicHandler.castSpell(CLIENT_A, spellName).back();
 
-    std::ostringstream expected;
-    expected << "There are no spells with the name of \"" << spellName << "\"\n";
+    std::ostringstream casterExpected;
+    casterExpected << "There are no spells with the name of \"" << spellName << "\"\n";
 
-    EXPECT_EQ(expected.str(), result.text);
+    EXPECT_EQ(CLIENT_A.id, result.connection.id);
+    EXPECT_EQ(casterExpected.str(), result.text);
 }
 
 
@@ -90,12 +92,14 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnSelf) {
 
     auto result = results.back();
 
-    std::ostringstream expected;
-    expected << "You cast Confuse on yourself.\n";
+    std::ostringstream casterExpected;
+    casterExpected << "You cast Confuse on yourself.\n";
 
     EXPECT_TRUE(magicHandler.isConfused(CLIENT_A));
     EXPECT_FALSE(magicHandler.isConfused(CLIENT_B));
-    EXPECT_EQ(expected.str(), result.text);
+
+    EXPECT_EQ(CLIENT_A.id, result.connection.id);
+    EXPECT_EQ(casterExpected.str(), result.text);
 }
 
 
@@ -123,7 +127,10 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
     EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
     EXPECT_TRUE(magicHandler.isConfused(CLIENT_B));
 
+    EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
     EXPECT_EQ(casterExpected.str(), casterResult.text);
+
+    EXPECT_EQ(CLIENT_B.id, targetResult.connection.id);
     EXPECT_EQ(targetExpected.str(), targetResult.text);
 }
 
@@ -143,12 +150,39 @@ TEST(MagicHandlerTestSuite, cannotCastConfuseOnOtherPlayerInDifferentRoom) {
 
     auto result = results.front();
 
-    std::ostringstream expected;
-    expected << "There is no player here with the name \"" << USERNAME_B << "\"\n";
+    std::ostringstream casterExpected;
+    casterExpected << "There is no player here with the name \"" << USERNAME_B << "\"\n";
 
     EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
     EXPECT_FALSE(magicHandler.isConfused(CLIENT_B));
-    EXPECT_EQ(expected.str(), result.text);
+
+    EXPECT_EQ(CLIENT_A.id, result.connection.id);
+    EXPECT_EQ(casterExpected.str(), result.text);
+}
+
+
+TEST(MagicHandlerTestSuite, cannotCastConfuseOnSelfWhileConfused) {
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(accountHandler);
+
+    std::ostringstream argument;
+    argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
+    magicHandler.castSpell(CLIENT_A, argument.str());
+
+    ASSERT_TRUE(magicHandler.isConfused(CLIENT_A));
+    ASSERT_FALSE(magicHandler.isConfused(CLIENT_B));
+
+    auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+
+    ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+
+    auto result = results.front();
+
+    std::ostringstream casterExpected;
+    casterExpected << "You are already under the effects of the Confuse spell!\n";
+
+    EXPECT_EQ(CLIENT_A.id, result.connection.id);
+    EXPECT_EQ(casterExpected.str(), result.text);
 }
 
 
@@ -174,6 +208,7 @@ TEST(MagicHandlerTestSuite, cannotCastConfuseOnConfusedPlayer) {
     std::ostringstream casterExpected;
     casterExpected<< USERNAME_B << " is already under the effects of the Confuse spell!\n";
 
+    ASSERT_EQ(CLIENT_A.id, casterResult.connection.id);
     ASSERT_EQ(casterExpected.str(), casterResult.text);
 }
 
@@ -221,10 +256,11 @@ TEST(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
 
     auto result = results.back();
 
-    std::ostringstream expected;
-    expected << "You can't cast Body Swap on yourself!\n";
+    std::ostringstream casterExpected;
+    casterExpected << "You can't cast Body Swap on yourself!\n";
 
-    EXPECT_EQ(expected.str(), result.text);
+    EXPECT_EQ(CLIENT_A.id, result.connection.id);
+    EXPECT_EQ(casterExpected.str(), result.text);
 }
 
 

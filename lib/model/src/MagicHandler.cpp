@@ -139,6 +139,10 @@ namespace model {
         auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
         auto casterUsername = this->accountHandler->getUsernameByClient(client);
+        if ((casterUsername == targetName) && (this->isConfused(client))) {
+            return {{client, "You are already under the effects of the Confuse spell!\n"}};
+        }
+
         if (casterUsername == targetName) {
             this->confuseTracker.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
             return {{client, "You cast Confuse on yourself.\n"}};
