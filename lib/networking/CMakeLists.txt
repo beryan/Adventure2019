@@ -4,10 +4,6 @@ add_library(networking
   src/Client.cpp
 )
 
-#[[
-find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
-]]
-
 target_include_directories(networking
   PUBLIC
     $<INSTALL_INTERFACE:include>
