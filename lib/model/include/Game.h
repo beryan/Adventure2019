@@ -7,9 +7,11 @@
 
 #include "Server.h"
 #include "Player.h"
-#include "PlayerHandler.h"
+#include "AccountHandler.h"
 #include "WorldHandler.h"
 #include "MagicHandler.h"
+#include "Command.h"
+#include "CommandHandler.h"
 
 #include <functional>
 #include <deque>
@@ -17,9 +19,10 @@
 
 using networking::Connection;
 using networking::Message;
-using model::PlayerHandler;
+using model::AccountHandler;
 using model::WorldHandler;
 using model::MagicHandler;
+using model::Command;
 
 namespace model {
     /**
@@ -40,56 +43,11 @@ namespace model {
         std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
+        model::CommandHandler commandHandler;
 
-        std::unique_ptr<PlayerHandler> playerHandler;
+        std::unique_ptr<AccountHandler> accountHandler;
         std::unique_ptr<WorldHandler> worldHandler;
         std::unique_ptr<MagicHandler> magicHandler;
-
-        enum class Command {
-            Help,
-            Login,
-            Logout,
-            Look,
-            Move,
-            Quit,
-            Register,
-            Say,
-            Shutdown,
-            Tell,
-            Yell,
-            Cast
-        };
-
-        std::map<std::string, Command> commandMap = {
-            {"help", Command::Help},
-            {"login", Command::Login},
-            {"logout", Command::Logout},
-            {"look", Command::Look},
-            {"info", Command::Look},
-            {"move", Command::Move},
-            {"quit", Command::Quit},
-            {"register", Command::Register},
-            {"say", Command::Say},
-            {"shutdown", Command::Shutdown},
-            {"tell", Command::Tell},
-            {"yell", Command::Yell},
-            {"cast", Command::Cast}
-        };
-
-        std::map<Command, std::vector<std::string>> commandWordsMap = {
-            {Command::Help, {"help"}},
-            {Command::Login, {"login"}},
-            {Command::Logout, {"logout"}},
-            {Command::Look, {"look"}},
-            {Command::Move, {"move"}},
-            {Command::Quit, {"quit"}},
-            {Command::Register, {"register"}},
-            {Command::Say, {"say"}},
-            {Command::Shutdown, {"shutdown"}},
-            {Command::Tell, {"tell"}},
-            {Command::Yell, {"yell"}},
-            {Command::Cast, {"cast"}}
-        };
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -136,13 +94,6 @@ namespace model {
          */
         std::deque<Message>
         formMessages(std::deque<Message> &messages);
-
-        /**
-         *  Returns the words associated with a command in the form of a comma-separated string.
-         *  Used to display commands in the help display.
-         */
-        std::string
-        getCommandWords(Command command);
 
         /**
          *  Update game state to include connections that are in game.

@@ -9,7 +9,7 @@ using model::Equipment;
 namespace model {
     Equipment::Equipment() {}
 
-    std::map<int, Object> Equipment::getMappedEquipment() {
+    std::unordered_map<int, Object> Equipment::getMappedEquipment() {
         return this->equipment;
     }
 
@@ -24,26 +24,27 @@ namespace model {
         return container;
     }
 
-    void Equipment::mapEquipment(std::vector<Object> &items) {
-        for (Object& item : items) {
+    void Equipment::mapEquipment(const std::vector<Object> &items) {
+        this->equipment.clear();
+        for (Object item : items) {
             this->equipment.insert(std::pair<int, Object>(item.getSlot(), item));
         }
     }
 
-    void Equipment::equipItem(Object object) {
-        this->equipment.insert(std::pair<int, Object>(object.getSlot(), std::move(object)));
+    void Equipment::equipItem(const Object &object) {
+        this->equipment.insert(std::pair<int, Object>(object.getSlot(), object));
     }
 
-    Object Equipment::unequipItem(Object &item) {
+    Object Equipment::unequipItem(const Object &item) {
         Object temp;
-        if (item.getId() == this->equipment.at(item.getSlot()).getId()) {
+        if (item == this->equipment.at(item.getSlot())) {
             temp = unequipSlot(item.getSlot());
         }
 
         return std::move(temp);
     }
 
-    Object Equipment::unequipSlot(Slot slot) {
+    Object Equipment::unequipSlot(const Slot &slot) {
         Object temp = std::move(this->equipment.at(slot));
         this->equipment.erase(slot);
 
@@ -56,6 +57,6 @@ namespace model {
 
     bool Equipment::isItemEquipped(const Object &item) {
         return  isSlotOccupied(item.getSlot()) &&
-                this->equipment.at(item.getSlot()).getId() == item.getId();
+                this->equipment.at(item.getSlot()) == item;
     }
 }

@@ -1,7 +1,7 @@
 #ifndef MAGICHANDLER_H
 #define MAGICHANDLER_H
 
-#include "PlayerHandler.h"
+#include "AccountHandler.h"
 #include <sstream>
 
 using model::Player;
@@ -62,7 +62,7 @@ namespace model {
      */
     class MagicHandler {
     private:
-        PlayerHandler* playerHandler;
+        AccountHandler* accountHandler;
         std::vector<SpellInstance> swapTracker;
         std::vector<SpellInstance> confuseTracker;
 
@@ -111,7 +111,7 @@ namespace model {
          *  Constructs a MagicHandler instance with a pointer to the
          *  PlayerHandler instance used by the Game class.
          */
-        explicit MagicHandler(PlayerHandler* playerHandler);
+        explicit MagicHandler(AccountHandler* accountHandler);
 
         /**
          *  Casts a spell if the spell name is valid

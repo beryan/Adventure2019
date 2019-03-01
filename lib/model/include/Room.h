@@ -69,9 +69,11 @@ namespace model {
         void addPlayerToRoom(const model::ID &playerId);
         void removePlayerFromRoom(const model::ID &playerId);
 
-        bool isValidDirection(const std::string &dir);
-        model::ID getDestination(const std::string &dir);
-        std::vector<model::ID> getNearbyRoomIds();
+        bool isValidDirection(const std::string &dir) const;
+        model::ID getDestination(const std::string &dir) const;
+        std::vector<model::ID> getNearbyRoomIds() const;
+        std::string descToString() const;
+        std::string doorsToString() const;
 
         bool operator==(const Room& room) const;
 

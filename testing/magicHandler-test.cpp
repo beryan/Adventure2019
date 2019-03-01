@@ -5,11 +5,11 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "MagicHandler.h"
-#include "PlayerHandler.h"
+#include "AccountHandler.h"
 #include "Server.h"
 
 using model::MagicHandler;
-using model::PlayerHandler;
+using model::AccountHandler;
 using networking::Connection;
 
 /*
@@ -40,30 +40,30 @@ constexpr unsigned int BODY_SWAP_DURATION = 50;
 
 constexpr auto VALID_LENGTH_STRING = "Valid Input";
 
-PlayerHandler createPlayerHandler() {
-    PlayerHandler playerHandler;
+AccountHandler createAccountHandler() {
+    AccountHandler accountHandler;
 
     // Register client A
-    playerHandler.processRegistration(CLIENT_A);
-    playerHandler.processRegistration(CLIENT_A, USERNAME_A);
-    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    playerHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    playerHandler.processRegistration(CLIENT_A);
+    accountHandler.processRegistration(CLIENT_A);
+    accountHandler.processRegistration(CLIENT_A, USERNAME_A);
+    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A);
 
     // Register client B
-    playerHandler.processRegistration(CLIENT_B);
-    playerHandler.processRegistration(CLIENT_B, USERNAME_B);
-    playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
-    playerHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
-    playerHandler.processRegistration(CLIENT_B);
+    accountHandler.processRegistration(CLIENT_B);
+    accountHandler.processRegistration(CLIENT_B, USERNAME_B);
+    accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_B);
 
-    return playerHandler;
+    return accountHandler;
 }
 
 
 TEST(MagicHandlerTestSuite, rejectInvalidSpellName) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     auto spellName = "invalid_spell_name";
     auto result = magicHandler.castSpell(CLIENT_A, spellName).back();
@@ -76,8 +76,8 @@ TEST(MagicHandlerTestSuite, rejectInvalidSpellName) {
 
 
 TEST(MagicHandlerTestSuite, canCastConfuseOnSelf) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
@@ -97,10 +97,10 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnSelf) {
 
 
 TEST(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
-    ASSERT_EQ(playerHandler.getRoomIdByClient(CLIENT_A), playerHandler.getRoomIdByClient(CLIENT_B));
+    ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
@@ -126,11 +126,11 @@ TEST(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
 
 
 TEST(MagicHandlerTestSuite, cannotCastConfuseOnOtherPlayerInDifferentRoom) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
-    playerHandler.setRoomIdByClient(CLIENT_B, 42);
-    ASSERT_NE(playerHandler.getRoomIdByClient(CLIENT_A), playerHandler.getRoomIdByClient(CLIENT_B));
+    accountHandler.setRoomIdByClient(CLIENT_B, 42);
+    ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
@@ -146,8 +146,8 @@ TEST(MagicHandlerTestSuite, cannotCastConfuseOnOtherPlayerInDifferentRoom) {
 
 
 TEST(MagicHandlerTestSuite, canConvertMessageToPigLatin) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     auto result = magicHandler.confuseSpeech("Hello, how are you?");
 
@@ -159,8 +159,8 @@ TEST(MagicHandlerTestSuite, canConvertMessageToPigLatin) {
 
 
 TEST(MagicHandlerTestSuite, canWaitUntilConfuseExpires) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     std::ostringstream argument;
     argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
@@ -178,8 +178,8 @@ TEST(MagicHandlerTestSuite, canWaitUntilConfuseExpires) {
 
 
 TEST(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_A;
@@ -197,10 +197,10 @@ TEST(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
 
 
 TEST(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
-    ASSERT_EQ(playerHandler.getRoomIdByClient(CLIENT_A), playerHandler.getRoomIdByClient(CLIENT_B));
+    ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
@@ -217,8 +217,8 @@ TEST(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
     std::ostringstream targetExpected;
     targetExpected << USERNAME_A << " cast swap on you!\n";
 
-    EXPECT_EQ(CLIENT_A.id, playerHandler.getClientByUsername(USERNAME_B).id);
-    EXPECT_EQ(CLIENT_B.id, playerHandler.getClientByUsername(USERNAME_A).id);
+    EXPECT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
+    EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
 
     EXPECT_EQ(casterExpected.str(), casterResult.text);
     EXPECT_EQ(targetExpected.str(), targetResult.text);
@@ -226,11 +226,11 @@ TEST(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
 
 
 TEST(MagicHandlerTestSuite, cannotCastBodySwapOnOtherPlayerInDifferentRoom) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
-    playerHandler.setRoomIdByClient(CLIENT_B, 42);
-    ASSERT_NE(playerHandler.getRoomIdByClient(CLIENT_A), playerHandler.getRoomIdByClient(CLIENT_B));
+    accountHandler.setRoomIdByClient(CLIENT_B, 42);
+    ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
@@ -239,15 +239,15 @@ TEST(MagicHandlerTestSuite, cannotCastBodySwapOnOtherPlayerInDifferentRoom) {
     std::ostringstream expected;
     expected << "There is no one here with the name \"" << USERNAME_B << "\"\n";
 
-    EXPECT_EQ(CLIENT_A.id, playerHandler.getClientByUsername(USERNAME_A).id);
-    EXPECT_EQ(CLIENT_B.id, playerHandler.getClientByUsername(USERNAME_B).id);
+    EXPECT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_A).id);
+    EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_B).id);
     EXPECT_EQ(expected.str(), result.text);
 }
 
 
 TEST(MagicHandlerTestSuite, canWaitUntilBodySwapExpires) {
-    PlayerHandler playerHandler = createPlayerHandler();
-    MagicHandler magicHandler(&playerHandler);
+    AccountHandler accountHandler = createAccountHandler();
+    MagicHandler magicHandler(&accountHandler);
 
     std::ostringstream argument;
     argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
@@ -255,11 +255,11 @@ TEST(MagicHandlerTestSuite, canWaitUntilBodySwapExpires) {
 
     std::deque<Message> messages;
     for (int i = BODY_SWAP_DURATION; i >= 0; --i) {
-        ASSERT_EQ(CLIENT_A.id, playerHandler.getClientByUsername(USERNAME_B).id);
-        ASSERT_EQ(CLIENT_B.id, playerHandler.getClientByUsername(USERNAME_A).id);
+        ASSERT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
+        ASSERT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
         magicHandler.processCycle(messages);
     }
 
-    EXPECT_EQ(CLIENT_A.id, playerHandler.getClientByUsername(USERNAME_A).id);
-    EXPECT_EQ(CLIENT_B.id, playerHandler.getClientByUsername(USERNAME_B).id);
+    EXPECT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_A).id);
+    EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_B).id);
 }

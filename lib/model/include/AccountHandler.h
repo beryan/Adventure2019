@@ -2,8 +2,8 @@
 // Created by Stephen Wanhella on 2019-01-22.
 //
 
-#ifndef PLAYERHANDLER_H
-#define PLAYERHANDLER_H
+#ifndef ACCOUNTHANDLER_H
+#define ACCOUNTHANDLER_H
 
 #include "Player.h"
 #include "Server.h"
@@ -16,10 +16,11 @@
 using json = nlohmann::json;
 using networking::Connection;
 using networking::Message;
+using model::Player;
 
 namespace model {
 
-    class PlayerHandler {
+    class AccountHandler {
     private:
         static const unsigned short MIN_PASSWORD_LENGTH;
         static const unsigned short MAX_USERNAME_AND_PASSWORD_LENGTH;
@@ -43,7 +44,7 @@ namespace model {
         std::vector<Connection> bootedClients;
 
     public:
-        PlayerHandler();
+        AccountHandler();
 
         /**
          *  Checks if a player is logged in (exists in the activeClientToId map)
@@ -89,10 +90,10 @@ namespace model {
         exitLogin(const Connection &client);
 
         /**
-         *  Logs out the client and informs them.
+         *  Logs out the client and returns a string to inform them.
          */
         std::string
-        logoutPlayer(const Connection &client);
+        logoutClient(const Connection &client);
 
         /**
          *  Returns the username of a Player given a client ID. Used for displaying names in chat.
@@ -148,4 +149,4 @@ namespace model {
     };
 }
 
-#endif //PLAYERHANDLER_H
+#endif //ACCOUNTHANDLER_H

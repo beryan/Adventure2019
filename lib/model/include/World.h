@@ -15,8 +15,6 @@ namespace model{
     class World{
     private:
         std::vector<Area> areas;
-        std::map<model::ID, Player> usersMap;
-        //std::map<model::ID, Area> areasMap;
 
         friend std::ostream& operator<<(std::ostream& os, const World& rhs);
 
@@ -40,20 +38,6 @@ namespace model{
 
         void
         addPlayer(const model::ID &playerID, const model::ID &roomID);
-
-        std::map<model::ID, Player>
-        getUserMap();
-
-        /*
-        std::map<model::ID, Character>
-        getAreaMap();
-         */
-
-        void
-        insertUser(Player player);
-
-        void
-        printUsers();
 
         void
         createStub();

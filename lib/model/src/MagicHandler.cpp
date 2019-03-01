@@ -14,8 +14,8 @@
 using model::MagicHandler;
 
 namespace model {
-    MagicHandler::MagicHandler(PlayerHandler* playerHandler) {
-        this->playerHandler = playerHandler;
+    MagicHandler::MagicHandler(AccountHandler* playerHandler) {
+        this->accountHandler = playerHandler;
         this->swapTracker = {};
         this->confuseTracker = {};
     }
@@ -73,8 +73,8 @@ namespace model {
     MagicHandler::bodySwap(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
 
-        auto casterUsername = this->playerHandler->getUsernameByClient(client);
-        auto casterPlayerId = this->playerHandler->getPlayerIdByClient(client);
+        auto casterUsername = this->accountHandler->getUsernameByClient(client);
+        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
 
         if (targetName.empty()) {
             return {{client, "You need to specify the name of the person to cast swap on.\n"}};
@@ -88,17 +88,17 @@ namespace model {
         std::ostringstream targetMessage;
 
         try {
-            auto targetClient = this->playerHandler->getClientByUsername(targetName);
-            auto targetPlayerId = this->playerHandler->getPlayerIdByClient(targetClient);
-            auto targetRoomId = this->playerHandler->getRoomIdByClient(targetClient);
-            auto casterRoomId = this->playerHandler->getRoomIdByClient(client);
+            auto targetClient = this->accountHandler->getClientByUsername(targetName);
+            auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
+            auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
+            auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
 
             if (targetRoomId != casterRoomId) {
                 casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
                 return {{client, casterMessage.str()}};
             }
 
-            this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+            this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
             this->swapTracker.push_back({casterPlayerId, targetPlayerId, SWAP_DURATION});
 
             casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
@@ -135,12 +135,12 @@ namespace model {
         std::vector<Message> responses;
 
         try {
-            auto casterPlayerId = this->playerHandler->getPlayerIdByClient(client);
-            auto targetClient = this->playerHandler->getClientByUsername(targetName);
-            auto targetPlayerId = this->playerHandler->getPlayerIdByClient(targetClient);
+            auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
+            auto targetClient = this->accountHandler->getClientByUsername(targetName);
+            auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
 
-            auto casterRoomId = this->playerHandler->getRoomIdByClient(client);
-            auto targetRoomId = this->playerHandler->getRoomIdByClient(targetClient);
+            auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
+            auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
 
             if (casterRoomId != targetRoomId) {
                 return {{client, "There is no player here with the name \"" + targetName + "\"\n"}};
@@ -148,7 +148,7 @@ namespace model {
 
             this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
-            auto casterUsername = this->playerHandler->getUsernameByClient(client);
+            auto casterUsername = this->accountHandler->getUsernameByClient(client);
 
             if (casterUsername == targetName) {
                 return {{client, "You cast Confuse on yourself.\n"}};
@@ -172,7 +172,7 @@ namespace model {
 
     bool
     MagicHandler::isConfused(const Connection &client) {
-        auto playerId = this->playerHandler->getPlayerIdByClient(client);
+        auto playerId = this->accountHandler->getPlayerIdByClient(client);
 
         auto it_confuse = std::find_if(
                 this->confuseTracker.begin(),
@@ -201,7 +201,7 @@ namespace model {
     void
     MagicHandler::handleLogout(const Connection &client) {
         // Swap back players if client is under Swap spell effects
-        auto clientPlayerId = this->playerHandler->getPlayerIdByClient(client);
+        auto clientPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto it_swap = std::find_if(
             this->swapTracker.begin(),
             this->swapTracker.end(),
@@ -214,12 +214,12 @@ namespace model {
             auto casterPlayerId= it_swap->casterPlayerId;
             auto targetPlayerId = it_swap->targetPlayerId;
 
-            this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+            this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
             this->swapTracker.erase(it_swap);
         }
 
         // Remove Confuse spell effect from player
-        auto playerId = this->playerHandler->getPlayerIdByClient(client);
+        auto playerId = this->accountHandler->getPlayerIdByClient(client);
         auto it_confuse = std::find_if(
             this->confuseTracker.begin(),
             this->confuseTracker.end(),
@@ -249,10 +249,10 @@ namespace model {
                auto casterPlayerId = swapInstance->casterPlayerId;
                auto targetPlayerId = swapInstance->targetPlayerId;
 
-               this->playerHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+               this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
 
-               auto casterClient = this->playerHandler->getClientByPlayerId(casterPlayerId);
-               auto targetClient = this->playerHandler->getClientByPlayerId(targetPlayerId);
+               auto casterClient = this->accountHandler->getClientByPlayerId(casterPlayerId);
+               auto targetClient = this->accountHandler->getClientByPlayerId(targetPlayerId);
 
                std::string message = "The effects of Swap has worn off and you return to your original body.\n";
                messages.push_back({casterClient, message});
@@ -271,7 +271,7 @@ namespace model {
                ++confuseInstance;
 
            } else {
-               auto targetClient = this->playerHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
+               auto targetClient = this->accountHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
 
                std::string message = "The effects of Confuse has worn off and your speech returns to normal.\n";
                messages.push_back({targetClient, message});
