@@ -116,8 +116,13 @@ namespace DataManager {
         }
 
         std::vector<Player> parseUsersJson(const std::string& filePath) {
-            std::ifstream ifs(filePath);
-            json usersJson = json::parse(ifs);
+            std::ifstream inFile(filePath);
+
+            if (!inFile.is_open()) {
+                throw std::runtime_error("Could not open file: " + filePath);
+            }
+
+            json usersJson = json::parse(inFile);
 
             std::vector<Player> players;
 
@@ -129,8 +134,13 @@ namespace DataManager {
 
         std::vector<Area> parseWorldJson(const std::string& filePath){
             // read a JSON file
-            std::ifstream ifs(filePath);
-            json j = json::parse(ifs);
+            std::ifstream inFile(filePath);
+
+            if (!inFile.is_open()) {
+                throw std::runtime_error("Could not open file: " + filePath);
+            }
+
+            json j = json::parse(inFile);
 
             std::vector<Area> areas;
 
@@ -145,8 +155,13 @@ namespace DataManager {
     Area ParseDataFile(const std::string& filePath){
         Area a;
         if(filesystem::extension(filePath) == JSON_EXTENSION){
-            std::ifstream ifs(filePath);
-            json j = json::parse(ifs);
+            std::ifstream inFile(filePath);
+
+            if (!inFile.is_open()) {
+                throw std::runtime_error("Could not open file: " + filePath);
+            }
+
+            json j = json::parse(inFile);
             a = parseAreaJson(j);
         }
         return a;
