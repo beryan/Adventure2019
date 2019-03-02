@@ -23,3 +23,8 @@ set_target_properties(handler
 install(TARGETS handler
         ARCHIVE DESTINATION lib
         )
+
+set_target_properties(handler
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )

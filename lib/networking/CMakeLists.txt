@@ -4,8 +4,6 @@ add_library(networking
   src/Client.cpp
 )
 
-find_package(Boost 1.68 COMPONENTS system REQUIRED)
-
 target_include_directories(networking
   PUBLIC
     $<INSTALL_INTERFACE:include>
@@ -30,3 +28,7 @@ install(TARGETS networking
   ARCHIVE DESTINATION lib
 )
 
+set_target_properties(networking
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )

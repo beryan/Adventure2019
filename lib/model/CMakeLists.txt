@@ -4,8 +4,6 @@ add_library(model
         ${SOURCES}
         )
 
-find_package(Boost 1.68 COMPONENTS system REQUIRED)
-
 target_include_directories(model
         PUBLIC
             $<INSTALL_INTERFACE:include>
@@ -25,4 +23,9 @@ set_target_properties(model
 
 install(TARGETS model
         ARCHIVE DESTINATION lib
+        )
+
+set_target_properties(model
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
         )
