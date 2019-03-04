@@ -1,0 +1,52 @@
+image: nsumner/cmpt373:projectbase
+
+stages:
+  - build
+  - analyze
+  - test
+
+build:
+  stage: build
+  script:
+    - mkdir build
+    - cd build
+    - cmake -DCMAKE_CXX_COMPILER=clang++ -DENABLE_COVERAGE=True -DCMAKE_EXPORT_COMPILE_COMMANDS=True ../
+    - make VERBOSE=1
+  artifacts:
+    expire_in: 10 mins
+    paths:
+      - build/*
+
+analyze:
+  stage: analyze
+  script:
+    - cppcheck lib/* 2> build/cppcheck-results.txt
+    - cd build
+    - >-
+     /usr/lib/llvm-6.0/share/clang/run-clang-tidy.py
+     -checks='*,-fuchsia-*,-google-readability-todo,-llvm-*,
+     -google-runtime-references,-misc-unused-parameters,
+     -google-readability-namespace-comments,
+     -readability-else-after-return' '^(?!.*(googletest|test|networking|nlohmann)).*' > clang-tidy-results.txt
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - build/cppcheck-results.txt
+      - build/clang-tidy-results.txt
+
+test:
+  stage: test
+  script:
+    - ASAN_OPTIONS=detect_leaks=0 LLVM_PROFILE_FILE="runAllTests.profraw" build/bin/runAllTests
+    - llvm-profdata merge -sparse runAllTests.profraw -o runAllTests.profdata
+    - llvm-cov show build/bin/runAllTests -instr-profile=runAllTests.profdata -show-line-counts-or-regions -output-dir=coverage/ -format="html"
+    - llvm-cov report build/bin/runAllTests -instr-profile=runAllTests.profdata
+  coverage: '/TOTAL.*\s+(\S+\%)/'
+  artifacts:
+    expire_in: 1 hour
+    paths:
+      - coverage/*
+
+
+
+

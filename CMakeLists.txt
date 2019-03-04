@@ -1,6 +1,20 @@
 cmake_minimum_required(VERSION 3.12)
 project(WebSocketNetworking)
 
+find_package(Boost 1.68 COMPONENTS filesystem REQUIRED)
+
+if (ENABLE_COVERAGE)
+    # NOTE: Coverage only works/makes sense with debug builds
+    set(CMAKE_BUILD_TYPE "Debug")
+
+    if("${CMAKE_CXX_COMPILER_ID}" MATCHES "(Apple)?[Cc]lang")
+        set(CXX_COVERAGE_FLAGS "-fprofile-instr-generate -fcoverage-mapping")
+    else()
+        message(FATAL_ERROR "Coverage generation is only supported for clang")
+    endif()
+    message("Enabling coverage instrumentation with:\n ${CXX_COVERAGE_FLAGS}")
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -10,7 +24,7 @@ set(PACKAGE_STRING "${PACKAGE_NAME} ${PACKAGE_VERSION}")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -fno-rtti")
-set(CMAKE_CXX_FLAGS_DEBUG 
+set(CMAKE_CXX_FLAGS_DEBUG
     "-O0 -g -fsanitize=address,undefined -fno-omit-frame-pointer"
 )
 
