@@ -62,13 +62,16 @@ namespace {
      *  7. A player cannot cast Confuse on an already Confused player
      *  8. The confuseSpeech() method can convert a string into Pig Latin
      *  9. Confuse spell instance will expire after a certain number of cycles
-     * 10. A player cannot cast Body Swap on themselves
-     * 11. A player can cast Body Swap on another player in the same room
-     * 12. A player cannot cast Body Swap on another player in a different room
-     * 13. A player cannot cast Body Swap if they are under the Body Swap spell's effects
-     * 14. A player cannot cast Body Swap on an already Body Swapped player
-     * 15. Body Swap spell instance will expire after a certain number of cycles
+     * 10. Confuse is removed on logout
+     * 11. A player cannot cast Body Swap on themselves
+     * 12. A player can cast Body Swap on another player in the same room
+     * 13. A player cannot cast Body Swap on another player in a different room
+     * 14. A player cannot cast Body Swap if they are under the Body Swap spell's effects
+     * 15. A player cannot cast Body Swap on an already Body Swapped player
+     * 16. Body Swap spell instance will expire after a certain number of cycles
+     * 17. Body Swap is removed on logout
      */
+
 
     TEST_F(MagicHandlerTestSuite, rejectNoSpellName) {
         std::string argument;
@@ -84,6 +87,7 @@ namespace {
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected, result.text);
     }
+
 
     TEST_F(MagicHandlerTestSuite, rejectInvalidSpellName) {
         std::string spellName = "invalid_spell";
@@ -247,6 +251,19 @@ namespace {
     }
 
 
+    TEST_F(MagicHandlerTestSuite, canRemoveConfuseOnLogout) {
+        std::ostringstream argument;
+        argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
+        magicHandler.castSpell(CLIENT_A, argument.str());
+
+        ASSERT_TRUE(magicHandler.isConfused(CLIENT_A));
+
+        magicHandler.handleLogout(CLIENT_A);
+
+        EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
+    }
+
+
     TEST_F(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
         std::ostringstream argument;
         argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_A;
@@ -350,6 +367,7 @@ namespace {
         EXPECT_TRUE(magicHandler.isBodySwapped(CLIENT_B));
     }
 
+
     TEST_F(MagicHandlerTestSuite, cannotCastBodySwapOnWhileOtherPlayerIsSwapped) {
         // Register client C
         accountHandler.processRegistration(CLIENT_C);
@@ -406,6 +424,25 @@ namespace {
             ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_B));
             magicHandler.processCycle(messages);
         }
+
+        EXPECT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_A).id);
+        EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_B).id);
+        EXPECT_FALSE(magicHandler.isBodySwapped(CLIENT_A));
+        EXPECT_FALSE(magicHandler.isBodySwapped(CLIENT_B));
+    }
+
+
+    TEST_F(MagicHandlerTestSuite, canRemoveBodySwapOnLogout) {
+        std::ostringstream argument;
+        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, argument.str());
+
+        ASSERT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
+        ASSERT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
+        ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_A));
+        ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_B));
+
+        magicHandler.handleLogout(CLIENT_A);
 
         EXPECT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_A).id);
         EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_B).id);
