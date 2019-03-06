@@ -70,18 +70,18 @@ namespace model {
         std::vector<Message> responses;
 
         if (this->isBodySwapped(client)) {
-            return {{client, "You can't cast Body Swap while already under the effects of the spell!\n"}};
+            return {{client, "You can't cast Swap while already under the effects of the spell!\n"}};
         }
 
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast Body Swap on.\n"}};
+            return {{client, "You need to specify the name of the person to cast Swap on.\n"}};
         }
 
         auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
         auto casterUsername = this->accountHandler->getUsernameByClient(client);
         if (casterUsername == targetName) {
-            return {{client, "You can't cast Body Swap on yourself!\n"}};
+            return {{client, "You can't cast Swap on yourself!\n"}};
         }
 
         std::ostringstream casterMessage;
@@ -100,7 +100,7 @@ namespace model {
         }
 
         if (this->isBodySwapped(targetClient)) {
-            casterMessage << targetName << " is already under the effects of the Body Swap spell!\n";
+            casterMessage << targetName << " is already under the effects of the Swap spell!\n";
             return {{client, casterMessage.str()}};
         }
 

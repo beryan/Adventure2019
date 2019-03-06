@@ -266,6 +266,10 @@ namespace model {
                             << " (displays exits from current location)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Move)
                             << " [direction] (moves you in the direction specified)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Spells)
+                            << " (displays available magic spells)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Cast)
+                            << " [spell] [target] (casts a spell on a target)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Logout)
                             << " (logs you out of the game)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Quit)
@@ -381,6 +385,14 @@ namespace model {
 
             case Command::Cast: {
                 return this->magicHandler.castSpell(client, param);
+            }
+
+            case Command::Spells: {
+                tempMessage << "\n"
+                            << "SPELLS:\n"
+                            << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
+                            << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+                break;
             }
 
             case Command::Debug: {

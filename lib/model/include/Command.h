@@ -21,6 +21,7 @@ namespace model {
         Tell,
         Yell,
         Cast,
+        Spells,
         InvalidCommand
     };
 }

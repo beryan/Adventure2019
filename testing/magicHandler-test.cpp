@@ -233,7 +233,7 @@ namespace {
         auto result = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You can't cast Body Swap on yourself!\n";
+        casterExpected << "You can't cast Swap on yourself!\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected.str(), result.text);
@@ -315,7 +315,7 @@ namespace {
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "You can't cast Body Swap while already under the effects of the spell!\n";
+        casterExpected << "You can't cast Swap while already under the effects of the spell!\n";
 
         EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);
@@ -355,7 +355,7 @@ namespace {
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << USERNAME_B << " is already under the effects of the Body Swap spell!\n";
+        casterExpected << USERNAME_B << " is already under the effects of the Swap spell!\n";
 
         EXPECT_EQ(CLIENT_C.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);

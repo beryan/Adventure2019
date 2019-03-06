@@ -97,6 +97,7 @@ namespace model {
                 {"tell",     Command::Tell},
                 {"yell",     Command::Yell},
                 {"cast",     Command::Cast},
+                {"spells",   Command::Spells}
         };
     };
 }
