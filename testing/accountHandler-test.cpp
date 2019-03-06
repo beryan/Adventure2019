@@ -39,7 +39,7 @@ constexpr Connection CLIENT_B = {200};
 constexpr unsigned short EXPECTED_MIN_PASSWORD_LENGTH = 4;
 constexpr unsigned short EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
-constexpr auto VALID_LENGTH_STRING = "Valid Input";
+constexpr auto VALID_PASSWORD_STRING = "Valid Input";
 constexpr auto LONG_LENGTH_STRING = "Very very very long input";
 constexpr auto SHORT_LENGTH_STRING = "SLS";
 
@@ -72,10 +72,10 @@ TEST(AccountHandlerTestSuite, canUseValidUsername) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    auto result = accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    auto result = accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     std::ostringstream expect;
-    expect << VALID_LENGTH_STRING << "\n"
+    expect << VALID_PASSWORD_STRING << "\n"
            << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
            << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
@@ -86,7 +86,7 @@ TEST(AccountHandlerTestSuite, canPreventShortPassword) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, SHORT_LENGTH_STRING);
 
     EXPECT_EQ("The password you entered is too short. Registration process cancelled.\n", result);
@@ -96,7 +96,7 @@ TEST(AccountHandlerTestSuite, canPreventLongPassword) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, LONG_LENGTH_STRING);
 
     EXPECT_EQ("The password you entered is too long. Registration process cancelled.\n", result);
@@ -106,8 +106,8 @@ TEST(AccountHandlerTestSuite, canUseValidPassword) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    auto result =  accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    auto result =  accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     EXPECT_EQ("Re-enter your password\n", result);
 }
@@ -116,8 +116,8 @@ TEST(AccountHandlerTestSuite, canDetectNonMatchingPassword) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, "notMatch");
 
     EXPECT_EQ("The passwords you entered do not match. Registration process cancelled.\n", result);
@@ -129,13 +129,13 @@ TEST(AccountHandlerTestSuite, canRegisterSuccessfully) {
     accountHandler.processRegistration(CLIENT_A);
     ASSERT_TRUE(accountHandler.isRegistering(CLIENT_A));
 
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     ASSERT_TRUE(accountHandler.isRegistering(CLIENT_A));
 
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     ASSERT_TRUE(accountHandler.isRegistering(CLIENT_A));
 
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     ASSERT_FALSE(accountHandler.isRegistering(CLIENT_A));
 
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_A));
@@ -168,9 +168,9 @@ TEST(AccountHandlerTestSuite, isLoggedInAfterRegister) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     EXPECT_FALSE(accountHandler.isLoggingIn(CLIENT_A));
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_A));
@@ -180,14 +180,14 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     accountHandler.processRegistration(CLIENT_B);
-    auto result = accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_LENGTH_STRING) + "\" has already been taken, please use a different username.\n", result);
+    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_PASSWORD_STRING) + "\" has already been taken, please use a different username.\n", result);
 }
 
 TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
@@ -198,28 +198,27 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     accountHandler.processRegistration(CLIENT_B);
 
     // Enters usernames
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
     // Enters passwords
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
     // Re-enters passwords
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    auto result = accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_LENGTH_STRING) + "\" has already been taken, please use a different username.\n", result);
+    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_PASSWORD_STRING) + "\" has already been taken, please use a different username.\n", result);
 }
 
 TEST(AccountHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.exitRegistration(CLIENT_A);
-    auto result = accountHandler.isRegistering(CLIENT_A);
 
     EXPECT_FALSE(accountHandler.isRegistering(CLIENT_A));
 }
@@ -237,8 +236,8 @@ TEST(AccountHandlerTestSuite, canDetectFailedLogin) {
     AccountHandler accountHandler{};
 
     accountHandler.processLogin(CLIENT_A);
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
-    auto result = accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+    auto result = accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     EXPECT_EQ("Invalid username or password.\n", result);
 }
@@ -247,18 +246,18 @@ TEST(AccountHandlerTestSuite, canLogInSuccessfully) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.logoutClient(CLIENT_A);
 
     accountHandler.processLogin(CLIENT_A);
     ASSERT_TRUE(accountHandler.isLoggingIn(CLIENT_A));
 
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
     ASSERT_TRUE(accountHandler.isLoggingIn(CLIENT_A));
 
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
     ASSERT_FALSE(accountHandler.isLoggingIn(CLIENT_A));
 
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_A));
@@ -269,20 +268,20 @@ TEST(LoginTest, LoginStateClearsOnFail) {
 
     // Create an account, then logout
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.logoutClient(CLIENT_A);
 
     // Attempt to login with incorrect username
     accountHandler.processLogin(CLIENT_A);
     accountHandler.processLogin(CLIENT_A, "invalid name");
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     // Login with correct username and password
     accountHandler.processLogin(CLIENT_A);
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     // Login should be successful (stored username state cleared on failure)
     ASSERT_FALSE(accountHandler.isLoggingIn(CLIENT_A));
@@ -293,13 +292,13 @@ TEST(AccountHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     AccountHandler accountHandler{};
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     accountHandler.processLogin(CLIENT_B);
-    accountHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
-    accountHandler.processLogin(CLIENT_B, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
     std::deque<Message> results = {};
     accountHandler.notifyBootedClients(results);
 
@@ -313,7 +312,7 @@ TEST(AccountHandlerTestSuite, canRemoveClientFromLoginOnDisconnect) {
     AccountHandler accountHandler{};
 
     accountHandler.processLogin(CLIENT_A);
-    accountHandler.processLogin(CLIENT_A, VALID_LENGTH_STRING);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.exitLogin(CLIENT_A);
 
     EXPECT_FALSE(accountHandler.isLoggingIn(CLIENT_A));

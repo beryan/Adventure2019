@@ -186,11 +186,11 @@ namespace model {
         auto playerId = this->accountHandler->getPlayerIdByClient(client);
 
         auto it_swap = std::find_if(
-                this->bodySwapInstances.begin(),
-                this->bodySwapInstances.end(),
-                [&playerId](const SpellInstance &swapInstance) {
-                    return (playerId == swapInstance.casterPlayerId) || (playerId == swapInstance.targetPlayerId);
-                }
+            this->bodySwapInstances.begin(),
+            this->bodySwapInstances.end(),
+            [&playerId](const SpellInstance &swapInstance) {
+                return (playerId == swapInstance.casterPlayerId) || (playerId == swapInstance.targetPlayerId);
+            }
         );
 
         return it_swap != this->bodySwapInstances.end();
@@ -202,11 +202,11 @@ namespace model {
         auto playerId = this->accountHandler->getPlayerIdByClient(client);
 
         auto it_confuse = std::find_if(
-                this->confuseInstances.begin(),
-                this->confuseInstances.end(),
-                [&playerId](const SpellInstance &confuseInstance) {
-                    return playerId == confuseInstance.targetPlayerId;
-                }
+            this->confuseInstances.begin(),
+            this->confuseInstances.end(),
+            [&playerId](const SpellInstance &confuseInstance) {
+                return playerId == confuseInstance.targetPlayerId;
+            }
         );
 
         return it_confuse != this->confuseInstances.end();

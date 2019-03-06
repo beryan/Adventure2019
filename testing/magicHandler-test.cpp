@@ -21,13 +21,14 @@ constexpr auto USERNAME_A = "Able";
 constexpr auto USERNAME_B = "Baker";
 constexpr auto USERNAME_C = "Charlie";
 
+constexpr auto VALID_PASSWORD_STRING= "Valid Pass";
+
 constexpr auto CONFUSE_SPELL_NAME = "confuse";
 constexpr auto BODY_SWAP_SPELL_NAME = "swap";
 
 constexpr unsigned int CONFUSE_DURATION = 50;
 constexpr unsigned int BODY_SWAP_DURATION = 50;
 
-constexpr auto VALID_LENGTH_STRING = "Valid Input";
 
 namespace {
     class MagicHandlerTestSuite : public ::testing::Test {
@@ -39,38 +40,61 @@ namespace {
             // Register client A
             accountHandler.processRegistration(CLIENT_A);
             accountHandler.processRegistration(CLIENT_A, USERNAME_A);
-            accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
-            accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
+            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
             // Register client B
             accountHandler.processRegistration(CLIENT_B);
             accountHandler.processRegistration(CLIENT_B, USERNAME_B);
-            accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
-            accountHandler.processRegistration(CLIENT_B, VALID_LENGTH_STRING);
+            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
+            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
         }
     };
 
     /*
      *  Cases to test:
-     *  1. Reject invalid spell names
-     *  2. A player can cast Confuse on themselves
-     *  3. A player can cast Confuse on another player in the same room
-     *  4. A player cannot cast Confuse on another player in a different room
-     *  5. A player cannot cast Confuse on themselves if they are already Confused
-     *  6. A player cannot cast Confuse on an already Confused player
-     *  7. The confuseSpeech() method can convert a string into Pig Latin
-     *  8. Confuse spell instance will expire after a certain number of cycles
-     *  9. A player cannot cast Body Swap on themselves
-     * 10. A player can cast Body Swap on another player in the same room
-     * 11. A player cannot cast Body Swap on another player in a different room
-     * 12. A player cannot cast Body Swap if they are under the Body Swap spell's effects
-     * 13. A player cannot cast Body Swap on an already Body Swapped player
-     * 14. Body Swap spell instance will expire after a certain number of cycles
+     *  1. Reject if no spell name
+     *  2. Reject invalid spell names
+     *  3. A player can cast Confuse on themselves
+     *  4. A player can cast Confuse on another player in the same room
+     *  5. A player cannot cast Confuse on another player in a different room
+     *  6. A player cannot cast Confuse on themselves if they are already Confused
+     *  7. A player cannot cast Confuse on an already Confused player
+     *  8. The confuseSpeech() method can convert a string into Pig Latin
+     *  9. Confuse spell instance will expire after a certain number of cycles
+     * 10. A player cannot cast Body Swap on themselves
+     * 11. A player can cast Body Swap on another player in the same room
+     * 12. A player cannot cast Body Swap on another player in a different room
+     * 13. A player cannot cast Body Swap if they are under the Body Swap spell's effects
+     * 14. A player cannot cast Body Swap on an already Body Swapped player
+     * 15. Body Swap spell instance will expire after a certain number of cycles
      */
 
+    TEST_F(MagicHandlerTestSuite, rejectNoSpellName) {
+        std::string argument;
+
+        auto results = magicHandler.castSpell(CLIENT_A, argument);
+
+        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+
+        auto result = results.back();
+
+        std::string casterExpected = "You need to specify the name of the spell to be cast.\n";
+
+        EXPECT_EQ(CLIENT_A.id, result.connection.id);
+        EXPECT_EQ(casterExpected, result.text);
+    }
+
     TEST_F(MagicHandlerTestSuite, rejectInvalidSpellName) {
-        auto spellName = "invalid_spell_name";
-        auto result = magicHandler.castSpell(CLIENT_A, spellName).back();
+        std::string spellName = "invalid_spell";
+        std::ostringstream argument;
+        argument << spellName << " " << USERNAME_B;
+
+        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+
+        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+
+        auto result = results.back();
 
         std::ostringstream casterExpected;
         casterExpected << "There are no spells with the name of \"" << spellName << "\"\n";
@@ -330,8 +354,8 @@ namespace {
         // Register client C
         accountHandler.processRegistration(CLIENT_C);
         accountHandler.processRegistration(CLIENT_C, USERNAME_C);
-        accountHandler.processRegistration(CLIENT_C, VALID_LENGTH_STRING);
-        accountHandler.processRegistration(CLIENT_C, VALID_LENGTH_STRING);
+        accountHandler.processRegistration(CLIENT_C, VALID_PASSWORD_STRING);
+        accountHandler.processRegistration(CLIENT_C, VALID_PASSWORD_STRING);
 
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_C));

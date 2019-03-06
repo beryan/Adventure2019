@@ -428,7 +428,7 @@ namespace model {
             clientMessages[message.connection] << message.text;
         }
 
-        for (auto const&[client, message] : clientMessages) {
+        for (auto const& [client, message] : clientMessages) {
             outgoing.push_back({client, message.str()});
         }
 
