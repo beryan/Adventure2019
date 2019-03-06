@@ -21,30 +21,25 @@ namespace model {
      * Formatter for boost::find_format. Converts strings into Pig Latin.
      */
     template<typename SeqT>
-    class PigLatinFormatter {
-    private:
-        typedef SeqT result_type;
-        typedef typename SeqT::value_type value_type;
-
-    public:
+    struct PigLatinFormatter {
         template<typename ReplaceT>
-        result_type operator()(const ReplaceT& Replace) const {
+        SeqT operator()(const ReplaceT& Replace) const {
             std::ostringstream result;
-            std::string temp(Replace.begin(), Replace.end());
+            std::string word(Replace.begin(), Replace.end());
 
-            auto firstVowelIndex = temp.find_first_of("aeiouAEIOU");
+            auto firstVowelIndex = word.find_first_of("aeiouAEIOU");
 
             if (firstVowelIndex != std::string::npos && firstVowelIndex != 0) {
                 // Word starts with consonant(s)
-                result << temp.substr(firstVowelIndex) << temp.substr(0, firstVowelIndex) << "ay";
+                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "ay";
 
             } else if (firstVowelIndex != std::string::npos) {
                 // Word starts with a vowel
-                result << temp.substr(firstVowelIndex) << temp.substr(0, firstVowelIndex) << "way";
+                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "way";
 
             } else {
                 // Word's letters are all consonants
-                result << temp << "ay";
+                result << word << "ay";
             }
 
             return result.str();
@@ -56,7 +51,7 @@ namespace model {
      *
      *  @brief A class for defining magic spells and performing the operations involved.
      *
-     *  This class uses the Game class' PlayerHandler instance to affect players with
+     *  This class uses the Game class' AccountHandler instance to affect players with
      *  the effects of magic spells. It is also responsible for associating words with
      *  spell names of the Cast command in the Game.
      */
@@ -109,7 +104,7 @@ namespace model {
     public:
         /**
          *  Constructs a MagicHandler instance with a pointer to the
-         *  PlayerHandler instance used by the Game class.
+         *  AccountHandler instance used by the Game class.
          */
         explicit MagicHandler(AccountHandler &accountHandler);
 
