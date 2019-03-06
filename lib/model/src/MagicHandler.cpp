@@ -106,7 +106,7 @@ namespace model {
 
         auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
         this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
-        this->bodySwapTracker.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
+        this->bodySwapInstances.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
         casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
         targetMessage << casterUsername << " cast swap on you!\n";
@@ -144,7 +144,7 @@ namespace model {
         }
 
         if (casterUsername == targetName) {
-            this->confuseTracker.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
+            this->confuseInstances.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
             return {{client, "You cast Confuse on yourself.\n"}};
         }
 
@@ -169,7 +169,7 @@ namespace model {
             return {{client, casterMessage.str()}};
         }
 
-        this->confuseTracker.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
+        this->confuseInstances.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
         casterMessage << "You cast Confuse on " << targetName << "\n";
         targetMessage << casterUsername << " cast Confuse on you!" << "\n";
@@ -186,14 +186,14 @@ namespace model {
         auto playerId = this->accountHandler->getPlayerIdByClient(client);
 
         auto it_swap = std::find_if(
-                this->bodySwapTracker.begin(),
-                this->bodySwapTracker.end(),
+                this->bodySwapInstances.begin(),
+                this->bodySwapInstances.end(),
                 [&playerId](const SpellInstance &swapInstance) {
                     return (playerId == swapInstance.casterPlayerId) || (playerId == swapInstance.targetPlayerId);
                 }
         );
 
-        return it_swap != this->bodySwapTracker.end();
+        return it_swap != this->bodySwapInstances.end();
     }
 
 
@@ -202,14 +202,14 @@ namespace model {
         auto playerId = this->accountHandler->getPlayerIdByClient(client);
 
         auto it_confuse = std::find_if(
-                this->confuseTracker.begin(),
-                this->confuseTracker.end(),
+                this->confuseInstances.begin(),
+                this->confuseInstances.end(),
                 [&playerId](const SpellInstance &confuseInstance) {
                     return playerId == confuseInstance.targetPlayerId;
                 }
         );
 
-        return it_confuse != this->confuseTracker.end();
+        return it_confuse != this->confuseInstances.end();
     }
 
 
@@ -230,33 +230,33 @@ namespace model {
         // Swap back players if client is under Swap spell effects
         auto clientPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto it_swap = std::find_if(
-            this->bodySwapTracker.begin(),
-            this->bodySwapTracker.end(),
+            this->bodySwapInstances.begin(),
+            this->bodySwapInstances.end(),
             [&clientPlayerId](const SpellInstance &swapInstance) {
                 return (clientPlayerId == swapInstance.casterPlayerId || clientPlayerId == swapInstance.targetPlayerId);
             }
         );
 
-        if (it_swap != this->bodySwapTracker.end()) {
+        if (it_swap != this->bodySwapInstances.end()) {
             auto casterPlayerId= it_swap->casterPlayerId;
             auto targetPlayerId = it_swap->targetPlayerId;
 
             this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
-            this->bodySwapTracker.erase(it_swap);
+            this->bodySwapInstances.erase(it_swap);
         }
 
         // Remove Confuse spell effect from player
         auto playerId = this->accountHandler->getPlayerIdByClient(client);
         auto it_confuse = std::find_if(
-            this->confuseTracker.begin(),
-            this->confuseTracker.end(),
+            this->confuseInstances.begin(),
+            this->confuseInstances.end(),
             [&playerId](const SpellInstance &confuseInstance) {
                 return playerId == confuseInstance.targetPlayerId;
             }
         );
 
-        if (it_confuse != this->confuseTracker.end()) {
-            this->confuseTracker.erase(it_confuse);
+        if (it_confuse != this->confuseInstances.end()) {
+            this->confuseInstances.erase(it_confuse);
         }
     }
 
@@ -264,9 +264,9 @@ namespace model {
     void
     MagicHandler::processCycle(std::deque<Message> &messages) {
        // Handle swap spell expiration
-       auto swapInstance = this->bodySwapTracker.begin();
+       auto swapInstance = this->bodySwapInstances.begin();
 
-       while (swapInstance != this->bodySwapTracker.end()) {
+       while (swapInstance != this->bodySwapInstances.end()) {
            if (swapInstance->cyclesRemaining > 0) {
                --swapInstance->cyclesRemaining;
                ++swapInstance;
@@ -284,14 +284,14 @@ namespace model {
                messages.push_back({casterClient, message});
                messages.push_back({targetClient, message});
 
-               this->bodySwapTracker.erase(swapInstance);
+               this->bodySwapInstances.erase(swapInstance);
            }
        }
 
        // Handle confuse spell expiration
-       auto confuseInstance = this->confuseTracker.begin();
+       auto confuseInstance = this->confuseInstances.begin();
 
-       while (confuseInstance != this->confuseTracker.end()) {
+       while (confuseInstance != this->confuseInstances.end()) {
            if (confuseInstance->cyclesRemaining > 0) {
                --confuseInstance->cyclesRemaining;
                ++confuseInstance;
@@ -302,7 +302,7 @@ namespace model {
                std::string message = "The effects of Confuse has worn off and your speech returns to normal.\n";
                messages.push_back({targetClient, message});
 
-               this->confuseTracker.erase(confuseInstance);
+               this->confuseInstances.erase(confuseInstance);
            }
        }
     }

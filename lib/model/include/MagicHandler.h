@@ -63,8 +63,8 @@ namespace model {
     class MagicHandler {
     private:
         AccountHandler* accountHandler;
-        std::vector<SpellInstance> bodySwapTracker;
-        std::vector<SpellInstance> confuseTracker;
+        std::vector<SpellInstance> bodySwapInstances;
+        std::vector<SpellInstance> confuseInstances;
 
         static constexpr unsigned int BODY_SWAP_DURATION = 50;
         static constexpr unsigned int CONFUSE_DURATION = 50;
