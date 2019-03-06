@@ -16,7 +16,7 @@ namespace model {
 
     //constructors
     Reset::Reset()
-      : action(""),
+        : action(""),
         id(-1),
         limit(-1),
         room(-1),
@@ -24,7 +24,7 @@ namespace model {
         { }
 
     Reset::Reset(std::string action, model::ID id, int limit, int room, int slot)
-      : action(std::move(action)),
+        : action(std::move(action)),
         id(id),
         limit(limit),
         room(room),
@@ -33,43 +33,43 @@ namespace model {
 
     //getters and setters
     std::string Reset::getAction() const {
-      return action;
+        return action;
     }
 
     model::ID Reset::getId() const {
-      return id;
+        return id;
     }
 
     int Reset::getLimit() const {
-      return limit;
+        return limit;
     }
 
     int Reset::getRoom() const {
-      return room;
+        return room;
     }
 
     int Reset::getSlot() const {
-      return slot;
+        return slot;
     }
 
-    void Reset::setAction(std::string action) {
-      this->action = std::move(action);
+    void Reset::setAction(const std::string &action) {
+        this->action = action;
     }
 
-    void Reset::setId(model::ID id) {
-      this->id = id;
+    void Reset::setId(const model::ID &id) {
+        this->id = id;
     }
 
     void Reset::setLimit(int limit) {
-      this->limit = limit;
+        this->limit = limit;
     }
 
     void Reset::setRoom(int room) {
-      this->room = room;
+        this->room = room;
     }
 
     void Reset::setSlot(int slot) {
-      this->slot = slot;
+        this->slot = slot;
     }
 
     std::ostream& operator<<(std::ostream& os, const Reset& r) {

@@ -13,8 +13,10 @@
 #include <string>
 #include <vector>
 #include "Room.h"
+#include "Reset.h"
 
 using model::Room;
+using model::Reset;
 
 namespace model {
 
@@ -23,41 +25,39 @@ namespace model {
     private:
         std::string name;
         std::vector<Room> rooms;
+        std::vector<NPC> npcs;
+        std::vector<Object> objects;
+        std::vector<Reset> resets;
 
         friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
 
     public:
         //constructors
         Area();
-
         Area(std::string name);
-
         Area(std::string name, std::vector<Room> rooms);
 
         //getters and setters
-        std::string
-        getName() const;
+        std::string getName() const;
+        std::vector<Room> getRooms() const;
+        std::vector<NPC> getNpcs() const;
+        std::vector<Object> getObjects() const;
+        std::vector<Reset> getResets() const;
+        void setName(const std::string &name);
+        void setRooms(const std::vector<Room> &rooms);
+        void setNpcs(const std::vector<NPC> &npcs);
+        void setObjects(const std::vector<Object> &objects);
+        void setResets(const std::vector<Reset> &resets);
 
-        std::vector<Room>
-        getRooms() const;
+        void addRoom(const Room &room);
+        void addNPC(const NPC &npc);
+        void addObject(const Object &object);
+        void addReset(const Reset &reset);
 
-        void
-        setName(std::string name);
+        bool removePlayer(const model::ID &playerID, const model::ID &roomID);
+        bool addPlayer(const model::ID &playerID, const model::ID &roomID);
 
-        void
-        setRooms(std::vector<Room> rooms);
-
-        void
-        addRoom(Room room);
-
-        bool
-        removePlayer(const model::ID &playerID, const model::ID &roomID);
-
-        bool
-        addPlayer(const model::ID &playerID, const model::ID &roomID);
-
-        bool
-        operator==(const Area& area) const;
+        bool operator==(const Area& area) const;
     };
 
 	inline void from_json(const json &j, Area &a) {
