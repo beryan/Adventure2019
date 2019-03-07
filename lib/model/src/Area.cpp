@@ -31,40 +31,64 @@ namespace model {
           rooms(std::move(rooms))
           { }
 
-
     //getters and setters
-    std::string
-    Area::getName() const {
+    std::string Area::getName() const {
         return name;
     }
 
-
-    std::vector<Room>
-    Area::getRooms() const {
+    std::vector<Room> Area::getRooms() const {
         return rooms;
     }
 
-
-    void
-    Area::setName(std::string name) {
-        this->name = std::move(name);
+    std::vector<NPC> Area::getNpcs() const {
+        return npcs;
     }
 
-
-    void
-    Area::setRooms(std::vector<Room> rooms) {
-        this->rooms = std::move(rooms);
+    std::vector<Object> Area::getObjects() const {
+        return objects;
     }
 
-
-    void
-    Area::addRoom(Room room) {
-        rooms.push_back(std::move(room));
+    std::vector<Reset> Area::getResets() const {
+        return resets;
     }
 
+    void Area::setName(const std::string &name) {
+        this->name = name;
+    }
 
-    bool
-    Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
+    void Area::setRooms(const std::vector<Room> &rooms) {
+        this->rooms = rooms;
+    }
+
+    void Area::setNpcs(const std::vector<NPC> &npcs) {
+        this->npcs = npcs;
+    }
+
+    void Area::setObjects(const std::vector<Object> &objects) {
+        this->objects = objects;
+    }
+
+    void Area::setResets(const std::vector<Reset> &resets) {
+        this->resets = resets;
+    }
+
+    void Area::addRoom(const Room &room) {
+        this->rooms.push_back(room);
+    }
+
+    void Area::addNPC(const NPC &npc) {
+        this->npcs.push_back(npc);
+    }
+
+    void Area::addObject(const Object &object) {
+        this->objects.push_back(object);
+    }
+
+    void Area::addReset(const Reset &reset) {
+        this->resets.push_back(reset);
+    }
+
+    bool Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
         auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
 
         if (it != this->rooms.end()) {
@@ -74,9 +98,7 @@ namespace model {
         return (it != this->rooms.end());
     }
 
-
-    bool
-    Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
+    bool Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
         auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
 
         if (it != this->rooms.end()) {
@@ -86,12 +108,9 @@ namespace model {
         return (it != this->rooms.end());
     }
 
-
-    bool
-    Area::operator==(const Area& area) const {
+    bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }
-
 
     //print object
     std::ostream& operator<<(std::ostream& os, const Area& area) {

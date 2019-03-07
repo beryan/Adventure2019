@@ -55,13 +55,13 @@ namespace model {
         std::vector<NPC> getNpcs() const;
         std::vector<Object> getObjects() const;
         std::vector<model::ID> getPlayersInRoom() const;
-        void setId(model::ID id);
-        void setName(std::string name);
-        void setDesc(std::vector<std::string> desc);
-        void setDoors(std::vector<Door> doors);
-        void setNpcs(std::vector<NPC> npcs);
-        void setObjects(std::vector<Object> objects);
-        void setPlayersInRoom(std::vector<model::ID> playersInRoom);
+        void setId(const model::ID &id);
+        void setName(const std::string &name);
+        void setDesc(const std::vector<std::string> &desc);
+        void setDoors(const std::vector<Door> &doors);
+        void setNpcs(const std::vector<NPC> &npcs);
+        void setObjects(const std::vector<Object> &objects);
+        void setPlayersInRoom(const std::vector<model::ID> &playersInRoom);
 
         void addDoor(const Door &door);
         void addNPC(const NPC &npc);

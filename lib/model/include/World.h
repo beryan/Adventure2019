@@ -19,28 +19,20 @@ namespace model{
         friend std::ostream& operator<<(std::ostream& os, const World& rhs);
 
     public:
+        //constructors
         World();
-
         World(std::vector<Area> areas);
 
         //getters and setters
-        std::vector<Area>
-        getAreas() const;
+        std::vector<Area> getAreas() const;
+        void setAreas(const std::vector<Area> &areas);
 
-        void
-        setAreas(std::vector<Area> areas);
+        void addArea(const Area &area);
 
-        void
-        addArea(Area area);
+        void removePlayer(const model::ID &playerID, const model::ID &roomID);
+        void addPlayer(const model::ID &playerID, const model::ID &roomID);
 
-        void
-        removePlayer(const model::ID &playerID, const model::ID &roomID);
-
-        void
-        addPlayer(const model::ID &playerID, const model::ID &roomID);
-
-        void
-        createStub();
+        void createStub();
     };
 }
 
