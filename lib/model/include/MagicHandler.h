@@ -51,9 +51,9 @@ namespace model {
      *
      *  @brief A class for defining magic spells and performing the operations involved.
      *
-     *  This class uses the Game class' AccountHandler instance to affect players with
-     *  the effects of magic spells. It is also responsible for associating words with
-     *  spell names of the Cast command in the Game.
+     *  This class defines the available magic spells in the game, their effects on
+     *  characters, and tracks the longevity of each spell instance. It uses the
+     *  Game class' AccountHandler to associate instances of spells on active players.
      */
     class MagicHandler {
     private:
@@ -127,10 +127,10 @@ namespace model {
         isConfused(const Connection &client);
 
         /**
-         *  Creates a Pig Latin copy of a string and returns it
+         *  Converts a string into Pig Latin
          */
-        std::string
-        confuseSpeech(std::string message);
+        void
+        confuseSpeech(std::string &message);
 
         /**
          *  Handles the active spells affecting the logged out Player.

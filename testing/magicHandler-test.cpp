@@ -90,7 +90,7 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, rejectInvalidSpellName) {
-        std::string spellName = "invalid_spell";
+        std::string spellName = "InvalidSpell";
         std::ostringstream argument;
         argument << spellName << " " << USERNAME_B;
 
@@ -227,12 +227,13 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canConvertMessageToPigLatin) {
-        auto result = magicHandler.confuseSpeech("Hello, how are you?");
+        std::string message = "Hello, how are you?";
+        magicHandler.confuseSpeech(message);
 
         std::ostringstream expected;
         expected << "elloHay, owhay areway ouyay?";
 
-        EXPECT_EQ(expected.str(), result);
+        EXPECT_EQ(expected.str(), message);
     }
 
 

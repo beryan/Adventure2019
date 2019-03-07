@@ -38,7 +38,7 @@ namespace model {
 
         if (!isValidSpellName) {
             std::ostringstream responseMessage;
-            responseMessage << "There are no spells with the name of \"" << spellName << "\"\n";
+            responseMessage << "There are no spells with the name of \"" << arguments.at(0) << "\"\n";
 
             return {{client, responseMessage.str()}};
         }
@@ -213,15 +213,13 @@ namespace model {
     }
 
 
-    std::string
-    MagicHandler::confuseSpeech(std::string message) {
+    void
+    MagicHandler::confuseSpeech(std::string &message) {
         boost::find_format_all(
             message,
             boost::token_finder((boost::is_alpha() || boost::is_any_of("'")), boost::token_compress_on),
             PigLatinFormatter<std::string>()
         );
-
-        return message;
     }
 
 
