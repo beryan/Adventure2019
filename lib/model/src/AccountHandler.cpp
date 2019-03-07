@@ -327,32 +327,25 @@ namespace model {
         this->bootedClients.clear();
     }
 
-    bool
+    void
     AccountHandler::swapPlayerClientsByPlayerId(const ID &sourceId, const ID &targetId) {
-        try {
-            auto sourceClient = this->activeIdToClient.at(sourceId);
-            auto targetClient = this->activeIdToClient.at(targetId);
+        auto sourceClient = this->activeIdToClient.at(sourceId);
+        auto targetClient = this->activeIdToClient.at(targetId);
 
-            auto sourceUsername = this->getUsernameByClient(sourceClient);
-            auto targetUsername = this->getUsernameByClient(targetClient);
+        auto sourceUsername = this->getUsernameByClient(sourceClient);
+        auto targetUsername = this->getUsernameByClient(targetClient);
 
-            this->activeIdToClient.at(sourceId) = targetClient;
-            this->activeClientToId.at(sourceClient) = targetId;
+        this->activeIdToClient.at(sourceId) = targetClient;
+        this->activeClientToId.at(sourceClient) = targetId;
 
-            this->activeIdToClient.at(targetId) = sourceClient;
-            this->activeClientToId.at(targetClient) = sourceId;
+        this->activeIdToClient.at(targetId) = sourceClient;
+        this->activeClientToId.at(targetClient) = sourceId;
 
 
-            std::cout << sourceClient.id << " (now " << targetUsername << ")"
-                      <<" swapped Players with "
-                      << targetClient.id << " (now " << sourceUsername << ")"
-                      << "\n";
-
-            return true;
-
-        } catch(const std::out_of_range &error) {
-            return false;
-        }
+        std::cout << sourceClient.id << " (now " << targetUsername << ")"
+                  <<" swapped Players with "
+                  << targetClient.id << " (now " << sourceUsername << ")"
+                  << "\n";
     }
 
     std::vector<Player>

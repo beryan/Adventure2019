@@ -141,7 +141,7 @@ namespace model {
         /**
          *  Swaps the clients of two active players. Returns true if successful.
          */
-        bool
+        void
         swapPlayerClientsByPlayerId(const ID &sourceId, const ID &targetId);
 
         static std::vector<Player>
