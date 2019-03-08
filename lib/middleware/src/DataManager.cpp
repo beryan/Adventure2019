@@ -31,45 +31,6 @@ namespace DataManager {
 
     namespace {
 
-        void addNPCsToRooms(std::vector<Room>& rooms, std::vector<NPC>& npcs, const std::vector<Reset>& resets) {
-            for(Reset r : resets) {
-                if(r.getAction() == "npc") {
-                    auto roomID = r.getRoom();
-                    auto room = std::find_if(rooms.begin(), rooms.end(),
-                                             [roomID](const Room & room) -> bool { return room.getId() == roomID ; });
-
-                    auto npcID = r.getId();
-                    auto npc = std::find_if(npcs.begin(), npcs.end(),
-                                            [npcID](const NPC & n) -> bool { return n.getId() == npcID ; });
-
-                    if(room != rooms.end() && npc != npcs.end()) {
-                        room->addNPC(*npc);
-                    }
-
-                }
-            }
-        }
-
-        void addObjectsToRooms(std::vector<Room>& rooms, std::vector<Object>& objects, const std::vector<Reset>& resets) {
-            for(Reset r : resets) {
-                if(r.getAction() == "object") {
-                    auto roomID = r.getRoom();
-                    auto room = std::find_if(rooms.begin(), rooms.end(),
-                                             [roomID](const Room & room) -> bool { return room.getId() == roomID ; });
-
-                    auto objectID = r.getId();
-                    auto object = std::find_if(objects.begin(), objects.end(),
-                                               [objectID](const Object & o) -> bool { return o.getId() == objectID ; });
-
-                    if(room != rooms.end() && object != objects.end()) {
-                        room->addObject(*object);
-                    }
-
-                }
-            }
-        }
-
-
         Area parseAreaJson(json t) {
 
             Area area;
@@ -92,12 +53,10 @@ namespace DataManager {
             }
 
             if(t.find(NPCS) != t.end()){
-                addNPCsToRooms(rooms, npcs, resets);
                 area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
             }
 
             if(t.find(OBJECTS) != t.end()){
-                addObjectsToRooms(rooms, objects, resets);
                 area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
             }
 
@@ -108,6 +67,9 @@ namespace DataManager {
             if(t.find(SHOPS) != t.end()){
                 // SHOPS field if empty in all json sample data
             }
+
+            area.addNPCsToRooms();
+            area.addObjectsToRooms();
 
             return area;
         }
