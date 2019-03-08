@@ -1,24 +1,16 @@
 enable_testing()
 
+
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/lib/
 )
 
+file(GLOB SOURCES "*.cpp")
+
 add_executable(runAllTests
         lib/gtest_main.cc
         lib/gmock-gtest-all.cc
-        area-test.cpp
-        character-test.cpp
-        game-test.cpp
-        player-test.cpp
-        playerHandler-test.cpp
-        propertiesManager-test.cpp
-        room-test.cpp
-        world-test.cpp
-        extraObjectInfo-test.cpp
-        object-test.cpp
-        worldHandler-test.cpp
-        )
+        ${SOURCES})
 
 target_link_libraries(runAllTests
         model
@@ -29,3 +21,8 @@ target_link_libraries(runAllTests
         )
 
 add_test(NAME AllTests COMMAND runAllTests)
+
+set_target_properties(runAllTests
+        PROPERTIES
+        LINK_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )

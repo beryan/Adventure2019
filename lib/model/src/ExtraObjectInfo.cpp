@@ -40,6 +40,13 @@ namespace model {
                this->getExtraDescriptions() == other.getExtraDescriptions();
     }
 
+    ExtraObjectInfo& ExtraObjectInfo::operator=(const ExtraObjectInfo &other){
+        this->extraKeywords = other.getExtraKeywords();
+        this->extraDescriptions = other.getExtraDescriptions();
+
+        return *this;
+    }
+
     bool ExtraObjectInfo::operator!=(const ExtraObjectInfo &other) const {
         return !(*this == other);
     }

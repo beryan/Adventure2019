@@ -83,7 +83,7 @@ namespace model {
 
     //print object
     std::ostream& operator<<(std::ostream& os, const NPC& npc) {
-        os << npc.getId() << ". " << npc.getShortDescription() << std::endl;
+        os << npc.getId() << ". " << npc.shortDescription << std::endl;
         return os;
     }
 }

@@ -27,6 +27,8 @@ namespace model {
         int room;
         int slot;
 
+        friend std::ostream& operator<<(std::ostream& os, const Reset& r);
+
     public:
       	//constructors
       	Reset();
@@ -38,12 +40,11 @@ namespace model {
         int getLimit() const;
         int getRoom() const;
         int getSlot() const;
-        void setAction(std::string action);
-        void setId(model::ID id);
+        void setAction(const std::string &action);
+        void setId(const model::ID &id);
         void setLimit(int limit);
         void setRoom(int room);
         void setSlot(int slot);
-        friend std::ostream& operator<<(std::ostream& os, const Reset& r);
     };
 
     inline void from_json(const json &j, Reset &r) {

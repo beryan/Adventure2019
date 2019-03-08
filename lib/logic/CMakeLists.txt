@@ -23,3 +23,8 @@ set_target_properties(model
 install(TARGETS logic
         ARCHIVE DESTINATION lib
         )
+
+set_target_properties(logic
+        PROPERTIES
+        COMPILE_FLAGS "${CXX_COVERAGE_FLAGS}"
+        )
