@@ -7,6 +7,7 @@
 #include <map>
 #include <sstream>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 using model::Game;
 using model::AccountHandler;
@@ -229,6 +230,13 @@ namespace model {
         std::vector<Message> messages = {};
         std::ostringstream tempMessage;
 
+        std::vector<std::string> params;
+        boost::split(params, param, boost::is_any_of("\t "));
+        std::cout << param << std::endl;
+        for (auto &str: params) {
+            std::cout << str << std::endl;
+        }
+
         switch (command) {
             case Command::Logout: {
                 this->removeClientFromGame(client);
@@ -345,6 +353,12 @@ namespace model {
 
             case Command::Debug: {
                 tempMessage << this->worldHandler->getWorld();
+                break;
+            }
+
+            case Command::Alias: {
+
+//                this->commandHandler.setUserAlias()
                 break;
             }
 

@@ -20,6 +20,7 @@ namespace model {
         Shutdown,
         Tell,
         Yell,
+        Alias,
         InvalidCommand
     };
 }
