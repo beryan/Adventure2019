@@ -84,21 +84,21 @@ namespace DataManager {
             }
 
             if(t.find(ROOMS) != t.end()){
-                rooms = t.at(ROOMS).get<std::vector<Room>>();
+                area.setRooms(t.at(ROOMS).get<std::vector<Room>>());
             }
 
             if(t.find(RESETS) != t.end()){
-                resets = t.at(RESETS).get<std::vector<Reset>>();
+                area.setResets(t.at(RESETS).get<std::vector<Reset>>());
             }
 
             if(t.find(NPCS) != t.end()){
-                npcs = t.at(NPCS).get<std::vector<NPC>>();
                 addNPCsToRooms(rooms, npcs, resets);
+                area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
             }
 
             if(t.find(OBJECTS) != t.end()){
-                objects = t.at(OBJECTS).get<std::vector<Object>>();
                 addObjectsToRooms(rooms, objects, resets);
+                area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
             }
 
             if(t.find(HELPS) != t.end()){
@@ -109,7 +109,6 @@ namespace DataManager {
                 // SHOPS field if empty in all json sample data
             }
 
-            area.setRooms(rooms);
             return area;
         }
 
