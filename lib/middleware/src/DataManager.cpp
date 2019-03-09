@@ -10,8 +10,6 @@
 #include <fstream>
 #include <iomanip>
 
-namespace filesystem = boost::filesystem;
-
 using json = nlohmann::json;
 using Door = model::Door;
 using NPC = model::NPC;
@@ -162,7 +160,7 @@ namespace DataManager {
 
     Area ParseDataFile(const std::string& filePath){
         Area a;
-        if(filesystem::extension(filePath) == JSON_EXTENSION){
+        if(has_extension(filePath, JSON_EXTENSION)){
             std::ifstream inFile(filePath);
 
             if (!inFile.is_open()) {
@@ -177,7 +175,7 @@ namespace DataManager {
 
     std::vector<Player> ParseUsersFile(const std::string& filePath){
         std::vector<Player> players;
-        if(DataManager::has_extension(filePath, JSON_EXTENSION)){
+        if(has_extension(filePath, JSON_EXTENSION)){
             players = DataManager::parseUsersJson(filePath);
         }
         return players;
@@ -185,7 +183,7 @@ namespace DataManager {
 
     std::vector<Area> ParseWorldFile(const std::string& filePath) {
         std::vector<Area> areas;
-        if(filesystem::extension(filePath) == JSON_EXTENSION) {
+        if(has_extension(filePath, JSON_EXTENSION)) {
             areas = parseWorldJson(filePath);
         }
         return areas;
