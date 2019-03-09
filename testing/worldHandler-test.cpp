@@ -100,10 +100,6 @@ namespace {
     TEST(WorldHandlerTestSuite, willThrowExceptionOnInvalidRoom) {
         model::WorldHandler worldHandler;
         model::ID nonExistentRoomId = 12345678;
-
-        try {
-            worldHandler.findRoom(nonExistentRoomId);
-            FAIL();
-        } catch (std::runtime_error &e) {}
+        ASSERT_THROW(worldHandler.findRoom(nonExistentRoomId), std::runtime_error);
     }
 }
