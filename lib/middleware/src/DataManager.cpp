@@ -33,40 +33,25 @@ namespace DataManager {
 
         Area parseAreaJson(json t) {
 
-            Area area;
-            std::vector<Room> rooms;
-            std::vector<NPC> npcs;
-            std::vector<Object> objects;
-            std::vector<Reset> resets;
+            bool checkFormat = (t.find(AREA) != t.end() && t.find(ROOMS) != t.end() && t.find(RESETS) != t.end() &&
+                                t.find(NPCS) != t.end() && t.find(OBJECTS) != t.end());
 
+            bool checkFields = (t.at(AREA) != nullptr && t.at(ROOMS) != nullptr && t.at(RESETS) != nullptr &&
+                                t.at(NPCS) != nullptr && t.at(OBJECTS) != nullptr);
 
-            if(t.find(AREA) != t.end()){
-                area = t.at(AREA).get<Area>();
+            if( !checkFormat ){
+                throw std::runtime_error("Incorrect format of load file.");
+
+            }
+            if( !checkFields ){
+                throw std::runtime_error("JSON file contains null field(s)");
             }
 
-            if(t.find(ROOMS) != t.end()){
-                area.setRooms(t.at(ROOMS).get<std::vector<Room>>());
-            }
-
-            if(t.find(RESETS) != t.end()){
-                area.setResets(t.at(RESETS).get<std::vector<Reset>>());
-            }
-
-            if(t.find(NPCS) != t.end()){
-                area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
-            }
-
-            if(t.find(OBJECTS) != t.end()){
-                area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
-            }
-
-            if(t.find(HELPS) != t.end()){
-                // HELPS field if empty in all json sample data
-            }
-
-            if(t.find(SHOPS) != t.end()){
-                // SHOPS field if empty in all json sample data
-            }
+            Area area = t.at(AREA).get<Area>();
+            area.setRooms(t.at(ROOMS).get<std::vector<Room>>());
+            area.setResets(t.at(RESETS).get<std::vector<Reset>>());
+            area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
+            area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
 
             area.addNPCsToRooms();
             area.addObjectsToRooms();
