@@ -7,10 +7,10 @@
 #include "Character.h"
 
 namespace {
-    model::ID getFirstRoom(const model::WorldHandler  &wh) {
-        EXPECT_FALSE(wh.getWorld().getAreas().empty());
-        auto area = wh.getWorld().getAreas()[0];
-        EXPECT_FALSE(wh.getWorld().getAreas()[0].getRooms().empty());
+    model::ID getFirstRoom(const model::WorldHandler &worldHandler) {
+        EXPECT_FALSE(worldHandler.getWorld().getAreas().empty());
+        auto area = worldHandler.getWorld().getAreas()[0];
+        EXPECT_FALSE(area.getRooms().empty());
         auto room = area.getRooms()[0];
         return room.getId();
     }
@@ -24,7 +24,7 @@ namespace {
         EXPECT_FALSE(worldHandler.getWorld().getAreas().empty());
     }
 
-    TEST(WorldHandlerTestSuite, canAddAndRemovePlayerToRoom) {
+    TEST(WorldHandlerTestSuite, canAddAndRemovePlayerFromRoom) {
         model::WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
         model::ID playerId = 1234;
@@ -32,16 +32,16 @@ namespace {
 
         auto room = worldHandler.findRoom(roomId);
         auto playersInRoom = room.getPlayersInRoom();
-        auto it = std::find(playersInRoom.begin(), playersInRoom.end(), playerId);
-        EXPECT_NE(it, playersInRoom.end());
+        bool isPlayerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
+        EXPECT_TRUE(isPlayerInRoom);
 
         worldHandler.removePlayer(playerId, roomId);
 
         // have to re-find room after making changes because it's not returned by reference
         room = worldHandler.findRoom(roomId);
         playersInRoom = room.getPlayersInRoom();
-        it = std::find(playersInRoom.begin(), playersInRoom.end(), playerId);
-        EXPECT_EQ(it, playersInRoom.end());
+        isPlayerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
+        EXPECT_FALSE(isPlayerInRoom);
     }
 
     TEST(WorldHandlerTestSuite, canGetAdjacentRooms) {
@@ -55,7 +55,8 @@ namespace {
         for (const auto &destinationPair: destinations) {
             auto direction = destinationPair.first;
             EXPECT_TRUE(worldHandler.isValidDirection(roomId, direction));
-            EXPECT_EQ(worldHandler.getDestination(roomId, direction), destinationPair.second);
+            auto destinationId = destinationPair.second;
+            EXPECT_EQ(worldHandler.getDestination(roomId, direction), destinationId);
         }
     }
 
@@ -72,12 +73,14 @@ namespace {
         auto playersInAdjacentRoom = worldHandler.findRoom(adjacentRoomId).getPlayersInRoom();
         auto nearbyPlayers = worldHandler.getNearbyPlayerIds(roomId);
 
-        bool playerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
-        bool playerInAdjacentRoom = std::find(playersInAdjacentRoom.begin(), playersInAdjacentRoom.end(), playerId) != playersInAdjacentRoom.end();
-        bool playerNearby = std::find(nearbyPlayers.begin(), nearbyPlayers.end(), playerId) != nearbyPlayers.end();
-        EXPECT_TRUE(playerInRoom);
-        EXPECT_FALSE(playerInAdjacentRoom);
-        EXPECT_TRUE(playerNearby);
+        bool isPlayerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
+        bool isPlayerInAdjacentRoom = std::find(playersInAdjacentRoom.begin(), playersInAdjacentRoom.end(), playerId) !=
+                                      playersInAdjacentRoom.end();
+        bool isPlayerNearbyRoom =
+                std::find(nearbyPlayers.begin(), nearbyPlayers.end(), playerId) != nearbyPlayers.end();
+        EXPECT_TRUE(isPlayerInRoom);
+        EXPECT_FALSE(isPlayerInAdjacentRoom);
+        EXPECT_TRUE(isPlayerNearbyRoom);
 
         worldHandler.movePlayer(playerId, roomId, adjacentRoomId);
 
@@ -85,11 +88,18 @@ namespace {
         playersInAdjacentRoom = worldHandler.findRoom(adjacentRoomId).getPlayersInRoom();
         nearbyPlayers = worldHandler.getNearbyPlayerIds(roomId);
 
-        playerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
-        playerInAdjacentRoom = std::find(playersInAdjacentRoom.begin(), playersInAdjacentRoom.end(), playerId) != playersInAdjacentRoom.end();
-        playerNearby = std::find(nearbyPlayers.begin(), nearbyPlayers.end(), playerId) != nearbyPlayers.end();
-        EXPECT_FALSE(playerInRoom);
-        EXPECT_TRUE(playerInAdjacentRoom);
-        EXPECT_TRUE(playerNearby);
+        isPlayerInRoom = std::find(playersInRoom.begin(), playersInRoom.end(), playerId) != playersInRoom.end();
+        isPlayerInAdjacentRoom = std::find(playersInAdjacentRoom.begin(), playersInAdjacentRoom.end(), playerId) !=
+                                 playersInAdjacentRoom.end();
+        isPlayerNearbyRoom = std::find(nearbyPlayers.begin(), nearbyPlayers.end(), playerId) != nearbyPlayers.end();
+        EXPECT_FALSE(isPlayerInRoom);
+        EXPECT_TRUE(isPlayerInAdjacentRoom);
+        EXPECT_TRUE(isPlayerNearbyRoom);
+    }
+
+    TEST(WorldHandlerTestSuite, willThrowExceptionOnInvalidRoom) {
+        model::WorldHandler worldHandler;
+        model::ID nonExistentRoomId = 12345678;
+        ASSERT_THROW(worldHandler.findRoom(nonExistentRoomId), std::runtime_error);
     }
 }
