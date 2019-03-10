@@ -3,3 +3,14 @@
 //
 
 #include "CombatHandler.h"
+
+using action::CombatHandler;
+using action::CharacterHandler;
+
+namespace action {
+    CombatHandler::CombatHandler() {}
+
+    void CombatHandler::attack(Character &attacker, Character &defender) {
+        handler.reduceHealth(defender, baseDamage);
+    }
+}

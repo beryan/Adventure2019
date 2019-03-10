@@ -11,13 +11,12 @@
 namespace logic {
     class CombatLogic {
     private:
-        CharacterLogic logic = {};
     public:
         CombatLogic();
 
-        bool canAttackTarget(Character attacker, Character defender);
+        bool canAttackTarget(const Character &attacker, const Character &defender);
 
-        bool canFlee(Character character);
+        bool canFlee(const Character &character);
     };
 };
 

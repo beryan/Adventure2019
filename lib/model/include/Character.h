@@ -21,7 +21,6 @@ namespace model {
     enum Role { Admin, Builder, Default };
 
     struct Character {
-
     public:
         explicit Character(model::ID id);
 

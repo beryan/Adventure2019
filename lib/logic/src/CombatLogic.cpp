@@ -9,7 +9,7 @@ using logic::CombatLogic;
 namespace logic {
     CombatLogic::CombatLogic() {}
 
-    bool CombatLogic::canAttackTarget(Character attacker, Characted defender) {
+    bool CombatLogic::canAttackTarget(const Character &attacker, const Character &defender) {
         bool result = false;
 
         // Check flags, magic, state, whatever
@@ -18,7 +18,7 @@ namespace logic {
         return result;
     }
 
-    bool CombatLogic::canFlee(Character character) {
+    bool CombatLogic::canFlee(const Character &character) {
         bool result = false;
 
         // Check if the Character can flee in its current state

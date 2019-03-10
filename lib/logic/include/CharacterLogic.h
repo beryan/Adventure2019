@@ -15,12 +15,8 @@ namespace logic {
 
     class CharacterLogic {
     private:
-        int minHealth;
-        int maxHealth;
     public:
         CharacterLogic();
-
-        CharacterLogic(int minHealth, int maxHealth);
 
         bool canReduceHealth(int health, int change);
 

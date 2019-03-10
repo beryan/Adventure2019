@@ -7,19 +7,13 @@
 using logic::CharacterLogic;
 
 namespace logic {
-    CharacterLogic::CharacterLogic() :
-        minHealth(DEFAULT_MIN_HEALTH),
-        maxHealth(DEFAULT_MAX_HEALTH) {}
-
-    CharacterLogic::CharacterLogic(int minHealth, int maxHealth) :
-        minHealth(minHealth),
-        maxHealth(maxHealth) {}
+    CharacterLogic::CharacterLogic() {}
 
     bool CharacterLogic::canReduceHealth(int health, int change) {
-        return health - change > minHealth;
+        return health - change > DEFAULT_MIN_HEALTH;
     }
 
     bool CharacterLogic::canIncreaseHealth(int health, int change) {
-        return health + change < maxHealth;
+        return health + change < DEFAULT_MAX_HEALTH;
     }
 }

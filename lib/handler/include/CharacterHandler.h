@@ -14,7 +14,7 @@ using logic::CharacterLogic;
 namespace action {
     class CharacterHandler {
     private:
-        CharacterLogic logic{0, 100};
+        CharacterLogic logic{};
     public:
         CharacterHandler();
 

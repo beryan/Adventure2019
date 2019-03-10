@@ -14,7 +14,7 @@ namespace action {
             character.setHealth(character.getHealth() - change);
         }
         else {
-            character.setHealth(logic.getMinHealth());
+            character.setHealth(logic::DEFAULT_MIN_HEALTH);
         }
     }
 
@@ -23,7 +23,7 @@ namespace action {
             character.setHealth(character.getHealth() + change);
         }
         else {
-            character.setHealth(logic.getMaxHealth());
+            character.setHealth(logic::DEFAULT_MAX_HEALTH);
         }
     }
 }
