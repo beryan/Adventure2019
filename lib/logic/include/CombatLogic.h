@@ -6,12 +6,18 @@
 #define WEBSOCKETNETWORKING_COMBATLOGIC_H
 
 #include "Character.h"
+#include "CharacterLogic.h"
 
 namespace logic {
     class CombatLogic {
     private:
+        CharacterLogic logic = {};
     public:
         CombatLogic();
+
+        bool canAttackTarget(Character attacker, Character defender);
+
+        bool canFlee(Character character);
     };
 };
 

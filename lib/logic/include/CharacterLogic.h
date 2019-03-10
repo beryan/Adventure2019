@@ -22,14 +22,6 @@ namespace logic {
 
         CharacterLogic(int minHealth, int maxHealth);
 
-        void setMaxHealth(int health);
-
-        void setMinHealth(int health);
-
-        int getMaxHealth();
-
-        int getMinHealth();
-
         bool canReduceHealth(int health, int change);
 
         bool canIncreaseHealth(int health, int change);

@@ -15,22 +15,6 @@ namespace logic {
         minHealth(minHealth),
         maxHealth(maxHealth) {}
 
-    void CharacterLogic::setMaxHealth(int health) {
-        maxHealth = health;
-    }
-
-    void CharacterLogic::setMinHealth(int health) {
-        minHealth = health;
-    }
-
-    int CharacterLogic::getMaxHealth() {
-        return maxHealth;
-    }
-
-    int CharacterLogic::getMinHealth() {
-        return minHealth;
-    }
-
     bool CharacterLogic::canReduceHealth(int health, int change) {
         return health - change > minHealth;
     }
