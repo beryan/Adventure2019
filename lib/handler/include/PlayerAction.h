@@ -25,8 +25,9 @@ namespace action {
          * does not exist in the inventory
          * @param player: Player that is equipping the item
          * @param item: Item that is being equipped
+         * @return false if item cannot be equipped
          */
-        void equipItem(Player &player, const Object &item);
+        bool equipItem(Player &player, const Object &item);
 
         /**
          * Unequipping the item will move the item from the Equipment to their Inventory. If the

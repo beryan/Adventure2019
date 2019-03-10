@@ -28,7 +28,7 @@ namespace {
     };
 
     TEST_F(PlayerTestSuite, canAddItemToInventory) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
 
@@ -36,7 +36,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.dropItem(player, item);
@@ -49,7 +49,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canDropItemFromInventory) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.dropItem(player, item);
@@ -59,7 +59,7 @@ namespace {
 
     TEST_F(PlayerTestSuite, canPickupItemFromRoomInventory) {
         Inventory inventory{};
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Body};
+        Object item{12345, "janga", {}, {}, Slot::Chest};
         unsigned int expected_size = 0;
 
         inventory.addItemToInventory(item);
@@ -74,8 +74,8 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canEquipTwoDifferentSlotItemsFromInventory) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
-        Object item2{22345, "Zooboo", "Danga", {}, {}, Slot::Body};
+        Object item{12345, "janga", {}, {}, Slot::Head};
+        Object item2{22345, "Danga", {}, {}, Slot::Chest};
 
         action.pickupItem(player, item);
         action.pickupItem(player, item2);
@@ -91,7 +91,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.equipItem(player, item);
@@ -101,12 +101,12 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.equipItem(player, item);
 
-        Object item2{121, "Hello", "world", {}, {}, Slot::Head};
+        Object item2{121, "world", {}, {}, Slot::Head};
 
         action.pickupItem(player, item2);
         action.equipItem(player, item2);
@@ -116,7 +116,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.equipItem(player, item);
 
@@ -125,7 +125,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canDropEquippedItem) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.equipItem(player, item);
@@ -138,7 +138,7 @@ namespace {
     }
 
     TEST_F(PlayerTestSuite, canUnequipItem) {
-        Object item{12345, "Booboo", "janga", {}, {}, Slot::Head};
+        Object item{12345, "janga", {}, {}, Slot::Head};
 
         action.pickupItem(player, item);
         action.equipItem(player, item);
@@ -153,7 +153,7 @@ namespace {
     TEST_F(PlayerTestSuite, canReturnCollectionOfItems) {
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
-            Object item{rand() % 220, "test", "test", {}, {}, Slot::Head};
+            Object item{rand() % 220, "test", {}, {}, Slot::Head};
             action.pickupItem(player, item);
         }
 

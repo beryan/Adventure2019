@@ -67,11 +67,14 @@ namespace model {
         void addNPC(const NPC &npc);
         void addObject(const Object &object);
         void addPlayerToRoom(const model::ID &playerId);
+
+        void removeObject(const Object &object);
         void removePlayerFromRoom(const model::ID &playerId);
 
         bool isValidDirection(const std::string &dir) const;
         model::ID getDestination(const std::string &dir) const;
         std::vector<model::ID> getNearbyRoomIds() const;
+
         std::string descToString() const;
         std::string doorsToString() const;
 

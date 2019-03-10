@@ -123,6 +123,10 @@ namespace model {
         }
     }
 
+    void Room::removeObject(const Object &object) {
+        objects.erase(std::remove(objects.begin(), objects.end(), object), objects.end());
+    }
+
     void Room::removePlayerFromRoom(const model::ID &playerId) {
         playersInRoom.erase(std::remove(playersInRoom.begin(), playersInRoom.end(), playerId), playersInRoom.end());
     }
@@ -134,22 +138,18 @@ namespace model {
 
     model::ID Room::getDestination(const std::string &dir) const {
         model::ID id = -1;
-
         auto it = std::find_if(this->doors.begin(), this->doors.end(), [&dir](const Door &door) {return door.dir == dir;});
         if (it != this->doors.end()) {
             id = it->leadsTo;
         }
-
         return id;
     }
 
     std::vector<model::ID> Room::getNearbyRoomIds() const {
         std::vector<model::ID> ids;
-
         for (const auto &door : this->doors) {
             ids.push_back(door.leadsTo);
         }
-
         return ids;
     }
 
@@ -200,8 +200,6 @@ namespace model {
 
         os << room.descToString();
 
-        os << room.doorsToString();
-
         if(!room.npcs.empty()) {
             os << "NPCS:" << std::endl;
             for (const auto &npc : room.npcs) {
@@ -215,6 +213,8 @@ namespace model {
                 os << obj;
             }
         }
+
+        os << room.doorsToString();
 
         return os;
     }

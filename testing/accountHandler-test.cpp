@@ -219,7 +219,6 @@ TEST(AccountHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
     accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     accountHandler.processRegistration(CLIENT_A, VALID_LENGTH_STRING);
     accountHandler.exitRegistration(CLIENT_A);
-    auto result = accountHandler.isRegistering(CLIENT_A);
 
     EXPECT_FALSE(accountHandler.isRegistering(CLIENT_A));
 }

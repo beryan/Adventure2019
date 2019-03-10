@@ -13,7 +13,6 @@ namespace {
         unsigned int expected_size = 0;
 
         EXPECT_EQ(model::Object::DEFAULT_ID, myObject.getId());
-        EXPECT_EQ(expected_string, myObject.getName());
         EXPECT_EQ(expected_string, myObject.getShortDescription());
         EXPECT_EQ(expected_size, myObject.getLongDescription().size());
         EXPECT_EQ(expected_size, myObject.getKeywords().size());
@@ -23,17 +22,15 @@ namespace {
 
     TEST(ObjectTestSuite, canUseConstructor) {
         model::ID myId = 42069;
-        std::string name = "Skateboard";
-        std::string shortDesc = "This is a magical skateboard";
+        std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
         std::vector<std::string> keywords = {"skateboard", "travel", "fast", "cool"};
         model::Slot mySlot = model::Slot::Head;
-        model::Object myObject{myId, name, shortDesc, longDesc, keywords, mySlot};
+        model::Object myObject{myId, shortDesc, longDesc, keywords, mySlot};
 
         model::ExtraObjectInfo emptyExtraInfo;
 
         EXPECT_EQ(myId, myObject.getId());
-        EXPECT_EQ(name, myObject.getName());
         EXPECT_EQ(shortDesc, myObject.getShortDescription());
         EXPECT_EQ(longDesc, myObject.getLongDescription());
         EXPECT_EQ(keywords, myObject.getKeywords());
@@ -43,16 +40,14 @@ namespace {
 
     TEST(ObjectTestSuite, canUseExtraObjectInfoConstructor) {
         model::ID myId = 42069;
-        std::string name = "Skateboard";
-        std::string shortDesc = "This is a magical skateboard";
+        std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
         std::vector<std::string> keywords = {"skateboard", "travel", "fast", "cool"};
         model::Slot mySlot = model::Slot::Head;
         model::ExtraObjectInfo myExtraInfo{{"asdf"}, {"hello"}};
-        model::Object myObject{myId, name, shortDesc, longDesc, keywords, mySlot, myExtraInfo};
+        model::Object myObject{myId, shortDesc, longDesc, keywords, mySlot, myExtraInfo};
 
         EXPECT_EQ(myId, myObject.getId());
-        EXPECT_EQ(name, myObject.getName());
         EXPECT_EQ(shortDesc, myObject.getShortDescription());
         EXPECT_EQ(longDesc, myObject.getLongDescription());
         EXPECT_EQ(keywords, myObject.getKeywords());
@@ -62,8 +57,7 @@ namespace {
 
     TEST(ObjectTestSuite, canMakeObjectFromSetters) {
         model::ID myId = 42069;
-        std::string name = "Skateboard";
-        std::string shortDesc = "This is a magical skateboard";
+        std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
         std::vector<std::string> keywords = {"skateboard", "travel", "fast", "cool"};
         model::Slot mySlot = model::Slot::Head;
@@ -71,7 +65,6 @@ namespace {
         model::Object myObject{};
 
         myObject.setId(myId);
-        myObject.setName(name);
         myObject.setShortDescription(shortDesc);
         myObject.setLongDescription(longDesc);
         myObject.setKeywords(keywords);
@@ -79,7 +72,6 @@ namespace {
         myObject.setExtraObjectInfo(myExtraInfo);
 
         EXPECT_EQ(myId, myObject.getId());
-        EXPECT_EQ(name, myObject.getName());
         EXPECT_EQ(shortDesc, myObject.getShortDescription());
         EXPECT_EQ(longDesc, myObject.getLongDescription());
         EXPECT_EQ(keywords, myObject.getKeywords());

@@ -17,7 +17,8 @@ namespace model {
     WorldHandler::WorldHandler() {
         //create temporary world
         this->world = World();
-        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+        this->world.createStub();
+        //this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
     }
 
     World
@@ -25,11 +26,11 @@ namespace model {
         return world;
     }
 
-    Room
-    WorldHandler::findRoom(const model::ID &roomID) {
-        for (const Area &area : this->world.getAreas()) {
-            std::vector<Room> rooms = area.getRooms();
-            auto it = std::find_if(rooms.begin(), rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
+    Room&
+    WorldHandler::findRoom(const model::ID &roomId) {
+        for (Area &area : this->world.getAreas()) {
+            std::vector<Room>& rooms = area.getRooms();
+            auto it = std::find_if(rooms.begin(), rooms.end(), [&roomId](const Room &room) {return room.getId() == roomId;});
             if (it != rooms.end()) {
                 return *it;
             }
@@ -38,31 +39,43 @@ namespace model {
     }
 
     bool
-    WorldHandler::isValidDirection(const model::ID &roomID, const std::string &dir) {
-        Room room = findRoom(roomID);
+    WorldHandler::isValidDirection(const model::ID &roomId, const std::string &dir) {
+        Room& room = findRoom(roomId);
         return room.isValidDirection(dir);
     }
 
     model::ID
-    WorldHandler::getDestination(const model::ID &roomID, const std::string &dir) {
-        Room room = findRoom(roomID);
+    WorldHandler::getDestination(const model::ID &roomId, const std::string &dir) {
+        Room& room = findRoom(roomId);
         return room.getDestination(dir);
     }
 
     void
-    WorldHandler::addPlayer(const model::ID &playerID, const model::ID &roomID) {
-        this->world.addPlayer(playerID, roomID);
+    WorldHandler::addPlayer(const model::ID &roomId, const model::ID &playerId) {
+        Room& room = findRoom(roomId);
+        room.addPlayerToRoom(playerId);
     }
 
     void
-    WorldHandler::removePlayer(const model::ID &playerID, const model::ID &roomID) {
-        this->world.removePlayer(playerID, roomID);
+    WorldHandler::removePlayer(const model::ID &roomId, const model::ID &playerId) {
+        Room& room = findRoom(roomId);
+        room.removePlayerFromRoom(playerId);
     }
 
     void
-    WorldHandler::movePlayer(const model::ID &playerID, const model::ID &sourceID, const model::ID &destinationID) {
-        this->world.removePlayer(playerID, sourceID);
-        this->world.addPlayer(playerID, destinationID);
+    WorldHandler::movePlayer(const model::ID &playerId, const model::ID &sourceId, const model::ID &destinationId) {
+        removePlayer(sourceId, playerId);
+        addPlayer(destinationId, playerId);
+    }
+
+    void
+    WorldHandler::removeItem(Room &room, const Object &item) {
+        room.removeObject(item);
+    }
+
+    void
+    WorldHandler::addItem(Room &room, const Object &item) {
+        room.addObject(item);
     }
 
     std::vector<model::ID>
