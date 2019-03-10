@@ -10,12 +10,17 @@
 using model::Character;
 
 namespace logic {
+    constexpr int DEFAULT_MIN_HEALTH = 0;
+    constexpr int DEFAULT_MAX_HEALTH = 100;
+
     class CharacterLogic {
     private:
         int minHealth;
         int maxHealth;
     public:
-        CharacterLogic(int maxHealth, int minHealth);
+        CharacterLogic();
+
+        CharacterLogic(int minHealth, int maxHealth);
 
         void setMaxHealth(int health);
 

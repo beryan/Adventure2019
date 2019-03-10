@@ -7,6 +7,10 @@
 using logic::CharacterLogic;
 
 namespace logic {
+    CharacterLogic::CharacterLogic() :
+        minHealth(DEFAULT_MIN_HEALTH),
+        maxHealth(DEFAULT_MAX_HEALTH) {}
+
     CharacterLogic::CharacterLogic(int minHealth, int maxHealth) :
         minHealth(minHealth),
         maxHealth(maxHealth) {}
