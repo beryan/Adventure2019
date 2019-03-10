@@ -7,14 +7,14 @@
 
 
 #include "Server.h"
-#include <ClientMessageBuffer.h>
+#include "ClientMessageBuffer.h"
+#include "Game.h"
 
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <unistd.h>
 #include <vector>
-#include <Game.h>
 
 
 using networking::Server;
