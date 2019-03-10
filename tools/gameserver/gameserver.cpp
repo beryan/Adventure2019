@@ -7,6 +7,7 @@
 
 
 #include "Server.h"
+#include <ClientMessageBuffer.h>
 
 #include <fstream>
 #include <iostream>
@@ -19,6 +20,7 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
+using networking::ClientMessageBuffer;
 using model::Game;
 
 std::vector<Connection> clients;
@@ -77,7 +79,8 @@ main(int argc, char* argv[]) {
       done = true;
   };
 
-  Game game(clients, newClients, disconnectedClients, disconnect, shutdown);
+  ClientMessageBuffer clientMessageBuffer;
+  Game game{clients, newClients, disconnectedClients, disconnect, shutdown};
 
   while (!done) {
     try {
@@ -90,7 +93,12 @@ main(int argc, char* argv[]) {
     }
 
     std::deque<Message> incoming = server.receive();
-    server.send(game.processCycle(incoming));
+
+    clientMessageBuffer.addMessagesToQueues(incoming);
+    clientMessageBuffer.discardDisconnectedClientQueues(disconnectedClients);
+
+    auto next = clientMessageBuffer.getNextMessages();
+    server.send(game.processCycle(next));
 
     sleep(1);
   }
