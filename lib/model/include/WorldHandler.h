@@ -11,8 +11,8 @@
 
 using json = nlohmann::json;
 
-namespace model{
-    class WorldHandler{
+namespace model {
+    class WorldHandler {
     public:
         WorldHandler();
 
