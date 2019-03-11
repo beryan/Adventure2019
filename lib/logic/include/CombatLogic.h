@@ -6,15 +6,21 @@
 #define WEBSOCKETNETWORKING_COMBATLOGIC_H
 
 #include "Character.h"
-#include "CharacterLogic.h"
+
+using model::Character;
 
 namespace logic {
+    constexpr int DEFAULT_MAX_HEALTH = 100;
+    constexpr int DEFAULT_MIN_HEALTH = 0;
+
     class CombatLogic {
     private:
     public:
         CombatLogic();
 
         bool canAttackTarget(const Character &attacker, const Character &defender);
+
+        bool canHealTarget(const Character &target);
 
         bool canFlee(const Character &character);
     };

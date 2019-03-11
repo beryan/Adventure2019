@@ -18,6 +18,10 @@ namespace logic {
         return result;
     }
 
+    bool CombatLogic::canHealTarget(const Character &target) {
+
+    }
+
     bool CombatLogic::canFlee(const Character &character) {
         bool result = false;
 
