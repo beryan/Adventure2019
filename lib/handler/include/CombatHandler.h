@@ -15,8 +15,8 @@ namespace action {
     class CombatHandler {
     private:
         CombatLogic logic = {};
-        int baseDamage = 1;
-        int baseHeal = 5;
+        constexpr static int BASE_DAMAGE = 10;
+        constexpr static int BASE_HEAL = 5;
     public:
         CombatHandler();
 

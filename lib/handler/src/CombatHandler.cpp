@@ -11,7 +11,7 @@ namespace action {
 
     void CombatHandler::attack(Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker, defender)) {
-            defender.setHealth(defender.getHealth() - baseDamage);
+            defender.setHealth(defender.getHealth() - BASE_DAMAGE);
         }
         else {
             defender.setHealth(logic::DEFAULT_MIN_HEALTH);
@@ -20,7 +20,7 @@ namespace action {
 
     void CombatHandler::heal(Character &target) {
         if (logic.canHealTarget(target)) {
-            target.setHealth(target.getHealth() + baseHeal);
+            target.setHealth(target.getHealth() + BASE_HEAL);
         }
         else {
             target.setHealth(logic::DEFAULT_MAX_HEALTH);

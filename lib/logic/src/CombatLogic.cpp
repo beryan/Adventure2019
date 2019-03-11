@@ -10,7 +10,7 @@ namespace logic {
     CombatLogic::CombatLogic() {}
 
     bool CombatLogic::canAttackTarget(const Character &attacker, const Character &defender) {
-        bool result = false;
+        bool result = true;
 
         // Check flags, magic, state, whatever
         // Set result to true if they are able to be attacked
@@ -23,7 +23,7 @@ namespace logic {
     }
 
     bool CombatLogic::canFlee(const Character &character) {
-        bool result = false;
+        bool result = true;
 
         // Check if the Character can flee in its current state
 
