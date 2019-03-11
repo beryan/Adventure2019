@@ -76,7 +76,7 @@ namespace model {
 
         bool containsKeyword(const std::string &keyword) const;
 
-        bool operator==(const Object &NPC) const;
+        bool operator==(const Object &object) const;
 
         bool operator<(const Object &object) const;
 

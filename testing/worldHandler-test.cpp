@@ -27,7 +27,7 @@ namespace {
     TEST(WorldHandlerTestSuite, canAddAndRemovePlayerFromRoom) {
         model::WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
-        Room& room = worldHandler.findRoom(roomId);
+        Room &room = worldHandler.findRoom(roomId);
         model::ID playerId = 1234;
 
         worldHandler.addPlayer(roomId, playerId);
@@ -60,7 +60,7 @@ namespace {
     TEST(WorldHandlerTestSuite, canMovePlayer) {
         model::WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
-        Room& room = worldHandler.findRoom(roomId);
+        Room &room = worldHandler.findRoom(roomId);
         auto adjacentRoomId = room.getDoors()[0].leadsTo;
         model::ID playerId = 1234;
 
@@ -94,9 +94,33 @@ namespace {
         EXPECT_TRUE(isPlayerInNearbyRoom);
     }
 
-    TEST(WorldHandlerTestSuite, willThrowExceptionOnInvalidRoom) {
+    TEST(WorldHandlerTestSuite, canThrowExceptionOnInvalidRoom) {
         model::WorldHandler worldHandler;
         model::ID nonExistentRoomId = 12345678;
         ASSERT_THROW(worldHandler.findRoom(nonExistentRoomId), std::runtime_error);
+    }
+
+    TEST(WorldHandlerTestSuite, canAddAndRemoveItemFromRoom) {
+        model::WorldHandler worldHandler;
+        auto roomId = getFirstRoom(worldHandler);
+        auto &room = worldHandler.findRoom(roomId);
+        model::ID objectId = 1234;
+        std::string shortDescription = "a sock";
+        std::vector<std::string> longDescription = {"a beautiful sock somebody left here"};
+        std::vector<std::string> keywords = {"sock", "stinky"};
+        model::Slot slot = model::Slot::Feet;
+        model::Object object{objectId, shortDescription, longDescription, keywords, slot};
+
+        worldHandler.addItem(room, object);
+        auto objects = room.getObjects();
+        auto findObjectById = [objectId](const Object &obj) { return obj.getId() == objectId; };
+
+        bool isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
+        EXPECT_TRUE(isObjectInRoom);
+
+        worldHandler.removeItem(room, object);
+        objects = room.getObjects();
+        isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
+        EXPECT_FALSE(isObjectInRoom);
     }
 }
