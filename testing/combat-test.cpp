@@ -26,6 +26,7 @@ namespace {
 
         Player attacker;
         Player defender;
+
         CombatHandler handler;
 
         virtual void SetUp() override {
@@ -37,6 +38,10 @@ namespace {
     };
 
     TEST_F(CombatTestSuite, canAttackTarget) {
-        EXPECT_EQ(true, true);
+        handler.attack(attacker, defender);
+
+        ASSERT_EQ(100, attacker.getHealth());
+        ASSERT_NE(100, defender.getHealth());
+        EXPECT_EQ(90, defender.getHealth());
     }
 }
