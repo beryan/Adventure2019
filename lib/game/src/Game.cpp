@@ -261,10 +261,8 @@ namespace game {
                             << "  - " << this->commandHandler.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Spells)
-                            << " (displays available magic spells)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Cast)
-                            << " [spell] [target] (casts a spell on a target)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
+                            << "  - " << this->commandHandler.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
