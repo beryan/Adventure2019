@@ -2,25 +2,25 @@
 // Created by Stephen Wanhella on 2019-02-14.
 //
 
-#ifndef COMMANDHANDLER_H
-#define COMMANDHANDLER_H
+#ifndef ALIASMANAGER_H
+#define ALIASMANAGER_H
 
 #include "Command.h"
 #include "Player.h"
 #include <string>
 #include <unordered_map>
 
-using model::Command;
+using game::Command;
 
-namespace model {
-    class CommandHandler {
+namespace game {
+    class AliasManager {
     public:
         /**
          * Gets default command from string
          * @param commandStr command string to parse
          * @return Command that matches commandStr. InvalidCommand if no matching command
          */
-        model::Command getDefaultCommand(const std::string &commandStr);
+        Command getDefaultCommand(const std::string &commandStr);
 
         /**
          * Get the appropriate command for a user from string, checking first if user has aliased a command
@@ -28,7 +28,7 @@ namespace model {
          * @param username username to check for command alias
          * @return Command from commandStr, InvalidCommand if no matching command
          */
-        model::Command getCommandForUser(const std::string &commandStr, const std::string &username);
+        Command getCommandForUser(const std::string &commandStr, const std::string &username);
 
         /**
          * Sets an alias for a command that all users can use
@@ -81,7 +81,7 @@ namespace model {
          */
         bool findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result);
 
-        std::unordered_map<std::string, model::Command> commands = {
+        std::unordered_map<std::string, Command> commands = {
                 {"debug",     Command::Debug},
                 {"drop",      Command::Drop},
                 {"equipment", Command::Equipment},
@@ -108,4 +108,4 @@ namespace model {
 }
 
 
-#endif //COMMANDHANDLER_H
+#endif //ALIASMANAGER_H

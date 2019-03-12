@@ -4,9 +4,9 @@
 
 #include "PlayerAction.h"
 
-using action::PlayerAction;
+using handler::PlayerAction;
 
-namespace action {
+namespace handler {
     PlayerAction::PlayerAction() {}
 
     bool PlayerAction::equipItem(Player &player, const Object &item) {

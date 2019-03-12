@@ -2,22 +2,22 @@
 // Created by Stephen Wanhella on 2019-02-14.
 //
 
-#include "CommandHandler.h"
+#include "AliasManager.h"
 #include "DataManager.h"
 
 #include <fstream>
 
 
 using nlohmann::json;
-using model::Command;
-using model::CommandHandler;
+using game::Command;
+using game::AliasManager;
 using DataManager::writeJson;
 
 constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
 constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
 
-Command CommandHandler::getDefaultCommand(const std::string &commandStr) {
+Command AliasManager::getDefaultCommand(const std::string &commandStr) {
     Command res = Command::InvalidCommand;
     auto it = this->commands.find(commandStr);
     if (it != this->commands.end()) {
@@ -27,7 +27,7 @@ Command CommandHandler::getDefaultCommand(const std::string &commandStr) {
     return res;
 }
 
-Command CommandHandler::getCommandForUser(const std::string &commandStr, const std::string &username) {
+Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
     Command result;
     if (!findAliasedCommand(commandStr, username, result) &&
         !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {
@@ -36,7 +36,7 @@ Command CommandHandler::getCommandForUser(const std::string &commandStr, const s
     return result;
 }
 
-bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std::string &username,
+bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::string &username,
                                         Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(COMMANDS_FILE_PATH);
@@ -65,16 +65,15 @@ bool CommandHandler::findAliasedCommand(const std::string &commandStr, const std
     return wasFound;
 }
 
-void CommandHandler::setGlobalAlias(const Command &command, const std::string &alias) {
+void AliasManager::setGlobalAlias(const Command &command, const std::string &alias) {
     setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
-void CommandHandler::clearGlobalAlias(const Command &command) {
+void AliasManager::clearGlobalAlias(const Command &command) {
     clearUserAlias(command, GLOBAL_ALIASES_USER);
 }
 
-void
-model::CommandHandler::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
+void AliasManager::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
     if (!inFile.is_open()) {
@@ -98,7 +97,7 @@ model::CommandHandler::setUserAlias(const Command &command, const std::string &a
     writeJson(commands_json, COMMANDS_FILE_PATH);
 }
 
-void model::CommandHandler::clearUserAlias(const Command &command, const std::string &username) {
+void AliasManager::clearUserAlias(const Command &command, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
 
     if (!inFile.is_open()) {
@@ -130,7 +129,7 @@ void model::CommandHandler::clearUserAlias(const Command &command, const std::st
     writeJson(commands_json, COMMANDS_FILE_PATH);
 }
 
-std::string CommandHandler::getStringForCommand(const Command &command) {
+std::string AliasManager::getStringForCommand(const Command &command) {
     std::string res;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
                            [command](const std::pair<std::string, Command> &pair) {

@@ -18,7 +18,7 @@ using networking::Connection;
 using networking::Message;
 using model::Player;
 
-namespace model {
+namespace handler {
 
     class AccountHandler {
     private:

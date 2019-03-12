@@ -2,12 +2,14 @@
 // Created by Stephen Wanhella on 2019-02-14.
 //
 
-#include <WorldHandler.h>
+#include "WorldHandler.h"
 #include "gtest/gtest.h"
 #include "Character.h"
 
+using handler::WorldHandler;
+
 namespace {
-    model::ID getFirstRoom(const model::WorldHandler &worldHandler) {
+    model::ID getFirstRoom(const WorldHandler &worldHandler) {
         EXPECT_FALSE(worldHandler.getWorld().getAreas().empty());
         auto area = worldHandler.getWorld().getAreas()[0];
         EXPECT_FALSE(area.getRooms().empty());
@@ -16,16 +18,16 @@ namespace {
     }
 
     TEST(WorldHandlerTestSuite, canMakeWorld) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
     }
 
     TEST(WorldHandlerTestSuite, canLoadAreas) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         EXPECT_FALSE(worldHandler.getWorld().getAreas().empty());
     }
 
     TEST(WorldHandlerTestSuite, canAddAndRemovePlayerFromRoom) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
         Room &room = worldHandler.findRoom(roomId);
         model::ID playerId = 1234;
@@ -42,7 +44,7 @@ namespace {
     }
 
     TEST(WorldHandlerTestSuite, canGetAdjacentRooms) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
         auto doors = worldHandler.findRoom(roomId).getDoors();
         std::unordered_map<std::string, model::ID> destinations;
@@ -58,7 +60,7 @@ namespace {
     }
 
     TEST(WorldHandlerTestSuite, canMovePlayer) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
         Room &room = worldHandler.findRoom(roomId);
         auto adjacentRoomId = room.getDoors()[0].leadsTo;
@@ -95,13 +97,13 @@ namespace {
     }
 
     TEST(WorldHandlerTestSuite, canThrowExceptionOnInvalidRoom) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         model::ID nonExistentRoomId = 12345678;
         ASSERT_THROW(worldHandler.findRoom(nonExistentRoomId), std::runtime_error);
     }
 
     TEST(WorldHandlerTestSuite, canAddAndRemoveItemFromRoom) {
-        model::WorldHandler worldHandler;
+        WorldHandler worldHandler;
         auto roomId = getFirstRoom(worldHandler);
         auto &room = worldHandler.findRoom(roomId);
         model::ID objectId = 1234;

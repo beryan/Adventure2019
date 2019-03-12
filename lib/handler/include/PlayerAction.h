@@ -13,7 +13,7 @@ using model::Object;
 using model::Slot;
 using logic::PlayerLogic;
 
-namespace action {
+namespace handler {
     class PlayerAction {
     private:
         PlayerLogic logic{};

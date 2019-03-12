@@ -7,7 +7,7 @@
 #include "PropertiesManager.h"
 #include <string>
 
-using model::PropertiesManager;
+using game::PropertiesManager;
 
 namespace {
   TEST(PropertiesManagerTestSuite, canGetStringProperty) {

@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <iostream>
 
-using action::PlayerAction;
+using handler::PlayerAction;
 
 namespace {
     class PlayerTestSuite : public ::testing::Test {

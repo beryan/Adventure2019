@@ -10,7 +10,7 @@
 #include "AccountHandler.h"
 #include "WorldHandler.h"
 #include "Command.h"
-#include "CommandHandler.h"
+#include "AliasManager.h"
 #include "PlayerAction.h"
 
 #include <functional>
@@ -19,10 +19,11 @@
 
 using networking::Connection;
 using networking::Message;
-using model::AccountHandler;
-using model::WorldHandler;
-using model::Command;
-using action::PlayerAction;
+using handler::AccountHandler;
+using handler::WorldHandler;
+using handler::PlayerAction;
+using game::Command;
+using game::AliasManager;
 
 namespace game {
     /**
@@ -43,7 +44,7 @@ namespace game {
         std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
-        model::CommandHandler commandHandler;
+        AliasManager aliasManager;
 
         std::unique_ptr<AccountHandler> accountHandler;
         std::unique_ptr<PlayerAction> playerHandler;

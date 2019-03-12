@@ -15,7 +15,7 @@
 using json = nlohmann::json;
 const std::string PROPERTIES_PATH = "lib/data/properties.json";
 
-namespace model {
+namespace game {
     class PropertiesManager {
     public:
         /**
