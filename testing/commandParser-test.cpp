@@ -2,10 +2,6 @@
 // Created by Stephen Wanhella on 2019-03-12.
 //
 
-//
-// Created by Stephen Wanhella on 2019-02-14.
-//
-
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "CommandParser.h"
