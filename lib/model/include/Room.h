@@ -68,7 +68,7 @@ namespace model {
         void addObject(const Object &object);
         void addPlayerToRoom(const model::ID &playerId);
 
-        void removeObject(const Object &object);
+        void removeObject(const model::ID &objectId);
         void removePlayerFromRoom(const model::ID &playerId);
 
         bool isValidDirection(const std::string &dir) const;

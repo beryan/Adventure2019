@@ -393,7 +393,7 @@ namespace game {
                 if (containsKeyword(objects, param)) {
                     auto item = getItemByKeyword(objects, param);
                     auto player = this->accountHandler->getPlayerByClient(client);
-                    this->worldHandler->removeItem(roomId, item);
+                    this->worldHandler->removeItem(roomId, item.getId());
                     this->playerHandler->pickupItem(*player, item);
                     tempMessage << "Item taken successfully.\n";
                 } else {

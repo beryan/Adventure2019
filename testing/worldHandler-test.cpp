@@ -118,12 +118,6 @@ namespace {
         bool isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
         EXPECT_TRUE(isObjectInRoom);
 
-        worldHandler.removeItem(roomId, object);
-        objects = room.getObjects();
-        isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
-        EXPECT_FALSE(isObjectInRoom);
-
-        worldHandler.addItem(roomId, object);
         worldHandler.removeItem(roomId, objectId);
         objects = room.getObjects();
         isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();

@@ -123,8 +123,9 @@ namespace model {
         }
     }
 
-    void Room::removeObject(const Object &object) {
-        objects.erase(std::remove(objects.begin(), objects.end(), object), objects.end());
+    void Room::removeObject(const model::ID &objectId) {
+        auto equal = [objectId](const Object &obj) {return obj.getId() == objectId;};
+        objects.erase(std::remove_if(objects.begin(), objects.end(), equal), objects.end());
     }
 
     void Room::removePlayerFromRoom(const model::ID &playerId) {

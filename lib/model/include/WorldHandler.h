@@ -62,12 +62,6 @@ namespace model {
         addItem(const model::ID &roomId, const Object &item);
 
         /**
-         *  Removes item from room
-         */
-        void
-        removeItem(const model::ID &roomId, const Object &item);
-
-        /**
          *  Removes item from room by id
          */
         void
