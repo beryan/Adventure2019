@@ -45,11 +45,32 @@ namespace {
         EXPECT_EQ(90, defender.getHealth());
     }
 
+    TEST_F(CombatTestSuite, cannotLowerTargetHealthBelowMin) {
+        defender.setHealth(0);
+
+        ASSERT_EQ(0, defender.getHealth());
+
+        handler.attack(attacker, defender);
+
+        EXPECT_EQ(0, defender.getHealth());
+    }
+
     TEST_F(CombatTestSuite, canHealTarget) {
+        defender.setHealth(95);
+
+        ASSERT_EQ(95, defender.getHealth());
+
         handler.heal(attacker, defender);
 
         ASSERT_EQ(100, attacker.getHealth());
-        ASSERT_NE(100, defender.getHealth());
-        EXPECT_EQ(105, defender.getHealth());
+        EXPECT_EQ(100, defender.getHealth());
+    }
+
+    TEST_F(CombatTestSuite, cannotIncreaseTargetHealthAboveMax) {
+        ASSERT_EQ(100, defender.getHealth());
+
+        handler.heal(attacker, defender);
+
+        EXPECT_EQ(100, defender.getHealth());
     }
 }
