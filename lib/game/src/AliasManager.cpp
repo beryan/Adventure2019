@@ -4,40 +4,21 @@
 
 #include "AliasManager.h"
 #include "DataManager.h"
+#include "CommandParser.h"
 
 #include <fstream>
 
+static constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
+static constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
 using nlohmann::json;
 using game::Command;
 using game::AliasManager;
 using DataManager::writeJson;
-
-constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
-constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
-
-
-Command AliasManager::getDefaultCommand(const std::string &commandStr) {
-    Command res = Command::InvalidCommand;
-    auto it = this->commands.find(commandStr);
-    if (it != this->commands.end()) {
-        res = it->second;
-    }
-
-    return res;
-}
-
-Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
-    Command result;
-    if (!findAliasedCommand(commandStr, username, result) &&
-        !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {
-        result = getDefaultCommand(commandStr);
-    }
-    return result;
-}
+using game::CommandParser;
 
 bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::string &username,
-                                        Command &result) {
+                                      Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(COMMANDS_FILE_PATH);
 
@@ -53,10 +34,11 @@ bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::
         auto aliasedCommands = username_iterator->get<std::unordered_map<std::string, std::string>>();
         auto command_iterator = aliasedCommands.find(commandStr);
         if (command_iterator != aliasedCommands.end()) {
+            CommandParser commandParser;
             std::string command = command_iterator->second;
-            auto it = this->commands.find(command);
-            if (it != this->commands.end()) {
-                result = it->second;
+            Command parsedCommand = commandParser.parseCommand(command);
+            if (parsedCommand != Command::InvalidCommand) {
+                result = parsedCommand;
                 wasFound = true;
             }
         }
@@ -75,6 +57,7 @@ void AliasManager::clearGlobalAlias(const Command &command) {
 
 void AliasManager::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
+    CommandParser commandParser;
 
     if (!inFile.is_open()) {
         throw std::runtime_error("Could not open commands file");
@@ -84,11 +67,11 @@ void AliasManager::setUserAlias(const Command &command, const std::string &alias
 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
-        std::string commandStr = getStringForCommand(command);
+        std::string commandStr = commandParser.getStringForCommand(command);
         json newAlias = {{alias, commandStr}};
         username_iterator->update(newAlias);
     } else {
-        std::string commandStr = getStringForCommand(command);
+        std::string commandStr = commandParser.getStringForCommand(command);
         commands_json[username] = {{alias, commandStr}};
     }
 
@@ -99,6 +82,7 @@ void AliasManager::setUserAlias(const Command &command, const std::string &alias
 
 void AliasManager::clearUserAlias(const Command &command, const std::string &username) {
     std::ifstream inFile(COMMANDS_FILE_PATH);
+    CommandParser commandParser;
 
     if (!inFile.is_open()) {
         throw std::runtime_error("Could not open commands file");
@@ -108,7 +92,7 @@ void AliasManager::clearUserAlias(const Command &command, const std::string &use
 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
-        std::string commandStr = getStringForCommand(command);
+        std::string commandStr = commandParser.getStringForCommand(command);
         auto user_aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
         auto it = std::find_if(user_aliases.begin(), user_aliases.end(), [commandStr](auto alias) {
             return alias.second == commandStr;
@@ -129,16 +113,12 @@ void AliasManager::clearUserAlias(const Command &command, const std::string &use
     writeJson(commands_json, COMMANDS_FILE_PATH);
 }
 
-std::string AliasManager::getStringForCommand(const Command &command) {
-    std::string res;
-    auto it = std::find_if(this->commands.begin(), this->commands.end(),
-                           [command](const std::pair<std::string, Command> &pair) {
-                               return pair.second == command;
-                           });
-
-    if (it != this->commands.end()) {
-        res = it->first;
+Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
+    Command result;
+    if (!findAliasedCommand(commandStr, username, result) &&
+        !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {
+        CommandParser commandParser;
+        result = commandParser.parseCommand(commandStr);
     }
-
-    return res;
+    return result;
 }

@@ -12,6 +12,7 @@
 #include "Command.h"
 #include "AliasManager.h"
 #include "PlayerHandler.h"
+#include "CommandParser.h"
 
 #include <functional>
 #include <deque>
@@ -45,6 +46,7 @@ namespace game {
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
         AliasManager aliasManager;
+        CommandParser commandParser;
 
         std::unique_ptr<AccountHandler> accountHandler;
         std::unique_ptr<PlayerHandler> playerHandler;

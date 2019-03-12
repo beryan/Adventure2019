@@ -5,31 +5,13 @@
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "AliasManager.h"
+#include "CommandParser.h"
 
 using game::Command;
 using game::AliasManager;
+using game::CommandParser;
 
 namespace {
-    TEST(AliasManagerTestSuite, canGetCommandsFromStrings) {
-        AliasManager aliasManager;
-        EXPECT_EQ(Command::Help, aliasManager.getDefaultCommand("help"));
-        EXPECT_EQ(Command::Login, aliasManager.getDefaultCommand("login"));
-        EXPECT_EQ(Command::Logout, aliasManager.getDefaultCommand("logout"));
-        EXPECT_EQ(Command::Look, aliasManager.getDefaultCommand("look"));
-        EXPECT_EQ(Command::Move, aliasManager.getDefaultCommand("move"));
-        EXPECT_EQ(Command::Quit, aliasManager.getDefaultCommand("quit"));
-        EXPECT_EQ(Command::Register, aliasManager.getDefaultCommand("register"));
-        EXPECT_EQ(Command::Say, aliasManager.getDefaultCommand("say"));
-        EXPECT_EQ(Command::Shutdown, aliasManager.getDefaultCommand("shutdown"));
-        EXPECT_EQ(Command::Tell, aliasManager.getDefaultCommand("tell"));
-        EXPECT_EQ(Command::Yell, aliasManager.getDefaultCommand("yell"));
-    }
-
-    TEST(AliasManagerTestSuite, canGetInvalidCommand) {
-        AliasManager aliasManager;
-        EXPECT_EQ(Command::InvalidCommand, aliasManager.getDefaultCommand("asdfasdfasdf"));
-    }
-
     TEST(AliasManagerTestSuite, canGetAliasedCommands) {
         AliasManager aliasManager;
         std::string testUser = "testuser";
@@ -57,7 +39,6 @@ namespace {
         aliasManager.setUserAlias(Command::Shutdown, shutdownAlias, testUser);
         aliasManager.setUserAlias(Command::Tell, tellAlias, testUser);
         aliasManager.setUserAlias(Command::Yell, yellAlias, testUser);
-
 
         EXPECT_EQ(Command::Help, aliasManager.getCommandForUser(testHelp, testUser));
         EXPECT_EQ(Command::Login, aliasManager.getCommandForUser(testLogin, testUser));
@@ -118,7 +99,8 @@ namespace {
         std::string testUser_noAliases = "asdf_user";
         std::string global_help_alias = "hAlP";
         std::string helpAlias = "test_help";
-        std::string helpDefault = aliasManager.getStringForCommand(Command::Help);
+        CommandParser commandParser;
+        std::string helpDefault = commandParser.getStringForCommand(Command::Help);
 
         aliasManager.setGlobalAlias(Command::Help, global_help_alias);
         aliasManager.setUserAlias(Command::Help, helpAlias, testUser);
