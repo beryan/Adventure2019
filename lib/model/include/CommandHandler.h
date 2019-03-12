@@ -65,6 +65,19 @@ namespace model {
          */
         std::string getStringForCommand(const Command &command);
 
+        /**
+         * Get a map of aliases for a user
+         * @param username user to get aliases for
+         * @return map of aliases
+         */
+        std::unordered_map<Command, std::string> getAliasesForUser(std::string_view username);
+
+        /**
+         * Get a map of global aliases
+         * @return map of global aliases
+         */
+        std::unordered_map<Command, std::string> getGlobalAliases();
+
     private:
         /**
          * Checks for an aliased command for user {username} and sets it to the result.

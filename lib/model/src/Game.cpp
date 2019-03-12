@@ -166,7 +166,6 @@ namespace model {
 
             if (!this->accountHandler->isLoggedIn(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
-
             } else {
                 if (this->isInvalidFormat(command, parameters)) {
                     tempMessage << "Invalid format for command \"" << commandString << "\".\n";
@@ -232,10 +231,6 @@ namespace model {
 
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
-        std::cout << param << std::endl;
-        for (auto &str: params) {
-            std::cout << str << std::endl;
-        }
 
         switch (command) {
             case Command::Logout: {
@@ -357,8 +352,44 @@ namespace model {
             }
 
             case Command::Alias: {
+                try {
+                    std::string username = this->accountHandler->getUsernameByClient(client);
+                    std::string which = params[0];
 
-//                this->commandHandler.setUserAlias()
+                    if (which == "list") {
+                        auto aliases = this->commandHandler.getAliasesForUser(username);
+                        auto globalAliases = this->commandHandler.getGlobalAliases();
+
+                        // TODO: iterate and output
+                    } else if (which == "set") {
+                        std::string command_to_alias_str = params[1];
+                        Command command_to_alias = this->commandHandler.getDefaultCommand(command_to_alias_str);
+                        if (command_to_alias != Command::InvalidCommand) {
+                            std::string alias = params[2];
+                            this->commandHandler.setUserAlias(command_to_alias, alias, username);
+                            tempMessage << "\nalias set successfully\n";
+                        } else {
+                            tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
+                        }
+                    } else if (which == "clear") {
+                        std::string command_to_clear_str = params[1];
+                        Command command_to_clear = this->commandHandler.getDefaultCommand(command_to_clear_str);
+                        if (command_to_clear != Command::InvalidCommand) {
+                            this->commandHandler.clearUserAlias(command_to_clear, username);
+                            tempMessage << "\nalias cleared successfully\n";
+                        } else {
+                            tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
+                        }
+                    } else {
+                        tempMessage << which << " is not a valid option for "
+                                    << this->commandHandler.getStringForCommand(Command::Alias) << std::endl;
+                    }
+                } catch (std::exception &e) {
+                    tempMessage << "\n error parsing " << this->commandHandler.getStringForCommand(Command::Alias)
+                            << " command!\n";
+                    std::cout << e.what();
+                }
+
                 break;
             }
 

@@ -6,6 +6,7 @@
 #include "DataManager.h"
 
 #include <fstream>
+#include <CommandHandler.h>
 
 
 using nlohmann::json;
@@ -142,4 +143,12 @@ std::string CommandHandler::getStringForCommand(const Command &command) {
     }
 
     return res;
+}
+
+std::unordered_map<Command, std::string> model::CommandHandler::getAliasesForUser(std::string_view username) {
+    return std::unordered_map<Command, std::string>();
+}
+
+std::unordered_map<Command, std::string> model::CommandHandler::getGlobalAliases() {
+    return std::unordered_map<Command, std::string>();
 }
