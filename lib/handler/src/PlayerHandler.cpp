@@ -32,6 +32,12 @@ namespace handler {
         player.getInventory().addItemToInventory(item);
     }
 
+    void PlayerHandler::giveItem(Player &giver, Player &receiver, const Object &item) {
+        if (giver.getInventory().isItemInInventory(item) || giver.getEquipment().isItemEquipped(item)) {
+            receiver.getInventory().addItemToInventory(dropItem(giver, item));
+        }
+    }
+
     Object PlayerHandler::dropItem(Player &player, const Object &item) {
         Object temp_item;
 
