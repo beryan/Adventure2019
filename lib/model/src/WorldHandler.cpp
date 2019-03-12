@@ -69,13 +69,23 @@ namespace model {
     }
 
     void
-    WorldHandler::removeItem(Room &room, const Object &item) {
+    WorldHandler::addItem(const model::ID &roomId, const Object &item) {
+        Room& room = findRoom(roomId);
+        room.addObject(item);
+    }
+
+    void
+    WorldHandler::removeItem(const model::ID &roomId, const Object &item) {
+        Room& room = findRoom(roomId);
         room.removeObject(item);
     }
 
     void
-    WorldHandler::addItem(Room &room, const Object &item) {
-        room.addObject(item);
+    WorldHandler::removeItem(const model::ID &roomId, const model::ID &objectId) {
+        Room& room = findRoom(roomId);
+        Object item = Object();
+        item.setId(objectId);
+        room.removeObject(item);
     }
 
     std::vector<model::ID>

@@ -386,13 +386,14 @@ namespace game {
             }
 
             case Command::Take: {
-                Room& room = this->worldHandler->findRoom(this->accountHandler->getRoomIdByClient(client));
+                auto roomId = this->accountHandler->getRoomIdByClient(client);
+                Room& room = this->worldHandler->findRoom(roomId);
                 auto objects = room.getObjects();
 
                 if (containsKeyword(objects, param)) {
                     auto item = getItemByKeyword(objects, param);
                     auto player = this->accountHandler->getPlayerByClient(client);
-                    this->worldHandler->removeItem(room, item);
+                    this->worldHandler->removeItem(roomId, item);
                     this->playerHandler->pickupItem(*player, item);
                     tempMessage << "Item taken successfully.\n";
                 } else {
@@ -410,10 +411,10 @@ namespace game {
 
                 if (containsKeyword(objects, param)) {
                     auto item = getItemByKeyword(objects, param);
-                    Room& room = this->worldHandler->findRoom(this->accountHandler->getRoomIdByClient(client));
+                    auto roomId = this->accountHandler->getRoomIdByClient(client);
 
                     this->playerHandler->dropItem(*player, item);
-                    this->worldHandler->addItem(room, item);
+                    this->worldHandler->addItem(roomId, item);
                     tempMessage << "Item dropped successfully.\n";
                 } else {
                     tempMessage << "Invalid keyword.\n";

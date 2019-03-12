@@ -56,16 +56,22 @@ namespace model {
         movePlayer(const model::ID &playerId, const model::ID &sourceId, const model::ID &destinationId);
 
         /**
-         *  Removes item from room
-         */
-        void
-        removeItem(Room &room, const Object &item);
-
-        /**
          *  Adds item to room
          */
         void
-        addItem(Room &room, const Object &item);
+        addItem(const model::ID &roomId, const Object &item);
+
+        /**
+         *  Removes item from room
+         */
+        void
+        removeItem(const model::ID &roomId, const Object &item);
+
+        /**
+         *  Removes item from room by id
+         */
+        void
+        removeItem(const model::ID &roomId, const model::ID &objectId);
 
         /**
          *  Gets player ids in current and adjacent rooms given current room id

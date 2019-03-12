@@ -111,14 +111,20 @@ namespace {
         model::Slot slot = model::Slot::Feet;
         model::Object object{objectId, shortDescription, longDescription, keywords, slot};
 
-        worldHandler.addItem(room, object);
+        worldHandler.addItem(roomId, object);
         auto objects = room.getObjects();
         auto findObjectById = [objectId](const Object &obj) { return obj.getId() == objectId; };
 
         bool isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
         EXPECT_TRUE(isObjectInRoom);
 
-        worldHandler.removeItem(room, object);
+        worldHandler.removeItem(roomId, object);
+        objects = room.getObjects();
+        isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
+        EXPECT_FALSE(isObjectInRoom);
+
+        worldHandler.addItem(roomId, object);
+        worldHandler.removeItem(roomId, objectId);
         objects = room.getObjects();
         isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
         EXPECT_FALSE(isObjectInRoom);

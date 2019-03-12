@@ -278,7 +278,7 @@ namespace model {
 
     Player*
     AccountHandler::getPlayerByClient(const Connection &client) {
-        Player* player;
+        Player* player = nullptr;
         if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
             player = this->usernameToPlayer.at(this->getUsernameByClient(client));
         }
