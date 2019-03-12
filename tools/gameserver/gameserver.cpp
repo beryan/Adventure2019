@@ -19,7 +19,7 @@
 using networking::Server;
 using networking::Connection;
 using networking::Message;
-using model::Game;
+using game::Game;
 
 std::vector<Connection> clients;
 std::vector<Connection> newClients;

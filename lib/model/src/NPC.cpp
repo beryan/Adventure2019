@@ -11,12 +11,12 @@ using json = nlohmann::json;
 namespace model {
 
     NPC::NPC() :
-            Character(0),
-            keywords({}),
-            description({}),
-            shortDescription({}),
-            longDescription({})
-    {}
+        Character(0),
+        keywords({}),
+        description({}),
+        shortDescription({}),
+        longDescription({})
+        {}
     
     NPC::NPC(model::ID id) :
         Character(id),
@@ -79,6 +79,10 @@ namespace model {
 
     void NPC::addToLongDescription(std::string addToLongDescription) {
         this->longDescription.push_back(std::move(addToLongDescription));
+    }
+
+    bool NPC::containsKeyword(const std::string &keyword) const {
+        return (std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end());
     }
 
     //print object

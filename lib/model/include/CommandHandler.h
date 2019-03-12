@@ -82,20 +82,27 @@ namespace model {
         bool findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result);
 
         std::unordered_map<std::string, model::Command> commands = {
-                {"debug",    Command::Debug},
-                {"exits",    Command::Exits},
-                {"help",     Command::Help},
-                {"info",     Command::Info},
-                {"login",    Command::Login},
-                {"logout",   Command::Logout},
-                {"look",     Command::Look},
-                {"move",     Command::Move},
-                {"quit",     Command::Quit},
-                {"register", Command::Register},
-                {"say",      Command::Say},
-                {"shutdown", Command::Shutdown},
-                {"tell",     Command::Tell},
-                {"yell",     Command::Yell}
+                {"debug",     Command::Debug},
+                {"drop",      Command::Drop},
+                {"equipment", Command::Equipment},
+                {"examine",   Command::Examine},
+                {"exits",     Command::Exits},
+                {"help",      Command::Help},
+                {"inventory", Command::Inventory},
+                {"login",     Command::Login},
+                {"logout",    Command::Logout},
+                {"look",      Command::Look},
+                {"move",      Command::Move},
+                {"quit",      Command::Quit},
+                {"register",  Command::Register},
+                {"remove",    Command::Remove},
+                {"say",       Command::Say},
+                {"shutdown",  Command::Shutdown},
+                {"take",      Command::Take},
+                {"talk",      Command::Talk},
+                {"tell",      Command::Tell},
+                {"wear",      Command::Wear},
+                {"yell",      Command::Yell}
         };
     };
 }
