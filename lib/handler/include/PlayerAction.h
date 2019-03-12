@@ -46,6 +46,14 @@ namespace action {
         void pickupItem(Player &player, const Object &item);
 
         /**
+         * Gives a specific item from giver to receiver if the item exists
+         * @param giver: Player giving the item
+         * @param receiver: Player receiving the item
+         */
+        void giveItem(Player &giver, Player &receiver, const Object &item);
+
+
+        /**
          * Drops the item from either the player's Inventory or Equipment.
          * @param player: Player that is dropping the item
          * @param item: The item being dropped from the Player

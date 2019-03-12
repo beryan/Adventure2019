@@ -60,6 +60,10 @@ namespace model {
                 this->equipment.at(item.getSlot()) == item;
     }
 
+    bool Equipment::isEquipmentEmpty() {
+        return equipment.empty();
+    }
+
     std::ostream&operator<<(std::ostream& os, const Equipment& rhs) {
         os << "\nEquipment:\n";
         os << "----------\n";

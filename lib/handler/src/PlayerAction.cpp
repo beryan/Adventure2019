@@ -32,6 +32,12 @@ namespace action {
         player.getInventory().addItemToInventory(item);
     }
 
+    void PlayerAction::giveItem(Player &giver, Player &receiver, const Object &item) {
+        if (giver.getInventory().isItemInInventory(item) || giver.getEquipment().isItemEquipped(item)) {
+            receiver.getInventory().addItemToInventory(dropItem(giver, item));
+        }
+    }
+
     Object PlayerAction::dropItem(Player &player, const Object &item) {
         Object temp_item;
 
