@@ -109,6 +109,12 @@ namespace model {
         explicit MagicHandler(AccountHandler &accountHandler);
 
         /**
+         *  Returns a formatted string describing available spells.
+         */
+        std::string
+        getSpells();
+
+        /**
          *  Casts a spell if the spell name is valid
          */
         std::vector<Message>

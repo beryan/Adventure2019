@@ -18,6 +18,19 @@ namespace model {
         accountHandler(&accountHandler){}
 
 
+    std::string MagicHandler::getSpells() {
+        std::ostringstream spells;
+
+        spells << "\n"
+               << "Spells:\n"
+               << "-------\n"
+               << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
+               << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+
+        return spells.str();
+    }
+
+
     std::vector<Message>
     MagicHandler::castSpell(const Connection &client, const std::string &param) {
         std::vector<std::string> arguments;

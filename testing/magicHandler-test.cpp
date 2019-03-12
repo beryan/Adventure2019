@@ -70,6 +70,7 @@ namespace {
      * 15. A player cannot cast Body Swap on an already Body Swapped player
      * 16. Body Swap spell instance will expire after a certain number of cycles
      * 17. Body Swap is removed on logout
+     * 18. Can get spells list
      */
 
 
@@ -449,5 +450,17 @@ namespace {
         EXPECT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_B).id);
         EXPECT_FALSE(magicHandler.isBodySwapped(CLIENT_A));
         EXPECT_FALSE(magicHandler.isBodySwapped(CLIENT_B));
+    }
+
+    TEST_F(MagicHandlerTestSuite, canGetSpellList) {
+        auto result = magicHandler.getSpells();
+        std::ostringstream expected;
+        expected << "\n"
+                 << "Spells:\n"
+                 << "-------\n"
+                 << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
+                 << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+
+        EXPECT_EQ(expected.str(), result);
     }
 }

@@ -402,10 +402,7 @@ namespace game {
             }
 
             case Command::Spells: {
-                tempMessage << "\n"
-                            << "SPELLS:\n"
-                            << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
-                            << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+                tempMessage << this->magicHandler.getSpells();
                 break;
             }
 
