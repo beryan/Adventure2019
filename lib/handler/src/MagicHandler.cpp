@@ -2,7 +2,7 @@
 // Created by louis on 16/02/19.
 //
 
-#include "MagicHandler.h"
+#include "../include/MagicHandler.h"
 #include <sstream>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -11,9 +11,9 @@
 #include <boost/algorithm/string/find_format.hpp>
 #include <boost/algorithm/string/formatter.hpp>
 
-using model::MagicHandler;
+using action::MagicHandler;
 
-namespace model {
+namespace action {
     MagicHandler::MagicHandler(AccountHandler &accountHandler) :
         accountHandler(&accountHandler){}
 

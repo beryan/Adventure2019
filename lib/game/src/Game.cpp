@@ -9,9 +9,6 @@
 #include <iostream>
 
 using game::Game;
-using model::AccountHandler;
-using model::WorldHandler;
-using action::PlayerAction;
 
 std::string
 lowercase(std::string string) {

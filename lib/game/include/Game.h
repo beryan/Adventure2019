@@ -23,8 +23,8 @@ using networking::Message;
 using model::AccountHandler;
 using model::CommandHandler;
 using model::WorldHandler;
-using model::MagicHandler;
 using model::Command;
+using action::MagicHandler;
 using action::PlayerAction;
 
 namespace game {

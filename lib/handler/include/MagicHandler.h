@@ -4,9 +4,11 @@
 #include "AccountHandler.h"
 #include <sstream>
 
+using model::AccountHandler;
 using model::Player;
+using model::ID;
 
-namespace model {
+namespace action {
     /**
      *  A spell instance containing the Player ID of the spell's caster and target, along
      *  with the remaining duration of the spell (in number of game cycles).
