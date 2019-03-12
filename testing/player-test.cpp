@@ -176,4 +176,50 @@ namespace {
 
         EXPECT_EQ(expected_roomID, player.getCurrRoomID());
     }
+
+    TEST_F(PlayerTestSuite, canNotGiveItemToDifferentPlayerWhenObjectIsNotInInventory) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+
+        action.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(receiver.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInInventory) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+        action.pickupItem(player, item);
+
+        ASSERT_TRUE(player.getInventory().isItemInInventory(item));
+
+        action.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInEquipment) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+        action.pickupItem(player, item);
+        action.equipItem(player, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_TRUE(player.getEquipment().isItemEquipped(item));
+
+        action.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
+    }
 }
