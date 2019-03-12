@@ -11,7 +11,7 @@
 using model::Character;
 using logic::CharacterLogic;
 
-namespace action {
+namespace handler {
     class CharacterHandler {
     private:
         CharacterLogic logic{0, 100};

@@ -2,14 +2,14 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#include "PlayerAction.h"
+#include "PlayerHandler.h"
 
-using action::PlayerAction;
+using handler::PlayerHandler;
 
-namespace action {
-    PlayerAction::PlayerAction() {}
+namespace handler {
+    PlayerHandler::PlayerHandler() {}
 
-    bool PlayerAction::equipItem(Player &player, const Object &item) {
+    bool PlayerHandler::equipItem(Player &player, const Object &item) {
         bool success = false;
         if (logic.canEquipItem(player.getInventory(), item)) {
             if (player.getEquipment().isSlotOccupied(item.getSlot())) {
@@ -22,23 +22,23 @@ namespace action {
         return success;
     }
 
-    void PlayerAction::unequipItem(Player &player, const Object &item) {
+    void PlayerHandler::unequipItem(Player &player, const Object &item) {
         if (player.getEquipment().isItemEquipped(item)) {
             player.getInventory().addItemToInventory(player.getEquipment().unequipItem(item));
         }
     }
 
-    void PlayerAction::pickupItem(Player &player, const Object &item) {
+    void PlayerHandler::pickupItem(Player &player, const Object &item) {
         player.getInventory().addItemToInventory(item);
     }
 
-    void PlayerAction::giveItem(Player &giver, Player &receiver, const Object &item) {
+    void PlayerHandler::giveItem(Player &giver, Player &receiver, const Object &item) {
         if (giver.getInventory().isItemInInventory(item) || giver.getEquipment().isItemEquipped(item)) {
             receiver.getInventory().addItemToInventory(dropItem(giver, item));
         }
     }
 
-    Object PlayerAction::dropItem(Player &player, const Object &item) {
+    Object PlayerHandler::dropItem(Player &player, const Object &item) {
         Object temp_item;
 
         if (player.getInventory().isItemInInventory(item)) {
