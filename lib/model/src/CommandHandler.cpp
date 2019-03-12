@@ -145,10 +145,26 @@ std::string CommandHandler::getStringForCommand(const Command &command) {
     return res;
 }
 
-std::unordered_map<Command, std::string> model::CommandHandler::getAliasesForUser(std::string_view username) {
-    return std::unordered_map<Command, std::string>();
+std::unordered_map<std::string, std::string> model::CommandHandler::getAliasesForUser(std::string_view username) {
+    std::unordered_map<std::string, std::string> aliases;
+
+    std::ifstream ifs(COMMANDS_FILE_PATH);
+
+    if (!ifs.is_open()) {
+        throw std::runtime_error("Could not open commands file");
+    }
+
+    json commands_json = json::parse(ifs);
+
+    auto username_iterator = commands_json.find(username);
+    if (username_iterator != commands_json.end()) {
+        aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
+
+    }
+
+    return aliases;
 }
 
-std::unordered_map<Command, std::string> model::CommandHandler::getGlobalAliases() {
-    return std::unordered_map<Command, std::string>();
+std::unordered_map<std::string, std::string> model::CommandHandler::getGlobalAliases() {
+    return getAliasesForUser(GLOBAL_ALIASES_USER);
 }

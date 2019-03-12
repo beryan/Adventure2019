@@ -35,6 +35,12 @@ trimWhitespace(const std::string &string) {
 }
 
 namespace model {
+    // move these when refactoring out commands
+    constexpr auto ALIAS_LIST = "list";
+    constexpr auto ALIAS_SET = "set";
+    constexpr auto ALIAS_CLEAR = "clear";
+    constexpr auto ALIAS_HELP = "help";
+
     Game::Game(std::vector<Connection> &clients,
                std::vector<Connection> &newClients,
                std::vector<Connection> &disconnectedClients,
@@ -221,7 +227,6 @@ namespace model {
         return {client, tempMessage.str()};
     }
 
-
     std::vector<Message>
     Game::executeInGameAction(const Connection &client,
                               const Command &command,
@@ -354,14 +359,28 @@ namespace model {
             case Command::Alias: {
                 try {
                     std::string username = this->accountHandler->getUsernameByClient(client);
-                    std::string which = params[0];
+                    std::string aliasOption = params[0];
 
-                    if (which == "list") {
+                    if (aliasOption == ALIAS_LIST) {
                         auto aliases = this->commandHandler.getAliasesForUser(username);
                         auto globalAliases = this->commandHandler.getGlobalAliases();
 
-                        // TODO: iterate and output
-                    } else if (which == "set") {
+                        tempMessage << "\nUser Aliases: \n";
+                        if (aliases.empty()) {
+                            tempMessage << "\tno user aliases set\n";
+                        }
+                        for (const auto &alias: aliases) {
+                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
+                        }
+
+                        tempMessage << "Global Aliases: \n";
+                        for (const auto &alias: globalAliases) {
+                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
+                        }
+                        if (globalAliases.empty()) {
+                            tempMessage << "\tno global aliases set\n";
+                        }
+                    } else if (aliasOption == ALIAS_SET) {
                         std::string command_to_alias_str = params[1];
                         Command command_to_alias = this->commandHandler.getDefaultCommand(command_to_alias_str);
                         if (command_to_alias != Command::InvalidCommand) {
@@ -371,7 +390,7 @@ namespace model {
                         } else {
                             tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
                         }
-                    } else if (which == "clear") {
+                    } else if (aliasOption == ALIAS_CLEAR) {
                         std::string command_to_clear_str = params[1];
                         Command command_to_clear = this->commandHandler.getDefaultCommand(command_to_clear_str);
                         if (command_to_clear != Command::InvalidCommand) {
@@ -380,8 +399,13 @@ namespace model {
                         } else {
                             tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
                         }
+                    } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
+                        tempMessage << "\nalias help: \n";
+                        tempMessage << "\talias list: list all aliases\n";
+                        tempMessage << "\talias set [command to alias] [alias]: sets an alias\n";
+                        tempMessage << "\talias clear [aliased command]: clear an alias for a command\n";
                     } else {
-                        tempMessage << which << " is not a valid option for "
+                        tempMessage << aliasOption << " is not a valid option for "
                                     << this->commandHandler.getStringForCommand(Command::Alias) << std::endl;
                     }
                 } catch (std::exception &e) {

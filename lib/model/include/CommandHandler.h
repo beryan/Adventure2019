@@ -70,13 +70,13 @@ namespace model {
          * @param username user to get aliases for
          * @return map of aliases
          */
-        std::unordered_map<Command, std::string> getAliasesForUser(std::string_view username);
+        std::unordered_map<std::string, std::string> getAliasesForUser(std::string_view username);
 
         /**
          * Get a map of global aliases
          * @return map of global aliases
          */
-        std::unordered_map<Command, std::string> getGlobalAliases();
+        std::unordered_map<std::string, std::string> getGlobalAliases();
 
     private:
         /**
@@ -108,7 +108,8 @@ namespace model {
                 {"say",      Command::Say},
                 {"shutdown", Command::Shutdown},
                 {"tell",     Command::Tell},
-                {"yell",     Command::Yell}
+                {"yell",     Command::Yell},
+                {"alias",    Command::Alias}
         };
     };
 }
