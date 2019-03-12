@@ -12,10 +12,18 @@
 
 using game::Command;
 
+static constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
 
 namespace game {
+    /**
+     * A class to handle the setting, clearing, and listing of aliases
+     */
     class AliasManager {
     public:
+        AliasManager() : filePath(COMMANDS_FILE_PATH) {};
+
+        explicit AliasManager(std::string filePath) : filePath(std::move(filePath)) {};
+
         /**
          * Sets an alias for a command that all users can use
          * @param command command to alias
@@ -53,6 +61,8 @@ namespace game {
         Command getCommandForUser(const std::string &commandStr, const std::string &username);
 
     private:
+        std::string filePath;
+
         /**
          * Checks for an aliased command for user {username} and sets it to the result.
          * Command json file should be formatted as follows:

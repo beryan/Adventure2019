@@ -7,8 +7,8 @@
 #include "CommandParser.h"
 
 #include <fstream>
+#include <AliasManager.h>
 
-static constexpr auto COMMANDS_FILE_PATH = "lib/data/commands.json";
 static constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
 using nlohmann::json;
@@ -20,7 +20,7 @@ using game::CommandParser;
 bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::string &username,
                                       Command &result) {
     // todo: use file access abstraction layer
-    std::ifstream ifs(COMMANDS_FILE_PATH);
+    std::ifstream ifs(this->filePath);
 
     if (!ifs.is_open()) {
         throw std::runtime_error("Could not open commands file");
@@ -56,7 +56,7 @@ void AliasManager::clearGlobalAlias(const Command &command) {
 }
 
 void AliasManager::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
-    std::ifstream inFile(COMMANDS_FILE_PATH);
+    std::ifstream inFile(this->filePath);
     CommandParser commandParser;
 
     if (!inFile.is_open()) {
@@ -77,11 +77,11 @@ void AliasManager::setUserAlias(const Command &command, const std::string &alias
 
     inFile.close();
 
-    writeJson(commands_json, COMMANDS_FILE_PATH);
+    writeJson(commands_json, this->filePath);
 }
 
 void AliasManager::clearUserAlias(const Command &command, const std::string &username) {
-    std::ifstream inFile(COMMANDS_FILE_PATH);
+    std::ifstream inFile(this->filePath);
     CommandParser commandParser;
 
     if (!inFile.is_open()) {
@@ -110,7 +110,7 @@ void AliasManager::clearUserAlias(const Command &command, const std::string &use
 
     inFile.close();
 
-    writeJson(commands_json, COMMANDS_FILE_PATH);
+    writeJson(commands_json, this->filePath);
 }
 
 Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
