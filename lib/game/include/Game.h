@@ -12,6 +12,7 @@
 #include "MagicHandler.h"
 #include "Command.h"
 #include "CommandHandler.h"
+#include "PlayerAction.h"
 
 #include <functional>
 #include <deque>
@@ -24,8 +25,9 @@ using model::CommandHandler;
 using model::WorldHandler;
 using model::MagicHandler;
 using model::Command;
+using action::PlayerAction;
 
-namespace model {
+namespace game {
     /**
      *  @class Game
      *
@@ -47,8 +49,9 @@ namespace model {
 
         AccountHandler accountHandler;
         CommandHandler commandHandler;
-        WorldHandler worldHandler;
         MagicHandler magicHandler;
+        PlayerAction playerHandler;
+        WorldHandler worldHandler;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -113,6 +116,14 @@ namespace model {
          */
         bool
         isInvalidFormat(const Command &command, const std::string &parameters);
+
+        template<typename T>
+        bool
+        containsKeyword(const std::vector<T> &objects, const std::string &keyword);
+
+        template<typename T>
+        T
+        getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
 
     public:
         /**

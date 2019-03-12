@@ -290,13 +290,23 @@ namespace model {
     }
 
 
+    Player*
+    AccountHandler::getPlayerByClient(const Connection &client) {
+        Player* player = nullptr;
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+            player = this->usernameToPlayer.at(this->getUsernameByClient(client));
+        }
+        return player;
+    }
+
+
     model::ID
     AccountHandler::getRoomIdByClient(const Connection &client) {
+        model::ID result = -1;
         if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
-            return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+            result = this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
         }
-
-        return this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+        return result;
     }
 
 
@@ -304,8 +314,6 @@ namespace model {
     AccountHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
         if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
             this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
-        } else {
-            throw std::runtime_error("Error: usernameToPlayer map does not contain username");
         }
 
         this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);

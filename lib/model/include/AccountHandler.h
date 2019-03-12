@@ -114,6 +114,12 @@ namespace model {
         getPlayerIdByClient(const Connection &client);
 
         /**
+         *  Returns a pointer to the player given a client ID.
+         */
+        Player*
+        getPlayerByClient(const Connection &client);
+
+        /**
          *  Returns the room ID of a Player given a client ID.
          */
         model::ID

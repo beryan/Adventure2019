@@ -17,6 +17,8 @@ namespace model {
          * Object: Item that is equipped
          */
         std::unordered_map<int, Object> equipment;
+
+        friend std::ostream&operator<<(std::ostream& os, const Equipment& inv);
     public:
         Equipment();
 

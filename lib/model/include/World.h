@@ -24,13 +24,10 @@ namespace model{
         World(std::vector<Area> areas);
 
         //getters and setters
-        std::vector<Area> getAreas() const;
+        std::vector<Area>& getAreas();
         void setAreas(const std::vector<Area> &areas);
 
         void addArea(const Area &area);
-
-        void removePlayer(const model::ID &playerID, const model::ID &roomID);
-        void addPlayer(const model::ID &playerID, const model::ID &roomID);
 
         void createStub();
     };
