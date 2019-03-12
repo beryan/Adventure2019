@@ -11,7 +11,7 @@
 #include "WorldHandler.h"
 #include "Command.h"
 #include "AliasManager.h"
-#include "PlayerAction.h"
+#include "PlayerHandler.h"
 
 #include <functional>
 #include <deque>
@@ -21,7 +21,7 @@ using networking::Connection;
 using networking::Message;
 using handler::AccountHandler;
 using handler::WorldHandler;
-using handler::PlayerAction;
+using handler::PlayerHandler;
 using game::Command;
 using game::AliasManager;
 
@@ -47,7 +47,7 @@ namespace game {
         AliasManager aliasManager;
 
         std::unique_ptr<AccountHandler> accountHandler;
-        std::unique_ptr<PlayerAction> playerHandler;
+        std::unique_ptr<PlayerHandler> playerHandler;
         std::unique_ptr<WorldHandler> worldHandler;
 
         /**

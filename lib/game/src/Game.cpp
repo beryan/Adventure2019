@@ -11,7 +11,7 @@
 using game::Game;
 using handler::AccountHandler;
 using handler::WorldHandler;
-using handler::PlayerAction;
+using handler::PlayerHandler;
 
 std::string
 lowercase(std::string string) {
@@ -48,7 +48,7 @@ namespace game {
         this->shutdown = shutdown;
 
         this->accountHandler = std::make_unique<AccountHandler>();
-        this->playerHandler = std::make_unique<PlayerAction>();
+        this->playerHandler = std::make_unique<PlayerHandler>();
         this->worldHandler = std::make_unique<WorldHandler>();
     }
 

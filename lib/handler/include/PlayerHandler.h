@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#ifndef PLAYERACTION_H
-#define PLAYERACTION_H
+#ifndef PLAYERHANDLER_H
+#define PLAYERHANDLER_H
 
 #include "Player.h"
 #include "PlayerLogic.h"
@@ -14,11 +14,11 @@ using model::Slot;
 using logic::PlayerLogic;
 
 namespace handler {
-    class PlayerAction {
+    class PlayerHandler {
     private:
         PlayerLogic logic{};
     public:
-        PlayerAction();
+        PlayerHandler();
 
         /**
          * Equips an item directly from the inventory. It will do nothing if the item
@@ -57,4 +57,4 @@ namespace handler {
     };
 }
 
-#endif //PLAYERACTION_H
+#endif //PLAYERHANDLER_H
