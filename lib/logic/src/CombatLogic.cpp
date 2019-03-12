@@ -18,8 +18,12 @@ namespace logic {
         return result;
     }
 
-    bool CombatLogic::canHealTarget(const Character &target) {
+    bool CombatLogic::canHealTarget(const Character &healer, const Character &target) {
+        bool result = true;
 
+        // Check if healer can heal the target
+
+        return result;
     }
 
     bool CombatLogic::canFlee(const Character &character) {

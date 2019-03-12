@@ -44,4 +44,12 @@ namespace {
         ASSERT_NE(100, defender.getHealth());
         EXPECT_EQ(90, defender.getHealth());
     }
+
+    TEST_F(CombatTestSuite, canHealTarget) {
+        handler.heal(attacker, defender);
+
+        ASSERT_EQ(100, attacker.getHealth());
+        ASSERT_NE(100, defender.getHealth());
+        EXPECT_EQ(105, defender.getHealth());
+    }
 }

@@ -22,7 +22,7 @@ namespace action {
 
         void attack(Character &attacker, Character &defender);
 
-        void heal(Character &target);
+        void heal(Character &healer, Character &target);
     };
 }
 

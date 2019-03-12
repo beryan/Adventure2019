@@ -20,7 +20,7 @@ namespace logic {
 
         bool canAttackTarget(const Character &attacker, const Character &defender);
 
-        bool canHealTarget(const Character &target);
+        bool canHealTarget(const Character &healer, const Character &target);
 
         bool canFlee(const Character &character);
     };

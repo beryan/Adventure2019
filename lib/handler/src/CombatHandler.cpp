@@ -18,8 +18,8 @@ namespace action {
         }
     }
 
-    void CombatHandler::heal(Character &target) {
-        if (logic.canHealTarget(target)) {
+    void CombatHandler::heal(Character &healer, Character &target) {
+        if (logic.canHealTarget(healer, target)) {
             target.setHealth(target.getHealth() + BASE_HEAL);
         }
         else {
