@@ -6,11 +6,9 @@
 #include "World.h"
 #include "Reset.h"
 
-#include <boost/filesystem.hpp>
 #include <iostream>
+#include <fstream>
 #include <iomanip>
-
-namespace filesystem = boost::filesystem;
 
 using json = nlohmann::json;
 using Door = model::Door;
@@ -152,9 +150,17 @@ namespace DataManager {
 
     } // anonymous namespace
 
+    bool has_extension(const std::string &filePath, const std::string &extension) {
+        if (filePath.length() >= extension.length()) {
+            return filePath.compare (filePath.length() - extension.length(), extension.length(), extension) == 0;
+        }
+
+        return false;
+    };
+
     Area ParseDataFile(const std::string& filePath){
         Area a;
-        if(filesystem::extension(filePath) == JSON_EXTENSION){
+        if(has_extension(filePath, JSON_EXTENSION)){
             std::ifstream inFile(filePath);
 
             if (!inFile.is_open()) {
@@ -169,15 +175,15 @@ namespace DataManager {
 
     std::vector<Player> ParseUsersFile(const std::string& filePath){
         std::vector<Player> players;
-        if(filesystem::extension(filePath) == JSON_EXTENSION){
-            players = parseUsersJson(filePath);
+        if(has_extension(filePath, JSON_EXTENSION)){
+            players = DataManager::parseUsersJson(filePath);
         }
         return players;
     }
 
     std::vector<Area> ParseWorldFile(const std::string& filePath) {
         std::vector<Area> areas;
-        if(filesystem::extension(filePath) == JSON_EXTENSION) {
+        if(has_extension(filePath, JSON_EXTENSION)) {
             areas = parseWorldJson(filePath);
         }
         return areas;
