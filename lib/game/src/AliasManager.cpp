@@ -57,14 +57,13 @@ void AliasManager::clearGlobalAlias(const Command &command) {
 
 void AliasManager::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
     std::ifstream inFile(this->filePath);
-    CommandParser commandParser;
 
     if (!inFile.is_open()) {
         throw std::runtime_error("Could not open commands file");
     }
 
+    CommandParser commandParser;
     json commands_json = json::parse(inFile);
-
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         std::string commandStr = commandParser.getStringForCommand(command);

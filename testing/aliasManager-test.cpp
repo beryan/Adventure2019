@@ -130,4 +130,16 @@ namespace {
         aliasManager.clearUserAlias(Command::Help, testUser);
         EXPECT_EQ(Command::InvalidCommand, aliasManager.getCommandForUser(user_help_alias, testUser));
     }
+
+    TEST(AliasManagerTestSuite, canThrowExceptionsOnBadFilePath) {
+        AliasManager aliasManager{"asdf.json"};
+        std::string username = "asdf_user";
+        std::string alias = "asdf";
+        Command command = Command::Logout;
+        ASSERT_ANY_THROW(aliasManager.setUserAlias(command, alias, username));
+        ASSERT_ANY_THROW(aliasManager.clearUserAlias(command, username));
+        ASSERT_ANY_THROW(aliasManager.setGlobalAlias(command, alias));
+        ASSERT_ANY_THROW(aliasManager.clearGlobalAlias(command));
+        ASSERT_ANY_THROW(aliasManager.getCommandForUser(alias, username));
+    }
 }
