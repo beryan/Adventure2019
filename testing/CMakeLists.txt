@@ -16,6 +16,7 @@ target_link_libraries(runAllTests
         model
         logic
         handler
+        game
         pthread
         ${CMAKE_THREAD_LIBS_INIT}
         )

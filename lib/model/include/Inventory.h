@@ -17,6 +17,8 @@ namespace model {
          * int: Quantity of the object
          */
         std::map<Object, int> inventory;
+
+        friend std::ostream&operator<<(std::ostream& os, const Inventory& inv);
     public:
         Inventory();
 
@@ -56,6 +58,12 @@ namespace model {
          * @return True if the item was found, False if not
          */
         bool isItemInInventory(const Object &item);
+
+
+        /**
+         * @return True if the inventory is empty
+         */
+        bool isInventoryEmpty();
     };
 }
 

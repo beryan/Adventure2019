@@ -37,7 +37,7 @@ namespace {
     }
 
     TEST_F(InventoryTestSuite, canAddTwoSameItemsToInventory) {
-        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        Object obj{12, "boo", {}, {}, Slot::Head};
 
         inventory.addItemToInventory(obj);
         inventory.addItemToInventory(obj);
@@ -46,7 +46,7 @@ namespace {
     }
 
     TEST_F(InventoryTestSuite, canCompletelyRemoveItemFromInventory) {
-        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        Object obj{12, "boo", {}, {}, Slot::Head};
         unsigned int expected = 0;
 
         inventory.addItemToInventory(obj);
@@ -58,7 +58,7 @@ namespace {
     }
 
     TEST_F(InventoryTestSuite, canAddTwoSameItemsToInventoryAndRemoveOne) {
-        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        Object obj{12, "boo", {}, {}, Slot::Head};
 
         inventory.addItemToInventory(obj);
         inventory.addItemToInventory(obj);
@@ -70,7 +70,7 @@ namespace {
     }
 
     TEST_F(InventoryTestSuite, canCheckExistingItemIsInInventory) {
-        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        Object obj{12, "boo", {}, {}, Slot::Head};
 
         inventory.addItemToInventory(obj);
 
@@ -78,7 +78,7 @@ namespace {
     }
 
     TEST_F(InventoryTestSuite, canCheckNotExistingItemIsNotInInventory) {
-        Object obj{12, "boo", "oofofoo", {}, {}, Slot::Head};
+        Object obj{12, "boo", {}, {}, Slot::Head};
 
         inventory.addItemToInventory(obj);
 

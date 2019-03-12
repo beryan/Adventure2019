@@ -59,4 +59,18 @@ namespace model {
         return  isSlotOccupied(item.getSlot()) &&
                 this->equipment.at(item.getSlot()) == item;
     }
+
+    bool Equipment::isEquipmentEmpty() {
+        return equipment.empty();
+    }
+
+    std::ostream&operator<<(std::ostream& os, const Equipment& rhs) {
+        os << "\nEquipment:\n";
+        os << "----------\n";
+        for (const auto &kv : rhs.equipment) {
+            os << kv.first << ". [" << kv.second.getShortDescription() << "]\n";
+        }
+
+        return os;
+    }
 }

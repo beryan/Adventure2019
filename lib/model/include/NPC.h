@@ -53,6 +53,8 @@ namespace model {
 
         void addToLongDescription(std::string addToLongDescription);
 
+        bool containsKeyword(const std::string &keyword) const;
+
         static constexpr int MAX_KEYWORDS = 8;
 
     private:

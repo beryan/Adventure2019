@@ -25,8 +25,9 @@ namespace action {
          * does not exist in the inventory
          * @param player: Player that is equipping the item
          * @param item: Item that is being equipped
+         * @return false if item cannot be equipped
          */
-        void equipItem(Player &player, const Object &item);
+        bool equipItem(Player &player, const Object &item);
 
         /**
          * Unequipping the item will move the item from the Equipment to their Inventory. If the
@@ -43,6 +44,14 @@ namespace action {
          * @param item: Item being picked up
          */
         void pickupItem(Player &player, const Object &item);
+
+        /**
+         * Gives a specific item from giver to receiver if the item exists
+         * @param giver: Player giving the item
+         * @param receiver: Player receiving the item
+         */
+        void giveItem(Player &giver, Player &receiver, const Object &item);
+
 
         /**
          * Drops the item from either the player's Inventory or Equipment.

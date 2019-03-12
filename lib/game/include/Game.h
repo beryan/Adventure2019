@@ -11,6 +11,7 @@
 #include "WorldHandler.h"
 #include "Command.h"
 #include "CommandHandler.h"
+#include "PlayerAction.h"
 
 #include <functional>
 #include <deque>
@@ -21,8 +22,9 @@ using networking::Message;
 using model::AccountHandler;
 using model::WorldHandler;
 using model::Command;
+using action::PlayerAction;
 
-namespace model {
+namespace game {
     /**
      *  @class Game
      *
@@ -44,6 +46,7 @@ namespace model {
         model::CommandHandler commandHandler;
 
         std::unique_ptr<AccountHandler> accountHandler;
+        std::unique_ptr<PlayerAction> playerHandler;
         std::unique_ptr<WorldHandler> worldHandler;
 
         /**
@@ -109,6 +112,14 @@ namespace model {
          */
         bool
         isInvalidFormat(const Command &command, const std::string &parameters);
+
+        template<typename T>
+        bool
+        containsKeyword(const std::vector<T> &objects, const std::string &keyword);
+
+        template<typename T>
+        T
+        getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
 
     public:
         /**

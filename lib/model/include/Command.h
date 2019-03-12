@@ -7,18 +7,25 @@
 namespace model {
     enum class Command {
         Debug,
+        Drop,
+        Equipment,
+        Examine,
         Exits,
         Help,
-        Info,
+        Inventory,
         Login,
         Logout,
         Look,
         Move,
         Quit,
         Register,
+        Remove,
         Say,
         Shutdown,
+        Talk,
+        Take,
         Tell,
+        Wear,
         Yell,
         InvalidCommand
     };

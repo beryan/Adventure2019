@@ -17,6 +17,8 @@ namespace model {
          * Object: Item that is equipped
          */
         std::unordered_map<int, Object> equipment;
+
+        friend std::ostream&operator<<(std::ostream& os, const Equipment& inv);
     public:
         Equipment();
 
@@ -70,6 +72,11 @@ namespace model {
          * @return Returns True if the item is currently equipped, False if not
          */
         bool isItemEquipped(const Object &item);
+
+        /**
+         * @return Returns true if the Equipment is empty
+         */
+        bool isEquipmentEmpty();
     };
 }
 

@@ -4,4 +4,7 @@ add_subdirectory(middleware)
 add_subdirectory(data)
 add_subdirectory(logic)
 add_subdirectory(handler)
+<<<<<<< HEAD
+=======
 add_subdirectory(game)
+>>>>>>> master
