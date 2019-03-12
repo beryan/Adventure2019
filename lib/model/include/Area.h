@@ -39,7 +39,7 @@ namespace model {
 
         //getters and setters
         std::string getName() const;
-        std::vector<Room> getRooms() const;
+        std::vector<Room>& getRooms();
         std::vector<NPC> getNpcs() const;
         std::vector<Object> getObjects() const;
         std::vector<Reset> getResets() const;
@@ -53,9 +53,6 @@ namespace model {
         void addNPC(const NPC &npc);
         void addObject(const Object &object);
         void addReset(const Reset &reset);
-
-        bool removePlayer(const model::ID &playerID, const model::ID &roomID);
-        bool addPlayer(const model::ID &playerID, const model::ID &roomID);
 
         bool operator==(const Area& area) const;
     };

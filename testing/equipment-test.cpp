@@ -23,7 +23,7 @@ namespace {
         Object obj2{};
 
         obj1.setSlot(Slot::Head);
-        obj2.setSlot(Slot::Body);
+        obj2.setSlot(Slot::Chest);
 
         std::unordered_map<int, Object> map {
                 std::make_pair(obj1.getSlot(), obj1),
@@ -42,7 +42,7 @@ namespace {
         Object obj2{};
 
         obj1.setSlot(Slot::Head);
-        obj2.setSlot(Slot::Body);
+        obj2.setSlot(Slot::Chest);
 
         std::vector<Object> vec = {obj1, obj2};
 
@@ -53,7 +53,7 @@ namespace {
 
     TEST_F(EquipmentTestSuite, canEquipItem) {
         Object obj{};
-        obj.setSlot(Slot::Body);
+        obj.setSlot(Slot::Chest);
 
         equipment.equipItem(obj);
 
@@ -63,7 +63,7 @@ namespace {
 
     TEST_F(EquipmentTestSuite, canUnequipByItem) {
         Object obj{};
-        obj.setSlot(Slot::Body);
+        obj.setSlot(Slot::Chest);
 
         equipment.equipItem(obj);
         equipment.unequipItem(obj);
@@ -74,7 +74,7 @@ namespace {
 
     TEST_F(EquipmentTestSuite, canUnequipBySlot) {
         Object obj{};
-        obj.setSlot(Slot::Body);
+        obj.setSlot(Slot::Chest);
 
         equipment.equipItem(obj);
         equipment.unequipSlot(obj.getSlot());

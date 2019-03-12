@@ -9,7 +9,6 @@ namespace model {
 
     Object::Object() :
             id(Object::DEFAULT_ID),
-            name({}),
             shortDescription({}),
             longDescription({}),
             keywords({}),
@@ -18,14 +17,12 @@ namespace model {
 
     Object::Object(
             model::ID id,
-            std::string name,
             std::string shortDescription,
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
             Slot slot
     ) :
             id(id),
-            name(std::move(name)),
             shortDescription(std::move(shortDescription)),
             longDescription(std::move(longDescription)),
             keywords(std::move(keywords)),
@@ -34,7 +31,6 @@ namespace model {
 
     Object::Object(
             model::ID id,
-            std::string name,
             std::string shortDescription,
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
@@ -42,7 +38,6 @@ namespace model {
             ExtraObjectInfo extraObjectInfo
     ) :
             id(id),
-            name(std::move(name)),
             shortDescription(std::move(shortDescription)),
             longDescription(std::move(longDescription)),
             keywords(std::move(keywords)),
@@ -55,14 +50,6 @@ namespace model {
 
     void Object::setId(model::ID id) {
         this->id = id;
-    }
-
-    std::string Object::getName() const {
-        return this->name;
-    }
-
-    void Object::setName(std::string name) {
-        this->name = std::move(name);
     }
 
     std::string Object::getShortDescription() const {
@@ -110,9 +97,12 @@ namespace model {
         return this->slot >= 0 && this->slot < Slot::Misc;
     }
 
+    bool Object::containsKeyword(const std::string &keyword) const {
+        return (std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end());
+    }
+
     bool Object::operator==(const Object &object) const {
-        return  this->id == object.getId() &&
-                this->name.compare(object.getName()) == 0;
+        return  this->id == object.getId();
     }
 
     bool Object::operator<(const Object &object) const {
@@ -121,7 +111,6 @@ namespace model {
 
     Object& Object::operator=(const Object &object) {
         this->id = object.getId();
-        this->name = object.getName();
         this->shortDescription = object.getShortDescription();
         this->longDescription = object.getLongDescription();
         this->keywords = object.getKeywords();
@@ -132,7 +121,7 @@ namespace model {
     }
 
     std::ostream&operator<<(std::ostream& os, const Object& obj) {
-        os << obj.id << ". " << obj.name << std::endl;
+        os << obj.id << ". " << obj.shortDescription << std::endl;
         return os;
     }
 }

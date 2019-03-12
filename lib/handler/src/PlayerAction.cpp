@@ -9,14 +9,17 @@ using action::PlayerAction;
 namespace action {
     PlayerAction::PlayerAction() {}
 
-    void PlayerAction::equipItem(Player &player, const Object &item) {
+    bool PlayerAction::equipItem(Player &player, const Object &item) {
+        bool success = false;
         if (logic.canEquipItem(player.getInventory(), item)) {
             if (player.getEquipment().isSlotOccupied(item.getSlot())) {
-                player.getEquipment().unequipSlot(item.getSlot());
+                auto prevItem = player.getEquipment().unequipSlot(item.getSlot());
+                player.getInventory().addItemToInventory(prevItem);
             }
-
             player.getEquipment().equipItem(player.getInventory().removeItemFromInventory(item));
+            success = true;
         }
+        return success;
     }
 
     void PlayerAction::unequipItem(Player &player, const Object &item) {
