@@ -11,21 +11,21 @@ namespace action {
 
     void CombatHandler::attack(Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker, defender)) {
-            int change = defender.getHealth() - BASE_DAMAGE;
+            int change = defender.getHealth() - BASE_DAMAGE >= logic::DEFAULT_MIN_HEALTH ?
+                            defender.getHealth() - BASE_DAMAGE :
+                            logic::DEFAULT_MIN_HEALTH;
 
-            change >= logic::DEFAULT_MIN_HEALTH ?
-                defender.setHealth(change) :
-                defender.setHealth(logic::DEFAULT_MIN_HEALTH);
+            defender.setHealth(change);
         }
     }
 
     void CombatHandler::heal(Character &healer, Character &target) {
         if (logic.canHealTarget(healer, target)) {
-            int change = target.getHealth() + BASE_HEAL;
+            int change = target.getHealth() + BASE_HEAL <= logic::DEFAULT_MAX_HEALTH ?
+                            target.getHealth() + BASE_HEAL :
+                            logic::DEFAULT_MAX_HEALTH;
 
-            change <= logic::DEFAULT_MAX_HEALTH ?
-                target.setHealth(change) :
-                target.setHealth(logic::DEFAULT_MAX_HEALTH);
+            target.setHealth(change);
         }
     }
 }
