@@ -17,7 +17,7 @@ using game::AliasManager;
 using DataManager::writeJson;
 using game::CommandParser;
 
-bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::string &username,
+bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_view username,
                                       Command &result) {
     // todo: use file access abstraction layer
     std::ifstream ifs(this->filePath);
@@ -32,7 +32,10 @@ bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         auto aliasedCommands = username_iterator->get<std::unordered_map<std::string, std::string>>();
-        auto command_iterator = aliasedCommands.find(commandStr);
+        auto command_iterator = std::find_if(aliasedCommands.begin(), aliasedCommands.end(),
+                                                        [commandStr](const auto &aliasedCommand) {
+                                                            return aliasedCommand.first == commandStr;
+                                                        });
         if (command_iterator != aliasedCommands.end()) {
             CommandParser commandParser;
             std::string command = command_iterator->second;
@@ -47,7 +50,7 @@ bool AliasManager::findAliasedCommand(const std::string &commandStr, const std::
     return wasFound;
 }
 
-void AliasManager::setGlobalAlias(const Command &command, const std::string &alias) {
+void AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
     setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
@@ -55,7 +58,7 @@ void AliasManager::clearGlobalAlias(const Command &command) {
     clearUserAlias(command, GLOBAL_ALIASES_USER);
 }
 
-void AliasManager::setUserAlias(const Command &command, const std::string &alias, const std::string &username) {
+void AliasManager::setUserAlias(const Command &command, std::string_view alias, std::string_view username) {
     std::ifstream inFile(this->filePath);
 
     if (!inFile.is_open()) {
@@ -71,7 +74,7 @@ void AliasManager::setUserAlias(const Command &command, const std::string &alias
         username_iterator->update(newAlias);
     } else {
         std::string commandStr = commandParser.getStringForCommand(command);
-        commands_json[username] = {{alias, commandStr}};
+        commands_json[std::string(username)] = {{alias, commandStr}};
     }
 
     inFile.close();
@@ -79,7 +82,7 @@ void AliasManager::setUserAlias(const Command &command, const std::string &alias
     writeJson(commands_json, this->filePath);
 }
 
-void AliasManager::clearUserAlias(const Command &command, const std::string &username) {
+void AliasManager::clearUserAlias(const Command &command, std::string_view username) {
     std::ifstream inFile(this->filePath);
     CommandParser commandParser;
 
@@ -112,7 +115,7 @@ void AliasManager::clearUserAlias(const Command &command, const std::string &use
     writeJson(commands_json, this->filePath);
 }
 
-Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
+Command AliasManager::getCommandForUser(std::string_view commandStr, std::string_view username) {
     Command result;
     if (!findAliasedCommand(commandStr, username, result) &&
         !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {

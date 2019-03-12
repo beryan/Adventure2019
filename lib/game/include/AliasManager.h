@@ -29,7 +29,7 @@ namespace game {
          * @param command command to alias
          * @param alias alias for the command
          */
-        void setGlobalAlias(const Command &command, const std::string &alias);
+        void setGlobalAlias(const Command &command, std::string_view alias);
 
         /**
          * Deletes a global alias for a command
@@ -43,14 +43,14 @@ namespace game {
          * @param alias alias for the command
          * @param username user to set the alias for
          */
-        void setUserAlias(const Command &command, const std::string &alias, const std::string &username);
+        void setUserAlias(const Command &command, std::string_view alias, std::string_view username);
 
         /**
          * Deletes an alias for a user
          * @param command command to clear the alias for
          * @param username user to clear the alias for
          */
-        void clearUserAlias(const Command &command, const std::string &username);
+        void clearUserAlias(const Command &command, std::string_view username);
 
         /**
          * Get the appropriate command for a user from string, checking first if user has aliased a command
@@ -58,7 +58,7 @@ namespace game {
          * @param username username to check for command alias
          * @return Command from commandStr, InvalidCommand if no matching command
          */
-        Command getCommandForUser(const std::string &commandStr, const std::string &username);
+        Command getCommandForUser(std::string_view commandStr, std::string_view username);
 
     private:
         std::string filePath;
@@ -76,7 +76,7 @@ namespace game {
          * @param result command that was aliased. Only gets set if command was found.
          * @return true if command was found, false otherwise
          */
-        bool findAliasedCommand(const std::string &commandStr, const std::string &username, Command &result);
+        bool findAliasedCommand(std::string_view commandStr, std::string_view username, Command &result);
     };
 }
 
