@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "Server.h"
 
-using model::Game;
+using game::Game;
 using networking::Connection;
 using networking::Message;
 

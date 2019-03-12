@@ -36,7 +36,7 @@ namespace model {
         return name;
     }
 
-    std::vector<Room> Area::getRooms() const {
+    std::vector<Room>& Area::getRooms() {
         return rooms;
     }
 
@@ -86,26 +86,6 @@ namespace model {
 
     void Area::addReset(const Reset &reset) {
         this->resets.push_back(reset);
-    }
-
-    bool Area::removePlayer(const model::ID &playerID, const model::ID &roomID) {
-        auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
-
-        if (it != this->rooms.end()) {
-            it->removePlayerFromRoom(playerID);
-        }
-
-        return (it != this->rooms.end());
-    }
-
-    bool Area::addPlayer(const model::ID &playerID, const model::ID &roomID) {
-        auto it = std::find_if(this->rooms.begin(), this->rooms.end(), [&roomID](const Room &room) {return room.getId() == roomID;});
-
-        if (it != this->rooms.end()) {
-            it->addPlayerToRoom(playerID);
-        }
-
-        return (it != this->rooms.end());
     }
 
     bool Area::operator==(const Area& area) const {

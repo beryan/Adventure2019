@@ -24,7 +24,7 @@ namespace model {
 
     // Count returns the length of the Slots
     enum Slot {
-        Head, Body, Legs, Arm, Weapon, Misc, Count
+        Head, Shoulders, Back, Chest, Hands, Legs, Feet, Weapon, Misc, Count
     };
 
     class Object {
@@ -33,7 +33,6 @@ namespace model {
 
         Object(
                 model::ID id,
-                std::string name,
                 std::string shortDescription,
                 std::vector<std::string> longDescription,
                 std::vector<std::string> keywords,
@@ -42,7 +41,6 @@ namespace model {
 
         Object(
                 model::ID id,
-                std::string name,
                 std::string shortDescription,
                 std::vector<std::string> longDescription,
                 std::vector<std::string> keywords,
@@ -53,10 +51,6 @@ namespace model {
         model::ID getId() const;
 
         void setId(model::ID id);
-
-        std::string getName() const;
-
-        void setName(std::string name);
 
         std::string getShortDescription() const;
 
@@ -80,7 +74,9 @@ namespace model {
 
         bool canBeEquipped() const;
 
-        bool operator==(const Object &NPC) const;
+        bool containsKeyword(const std::string &keyword) const;
+
+        bool operator==(const Object &object) const;
 
         bool operator<(const Object &object) const;
 
@@ -108,11 +104,10 @@ namespace model {
 
     inline void from_json(const json &j, Object &o) {
         o.setId(j.at("id").get<model::ID>());
-        o.setName(j.at("shortdesc").get<std::string>());
         o.setShortDescription(j.at("shortdesc").get<std::string>());
         o.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
         o.setKeywords(j.at("keywords").get<std::vector<std::string>>());
-        o.setSlot(model::Weapon);
+        o.setSlot(model::Misc);
     }
 
 }

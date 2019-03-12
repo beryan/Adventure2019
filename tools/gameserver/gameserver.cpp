@@ -21,7 +21,7 @@ using networking::Server;
 using networking::Connection;
 using networking::Message;
 using networking::ClientMessageBuffer;
-using model::Game;
+using game::Game;
 
 std::vector<Connection> clients;
 std::vector<Connection> newClients;

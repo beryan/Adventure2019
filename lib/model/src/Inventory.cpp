@@ -61,4 +61,15 @@ namespace model {
     bool Inventory::isItemInInventory(const Object &item) {
         return static_cast<bool>(this->inventory.count(item));
     }
+
+    std::ostream&operator<<(std::ostream& os, const Inventory& rhs) {
+        os << "\nInventory:\n";
+        os << "----------\n";
+        for (const auto &kv : rhs.inventory) {
+            os << "[" << kv.first.getShortDescription() << " x" << kv.second << "]";
+        }
+        os << std::endl;
+
+        return os;
+    }
 }
