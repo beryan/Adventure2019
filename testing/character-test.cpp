@@ -7,7 +7,7 @@
 #include "CharacterHandler.h"
 
 using model::Role;
-using action::CharacterHandler;
+using handler::CharacterHandler;
 
 namespace {
     TEST(CharacterTestSuite, canConstructCharacter) {

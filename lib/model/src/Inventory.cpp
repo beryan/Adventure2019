@@ -62,6 +62,10 @@ namespace model {
         return static_cast<bool>(this->inventory.count(item));
     }
 
+    bool Inventory::isInventoryEmpty() {
+        return inventory.empty();
+    }
+
     std::ostream&operator<<(std::ostream& os, const Inventory& rhs) {
         os << "\nInventory:\n";
         os << "----------\n";

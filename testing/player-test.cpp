@@ -4,17 +4,17 @@
 
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
-#include "PlayerAction.h"
+#include "PlayerHandler.h"
 #include <stdlib.h>
 #include <iostream>
 
-using action::PlayerAction;
+using handler::PlayerHandler;
 
 namespace {
     class PlayerTestSuite : public ::testing::Test {
     protected:
         Player player;
-        PlayerAction action;
+        PlayerHandler handler;
 
         virtual void SetUp() override {
             int expected_id = 12345;
@@ -23,14 +23,14 @@ namespace {
             model::ID expected_roomID = 41;
 
             player = {expected_id, expected_username, expected_password, expected_roomID};
-            action = {};
+            handler = {};
         }
     };
 
     TEST_F(PlayerTestSuite, canAddItemToInventory) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
+        handler.pickupItem(player, item);
 
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
@@ -38,12 +38,12 @@ namespace {
     TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.dropItem(player, item);
+        handler.pickupItem(player, item);
+        handler.dropItem(player, item);
 
         ASSERT_FALSE(player.getInventory().isItemInInventory(item));
 
-        action.pickupItem(player, item);
+        handler.pickupItem(player, item);
 
         EXPECT_TRUE(player.getInventory().isItemInInventory(item));
     }
@@ -51,8 +51,8 @@ namespace {
     TEST_F(PlayerTestSuite, canDropItemFromInventory) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.dropItem(player, item);
+        handler.pickupItem(player, item);
+        handler.dropItem(player, item);
 
         EXPECT_FALSE(player.getInventory().isItemInInventory(item));
     }
@@ -66,7 +66,7 @@ namespace {
 
         ASSERT_TRUE(inventory.isItemInInventory(item));
 
-        action.pickupItem(player, inventory.removeItemFromInventory(item));
+        handler.pickupItem(player, inventory.removeItemFromInventory(item));
 
         ASSERT_FALSE(inventory.isItemInInventory(item));
         EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
@@ -77,11 +77,11 @@ namespace {
         Object item{12345, "janga", {}, {}, Slot::Head};
         Object item2{22345, "Danga", {}, {}, Slot::Chest};
 
-        action.pickupItem(player, item);
-        action.pickupItem(player, item2);
+        handler.pickupItem(player, item);
+        handler.pickupItem(player, item2);
 
-        action.equipItem(player, item);
-        action.equipItem(player, item2);
+        handler.equipItem(player, item);
+        handler.equipItem(player, item2);
 
         EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
         EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
@@ -93,8 +93,8 @@ namespace {
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.equipItem(player, item);
+        handler.pickupItem(player, item);
+        handler.equipItem(player, item);
 
         EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
         EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
@@ -103,13 +103,13 @@ namespace {
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.equipItem(player, item);
+        handler.pickupItem(player, item);
+        handler.equipItem(player, item);
 
         Object item2{121, "world", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item2);
-        action.equipItem(player, item2);
+        handler.pickupItem(player, item2);
+        handler.equipItem(player, item2);
 
         EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
         EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
@@ -118,7 +118,7 @@ namespace {
     TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.equipItem(player, item);
+        handler.equipItem(player, item);
 
         EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
@@ -127,10 +127,10 @@ namespace {
     TEST_F(PlayerTestSuite, canDropEquippedItem) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.equipItem(player, item);
+        handler.pickupItem(player, item);
+        handler.equipItem(player, item);
 
-        Object droppedItem = action.dropItem(player, item);
+        Object droppedItem = handler.dropItem(player, item);
 
         EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
@@ -140,10 +140,10 @@ namespace {
     TEST_F(PlayerTestSuite, canUnequipItem) {
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        action.pickupItem(player, item);
-        action.equipItem(player, item);
+        handler.pickupItem(player, item);
+        handler.equipItem(player, item);
 
-        action.unequipItem(player, item);
+        handler.unequipItem(player, item);
 
         EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
         EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
@@ -154,7 +154,7 @@ namespace {
         unsigned int itemsToCreate = 10;
         for (unsigned int i = 0; i < itemsToCreate; i++) {
             Object item{rand() % 220, "test", {}, {}, Slot::Head};
-            action.pickupItem(player, item);
+            handler.pickupItem(player, item);
         }
 
         std::vector<Object> items = player.getInventory().getVectorInventory();
@@ -175,5 +175,51 @@ namespace {
         player.setCurrRoomID(expected_roomID);
 
         EXPECT_EQ(expected_roomID, player.getCurrRoomID());
+    }
+
+    TEST_F(PlayerTestSuite, canNotGiveItemToDifferentPlayerWhenObjectIsNotInInventory) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+
+        handler.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_FALSE(receiver.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInInventory) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+        handler.pickupItem(player, item);
+
+        ASSERT_TRUE(player.getInventory().isItemInInventory(item));
+
+        handler.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
+    }
+
+    TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInEquipment) {
+        Player receiver{1241525, "Mo", "Do"};
+
+        Object item{12345, "janga", {}, {}, Slot::Head};
+        handler.pickupItem(player, item);
+        handler.equipItem(player, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_TRUE(player.getEquipment().isItemEquipped(item));
+
+        handler.giveItem(player, receiver, item);
+
+        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
     }
 }
