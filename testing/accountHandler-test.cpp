@@ -7,7 +7,7 @@
 #include "AccountHandler.h"
 #include "Server.h"
 
-using model::AccountHandler;
+using handler::AccountHandler;
 using networking::Connection;
 
 /*
