@@ -23,27 +23,33 @@ namespace logic {
         );
     }
 
-    bool CombatLogic::canAttackTarget(const Character &attacker, const Character &defender) {
+
+    bool CombatLogic::canHealTarget(Character &healer, Character &target) {
         bool result = true;
 
-        // Check flags, magic, state, whatever
-        // Set result to true if they are able to be attacked
+        // Heal condition
 
         return result;
     }
 
-    bool CombatLogic::canHealTarget(const Character &healer, const Character &target) {
+    // These two methods all have the same if-condition for now
+    // until we get a clearer idea of the specific conditions
+    bool CombatLogic::canAttackTarget(const CombatState &combat) {
         bool result = true;
 
-        // Check if healer can heal the target
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+            result = false;
+        }
 
         return result;
     }
 
-    bool CombatLogic::canFlee(const Character &character) {
+    bool CombatLogic::canFlee(const CombatState &combat) {
         bool result = true;
 
-        // Check if the Character can flee in its current state
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+            result = false;
+        }
 
         return result;
     }

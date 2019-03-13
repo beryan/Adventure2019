@@ -38,11 +38,11 @@ namespace logic {
 
         bool canExitCombat(const CombatState &combat);
 
-        bool canAttackTarget(const Character &attacker, const Character &defender);
+        bool canHealTarget(Character &healer, Character &target);
 
-        bool canHealTarget(const Character &healer, const Character &target);
+        bool canAttackTarget(const CombatState &combat);
 
-        bool canFlee(const Character &character);
+        bool canFlee(const CombatState &combat);
     };
 };
 
