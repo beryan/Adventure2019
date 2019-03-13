@@ -28,16 +28,16 @@ namespace {
         clientMessageBuffer.addMessagesToQueues(messages);
 
         auto next = clientMessageBuffer.getNextMessages();
-        ASSERT_EQ(static_cast<unsigned int>(2), next.size());
+        ASSERT_EQ(2u, next.size());
 
         next = clientMessageBuffer.getNextMessages();
-        ASSERT_EQ(static_cast<unsigned int>(2), next.size());
+        ASSERT_EQ(2u, next.size());
 
         next = clientMessageBuffer.getNextMessages();
-        ASSERT_EQ(static_cast<unsigned int>(1), next.size());
+        ASSERT_EQ(1u, next.size());
 
         next = clientMessageBuffer.getNextMessages();
-        EXPECT_EQ(static_cast<unsigned int>(0), next.size());
+        EXPECT_EQ(0u, next.size());
     }
 
     TEST(ClientMessageBufferTestSuite, canDiscardDisconnectedClientQueues) {
@@ -54,16 +54,16 @@ namespace {
         clientMessageBuffer.addMessagesToQueues(messages);
 
         auto next = clientMessageBuffer.getNextMessages();
-        ASSERT_EQ(static_cast<unsigned int>(2), next.size());
+        ASSERT_EQ(2u, next.size());
 
         clientMessageBuffer.discardDisconnectedClientQueues({CLIENT_B});
 
         next = clientMessageBuffer.getNextMessages();
-        ASSERT_EQ(static_cast<unsigned int>(1), next.size());
+        ASSERT_EQ(1u, next.size());
 
         clientMessageBuffer.discardDisconnectedClientQueues({CLIENT_A});
 
         next = clientMessageBuffer.getNextMessages();
-        EXPECT_EQ(static_cast<unsigned int>(0), next.size());
+        EXPECT_EQ(0u, next.size());
     }
 }
