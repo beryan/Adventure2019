@@ -11,9 +11,9 @@
 #include <boost/algorithm/string/find_format.hpp>
 #include <boost/algorithm/string/formatter.hpp>
 
-using action::MagicHandler;
+using handler::MagicHandler;
 
-namespace action {
+namespace handler {
     MagicHandler::MagicHandler(AccountHandler &accountHandler) :
         accountHandler(&accountHandler){}
 

@@ -8,8 +8,8 @@
 #include "AccountHandler.h"
 #include "Server.h"
 
-using action::MagicHandler;
-using model::AccountHandler;
+using handler::MagicHandler;
+using handler::AccountHandler;
 using networking::Connection;
 
 

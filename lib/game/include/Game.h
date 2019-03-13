@@ -11,8 +11,9 @@
 #include "WorldHandler.h"
 #include "MagicHandler.h"
 #include "Command.h"
-#include "CommandHandler.h"
-#include "PlayerAction.h"
+#include "AliasManager.h"
+#include "PlayerHandler.h"
+#include "CommandParser.h"
 
 #include <functional>
 #include <deque>
@@ -20,12 +21,12 @@
 
 using networking::Connection;
 using networking::Message;
-using model::AccountHandler;
-using model::CommandHandler;
-using model::WorldHandler;
-using model::Command;
-using action::MagicHandler;
-using action::PlayerAction;
+using handler::AccountHandler;
+using handler::WorldHandler;
+using handler::PlayerHandler;
+using handler::MagicHandler;
+using game::Command;
+using game::AliasManager;
 
 namespace game {
     /**
@@ -48,10 +49,11 @@ namespace game {
         std::function<void()> shutdown;
 
         AccountHandler accountHandler;
-        CommandHandler commandHandler;
         MagicHandler magicHandler;
-        PlayerAction playerHandler;
+        PlayerHandler playerHandler;
         WorldHandler worldHandler;
+        AliasManager aliasManager;
+        CommandParser commandParser;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated

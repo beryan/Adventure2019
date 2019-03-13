@@ -4,7 +4,7 @@
 
 #ifndef COMMAND_H
 #define COMMAND_H
-namespace model {
+namespace game {
     enum class Command {
         Debug,
         Drop,

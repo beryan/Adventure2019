@@ -18,7 +18,7 @@ using networking::Connection;
 using networking::Message;
 using model::Player;
 
-namespace model {
+namespace handler {
 
     class AccountHandler {
     private:
@@ -148,7 +148,7 @@ namespace model {
          *  Swaps the clients of two active players. Returns true if successful.
          */
         void
-        swapPlayerClientsByPlayerId(const ID &sourceId, const ID &targetId);
+        swapPlayerClientsByPlayerId(const model::ID &sourceId, const model::ID &targetId);
 
         static std::vector<Player>
         parseJsonUsers(json);

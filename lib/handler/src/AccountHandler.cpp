@@ -8,11 +8,11 @@
 #include "AccountHandler.h"
 #include "Server.h"
 
-using model::AccountHandler;
+using handler::AccountHandler;
 using json = nlohmann::json;
 using networking::Connection;
 
-namespace model {
+namespace handler {
     const unsigned short AccountHandler::MIN_PASSWORD_LENGTH = 4;
     const unsigned short AccountHandler::MAX_USERNAME_AND_PASSWORD_LENGTH = 16;
 
@@ -336,7 +336,7 @@ namespace model {
     }
 
     void
-    AccountHandler::swapPlayerClientsByPlayerId(const ID &sourceId, const ID &targetId) {
+    AccountHandler::swapPlayerClientsByPlayerId(const model::ID &sourceId, const model::ID &targetId) {
         auto sourceClient = this->activeIdToClient.at(sourceId);
         auto targetClient = this->activeIdToClient.at(targetId);
 

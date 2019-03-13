@@ -72,6 +72,11 @@ namespace model {
          * @return Returns True if the item is currently equipped, False if not
          */
         bool isItemEquipped(const Object &item);
+
+        /**
+         * @return Returns true if the Equipment is empty
+         */
+        bool isEquipmentEmpty();
     };
 }
 
