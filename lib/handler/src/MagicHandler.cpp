@@ -24,8 +24,8 @@ namespace action {
         spells << "\n"
                << "Spells:\n"
                << "-------\n"
-               << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
-               << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+               << "  - " << CONFUSE_SPELL_NAME << " (causes the target to temporarily speak in Pig Latin)\n"
+               << "  - " << BODY_SWAP_SPELL_NAME << " (causes the caster to switch bodies with the target temporarily)\n";
 
         return spells.str();
     }
@@ -83,18 +83,18 @@ namespace action {
         std::vector<Message> responses;
 
         if (this->isBodySwapped(client)) {
-            return {{client, "You can't cast Swap while already under the effects of the spell!\n"}};
+            return {{client, "You can't cast " + std::string(BODY_SWAP_SPELL_NAME) + " while already under the effects of the spell!\n"}};
         }
 
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast Swap on.\n"}};
+            return {{client, "You need to specify the name of the person to cast " + std::string(BODY_SWAP_SPELL_NAME) + " on.\n"}};
         }
 
         auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
         auto casterUsername = this->accountHandler->getUsernameByClient(client);
         if (casterUsername == targetName) {
-            return {{client, "You can't cast Swap on yourself!\n"}};
+            return {{client, "You can't cast " + std::string(BODY_SWAP_SPELL_NAME) + " on yourself!\n"}};
         }
 
         std::ostringstream casterMessage;
@@ -113,7 +113,7 @@ namespace action {
         }
 
         if (this->isBodySwapped(targetClient)) {
-            casterMessage << targetName << " is already under the effects of the Swap spell!\n";
+            casterMessage << targetName << " is already under the effects of the " + std::string(BODY_SWAP_SPELL_NAME) + " spell!\n";
             return {{client, casterMessage.str()}};
         }
 
@@ -122,7 +122,7 @@ namespace action {
         this->bodySwapInstances.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
         casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
-        targetMessage << casterUsername << " cast swap on you!\n";
+        targetMessage << casterUsername << " cast " + std::string(BODY_SWAP_SPELL_NAME) + " on you!\n";
 
         responses.push_back({targetClient, targetMessage.str()});
         responses.push_back({client, casterMessage.str()});
@@ -146,19 +146,19 @@ namespace action {
         std::vector<Message> responses;
 
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast Confuse on.\n"}};
+            return {{client, "You need to specify the name of the person to cast " + std::string(CONFUSE_SPELL_NAME) + " on.\n"}};
         }
 
         auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
         auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
         auto casterUsername = this->accountHandler->getUsernameByClient(client);
         if ((casterUsername == targetName) && (this->isConfused(client))) {
-            return {{client, "You are already under the effects of the Confuse spell!\n"}};
+            return {{client, "You are already under the effects of the " + std::string(CONFUSE_SPELL_NAME) + " spell!\n"}};
         }
 
         if (casterUsername == targetName) {
             this->confuseInstances.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
-            return {{client, "You cast Confuse on yourself.\n"}};
+            return {{client, "You cast " + std::string(CONFUSE_SPELL_NAME) + " on yourself.\n"}};
         }
 
         std::ostringstream casterMessage;
@@ -178,14 +178,14 @@ namespace action {
         }
 
         if (isConfused(targetClient)) {
-            casterMessage << targetName << " is already under the effects of the Confuse spell!\n";
+            casterMessage << targetName << " is already under the effects of the " + std::string(CONFUSE_SPELL_NAME) + " spell!\n";
             return {{client, casterMessage.str()}};
         }
 
         this->confuseInstances.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
-        casterMessage << "You cast Confuse on " << targetName << "\n";
-        targetMessage << casterUsername << " cast Confuse on you!" << "\n";
+        casterMessage << "You cast " + std::string(CONFUSE_SPELL_NAME) + " on " << targetName << "\n";
+        targetMessage << casterUsername << " cast " + std::string(CONFUSE_SPELL_NAME) + " on you!" << "\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
@@ -291,7 +291,7 @@ namespace action {
                auto casterClient = this->accountHandler->getClientByPlayerId(casterPlayerId);
                auto targetClient = this->accountHandler->getClientByPlayerId(targetPlayerId);
 
-               std::string message = "The effects of Swap has worn off and you return to your original body.\n";
+               std::string message = "The effects of " + std::string(BODY_SWAP_SPELL_NAME) + " has worn off and you return to your original body.\n";
                messages.push_back({casterClient, message});
                messages.push_back({targetClient, message});
 
@@ -310,7 +310,7 @@ namespace action {
            } else {
                auto targetClient = this->accountHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
 
-               std::string message = "The effects of Confuse has worn off and your speech returns to normal.\n";
+               std::string message = "The effects of " + std::string(CONFUSE_SPELL_NAME) + " has worn off and your speech returns to normal.\n";
                messages.push_back({targetClient, message});
 
                this->confuseInstances.erase(confuseInstance);

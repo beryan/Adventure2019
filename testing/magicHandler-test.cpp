@@ -119,7 +119,7 @@ namespace {
         auto result = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You cast Confuse on yourself.\n";
+        casterExpected << "You cast " << CONFUSE_SPELL_NAME << " on yourself.\n";
 
         EXPECT_TRUE(magicHandler.isConfused(CLIENT_A));
         EXPECT_FALSE(magicHandler.isConfused(CLIENT_B));
@@ -142,10 +142,10 @@ namespace {
         auto targetResult = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You cast Confuse on " << USERNAME_B << "\n";
+        casterExpected << "You cast " << CONFUSE_SPELL_NAME << " on " << USERNAME_B << "\n";
 
         std::ostringstream targetExpected;
-        targetExpected << USERNAME_A << " cast Confuse on you!" << "\n";
+        targetExpected << USERNAME_A << " cast " << CONFUSE_SPELL_NAME << " on you!" << "\n";
 
         EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
         EXPECT_TRUE(magicHandler.isConfused(CLIENT_B));
@@ -196,7 +196,7 @@ namespace {
         auto result = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "You are already under the effects of the Confuse spell!\n";
+        casterExpected << "You are already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected.str(), result.text);
@@ -220,7 +220,7 @@ namespace {
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << USERNAME_B << " is already under the effects of the Confuse spell!\n";
+        casterExpected << USERNAME_B << " is already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
 
         ASSERT_EQ(CLIENT_A.id, casterResult.connection.id);
         ASSERT_EQ(casterExpected.str(), casterResult.text);
@@ -276,7 +276,7 @@ namespace {
         auto result = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You can't cast Swap on yourself!\n";
+        casterExpected << "You can't cast " << BODY_SWAP_SPELL_NAME << " on yourself!\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected.str(), result.text);
@@ -299,7 +299,7 @@ namespace {
         casterExpected << "You have successfully swapped bodies with " << USERNAME_B << "\n";
 
         std::ostringstream targetExpected;
-        targetExpected << USERNAME_A << " cast swap on you!\n";
+        targetExpected << USERNAME_A << " cast " << BODY_SWAP_SPELL_NAME << " on you!\n";
 
         EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);
@@ -358,7 +358,7 @@ namespace {
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "You can't cast Swap while already under the effects of the spell!\n";
+        casterExpected << "You can't cast " << BODY_SWAP_SPELL_NAME << " while already under the effects of the spell!\n";
 
         EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);
@@ -399,7 +399,7 @@ namespace {
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << USERNAME_B << " is already under the effects of the Swap spell!\n";
+        casterExpected << USERNAME_B << " is already under the effects of the " << BODY_SWAP_SPELL_NAME << " spell!\n";
 
         EXPECT_EQ(CLIENT_C.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);
@@ -458,8 +458,8 @@ namespace {
         expected << "\n"
                  << "Spells:\n"
                  << "-------\n"
-                 << "  - Confuse (causes the target to temporarily speak in Pig Latin)\n"
-                 << "  - Swap (causes the caster to switch bodies with the target temporarily)\n";
+                 << "  - " << CONFUSE_SPELL_NAME << " (causes the target to temporarily speak in Pig Latin)\n"
+                 << "  - " << BODY_SWAP_SPELL_NAME << " (causes the caster to switch bodies with the target temporarily)\n";
 
         EXPECT_EQ(expected.str(), result);
     }

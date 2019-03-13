@@ -48,6 +48,11 @@ namespace action {
         }
     };
 
+
+    auto constexpr CONFUSE_SPELL_NAME = "confuse";
+    auto constexpr BODY_SWAP_SPELL_NAME = "swap";
+    auto constexpr DECOY_SPELL_NAME = "decoy";
+
     /**
      *  @class MagicHandler
      *
@@ -73,15 +78,9 @@ namespace action {
         };
 
         std::map<std::string, Spell> spellMap = {
-            {"swap", Spell::BodySwap},
-            {"decoy", Spell::Decoy},
-            {"confuse", Spell::Confuse},
-        };
-
-        std::map<Spell, std::vector<std::string>> spellWordsMap = {
-            {Spell::BodySwap, {"swap"}},
-            {Spell::Decoy, {"decoy"}},
-            {Spell::Confuse, {"confuse"}}
+            {BODY_SWAP_SPELL_NAME, Spell::BodySwap},
+            {DECOY_SPELL_NAME, Spell::Decoy},
+            {CONFUSE_SPELL_NAME, Spell::Confuse},
         };
 
         /**
