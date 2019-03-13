@@ -9,15 +9,14 @@
 #include "Character.h"
 
 using logic::CombatLogic;
-using logic::CombatState;
 using model::Character;
 
 namespace action {
     class CombatHandler {
     private:
-        std::vector<CombatState> active_combats = {};
+        std::vector<CombatState> active_combats;
 
-        CombatLogic logic = {active_combats};
+        CombatLogic logic;
 
         constexpr static int BASE_DAMAGE = 10;
         constexpr static int BASE_HEAL = 5;

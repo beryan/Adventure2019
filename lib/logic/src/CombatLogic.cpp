@@ -7,9 +7,8 @@
 using logic::CombatLogic;
 
 namespace logic {
-    CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) {
-        this->active_combats = active_combats;
-    }
+    CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) :
+        active_combats(active_combats) {}
 
     bool CombatLogic::canEnterCombat(const CombatState &combat) {
         return static_cast<bool>(
@@ -37,7 +36,7 @@ namespace logic {
     bool CombatLogic::canAttackTarget(const CombatState &combat) {
         bool result = true;
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()) {
             result = false;
         }
 
@@ -47,7 +46,7 @@ namespace logic {
     bool CombatLogic::canFlee(const CombatState &combat) {
         bool result = true;
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()) {
             result = false;
         }
 

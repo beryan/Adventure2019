@@ -3,11 +3,14 @@
 //
 
 #include "CombatHandler.h"
+#include <iostream>
 
 using action::CombatHandler;
 
 namespace action {
-    CombatHandler::CombatHandler() {}
+    CombatHandler::CombatHandler() :
+        active_combats{},
+        logic(active_combats){}
 
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         CombatState combat{attacker.getId(), defender.getId()};
