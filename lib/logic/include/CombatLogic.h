@@ -19,8 +19,6 @@ namespace logic {
     private:
         std::vector<CombatState> &active_combats;
     public:
-        std::vector<CombatState> &getCombatStates() {return active_combats;};
-
         CombatLogic(std::vector<CombatState> &active_combats);
 
         bool canEnterCombat(const CombatState &combat);
