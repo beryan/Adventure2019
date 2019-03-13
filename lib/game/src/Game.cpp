@@ -10,9 +10,9 @@
 #include <boost/algorithm/string.hpp>
 
 using game::Game;
-using model::AccountHandler;
-using model::WorldHandler;
-using action::PlayerAction;
+using handler::AccountHandler;
+using handler::WorldHandler;
+using handler::PlayerHandler;
 
 std::string
 lowercase(std::string string) {
@@ -55,7 +55,7 @@ namespace game {
         this->shutdown = shutdown;
 
         this->accountHandler = std::make_unique<AccountHandler>();
-        this->playerHandler = std::make_unique<PlayerAction>();
+        this->playerHandler = std::make_unique<PlayerHandler>();
         this->worldHandler = std::make_unique<WorldHandler>();
     }
 
@@ -67,8 +67,8 @@ namespace game {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                         << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n";
+                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
+                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register) << "\" to create a new account\n";
 
             messages.push_back({newClient, introduction.str()});
         }
@@ -142,7 +142,7 @@ namespace game {
 
             std::string commandString = lowercase(incomingInput.substr(0, incomingInput.find(' ')));
             std::string username = this->accountHandler->getUsernameByClient(client);
-            Command command = this->commandHandler.getCommandForUser(commandString, username);
+            Command command = this->aliasManager.getCommandForUser(commandString, username);
 
             if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
@@ -211,18 +211,18 @@ namespace game {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Register) << " (create a new account)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Login) << " (login to an existing account)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandParser.getStringForCommand(Command::Help) << " (shows this help interface)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Register) << " (create a new account)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Login) << " (login to an existing account)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
                 break;
 
             default:
                 tempMessage << "\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Register) << "\" to create a new account\n"
-                            << "Enter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register) << "\" to create a new account\n"
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
                 break;
         }
 
@@ -253,24 +253,24 @@ namespace game {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Look) << " (displays current location information)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Examine) << " [keyword] (examines something or someone)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Talk) << " [keyword] (interacts with NPC)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Take) << " [keyword] (places item in your inventory)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandHandler.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandParser.getStringForCommand(Command::Help) << " (shows this help interface)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Look) << " (displays current location information)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Examine) << " [keyword] (examines something or someone)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Talk) << " [keyword] (interacts with NPC)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Take) << " [keyword] (places item in your inventory)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
                 break;
 
             case Command::Say: {
@@ -483,8 +483,8 @@ namespace game {
                     std::string aliasOption = params[0];
 
                     if (aliasOption == ALIAS_LIST) {
-                        auto aliases = this->commandHandler.getAliasesForUser(username);
-                        auto globalAliases = this->commandHandler.getGlobalAliases();
+                        auto aliases = this->aliasManager.getAliasesForUser(username);
+                        auto globalAliases = this->aliasManager.getGlobalAliases();
 
                         tempMessage << "\nUser Aliases: \n";
                         if (aliases.empty()) {
@@ -503,19 +503,19 @@ namespace game {
                         }
                     } else if (aliasOption == ALIAS_SET) {
                         std::string command_to_alias_str = params[1];
-                        Command command_to_alias = this->commandHandler.getDefaultCommand(command_to_alias_str);
+                        Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
                         if (command_to_alias != Command::InvalidCommand) {
                             std::string alias = params[2];
-                            this->commandHandler.setUserAlias(command_to_alias, alias, username);
+                            this->aliasManager.setUserAlias(command_to_alias, alias, username);
                             tempMessage << "\nalias set successfully\n";
                         } else {
                             tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
                         }
                     } else if (aliasOption == ALIAS_CLEAR) {
                         std::string command_to_clear_str = params[1];
-                        Command command_to_clear = this->commandHandler.getDefaultCommand(command_to_clear_str);
+                        Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
                         if (command_to_clear != Command::InvalidCommand) {
-                            this->commandHandler.clearUserAlias(command_to_clear, username);
+                            this->aliasManager.clearUserAlias(command_to_clear, username);
                             tempMessage << "\nalias cleared successfully\n";
                         } else {
                             tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
@@ -527,10 +527,10 @@ namespace game {
                         tempMessage << "\talias clear [aliased command]: clear an alias for a command\n";
                     } else {
                         tempMessage << aliasOption << " is not a valid option for "
-                                    << this->commandHandler.getStringForCommand(Command::Alias) << std::endl;
+                                    << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
                     }
                 } catch (std::exception &e) {
-                    tempMessage << "\n error parsing " << this->commandHandler.getStringForCommand(Command::Alias)
+                    tempMessage << "\n error parsing " << this->commandParser.getStringForCommand(Command::Alias)
                             << " command!\n";
                     std::cout << e.what();
                 }
@@ -539,7 +539,7 @@ namespace game {
             }
 
             default:
-                tempMessage << "\nEnter " << "\"" << this->commandHandler.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
+                tempMessage << "\nEnter " << "\"" << this->commandParser.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
                 break;
         }
 

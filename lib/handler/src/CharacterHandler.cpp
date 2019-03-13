@@ -4,9 +4,9 @@
 
 #include "CharacterHandler.h"
 
-using action::CharacterHandler;
+using handler::CharacterHandler;
 
-namespace action {
+namespace handler {
     CharacterHandler::CharacterHandler() {};
 
     void CharacterHandler::reduceHealth(Character &character, int change) {

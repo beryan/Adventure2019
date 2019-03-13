@@ -10,8 +10,10 @@
 #include "json.hpp"
 
 using json = nlohmann::json;
+using model::World;
+using model::Room;
 
-namespace model {
+namespace handler {
     class WorldHandler {
     public:
         WorldHandler();

@@ -58,6 +58,12 @@ namespace model {
          * @return True if the item was found, False if not
          */
         bool isItemInInventory(const Object &item);
+
+
+        /**
+         * @return True if the inventory is empty
+         */
+        bool isInventoryEmpty();
     };
 }
 

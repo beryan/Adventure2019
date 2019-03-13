@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-04.
 //
 
-#ifndef PLAYERACTION_H
-#define PLAYERACTION_H
+#ifndef PLAYERHANDLER_H
+#define PLAYERHANDLER_H
 
 #include "Player.h"
 #include "PlayerLogic.h"
@@ -13,12 +13,12 @@ using model::Object;
 using model::Slot;
 using logic::PlayerLogic;
 
-namespace action {
-    class PlayerAction {
+namespace handler {
+    class PlayerHandler {
     private:
         PlayerLogic logic{};
     public:
-        PlayerAction();
+        PlayerHandler();
 
         /**
          * Equips an item directly from the inventory. It will do nothing if the item
@@ -46,6 +46,14 @@ namespace action {
         void pickupItem(Player &player, const Object &item);
 
         /**
+         * Gives a specific item from giver to receiver if the item exists
+         * @param giver: Player giving the item
+         * @param receiver: Player receiving the item
+         */
+        void giveItem(Player &giver, Player &receiver, const Object &item);
+
+
+        /**
          * Drops the item from either the player's Inventory or Equipment.
          * @param player: Player that is dropping the item
          * @param item: The item being dropped from the Player
@@ -57,4 +65,4 @@ namespace action {
     };
 }
 
-#endif //PLAYERACTION_H
+#endif //PLAYERHANDLER_H
