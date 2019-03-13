@@ -7,7 +7,21 @@
 using logic::CombatLogic;
 
 namespace logic {
-    CombatLogic::CombatLogic() {}
+    CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) {
+        this->active_combats = active_combats;
+    }
+
+    bool CombatLogic::canEnterCombat(const CombatState &combat) {
+        return static_cast<bool>(
+                std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()
+                );
+    }
+
+    bool CombatLogic::canExitCombat(const CombatState &combat) {
+        return static_cast<bool>(
+                std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()
+        );
+    }
 
     bool CombatLogic::canAttackTarget(const Character &attacker, const Character &defender) {
         bool result = true;

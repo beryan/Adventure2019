@@ -9,6 +9,18 @@ using action::CombatHandler;
 namespace action {
     CombatHandler::CombatHandler() {}
 
+    void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
+        CombatState combat{attacker.getId(), defender.getId()};
+
+        if (logic.canEnterCombat(combat)) {
+
+        }
+    }
+
+    void CombatHandler::exitCombat(Character &attacker, Character &defender) {
+
+    }
+
     void CombatHandler::attack(Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker, defender)) {
             int newHealth = defender.getHealth() - BASE_DAMAGE;

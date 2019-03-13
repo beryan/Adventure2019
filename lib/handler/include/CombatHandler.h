@@ -9,16 +9,24 @@
 #include "Character.h"
 
 using logic::CombatLogic;
+using logic::CombatState;
 using model::Character;
 
 namespace action {
     class CombatHandler {
     private:
-        CombatLogic logic = {};
+        std::vector<CombatState> active_combats = {};
+
+        CombatLogic logic = {active_combats};
+
         constexpr static int BASE_DAMAGE = 10;
         constexpr static int BASE_HEAL = 5;
     public:
         CombatHandler();
+
+        void enterCombat(const Character &attacker, const Character &defender);
+
+        void exitCombat(Character &attacker, Character &defender);
 
         void attack(Character &attacker, Character &defender);
 
