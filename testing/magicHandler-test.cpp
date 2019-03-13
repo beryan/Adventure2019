@@ -79,7 +79,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_A, argument);
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.back();
 
@@ -97,7 +97,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.back();
 
@@ -114,7 +114,7 @@ namespace {
         argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.back();
 
@@ -136,7 +136,7 @@ namespace {
         argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(2), results.size());
+        ASSERT_EQ(2u, results.size());
 
         auto casterResult = results.front();
         auto targetResult = results.back();
@@ -166,7 +166,7 @@ namespace {
         argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.front();
 
@@ -191,7 +191,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.front();
 
@@ -215,7 +215,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto casterResult = results.front();
 
@@ -271,7 +271,7 @@ namespace {
         argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_A;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.back();
 
@@ -290,7 +290,7 @@ namespace {
         argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(2), results.size());
+        ASSERT_EQ(2u, results.size());
 
         auto targetResult = results.front();
         auto casterResult = results.back();
@@ -322,7 +322,7 @@ namespace {
         argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto result = results.front();
 
@@ -353,7 +353,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_A, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto casterResult = results.front();
 
@@ -394,7 +394,7 @@ namespace {
 
         auto results = magicHandler.castSpell(CLIENT_C, argument.str());
 
-        ASSERT_EQ(static_cast<unsigned int>(1), results.size());
+        ASSERT_EQ(1u, results.size());
 
         auto casterResult = results.front();
 
