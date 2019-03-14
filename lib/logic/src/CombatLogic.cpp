@@ -34,20 +34,20 @@ namespace logic {
     // These two methods all have the same if-condition for now
     // until we get a clearer idea of the specific conditions
     bool CombatLogic::canAttackTarget(const CombatState &combat) {
-        bool result = true;
+        bool result = false;
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()) {
-            result = false;
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+            result = true;
         }
 
         return result;
     }
 
     bool CombatLogic::canFlee(const CombatState &combat) {
-        bool result = true;
+        bool result = false;
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()) {
-            result = false;
+        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+            result = true;
         }
 
         return result;
