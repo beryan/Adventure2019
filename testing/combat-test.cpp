@@ -27,23 +27,13 @@ namespace {
         Player attacker;
         Player defender;
 
-        CombatHandler handler;
+        CombatHandler handler{};
 
         virtual void SetUp() override {
             attacker = {ATTACKER_ID, ATTACKER_USERNAME, ATTACKER_PASSWORD};
             defender = {DEFENDER_ID, DEFENDER_USERNAME, DEFENDER_PASSWORD};
-
-            // TODO: Figure out issue
-            //handler = {};
         }
     };
-
-    TEST_F(CombatTestSuite, canNotAttackTargetWithoutEnteringCombatState) {
-        handler.attack(attacker, defender);
-
-        ASSERT_EQ(100, attacker.getHealth());
-        ASSERT_EQ(100, defender.getHealth());
-    }
 
     TEST_F(CombatTestSuite, canNotAttackTargetAfterExitingCombat) {
         handler.enterCombat(attacker, defender);
@@ -62,6 +52,13 @@ namespace {
         ASSERT_EQ(100, attacker.getHealth());
         ASSERT_NE(100, defender.getHealth());
         EXPECT_EQ(90, defender.getHealth());
+    }
+
+    TEST_F(CombatTestSuite, canNotAttackTargetWithoutEnteringCombatState) {
+        handler.attack(attacker, defender);
+
+        ASSERT_EQ(100, attacker.getHealth());
+        ASSERT_EQ(100, defender.getHealth());
     }
 
     TEST_F(CombatTestSuite, cannotLowerTargetHealthBelowMin) {
