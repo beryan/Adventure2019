@@ -116,7 +116,7 @@ void AliasManager::clearUserAlias(const Command &command, std::string_view usern
     writeJson(commands_json, this->filePath);
 }
 
-Command AliasManager::getCommandForUser(const std::string &commandStr, const std::string &username) {
+Command AliasManager::getCommandForUser(std::string_view commandStr, std::string_view username) {
     Command result;
     if (!findAliasedCommand(commandStr, username, result) &&
         !findAliasedCommand(commandStr, GLOBAL_ALIASES_USER, result)) {

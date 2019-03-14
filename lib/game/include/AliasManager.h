@@ -22,7 +22,7 @@ namespace game {
     public:
         AliasManager() : filePath(COMMANDS_FILE_PATH) {};
 
-        explicit AliasManager(std::string filePath) : filePath(std::move(filePath)) {};
+        explicit AliasManager(std::string_view filePath) : filePath(filePath) {};
 
         /**
          * Sets an alias for a command that all users can use
@@ -66,7 +66,7 @@ namespace game {
          * @param username username to check for command alias
          * @return Command from commandStr, InvalidCommand if no matching command
          */
-        Command getCommandForUser(const std::string &commandStr, const std::string &username);
+        Command getCommandForUser(std::string_view commandStr, std::string_view username);
 
         /**
          * Get a map of aliases for a user

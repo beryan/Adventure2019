@@ -10,7 +10,7 @@
 using game::Command;
 using game::CommandParser;
 
-Command CommandParser::parseCommand(const std::string &commandStr) {
+Command CommandParser::parseCommand(std::string_view commandStr) {
     Command res = Command::InvalidCommand;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
                            [&commandStr](const auto &command) {
