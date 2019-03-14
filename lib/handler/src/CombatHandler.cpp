@@ -13,18 +13,17 @@ namespace action {
         logic(active_combats){}
 
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
-        CombatState combat{attacker.getId(), defender.getId()};
-
-        if (logic.canEnterCombat(combat)) {
-            active_combats.push_back(combat);
+        if (logic.canEnterCombat(attacker.getId(), defender.getId())) {
+            active_combats.push_back(CombatState{attacker.getId(), defender.getId()});
         }
     }
 
-    void CombatHandler::exitCombat(Character &attacker, Character &defender) {
-        CombatState combat{attacker.getId(), defender.getId()};
-
-        if (logic.canExitCombat(combat)) {
-            auto it = std::find(active_combats.begin(), active_combats.end(), combat);
+    void CombatHandler::exitCombat(const Character &attacker, const Character &defender) {
+        if (logic.canExitCombat(attacker.getId(), defender.getId())) {
+            auto it = std::find(
+                    active_combats.begin(),
+                    active_combats.end(),
+                    CombatState{attacker.getId(), defender.getId()});
 
             if (it != active_combats.end()) {
                 active_combats.erase(it);
@@ -32,17 +31,15 @@ namespace action {
         }
     }
 
-    void CombatHandler::attack(Character &attacker, Character &defender) {
-        CombatState combat{attacker.getId(), defender.getId()};
-
-        if (logic.canAttackTarget(combat)) {
+    void CombatHandler::attack(const Character &attacker, Character &defender) {
+        if (logic.canAttackTarget(attacker.getId(), defender.getId())) {
             int newHealth = defender.getHealth() - BASE_DAMAGE;
             defender.setHealth(std::max(newHealth, logic::DEFAULT_MIN_HEALTH));
         }
     }
 
-    void CombatHandler::heal(Character &healer, Character &target) {
-        if (logic.canHealTarget(healer, target)) {
+    void CombatHandler::heal(const Character &healer, Character &target) {
+        if (logic.canHealTarget(healer.getId(), target.getId())) {
             int newHealth = target.getHealth() + BASE_HEAL;
             target.setHealth(std::min(newHealth, logic::DEFAULT_MAX_HEALTH));
         }
@@ -50,10 +47,9 @@ namespace action {
 
     bool CombatHandler::isInCombat(const Character &attacker, const Character &defender) {
         bool result = false;
-        CombatState combat{attacker.getId(), defender.getId()};
 
         // Can enter combat returns false if the combat state exists
-        if (!logic.canEnterCombat(combat)) {
+        if (!logic.canEnterCombat(attacker.getId(), defender.getId())) {
             result = true;
         }
 

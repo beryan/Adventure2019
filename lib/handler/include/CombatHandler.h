@@ -36,21 +36,21 @@ namespace action {
          * @param attacker: First character that is part of the Combat
          * @param defender: Second character that is part of the Combat
          */
-        void exitCombat(Character &attacker, Character &defender);
+        void exitCombat(const Character &attacker, const Character &defender);
 
         /**
          *
          * @param attacker is the person dealing damage
          * @param defender is the perosn being dealt the damage
          */
-        void attack(Character &attacker, Character &defender);
+        void attack(const Character &attacker, Character &defender);
 
         /**
          *
          * @param healer that will use their ability to heal someone
          * @param target is the person being healed
          */
-        void heal(Character &healer, Character &target);
+        void heal(const Character &healer, Character &target);
 
         /**
          *

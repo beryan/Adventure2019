@@ -10,20 +10,24 @@ namespace logic {
     CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) :
         active_combats(active_combats) {}
 
-    bool CombatLogic::canEnterCombat(const CombatState &combat) {
+    bool CombatLogic::canEnterCombat(const model::ID &attacker, const model::ID &defender) {
+        CombatState combat{attacker, defender};
+
         return static_cast<bool>(
                 std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()
                 );
     }
 
-    bool CombatLogic::canExitCombat(const CombatState &combat) {
+    bool CombatLogic::canExitCombat(const model::ID &attacker, const model::ID &defender) {
+        CombatState combat{attacker, defender};
+
         return static_cast<bool>(
                 std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()
         );
     }
 
 
-    bool CombatLogic::canHealTarget(Character &healer, Character &target) {
+    bool CombatLogic::canHealTarget(const model::ID &healer, const model::ID &target) {
         bool result = true;
 
         // Heal condition
@@ -33,8 +37,9 @@ namespace logic {
 
     // These two methods all have the same if-condition for now
     // until we get a clearer idea of the specific conditions
-    bool CombatLogic::canAttackTarget(const CombatState &combat) {
+    bool CombatLogic::canAttackTarget(const model::ID &attacker, const model::ID &defender) {
         bool result = false;
+        CombatState combat{attacker, defender};
 
         if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
             result = true;
@@ -43,8 +48,9 @@ namespace logic {
         return result;
     }
 
-    bool CombatLogic::canFlee(const CombatState &combat) {
+    bool CombatLogic::canFlee(const model::ID &attacker, const model::ID &defender) {
         bool result = false;
+        CombatState combat{attacker, defender};
 
         if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
             result = true;
