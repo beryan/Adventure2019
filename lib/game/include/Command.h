@@ -7,6 +7,7 @@
 namespace game {
     enum class Command {
         Cast,
+        Chat,
         Debug,
         Drop,
         Equipment,

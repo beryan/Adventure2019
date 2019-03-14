@@ -239,9 +239,10 @@ namespace game {
                             << "\n"
                             << "COMMANDS:\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Chat) << " [message] (sends [message] to global chat)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Say) << " [message] (sends [message] to players in the same room)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Yell) << " [message] (sends [message] loud enough to be heard by players in adjacent rooms)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Look) << " (displays current location information)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
@@ -262,6 +263,28 @@ namespace game {
 
             case Command::Say: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto playerIds = this->worldHandler.findRoom(roomId).getPlayersInRoom();
+
+
+                for (const auto &playerId : playerIds) {
+                    auto connection = this->accountHandler.getClientByPlayerId(playerId);
+                    auto message = param;
+
+                    if (this->magicHandler.isConfused(client)) {
+                        this->magicHandler.confuseSpeech(message);
+                    }
+
+                    std::ostringstream sayMessage;
+                    sayMessage << this->accountHandler.getUsernameByClient(client) << " says> " << message << "\n";
+
+                    messages.push_back({connection, sayMessage.str()});
+                }
+
+                return messages;
+            }
+
+            case Command::Yell: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto playerIds = this->worldHandler.getNearbyPlayerIds(roomId);
 
 
@@ -274,7 +297,7 @@ namespace game {
                     }
 
                     std::ostringstream sayMessage;
-                    sayMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
+                    sayMessage << this->accountHandler.getUsernameByClient(client) << " yells> " << message << "\n";
 
                     messages.push_back({connection, sayMessage.str()});
                 }
@@ -314,7 +337,7 @@ namespace game {
                 break;
             }
 
-            case Command::Yell: {
+            case Command::Chat: {
                 auto message = param;
 
                 if (this->magicHandler.isConfused(client)) {
@@ -322,9 +345,11 @@ namespace game {
                 }
 
                 for (auto connection : *this->clients) {
-                    std::ostringstream yellMessage;
-                    yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
-                    messages.push_back({connection, yellMessage.str()});
+                    if (this->accountHandler.isLoggedIn(connection)) {
+                        std::ostringstream yellMessage;
+                        yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
+                        messages.push_back({connection, yellMessage.str()});
+                    }
                 }
 
                 return messages;
