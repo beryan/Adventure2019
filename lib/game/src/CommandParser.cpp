@@ -12,7 +12,7 @@ using game::CommandParser;
 Command CommandParser::parseCommand(std::string_view commandStr) {
     Command res = Command::InvalidCommand;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
-                           [commandStr](const auto &command) { return command.first == commandStr; });
+                           [&commandStr](const auto &command) { return command.first == commandStr; });
     if (it != this->commands.end()) {
         res = it->second;
     }
@@ -23,7 +23,7 @@ Command CommandParser::parseCommand(std::string_view commandStr) {
 std::string CommandParser::getStringForCommand(const Command &command) {
     std::string res;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
-                           [command](const std::pair<std::string, Command> &pair) {
+                           [&command](const std::pair<std::string, Command> &pair) {
                                return pair.second == command;
                            });
 
