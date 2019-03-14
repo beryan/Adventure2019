@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "AccountHandler.h"
 #include "WorldHandler.h"
+#include "MagicHandler.h"
 #include "Command.h"
 #include "AliasManager.h"
 #include "PlayerHandler.h"
@@ -23,6 +24,7 @@ using networking::Message;
 using handler::AccountHandler;
 using handler::WorldHandler;
 using handler::PlayerHandler;
+using handler::MagicHandler;
 using game::Command;
 using game::AliasManager;
 
@@ -45,12 +47,13 @@ namespace game {
         std::vector<Connection>* disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
+
+        AccountHandler accountHandler;
+        MagicHandler magicHandler;
+        PlayerHandler playerHandler;
+        WorldHandler worldHandler;
         AliasManager aliasManager;
         CommandParser commandParser;
-
-        std::unique_ptr<AccountHandler> accountHandler;
-        std::unique_ptr<PlayerHandler> playerHandler;
-        std::unique_ptr<WorldHandler> worldHandler;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated

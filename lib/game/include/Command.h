@@ -6,6 +6,7 @@
 #define COMMAND_H
 namespace game {
     enum class Command {
+        Cast,
         Debug,
         Drop,
         Equipment,
@@ -22,6 +23,7 @@ namespace game {
         Remove,
         Say,
         Shutdown,
+        Spells,
         Talk,
         Take,
         Tell,
