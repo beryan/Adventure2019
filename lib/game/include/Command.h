@@ -27,6 +27,8 @@ namespace game {
         Tell,
         Wear,
         Yell,
+        Cast,
+        Spells,
         InvalidCommand
     };
 }
