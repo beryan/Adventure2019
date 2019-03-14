@@ -2,7 +2,7 @@
 add_library(networking
   src/Server.cpp
   src/Client.cpp
-)
+  src/ClientMessageBuffer.cpp)
 
 target_include_directories(networking
   PUBLIC
