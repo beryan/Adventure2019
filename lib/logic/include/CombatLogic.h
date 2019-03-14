@@ -26,7 +26,7 @@ namespace logic {
          * @return False if state already exists between two characters in the
          * Combat param, True if not.
          */
-        bool canEnterCombat(const model::ID &attacker, const model::ID &defender);
+        bool canEnterCombat(const model::ID &attacker, const model::ID &defender) const;
 
         /**
          *
@@ -34,7 +34,7 @@ namespace logic {
          * @return True if the state already exists between two characters in the Combat
          * param, False if not.
          */
-        bool canExitCombat(const model::ID &attacker, const model::ID &defender);
+        bool canExitCombat(const model::ID &attacker, const model::ID &defender) const;
 
         /**
          *
@@ -42,17 +42,17 @@ namespace logic {
          * @param target that the heal will affect
          * @return Returns True if the Target can be healed, False if not
          */
-        bool canHealTarget(const model::ID &healer, const model::ID &target);
+        bool canHealTarget(const model::ID &healer, const model::ID &target) const;
 
         /**
          *
          * @param combat state to check in active_combats
          * @return Returns True if the Combat param exists in active_combats, False if not
          */
-        bool canAttackTarget(const model::ID &attacker, const model::ID &defender);
+        bool canAttackTarget(const model::ID &attacker, const model::ID &defender) const;
 
         // TODO: Complete implementation detail
-        bool canFlee(const model::ID &attacker, const model::ID &defender);
+        bool canFlee(const model::ID &attacker, const model::ID &defender) const;
     };
 };
 

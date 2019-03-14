@@ -10,7 +10,7 @@ namespace logic {
     CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) :
         active_combats(active_combats) {}
 
-    bool CombatLogic::canEnterCombat(const model::ID &attacker, const model::ID &defender) {
+    bool CombatLogic::canEnterCombat(const model::ID &attacker, const model::ID &defender) const {
         CombatState combat{attacker, defender};
 
         return static_cast<bool>(
@@ -18,7 +18,7 @@ namespace logic {
                 );
     }
 
-    bool CombatLogic::canExitCombat(const model::ID &attacker, const model::ID &defender) {
+    bool CombatLogic::canExitCombat(const model::ID &attacker, const model::ID &defender) const {
         CombatState combat{attacker, defender};
 
         return static_cast<bool>(
@@ -27,7 +27,7 @@ namespace logic {
     }
 
 
-    bool CombatLogic::canHealTarget(const model::ID &healer, const model::ID &target) {
+    bool CombatLogic::canHealTarget(const model::ID &healer, const model::ID &target) const {
         bool result = true;
 
         // Heal condition
@@ -37,7 +37,7 @@ namespace logic {
 
     // These two methods all have the same if-condition for now
     // until we get a clearer idea of the specific conditions
-    bool CombatLogic::canAttackTarget(const model::ID &attacker, const model::ID &defender) {
+    bool CombatLogic::canAttackTarget(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
         CombatState combat{attacker, defender};
 
@@ -48,7 +48,7 @@ namespace logic {
         return result;
     }
 
-    bool CombatLogic::canFlee(const model::ID &attacker, const model::ID &defender) {
+    bool CombatLogic::canFlee(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
         CombatState combat{attacker, defender};
 
