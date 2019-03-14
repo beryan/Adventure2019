@@ -45,6 +45,32 @@ namespace {
         ASSERT_EQ(100, defender.getHealth());
     }
 
+    TEST_F(CombatTestSuite, canEnterAndLeaveCombatMultipleTimes) {
+        handler.enterCombat(attacker, defender);
+
+        handler.attack(attacker, defender);
+
+        ASSERT_EQ(90, defender.getHealth());
+
+        handler.exitCombat(attacker, defender);
+
+        handler.attack(attacker, defender);
+
+        ASSERT_EQ(90, defender.getHealth());
+
+        handler.enterCombat(attacker, defender);
+
+        handler.attack(attacker, defender);
+        handler.attack(attacker, defender);
+
+        handler.exitCombat(attacker, defender);
+
+        handler.attack(attacker, defender);
+
+        EXPECT_EQ(100, attacker.getHealth());
+        EXPECT_EQ(70, defender.getHealth());
+    }
+
     TEST_F(CombatTestSuite, canAttackTarget) {
         handler.enterCombat(attacker, defender);
         handler.attack(attacker, defender);
