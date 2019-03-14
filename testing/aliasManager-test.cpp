@@ -12,6 +12,14 @@ using game::AliasManager;
 using game::CommandParser;
 
 namespace {
+    std::string toUpper(std::string str) {
+        std::locale locale;
+        for (std::string::size_type i = 0; i < str.length(); ++i) {
+            str[i] = std::toupper(str[i]);
+        }
+        return str;
+    }
+
     TEST(AliasManagerTestSuite, canGetAliasedCommands) {
         AliasManager aliasManager;
         std::string testUser = "testuser";
@@ -141,5 +149,21 @@ namespace {
         ASSERT_ANY_THROW(aliasManager.setGlobalAlias(command, alias));
         ASSERT_ANY_THROW(aliasManager.clearGlobalAlias(command));
         ASSERT_ANY_THROW(aliasManager.getCommandForUser(alias, username));
+    }
+
+    TEST(AliasManagerTestSuite, canCatchInvalidAliases) {
+        AliasManager aliasManager;
+        CommandParser commandParser;
+
+        std::string invalidAlias = commandParser.getStringForCommand(Command::Say);
+        std::string uppercaseInvalidAlias = toUpper(invalidAlias);
+
+        std::string validAlias = "ayo";
+        std::string uppercaseValidAlias = toUpper(validAlias);
+
+        EXPECT_TRUE(aliasManager.isValidAlias(validAlias));
+        EXPECT_TRUE(aliasManager.isValidAlias(uppercaseValidAlias));
+        EXPECT_FALSE(aliasManager.isValidAlias(invalidAlias));
+        EXPECT_FALSE(aliasManager.isValidAlias(uppercaseInvalidAlias));
     }
 }

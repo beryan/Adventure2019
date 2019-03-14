@@ -17,7 +17,7 @@ namespace game {
          * @param commandStr command string to parse
          * @return Command that matches commandStr. InvalidCommand if no matching command
          */
-        Command parseCommand(std::string_view commandStr);
+        Command parseCommand(const std::string &commandStr);
 
         /**
          * Returns the default string that represents a command

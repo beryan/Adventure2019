@@ -3,16 +3,19 @@
 //
 
 #include <algorithm>
+#include <iostream>
 #include "CommandParser.h"
 #include "AliasManager.h"
 
 using game::Command;
 using game::CommandParser;
 
-Command CommandParser::parseCommand(std::string_view commandStr) {
+Command CommandParser::parseCommand(const std::string &commandStr) {
     Command res = Command::InvalidCommand;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
-                           [&commandStr](const auto &command) { return command.first == commandStr; });
+                           [&commandStr](const auto &command) {
+                               return commandStr.compare(command.first) == 0;
+                           });
     if (it != this->commands.end()) {
         res = it->second;
     }
@@ -23,7 +26,7 @@ Command CommandParser::parseCommand(std::string_view commandStr) {
 std::string CommandParser::getStringForCommand(const Command &command) {
     std::string res;
     auto it = std::find_if(this->commands.begin(), this->commands.end(),
-                           [&command](const std::pair<std::string, Command> &pair) {
+                           [command](const std::pair<std::string, Command> &pair) {
                                return pair.second == command;
                            });
 

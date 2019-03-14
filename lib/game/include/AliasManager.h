@@ -38,12 +38,20 @@ namespace game {
         void clearGlobalAlias(const Command &command);
 
         /**
+         * Checks if an alias is valid, i.e. doesn't match a default command.
+         * e.g. and alias "say" or "yell" is invalid.
+         * @param alias
+         * @return true if valid, false otherwise
+         */
+        bool isValidAlias(const std::string &alias);
+
+        /**
          * Sets an alias for a command for a particular user
          * @param command command to alias
          * @param alias alias for the command
          * @param username user to set the alias for
          */
-        void setUserAlias(const Command &command, std::string_view alias, std::string_view username);
+        bool setUserAlias(const Command &command, std::string_view alias, std::string_view username);
 
         /**
          * Deletes an alias for a user
@@ -58,7 +66,7 @@ namespace game {
          * @param username username to check for command alias
          * @return Command from commandStr, InvalidCommand if no matching command
          */
-        Command getCommandForUser(std::string_view commandStr, std::string_view username);
+        Command getCommandForUser(const std::string &commandStr, const std::string &username);
 
         /**
          * Get a map of aliases for a user
@@ -91,6 +99,12 @@ namespace game {
          * @return true if command was found, false otherwise
          */
         bool findAliasedCommand(std::string_view commandStr, std::string_view username, Command &result);
+
+        /**
+         * transform a string to lowercase
+         * @param str string to transform
+         */
+        std::string toLower(std::string str);
     };
 }
 

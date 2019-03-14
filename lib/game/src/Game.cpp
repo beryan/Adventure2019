@@ -506,8 +506,15 @@ namespace game {
                         Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
                         if (command_to_alias != Command::InvalidCommand) {
                             std::string alias = params[2];
-                            this->aliasManager.setUserAlias(command_to_alias, alias, username);
-                            tempMessage << "\nalias set successfully\n";
+                            if (this->aliasManager.isValidAlias(alias)) {
+                                if (this->aliasManager.setUserAlias(command_to_alias, alias, username)) {
+                                    tempMessage << "\nalias set successfully\n";
+                                } else {
+                                    tempMessage << "\nalias could not be set\n";
+                                }
+                            } else {
+                                tempMessage << std::endl << alias << " is not a valid alias\n";
+                            }
                         } else {
                             tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
                         }
