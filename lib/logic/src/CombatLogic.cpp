@@ -7,23 +7,25 @@
 using logic::CombatLogic;
 
 namespace logic {
-    CombatLogic::CombatLogic(std::vector<CombatState> &active_combats) :
-        active_combats(active_combats) {}
+    CombatLogic::CombatLogic(std::vector<CombatState> &states) :
+        states(states) {}
 
     bool CombatLogic::canEnterCombat(const model::ID &attacker, const model::ID &defender) const {
-        CombatState combat{attacker, defender};
-
         return static_cast<bool>(
-                std::find(this->active_combats.begin(), this->active_combats.end(), combat) == this->active_combats.end()
-                );
+                std::find(
+                        this->states.begin(),
+                        this->states.end(),
+                        CombatState{attacker, defender}) == this->states.end()
+                        );
     }
 
     bool CombatLogic::canExitCombat(const model::ID &attacker, const model::ID &defender) const {
-        CombatState combat{attacker, defender};
-
         return static_cast<bool>(
-                std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()
-        );
+                std::find(
+                        this->states.begin(),
+                        this->states.end(),
+                        CombatState{attacker, defender}) != this->states.end()
+                        );
     }
 
 
@@ -39,9 +41,8 @@ namespace logic {
     // until we get a clearer idea of the specific conditions
     bool CombatLogic::canAttackTarget(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
-        CombatState combat{attacker, defender};
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+        if (std::find(this->states.begin(), this->states.end(), CombatState{attacker, defender}) != this->states.end()) {
             result = true;
         }
 
@@ -50,9 +51,8 @@ namespace logic {
 
     bool CombatLogic::canFlee(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
-        CombatState combat{attacker, defender};
 
-        if (std::find(this->active_combats.begin(), this->active_combats.end(), combat) != this->active_combats.end()) {
+        if (std::find(this->states.begin(), this->states.end(), CombatState{attacker, defender}) != this->states.end()) {
             result = true;
         }
 

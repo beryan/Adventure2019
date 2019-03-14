@@ -14,7 +14,7 @@ namespace action {
 
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         if (logic.canEnterCombat(attacker.getId(), defender.getId())) {
-            active_combats.push_back(CombatState{attacker.getId(), defender.getId()});
+            active_combats.emplace_back(CombatState{attacker.getId(), defender.getId()});
         }
     }
 

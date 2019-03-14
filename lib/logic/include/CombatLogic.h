@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-03-10.
 //
 
-#ifndef WEBSOCKETNETWORKING_COMBATLOGIC_H
-#define WEBSOCKETNETWORKING_COMBATLOGIC_H
+#ifndef COMBATLOGIC_H
+#define COMBATLOGIC_H
 
 #include "Character.h"
 #include "CombatState.h"
@@ -17,9 +17,9 @@ namespace logic {
 
     class CombatLogic {
     private:
-        std::vector<CombatState> &active_combats;
+        std::vector<CombatState> &states;
     public:
-        CombatLogic(std::vector<CombatState> &active_combats);
+        explicit CombatLogic(std::vector<CombatState> &states);
 
         /**
          * @param combat state to be checked in active_combats
@@ -58,4 +58,4 @@ namespace logic {
 
 
 
-#endif //WEBSOCKETNETWORKING_COMBATLOGIC_H
+#endif //COMBATLOGIC_H
