@@ -116,4 +116,14 @@ namespace {
 
         EXPECT_EQ(100, defender.getHealth());
     }
+
+    TEST_F(CombatTestSuite, canCheckIfPlayerIsInCombatState) {
+        handler.enterCombat(attacker, defender);
+
+        ASSERT_TRUE(handler.isInCombat(attacker, defender));
+
+        handler.exitCombat(attacker, defender);
+
+        ASSERT_FALSE(handler.isInCombat(attacker, defender));
+    }
 }

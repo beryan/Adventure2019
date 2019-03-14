@@ -51,6 +51,14 @@ namespace action {
          * @param target is the person being healed
          */
         void heal(Character &healer, Character &target);
+
+        /**
+         *
+         * @param attacker that is ataccking the target
+         * @param defender that is taking the damage
+         * @return True if there is an active combat state, or False if there isn't
+         */
+        bool isInCombat(const Character &attacker, const Character &defender);
     };
 }
 

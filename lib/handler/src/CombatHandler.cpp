@@ -47,4 +47,16 @@ namespace action {
             target.setHealth(std::min(newHealth, logic::DEFAULT_MAX_HEALTH));
         }
     }
+
+    bool CombatHandler::isInCombat(const Character &attacker, const Character &defender) {
+        bool result = false;
+        CombatState combat{attacker.getId(), defender.getId()};
+
+        // Can enter combat returns false if the combat state exists
+        if (!logic.canEnterCombat(combat)) {
+            result = true;
+        }
+
+        return result;
+    }
 }
