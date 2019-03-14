@@ -102,6 +102,32 @@ namespace handler {
         std::vector<Message>
         confuse(const Connection &client, const std::string &targetName);
 
+        /**
+         *  Removes a body swap SpellInstance containing the specified player ID as a target or caster and reverts
+         *  the swap between player clients.
+         */
+        void
+        removeBodySwap (const model::ID &playerId);
+
+        /**
+         *  Removes a confuse SpellInstance containing the specified player ID as a target or caster
+         */
+        void
+        removeConfuse(const model::ID &playerId);
+
+        /**
+         *  Decrements the remaining duration of Confuse spell instances, erasing them if expired.
+         */
+        void
+        processConfuseInstancesCycle(std::deque<Message> &messages);
+
+        /**
+         *  Decrements the remaining duration of Body Swap spell instances, reverting the swap and
+         *  erasing them if expired.
+         */
+        void
+        processBodySwapInstancesCycle(std::deque<Message> &messages);
+
     public:
         /**
          *  Constructs a MagicHandler instance with a pointer to the
