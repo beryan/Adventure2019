@@ -31,17 +31,17 @@ namespace handler {
 
             auto firstVowelIndex = word.find_first_of("aeiouAEIOU");
 
-            if (firstVowelIndex != std::string::npos && firstVowelIndex != 0) {
-                // Word starts with consonant(s)
-                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "ay";
-
-            } else if (firstVowelIndex != std::string::npos) {
-                // Word starts with a vowel
-                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "way";
-
-            } else {
+            if (firstVowelIndex == std::string::npos) {
                 // Word's letters are all consonants
                 result << word << "ay";
+
+            } else if (firstVowelIndex == 0) {
+                // Word starts with a vowel
+                result << word << "way";
+
+            } else {
+                // Word starts with consonant(s)
+                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "ay";
             }
 
             return result.str();
