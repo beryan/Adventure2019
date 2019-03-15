@@ -29,9 +29,8 @@ TEST(GameTestSuite, canConstructGameInstance) {
     std::vector<Connection> newClients;
     std::vector<Connection> disconnectedClients;
     std::function<void(Connection)> disconnect = [](Connection) {};
-    std::function<void()> shutdown = []() {};
 
-    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect);
     Game game{connectionHandler};
 
 
@@ -46,10 +45,8 @@ TEST(GameTestSuite, canGetGreetingOnConnect) {
     std::vector<Connection> newClients{CLIENT_A};
     std::vector<Connection> disconnectedClients;
     std::function<void(Connection)> disconnect = [](Connection) { };
-    std::function<void()> shutdown = []() {};
 
-
-    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect);
     Game game{connectionHandler};
 
     std::ostringstream introduction;
@@ -85,9 +82,8 @@ TEST(GameTestSuite, canCallDisconnectCommand) {
     std::function<void(Connection)> disconnect = [&isDisconnected](Connection) {
         isDisconnected = true;
     };
-    std::function<void()> shutdown = []() {};
 
-    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect);
     Game game{connectionHandler};
     std::deque<Message> userInput{{CLIENT_A, DISCONNECT_COMMAND}};
 
@@ -100,21 +96,16 @@ TEST(GameTestSuite, canCallDisconnectCommand) {
 }
 
 TEST(GameTestSuite, canCallShutdownCommand) {
-    bool isShutdown= false;
-
     std::vector<Connection> clients{CLIENT_A};
     std::vector<Connection> newClients;
     std::vector<Connection> disconnectedClients;
     std::function<void(Connection)> disconnect = [](Connection) {};
-    std::function<void()> shutdown = [&isShutdown]() {
-        isShutdown = true;
-    };
 
-    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect);
     Game game{connectionHandler};
     std::deque<Message> userInput{{CLIENT_A, SHUTDOWN_COMMAND}};
 
     game.processCycle(userInput);
 
-    EXPECT_EQ(true, isShutdown);
+    EXPECT_FALSE(game.isRunning());
 }

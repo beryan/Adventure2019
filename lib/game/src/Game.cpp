@@ -137,7 +137,7 @@ namespace game {
 
                 case Command::Shutdown: {
                     std::cout << "Shutting down.\n";
-                    this->connectionHandler.shutdown();
+                    this->shutdown();
                     return;
                 }
 
@@ -273,5 +273,13 @@ namespace game {
         this->handleOutgoing(messages);
 
         return this->formMessages(messages);
+    }
+
+    bool Game::isRunning() const {
+        return running;
+    }
+
+    void Game::shutdown() {
+        running = false;
     }
 }

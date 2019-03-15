@@ -16,8 +16,7 @@ public:
     ConnectionHandler(std::vector<Connection> &clients,
                       std::vector<Connection> &newClients,
                       std::vector<Connection> &disconnectedClients,
-                      std::function<void(Connection)> disconnect,
-                      std::function<void()> shutdown);
+                      std::function<void(Connection)> disconnect);
 
     std::vector<Connection> &getClients();
 
@@ -26,8 +25,6 @@ public:
     std::vector<Connection> &getDisconnectedClients();
 
     void disconnect(Connection client);
-
-    void shutdown();
 
 private:
     std::vector<Connection> &clients;

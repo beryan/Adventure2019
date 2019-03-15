@@ -53,6 +53,8 @@ namespace game {
         CommandParser commandParser;
         CommandExecutor commandExecutor;
 
+        bool running = true;
+
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
          *  vector on completion.
@@ -125,6 +127,17 @@ namespace game {
          */
         std::deque<Message>
         processCycle(std::deque<Message> &incoming);
+
+        /**
+         * Checks if the game is still running
+         * @return true if the game is still running, false otherwise
+         */
+        bool isRunning() const;
+
+        /**
+         * Shuts down the game
+         */
+        void shutdown();
 
     };
 }

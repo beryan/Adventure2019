@@ -66,7 +66,6 @@ main(int argc, char *argv[]) {
         return 1;
     }
 
-    bool done = false;
     unsigned short port = (unsigned short) std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
@@ -74,22 +73,18 @@ main(int argc, char *argv[]) {
         server.disconnect(connection);
     };
 
-    std::function<void()> shutdown = [&done]() {
-        done = true;
-    };
-
     ClientMessageBuffer clientMessageBuffer;
-    ConnectionHandler connectionHandler{clients, newClients, disconnectedClients, disconnect, shutdown};
+    ConnectionHandler connectionHandler{clients, newClients, disconnectedClients, disconnect};
     Game game{connectionHandler};
 
-    while (!done) {
+    while (game.isRunning()) {
         try {
             server.update();
 
         } catch (std::exception &e) {
             std::cerr << "Exception from Server update:\n"
                       << " " << e.what() << "\n\n";
-            done = true;
+            game.shutdown();
         }
 
         std::deque<Message> incoming = server.receive();
