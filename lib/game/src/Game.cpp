@@ -252,6 +252,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Give) << " [username] [keyword] (gives item to username)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
@@ -358,24 +359,35 @@ namespace game {
             case Command::Look: {
                 if (param.empty()) {
                     auto roomId = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << this->worldHandler.findRoom(roomId);
+                    auto room = this->worldHandler.findRoom(roomId);
+                    tempMessage << room;
+                    tempMessage << "[Players]\n";
+                    for (const auto &id : room.getPlayersInRoom()) {
+                        tempMessage << this->accountHandler.getUsernameByPlayerId(id) << std::endl;
+                    }
                     break;
                 }
             }
 
             case Command::Examine: {
                 auto room = this->worldHandler.findRoom(this->accountHandler.getRoomIdByClient(client));
-                auto npcs = room.getNpcs();
                 auto objects = room.getObjects();
+                auto npcs = room.getNpcs();
+                auto extras = room.getExtras();
 
-                if (containsKeyword(npcs, param)) {
-                    NPC npc = getItemByKeyword(npcs, param);
+                if (containsKeyword(objects, param)) {
+                    auto obj = getItemByKeyword(objects, param);
+                    for (const auto &str : obj.getLongDescription()) {
+                        tempMessage << str << std::endl;
+                    }
+                } else if (containsKeyword(npcs, param)) {
+                    auto npc = getItemByKeyword(npcs, param);
                     for (const auto &str : npc.getDescription()) {
                         tempMessage << str << std::endl;
                     }
-                } else if (containsKeyword(objects, param)) {
-                    Object obj = getItemByKeyword(objects, param);
-                    for (const auto &str : obj.getLongDescription()) {
+                } else if (containsKeyword(extras, param)) {
+                    auto extra = getItemByKeyword(extras, param);
+                    for (const auto &str : extra.getExtraDescriptions()) {
                         tempMessage << str << std::endl;
                     }
                 } else {
@@ -393,10 +405,11 @@ namespace game {
 
             case Command::Move: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto dir = lowercase(param);
 
-                if (this->worldHandler.isValidDirection(roomId, param)) {
+                if (this->worldHandler.isValidDirection(roomId, dir)) {
                     auto playerId = this->accountHandler.getPlayerIdByClient(client);
-                    auto destinationId = this->worldHandler.getDestination(roomId, param);
+                    auto destinationId = this->worldHandler.getDestination(roomId, dir);
                     this->worldHandler.movePlayer(playerId, roomId, destinationId);
                     this->accountHandler.setRoomIdByClient(client, destinationId);
                     tempMessage << "\n" << this->worldHandler.findRoom(destinationId).descToString();
@@ -501,6 +514,44 @@ namespace game {
                 break;
             }
 
+            case Command::Give: {
+                auto username = param.substr(0, param.find(' '));
+                auto keyword = trimWhitespace(param.substr(param.find(' ') + 1));
+
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto receiverClient = this->accountHandler.getClientByUsername(username);
+                auto receiverId = this->accountHandler.getPlayerIdByClient(receiverClient);
+
+                auto sender = this->accountHandler.getPlayerByClient(client);
+                auto senderName = this->accountHandler.getUsernameByClient(client);
+                auto objects = sender->getInventory().getVectorInventory();
+                auto equip = sender->getEquipment().getVectorEquipment();
+                objects.insert(objects.end(), equip.begin(), equip.end());
+
+                if (!this->worldHandler.canGive(roomId, receiverId) || username == senderName) {
+                    tempMessage << "Invalid username.\n";
+                } else if (containsKeyword(objects, keyword)) {
+                    auto receiver = this->accountHandler.getPlayerByClient(receiverClient);
+                    auto object = getItemByKeyword(objects, keyword);
+                    this->playerHandler.giveItem(*sender, *receiver, object);
+
+                    std::ostringstream senderMessage;
+                    std::ostringstream receiverMessage;
+
+                    senderMessage << "Item given successfully.\n";
+                    receiverMessage << senderName << " has given you " << object.getShortDescription() << std::endl;
+
+                    messages.push_back({client, senderMessage.str()});
+                    messages.push_back({receiverClient, receiverMessage.str()});
+
+                    return messages;
+                } else {
+                    tempMessage << "Invalid keyword.\n";
+                }
+
+                break;
+            }
+
             case Command::Inventory: {
                 tempMessage << this->accountHandler.getPlayerByClient(client)->getInventory();
                 break;
@@ -569,7 +620,8 @@ namespace game {
 
     bool
     Game::isInvalidFormat(const Command &command, const std::string &parameters) {
-        bool wrongTellFormat = (command == Command::Tell && parameters.find(' ') == std::string::npos);
+        bool wrongFormat = ((command == Command::Tell || command == Command::Give)
+            && parameters.find(' ') == std::string::npos);
         bool isCommandWithParam = (command == Command::Say
             || command == Command::Yell
             || command == Command::Move
@@ -580,13 +632,14 @@ namespace game {
             || command == Command::Wear
             || command == Command::Remove);
 
-        return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
+        return (wrongFormat || (isCommandWithParam && parameters.empty()));
     }
 
 
     template <typename T>
     bool
-    Game::containsKeyword(const std::vector<T> &objects, const std::string &keyword) {
+    Game::containsKeyword(const std::vector<T> &objects, const std::string &param) {
+        auto keyword = lowercase(param);
         auto it = std::find_if(objects.begin(), objects.end(), [&keyword](const T &obj) {return obj.containsKeyword(keyword);});
         return (it != objects.end());
     }
@@ -594,7 +647,8 @@ namespace game {
 
     template <typename T>
     T
-    Game::getItemByKeyword(const std::vector<T> &objects, const std::string &keyword) {
+    Game::getItemByKeyword(const std::vector<T> &objects, const std::string &param) {
+        auto keyword = lowercase(param);
         T item;
         auto it = std::find_if(objects.begin(), objects.end(), [&keyword](const T &obj) {return obj.containsKeyword(keyword);});
         if (it != objects.end()) {

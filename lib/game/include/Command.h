@@ -13,6 +13,7 @@ namespace game {
         Equipment,
         Examine,
         Exits,
+        Give,
         Help,
         Inventory,
         Login,

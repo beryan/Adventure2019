@@ -18,6 +18,7 @@
 #include <functional>
 #include <deque>
 #include <map>
+#include <boost/algorithm/string.hpp>
 
 using networking::Connection;
 using networking::Message;

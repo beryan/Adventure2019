@@ -80,6 +80,14 @@ namespace handler {
         room.removeObject(objectId);
     }
 
+    bool
+    WorldHandler::canGive(const model::ID &roomId, const model::ID &playerId) {
+        Room& room = findRoom(roomId);
+        auto players = room.getPlayersInRoom();
+        auto it = std::find(players.begin(), players.end(), playerId);
+        return (it != players.end());
+    }
+
     std::vector<model::ID>
     WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
         Room room = findRoom(roomId);

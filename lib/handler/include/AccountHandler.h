@@ -104,7 +104,7 @@ namespace handler {
         getUsernameByClient(const Connection &client);
 
         /**
-         *  Returns the client of a Player with the specified username
+         *  Returns the client of a Player given a username
          */
         Connection
         getClientByUsername(const std::string &username);
@@ -116,7 +116,7 @@ namespace handler {
         getPlayerIdByClient(const Connection &client);
 
         /**
-         *  Returns a pointer to the player given a client ID.
+         *  Returns a pointer to a Player given a client ID.
          */
         Player*
         getPlayerByClient(const Connection &client);
@@ -138,6 +138,12 @@ namespace handler {
          */
         Connection
         getClientByPlayerId(const model::ID &playerId);
+
+        /**
+         *  Returns the username of a Player given a player ID
+         */
+        std::string
+        getUsernameByPlayerId(const model::ID &playerId);
 
         /**
          *  Appends Responses based on clients who have been logged out due to a login by another client into the

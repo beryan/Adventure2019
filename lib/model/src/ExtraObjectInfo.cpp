@@ -4,6 +4,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include <ExtraObjectInfo.h>
 
 namespace model {
@@ -33,6 +34,10 @@ namespace model {
 
     void ExtraObjectInfo::setExtraDescriptions(std::vector<std::string> extraDescriptions) {
         this->extraDescriptions = std::move(extraDescriptions);
+    }
+
+    bool ExtraObjectInfo::containsKeyword(const std::string &keyword) const {
+        return (std::find(this->extraKeywords.begin(), this->extraKeywords.end(), keyword) != this->extraKeywords.end());
     }
 
     bool ExtraObjectInfo::operator==(const ExtraObjectInfo &other) const {

@@ -76,6 +76,10 @@ namespace model {
         return playersInRoom;
     }
 
+    std::vector<ExtraObjectInfo> Room::getExtras() const {
+        return extras;
+    }
+
     void Room::setId(const model::ID &id) {
         this->id = id;
     }
@@ -123,9 +127,13 @@ namespace model {
         }
     }
 
+    void Room::addExtra(const ExtraObjectInfo &extra) {
+        this->extras.push_back(extra);
+    }
+
     void Room::removeObject(const model::ID &objectId) {
         auto equal = [objectId](const Object &obj) {return obj.getId() == objectId;};
-        objects.erase(std::remove_if(objects.begin(), objects.end(), equal), objects.end());
+        objects.erase(std::remove_if(objects.begin(), objects.end(), equal));
     }
 
     void Room::removePlayerFromRoom(const model::ID &playerId) {
@@ -163,7 +171,7 @@ namespace model {
         os << rhs.dir;
 
         if (!rhs.desc.empty()) {
-            os << ", ";
+            os << ". ";
             for (const auto &s : rhs.desc) {
                 os << s << std::endl;
             }
@@ -187,7 +195,7 @@ namespace model {
     std::string Room::doorsToString() const {
         std::ostringstream os;
         if(!this->doors.empty()) {
-            os << "Exits:" << std::endl;
+            os << "[Exits]" << std::endl;
             for (const auto &door : this->doors) {
                 os << door;
             }
@@ -201,21 +209,21 @@ namespace model {
 
         os << room.descToString();
 
-        if(!room.npcs.empty()) {
-            os << "NPCS:" << std::endl;
-            for (const auto &npc : room.npcs) {
-                os << npc;
-            }
-        }
+        os << room.doorsToString();
 
         if(!room.objects.empty()) {
-            os << "Objects:" << std::endl;
+            os << "[Objects]" << std::endl;
             for (const auto &obj : room.objects) {
                 os << obj;
             }
         }
 
-        os << room.doorsToString();
+        if(!room.npcs.empty()) {
+            os << "[NPCS]" << std::endl;
+            for (const auto &npc : room.npcs) {
+                os << npc;
+            }
+        }
 
         return os;
     }
