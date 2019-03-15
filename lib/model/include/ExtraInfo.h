@@ -7,6 +7,9 @@
 
 #include <string>
 #include <vector>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
 
@@ -36,9 +39,7 @@ namespace model {
 
         void setExtraDescriptions(std::vector<std::string> extraDescriptions);
 
-        bool containsKeyword(const std::string &keyword) const;
-
-        bool operator==(const ExtraObjectInfo &other) const;
+        bool operator==(const ExtraInfo &other) const;
 
         ExtraInfo& operator=(const ExtraInfo &other);
 
@@ -49,6 +50,14 @@ namespace model {
 
         std::vector<std::string> extraDescriptions;
     };
+
+
+    inline void from_json(const json &j, ExtraInfo &e) {
+        e.setExtraDescriptions(j.at("desc").get<std::vector<std::string>>());
+        e.setExtraKeywords(j.at("keywords").get<std::vector<std::string>>());
+    }
+
+
 }
 
 #endif //EXTRAOBJECTINFO_H
