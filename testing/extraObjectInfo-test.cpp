@@ -4,21 +4,21 @@
 
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "ExtraObjectInfo.h"
+#include "ExtraInfo.h"
 
 namespace {
 
-    TEST(ExtraObjectInfoTestSuite, canUseDefaultConstructor) {
-        model::ExtraObjectInfo myInfo;
+    TEST(ExtraInfoTestSuite, canUseDefaultConstructor) {
+        model::ExtraInfo myInfo;
         unsigned int expected_size = 0;
         EXPECT_EQ(expected_size, myInfo.getExtraKeywords().size());
         EXPECT_EQ(expected_size, myInfo.getExtraDescriptions().size());
     }
 
-    TEST(ExtraObjectInfoTestSuite, canUseTwoArgConstructor) {
+    TEST(ExtraInfoTestSuite, canUseTwoArgConstructor) {
         std::string myKeyword = "test_keyword";
         std::string myDescription = "test_description";
-        model::ExtraObjectInfo myInfo{{myKeyword},
+        model::ExtraInfo myInfo{{myKeyword},
                                       {myDescription}};
         unsigned int expected_size = 1;
         EXPECT_EQ(expected_size, myInfo.getExtraKeywords().size());
@@ -27,9 +27,9 @@ namespace {
         EXPECT_EQ(myDescription, myInfo.getExtraDescriptions().at(0));
     }
 
-    TEST(ExtraObjectInfoTestSuite, canSetExtraKeywords) {
+    TEST(ExtraInfoTestSuite, canSetExtraKeywords) {
         std::vector<std::string> keywords = {"test1", "test2"};
-        model::ExtraObjectInfo myInfo;
+        model::ExtraInfo myInfo;
 
         unsigned int expected_size1 = 0;
         EXPECT_EQ(expected_size1, myInfo.getExtraKeywords().size());
@@ -45,9 +45,9 @@ namespace {
         EXPECT_NE(keywords, myInfo.getExtraKeywords());
     }
 
-    TEST(ExtraObjectInfoTestSuite, canSetExtraDescriptions) {
+    TEST(ExtraInfoTestSuite, canSetExtraDescriptions) {
         std::vector<std::string> descriptions = {"test1", "test2"};
-        model::ExtraObjectInfo myInfo;
+        model::ExtraInfo myInfo;
 
         unsigned int expected_size1 = 0;
         EXPECT_EQ(expected_size1, myInfo.getExtraDescriptions().size());
@@ -63,9 +63,9 @@ namespace {
         EXPECT_NE(descriptions, myInfo.getExtraDescriptions());
     }
 
-    TEST(ExtraObjectInfoTestSuite, canCheckEquality) {
-        model::ExtraObjectInfo obj1;
-        model::ExtraObjectInfo obj2;
+    TEST(ExtraInfoTestSuite, canCheckEquality) {
+        model::ExtraInfo obj1;
+        model::ExtraInfo obj2;
 
         EXPECT_EQ(obj2, obj1);
 

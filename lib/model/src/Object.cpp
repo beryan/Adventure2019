@@ -35,7 +35,7 @@ namespace model {
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
             Slot slot,
-            ExtraObjectInfo extraObjectInfo
+            ExtraInfo extraObjectInfo
     ) :
             id(id),
             shortDescription(std::move(shortDescription)),
@@ -85,11 +85,11 @@ namespace model {
         this->slot = slot;
     }
 
-    ExtraObjectInfo Object::getExtraObjectInfo() const {
+    ExtraInfo Object::getExtraObjectInfo() const {
         return extraObjectInfo;
     }
 
-    void Object::setExtraObjectInfo(ExtraObjectInfo extraObjectInfo) {
+    void Object::setExtraObjectInfo(ExtraInfo extraObjectInfo) {
         Object::extraObjectInfo = std::move(extraObjectInfo);
     }
 

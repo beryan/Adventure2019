@@ -8,7 +8,7 @@
 namespace {
     TEST(ObjectTestSuite, canUseNoArgConstructor) {
         model::Object myObject;
-        model::ExtraObjectInfo myExtraInfo;
+        model::ExtraInfo myExtraInfo;
         std::string expected_string;
         unsigned int expected_size = 0;
 
@@ -28,7 +28,7 @@ namespace {
         model::Slot mySlot = model::Slot::Head;
         model::Object myObject{myId, shortDesc, longDesc, keywords, mySlot};
 
-        model::ExtraObjectInfo emptyExtraInfo;
+        model::ExtraInfo emptyExtraInfo;
 
         EXPECT_EQ(myId, myObject.getId());
         EXPECT_EQ(shortDesc, myObject.getShortDescription());
@@ -44,7 +44,7 @@ namespace {
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
         std::vector<std::string> keywords = {"skateboard", "travel", "fast", "cool"};
         model::Slot mySlot = model::Slot::Head;
-        model::ExtraObjectInfo myExtraInfo{{"asdf"}, {"hello"}};
+        model::ExtraInfo myExtraInfo{{"asdf"}, {"hello"}};
         model::Object myObject{myId, shortDesc, longDesc, keywords, mySlot, myExtraInfo};
 
         EXPECT_EQ(myId, myObject.getId());
@@ -61,7 +61,7 @@ namespace {
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
         std::vector<std::string> keywords = {"skateboard", "travel", "fast", "cool"};
         model::Slot mySlot = model::Slot::Head;
-        model::ExtraObjectInfo myExtraInfo{{"asdf"}, {"hello"}};
+        model::ExtraInfo myExtraInfo{{"asdf"}, {"hello"}};
         model::Object myObject{};
 
         myObject.setId(myId);
