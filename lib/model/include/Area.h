@@ -7,8 +7,8 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_AREA_H
-#define WEBSOCKETNETWORKING_AREA_H
+#ifndef AREA_H
+#define AREA_H
 
 #include <string>
 #include <vector>
@@ -70,4 +70,4 @@ namespace model {
 
 }
 
-#endif
+#endif //AREA_H

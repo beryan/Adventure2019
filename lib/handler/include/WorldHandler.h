@@ -70,6 +70,12 @@ namespace handler {
         removeItem(const model::ID &roomId, const model::ID &objectId);
 
         /**
+         *  Determines if you can give to a player
+         */
+        bool
+        canGive(const model::ID &roomId, const model::ID &playerId);
+
+        /**
          *  Gets player ids in current and adjacent rooms given current room id
          */
         std::vector<model::ID>

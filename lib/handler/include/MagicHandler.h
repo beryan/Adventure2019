@@ -107,7 +107,7 @@ namespace handler {
          *  the swap between player clients.
          */
         void
-        removeBodySwap (const model::ID &playerId);
+        removeBodySwap(const model::ID &playerId);
 
         /**
          *  Removes a confuse SpellInstance containing the specified player ID as a target or caster
