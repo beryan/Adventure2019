@@ -31,17 +31,17 @@ namespace handler {
 
             auto firstVowelIndex = word.find_first_of("aeiouAEIOU");
 
-            if (firstVowelIndex != std::string::npos && firstVowelIndex != 0) {
-                // Word starts with consonant(s)
-                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "ay";
-
-            } else if (firstVowelIndex != std::string::npos) {
-                // Word starts with a vowel
-                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "way";
-
-            } else {
+            if (firstVowelIndex == std::string::npos) {
                 // Word's letters are all consonants
                 result << word << "ay";
+
+            } else if (firstVowelIndex == 0) {
+                // Word starts with a vowel
+                result << word << "way";
+
+            } else {
+                // Word starts with consonant(s)
+                result << word.substr(firstVowelIndex) << word.substr(0, firstVowelIndex) << "ay";
             }
 
             return result.str();
@@ -49,9 +49,12 @@ namespace handler {
     };
 
 
-    auto constexpr CONFUSE_SPELL_NAME = "confuse";
-    auto constexpr BODY_SWAP_SPELL_NAME = "swap";
-    auto constexpr DECOY_SPELL_NAME = "decoy";
+    constexpr auto CONFUSE_SPELL_NAME = "confuse";
+    constexpr auto BODY_SWAP_SPELL_NAME = "swap";
+    constexpr auto DECOY_SPELL_NAME = "decoy";
+    constexpr unsigned int BODY_SWAP_DURATION = 50;
+    constexpr unsigned int CONFUSE_DURATION = 50;
+
 
     /**
      *  @class MagicHandler
@@ -67,9 +70,6 @@ namespace handler {
         AccountHandler* accountHandler;
         std::vector<SpellInstance> bodySwapInstances;
         std::vector<SpellInstance> confuseInstances;
-
-        static constexpr unsigned int BODY_SWAP_DURATION = 50;
-        static constexpr unsigned int CONFUSE_DURATION = 50;
 
         enum class Spell {
             BodySwap,
@@ -103,14 +103,14 @@ namespace handler {
         confuse(const Connection &client, const std::string &targetName);
 
         /**
-         *  Removes a body swap SpellInstance containing the specified player ID as a target or caster and reverts
+         *  Removes a body swap SpellInstance containing the specified player ID as the target or caster and reverts
          *  the swap between player clients.
          */
         void
         removeBodySwap(const model::ID &playerId);
 
         /**
-         *  Removes a confuse SpellInstance containing the specified player ID as a target or caster
+         *  Removes a confuse SpellInstance containing the specified player ID as the target
          */
         void
         removeConfuse(const model::ID &playerId);
