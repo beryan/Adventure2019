@@ -31,7 +31,8 @@ TEST(GameTestSuite, canConstructGameInstance) {
     std::function<void(Connection)> disconnect = [](Connection) {};
     std::function<void()> shutdown = []() {};
 
-    Game game{clients, newClients, disconnectedClients, disconnect, shutdown};
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    Game game{connectionHandler};
 
 
     unsigned int expectedValue = 0;
@@ -48,7 +49,8 @@ TEST(GameTestSuite, canGetGreetingOnConnect) {
     std::function<void()> shutdown = []() {};
 
 
-    Game game{clients, newClients, disconnectedClients, disconnect, shutdown};
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    Game game{connectionHandler};
 
     std::ostringstream introduction;
     introduction << "Welcome to Adventure 2019!\n"
@@ -85,7 +87,8 @@ TEST(GameTestSuite, canCallDisconnectCommand) {
     };
     std::function<void()> shutdown = []() {};
 
-    Game game{clients, newClients, disconnectedClients, disconnect, shutdown};
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    Game game{connectionHandler};
     std::deque<Message> userInput{{CLIENT_A, DISCONNECT_COMMAND}};
 
     game.processCycle(userInput);
@@ -107,7 +110,8 @@ TEST(GameTestSuite, canCallShutdownCommand) {
         isShutdown = true;
     };
 
-    Game game{clients, newClients, disconnectedClients, disconnect, shutdown};
+    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect, shutdown);
+    Game game{connectionHandler};
     std::deque<Message> userInput{{CLIENT_A, SHUTDOWN_COMMAND}};
 
     game.processCycle(userInput);

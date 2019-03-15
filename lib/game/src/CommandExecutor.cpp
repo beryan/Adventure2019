@@ -14,13 +14,15 @@ constexpr auto ALIAS_SET = "set";
 constexpr auto ALIAS_CLEAR = "clear";
 constexpr auto ALIAS_HELP = "help";
 
-CommandExecutor::CommandExecutor(std::vector<Connection> &clients, AccountHandler &accountHandler, MagicHandler &magicHandler,
+CommandExecutor::CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
+                                 MagicHandler &magicHandler,
                                  WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser)
-        : accountHandler(accountHandler),
+        : connectionHandler(connectionHandler),
+          accountHandler(accountHandler),
           magicHandler(magicHandler),
           worldHandler(worldHandler),
           aliasManager(aliasManager),
-          commandParser(commandParser){}
+          commandParser(commandParser) {}
 
 std::vector<Message> CommandExecutor::executeCommand(const Connection &client, const game::Command &command,
                                                      const std::vector<std::string> &params) {
@@ -113,7 +115,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
                 this->magicHandler.confuseSpeech(message);
             }
 
-            for (auto connection: *this->clients) {
+            for (auto connection: connectionHandler.getClients()) {
                 auto receiver = this->accountHandler.getUsernameByClient(connection);
 
                 if (receiver == username) {
@@ -144,7 +146,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
                 this->magicHandler.confuseSpeech(message);
             }
 
-            for (auto connection : *this->clients) {
+            for (auto connection : connectionHandler.getClients()) {
                 std::ostringstream yellMessage;
                 yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
                 messages.push_back({connection, yellMessage.str()});

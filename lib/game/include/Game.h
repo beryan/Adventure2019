@@ -19,6 +19,7 @@
 #include <functional>
 #include <deque>
 #include <map>
+#include <ConnectionHandler.h>
 
 using networking::Connection;
 using networking::Message;
@@ -44,13 +45,7 @@ namespace game {
      */
     class Game {
     private:
-        // todo: refactor these into something like ConnectionsHandler
-        std::vector<Connection> *clients;
-        std::vector<Connection> *newClients;
-        std::vector<Connection> *disconnectedClients;
-        std::function<void(Connection action)> disconnect;
-        std::function<void()> shutdown;
-
+        ConnectionHandler &connectionHandler;
         AccountHandler accountHandler;
         MagicHandler magicHandler;
         WorldHandler worldHandler;
@@ -122,11 +117,7 @@ namespace game {
          *  The game class' handleConnects() and handleDisconnects() methods are responsible for removing IDs from the
          *  new client ID and disconnected client ID vectors, respectively.
          */
-        Game(std::vector<Connection> &clients,
-             std::vector<Connection> &newClients,
-             std::vector<Connection> &disconnectedClients,
-             std::function<void(Connection)> &disconnect,
-             std::function<void()> &shutdown);
+        explicit Game(ConnectionHandler &connectionManager);
 
         /**
          *  Runs a game cycle. Performs handleConnects(), handleDisconnects(), handleIncoming(), handleOutgoing(),

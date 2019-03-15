@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include "ConnectionHandler.h"
 #include "Command.h"
 #include "Server.h"
 #include "PlayerHandler.h"
@@ -26,8 +27,9 @@ using networking::Connection;
 namespace game {
     class CommandExecutor {
     public:
-        CommandExecutor(std::vector<Connection> &clients, AccountHandler &accountHandler1, MagicHandler &magicHandler1,
-                        WorldHandler &worldHandler1, AliasManager &aliasManager1, CommandParser &commandParser);
+        CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
+                        MagicHandler &magicHandler,
+                        WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser);
 
         /**
          * Executes a command
@@ -43,9 +45,9 @@ namespace game {
          *  Update game state to not include connections that are no longer in game.
          */
         void removeClientFromGame(Connection client);
-    private:
-        std::vector<Connection> *clients;
 
+    private:
+        ConnectionHandler& connectionHandler;
         PlayerHandler playerHandler;
         AccountHandler accountHandler;
         MagicHandler magicHandler;

@@ -31,22 +31,15 @@ trimWhitespace(const std::string &string) {
 }
 
 namespace game {
-    Game::Game(std::vector<Connection> &clients,
-               std::vector<Connection> &newClients,
-               std::vector<Connection> &disconnectedClients,
-               std::function<void(Connection)> &disconnect,
-               std::function<void()> &shutdown) :
-            clients(&clients),
-            newClients(&newClients),
-            disconnectedClients(&disconnectedClients),
-            disconnect(disconnect),
-            shutdown(shutdown),
+    Game::Game(ConnectionHandler &connectionHandler) :
+            connectionHandler(connectionHandler),
             magicHandler(this->accountHandler),
-            commandExecutor(clients, accountHandler, magicHandler, worldHandler, aliasManager, commandParser) {};
+            commandExecutor(connectionHandler, accountHandler, magicHandler, worldHandler, aliasManager,
+                            commandParser) {};
 
     void
     Game::handleConnects(std::deque<Message> &messages) {
-        for (auto &newClient : *this->newClients) {
+        for (auto &newClient : connectionHandler.getNewClients()) {
             std::ostringstream introduction;
 
             introduction << "Welcome to Adventure 2019!\n"
@@ -59,12 +52,12 @@ namespace game {
             messages.push_back({newClient, introduction.str()});
         }
 
-        this->newClients->clear();
+        this->connectionHandler.getNewClients().clear();
     }
 
     void
     Game::handleDisconnects(std::deque<Message> &messages) {
-        for (auto &disconnectedClient : *this->disconnectedClients) {
+        for (auto &disconnectedClient : this->connectionHandler.getDisconnectedClients()) {
             if (this->accountHandler.isLoggingIn(disconnectedClient)) {
                 this->accountHandler.exitLogin(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been removed from login due to disconnect\n";
@@ -83,7 +76,7 @@ namespace game {
             }
         }
 
-        this->disconnectedClients->clear();
+        this->connectionHandler.getDisconnectedClients().clear();
     }
 
     void
@@ -94,10 +87,8 @@ namespace game {
             std::ostringstream tempMessage;
 
             if (this->accountHandler.isLoggingIn(client)) {
-                messages.push_back({client,
-                                    this->accountHandler.processLogin(client,
-                                                                      incomingInput.substr(0, incomingInput.find(
-                                                                              ' ')))});
+                auto username = incomingInput.substr(0, incomingInput.find(' '));
+                messages.push_back({client, this->accountHandler.processLogin(client, username)});
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
@@ -109,9 +100,9 @@ namespace game {
                 continue;
 
             } else if (this->accountHandler.isRegistering(client)) {
-                messages.push_back({client, this->accountHandler.processRegistration(client, incomingInput.substr(0,
-                                                                                                                  incomingInput.find(
-                                                                                                                          ' ')))});
+                auto username = incomingInput.substr(0, incomingInput.find(' '));
+                std::string result = this->accountHandler.processRegistration(client, username);
+                messages.push_back({client, result});
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
@@ -140,13 +131,13 @@ namespace game {
 
             switch (command) {
                 case Command::Quit: {
-                    this->disconnect(input.connection);
+                    this->connectionHandler.disconnect(input.connection);
                     continue;
                 }
 
                 case Command::Shutdown: {
                     std::cout << "Shutting down.\n";
-                    this->shutdown();
+                    this->connectionHandler.shutdown();
                     return;
                 }
 
