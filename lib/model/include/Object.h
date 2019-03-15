@@ -45,7 +45,7 @@ namespace model {
                 std::vector<std::string> longDescription,
                 std::vector<std::string> keywords,
                 Slot slot,
-                ExtraInfo extraObjectInfo
+                std::vector<ExtraInfo> extraObjectInfo
         );
 
         model::ID getId() const;
@@ -68,9 +68,9 @@ namespace model {
 
         void setSlot(Slot slot);
 
-        ExtraInfo getExtraObjectInfo() const;
+        std::vector<ExtraInfo> getExtraObjectInfo() const;
 
-        void setExtraObjectInfo(ExtraInfo extraObjectInfo);
+        void setExtraObjectInfo(std::vector<ExtraInfo> extraObjectInfo);
 
         bool canBeEquipped() const;
 
@@ -97,7 +97,7 @@ namespace model {
 
         Slot slot;
 
-        ExtraInfo extraObjectInfo;
+        std::vector<ExtraInfo> extraObjectInfo;
 
         friend std::ostream&operator<<(std::ostream& os, const Object& obj);
     };
