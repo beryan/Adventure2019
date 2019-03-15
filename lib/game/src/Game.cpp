@@ -266,7 +266,6 @@ namespace game {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto playerIds = this->worldHandler.findRoom(roomId).getPlayersInRoom();
 
-
                 for (const auto &playerId : playerIds) {
                     auto connection = this->accountHandler.getClientByPlayerId(playerId);
                     auto message = param;
@@ -287,7 +286,6 @@ namespace game {
             case Command::Yell: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto playerIds = this->worldHandler.getNearbyPlayerIds(roomId);
-
 
                 for (const auto &playerId : playerIds) {
                     auto connection = this->accountHandler.getClientByPlayerId(playerId);
@@ -347,9 +345,9 @@ namespace game {
 
                 for (auto connection : *this->clients) {
                     if (this->accountHandler.isLoggedIn(connection)) {
-                        std::ostringstream yellMessage;
-                        yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
-                        messages.push_back({connection, yellMessage.str()});
+                        std::ostringstream chatMessage;
+                        chatMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
+                        messages.push_back({connection, chatMessage.str()});
                     }
                 }
 
