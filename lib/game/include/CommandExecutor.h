@@ -9,22 +9,50 @@
 #include <vector>
 #include "Command.h"
 #include "Server.h"
+#include "PlayerHandler.h"
+#include "AccountHandler.h"
+#include "MagicHandler.h"
+#include "WorldHandler.h"
+#include "AliasManager.h"
+#include "CommandParser.h"
 
+using networking::Message;
+using handler::PlayerHandler;
+using handler::AccountHandler;
+using handler::MagicHandler;
+using handler::WorldHandler;
 using networking::Connection;
 
 namespace game {
     class CommandExecutor {
     public:
+        CommandExecutor(std::vector<Connection> &clients, AccountHandler &accountHandler1, MagicHandler &magicHandler1,
+                        WorldHandler &worldHandler1, AliasManager &aliasManager1, CommandParser &commandParser);
+
         /**
          * Executes a command
+         * @param client client to execute the command for
          * @param command command to execute
          * @param params parameters for the command
-         * @return result of the command
+         * @return messages for client
          */
-        std::string executeCommand(const Connection &client, const Command &command,
-                                   const std::vector<std::string> &params);
+        std::vector<Message> executeCommand(const Connection &client, const Command &command,
+                                            const std::vector<std::string> &params);
 
+        /**
+         *  Update game state to not include connections that are no longer in game.
+         */
+        void removeClientFromGame(Connection client);
     private:
+        std::vector<Connection> *clients;
+
+        PlayerHandler playerHandler;
+        AccountHandler accountHandler;
+        MagicHandler magicHandler;
+        WorldHandler worldHandler;
+        AliasManager aliasManager;
+        CommandParser commandParser;
+
         std::string executeAliasCommand(const Connection &client, const std::vector<std::string> &params);
 
         template<typename T>

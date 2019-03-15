@@ -3,12 +3,7 @@
 //
 
 #include <CommandExecutor.h>
-#include <sstream>
 #include <iostream>
-
-#include "CommandExecutor.h"
-#include "Room.h"
-#include "NPC.h"
 
 using game::CommandExecutor;
 using model::NPC;
@@ -19,9 +14,19 @@ constexpr auto ALIAS_SET = "set";
 constexpr auto ALIAS_CLEAR = "clear";
 constexpr auto ALIAS_HELP = "help";
 
-std::string CommandExecutor::executeCommand(const Connection &client, const Command &command,
-                                            const std::vector<std::string> &params) {
+CommandExecutor::CommandExecutor(std::vector<Connection> &clients, AccountHandler &accountHandler, MagicHandler &magicHandler,
+                                 WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser)
+        : accountHandler(accountHandler),
+          magicHandler(magicHandler),
+          worldHandler(worldHandler),
+          aliasManager(aliasManager),
+          commandParser(commandParser){}
+
+std::vector<Message> CommandExecutor::executeCommand(const Connection &client, const game::Command &command,
+                                                     const std::vector<std::string> &params) {
+    std::vector<Message> messages = {};
     std::ostringstream tempMessage;
+
     switch (command) {
         case Command::Logout: {
             this->magicHandler.handleLogout(client);
@@ -82,7 +87,6 @@ std::string CommandExecutor::executeCommand(const Connection &client, const Comm
         case Command::Say: {
             auto roomId = this->accountHandler.getRoomIdByClient(client);
             auto playerIds = this->worldHandler.getNearbyPlayerIds(roomId);
-
 
             for (const auto &playerId : playerIds) {
                 auto connection = this->accountHandler.getClientByPlayerId(playerId);
@@ -322,6 +326,9 @@ std::string CommandExecutor::executeCommand(const Connection &client, const Comm
                         << "\" for a full list of commands\n";
             break;
     }
+
+    messages.push_back({client, tempMessage.str()});
+    return messages;
 }
 
 std::string CommandExecutor::executeAliasCommand(const Connection &client, const std::vector<std::string> &params) {
@@ -412,4 +419,11 @@ CommandExecutor::getItemByKeyword(const std::vector<T> &objects, const std::stri
         item = *it;
     }
     return item;
+}
+
+void
+CommandExecutor::removeClientFromGame(Connection client) {
+    auto playerId = this->accountHandler.getPlayerIdByClient(client);
+    auto roomId = this->accountHandler.getRoomIdByClient(client);
+    this->worldHandler.removePlayer(roomId, playerId);
 }

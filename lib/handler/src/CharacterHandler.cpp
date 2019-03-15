@@ -7,7 +7,7 @@
 using handler::CharacterHandler;
 
 namespace handler {
-    CharacterHandler::CharacterHandler() {};
+    CharacterHandler::CharacterHandler() = default;
 
     void CharacterHandler::reduceHealth(Character &character, int change) {
         if (logic.canReduceHealth(character.getHealth(), change)) {

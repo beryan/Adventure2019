@@ -41,7 +41,8 @@ namespace game {
             disconnectedClients(&disconnectedClients),
             disconnect(disconnect),
             shutdown(shutdown),
-            magicHandler(this->accountHandler) {};
+            magicHandler(this->accountHandler),
+            commandExecutor(clients, accountHandler, magicHandler, worldHandler, aliasManager, commandParser) {};
 
     void
     Game::handleConnects(std::deque<Message> &messages) {
@@ -76,7 +77,7 @@ namespace game {
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
                 this->magicHandler.handleLogout(disconnectedClient);
-                this->removeClientFromGame(disconnectedClient);
+                this->commandExecutor.removeClientFromGame(disconnectedClient);
                 this->accountHandler.logoutClient(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
@@ -219,20 +220,11 @@ namespace game {
     }
 
     std::vector<Message>
-    Game::executeInGameAction(const Connection &client,
-                              const Command &command,
-                              const std::string &param) {
-        std::vector<Message> messages = {};
-        std::ostringstream tempMessage;
-
+    Game::executeInGameAction(const Connection &client, const Command &command, const std::string &param) {
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
 
-        tempMessage << this->commandExecutor.executeCommand(client, command, params);
-
-        messages.push_back({client, tempMessage.str()});
-
-        return messages;
+        return this->commandExecutor.executeCommand(client, command, params);
     }
 
     void
@@ -262,13 +254,6 @@ namespace game {
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.addPlayer(roomId, playerId);
-    }
-
-    void
-    Game::removeClientFromGame(Connection client) {
-        auto playerId = this->accountHandler.getPlayerIdByClient(client);
-        auto roomId = this->accountHandler.getRoomIdByClient(client);
-        this->worldHandler.removePlayer(roomId, playerId);
     }
 
     bool

@@ -44,6 +44,7 @@ namespace game {
      */
     class Game {
     private:
+        // todo: refactor these into something like ConnectionsHandler
         std::vector<Connection> *clients;
         std::vector<Connection> *newClients;
         std::vector<Connection> *disconnectedClients;
@@ -52,7 +53,6 @@ namespace game {
 
         AccountHandler accountHandler;
         MagicHandler magicHandler;
-        PlayerHandler playerHandler;
         WorldHandler worldHandler;
         AliasManager aliasManager;
         CommandParser commandParser;
@@ -109,12 +109,6 @@ namespace game {
          */
         void
         addClientToGame(Connection client);
-
-        /**
-         *  Update game state to not include connections that are no longer in game.
-         */
-        void
-        removeClientFromGame(Connection client);
 
         /**
          *  Checks if parameters are incorrect format for in game command.
