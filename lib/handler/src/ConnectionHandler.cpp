@@ -27,6 +27,6 @@ std::vector<Connection> &ConnectionHandler::getDisconnectedClients() {
     return this->disconnectedClients;
 }
 
-void ConnectionHandler::disconnect(Connection client) {
+void ConnectionHandler::disconnectClient(Connection client) {
     this->disconnectFn(client);
 }

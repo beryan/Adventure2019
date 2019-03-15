@@ -24,7 +24,7 @@ public:
 
     std::vector<Connection> &getDisconnectedClients();
 
-    void disconnect(Connection client);
+    void disconnectClient(Connection client);
 
 private:
     std::vector<Connection> &clients;

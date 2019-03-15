@@ -69,12 +69,12 @@ main(int argc, char *argv[]) {
     unsigned short port = (unsigned short) std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
-    std::function<void(Connection)> disconnect = [&server](Connection connection) {
+    std::function<void(Connection)> disconnectClient = [&server](Connection connection) {
         server.disconnect(connection);
     };
 
     ClientMessageBuffer clientMessageBuffer;
-    ConnectionHandler connectionHandler{clients, newClients, disconnectedClients, disconnect};
+    ConnectionHandler connectionHandler{clients, newClients, disconnectedClients, disconnectClient};
     Game game{connectionHandler};
 
     while (game.isRunning()) {

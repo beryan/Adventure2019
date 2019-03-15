@@ -131,7 +131,7 @@ namespace game {
 
             switch (command) {
                 case Command::Quit: {
-                    this->connectionHandler.disconnect(input.connection);
+                    this->connectionHandler.disconnectClient(input.connection);
                     continue;
                 }
 
