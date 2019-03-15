@@ -4,8 +4,6 @@
 
 #include "Game.h"
 
-#include <map>
-#include <sstream>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
 
@@ -33,24 +31,17 @@ trimWhitespace(const std::string &string) {
 }
 
 namespace game {
-    // move these when refactoring out commands
-    constexpr auto ALIAS_LIST = "list";
-    constexpr auto ALIAS_SET = "set";
-    constexpr auto ALIAS_CLEAR = "clear";
-    constexpr auto ALIAS_HELP = "help";
-
     Game::Game(std::vector<Connection> &clients,
                std::vector<Connection> &newClients,
                std::vector<Connection> &disconnectedClients,
                std::function<void(Connection)> &disconnect,
                std::function<void()> &shutdown) :
-        clients(&clients),
-        newClients(&newClients),
-        disconnectedClients(&disconnectedClients),
-        disconnect(disconnect),
-        shutdown(shutdown),
-        magicHandler(this->accountHandler){};
-
+            clients(&clients),
+            newClients(&newClients),
+            disconnectedClients(&disconnectedClients),
+            disconnect(disconnect),
+            shutdown(shutdown),
+            magicHandler(this->accountHandler) {};
 
     void
     Game::handleConnects(std::deque<Message> &messages) {
@@ -59,15 +50,16 @@ namespace game {
 
             introduction << "Welcome to Adventure 2019!\n"
                          << "\n"
-                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register) << "\" to create a new account\n";
+                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login)
+                         << "\" to login to an existing account\n"
+                         << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register)
+                         << "\" to create a new account\n";
 
             messages.push_back({newClient, introduction.str()});
         }
 
         this->newClients->clear();
     }
-
 
     void
     Game::handleDisconnects(std::deque<Message> &messages) {
@@ -93,7 +85,6 @@ namespace game {
         this->disconnectedClients->clear();
     }
 
-
     void
     Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages) {
         for (const auto &input : incoming) {
@@ -102,10 +93,10 @@ namespace game {
             std::ostringstream tempMessage;
 
             if (this->accountHandler.isLoggingIn(client)) {
-                messages.push_back({
-                    client,
-                    this->accountHandler.processLogin(client, incomingInput.substr(0, incomingInput.find(' ')))
-                });
+                messages.push_back({client,
+                                    this->accountHandler.processLogin(client,
+                                                                      incomingInput.substr(0, incomingInput.find(
+                                                                              ' ')))});
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
@@ -117,11 +108,9 @@ namespace game {
                 continue;
 
             } else if (this->accountHandler.isRegistering(client)) {
-                messages.push_back({
-                    client,
-                    this->accountHandler.processRegistration(client, incomingInput.substr(0, incomingInput.find(' ')))
-                });
-
+                messages.push_back({client, this->accountHandler.processRegistration(client, incomingInput.substr(0,
+                                                                                                                  incomingInput.find(
+                                                                                                                          ' ')))});
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
@@ -203,18 +192,26 @@ namespace game {
                             << "********\n"
                             << "\n"
                             << "COMMANDS:\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Register) << " (create a new account)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Login) << " (login to an existing account)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
+                            << "  - " << this->commandParser.getStringForCommand(Command::Help)
+                            << " (shows this help interface)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Register)
+                            << " (create a new account)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Login)
+                            << " (login to an existing account)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Quit)
+                            << " (disconnects you from the game server)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown)
+                            << " (shuts down the game server)\n";
                 break;
 
             default:
                 tempMessage << "\n"
-                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login) << "\" to login to an existing account\n"
-                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register) << "\" to create a new account\n"
-                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Login)
+                            << "\" to login to an existing account\n"
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Register)
+                            << "\" to create a new account\n"
+                            << "Enter " << "\"" << this->commandParser.getStringForCommand(Command::Help)
+                            << "\" for a full list of commands\n";
                 break;
         }
 
@@ -231,359 +228,18 @@ namespace game {
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
 
-        switch (command) {
-            case Command::Logout: {
-                this->magicHandler.handleLogout(client);
-                this->removeClientFromGame(client);
-                tempMessage << this->accountHandler.logoutClient(client);
-                break;
-            }
-
-            case Command::Help:
-                tempMessage << "\n"
-                            << "********\n"
-                            << "* HELP *\n"
-                            << "********\n"
-                            << "\n"
-                            << "COMMANDS:\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Help) << " (shows this help interface)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Say) << " [message] (sends [message] to nearby players in the game)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Tell) << " [username] [message] (sends [message] to [username] in the game)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Yell) << " [message] (sends [message] to other players in the game)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Look) << " (displays current location information)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Exits) << " (displays exits from current location)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Examine) << " [keyword] (examines something or someone)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Talk) << " [keyword] (interacts with NPC)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Take) << " [keyword] (places item in your inventory)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
-                break;
-
-            case Command::Say: {
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                auto playerIds = this->worldHandler.getNearbyPlayerIds(roomId);
-
-
-                for (const auto &playerId : playerIds) {
-                    auto connection = this->accountHandler.getClientByPlayerId(playerId);
-                    auto message = param;
-
-                    if (this->magicHandler.isConfused(client)) {
-                        this->magicHandler.confuseSpeech(message);
-                    }
-
-                    std::ostringstream sayMessage;
-                    sayMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
-
-                    messages.push_back({connection, sayMessage.str()});
-                }
-
-                return messages;
-            }
-
-            case Command::Tell: {
-                auto username = param.substr(0, param.find(' '));
-                auto message = trimWhitespace(param.substr(param.find(' ') + 1));
-
-                if (this->magicHandler.isConfused(client)) {
-                    this->magicHandler.confuseSpeech(message);
-                }
-
-                for (auto connection: *this->clients) {
-                    auto receiver = this->accountHandler.getUsernameByClient(connection);
-
-                    if (receiver == username) {
-                        auto sender = this->accountHandler.getUsernameByClient(client);
-
-                        std::ostringstream toMessage;
-                        std::ostringstream fromMessage;
-
-                        toMessage << "To " << receiver << "> " << message << "\n";
-                        fromMessage << "From " + sender + "> " << message << "\n";;
-
-                        messages.push_back({client, toMessage.str()});
-                        messages.push_back({connection, fromMessage.str()});
-
-                        return messages;
-                    }
-                }
-
-                tempMessage << "Unable to find online user \"" << username << "\".\n";
-
-                break;
-            }
-
-            case Command::Yell: {
-                auto message = param;
-
-                if (this->magicHandler.isConfused(client)) {
-                    this->magicHandler.confuseSpeech(message);
-                }
-
-                for (auto connection : *this->clients) {
-                    std::ostringstream yellMessage;
-                    yellMessage << this->accountHandler.getUsernameByClient(client) << "> " << message << "\n";
-                    messages.push_back({connection, yellMessage.str()});
-                }
-
-                return messages;
-            }
-
-            case Command::Look: {
-                if (param.empty()) {
-                    auto roomId = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << this->worldHandler.findRoom(roomId);
-                    break;
-                }
-            }
-
-            case Command::Examine: {
-                auto room = this->worldHandler.findRoom(this->accountHandler.getRoomIdByClient(client));
-                auto npcs = room.getNpcs();
-                auto objects = room.getObjects();
-
-                if (containsKeyword(npcs, param)) {
-                    NPC npc = getItemByKeyword(npcs, param);
-                    for (const auto &str : npc.getDescription()) {
-                        tempMessage << str << std::endl;
-                    }
-                } else if (containsKeyword(objects, param)) {
-                    Object obj = getItemByKeyword(objects, param);
-                    for (const auto &str : obj.getLongDescription()) {
-                        tempMessage << str << std::endl;
-                    }
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Exits: {
-                auto roomID = this->accountHandler.getRoomIdByClient(client);
-                tempMessage << "\n" << this->worldHandler.findRoom(roomID).doorsToString();
-                break;
-            }
-
-            case Command::Move: {
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-
-                if (this->worldHandler.isValidDirection(roomId, param)) {
-                    auto playerId = this->accountHandler.getPlayerIdByClient(client);
-                    auto destinationId = this->worldHandler.getDestination(roomId, param);
-                    this->worldHandler.movePlayer(playerId, roomId, destinationId);
-                    this->accountHandler.setRoomIdByClient(client, destinationId);
-                    tempMessage << "\n" << this->worldHandler.findRoom(destinationId).descToString();
-                } else {
-                    tempMessage << "You can't move that way!\n";
-                }
-
-                break;
-            }
-
-            case Command::Cast: {
-                return this->magicHandler.castSpell(client, param);
-            }
-
-            case Command::Spells: {
-                tempMessage << this->magicHandler.getSpells();
-                break;
-            }
-
-            case Command::Talk: {
-                auto room = this->worldHandler.findRoom(this->accountHandler.getRoomIdByClient(client));
-                auto npcs = room.getNpcs();
-
-                if (containsKeyword(npcs, param)) {
-                    auto npc = getItemByKeyword(npcs, param);
-                    for (const auto &str : npc.getLongDescription()) {
-                        tempMessage << str << std::endl;
-                    }
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Take: {
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                Room& room = this->worldHandler.findRoom(roomId);
-                auto objects = room.getObjects();
-
-                if (containsKeyword(objects, param)) {
-                    auto item = getItemByKeyword(objects, param);
-                    auto player = this->accountHandler.getPlayerByClient(client);
-                    this->worldHandler.removeItem(roomId, item.getId());
-                    this->playerHandler.pickupItem(*player, item);
-                    tempMessage << "Item taken successfully.\n";
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Drop: {
-                auto player = this->accountHandler.getPlayerByClient(client);
-                auto objects = player->getInventory().getVectorInventory();
-                auto equip = player->getEquipment().getVectorEquipment();
-                objects.insert(objects.end(), equip.begin(), equip.end());
-
-                if (containsKeyword(objects, param)) {
-                    auto item = getItemByKeyword(objects, param);
-                    auto roomId = this->accountHandler.getRoomIdByClient(client);
-
-                    this->playerHandler.dropItem(*player, item);
-                    this->worldHandler.addItem(roomId, item);
-                    tempMessage << "Item dropped successfully.\n";
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Wear: {
-                auto player = this->accountHandler.getPlayerByClient(client);
-                auto objects = player->getInventory().getVectorInventory();
-
-                if (containsKeyword(objects, param)) {
-                    if (this->playerHandler.equipItem(*player, getItemByKeyword(objects, param))) {
-                        tempMessage << "Item equipped successfully.\n";
-                    } else {
-                        tempMessage << "That item cannot be equipped!\n";
-                    }
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Remove: {
-                auto player = this->accountHandler.getPlayerByClient(client);
-                auto objects = player->getEquipment().getVectorEquipment();
-
-                if (containsKeyword(objects, param)) {
-                    this->playerHandler.unequipItem(*player, getItemByKeyword(objects, param));
-                    tempMessage << "Item unequipped successfully.\n";
-                } else {
-                    tempMessage << "Invalid keyword.\n";
-                }
-
-                break;
-            }
-
-            case Command::Inventory: {
-                tempMessage << this->accountHandler.getPlayerByClient(client)->getInventory();
-                break;
-            }
-
-            case Command::Equipment: {
-                tempMessage << this->accountHandler.getPlayerByClient(client)->getEquipment();
-                break;
-            }
-
-            case Command::Debug: {
-                tempMessage << this->worldHandler.getWorld();
-                break;
-            }
-
-            case Command::Alias: {
-                try {
-                    std::string username = this->accountHandler->getUsernameByClient(client);
-                    std::string aliasOption = params[0];
-
-                    if (aliasOption == ALIAS_LIST) {
-                        auto aliases = this->aliasManager.getAliasesForUser(username);
-                        auto globalAliases = this->aliasManager.getGlobalAliases();
-
-                        tempMessage << "\nUser Aliases: \n";
-                        if (aliases.empty()) {
-                            tempMessage << "\tno user aliases set\n";
-                        }
-                        for (const auto &alias: aliases) {
-                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
-                        }
-
-                        tempMessage << "Global Aliases: \n";
-                        for (const auto &alias: globalAliases) {
-                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
-                        }
-                        if (globalAliases.empty()) {
-                            tempMessage << "\tno global aliases set\n";
-                        }
-                    } else if (aliasOption == ALIAS_SET) {
-                        std::string command_to_alias_str = params[1];
-                        Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
-                        if (command_to_alias != Command::InvalidCommand) {
-                            std::string alias = params[2];
-                            if (this->aliasManager.isValidAlias(alias)) {
-                                if (this->aliasManager.setUserAlias(command_to_alias, alias, username)) {
-                                    tempMessage << "\nalias set successfully\n";
-                                } else {
-                                    tempMessage << "\nalias could not be set\n";
-                                }
-                            } else {
-                                tempMessage << std::endl << alias << " is not a valid alias\n";
-                            }
-                        } else {
-                            tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
-                        }
-                    } else if (aliasOption == ALIAS_CLEAR) {
-                        std::string command_to_clear_str = params[1];
-                        Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
-                        if (command_to_clear != Command::InvalidCommand) {
-                            this->aliasManager.clearUserAlias(command_to_clear, username);
-                            tempMessage << "\nalias cleared successfully\n";
-                        } else {
-                            tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
-                        }
-                    } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
-                        tempMessage << "\nalias help: \n";
-                        tempMessage << "\talias list: list all aliases\n";
-                        tempMessage << "\talias set [command to alias] [alias]: sets an alias\n";
-                        tempMessage << "\talias clear [aliased command]: clear an alias for a command\n";
-                    } else {
-                        tempMessage << aliasOption << " is not a valid option for "
-                                    << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
-                    }
-                } catch (std::exception &e) {
-                    tempMessage << "\n error parsing " << this->commandParser.getStringForCommand(Command::Alias)
-                            << " command!\n";
-                    std::cout << e.what();
-                }
-
-                break;
-            }
-
-            default:
-                tempMessage << "\nEnter " << "\"" << this->commandParser.getStringForCommand(Command::Help) << "\" for a full list of commands\n";
-                break;
-        }
+        tempMessage << this->commandExecutor.executeCommand(client, command, params);
 
         messages.push_back({client, tempMessage.str()});
 
         return messages;
     }
 
-
     void
     Game::handleOutgoing(std::deque<Message> &messages) {
         this->accountHandler.notifyBootedClients(messages);
         this->magicHandler.processCycle(messages);
     }
-
 
     std::deque<Message>
     Game::formMessages(std::deque<Message> &messages) {
@@ -594,13 +250,12 @@ namespace game {
             clientMessages[message.connection] << message.text;
         }
 
-        for (auto const& [client, message] : clientMessages) {
+        for (auto const&[client, message] : clientMessages) {
             outgoing.push_back({client, message.str()});
         }
 
         return outgoing;
     }
-
 
     void
     Game::addClientToGame(Connection client) {
@@ -609,7 +264,6 @@ namespace game {
         this->worldHandler.addPlayer(roomId, playerId);
     }
 
-
     void
     Game::removeClientFromGame(Connection client) {
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
@@ -617,43 +271,21 @@ namespace game {
         this->worldHandler.removePlayer(roomId, playerId);
     }
 
-
     bool
     Game::isInvalidFormat(const Command &command, const std::string &parameters) {
         bool wrongTellFormat = (command == Command::Tell && parameters.find(' ') == std::string::npos);
         bool isCommandWithParam = (command == Command::Say
-            || command == Command::Yell
-            || command == Command::Move
-            || command == Command::Examine
-            || command == Command::Talk
-            || command == Command::Take
-            || command == Command::Drop
-            || command == Command::Wear
-            || command == Command::Remove);
+                                   || command == Command::Yell
+                                   || command == Command::Move
+                                   || command == Command::Examine
+                                   || command == Command::Talk
+                                   || command == Command::Take
+                                   || command == Command::Drop
+                                   || command == Command::Wear
+                                   || command == Command::Remove);
 
         return (wrongTellFormat || (isCommandWithParam && parameters.empty()));
     }
-
-
-    template <typename T>
-    bool
-    Game::containsKeyword(const std::vector<T> &objects, const std::string &keyword) {
-        auto it = std::find_if(objects.begin(), objects.end(), [&keyword](const T &obj) {return obj.containsKeyword(keyword);});
-        return (it != objects.end());
-    }
-
-
-    template <typename T>
-    T
-    Game::getItemByKeyword(const std::vector<T> &objects, const std::string &keyword) {
-        T item;
-        auto it = std::find_if(objects.begin(), objects.end(), [&keyword](const T &obj) {return obj.containsKeyword(keyword);});
-        if (it != objects.end()) {
-            item = *it;
-        }
-        return item;
-    }
-
 
     std::deque<Message>
     Game::processCycle(std::deque<Message> &incoming) {

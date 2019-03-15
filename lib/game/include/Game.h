@@ -14,6 +14,7 @@
 #include "AliasManager.h"
 #include "PlayerHandler.h"
 #include "CommandParser.h"
+#include "CommandExecutor.h"
 
 #include <functional>
 #include <deque>
@@ -27,6 +28,7 @@ using handler::PlayerHandler;
 using handler::MagicHandler;
 using game::Command;
 using game::AliasManager;
+using game::CommandExecutor;
 
 namespace game {
     /**
@@ -42,9 +44,9 @@ namespace game {
      */
     class Game {
     private:
-        std::vector<Connection>* clients;
-        std::vector<Connection>* newClients;
-        std::vector<Connection>* disconnectedClients;
+        std::vector<Connection> *clients;
+        std::vector<Connection> *newClients;
+        std::vector<Connection> *disconnectedClients;
         std::function<void(Connection action)> disconnect;
         std::function<void()> shutdown;
 
@@ -54,6 +56,7 @@ namespace game {
         WorldHandler worldHandler;
         AliasManager aliasManager;
         CommandParser commandParser;
+        CommandExecutor commandExecutor;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
@@ -119,14 +122,6 @@ namespace game {
         bool
         isInvalidFormat(const Command &command, const std::string &parameters);
 
-        template<typename T>
-        bool
-        containsKeyword(const std::vector<T> &objects, const std::string &keyword);
-
-        template<typename T>
-        T
-        getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
-
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.
@@ -145,6 +140,7 @@ namespace game {
          */
         std::deque<Message>
         processCycle(std::deque<Message> &incoming);
+
     };
 }
 
