@@ -42,6 +42,7 @@ namespace game {
         disconnectedClients(&disconnectedClients),
         disconnect(disconnect),
         shutdown(shutdown),
+        avatarHandler(this->accountHandler),
         magicHandler(this->accountHandler){};
 
 
@@ -81,6 +82,11 @@ namespace game {
                 this->accountHandler.logoutClient(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
+
+            if (this->avatarHandler.isCreatingAvatar(disconnectedClient)) {
+                this->avatarHandler.exitCreation(disconnectedClient);
+                std::cout << disconnectedClient.id << " has been removed from avatar creation due to disconnect\n";
+            }
         }
 
         this->disconnectedClients->clear();
@@ -116,6 +122,22 @@ namespace game {
                 });
 
                 if (this->accountHandler.isLoggedIn(client)) {
+                    messages.push_back({
+                        client,
+                        this->avatarHandler.processCreation(client)
+                    });
+                }
+
+                continue;
+
+            } else if (this->avatarHandler.isCreatingAvatar(client)) {
+                messages.push_back({
+                    client,
+                    this->avatarHandler.processCreation(client, incomingInput.substr(0, incomingInput.find(' ')))
+                });
+
+                // Add player to game after finishing avatar creation
+                if (!this->avatarHandler.isCreatingAvatar(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
                     tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
@@ -157,7 +179,7 @@ namespace game {
                     break;
             }
 
-            if (!this->accountHandler.isLoggedIn(client)) {
+            if (!this->accountHandler.isLoggedIn(client) && !this->avatarHandler.isCreatingAvatar(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
 
             } else {
@@ -372,6 +394,18 @@ namespace game {
                 auto objects = room.getObjects();
                 auto npcs = room.getNpcs();
                 auto extras = room.getExtras();
+
+                auto assumedClient = this->accountHandler.getClientByUsername(param);
+                if (assumedClient.id != AccountHandler::INVALID_PLAYER_ID) {
+                    auto playerRoom = this->accountHandler.getRoomIdByClient(client);
+                    auto examinedPlayerRoom = this->accountHandler.getRoomIdByClient(assumedClient);
+
+                    if (playerRoom == examinedPlayerRoom) {
+                        auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
+                        tempMessage << examinedPlayer->getDescription();
+                        break;
+                    }
+                }
 
                 if (containsKeyword(objects, param)) {
                     auto obj = getItemByKeyword(objects, param);

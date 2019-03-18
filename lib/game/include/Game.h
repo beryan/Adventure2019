@@ -14,6 +14,7 @@
 #include "AliasManager.h"
 #include "PlayerHandler.h"
 #include "CommandParser.h"
+#include "AvatarHandler.h"
 
 #include <functional>
 #include <deque>
@@ -25,6 +26,7 @@ using handler::AccountHandler;
 using handler::WorldHandler;
 using handler::PlayerHandler;
 using handler::MagicHandler;
+using handler::AvatarHandler;
 using game::Command;
 using game::AliasManager;
 
@@ -49,6 +51,7 @@ namespace game {
         std::function<void()> shutdown;
 
         AccountHandler accountHandler;
+        AvatarHandler avatarHandler;
         MagicHandler magicHandler;
         PlayerHandler playerHandler;
         WorldHandler worldHandler;
