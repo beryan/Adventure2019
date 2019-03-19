@@ -30,7 +30,7 @@ namespace game {
         std::unordered_map<std::string, Command> commands = {
                 {"cast",      Command::Cast},
                 {"chat",      Command::Chat},
-                {"debug",     Command::Debug},
+                {"build",     Command::Build},
                 {"drop",      Command::Drop},
                 {"equipment", Command::Equipment},
                 {"examine",   Command::Examine},
@@ -52,7 +52,24 @@ namespace game {
                 {"talk",      Command::Talk},
                 {"tell",      Command::Tell},
                 {"wear",      Command::Wear},
-                {"yell",      Command::Yell}
+                {"yell",      Command::Yell},
+
+                {"acreate",   Command::Acreate},
+                {"rcreate",   Command::Rcreate},
+                {"ocreate",   Command::Ocreate},
+                {"ncreate",   Command::Ncreate},
+                {"aedit",     Command::Aedit},
+                {"redit",     Command::Redit},
+                {"oedit",     Command::Oedit},
+                {"nedit",     Command::Nedit},
+                {"oreset",    Command::Oreset},
+                {"nreset",    Command::Nreset},
+                {"alist",     Command::Alist},
+                {"rlist",     Command::Rlist},
+                {"olist",     Command::Olist},
+                {"nlist",     Command::Nlist},
+                {"goto",      Command::Goto},
+                {"reset",     Command::Reset}
         };
     };
 }

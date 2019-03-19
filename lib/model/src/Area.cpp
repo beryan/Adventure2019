@@ -76,7 +76,7 @@ namespace model {
         this->rooms.push_back(room);
     }
 
-    void Area::addNPC(const NPC &npc) {
+    void Area::addNpc(const NPC &npc) {
         this->npcs.push_back(npc);
     }
 
@@ -103,7 +103,15 @@ namespace model {
                             [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
     }
 
-    void Area::addNPCsToRooms() {
+    bool Area::npcExists(const model::ID &npcId) {
+        return findNpcById(npcId) != this->npcs.end();
+    }
+
+    bool Area::objectExists(const model::ID &objectId) {
+        return findObjectById(objectId) != this->objects.end();
+    }
+
+    void Area::addNpcsToRooms() {
         for(const Reset &r : this->resets) {
             if(r.getAction() == "npc") {
                 auto room = findRoomById(r.getRoom());
@@ -135,13 +143,13 @@ namespace model {
         return this->name == area.getName();
     }
 
-    //print object
+    //print area
     std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << "Area: " << area.name << std::endl;
+        os << area.name << ":\n";
 
         if (area.rooms.size()) {
             for (const auto &room : area.rooms) {
-                os << room;
+                os << "- " << room.getId() << ". " << room.getName() << std::endl;
             }
         }
 

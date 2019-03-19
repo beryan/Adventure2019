@@ -2,8 +2,8 @@
 // Created by arehal on 1/18/19.
 //
 
-#ifndef WEBSOCKETNETWORKING_WORLDHANDLER_H
-#define WEBSOCKETNETWORKING_WORLDHANDLER_H
+#ifndef WORLDHANDLER_H
+#define WORLDHANDLER_H
 
 #include "Player.h"
 #include "World.h"
@@ -22,10 +22,22 @@ namespace handler {
         getWorld() const;
 
         /**
+         *  Determines if room exists based on room id
+         */
+        bool
+        roomExists(const model::ID &roomId);
+
+        /**
          *  Finds room based on room id
          */
         Room&
         findRoom(const model::ID &roomId);
+
+        /**
+         *  Finds area based on room id
+         */
+        Area&
+        findArea(const model::ID &roomId);
 
         /**
          *  Determines if you can move from a room in a specified direction
@@ -81,9 +93,45 @@ namespace handler {
         std::vector<model::ID>
         getNearbyPlayerIds(const model::ID &roomId);
 
+        bool
+        createArea(const std::string &parameters);
+
+        bool
+        createRoom(const std::string &parameters);
+
+        bool
+        createObject(const std::string &parameters);
+
+        bool
+        createNpc(const std::string &parameters);
+
+        bool
+        createObjectReset(const model::ID &roomId, const std::string &parameters);
+
+        bool
+        createNpcReset(const model::ID &roomId, const std::string &parameters);
+
+        bool
+        editArea(const model::ID &roomId, const std::string &parameters);
+
+        bool
+        editRoom(const model::ID &roomId, const std::string &parameters);
+
+        bool
+        editObject(const model::ID &roomId, const std::string &parameters);
+
+        bool
+        editNpc(const model::ID &roomId, const std::string &parameters);
+
+        void
+        reset();
+
     private:
         World world;
+
+        bool
+        isNum(const std::string &str);
     };
 }
 
-#endif //WEBSOCKETNETWORKING_WORLDHANDLER_H
+#endif //WORLDHANDLER_H

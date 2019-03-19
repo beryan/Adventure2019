@@ -26,6 +26,14 @@ namespace model {
         longDescription({})
         {}
 
+    NPC::NPC(model::ID id, std::string shortDescription) :
+        Character(id),
+        keywords({}),
+        description({}),
+        shortDescription(std::move(shortDescription)),
+        longDescription({})
+        {}
+
     NPC::NPC(
         model::ID id,
         std::vector<std::string> keywords,
@@ -87,7 +95,7 @@ namespace model {
 
     //print object
     std::ostream& operator<<(std::ostream& os, const NPC& npc) {
-        os << npc.getId() << ". " << npc.shortDescription << std::endl;
+        os << "- " << npc.shortDescription << std::endl;
         return os;
     }
 }

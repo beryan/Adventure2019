@@ -53,7 +53,7 @@ namespace DataManager {
             area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
             area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
 
-            area.addNPCsToRooms();
+            area.addNpcsToRooms();
             area.addObjectsToRooms();
 
             return area;

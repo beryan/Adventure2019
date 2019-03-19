@@ -29,6 +29,8 @@ namespace model{
 
         void addArea(const Area &area);
 
+        void reset();
+
         void createStub();
     };
 }

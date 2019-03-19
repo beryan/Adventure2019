@@ -24,7 +24,19 @@ namespace model {
           doors({}),
           npcs({}),
           objects({}),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
+          { }
+
+    Room::Room(model::ID id, std::string name)
+        : id(id),
+          name(std::move(name)),
+          desc({}),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({}),
+          extras({})
           { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
@@ -34,7 +46,8 @@ namespace model {
           doors({}),
           npcs({}),
           objects({}),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
           { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
@@ -44,7 +57,8 @@ namespace model {
           doors(std::move(doors)),
           npcs(std::move(npcs)),
           objects(std::move(objects)),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
           { }
 
     //getters and setters
@@ -168,7 +182,7 @@ namespace model {
 
     //print door
     std::ostream& operator<<(std::ostream& os, const Door& rhs) {
-        os << rhs.dir;
+        os << "- " << rhs.dir;
 
         if (!rhs.desc.empty()) {
             os << ". ";
@@ -195,7 +209,7 @@ namespace model {
     std::string Room::doorsToString() const {
         std::ostringstream os;
         if(!this->doors.empty()) {
-            os << "[Exits]" << std::endl;
+            os << "Exits:" << std::endl;
             for (const auto &door : this->doors) {
                 os << door;
             }
@@ -205,21 +219,22 @@ namespace model {
 
     //print room
     std::ostream& operator<<(std::ostream& os, const Room& room) {
-        os << "\n" << room.id << ". " << room.name << "\n";
+        os << "\n" << room.name << "\n";
+        os << std::string(room.name.length(), '-') << std::endl;
 
         os << room.descToString();
 
         os << room.doorsToString();
 
         if(!room.objects.empty()) {
-            os << "[Objects]" << std::endl;
+            os << "Objects:" << std::endl;
             for (const auto &obj : room.objects) {
                 os << obj;
             }
         }
 
         if(!room.npcs.empty()) {
-            os << "[NPCS]" << std::endl;
+            os << "NPCS:" << std::endl;
             for (const auto &npc : room.npcs) {
                 os << npc;
             }

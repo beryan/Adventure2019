@@ -17,6 +17,17 @@ namespace model {
 
     Object::Object(
             model::ID id,
+            std::string shortDescription
+    ) :
+            id(id),
+            shortDescription(std::move(shortDescription)),
+            longDescription({}),
+            keywords({}),
+            slot(Slot::Misc),
+            extraObjectInfo({}) {}
+
+    Object::Object(
+            model::ID id,
             std::string shortDescription,
             std::vector<std::string> longDescription,
             std::vector<std::string> keywords,
@@ -121,7 +132,7 @@ namespace model {
     }
 
     std::ostream&operator<<(std::ostream& os, const Object& obj) {
-        os << obj.id << ". " << obj.shortDescription << std::endl;
+        os << "- " << obj.shortDescription << std::endl;
         return os;
     }
 }

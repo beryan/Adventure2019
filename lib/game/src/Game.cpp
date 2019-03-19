@@ -257,6 +257,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Build) << " (displays available world building commands)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
@@ -358,10 +359,9 @@ namespace game {
                 if (param.empty()) {
                     auto roomId = this->accountHandler.getRoomIdByClient(client);
                     auto room = this->worldHandler.findRoom(roomId);
-                    tempMessage << room;
-                    tempMessage << "[Players]\n";
+                    tempMessage << room << "Players:\n";;
                     for (const auto &id : room.getPlayersInRoom()) {
-                        tempMessage << this->accountHandler.getUsernameByPlayerId(id) << std::endl;
+                        tempMessage << "- " << this->accountHandler.getUsernameByPlayerId(id) << std::endl;
                     }
                     break;
                 }
@@ -406,13 +406,38 @@ namespace game {
                 auto dir = lowercase(param);
 
                 if (this->worldHandler.isValidDirection(roomId, dir)) {
-                    auto playerId = this->accountHandler.getPlayerIdByClient(client);
                     auto destinationId = this->worldHandler.getDestination(roomId, dir);
-                    this->worldHandler.movePlayer(playerId, roomId, destinationId);
-                    this->accountHandler.setRoomIdByClient(client, destinationId);
-                    tempMessage << "\n" << this->worldHandler.findRoom(destinationId).descToString();
+                    if (this->worldHandler.roomExists(destinationId)) {
+                        auto playerId = this->accountHandler.getPlayerIdByClient(client);
+                        this->worldHandler.movePlayer(playerId, roomId, destinationId);
+                        this->accountHandler.setRoomIdByClient(client, destinationId);
+                        tempMessage << "\n" << this->worldHandler.findRoom(destinationId).descToString();
+                    } else {
+                        tempMessage << "You tried to move to a room that does not exist!\n";
+                    }
                 } else {
                     tempMessage << "You can't move that way!\n";
+                }
+
+                break;
+            }
+
+            case Command::Goto: {
+                if (std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    int destinationId = std::stoi(param);
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    if (destinationId == roomId) {
+                        tempMessage << "You are already in room " << param << ".\n";
+                    } else if (this->worldHandler.roomExists(destinationId)) {
+                        auto playerId = this->accountHandler.getPlayerIdByClient(client);
+                        this->worldHandler.movePlayer(playerId, roomId, destinationId);
+                        this->accountHandler.setRoomIdByClient(client, destinationId);
+                        tempMessage << "You are now in room " << param << ".\n";
+                    } else {
+                        tempMessage << "That room does not exist.\n";
+                    }
+                } else {
+                    tempMessage << "Invalid room id.\n";
                 }
 
                 break;
@@ -560,8 +585,199 @@ namespace game {
                 break;
             }
 
-            case Command::Debug: {
-                tempMessage << this->worldHandler.getWorld();
+            case Command::Build: {
+                tempMessage << "\n"
+                            << "******************\n"
+                            << "* World Building *\n"
+                            << "******************\n"
+                            << "\n"
+                            << "COMMANDS:\n"
+                            << "  - acreate [name] (creates an area with specified name)\n"
+                            << "  - rcreate [anum] [id] [name] (creates room in specified area)\n"
+                            << "  - ocreate/ncreate [anum] [id] [short description] (creates object/npc in specified area)\n"
+                            << "  - aedit [field] [values] (modifies current area)\n"
+                            << "  - redit [field] [values] (modifies current room)\n"
+                            << "  - oedit/nedit [id] [field] [values] (modifies object/npc with specified id in current area)\n"
+                            << "  - oreset [id] (creates object reset for current room)\n"
+                            << "  - nreset [id] [amount] (creates NPC reset for current room)\n"
+                            << "  - alist (lists world areas)\n"
+                            << "  - rlist/olist/nlist [areaId] (lists rooms/objects/npcs of area)\n"
+                            << "  - goto [id] (moves you to room with id)\n"
+                            << "  - reset (triggers world reset)\n";
+                break;
+            }
+
+            case Command::Acreate: {
+                if (this->worldHandler.createArea(param)) {
+                    tempMessage << "Area successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create area.\n";
+                }
+                break;
+            }
+
+            case Command::Rcreate: {
+                if (this->worldHandler.createRoom(param)) {
+                    tempMessage << "Room successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create room.\n";
+                }
+                break;
+            }
+
+            case Command::Ocreate: {
+                if (this->worldHandler.createObject(param)) {
+                    tempMessage << "Object successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create object.\n";
+                }
+                break;
+            }
+
+            case Command::Ncreate: {
+                if (this->worldHandler.createNpc(param)) {
+                    tempMessage << "NPC successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create NPC.\n";
+                }
+                break;
+            }
+
+            case Command::Aedit: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editArea(roomId, param)) {
+                    tempMessage << "Area successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Area.\n";
+                }
+                break;
+            }
+
+            case Command::Redit: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editRoom(roomId, param)) {
+                    tempMessage << "Room successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Room.\n";
+                }
+                break;
+            }
+
+            case Command::Oedit: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editObject(roomId, param)) {
+                    tempMessage << "Object successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Object.\n";
+                }
+                break;
+            }
+
+            case Command::Nedit: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editNpc(roomId, param)) {
+                    tempMessage << "NPC successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit NPC.\n";
+                }
+                break;
+            }
+
+            case Command::Oreset: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createObjectReset(roomId, param)) {
+                    tempMessage << "Reset successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create reset.\n";
+                }
+                break;
+            }
+
+            case Command::Nreset: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createNpcReset(roomId, param)) {
+                    tempMessage << "Reset successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create reset.\n";
+                }
+                break;
+            }
+
+            case Command::Alist: {
+                tempMessage << "\nArea List\n";
+                tempMessage << "---------\n";
+                auto areas = this->worldHandler.getWorld().getAreas();
+                int count = 1;
+                for (const auto &area : areas) {
+                    tempMessage << "- " << count << ". " << area.getName() << std::endl;
+                    count++;
+                }
+                break;
+            }
+
+            case Command::Rlist: {
+                if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    unsigned int index = std::stoi(param) - 1;
+                    if (index < this->worldHandler.getWorld().getAreas().size()) {
+                        tempMessage << "\nRoom List\n";
+                        tempMessage << "---------\n";
+                        auto area = this->worldHandler.getWorld().getAreas().at(index);
+                        for (const auto &room : area.getRooms()) {
+                            tempMessage << "- " << room.getId() << ". " << room.getName() << std::endl;
+                        }
+                    } else {
+                        tempMessage << "Invalid index.\n";
+                    }
+
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Olist: {
+                if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    unsigned int index = std::stoi(param) - 1;
+                    if (index < this->worldHandler.getWorld().getAreas().size()) {
+                        tempMessage << "\nObject List\n";
+                        tempMessage << "-----------\n";
+                        auto area = this->worldHandler.getWorld().getAreas().at(index);
+                        for (const auto &obj : area.getObjects()) {
+                            tempMessage << "- " << obj.getId() << ". " << obj.getShortDescription() << std::endl;
+                        }
+                    } else {
+                        tempMessage << "Invalid index.\n";
+                    }
+
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Nlist: {
+                if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    unsigned int index = std::stoi(param) - 1;
+                    if (index < this->worldHandler.getWorld().getAreas().size()) {
+                        tempMessage << "\nNPC List\n";
+                        tempMessage << "--------\n";
+                        auto area = this->worldHandler.getWorld().getAreas().at(index);
+                        for (const auto &npc : area.getNpcs()) {
+                            tempMessage << "- " << npc.getId() << ". " << npc.getShortDescription() << std::endl;
+                        }
+                    } else {
+                        tempMessage << "Invalid index.\n";
+                    }
+
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Reset: {
+                this->worldHandler.reset();
+                tempMessage << "World reset.\n";
                 break;
             }
 
@@ -628,7 +844,8 @@ namespace game {
             || command == Command::Take
             || command == Command::Drop
             || command == Command::Wear
-            || command == Command::Remove);
+            || command == Command::Remove
+            || command == Command::Goto);
 
         return (wrongFormat || (isCommandWithParam && parameters.empty()));
     }

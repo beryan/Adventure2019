@@ -33,6 +33,11 @@ namespace model {
 
         Object(
                 model::ID id,
+                std::string shortDescription
+        );
+
+        Object(
+                model::ID id,
                 std::string shortDescription,
                 std::vector<std::string> longDescription,
                 std::vector<std::string> keywords,

@@ -6,9 +6,9 @@
 #define COMMAND_H
 namespace game {
     enum class Command {
+        Build,
         Cast,
         Chat,
-        Debug,
         Drop,
         Equipment,
         Examine,
@@ -31,7 +31,24 @@ namespace game {
         Tell,
         Wear,
         Yell,
-        InvalidCommand
+        InvalidCommand,
+
+        Acreate,
+        Rcreate,
+        Ocreate,
+        Ncreate,
+        Aedit,
+        Redit,
+        Oedit,
+        Nedit,
+        Oreset,
+        Nreset,
+        Alist,
+        Rlist,
+        Olist,
+        Nlist,
+        Goto,
+        Reset,
     };
 }
 
