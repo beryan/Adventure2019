@@ -40,6 +40,9 @@ namespace game {
     constexpr auto ALIAS_CLEAR = "clear";
     constexpr auto ALIAS_CLEAR_GLOBAL = "clear-global";
     constexpr auto ALIAS_HELP = "help";
+    constexpr auto ALIAS_SET_NUM_PARAMS = 3;
+    constexpr auto ALIAS_CLEAR_NUM_PARAMS = 2;
+    constexpr auto ALIAS_LIST_NUM_PARAMS = 1;
 
     Game::Game(std::vector<Connection> &clients,
                std::vector<Connection> &newClients,
@@ -580,9 +583,17 @@ namespace game {
             case Command::Alias: {
                 try {
                     std::string username = this->accountHandler.getUsernameByClient(client);
+                    if (params.empty()) {
+                        tempMessage << "\nIncorrect number of parameters for alias command\n";
+                        break;
+                    }
                     std::string aliasOption = params[0];
 
                     if (aliasOption == ALIAS_LIST) {
+                        if (params.size() != ALIAS_LIST_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias list command\n";
+                            break;
+                        }
                         auto aliases = this->aliasManager.getAliasesForUser(username);
                         auto globalAliases = this->aliasManager.getGlobalAliases();
 
@@ -602,6 +613,10 @@ namespace game {
                             tempMessage << "\tno global aliases set\n";
                         }
                     } else if (aliasOption == ALIAS_SET || aliasOption == ALIAS_SET_GLOBAL) {
+                        if (params.size() != ALIAS_SET_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias set command\n";
+                            break;
+                        }
                         std::string command_to_alias_str = params[1];
                         Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
                         if (command_to_alias != Command::InvalidCommand) {
@@ -622,6 +637,10 @@ namespace game {
                             tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
                         }
                     } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
+                        if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias clear command\n";
+                            break;
+                        }
                         std::string command_to_clear_str = params[1];
                         Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
                         if (command_to_clear != Command::InvalidCommand) {
