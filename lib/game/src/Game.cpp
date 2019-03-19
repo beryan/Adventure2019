@@ -265,6 +265,8 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Alias) << " (aliases a command. Type \""
+                                    <<  this->commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
@@ -575,7 +577,7 @@ namespace game {
 
             case Command::Alias: {
                 try {
-                    std::string username = this->accountHandler->getUsernameByClient(client);
+                    std::string username = this->accountHandler.getUsernameByClient(client);
                     std::string aliasOption = params[0];
 
                     if (aliasOption == ALIAS_LIST) {
