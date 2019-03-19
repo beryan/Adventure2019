@@ -264,6 +264,20 @@ namespace handler {
         return username;
     }
 
+    Connection
+    AccountHandler::getClientByUsername(const std::string &username) {
+        if (!this->usernameToPlayer.count(username)) {
+            return {0};
+        }
+
+        auto player = this->usernameToPlayer.at(username);
+
+        if (!this->activeIdToClient.count(player->getId())) {
+            return {0};
+        }
+
+        return this->activeIdToClient.at(player->getId());
+    }
 
     model::ID
     AccountHandler::getPlayerIdByClient(const Connection &client) {
@@ -279,7 +293,7 @@ namespace handler {
     Player*
     AccountHandler::getPlayerByClient(const Connection &client) {
         Player* player = nullptr;
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             player = this->usernameToPlayer.at(this->getUsernameByClient(client));
         }
         return player;
@@ -289,7 +303,7 @@ namespace handler {
     model::ID
     AccountHandler::getRoomIdByClient(const Connection &client) {
         model::ID result = -1;
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             result = this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
         }
         return result;
@@ -298,7 +312,7 @@ namespace handler {
 
     void
     AccountHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
-        if (this->usernameToPlayer.count(this->getUsernameByClient(client)) > 0) {
+        if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
         }
     }
@@ -306,7 +320,21 @@ namespace handler {
 
     Connection
     AccountHandler::getClientByPlayerId(const model::ID &playerId) {
+        if (!this->activeIdToClient.count(playerId)) {
+            return {0};
+        }
+
         return this->activeIdToClient.at(playerId);
+    }
+
+
+    std::string
+    AccountHandler::getUsernameByPlayerId(const model::ID &playerId) {
+        if (!this->allPlayers.count(playerId)) {
+            return "";
+        }
+
+        return this->allPlayers.at(playerId).getUsername();
     }
 
 
@@ -319,6 +347,26 @@ namespace handler {
         this->bootedClients.clear();
     }
 
+    void
+    AccountHandler::swapPlayerClientsByPlayerId(const model::ID &sourceId, const model::ID &targetId) {
+        auto sourceClient = this->activeIdToClient.at(sourceId);
+        auto targetClient = this->activeIdToClient.at(targetId);
+
+        auto sourceUsername = this->getUsernameByClient(sourceClient);
+        auto targetUsername = this->getUsernameByClient(targetClient);
+
+        this->activeIdToClient.at(sourceId) = targetClient;
+        this->activeClientToId.at(sourceClient) = targetId;
+
+        this->activeIdToClient.at(targetId) = sourceClient;
+        this->activeClientToId.at(targetClient) = sourceId;
+
+
+        std::cout << sourceClient.id << " (now " << targetUsername << ")"
+                  <<" swapped Players with "
+                  << targetClient.id << " (now " << sourceUsername << ")"
+                  << "\n";
+    }
 
     std::vector<Player>
     AccountHandler::parseJsonUsers(json users) {

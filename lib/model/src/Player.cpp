@@ -10,13 +10,13 @@ using model::Object;
 namespace model {
 
     Player::Player() :
-            Character({}),
-            username({}),
-            password({}),
-            inventory({}),
-            equipment({}),
-            currRoomID(STARTING_LOCATION)
-            {}
+        Character({}),
+        username({}),
+        password({}),
+        inventory({}),
+        equipment({}),
+        currRoomID(STARTING_LOCATION)
+        {}
 
 
     Player::Player(model::ID id, std::string_view username, std::string_view password) :

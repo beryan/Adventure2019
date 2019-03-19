@@ -7,8 +7,8 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_AREA_H
-#define WEBSOCKETNETWORKING_AREA_H
+#ifndef AREA_H
+#define AREA_H
 
 #include <string>
 #include <vector>
@@ -54,6 +54,13 @@ namespace model {
         void addObject(const Object &object);
         void addReset(const Reset &reset);
 
+        std::vector<Room>::iterator findRoomById(model::ID roomID);
+        std::vector<NPC>::iterator findNpcById(model::ID npcID);
+        std::vector<Object>::iterator findObjectById(model::ID objectID);
+
+        void addNPCsToRooms();
+        void addObjectsToRooms();
+
         bool operator==(const Area& area) const;
     };
 
@@ -63,4 +70,4 @@ namespace model {
 
 }
 
-#endif
+#endif //AREA_H

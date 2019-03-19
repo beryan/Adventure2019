@@ -46,6 +46,8 @@ namespace handler {
     public:
         AccountHandler();
 
+        static const model::ID INVALID_PLAYER_ID = 0;
+
         /**
          *  Checks if a player is logged in (exists in the activeClientToId map)
          */
@@ -102,13 +104,19 @@ namespace handler {
         getUsernameByClient(const Connection &client);
 
         /**
+         *  Returns the client of a Player given a username
+         */
+        Connection
+        getClientByUsername(const std::string &username);
+
+        /**
          *  Returns the player ID of a Player given a client ID.
          */
         model::ID
         getPlayerIdByClient(const Connection &client);
 
         /**
-         *  Returns a pointer to the player given a client ID.
+         *  Returns a pointer to a Player given a client ID.
          */
         Player*
         getPlayerByClient(const Connection &client);
@@ -132,11 +140,23 @@ namespace handler {
         getClientByPlayerId(const model::ID &playerId);
 
         /**
+         *  Returns the username of a Player given a player ID
+         */
+        std::string
+        getUsernameByPlayerId(const model::ID &playerId);
+
+        /**
          *  Appends Responses based on clients who have been logged out due to a login by another client into the
          *  same Player. Is to be called by the Game class' handleOutgoing() method.
          */
         void
         notifyBootedClients(std::deque<Message> &messages);
+
+        /**
+         *  Swaps the clients of two active players. Returns true if successful.
+         */
+        void
+        swapPlayerClientsByPlayerId(const model::ID &sourceId, const model::ID &targetId);
 
         static std::vector<Player>
         parseJsonUsers(json);

@@ -7,16 +7,18 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_ROOM_H
-#define WEBSOCKETNETWORKING_ROOM_H
+#ifndef ROOM_H
+#define ROOM_H
 
 #include <string>
 #include <vector>
 #include "NPC.h"
 #include "Player.h"
+#include "ExtraObjectInfo.h"
 
 using model::NPC;
 using model::Object;
+using model::ExtraObjectInfo;
 
 namespace model {
 
@@ -37,6 +39,7 @@ namespace model {
         std::vector<NPC> npcs;
         std::vector<Object> objects;
         std::vector<model::ID> playersInRoom;
+        std::vector<ExtraObjectInfo> extras;
 
         friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
         friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
@@ -55,6 +58,7 @@ namespace model {
         std::vector<NPC> getNpcs() const;
         std::vector<Object> getObjects() const;
         std::vector<model::ID> getPlayersInRoom() const;
+        std::vector<ExtraObjectInfo> getExtras() const;
         void setId(const model::ID &id);
         void setName(const std::string &name);
         void setDesc(const std::vector<std::string> &desc);
@@ -67,6 +71,7 @@ namespace model {
         void addNPC(const NPC &npc);
         void addObject(const Object &object);
         void addPlayerToRoom(const model::ID &playerId);
+        void addExtra(const ExtraObjectInfo &extra);
 
         void removeObject(const model::ID &objectId);
         void removePlayerFromRoom(const model::ID &playerId);
@@ -97,4 +102,4 @@ namespace model {
     }
 }
 
-#endif
+#endif //ROOM_H

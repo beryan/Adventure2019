@@ -7,8 +7,8 @@
 * Author: Brittany Ryan, 301217765
 */
 
-#ifndef WEBSOCKETNETWORKING_RESET_H
-#define WEBSOCKETNETWORKING_RESET_H
+#ifndef RESET_H
+#define RESET_H
 
 #include <string>
 #include "Types.h"
@@ -64,4 +64,4 @@ namespace model {
 
 }
 
-#endif
+#endif //RESET_H

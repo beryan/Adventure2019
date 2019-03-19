@@ -28,11 +28,14 @@ namespace game {
 
     private:
         std::unordered_map<std::string, Command> commands = {
+                {"cast",      Command::Cast},
+                {"chat",      Command::Chat},
                 {"debug",     Command::Debug},
                 {"drop",      Command::Drop},
                 {"equipment", Command::Equipment},
                 {"examine",   Command::Examine},
                 {"exits",     Command::Exits},
+                {"give",      Command::Give},
                 {"help",      Command::Help},
                 {"inventory", Command::Inventory},
                 {"login",     Command::Login},
@@ -44,6 +47,7 @@ namespace game {
                 {"remove",    Command::Remove},
                 {"say",       Command::Say},
                 {"shutdown",  Command::Shutdown},
+                {"spells",    Command::Spells},
                 {"take",      Command::Take},
                 {"talk",      Command::Talk},
                 {"tell",      Command::Tell},

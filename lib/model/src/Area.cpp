@@ -88,6 +88,49 @@ namespace model {
         this->resets.push_back(reset);
     }
 
+    std::vector<Room>::iterator Area::findRoomById(model::ID roomID){
+        return std::find_if(this->rooms.begin(), this->rooms.end(),
+                            [roomID](const Room & room) -> bool { return room.getId() == roomID ; });
+    }
+
+    std::vector<NPC>::iterator Area::findNpcById(model::ID npcID){
+        return std::find_if(this->npcs.begin(), this->npcs.end(),
+                            [npcID](const NPC & npc) -> bool { return npc.getId() == npcID ; });
+    }
+
+    std::vector<Object>::iterator Area::findObjectById(model::ID objectID){
+        return std::find_if(this->objects.begin(), this->objects.end(),
+                            [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
+    }
+
+    void Area::addNPCsToRooms() {
+        for(const Reset &r : this->resets) {
+            if(r.getAction() == "npc") {
+                auto room = findRoomById(r.getRoom());
+                auto npc = findNpcById(r.getId());
+
+                if(room != this->rooms.end() && npc != this->npcs.end()) {
+                    room->addNPC(*npc);
+                }
+
+            }
+        }
+    }
+
+    void Area::addObjectsToRooms() {
+        for(Reset r : this->resets) {
+            if(r.getAction() == "object") {
+                auto room = findRoomById(r.getRoom());
+                auto object = findObjectById(r.getId());
+
+                if(room != this->rooms.end() && object != this->objects.end()) {
+                    room->addObject(*object);
+                }
+
+            }
+        }
+    }
+
     bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }
