@@ -1,6 +1,6 @@
 
-#include "lib/gtest/gtest.h"
-#include "lib/gmock/gmock.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "Equipment.h"
 #include <stdlib.h>
 #include <iostream>

@@ -3,10 +3,21 @@
 //
 
 #include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <Object.h>
 
 namespace {
-    TEST(ObjectTestSuite, canUseNoArgConstructor) {
+    class ObjectTestSuite : public ::testing::Test {
+    protected:
+        model::Slot slot = model::Slot::Head;
+        std::string shortDescription = "short";
+        std::vector<std::string> longDescription = {"long"};
+        std::vector<std::string> keywords = {"keywords"};
+
+        model::Object object{31, shortDescription, longDescription, keywords, slot};
+    };
+
+    TEST_F(ObjectTestSuite, canUseNoArgConstructor) {
         model::Object myObject;
         model::ExtraObjectInfo myExtraInfo;
         std::string expected_string;
@@ -20,7 +31,7 @@ namespace {
         EXPECT_EQ(myExtraInfo, myObject.getExtraObjectInfo());
     }
 
-    TEST(ObjectTestSuite, canUseConstructor) {
+    TEST_F(ObjectTestSuite, canUseConstructor) {
         model::ID myId = 42069;
         std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
@@ -38,7 +49,7 @@ namespace {
         EXPECT_EQ(emptyExtraInfo, myObject.getExtraObjectInfo());
     }
 
-    TEST(ObjectTestSuite, canUseExtraObjectInfoConstructor) {
+    TEST_F(ObjectTestSuite, canUseExtraObjectInfoConstructor) {
         model::ID myId = 42069;
         std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
@@ -55,7 +66,7 @@ namespace {
         EXPECT_EQ(myExtraInfo, myObject.getExtraObjectInfo());
     }
 
-    TEST(ObjectTestSuite, canMakeObjectFromSetters) {
+    TEST_F(ObjectTestSuite, canMakeObjectFromSetters) {
         model::ID myId = 42069;
         std::string shortDesc = "A magical skateboard";
         std::vector<std::string> longDesc = {"my", "long", "description", "?"};
@@ -78,4 +89,15 @@ namespace {
         EXPECT_EQ(mySlot, myObject.getSlot());
         EXPECT_EQ(myExtraInfo, myObject.getExtraObjectInfo());
     }
+
+    TEST_F(ObjectTestSuite, canGetItemSlot) {
+        EXPECT_EQ(slot, object.getSlot());
+    }
+
+    TEST_F(ObjectTestSuite, canSetItemSlot) {
+        object.setSlot(model::Slot::Back);
+
+        EXPECT_EQ(model::Slot::Back, object.getSlot());
+    }
+
 }
