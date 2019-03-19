@@ -37,6 +37,8 @@ namespace model {
 
         std::vector<std::string> getExtraDescriptions() const;
 
+        bool containsKeyword(const std::string &keyword) const;
+
         void setExtraDescriptions(std::vector<std::string> extraDescriptions);
 
         bool operator==(const ExtraInfo &other) const;

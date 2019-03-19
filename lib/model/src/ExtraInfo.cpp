@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include "ExtraObjectInfo.h"
+#include "ExtraInfo.h"
 
 namespace model {
 
@@ -36,11 +36,11 @@ namespace model {
         this->extraDescriptions = std::move(extraDescriptions);
     }
 
-    bool ExtraObjectInfo::containsKeyword(const std::string &keyword) const {
+    bool ExtraInfo::containsKeyword(const std::string &keyword) const {
         return (std::find(this->extraKeywords.begin(), this->extraKeywords.end(), keyword) != this->extraKeywords.end());
     }
 
-    bool ExtraObjectInfo::operator==(const ExtraObjectInfo &other) const {
+    bool ExtraInfo::operator==(const ExtraInfo &other) const {
         return this->getExtraKeywords() == other.getExtraKeywords() &&
                this->getExtraDescriptions() == other.getExtraDescriptions();
     }

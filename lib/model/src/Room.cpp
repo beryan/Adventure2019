@@ -76,7 +76,7 @@ namespace model {
         return this->playersInRoom;
     }
 
-    std::vector<ExtraObjectInfo> Room::getExtras() const {
+    std::vector<ExtraInfo> Room::getExtras() const {
         return this->extras;
     }
 
@@ -127,7 +127,7 @@ namespace model {
         }
     }
 
-    void Room::addExtra(const ExtraObjectInfo &extra) {
+    void Room::addExtra(const ExtraInfo &extra) {
         this->extras.push_back(extra);
     }
 
