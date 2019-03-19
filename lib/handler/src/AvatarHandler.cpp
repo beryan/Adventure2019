@@ -65,9 +65,8 @@ namespace handler {
             case AvatarCreationStage::Race: {
                 if (!(lowercaseInput == "human" || lowercaseInput == "elf" ||
                         lowercaseInput == "dwarf" || lowercaseInput == "orc")) {
-
-                        response << "Invalid input, please try again.\n"
-                                 << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
+                    response << "Invalid input, please try again.\n"
+                             << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
                     break;
                 }
 
@@ -80,6 +79,12 @@ namespace handler {
             }
 
             case AvatarCreationStage::Trait1: {
+                if (lowercaseInput.empty()) {
+                    response << "Invalid input, please try again.\n"
+                             << "Enter a trait of your character:\n";
+                    break;
+                }
+
                 this->avatarsInCreation.at(client).trait1 = input;
                 this->creatingClients.at(client) = AvatarCreationStage::Trait2;
 
@@ -89,6 +94,12 @@ namespace handler {
             }
 
             case AvatarCreationStage::Trait2: {
+                if (lowercaseInput.empty()) {
+                    response << "Invalid input, please try again.\n"
+                             << "Enter a second trait of your character:\n";
+                    break;
+                }
+
                 this->avatarsInCreation.at(client).trait2 = input;
                 this->creatingClients.at(client) = AvatarCreationStage::Confirm;
 
@@ -112,8 +123,7 @@ namespace handler {
                     auto player = this->accountHandler->getPlayerByClient(client);
                     player->setAvatar(avatar);
 
-                    response << input << "\n"
-                             << "Your character has successfully been created!\n";
+                    response << "Your character has been successfully created!\n";
 
                 } else {
                     this->creatingClients.at(client) = AvatarCreationStage::Race;

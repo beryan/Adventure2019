@@ -107,6 +107,17 @@ namespace game {
                 });
 
                 if (this->accountHandler.isLoggedIn(client)) {
+                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client)->getAvatar().isDefined();
+                    if (!hasCreatedAvatar) {
+                        messages.push_back({
+                            client,
+                            this->avatarHandler.processCreation(client)
+                        });
+
+                        continue;
+                    }
+                    std::cout << client.id << " has already created their avatar.\n";
+
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
                     tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();

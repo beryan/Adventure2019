@@ -13,6 +13,10 @@ namespace model {
         std::string race;
         std::string trait1;
         std::string trait2;
+
+        bool isDefined() {
+            return !(this->gender.empty() || this->race.empty() || this->trait1.empty() || this->trait2.empty());
+        }
     };
 }
 
