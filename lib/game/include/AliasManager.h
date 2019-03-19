@@ -29,7 +29,7 @@ namespace game {
          * @param command command to alias
          * @param alias alias for the command
          */
-        void setGlobalAlias(const Command &command, std::string_view alias);
+        bool setGlobalAlias(const Command &command, std::string_view alias);
 
         /**
          * Deletes a global alias for a command

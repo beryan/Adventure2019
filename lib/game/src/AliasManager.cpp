@@ -50,8 +50,8 @@ bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_v
     return wasFound;
 }
 
-void AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
-    setUserAlias(command, alias, GLOBAL_ALIASES_USER);
+bool AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
+    return setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
 void AliasManager::clearGlobalAlias(const Command &command) {
