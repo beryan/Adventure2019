@@ -100,4 +100,17 @@ namespace {
         EXPECT_EQ(model::Slot::Back, object.getSlot());
     }
 
+    TEST_F(ObjectTestSuite, canGetSlotFromString) {
+        object.setSlot(model::getSlotFromString("Feet"));
+
+        ASSERT_EQ(model::Slot::Feet, object.getSlot());
+
+        object.setSlot(model::getSlotFromString("ODKOIJCOIDSC"));
+
+        ASSERT_EQ(model::Slot::Misc, object.getSlot());
+
+        object.setSlot(model::getSlotFromString("WEAPON"));
+
+        EXPECT_EQ(model::Slot::Weapon, object.getSlot());
+    }
 }
