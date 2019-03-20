@@ -17,8 +17,9 @@ namespace handler {
     WorldHandler::WorldHandler() {
         //create temporary world
         this->world = World();
-        this->world.createStub();
-        //this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+//        this->world.createStub();
+        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+        resetAreas();
     }
 
     World
@@ -86,6 +87,12 @@ namespace handler {
         auto players = room.getPlayersInRoom();
         auto it = std::find(players.begin(), players.end(), playerId);
         return (it != players.end());
+    }
+
+    void WorldHandler::resetAreas(){
+        for(Area& a : this->world.getAreas()){
+            resetHandler.resetArea(a);
+        }
     }
 
     std::vector<model::ID>
