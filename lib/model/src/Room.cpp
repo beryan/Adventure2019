@@ -108,6 +108,10 @@ namespace model {
         this->playersInRoom = playersInRoom;
     }
 
+    void Room::setExtras(const std::vector<ExtraInfo> &extras) {
+        this->extras = extras;
+    }
+
     void Room::addDoor(const Door &door) {
         this->doors.push_back(door);
     }

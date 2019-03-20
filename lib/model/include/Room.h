@@ -66,6 +66,7 @@ namespace model {
         void setNpcs(const std::vector<NPC> &npcs);
         void setObjects(const std::vector<Object> &objects);
         void setPlayersInRoom(const std::vector<model::ID> &playersInRoom);
+        void setExtras(const std::vector<ExtraInfo> &extras);
 
         void addDoor(const Door &door);
         void addNPC(const NPC &npc);
@@ -99,6 +100,7 @@ namespace model {
         r.setName(j.at("name").get<std::string>());
         r.setDesc(j.at("desc").get<std::vector<std::string>>());
         r.setDoors(j.at("doors").get<std::vector<Door>>());
+        r.setExtras((j.at("extended_descriptions").get<std::vector<ExtraInfo>>()));
     }
 }
 
