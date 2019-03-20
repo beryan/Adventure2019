@@ -2,8 +2,8 @@
 // Created by Waswa Olunga on 2019-01-31.
 //
 
-#ifndef EXTRAOBJECTINFO_H
-#define EXTRAOBJECTINFO_H
+#ifndef EXTRAINFO_H
+#define EXTRAINFO_H
 
 #include <string>
 #include <vector>
@@ -14,11 +14,11 @@ using json = nlohmann::json;
 namespace model {
 
     /**
-     *  @struct ExtraObjectInfo
+     *  @struct ExtraInfo
      *
      *  @brief A struct describing the extra information an object can have.
      *
-     *  The ExtraObjectInfo contains extra object info
+     *  The ExtraInfo contains extra object info
      *  including keywords and description
      */
 
@@ -62,4 +62,4 @@ namespace model {
 
 }
 
-#endif //EXTRAOBJECTINFO_H
+#endif //EXTRAINFO_H
