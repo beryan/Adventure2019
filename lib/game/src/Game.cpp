@@ -116,7 +116,6 @@ namespace game {
 
                         continue;
                     }
-                    std::cout << client.id << " has already created their avatar.\n";
 
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
