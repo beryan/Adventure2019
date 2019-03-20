@@ -40,6 +40,15 @@ namespace model {
         longDescription(std::move(longDescription))
         {}
 
+
+    model::ID NPC::getId() const {
+        return this->id;
+    }
+
+    void NPC::setId(model::ID id) {
+        this->id = id;
+    }
+
     std::vector<std::string> NPC::getDescription() const {
         return this->description;
     }
