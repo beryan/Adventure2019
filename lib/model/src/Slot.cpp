@@ -33,7 +33,7 @@ namespace model {
         return result;
     }
 
-    std::string getStringFromSlot(Slot slot) {
+    std::string getStringFromSlot(const Slot &slot) {
         std::string result = "misc";
 
         for (const auto &it : slots) {

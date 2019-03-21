@@ -23,7 +23,7 @@ namespace model {
      */
     Slot getSlotFromString(std::string slot);
 
-    std::string getStringFromSlot(Slot slot);
+    std::string getStringFromSlot(const Slot &slot);
 }
 
 
