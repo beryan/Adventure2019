@@ -617,24 +617,29 @@ namespace game {
                             tempMessage << "\nIncorrect number of parameters for alias set command\n";
                             break;
                         }
+
                         std::string command_to_alias_str = params[1];
                         Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
-                        if (command_to_alias != Command::InvalidCommand) {
-                            std::string alias = params[2];
-                            if (this->aliasManager.isValidAlias(alias)) {
-                                if ((aliasOption == ALIAS_SET &&
-                                     this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
-                                    (aliasOption == ALIAS_SET_GLOBAL &&
-                                     this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
-                                    tempMessage << "\nalias set successfully\n";
-                                } else {
-                                    tempMessage << "\nalias could not be set\n";
-                                }
-                            } else {
-                                tempMessage << std::endl << alias << " is not a valid alias\n";
-                            }
-                        } else {
+
+                        if (command_to_alias == Command::InvalidCommand) {
                             tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
+                            break;
+                        }
+
+                        std::string alias = params[2];
+
+                        if (!this->aliasManager.isValidAlias(alias)) {
+                            tempMessage << std::endl << alias << " is not a valid alias\n";
+                            break;
+                        }
+
+                        if ((aliasOption == ALIAS_SET &&
+                             this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
+                            (aliasOption == ALIAS_SET_GLOBAL &&
+                             this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
+                            tempMessage << "\nalias set successfully\n";
+                        } else {
+                            tempMessage << "\nalias could not be set\n";
                         }
                     } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
                         if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
@@ -643,16 +648,20 @@ namespace game {
                         }
                         std::string command_to_clear_str = params[1];
                         Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
-                        if (command_to_clear != Command::InvalidCommand) {
-                            if (aliasOption == ALIAS_CLEAR) {
-                                this->aliasManager.clearUserAlias(command_to_clear, username);
-                            } else {
-                                this->aliasManager.clearGlobalAlias(command_to_clear);
-                            }
-                            tempMessage << "\nalias cleared successfully\n";
-                        } else {
+
+                        if (!(command_to_clear == Command::InvalidCommand)) {
                             tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
+                            break;
                         }
+
+                        if (aliasOption == ALIAS_CLEAR) {
+                            this->aliasManager.clearUserAlias(command_to_clear, username);
+                        } else {
+                            this->aliasManager.clearGlobalAlias(command_to_clear);
+                        }
+
+                        tempMessage << "\nalias cleared successfully\n";
+
                     } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
                         tempMessage << "\nalias help: \n";
                         tempMessage << "\talias list: list all aliases\n";
