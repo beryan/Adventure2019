@@ -622,14 +622,14 @@ namespace game {
                         Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
 
                         if (command_to_alias == Command::InvalidCommand) {
-                            tempMessage << std::endl << command_to_alias_str << " did not map to a command\n";
+                            tempMessage << "\nAlias could not be set: " << command_to_alias_str << " is not the name of a command\n";
                             break;
                         }
 
                         std::string alias = params[2];
 
                         if (!this->aliasManager.isValidAlias(alias)) {
-                            tempMessage << std::endl << alias << " is not a valid alias\n";
+                            tempMessage << "\nAlias could not be set: " << alias << " is the name of a default command\n";
                             break;
                         }
 
@@ -637,9 +637,9 @@ namespace game {
                              this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
                             (aliasOption == ALIAS_SET_GLOBAL &&
                              this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
-                            tempMessage << "\nalias set successfully\n";
+                            tempMessage << "\nAlias set successfully\n";
                         } else {
-                            tempMessage << "\nalias could not be set\n";
+                            tempMessage << "\nAlias could not be set: an alias has already been set for the specified command\n";
                         }
                     } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
                         if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
@@ -649,8 +649,8 @@ namespace game {
                         std::string command_to_clear_str = params[1];
                         Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
 
-                        if (!(command_to_clear == Command::InvalidCommand)) {
-                            tempMessage << std::endl << command_to_clear_str << " did not map to a command\n";
+                        if (command_to_clear == Command::InvalidCommand) {
+                            tempMessage << "\nAlias could not be cleared: " << command_to_clear_str << " is not the name of a command\n";
                             break;
                         }
 
@@ -660,7 +660,7 @@ namespace game {
                             this->aliasManager.clearGlobalAlias(command_to_clear);
                         }
 
-                        tempMessage << "\nalias cleared successfully\n";
+                        tempMessage << "\nAlias cleared successfully\n";
 
                     } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
                         tempMessage << "\nAlias Commands:\n"
