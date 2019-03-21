@@ -120,10 +120,14 @@ namespace {
     TEST_F(CombatTestSuite, canCheckIfPlayerIsInCombatState) {
         handler.enterCombat(attacker, defender);
 
-        ASSERT_TRUE(handler.isInCombat(attacker, defender));
+        ASSERT_TRUE(handler.areInCombat(attacker, defender));
+        ASSERT_TRUE(handler.isInCombat(attacker));
+        ASSERT_TRUE(handler.isInCombat(defender));
 
         handler.exitCombat(attacker, defender);
 
-        ASSERT_FALSE(handler.isInCombat(attacker, defender));
+        EXPECT_FALSE(handler.areInCombat(attacker, defender));
+        EXPECT_FALSE(handler.isInCombat(attacker));
+        EXPECT_FALSE(handler.isInCombat(defender));
     }
 }

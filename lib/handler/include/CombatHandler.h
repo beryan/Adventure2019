@@ -54,11 +54,18 @@ namespace handler {
 
         /**
          *
-         * @param attacker that is ataccking the target
+         * @param attacker that is attacking the target
          * @param defender that is taking the damage
-         * @return True if there is an active combat state, or False if there isn't
+         * @return True if there is an active combat state with both characters, or False otherwise
          */
-        bool isInCombat(const Character &attacker, const Character &defender);
+        bool areInCombat(const Character &attacker, const Character &defender);
+
+        /**
+         *
+         * @param character to be evaluated
+         * @return True if character is in an active combat state, or False otherwise
+         */
+        bool isInCombat(const Character &character);
     };
 }
 

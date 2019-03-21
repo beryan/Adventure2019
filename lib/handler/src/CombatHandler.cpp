@@ -12,11 +12,13 @@ namespace handler {
         active_combats{},
         logic(active_combats){}
 
+
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         if (logic.canEnterCombat(attacker.getId(), defender.getId())) {
             active_combats.emplace_back(CombatState{attacker.getId(), defender.getId()});
         }
     }
+
 
     void CombatHandler::exitCombat(const Character &attacker, const Character &defender) {
         if (logic.canExitCombat(attacker.getId(), defender.getId())) {
@@ -31,12 +33,14 @@ namespace handler {
         }
     }
 
+
     void CombatHandler::attack(const Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker.getId(), defender.getId())) {
             int newHealth = defender.getHealth() - BASE_DAMAGE;
             defender.setHealth(std::max(newHealth, logic::DEFAULT_MIN_HEALTH));
         }
     }
+
 
     void CombatHandler::heal(const Character &healer, Character &target) {
         if (logic.canHealTarget(healer.getId(), target.getId())) {
@@ -45,7 +49,8 @@ namespace handler {
         }
     }
 
-    bool CombatHandler::isInCombat(const Character &attacker, const Character &defender) {
+
+    bool CombatHandler::areInCombat(const Character &attacker, const Character &defender) {
         bool result = false;
 
         // Can enter combat returns false if the combat state exists
@@ -55,4 +60,19 @@ namespace handler {
 
         return result;
     }
+
+
+    bool CombatHandler::isInCombat(const Character &character) {
+        auto characterId = character.getId();
+
+        auto combat_it = std::find_if(
+            this->active_combats.begin(),
+            this->active_combats.end(),
+            [&characterId](const auto &combatState) {
+                return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+            }
+        );
+
+        return combat_it != this->active_combats.end();
+    };
 }
