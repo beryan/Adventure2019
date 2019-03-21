@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <locale>
+#include <boost/algorithm/string/case_conv.hpp>
 
 static constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
@@ -162,15 +163,7 @@ std::unordered_map<std::string, std::string> AliasManager::getGlobalAliases() {
 
 bool AliasManager::isValidAlias(const std::string &alias) {
     CommandParser commandParser;
-    std::string lower = toLower(alias);
+    std::string lower = boost::algorithm::to_lower_copy(alias);;
     Command command = commandParser.parseCommand(lower);
     return command == Command::InvalidCommand;
-}
-
-std::string AliasManager::toLower(std::string str) {
-    std::locale locale;
-    for (std::string::size_type i = 0; i < str.length(); ++i) {
-        str[i] = std::tolower(str[i], locale);
-    }
-    return str;
 }

@@ -99,12 +99,6 @@ namespace game {
          * @return true if command was found, false otherwise
          */
         bool findAliasedCommand(std::string_view commandStr, std::string_view username, Command &result);
-
-        /**
-         * transform a string to lowercase
-         * @param str string to transform
-         */
-        std::string toLower(std::string str);
     };
 }
 
