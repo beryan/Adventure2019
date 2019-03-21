@@ -32,4 +32,17 @@ namespace model {
 
         return result;
     }
+
+    std::string getStringFromSlot(Slot slot) {
+        std::string result = "misc";
+
+        for (const auto &it : slots) {
+            if (it.second == slot) {
+                result = it.first;
+                break;
+            }
+        }
+
+        return result;
+    }
 }

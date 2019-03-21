@@ -22,6 +22,8 @@ namespace model {
      * Misc
      */
     Slot getSlotFromString(std::string slot);
+
+    std::string getStringFromSlot(Slot slot);
 }
 
 

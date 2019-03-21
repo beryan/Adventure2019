@@ -113,4 +113,15 @@ namespace {
 
         EXPECT_EQ(model::Slot::Weapon, object.getSlot());
     }
+
+    TEST_F(ObjectTestSuite, canReturnStringFromSlot) {
+        ASSERT_EQ("hello head", "hello " + model::getStringFromSlot(object.getSlot()));
+
+        object.setSlot(Slot::Feet);
+
+        ASSERT_EQ("hello feet", "hello " + model::getStringFromSlot(object.getSlot()));
+
+        ASSERT_EQ("hello misc", "hello " + model::getStringFromSlot(Slot::Count));
+
+    }
 }
