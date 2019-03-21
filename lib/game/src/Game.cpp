@@ -663,10 +663,13 @@ namespace game {
                         tempMessage << "\nalias cleared successfully\n";
 
                     } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
-                        tempMessage << "\nalias help: \n";
-                        tempMessage << "\talias list: list all aliases\n";
-                        tempMessage << "\talias (set/set-global) command_to_alias alias: sets an alias\n";
-                        tempMessage << "\talias (clear/clear-global) aliased_command: clear an alias for a command\n";
+                        tempMessage << "\nAlias Commands:\n"
+                                    << "---------------\n"
+                                    << "  - alias list (lists all aliases)\n"
+                                    << "  - alias set [command] [alias] (sets an alias for a command)\n"
+                                    << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
+                                    << "  - alias clear [command] (clears an alias for a command)\n"
+                                    << "  - alias clear-global [command] (clears a global alias for a command)\n";
                     } else {
                         tempMessage << aliasOption << " is not a valid option for "
                                     << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
