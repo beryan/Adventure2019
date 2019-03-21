@@ -417,6 +417,13 @@ namespace game {
             }
 
             case Command::Move: {
+                auto player = this->accountHandler.getPlayerByClient(client);
+
+                if (this->combatHandler.isInCombat(*player)) {
+                    tempMessage << "You flee from combat.\n";
+                    this->combatHandler.exitCombat(*player);
+                }
+
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto dir = lowercase(param);
 
@@ -453,6 +460,72 @@ namespace game {
                     }
                 } else {
                     tempMessage << "Invalid keyword.\n";
+                }
+
+                break;
+            }
+
+            case Command::Attack: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto room = this->worldHandler.findRoom(roomId);
+                auto npcs = room.getNpcs();
+
+                if (!containsKeyword(npcs, param)) {
+                    tempMessage << "There is no one here with the name of " << param << "\n";
+                    break;
+                }
+
+                auto player = this->accountHandler.getPlayerByClient(client);
+                auto npc = getItemByKeyword(npcs, param);
+
+                bool playerInCombat = this->combatHandler.isInCombat(*player);
+                bool npcInCombat = this->combatHandler.isInCombat(npc);
+                bool npcInCombatWithPlayer = this->combatHandler.areInCombat(*player, npc);
+
+                if (npcInCombat && !npcInCombatWithPlayer) {
+                    tempMessage << param << " is already engaged in combat with someone else!\n";
+                    break;
+                }
+
+                if (playerInCombat && !npcInCombatWithPlayer) {
+                    tempMessage << "You are already engaged in combat with someone else!\n";
+                    break;
+                }
+
+                if (!npcInCombat) {
+                    // Begin combat with NPC
+                    this->combatHandler.enterCombat(*player, npc);
+                }
+
+                auto npcHpBefore = npc.getHealth();
+                this->combatHandler.attack(*player, npc);
+                auto npcHpAfter = npc.getHealth();
+
+                tempMessage << "\n"
+                            << "You inflict " << (npcHpBefore - npcHpAfter)
+                            << " HP worth of damage to " << npc.getShortDescription()
+                            << " (" << npcHpAfter << " HP remaining)\n";
+
+                auto playerHpBefore = player->getHealth();
+                this->combatHandler.attack(npc, *player);
+                auto playerHpAfter = player->getHealth();
+
+
+                tempMessage << npc.getShortDescription() << " inflicts "
+                            << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                            << playerHpAfter << " HP remaining)\n";
+
+                if (player->getHealth() == 0) {
+                    tempMessage << "You lost the battle.\n";
+                    this->combatHandler.exitCombat(*player, npc);
+                    player->setHealth(Character::STARTING_HEALTH);
+                    npc.setHealth(Character::STARTING_HEALTH);
+
+                } else if (npc.getHealth() == 0) {
+                    tempMessage << "You won the battle!\n";
+                    this->combatHandler.exitCombat(*player, npc);
+                    player->setHealth(Character::STARTING_HEALTH);
+                    npc.setHealth(Character::STARTING_HEALTH);
                 }
 
                 break;

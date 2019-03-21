@@ -6,6 +6,7 @@
 #define COMMAND_H
 namespace game {
     enum class Command {
+        Attack,
         Cast,
         Chat,
         Debug,

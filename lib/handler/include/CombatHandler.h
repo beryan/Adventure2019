@@ -38,6 +38,8 @@ namespace handler {
          */
         void exitCombat(const Character &attacker, const Character &defender);
 
+        void exitCombat(const Character &character);
+
         /**
          *
          * @param attacker is the person dealing damage

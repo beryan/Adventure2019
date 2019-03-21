@@ -34,6 +34,22 @@ namespace handler {
     }
 
 
+    void CombatHandler::exitCombat(const Character &character) {
+        auto characterId = character.getId();
+        auto combat_it = std::find_if(
+                active_combats.begin(),
+                active_combats.end(),
+                [&characterId](const auto &combatState) {
+                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+                }
+        );
+
+        if (logic.canExitCombat(combat_it->attackerID, combat_it->defenderID)) {
+            active_combats.erase(combat_it);
+        }
+    }
+
+
     void CombatHandler::attack(const Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker.getId(), defender.getId())) {
             int newHealth = defender.getHealth() - BASE_DAMAGE;

@@ -14,6 +14,7 @@
 #include "AliasManager.h"
 #include "PlayerHandler.h"
 #include "CommandParser.h"
+#include "CombatHandler.h"
 
 #include <functional>
 #include <deque>
@@ -25,6 +26,7 @@ using handler::AccountHandler;
 using handler::WorldHandler;
 using handler::PlayerHandler;
 using handler::MagicHandler;
+using handler::CombatHandler;
 using game::Command;
 using game::AliasManager;
 
@@ -54,6 +56,7 @@ namespace game {
         WorldHandler worldHandler;
         AliasManager aliasManager;
         CommandParser commandParser;
+        CombatHandler combatHandler;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
