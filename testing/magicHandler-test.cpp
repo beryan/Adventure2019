@@ -145,7 +145,7 @@ namespace {
         casterExpected << "You cast " << CONFUSE_SPELL_NAME << " on " << USERNAME_B << "\n";
 
         std::ostringstream targetExpected;
-        targetExpected << USERNAME_A << " cast " << CONFUSE_SPELL_NAME << " on you!" << "\n";
+        targetExpected << USERNAME_A << " casts " << CONFUSE_SPELL_NAME << " on you!" << "\n";
 
         EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
         EXPECT_TRUE(magicHandler.isConfused(CLIENT_B));
@@ -299,7 +299,7 @@ namespace {
         casterExpected << "You have successfully swapped bodies with " << USERNAME_B << "\n";
 
         std::ostringstream targetExpected;
-        targetExpected << USERNAME_A << " cast " << BODY_SWAP_SPELL_NAME << " on you!\n";
+        targetExpected << USERNAME_A << " casts " << BODY_SWAP_SPELL_NAME << " on you!\n";
 
         EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);

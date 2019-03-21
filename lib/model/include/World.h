@@ -2,8 +2,8 @@
 // Created by arehal on 1/17/19.
 //
 
-#ifndef WEBSOCKETNETWORKING_WORLD_H
-#define WEBSOCKETNETWORKING_WORLD_H
+#ifndef WORLD_H
+#define WORLD_H
 
 #include <map>
 #include <vector>
@@ -33,4 +33,4 @@ namespace model{
     };
 }
 
-#endif //WEBSOCKETNETWORKING_WORLD_H
+#endif //WORLD_H

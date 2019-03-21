@@ -48,6 +48,6 @@ namespace handler {
             temp_item = player.getEquipment().unequipItem(item);
         }
 
-        return std::move(temp_item);
+        return temp_item;
     }
 }

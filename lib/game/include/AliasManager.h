@@ -29,7 +29,7 @@ namespace game {
          * @param command command to alias
          * @param alias alias for the command
          */
-        void setGlobalAlias(const Command &command, std::string_view alias);
+        bool setGlobalAlias(const Command &command, std::string_view alias);
 
         /**
          * Deletes a global alias for a command
@@ -99,12 +99,6 @@ namespace game {
          * @return true if command was found, false otherwise
          */
         bool findAliasedCommand(std::string_view commandStr, std::string_view username, Command &result);
-
-        /**
-         * transform a string to lowercase
-         * @param str string to transform
-         */
-        std::string toLower(std::string str);
     };
 }
 
