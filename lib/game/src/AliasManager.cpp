@@ -7,7 +7,8 @@
 #include "CommandParser.h"
 
 #include <fstream>
-#include <AliasManager.h>
+#include <locale>
+#include <boost/algorithm/string/case_conv.hpp>
 
 static constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
@@ -33,9 +34,9 @@ bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_v
     if (username_iterator != commands_json.end()) {
         auto aliasedCommands = username_iterator->get<std::unordered_map<std::string, std::string>>();
         auto command_iterator = std::find_if(aliasedCommands.begin(), aliasedCommands.end(),
-                                                        [commandStr](const auto &aliasedCommand) {
-                                                            return aliasedCommand.first == commandStr;
-                                                        });
+                                             [commandStr](const auto &aliasedCommand) {
+                                                 return aliasedCommand.first == commandStr;
+                                             });
         if (command_iterator != aliasedCommands.end()) {
             CommandParser commandParser;
             std::string command = command_iterator->second;
@@ -50,15 +51,16 @@ bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_v
     return wasFound;
 }
 
-void AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
-    setUserAlias(command, alias, GLOBAL_ALIASES_USER);
+bool AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
+    return setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
 void AliasManager::clearGlobalAlias(const Command &command) {
     clearUserAlias(command, GLOBAL_ALIASES_USER);
 }
 
-void AliasManager::setUserAlias(const Command &command, std::string_view alias, std::string_view username) {
+bool AliasManager::setUserAlias(const Command &command, std::string_view alias, std::string_view username) {
+    bool didSetAlias = true;
     std::ifstream inFile(this->filePath);
 
     if (!inFile.is_open()) {
@@ -70,8 +72,17 @@ void AliasManager::setUserAlias(const Command &command, std::string_view alias, 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         std::string commandStr = commandParser.getStringForCommand(command);
-        json newAlias = {{alias, commandStr}};
-        username_iterator->update(newAlias);
+        auto user_aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
+        auto alias_iterator = std::find_if(user_aliases.begin(), user_aliases.end(),
+                                           [&alias, &commandStr](const auto &alias_pair) {
+                                               return alias_pair.first == alias || alias_pair.second == commandStr;
+                                           });
+        if (alias_iterator == user_aliases.end()) {
+            json newAlias = {{alias, commandStr}};
+            username_iterator->update(newAlias);
+        } else {
+            didSetAlias = false;
+        }
     } else {
         std::string commandStr = commandParser.getStringForCommand(command);
         commands_json[std::string(username)] = {{alias, commandStr}};
@@ -80,6 +91,7 @@ void AliasManager::setUserAlias(const Command &command, std::string_view alias, 
     inFile.close();
 
     writeJson(commands_json, this->filePath);
+    return didSetAlias;
 }
 
 void AliasManager::clearUserAlias(const Command &command, std::string_view username) {
@@ -123,4 +135,35 @@ Command AliasManager::getCommandForUser(std::string_view commandStr, std::string
         result = commandParser.parseCommand(commandStr);
     }
     return result;
+}
+
+std::unordered_map<std::string, std::string> AliasManager::getAliasesForUser(std::string_view username) {
+    std::unordered_map<std::string, std::string> aliases;
+
+    std::ifstream ifs(COMMANDS_FILE_PATH);
+
+    if (!ifs.is_open()) {
+        throw std::runtime_error("Could not open commands file");
+    }
+
+    json commands_json = json::parse(ifs);
+
+    auto username_iterator = commands_json.find(username);
+    if (username_iterator != commands_json.end()) {
+        aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
+
+    }
+
+    return aliases;
+}
+
+std::unordered_map<std::string, std::string> AliasManager::getGlobalAliases() {
+    return getAliasesForUser(GLOBAL_ALIASES_USER);
+}
+
+bool AliasManager::isValidAlias(const std::string &alias) {
+    CommandParser commandParser;
+    std::string lower = boost::algorithm::to_lower_copy(alias);;
+    Command command = commandParser.parseCommand(lower);
+    return command == Command::InvalidCommand;
 }

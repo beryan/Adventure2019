@@ -31,6 +31,7 @@ namespace game {
         Tell,
         Wear,
         Yell,
+        Alias,
         InvalidCommand
     };
 }
