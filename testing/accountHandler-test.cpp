@@ -24,14 +24,14 @@ using networking::Connection;
  *  10. Logged in after registering
  *  11. Prevent registration with taken username on username input
  *  12. Prevent registration with taken username on second password input
- *  13. Remove appropriate 'reg' states if client disconnects while in registration process
+ *  13. Remove appropriate register states if client disconnects during registration process
  *  14. Start login and prompt for username
  *  15. Login prompts for password after entering username
  *  16. Enter invalid credentials in login
  *  17. Enter valid credentials in login
  *  18. Verify login state is cleared on failure
  *  19. Logout other client if same Player logged in by a client
- *  20. Remove appropriate 'login' states if client disconnects while in login process
+ *  20. Remove appropriate login states if client disconnects during login process
  */
 constexpr Connection CLIENT_A = {100};
 constexpr Connection CLIENT_B = {200};
@@ -49,13 +49,13 @@ TEST(AccountHandlerTestSuite, canStartRegistration) {
 
     auto result = accountHandler.processRegistration(CLIENT_A);
 
-    std::ostringstream expect;
-    expect << "\n"
-           << "Register\n"
-           << "--------\n"
-           << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+    std::ostringstream expected;
+    expected << "\n"
+             << "Register\n"
+             << "--------\n"
+             << "Enter your username (maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
-    EXPECT_EQ(expect.str(), result);
+    EXPECT_EQ(expected.str(), result);
     EXPECT_TRUE(accountHandler.isRegistering(CLIENT_A));
 }
 
@@ -65,7 +65,10 @@ TEST(AccountHandlerTestSuite, canPreventLongUsername) {
     accountHandler.processRegistration(CLIENT_A);
     auto result = accountHandler.processRegistration(CLIENT_A, LONG_LENGTH_STRING);
 
-    EXPECT_EQ("The username you entered is too long. Registration process cancelled.\n", result);
+    std::ostringstream expected;
+    expected << "The username you entered is too long. Registration process cancelled.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canUseValidUsername) {
@@ -74,12 +77,12 @@ TEST(AccountHandlerTestSuite, canUseValidUsername) {
     accountHandler.processRegistration(CLIENT_A);
     auto result = accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
-    std::ostringstream expect;
-    expect << VALID_PASSWORD_STRING << "\n"
-           << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
-           << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+    std::ostringstream expected;
+    expected << VALID_PASSWORD_STRING << "\n"
+             << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
+             << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
-    EXPECT_EQ(expect.str(), result);
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canPreventShortPassword) {
@@ -89,7 +92,10 @@ TEST(AccountHandlerTestSuite, canPreventShortPassword) {
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, SHORT_LENGTH_STRING);
 
-    EXPECT_EQ("The password you entered is too short. Registration process cancelled.\n", result);
+    std::ostringstream expected;
+    expected << "The password you entered is too short. Registration process cancelled.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canPreventLongPassword) {
@@ -99,7 +105,10 @@ TEST(AccountHandlerTestSuite, canPreventLongPassword) {
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, LONG_LENGTH_STRING);
 
-    EXPECT_EQ("The password you entered is too long. Registration process cancelled.\n", result);
+    std::ostringstream expected;
+    expected << "The password you entered is too long. Registration process cancelled.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canUseValidPassword) {
@@ -109,7 +118,10 @@ TEST(AccountHandlerTestSuite, canUseValidPassword) {
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result =  accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("Re-enter your password\n", result);
+    std::ostringstream expected;
+    expected << "Re-enter your password\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canDetectNonMatchingPassword) {
@@ -120,7 +132,10 @@ TEST(AccountHandlerTestSuite, canDetectNonMatchingPassword) {
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_A, "notMatch");
 
-    EXPECT_EQ("The passwords you entered do not match. Registration process cancelled.\n", result);
+    std::ostringstream expected;
+    expected << "The passwords you entered do not match. Registration process cancelled.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canRegisterSuccessfully) {
@@ -141,10 +156,10 @@ TEST(AccountHandlerTestSuite, canRegisterSuccessfully) {
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_A));
 }
 
-TEST(RegisterTest, RegisterStateClearsOnFail) {
+TEST(AccountHandlerTestSuite, canClearRegisterStateOnFail) {
     AccountHandler accountHandler{};
 
-    // Fail the registration after storing a username and Foobar in state
+    // Fail the registration after storing a username and password in state
     accountHandler.processRegistration(CLIENT_A);
     accountHandler.processRegistration(CLIENT_A, "test");
     accountHandler.processRegistration(CLIENT_A, "Foobar");
@@ -187,7 +202,11 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
     accountHandler.processRegistration(CLIENT_B);
     auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_PASSWORD_STRING) + "\" has already been taken, please use a different username.\n", result);
+    std::ostringstream expected;
+    expected << "The username \"" << VALID_PASSWORD_STRING
+             << "\" has already been taken, please use a different username.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
@@ -197,19 +216,23 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     accountHandler.processRegistration(CLIENT_A);
     accountHandler.processRegistration(CLIENT_B);
 
-    // Enters usernames
+    // Enter usernames
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    // Enters passwords
+    // Enter passwords
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    // Re-enters passwords
+    // Re-enter passwords
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("The username \"" + static_cast<std::string>(VALID_PASSWORD_STRING) + "\" has already been taken, please use a different username.\n", result);
+    std::ostringstream expected;
+    expected << "The username \"" << VALID_PASSWORD_STRING
+             << "\" has already been taken, please use a different username.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canRemoveClientFromRegisteringOnDisconnect) {
@@ -228,7 +251,14 @@ TEST(AccountHandlerTestSuite, canStartLogin) {
 
     auto result = accountHandler.processLogin(CLIENT_A);
 
-    EXPECT_EQ("\nLogin\n-----\nEnter your username\n", result);
+    std::ostringstream expected;
+    expected << "\n"
+             << "Login\n"
+             << "-----\n"
+             << "Enter your username\n";
+
+
+    EXPECT_EQ(expected.str(), result);
     EXPECT_TRUE(accountHandler.isLoggingIn(CLIENT_A));
 }
 
@@ -239,7 +269,10 @@ TEST(AccountHandlerTestSuite, canDetectFailedLogin) {
     accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
     auto result = accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
-    EXPECT_EQ("Invalid username or password.\n", result);
+    std::ostringstream expected;
+    expected << "Invalid username or password.\n";
+
+    EXPECT_EQ(expected.str(), result);
 }
 
 TEST(AccountHandlerTestSuite, canLogInSuccessfully) {
@@ -263,7 +296,7 @@ TEST(AccountHandlerTestSuite, canLogInSuccessfully) {
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_A));
 }
 
-TEST(LoginTest, LoginStateClearsOnFail) {
+TEST(AccountHandlerTestSuite, LoginStateClearsOnFail) {
     AccountHandler accountHandler{};
 
     // Create an account, then logout
@@ -302,8 +335,11 @@ TEST(AccountHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     std::deque<Message> results = {};
     accountHandler.notifyBootedClients(results);
 
+    std::ostringstream expected;
+    expected << "You have been logged out due to being logged in elsewhere.\n";
+
     EXPECT_EQ(CLIENT_A, results.front().connection);
-    EXPECT_EQ("You have been logged out due to being logged in elsewhere.\n", results.front().text);
+    EXPECT_EQ(expected.str(), results.front().text);
     EXPECT_FALSE(accountHandler.isLoggedIn(CLIENT_A));
     EXPECT_TRUE(accountHandler.isLoggedIn(CLIENT_B));
 }
