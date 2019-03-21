@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "NPC.h"
 
-using action::CombatHandler;
+using handler::CombatHandler;
 using model::Player;
 using model::NPC;
 

@@ -11,7 +11,7 @@
 using logic::CombatLogic;
 using model::Character;
 
-namespace action {
+namespace handler {
     class CombatHandler {
     private:
         std::vector<CombatState> active_combats;

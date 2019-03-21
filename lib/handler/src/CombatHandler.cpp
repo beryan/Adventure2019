@@ -5,9 +5,9 @@
 #include "CombatHandler.h"
 #include <iostream>
 
-using action::CombatHandler;
+using handler::CombatHandler;
 
-namespace action {
+namespace handler {
     CombatHandler::CombatHandler() :
         active_combats{},
         logic(active_combats){}
