@@ -25,11 +25,13 @@ namespace handler {
         constexpr static int BASE_MAX_DAMAGE = 20;
         constexpr static int BASE_HEAL = 5;
 
+        constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
+        constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
+
     public:
         CombatHandler();
 
         constexpr static float BASE_FLEE_CHANCE = 0.2f;
-        constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
 
         /**
          *

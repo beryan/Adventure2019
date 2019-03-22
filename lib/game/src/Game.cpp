@@ -441,7 +441,8 @@ namespace game {
                             this->combatHandler.attack(npc, *player);
                             auto playerHpAfter = player->getHealth();
 
-                            tempMessage << "You attempt to flee " << param << ", but fail. (20% chance of success)\n";
+                            tempMessage << "You attempt to flee " << param << ", but fail. ("
+                                        << this->combatHandler.BASE_FLEE_CHANCE << "% chance of success)\n";
 
                             tempMessage << npc.getShortDescription() << " inflicts "
                                         << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -449,12 +450,6 @@ namespace game {
 
                             if (player->getHealth() == 0) {
                                 tempMessage << "You lost the battle.\n";
-                                this->combatHandler.exitCombat(*player, npc);
-                                player->setHealth(Character::STARTING_HEALTH);
-                                npc.setHealth(Character::STARTING_HEALTH);
-
-                            } else if (npc.getHealth() == 0) {
-                                tempMessage << "You won the battle!\n";
                                 this->combatHandler.exitCombat(*player, npc);
                                 player->setHealth(Character::STARTING_HEALTH);
                                 npc.setHealth(Character::STARTING_HEALTH);
@@ -543,10 +538,20 @@ namespace game {
                             << " HP worth of damage to " << npc.getShortDescription()
                             << " (" << npcHpAfter << " HP remaining)\n";
 
+
+
+                if (npc.getHealth() == 0) {
+                    tempMessage << "You won the battle!\n";
+                    this->combatHandler.exitCombat(*player, npc);
+                    player->setHealth(Character::STARTING_HEALTH);
+                    npc.setHealth(Character::STARTING_HEALTH);
+
+                    break;
+                }
+
                 auto playerHpBefore = player->getHealth();
                 this->combatHandler.attack(npc, *player);
                 auto playerHpAfter = player->getHealth();
-
 
                 tempMessage << npc.getShortDescription() << " inflicts "
                             << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -554,12 +559,6 @@ namespace game {
 
                 if (player->getHealth() == 0) {
                     tempMessage << "You lost the battle.\n";
-                    this->combatHandler.exitCombat(*player, npc);
-                    player->setHealth(Character::STARTING_HEALTH);
-                    npc.setHealth(Character::STARTING_HEALTH);
-
-                } else if (npc.getHealth() == 0) {
-                    tempMessage << "You won the battle!\n";
                     this->combatHandler.exitCombat(*player, npc);
                     player->setHealth(Character::STARTING_HEALTH);
                     npc.setHealth(Character::STARTING_HEALTH);
@@ -593,7 +592,8 @@ namespace game {
                             this->combatHandler.attack(npc, *player);
                             auto playerHpAfter = player->getHealth();
 
-                            tempMessage << "You attempt to flee from combat, but fail. (10% chance of success)\n";
+                            tempMessage << "You attempt to flee from combat, but fail. ("
+                                        << (CombatHandler::BASE_FLEE_CHANCE / 2) << "% chance of success)\n";
 
                             tempMessage << npc.getShortDescription() << " inflicts "
                                         << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -601,12 +601,6 @@ namespace game {
 
                             if (player->getHealth() == 0) {
                                 tempMessage << "You lost the battle.\n";
-                                this->combatHandler.exitCombat(*player, npc);
-                                player->setHealth(Character::STARTING_HEALTH);
-                                npc.setHealth(Character::STARTING_HEALTH);
-
-                            } else if (npc.getHealth() == 0) {
-                                tempMessage << "You won the battle!\n";
                                 this->combatHandler.exitCombat(*player, npc);
                                 player->setHealth(Character::STARTING_HEALTH);
                                 npc.setHealth(Character::STARTING_HEALTH);
@@ -641,7 +635,8 @@ namespace game {
                         this->combatHandler.attack(npc, *player);
                         auto playerHpAfter = player->getHealth();
 
-                        tempMessage << "You attempt to flee, but fail. (" << (20 * doors.size()) << "% chance of success)\n";
+                        tempMessage << "You attempt to flee, but fail. ("
+                                    << (CombatHandler::BASE_FLEE_CHANCE * doors.size()) << "% chance of success)\n";
 
                         tempMessage << npc.getShortDescription() << " inflicts "
                                     << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -649,12 +644,6 @@ namespace game {
 
                         if (player->getHealth() == 0) {
                             tempMessage << "You lost the battle.\n";
-                            this->combatHandler.exitCombat(*player, npc);
-                            player->setHealth(Character::STARTING_HEALTH);
-                            npc.setHealth(Character::STARTING_HEALTH);
-
-                        } else if (npc.getHealth() == 0) {
-                            tempMessage << "You won the battle!\n";
                             this->combatHandler.exitCombat(*player, npc);
                             player->setHealth(Character::STARTING_HEALTH);
                             npc.setHealth(Character::STARTING_HEALTH);

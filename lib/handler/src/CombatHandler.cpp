@@ -53,7 +53,17 @@ namespace handler {
 
     void CombatHandler::attack(const Character &attacker, Character &defender) {
         if (logic.canAttackTarget(attacker.getId(), defender.getId())) {
-            int newHealth = defender.getHealth() - BASE_MIN_DAMAGE;
+            std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
+            std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
+
+            auto damage = damageRoll(this->RNG);
+
+            if (criticalProc(this->RNG)) {
+                damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
+            }
+
+            int newHealth = defender.getHealth() - damage;
+
             defender.setHealth(std::max(newHealth, logic::DEFAULT_MIN_HEALTH));
         }
     }
