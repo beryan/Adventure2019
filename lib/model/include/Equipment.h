@@ -8,6 +8,7 @@
 #include "Object.h"
 
 using model::Object;
+using model::Slot;
 
 namespace model {
     class Equipment {
@@ -16,7 +17,7 @@ namespace model {
          * int: Numbers indicate which slot the item is in
          * Object: Item that is equipped
          */
-        std::unordered_map<int, Object> equipment;
+        std::unordered_map<Slot, Object> equipment;
 
         friend std::ostream&operator<<(std::ostream& os, const Equipment& inv);
     public:
@@ -25,7 +26,7 @@ namespace model {
         /**
          * @return the immutable unordered map of Equipment
          */
-        std::unordered_map<int, Object> getMappedEquipment();
+        std::unordered_map<Slot, Object> getMappedEquipment();
 
         /**
          * @return the immutable vector form of Equipment

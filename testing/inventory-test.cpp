@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-02-26.
 //
 
-#include "lib/gtest/gtest.h"
-#include "lib/gmock/gmock.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "Inventory.h"
 #include <stdlib.h>
 #include <iostream>

@@ -31,7 +31,7 @@ namespace game {
         Tell,
         Wear,
         Yell,
-        InvalidCommand,
+        Alias,
 
         Acreate,
         Rcreate,
@@ -49,6 +49,7 @@ namespace game {
         Nlist,
         Goto,
         Reset,
+        InvalidCommand
     };
 }
 

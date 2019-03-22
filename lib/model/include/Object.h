@@ -6,9 +6,11 @@
 #define OBJECT_H
 
 #include "Types.h"
+#include "Slot.h"
 #include "ExtraObjectInfo.h"
 #include "json.hpp"
 
+using model::Slot;
 using json = nlohmann::json;
 
 namespace model {
@@ -21,11 +23,6 @@ namespace model {
      *  an object that is part of the inventory of a player
      *  or an object that is part of a room.
      */
-
-    // Count returns the length of the Slots
-    enum Slot {
-        Head, Shoulders, Back, Chest, Hands, Legs, Feet, Weapon, Misc, Count
-    };
 
     class Object {
     public:

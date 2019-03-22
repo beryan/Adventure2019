@@ -53,6 +53,7 @@ namespace game {
                 {"tell",      Command::Tell},
                 {"wear",      Command::Wear},
                 {"yell",      Command::Yell},
+                {"alias",     Command::Alias},
 
                 {"acreate",   Command::Acreate},
                 {"rcreate",   Command::Rcreate},
