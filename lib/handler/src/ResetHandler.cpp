@@ -12,7 +12,7 @@ namespace handler {
 
     void ResetHandler::addNpcsToRooms(Area& area){
         for(const Reset &r : area.getResets()) {
-            if(r.getAction() == "npc") {
+            if(r.getAction() == NPC_ACTION) {
                 auto room = area.findRoomById(r.getRoom());
                 auto npc = area.findNpcById(r.getId());
 
@@ -28,7 +28,7 @@ namespace handler {
 
     void ResetHandler::addObjectsToRooms(Area& area){
         for(Reset r : area.getResets()) {
-            if(r.getAction() == "object") {
+            if(r.getAction() == OBJECT_ACTION) {
                 auto room = area.findRoomById(r.getRoom());
                 auto object = area.findObjectById(r.getId());
 

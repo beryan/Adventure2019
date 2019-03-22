@@ -11,6 +11,9 @@
 using logic::ResetLogic;
 using model::Area;
 
+constexpr auto NPC_ACTION = "npc";
+constexpr auto OBJECT_ACTION = "object";
+
 namespace handler {
     class ResetHandler {
     private:
