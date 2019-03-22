@@ -61,9 +61,6 @@ namespace model {
         bool npcExists(const model::ID &npcId);
         bool objectExists(const model::ID &objectId);
 
-        void addNpcsToRooms();
-        void addObjectsToRooms();
-
         bool operator==(const Area& area) const;
     };
 

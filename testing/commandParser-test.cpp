@@ -124,7 +124,7 @@ namespace {
         EXPECT_EQ(REMOVE, commandParser.getStringForCommand(Command::Remove));
         EXPECT_EQ(SAY, commandParser.getStringForCommand(Command::Say));
         EXPECT_EQ(SHUTDOWN, commandParser.getStringForCommand(Command::Shutdown));
-        EXPECT_EQ(SPELLS, commandParser.getStringForCommand(Command::SPELLS));
+        EXPECT_EQ(SPELLS, commandParser.getStringForCommand(Command::Spells));
         EXPECT_EQ(TAKE, commandParser.getStringForCommand(Command::Take));
         EXPECT_EQ(TALK, commandParser.getStringForCommand(Command::Talk));
         EXPECT_EQ(TELL, commandParser.getStringForCommand(Command::Tell));

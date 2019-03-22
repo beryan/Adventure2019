@@ -67,13 +67,6 @@ namespace model {
         this->addArea(area1);
     }
 
-    void World::reset() {
-        for (auto &area : this->areas) {
-            area.addNpcsToRooms();
-            area.addObjectsToRooms();
-        }
-    }
-
     //print world
     std::ostream& operator<<(std::ostream& os, const World& rhs) {
         int count = 1;

@@ -7,9 +7,11 @@
 
 #include "Player.h"
 #include "World.h"
+#include "ResetHandler.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
+using handler::ResetHandler;
 using model::World;
 using model::Room;
 
@@ -124,10 +126,11 @@ namespace handler {
         editNpc(const model::ID &roomId, const std::string &parameters);
 
         void
-        reset();
+        resetAreas();
 
     private:
         World world;
+        ResetHandler resetHandler;
 
         bool
         isNum(const std::string &str);

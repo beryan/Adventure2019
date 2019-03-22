@@ -791,7 +791,7 @@ namespace game {
             }
 
             case Command::Reset: {
-                this->worldHandler.reset();
+                this->worldHandler.resetAreas();
                 tempMessage << "World reset.\n";
                 break;
             }

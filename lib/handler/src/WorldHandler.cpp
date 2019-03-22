@@ -20,7 +20,7 @@ namespace handler {
         this->world = World();
         this->world.createStub();
         //this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
-        reset();
+        resetAreas();
     }
 
     World
@@ -353,9 +353,10 @@ namespace handler {
         return success;
     }
 
-    void
-    WorldHandler::reset() {
-        this->world.reset();
+    void WorldHandler::resetAreas(){
+        for(Area& a : this->world.getAreas()){
+            resetHandler.resetArea(a);
+        }
     }
 
     bool
