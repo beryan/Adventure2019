@@ -5,6 +5,7 @@
 #ifndef COMBATHANDLER_H
 #define COMBATHANDLER_H
 
+#include <random>
 #include "CombatLogic.h"
 #include "Character.h"
 
@@ -14,14 +15,21 @@ using model::Character;
 namespace handler {
     class CombatHandler {
     private:
-        std::vector<CombatState> active_combats;
+        std::vector<CombatState> active_combat;
 
         CombatLogic logic;
 
-        constexpr static int BASE_DAMAGE = 10;
+        std::mt19937 RNG;
+
+        constexpr static int BASE_MIN_DAMAGE = 10;
+        constexpr static int BASE_MAX_DAMAGE = 20;
         constexpr static int BASE_HEAL = 5;
+
     public:
         CombatHandler();
+
+        constexpr static float BASE_FLEE_CHANCE = 0.2f;
+        constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
 
         /**
          *
@@ -38,6 +46,10 @@ namespace handler {
          */
         void exitCombat(const Character &attacker, const Character &defender);
 
+        /**
+         * Erases a combat state involving character
+         * @param character: character that is in combat
+         */
         void exitCombat(const Character &character);
 
         /**
@@ -68,6 +80,10 @@ namespace handler {
          * @return True if character is in an active combat state, or False otherwise
          */
         bool isInCombat(const Character &character);
+
+        model::ID getOpponentId(const Character &character);
+
+        std::mt19937& generateRandom();
     };
 }
 

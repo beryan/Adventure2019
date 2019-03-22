@@ -36,6 +36,7 @@ namespace game {
                 {"equipment", Command::Equipment},
                 {"examine",   Command::Examine},
                 {"exits",     Command::Exits},
+                {"flee",      Command::Flee},
                 {"give",      Command::Give},
                 {"help",      Command::Help},
                 {"inventory", Command::Inventory},

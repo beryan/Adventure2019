@@ -14,6 +14,7 @@ namespace game {
         Equipment,
         Examine,
         Exits,
+        Flee,
         Give,
         Help,
         Inventory,

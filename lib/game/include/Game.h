@@ -130,6 +130,9 @@ namespace game {
         T
         getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
 
+        NPC&
+        getNpcByKeyword(std::vector<NPC>& npcs, const std::string &keyword);
+
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.

@@ -5,6 +5,7 @@
 #include "Game.h"
 
 #include <map>
+#include <random>
 #include <sstream>
 #include <iostream>
 #include <boost/algorithm/string.hpp>
@@ -54,8 +55,7 @@ namespace game {
         disconnectedClients(&disconnectedClients),
         disconnect(disconnect),
         shutdown(shutdown),
-        magicHandler(this->accountHandler){};
-
+        magicHandler(this->accountHandler){}
 
     void
     Game::handleConnects(std::deque<Message> &messages) {
@@ -114,8 +114,8 @@ namespace game {
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << "\n" << this->worldHandler.findRoom(roomId).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -129,8 +129,8 @@ namespace game {
 
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
-                    auto roomID = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << "\n" << this->worldHandler.findRoom(roomId).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -261,6 +261,8 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Move) << " [direction] (moves you in the direction specified)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Examine) << " [keyword] (examines something or someone)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Talk) << " [keyword] (interacts with NPC)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Attack) << " [keyword] (attack an NPC)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Flee) << " (attempt to escape from combat, moving to a random direction)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Take) << " [keyword] (places item in your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Drop) << " [keyword] (drops item from inventory/equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
@@ -271,7 +273,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Alias) << " (aliases a command. Type \""
-                                    <<  this->commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
+                                      << this->commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
@@ -411,28 +413,63 @@ namespace game {
             }
 
             case Command::Exits: {
-                auto roomID = this->accountHandler.getRoomIdByClient(client);
-                tempMessage << "\n" << this->worldHandler.findRoom(roomID).doorsToString();
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                tempMessage << "\n" << this->worldHandler.findRoom(roomId).doorsToString();
                 break;
             }
 
             case Command::Move: {
-                auto player = this->accountHandler.getPlayerByClient(client);
-
-                if (this->combatHandler.isInCombat(*player)) {
-                    tempMessage << "You flee from combat.\n";
-                    this->combatHandler.exitCombat(*player);
-                }
-
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto dir = lowercase(param);
 
                 if (this->worldHandler.isValidDirection(roomId, dir)) {
+                    auto player = this->accountHandler.getPlayerByClient(client);
+
+                    if (this->combatHandler.isInCombat(*player)) {
+                        // Player has chance of fleeing to a desired direction successfully
+                        std::bernoulli_distribution fleeChance(CombatHandler::BASE_FLEE_CHANCE);
+
+                        if (fleeChance(this->combatHandler.generateRandom())) {
+                            tempMessage << "You successfully flee to the " << param << ".\n";
+                            this->combatHandler.exitCombat(*player);
+
+                        } else {
+                            auto opponentId = this->combatHandler.getOpponentId(*player);
+                            auto &npc = this->worldHandler.findRoom(roomId).getNpc(opponentId);
+
+                            auto playerHpBefore = player->getHealth();
+                            this->combatHandler.attack(npc, *player);
+                            auto playerHpAfter = player->getHealth();
+
+                            tempMessage << "You attempt to flee " << param << ", but fail. (20% chance of success)\n";
+
+                            tempMessage << npc.getShortDescription() << " inflicts "
+                                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                                        << playerHpAfter << " HP remaining)\n";
+
+                            if (player->getHealth() == 0) {
+                                tempMessage << "You lost the battle.\n";
+                                this->combatHandler.exitCombat(*player, npc);
+                                player->setHealth(Character::STARTING_HEALTH);
+                                npc.setHealth(Character::STARTING_HEALTH);
+
+                            } else if (npc.getHealth() == 0) {
+                                tempMessage << "You won the battle!\n";
+                                this->combatHandler.exitCombat(*player, npc);
+                                player->setHealth(Character::STARTING_HEALTH);
+                                npc.setHealth(Character::STARTING_HEALTH);
+                            }
+
+                            break;
+                        }
+                    }
+
                     auto playerId = this->accountHandler.getPlayerIdByClient(client);
                     auto destinationId = this->worldHandler.getDestination(roomId, dir);
                     this->worldHandler.movePlayer(playerId, roomId, destinationId);
                     this->accountHandler.setRoomIdByClient(client, destinationId);
                     tempMessage << "\n" << this->worldHandler.findRoom(destinationId).descToString();
+
                 } else {
                     tempMessage << "You can't move that way!\n";
                 }
@@ -467,8 +504,8 @@ namespace game {
 
             case Command::Attack: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
-                auto room = this->worldHandler.findRoom(roomId);
-                auto npcs = room.getNpcs();
+                auto &room = this->worldHandler.findRoom(roomId);
+                auto &npcs = room.getNpcs();
 
                 if (!containsKeyword(npcs, param)) {
                     tempMessage << "There is no one here with the name of " << param << "\n";
@@ -476,7 +513,7 @@ namespace game {
                 }
 
                 auto player = this->accountHandler.getPlayerByClient(client);
-                auto npc = getItemByKeyword(npcs, param);
+                auto &npc = getNpcByKeyword(npcs, param);
 
                 bool playerInCombat = this->combatHandler.isInCombat(*player);
                 bool npcInCombat = this->combatHandler.isInCombat(npc);
@@ -531,9 +568,112 @@ namespace game {
                 break;
             }
 
+            case Command::Flee: {
+                auto player = this->accountHandler.getPlayerByClient(client);
+                auto playerId = this->accountHandler.getPlayerIdByClient(client);
+
+                if (this->combatHandler.isInCombat(*player)) {
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    auto doors = this->worldHandler.findRoom(roomId).getDoors();
+
+                    // Corner case where room has no doors
+                    if (doors.empty()) {
+                        // Player has halved chance of fleeing successfully
+                        std::bernoulli_distribution fleeChance{CombatHandler::BASE_FLEE_CHANCE / 2};
+
+                        if (fleeChance(combatHandler.generateRandom())) {
+                            this->combatHandler.exitCombat(*player);
+                            tempMessage << "You successfully flee from combat.\n";
+
+                        } else {
+                            auto opponentId = this->combatHandler.getOpponentId(*player);
+                            auto &npc = this->worldHandler.findRoom(roomId).getNpc(opponentId);
+
+                            auto playerHpBefore = player->getHealth();
+                            this->combatHandler.attack(npc, *player);
+                            auto playerHpAfter = player->getHealth();
+
+                            tempMessage << "You attempt to flee from combat, but fail. (10% chance of success)\n";
+
+                            tempMessage << npc.getShortDescription() << " inflicts "
+                                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                                        << playerHpAfter << " HP remaining)\n";
+
+                            if (player->getHealth() == 0) {
+                                tempMessage << "You lost the battle.\n";
+                                this->combatHandler.exitCombat(*player, npc);
+                                player->setHealth(Character::STARTING_HEALTH);
+                                npc.setHealth(Character::STARTING_HEALTH);
+
+                            } else if (npc.getHealth() == 0) {
+                                tempMessage << "You won the battle!\n";
+                                this->combatHandler.exitCombat(*player, npc);
+                                player->setHealth(Character::STARTING_HEALTH);
+                                npc.setHealth(Character::STARTING_HEALTH);
+                            }
+
+                            break;
+                        }
+
+                    }
+
+                    // Player has chance of fleeing to a random direction successfully
+                    std::bernoulli_distribution fleeChance(CombatHandler::BASE_FLEE_CHANCE * doors.size());
+
+                    if (fleeChance(combatHandler.generateRandom())) {
+                        std::uniform_int_distribution<unsigned long> pickDoor(0, (doors.size() - 1));
+
+                        auto door = doors.at(pickDoor(combatHandler.generateRandom()));
+                        auto direction = door.dir;
+                        auto destinationId = door.leadsTo;
+
+                        this->worldHandler.movePlayer(playerId, roomId, destinationId);
+                        this->accountHandler.setRoomIdByClient(client, destinationId);
+
+                        this->combatHandler.exitCombat(*player);
+                        tempMessage << "You successfully flee to the " << direction << ".\n";
+
+                    } else {
+                        auto opponentId = this->combatHandler.getOpponentId(*player);
+                        auto &npc = this->worldHandler.findRoom(roomId).getNpc(opponentId);
+
+                        auto playerHpBefore = player->getHealth();
+                        this->combatHandler.attack(npc, *player);
+                        auto playerHpAfter = player->getHealth();
+
+                        tempMessage << "You attempt to flee, but fail. (" << (20 * doors.size()) << "% chance of success)\n";
+
+                        tempMessage << npc.getShortDescription() << " inflicts "
+                                    << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                                    << playerHpAfter << " HP remaining)\n";
+
+                        if (player->getHealth() == 0) {
+                            tempMessage << "You lost the battle.\n";
+                            this->combatHandler.exitCombat(*player, npc);
+                            player->setHealth(Character::STARTING_HEALTH);
+                            npc.setHealth(Character::STARTING_HEALTH);
+
+                        } else if (npc.getHealth() == 0) {
+                            tempMessage << "You won the battle!\n";
+                            this->combatHandler.exitCombat(*player, npc);
+                            player->setHealth(Character::STARTING_HEALTH);
+                            npc.setHealth(Character::STARTING_HEALTH);
+                        }
+
+                        break;
+                    }
+
+
+                } else {
+                    tempMessage << "You are in no danger to flee from.\n";
+                }
+
+                break;
+            }
+
             case Command::Take: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
-                Room& room = this->worldHandler.findRoom(roomId);
+                Room room = this->worldHandler.findRoom(roomId);
                 auto objects = room.getObjects();
 
                 if (containsKeyword(objects, param)) {
@@ -845,6 +985,20 @@ namespace game {
         }
         return item;
     }
+
+    NPC&
+    Game::getNpcByKeyword(std::vector<NPC> &npcs, const std::string &param) {
+        auto keyword = lowercase(param);
+
+        auto it = std::find_if(npcs.begin(), npcs.end(), [&keyword](const auto &npc) {return npc.containsKeyword(keyword);});
+
+        if (it != npcs.end()) {
+            return *it;
+        }
+
+        throw std::runtime_error("No NPC matching keyword");
+    }
+
 
 
     std::deque<Message>

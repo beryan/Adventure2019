@@ -64,8 +64,26 @@ namespace model {
         return this->doors;
     }
 
-    std::vector<NPC> Room::getNpcs() const {
+    std::vector<NPC>& Room::getNpcs() {
         return this->npcs;
+    }
+
+    NPC& Room::getNpc(const model::ID &id) {
+        auto it = std::find_if(
+            this->npcs.begin(),
+            this->npcs.end(),
+            [&id](const auto &npc) {
+                return npc.getId() == id;
+            }
+        );
+
+        if (it != this->npcs.end()) {
+            return *it;
+
+        } else {
+            throw std::runtime_error("No NPC with specified ID for Room::getNpc");
+        }
+
     }
 
     std::vector<Object> Room::getObjects() const {
