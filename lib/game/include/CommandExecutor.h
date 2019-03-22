@@ -47,7 +47,7 @@ namespace game {
         void removeClientFromGame(Connection client);
 
     private:
-        ConnectionHandler& connectionHandler;
+        ConnectionHandler &connectionHandler;
         PlayerHandler playerHandler;
         AccountHandler accountHandler;
         MagicHandler magicHandler;
@@ -64,6 +64,45 @@ namespace game {
         template<typename T>
         T
         getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
+
+        std::string executeHelpCommand();
+
+        std::vector<Message> executeSayCommand(const Connection &client, std::string &message);
+
+        std::string executeLogoutCommand(const Connection &client);
+
+        std::vector<Message> executeChatCommand(const Connection &client, std::basic_string<char> &message);
+
+        std::string executeLookCommand(const Connection &client);
+
+        std::string executeExamineCommand(const Connection &client, std::string &keyword);
+
+        std::string executeExitsCommand(const Connection &client);
+
+        std::string executeMoveCommand(const Connection &client, const std::string &dir);
+
+        std::vector<Message> executeCastCommand(const Connection &client, const std::string &spell);
+
+        std::string executeSpellsCommand();
+
+        std::string executeTalkCommand(const Connection &client, std::string &keyword);
+
+        std::string executeTakeCommand(const Connection &client, const std::string &keyword);
+
+        std::string executeDropCommand(const Connection &client, const std::string &keyword);
+
+        std::string executeWearCommand(const Connection &client, const std::string &keyword);
+
+        std::string executeRemoveCommand(const Connection &client, const std::string &keyword);
+
+        Inventory &executeInventoryCommand(const Connection &client);
+
+        Equipment &executeEquipmentCommand(const Connection &client);
+
+        World executeDebugCommand();
+
+        std::vector<Message>
+        executeGiveCommand(const Connection &client, const std::string &username, const std::string &keyword);
     };
 }
 
