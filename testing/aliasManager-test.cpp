@@ -6,20 +6,13 @@
 #include "gmock/gmock.h"
 #include "AliasManager.h"
 #include "CommandParser.h"
+#include <boost/algorithm/string/case_conv.hpp>
 
 using game::Command;
 using game::AliasManager;
 using game::CommandParser;
 
 namespace {
-    std::string toUpper(std::string str) {
-        std::locale locale;
-        for (std::string::size_type i = 0; i < str.length(); ++i) {
-            str[i] = std::toupper(str[i]);
-        }
-        return str;
-    }
-
     TEST(AliasManagerTestSuite, canGetAliasedCommands) {
         AliasManager aliasManager;
         std::string testUser = "testuser";
@@ -156,10 +149,10 @@ namespace {
         CommandParser commandParser;
 
         std::string invalidAlias = commandParser.getStringForCommand(Command::Say);
-        std::string uppercaseInvalidAlias = toUpper(invalidAlias);
+        std::string uppercaseInvalidAlias = boost::algorithm::to_upper_copy(invalidAlias);
 
         std::string validAlias = "ayo";
-        std::string uppercaseValidAlias = toUpper(validAlias);
+        std::string uppercaseValidAlias = boost::algorithm::to_upper_copy(validAlias);
 
         EXPECT_TRUE(aliasManager.isValidAlias(validAlias));
         EXPECT_TRUE(aliasManager.isValidAlias(uppercaseValidAlias));

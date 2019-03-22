@@ -63,16 +63,20 @@ namespace model {
     }
 
     bool Inventory::isInventoryEmpty() {
-        return inventory.empty();
+        return this->inventory.empty();
     }
 
     std::ostream&operator<<(std::ostream& os, const Inventory& rhs) {
-        os << "\nInventory:\n";
-        os << "----------\n";
-        for (const auto &kv : rhs.inventory) {
-            os << "[" << kv.first.getShortDescription() << " x" << kv.second << "]";
+        if (!rhs.inventory.empty()) {
+            os << "\nInventory:\n";
+            os << "----------\n";
+            for (const auto &kv : rhs.inventory) {
+                os << "[" << kv.first.getShortDescription() << " x" << kv.second << "]";
+            }
+            os << std::endl;
+        } else {
+            os << "Empty inventory!\n";
         }
-        os << std::endl;
 
         return os;
     }

@@ -7,9 +7,11 @@
 
 #include "Player.h"
 #include "World.h"
+#include "ResetHandler.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
+using handler::ResetHandler;
 using model::World;
 using model::Room;
 
@@ -70,13 +72,22 @@ namespace handler {
         removeItem(const model::ID &roomId, const model::ID &objectId);
 
         /**
+         *  Determines if you can give to a player
+         */
+        bool
+        canGive(const model::ID &roomId, const model::ID &playerId);
+
+        /**
          *  Gets player ids in current and adjacent rooms given current room id
          */
         std::vector<model::ID>
         getNearbyPlayerIds(const model::ID &roomId);
 
+        void resetAreas();
+
     private:
         World world;
+        ResetHandler resetHandler;
     };
 }
 

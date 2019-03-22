@@ -114,15 +114,35 @@ namespace {
         model::Object object{objectId, shortDescription, longDescription, keywords, slot};
 
         worldHandler.addItem(roomId, object);
+        worldHandler.addItem(roomId, object);
         auto objects = room.getObjects();
         auto findObjectById = [objectId](const Object &obj) { return obj.getId() == objectId; };
 
         bool isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
         EXPECT_TRUE(isObjectInRoom);
 
+        auto expected_size = objects.size() - 1;
+        worldHandler.removeItem(roomId, objectId);
+        objects = room.getObjects();
+        EXPECT_EQ(expected_size, objects.size());
+        isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
+        EXPECT_TRUE(isObjectInRoom);
+
         worldHandler.removeItem(roomId, objectId);
         objects = room.getObjects();
         isObjectInRoom = std::find_if(objects.begin(), objects.end(), findObjectById) != objects.end();
         EXPECT_FALSE(isObjectInRoom);
+    }
+
+    TEST(WorldHandlerTestSuite, canGive) {
+        WorldHandler worldHandler;
+        auto roomId = getFirstRoom(worldHandler);
+        model::ID playerId = 1234;
+
+        EXPECT_FALSE(worldHandler.canGive(roomId, playerId));
+
+        worldHandler.addPlayer(roomId, playerId);
+
+        EXPECT_TRUE(worldHandler.canGive(roomId, playerId));
     }
 }

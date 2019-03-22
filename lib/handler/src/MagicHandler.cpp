@@ -2,7 +2,7 @@
 // Created by louis on 16/02/19.
 //
 
-#include "../include/MagicHandler.h"
+#include "MagicHandler.h"
 #include <sstream>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/trim.hpp>
@@ -122,7 +122,7 @@ namespace handler {
         this->bodySwapInstances.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
         casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
-        targetMessage << casterUsername << " cast " + std::string(BODY_SWAP_SPELL_NAME) + " on you!\n";
+        targetMessage << casterUsername << " casts " + std::string(BODY_SWAP_SPELL_NAME) + " on you!\n";
 
         responses.push_back({targetClient, targetMessage.str()});
         responses.push_back({client, casterMessage.str()});
@@ -185,7 +185,7 @@ namespace handler {
         this->confuseInstances.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
         casterMessage << "You cast " + std::string(CONFUSE_SPELL_NAME) + " on " << targetName << "\n";
-        targetMessage << casterUsername << " cast " + std::string(CONFUSE_SPELL_NAME) + " on you!" << "\n";
+        targetMessage << casterUsername << " casts " + std::string(CONFUSE_SPELL_NAME) + " on you!" << "\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
@@ -248,7 +248,7 @@ namespace handler {
                 auto casterClient = this->accountHandler->getClientByPlayerId(casterPlayerId);
                 auto targetClient = this->accountHandler->getClientByPlayerId(targetPlayerId);
 
-                std::string message = "The effects of " + std::string(BODY_SWAP_SPELL_NAME) + " has worn off and you return to your original body.\n";
+                std::string message = "The effects of " + std::string(BODY_SWAP_SPELL_NAME) + " have worn off and you return to your original body.\n";
                 messages.push_back({casterClient, message});
                 messages.push_back({targetClient, message});
 
@@ -270,7 +270,7 @@ namespace handler {
             } else {
                 auto targetClient = this->accountHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
 
-                std::string message = "The effects of " + std::string(CONFUSE_SPELL_NAME) + " has worn off and your speech returns to normal.\n";
+                std::string message = "The effects of " + std::string(CONFUSE_SPELL_NAME) + " have worn off and your speech returns to normal.\n";
                 messages.push_back({targetClient, message});
 
                 this->confuseInstances.erase(confuseInstance);

@@ -8,6 +8,7 @@
 
 #include <fstream>
 #include <locale>
+#include <boost/algorithm/string/case_conv.hpp>
 
 static constexpr auto GLOBAL_ALIASES_USER = "global_aliases";
 
@@ -50,8 +51,8 @@ bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_v
     return wasFound;
 }
 
-void AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
-    setUserAlias(command, alias, GLOBAL_ALIASES_USER);
+bool AliasManager::setGlobalAlias(const Command &command, std::string_view alias) {
+    return setUserAlias(command, alias, GLOBAL_ALIASES_USER);
 }
 
 void AliasManager::clearGlobalAlias(const Command &command) {
@@ -59,6 +60,7 @@ void AliasManager::clearGlobalAlias(const Command &command) {
 }
 
 bool AliasManager::setUserAlias(const Command &command, std::string_view alias, std::string_view username) {
+    bool didSetAlias = true;
     std::ifstream inFile(this->filePath);
 
     if (!inFile.is_open()) {
@@ -70,8 +72,17 @@ bool AliasManager::setUserAlias(const Command &command, std::string_view alias, 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         std::string commandStr = commandParser.getStringForCommand(command);
-        json newAlias = {{alias, commandStr}};
-        username_iterator->update(newAlias);
+        auto user_aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
+        auto alias_iterator = std::find_if(user_aliases.begin(), user_aliases.end(),
+                                           [&alias, &commandStr](const auto &alias_pair) {
+                                               return alias_pair.first == alias || alias_pair.second == commandStr;
+                                           });
+        if (alias_iterator == user_aliases.end()) {
+            json newAlias = {{alias, commandStr}};
+            username_iterator->update(newAlias);
+        } else {
+            didSetAlias = false;
+        }
     } else {
         std::string commandStr = commandParser.getStringForCommand(command);
         commands_json[std::string(username)] = {{alias, commandStr}};
@@ -80,7 +91,7 @@ bool AliasManager::setUserAlias(const Command &command, std::string_view alias, 
     inFile.close();
 
     writeJson(commands_json, this->filePath);
-    return true;
+    return didSetAlias;
 }
 
 void AliasManager::clearUserAlias(const Command &command, std::string_view username) {
@@ -152,15 +163,7 @@ std::unordered_map<std::string, std::string> AliasManager::getGlobalAliases() {
 
 bool AliasManager::isValidAlias(const std::string &alias) {
     CommandParser commandParser;
-    std::string lower = toLower(alias);
+    std::string lower = boost::algorithm::to_lower_copy(alias);;
     Command command = commandParser.parseCommand(lower);
     return command == Command::InvalidCommand;
-}
-
-std::string AliasManager::toLower(std::string str) {
-    std::locale locale;
-    for (std::string::size_type i = 0; i < str.length(); ++i) {
-        str[i] = std::tolower(str[i], locale);
-    }
-    return str;
 }

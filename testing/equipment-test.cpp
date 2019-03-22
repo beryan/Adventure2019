@@ -1,6 +1,6 @@
 
-#include "lib/gtest/gtest.h"
-#include "lib/gmock/gmock.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include "Equipment.h"
 #include <stdlib.h>
 #include <iostream>
@@ -11,11 +11,7 @@ using model::Slot;
 namespace {
     class EquipmentTestSuite : public ::testing::Test {
     protected:
-        Equipment equipment;
-
-        virtual void SetUp() override {
-            equipment = {};
-        }
+        Equipment equipment{};
     };
 
     TEST_F(EquipmentTestSuite, canMapEquipment) {
@@ -25,7 +21,7 @@ namespace {
         obj1.setSlot(Slot::Head);
         obj2.setSlot(Slot::Chest);
 
-        std::unordered_map<int, Object> map {
+        std::unordered_map<Slot, Object> map {
                 std::make_pair(obj1.getSlot(), obj1),
                 std::make_pair(obj2.getSlot(), obj2)
         };
