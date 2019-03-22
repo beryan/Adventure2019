@@ -180,6 +180,17 @@ namespace model {
         return ids;
     }
 
+    int Room::countNpcById(const model::ID& npcID) const {
+        return std::count_if(this->npcs.begin(), this->npcs.end(),
+                          [npcID](const NPC & npc) -> bool { return npc.getId() == npcID ; });
+    }
+
+    int Room::countObjectById(const model::ID& objectID) const {
+        return std::count_if(this->objects.begin(), this->objects.end(),
+                          [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
+    }
+
+
     bool Room::operator==(const Room& Room) const {
         return this->id == Room.getId();
     }
