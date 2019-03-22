@@ -103,34 +103,6 @@ namespace model {
                             [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
     }
 
-    void Area::addNPCsToRooms() {
-        for(const Reset &r : this->resets) {
-            if(r.getAction() == "npc") {
-                auto room = findRoomById(r.getRoom());
-                auto npc = findNpcById(r.getId());
-
-                if(room != this->rooms.end() && npc != this->npcs.end()) {
-                    room->addNPC(*npc);
-                }
-
-            }
-        }
-    }
-
-    void Area::addObjectsToRooms() {
-        for(Reset r : this->resets) {
-            if(r.getAction() == "object") {
-                auto room = findRoomById(r.getRoom());
-                auto object = findObjectById(r.getId());
-
-                if(room != this->rooms.end() && object != this->objects.end()) {
-                    room->addObject(*object);
-                }
-
-            }
-        }
-    }
-
     bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }

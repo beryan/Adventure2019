@@ -80,6 +80,9 @@ namespace model {
         model::ID getDestination(const std::string &dir) const;
         std::vector<model::ID> getNearbyRoomIds() const;
 
+        int countNpcById(const model::ID& npcID) const;
+        int countObjectById(const model::ID& objectID) const;
+
         std::string descToString() const;
         std::string doorsToString() const;
 

@@ -58,9 +58,6 @@ namespace model {
         std::vector<NPC>::iterator findNpcById(model::ID npcID);
         std::vector<Object>::iterator findObjectById(model::ID objectID);
 
-        void addNPCsToRooms();
-        void addObjectsToRooms();
-
         bool operator==(const Area& area) const;
     };
 

@@ -7,9 +7,11 @@
 
 #include "Player.h"
 #include "World.h"
+#include "ResetHandler.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
+using handler::ResetHandler;
 using model::World;
 using model::Room;
 
@@ -81,8 +83,11 @@ namespace handler {
         std::vector<model::ID>
         getNearbyPlayerIds(const model::ID &roomId);
 
+        void resetAreas();
+
     private:
         World world;
+        ResetHandler resetHandler;
     };
 }
 
