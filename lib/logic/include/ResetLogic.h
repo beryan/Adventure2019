@@ -13,12 +13,11 @@ using model::Room;
 
 namespace logic {
     class ResetLogic {
-    private:
     public:
         ResetLogic();
 
-        bool canAddNpcToRoom(const Reset reset, const Room room) const;
-        bool canAddObjectToRoom(const Reset reset, const Room room) const;
+        bool canAddNpcToRoom(const Reset& reset, const Room& room) const;
+        bool canAddObjectToRoom(const Reset& reset, const Room& room) const;
     };
 
 }

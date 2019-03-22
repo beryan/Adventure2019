@@ -162,12 +162,12 @@ namespace model {
         return ids;
     }
 
-    int Room::countNpcById(model::ID npcID){
+    int Room::countNpcById(const model::ID& npcID) const {
         return std::count_if(this->npcs.begin(), this->npcs.end(),
                           [npcID](const NPC & npc) -> bool { return npc.getId() == npcID ; });
     }
 
-    int Room::countObjectById(model::ID objectID){
+    int Room::countObjectById(const model::ID& objectID) const {
         return std::count_if(this->objects.begin(), this->objects.end(),
                           [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
     }

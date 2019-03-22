@@ -35,10 +35,6 @@ namespace model {
             std::vector<std::string> longDescription
         );
 
-        model::ID getId() const;
-
-        void setId(model::ID);
-
         std::vector<std::string> getKeywords() const;
 
         void setKeywords(std::vector<std::string> keywords);
@@ -62,8 +58,6 @@ namespace model {
         static constexpr int MAX_KEYWORDS = 8;
 
     private:
-
-        model::ID id;
 
         std::vector<std::string> keywords;
 

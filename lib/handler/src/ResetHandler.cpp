@@ -32,12 +32,11 @@ namespace handler {
                 auto room = area.findRoomById(r.getRoom());
                 auto object = area.findObjectById(r.getId());
 
-                if(room != area.getRooms().end() && object != area.getObjects().end()) {
-                    if(logic.canAddObjectToRoom(r, *room)){
-                        room->addObject(*object);
-                    }
-                }
+                bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
 
+                if(roomAndObjectFound && logic.canAddObjectToRoom(r, *room)){
+                        room->addObject(*object);
+                }
             }
         }
     }
