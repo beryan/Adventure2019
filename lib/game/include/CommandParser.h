@@ -50,6 +50,7 @@ namespace game {
                 {"say",       Command::Say},
                 {"shutdown",  Command::Shutdown},
                 {"spells",    Command::Spells},
+                {"status",    Command::Status},
                 {"take",      Command::Take},
                 {"talk",      Command::Talk},
                 {"tell",      Command::Tell},

@@ -268,6 +268,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Give) << " [username] [keyword] (gives item to username)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Status) << " (displays your health and current status ailments)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
@@ -426,37 +427,9 @@ namespace game {
                     auto player = this->accountHandler.getPlayerByClient(client);
 
                     if (this->combatHandler.isInCombat(*player)) {
-                        // Player has chance of fleeing to a desired direction successfully
-                        std::bernoulli_distribution fleeChance(CombatHandler::BASE_FLEE_CHANCE);
-
-                        if (fleeChance(this->combatHandler.generateRandom())) {
-                            tempMessage << "You successfully flee to the " << param << ".\n";
-                            this->combatHandler.exitCombat(*player);
-
-                        } else {
-                            auto opponentId = this->combatHandler.getOpponentId(*player);
-                            auto &npc = this->worldHandler.findRoom(roomId).getNpc(opponentId);
-
-                            auto playerHpBefore = player->getHealth();
-                            this->combatHandler.attack(npc, *player);
-                            auto playerHpAfter = player->getHealth();
-
-                            tempMessage << "You attempt to flee " << param << ", but fail. ("
-                                        << this->combatHandler.BASE_FLEE_CHANCE << "% chance of success)\n";
-
-                            tempMessage << npc.getShortDescription() << " inflicts "
-                                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
-                                        << playerHpAfter << " HP remaining)\n";
-
-                            if (player->getHealth() == 0) {
-                                tempMessage << "You lost the battle.\n";
-                                this->combatHandler.exitCombat(*player, npc);
-                                player->setHealth(Character::STARTING_HEALTH);
-                                npc.setHealth(Character::STARTING_HEALTH);
-                            }
-
-                            break;
-                        }
+                        tempMessage << "You can't expect to just stroll out of here with someone attacking you!"
+                                    << " Perhaps you should flee instead.\n";
+                        break;
                     }
 
                     auto playerId = this->accountHandler.getPlayerIdByClient(client);
@@ -593,7 +566,7 @@ namespace game {
                             auto playerHpAfter = player->getHealth();
 
                             tempMessage << "You attempt to flee from combat, but fail. ("
-                                        << (CombatHandler::BASE_FLEE_CHANCE / 2) << "% chance of success)\n";
+                                        << (CombatHandler::BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
 
                             tempMessage << npc.getShortDescription() << " inflicts "
                                         << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -636,7 +609,7 @@ namespace game {
                         auto playerHpAfter = player->getHealth();
 
                         tempMessage << "You attempt to flee, but fail. ("
-                                    << (CombatHandler::BASE_FLEE_CHANCE * doors.size()) << "% chance of success)\n";
+                                    << (CombatHandler::BASE_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
 
                         tempMessage << npc.getShortDescription() << " inflicts "
                                     << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
@@ -763,6 +736,30 @@ namespace game {
                 } else {
                     tempMessage << "Invalid keyword.\n";
                 }
+
+                break;
+            }
+
+            case Command::Status: {
+                auto player = this->accountHandler.getPlayerByClient(client);
+
+                tempMessage << "\n"
+                            << "Status:\n"
+                            << "-------\n"
+                            << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+
+                auto isBodySwapped = this->magicHandler.isBodySwapped(client);
+                auto isConfused = this->magicHandler.isConfused(client);
+
+                if (isBodySwapped) {
+                    tempMessage << "Body Swapped (This is not your body. How uncomfortable.)\n";
+                }
+
+                if (isConfused) {
+                    tempMessage << "Confused (No matter how hard you try, everything you say comes out all funny.)\n";
+                }
+
+                tempMessage << "\n";
 
                 break;
             }
@@ -974,6 +971,7 @@ namespace game {
         }
         return item;
     }
+
 
     NPC&
     Game::getNpcByKeyword(std::vector<NPC> &npcs, const std::string &param) {

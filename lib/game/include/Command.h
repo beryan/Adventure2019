@@ -28,6 +28,7 @@ namespace game {
         Say,
         Shutdown,
         Spells,
+        Status,
         Talk,
         Take,
         Tell,
