@@ -100,6 +100,15 @@ namespace model {
         j.at("keywords").get_to(d.keywords);
     }
 
+    inline void to_json(json &j, const Door &d) {
+        j = {
+                {"dir", d.dir},
+                {"to", d.leadsTo},
+                {"desc", d.desc},
+                {"keywords", d.keywords}
+        };
+    }
+
     inline void from_json(const json &j, Room &r) {
         r.setId(j.at("id").get<model::ID>());
         r.setName(j.at("name").get<std::string>());
@@ -107,6 +116,16 @@ namespace model {
         r.setDoors(j.at("doors").get<std::vector<Door>>());
         r.setExtras((j.at("extended_descriptions").get<std::vector<ExtraInfo>>()));
     }
+
+    inline void to_json(json &j, const Room &r) {
+        j = {
+                {"id", r.getId()},
+                {"name", r.getName()},
+                {"desc", r.getDesc()},
+                {"doors", r.getDoors()}
+        };
+    }
+
 }
 
 #endif //ROOM_H

@@ -69,6 +69,10 @@ namespace model {
 		a.setName(j.at("name").get<std::string>());
 	}
 
+    inline void to_json(json &j, const Area &a) {
+        j = { {"name", a.getName()} };
+    }
+
 }
 
 #endif //AREA_H

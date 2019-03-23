@@ -62,6 +62,26 @@ namespace model {
 
     }
 
+    inline void to_json(json &j, const Reset &r) {
+
+        j = {
+                {"id", r.getId()},
+                {"action", r.getAction()}
+        };
+
+        if(r.getLimit() != -1) {
+            j.push_back({"limit", r.getLimit()});
+        }
+
+        if(r.getRoom() != -1) {
+            j.push_back({"room", r.getRoom()});
+        }
+
+        if (r.getSlot() != -1){
+            j.push_back({"slot", r.getSlot()});
+        }
+    }
+
 }
 
 #endif //RESET_H
