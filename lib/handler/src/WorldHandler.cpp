@@ -316,6 +316,12 @@ namespace handler {
                 } else if (field == "keywords") {
                     object->setKeywords(std::vector<std::string>(arguments.begin() + 2, arguments.end()));
                     success = true;
+                } else if (field == "slot") {
+                    auto slot = model::getSlotFromString(value);
+                    if (slot != model::Slot::Misc) {
+                        object->setSlot(slot);
+                        success = true;
+                    }
                 }
             }
         }
