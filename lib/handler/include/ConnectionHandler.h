@@ -31,7 +31,6 @@ private:
     std::vector<Connection> &newClients;
     std::vector<Connection> &disconnectedClients;
     std::function<void(Connection action)> disconnectFn;
-    std::function<void()> shutdownFn;
 };
 
 
