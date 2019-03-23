@@ -80,8 +80,9 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Cast: {
-            auto spell = params[0];
-            return cast(client, spell);
+            auto spellName = params.size() >= 1 ? params[0] : "";
+            auto targetName = params.size() >= 2 ? params[1] : "";
+            return magicHandler.castSpell(client, spellName, targetName);
         }
 
         case Command::Spells: {
@@ -262,10 +263,6 @@ std::string CommandExecutor::talk(const Connection &client, std::string &keyword
 
 std::string CommandExecutor::spells() {
     return magicHandler.getSpells();
-}
-
-std::vector<Message> CommandExecutor::cast(const Connection &client, const std::string &spell) {
-    return magicHandler.castSpell(client, spell);
 }
 
 std::string CommandExecutor::move(const Connection &client, const std::string &dir) {
@@ -566,7 +563,7 @@ CommandExecutor::removeClientFromGame(Connection client) {
 }
 
 std::vector<Message> CommandExecutor::give(const Connection &client, const std::string &username,
-                                                 const std::string &keyword) {
+                                           const std::string &keyword) {
     std::vector<Message> messages = {};
     auto roomId = this->accountHandler.getRoomIdByClient(client);
     auto receiverClient = this->accountHandler.getClientByUsername(username);

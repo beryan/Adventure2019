@@ -21,7 +21,7 @@ constexpr auto USERNAME_A = "Able";
 constexpr auto USERNAME_B = "Baker";
 constexpr auto USERNAME_C = "Charlie";
 
-constexpr auto VALID_PASSWORD_STRING= "Valid Pass";
+constexpr auto VALID_PASSWORD_STRING = "Valid Pass";
 
 constexpr auto CONFUSE_SPELL_NAME = "confuse";
 constexpr auto BODY_SWAP_SPELL_NAME = "swap";
@@ -75,9 +75,7 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, rejectNoSpellName) {
-        std::string argument;
-
-        auto results = magicHandler.castSpell(CLIENT_A, argument);
+        auto results = magicHandler.castSpell(CLIENT_A, "", "");
 
         ASSERT_EQ(1u, results.size());
 
@@ -92,10 +90,9 @@ namespace {
 
     TEST_F(MagicHandlerTestSuite, rejectInvalidSpellName) {
         std::string spellName = "InvalidSpell";
-        std::ostringstream argument;
-        argument << spellName << " " << USERNAME_B;
+        std::string targetName = USERNAME_B;
 
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -110,9 +107,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canCastConfuseOnSelf) {
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_A;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -132,9 +129,9 @@ namespace {
     TEST_F(MagicHandlerTestSuite, canCastConfuseOnOtherPlayerInSameRoom) {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(2u, results.size());
 
@@ -162,9 +159,9 @@ namespace {
         accountHandler.setRoomIdByClient(CLIENT_B, 42);
         ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -182,14 +179,14 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastConfuseOnSelfWhileConfused) {
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_A;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_TRUE(magicHandler.isConfused(CLIENT_A));
         ASSERT_FALSE(magicHandler.isConfused(CLIENT_B));
 
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -206,21 +203,21 @@ namespace {
     TEST_F(MagicHandlerTestSuite, cannotCastConfuseOnConfusedPlayer) {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_B;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_FALSE(magicHandler.isConfused(CLIENT_A));
         ASSERT_TRUE(magicHandler.isConfused(CLIENT_B));
 
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << USERNAME_B << " is already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
+        casterExpected << targetName << " is already under the effects of the " << spellName << " spell!\n";
 
         ASSERT_EQ(CLIENT_A.id, casterResult.connection.id);
         ASSERT_EQ(casterExpected.str(), casterResult.text);
@@ -239,9 +236,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canWaitUntilConfuseExpires) {
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_A;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         std::deque<Message> messages;
         for (int i = CONFUSE_DURATION; i >= 0; --i) {
@@ -254,9 +251,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canRemoveConfuseOnLogout) {
-        std::ostringstream argument;
-        argument << CONFUSE_SPELL_NAME << " " << USERNAME_A;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = CONFUSE_SPELL_NAME;
+        std::string targetName = USERNAME_A;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_TRUE(magicHandler.isConfused(CLIENT_A));
 
@@ -267,9 +264,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastBodySwapOnSelf) {
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_A;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_A;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -286,9 +283,9 @@ namespace {
     TEST_F(MagicHandlerTestSuite, canCastBodySwapOnOtherPlayerInSameRoom) {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(2u, results.size());
 
@@ -318,9 +315,9 @@ namespace {
         accountHandler.setRoomIdByClient(CLIENT_B, 42);
         ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -342,23 +339,24 @@ namespace {
     TEST_F(MagicHandlerTestSuite, cannotCastBodySwapOnWhileSelfIsSwapped) {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
         ASSERT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
         ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_A));
         ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_B));
 
-        auto results = magicHandler.castSpell(CLIENT_A, argument.str());
+        auto results = magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
         auto casterResult = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "You can't cast " << BODY_SWAP_SPELL_NAME << " while already under the effects of the spell!\n";
+        casterExpected << "You can't cast " << BODY_SWAP_SPELL_NAME
+                       << " while already under the effects of the spell!\n";
 
         EXPECT_EQ(CLIENT_A.id, casterResult.connection.id);
         EXPECT_EQ(casterExpected.str(), casterResult.text);
@@ -381,9 +379,9 @@ namespace {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_C));
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_B), accountHandler.getRoomIdByClient(CLIENT_C));
 
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
         ASSERT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
@@ -392,7 +390,7 @@ namespace {
         ASSERT_TRUE(magicHandler.isBodySwapped(CLIENT_B));
         ASSERT_FALSE(magicHandler.isBodySwapped(CLIENT_C));
 
-        auto results = magicHandler.castSpell(CLIENT_C, argument.str());
+        auto results = magicHandler.castSpell(CLIENT_C, spellName, targetName);
 
         ASSERT_EQ(1u, results.size());
 
@@ -414,9 +412,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canWaitUntilBodySwapExpires) {
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         std::deque<Message> messages;
         for (int i = BODY_SWAP_DURATION; i >= 0; --i) {
@@ -435,9 +433,9 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canRemoveBodySwapOnLogout) {
-        std::ostringstream argument;
-        argument << BODY_SWAP_SPELL_NAME << " " << USERNAME_B;
-        magicHandler.castSpell(CLIENT_A, argument.str());
+        std::string spellName = BODY_SWAP_SPELL_NAME;
+        std::string targetName = USERNAME_B;
+        magicHandler.castSpell(CLIENT_A, spellName, targetName);
 
         ASSERT_EQ(CLIENT_A.id, accountHandler.getClientByUsername(USERNAME_B).id);
         ASSERT_EQ(CLIENT_B.id, accountHandler.getClientByUsername(USERNAME_A).id);
@@ -459,7 +457,8 @@ namespace {
                  << "Spells:\n"
                  << "-------\n"
                  << "  - " << CONFUSE_SPELL_NAME << " (causes the target to temporarily speak in Pig Latin)\n"
-                 << "  - " << BODY_SWAP_SPELL_NAME << " (causes the caster to switch bodies with the target temporarily)\n";
+                 << "  - " << BODY_SWAP_SPELL_NAME
+                 << " (causes the caster to switch bodies with the target temporarily)\n";
 
         EXPECT_EQ(expected.str(), result);
     }

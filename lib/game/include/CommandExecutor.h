@@ -73,8 +73,6 @@ namespace game {
 
         std::string move(const Connection &client, const std::string &dir);
 
-        std::vector<Message> cast(const Connection &client, const std::string &spell);
-
         std::string spells();
 
         std::string talk(const Connection &client, std::string &keyword);
