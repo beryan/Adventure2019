@@ -37,7 +37,7 @@ namespace model {
     }
 
     bool ExtraObjectInfo::containsKeyword(const std::string &keyword) const {
-        return (std::find(this->extraKeywords.begin(), this->extraKeywords.end(), keyword) != this->extraKeywords.end());
+        return std::find(this->extraKeywords.begin(), this->extraKeywords.end(), keyword) != this->extraKeywords.end();
     }
 
     bool ExtraObjectInfo::operator==(const ExtraObjectInfo &other) const {
