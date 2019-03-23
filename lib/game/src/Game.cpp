@@ -601,24 +601,36 @@ namespace game {
             }
 
             case Command::Build: {
-                tempMessage << "\n"
-                            << "******************\n"
-                            << "* World Building *\n"
-                            << "******************\n"
-                            << "\n"
-                            << "COMMANDS:\n"
-                            << "  - acreate [name] (creates an area with specified name)\n"
-                            << "  - rcreate [anum] [id] [name] (creates room in specified area)\n"
-                            << "  - ocreate/ncreate [anum] [id] [short description] (creates object/npc in specified area)\n"
-                            << "  - aedit [field] [values] (modifies current area)\n"
-                            << "  - redit [field] [values] (modifies current room)\n"
-                            << "  - oedit/nedit [id] [field] [values] (modifies object/npc with specified id in current area)\n"
-                            << "  - oreset [id] (creates object reset for current room)\n"
-                            << "  - nreset [id] [amount] (creates NPC reset for current room)\n"
-                            << "  - alist (lists world areas)\n"
-                            << "  - rlist/olist/nlist [areaId] (lists rooms/objects/npcs of area)\n"
-                            << "  - goto [id] (moves you to room with id)\n"
-                            << "  - reset (triggers world reset)\n";
+                tempMessage << "\nWorld Building Commands:\n"
+                            << "------------------------\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Acreate)
+                            << " [name] (creates an area with specified name)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Rcreate)
+                            << " [anum] [id] [name] (creates room in specified area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Ocreate)
+                            << "/" << this->commandParser.getStringForCommand(Command::Ncreate)
+                            << " [anum] [id] [short description] (creates object/npc in specified area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Aedit)
+                            << " [field] [values] (modifies current area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Redit)
+                            << " [field] [values] (modifies current room)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Oedit)
+                            << "/" << this->commandParser.getStringForCommand(Command::Nedit)
+                            << " [id] [field] [values] (modifies object/npc with specified id in current area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Oreset)
+                            << " [id] (creates object reset for current room)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Nreset)
+                            << " [id] [amount] (creates NPC reset for current room)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Alist)
+                            << " (lists world areas)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Rlist)
+                            << "/" << this->commandParser.getStringForCommand(Command::Olist)
+                            << "/" << this->commandParser.getStringForCommand(Command::Nlist)
+                            << " [areaId] (lists rooms/objects/npcs of area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Goto)
+                            << " [id] (moves you to room with id)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Reset)
+                            << " (triggers world reset)\n";
                 break;
             }
 
