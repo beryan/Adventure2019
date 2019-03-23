@@ -41,9 +41,34 @@ namespace handler {
         }
     }
 
+    void ResetHandler::loadSavedResets(Area& area){
+        for(const Reset &r : area.getSaveResets()) {
+            if(r.getAction() == NPC_ACTION) {
+                auto room = area.findRoomById(r.getRoom());
+                auto npc = area.findNpcById(r.getId());
+
+                if(room != area.getRooms().end() && npc != area.getNpcs().end()) {
+                    while(logic.canAddNpcToRoom(r, *room)){
+                        room->addNPC(*npc);
+                    }
+                }
+            }else if(r.getAction() == OBJECT_ACTION) {
+                auto room = area.findRoomById(r.getRoom());
+                auto object = area.findObjectById(r.getId());
+
+                bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
+
+                if(roomAndObjectFound && logic.canAddObjectToRoom(r, *room)){
+                    room->addObject(*object);
+                }
+            }
+        }
+    }
+
 
     void ResetHandler::resetArea(Area& area){
         addNpcsToRooms(area);
         addObjectsToRooms(area);
     }
+
 }
