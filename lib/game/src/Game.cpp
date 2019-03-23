@@ -630,7 +630,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Goto)
                             << " [id] (moves you to room with id)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Reset)
-                            << " (triggers world reset)\n";
+                            << " [anum] (triggers world reset or area reset if specified)\n";
                 break;
             }
 
@@ -803,8 +803,16 @@ namespace game {
             }
 
             case Command::Reset: {
-                this->worldHandler.resetAreas();
-                tempMessage << "World reset.\n";
+                if (param.empty()) {
+                    this->worldHandler.resetAreas();
+                    tempMessage << "World reset.\n";
+                } else {
+                    if (this->worldHandler.resetArea(param)) {
+                        tempMessage << "Area reset.\n";
+                    } else {
+                        tempMessage << "Failed to reset area.\n";
+                    }
+                }
                 break;
             }
 

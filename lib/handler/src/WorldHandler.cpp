@@ -353,9 +353,25 @@ namespace handler {
         return success;
     }
 
-    void WorldHandler::resetAreas(){
-        for(Area& a : this->world.getAreas()){
-            resetHandler.resetArea(a);
+    bool WorldHandler::resetArea(const std::string &parameters) {
+        //reset [anum]
+        bool success = false;
+        std::vector<std::string> arguments;
+        boost::split(arguments, parameters, boost::is_any_of(" "));
+        if (arguments.size() == 1 && isNum(arguments.at(0))) {
+            unsigned int index = std::stoi(arguments.at(0)) - 1;
+            if (index < this->world.getAreas().size()) {
+                auto &area = this->world.getAreas().at(index);
+                resetHandler.resetArea(area);
+                success = true;
+            }
+        }
+        return success;
+    }
+
+    void WorldHandler::resetAreas() {
+        for (Area& area : this->world.getAreas()) {
+            resetHandler.resetArea(area);
         }
     }
 

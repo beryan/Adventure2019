@@ -125,6 +125,9 @@ namespace handler {
         bool
         editNpc(const model::ID &roomId, const std::string &parameters);
 
+        bool
+        resetArea(const std::string &parameters);
+
         void
         resetAreas();
 
