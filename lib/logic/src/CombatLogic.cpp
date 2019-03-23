@@ -7,7 +7,7 @@
 using logic::CombatLogic;
 
 namespace logic {
-    CombatLogic::CombatLogic(std::vector<CombatState> &states) :
+    CombatLogic::CombatLogic(std::vector<CombatInstance> &states) :
         states(states) {}
 
     bool CombatLogic::canEnterCombat(const model::ID &attacker, const model::ID &defender) const {
@@ -15,7 +15,7 @@ namespace logic {
                 std::find(
                         this->states.begin(),
                         this->states.end(),
-                        CombatState{attacker, defender}) == this->states.end()
+                        CombatInstance{attacker, defender}) == this->states.end()
                         );
     }
 
@@ -24,7 +24,7 @@ namespace logic {
                 std::find(
                         this->states.begin(),
                         this->states.end(),
-                        CombatState{attacker, defender}) != this->states.end()
+                        CombatInstance{attacker, defender}) != this->states.end()
                         );
     }
 
@@ -42,7 +42,7 @@ namespace logic {
     bool CombatLogic::canAttackTarget(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
 
-        if (std::find(this->states.begin(), this->states.end(), CombatState{attacker, defender}) != this->states.end()) {
+        if (std::find(this->states.begin(), this->states.end(), CombatInstance{attacker, defender}) != this->states.end()) {
             result = true;
         }
 
@@ -52,7 +52,7 @@ namespace logic {
     bool CombatLogic::canFlee(const model::ID &attacker, const model::ID &defender) const {
         bool result = false;
 
-        if (std::find(this->states.begin(), this->states.end(), CombatState{attacker, defender}) != this->states.end()) {
+        if (std::find(this->states.begin(), this->states.end(), CombatInstance{attacker, defender}) != this->states.end()) {
             result = true;
         }
 

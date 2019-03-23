@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <boost/algorithm/string/case_conv.hpp>
 
 using model::Room;
 
@@ -68,7 +69,7 @@ namespace model {
         return this->npcs;
     }
 
-    NPC& Room::getNpc(const model::ID &id) {
+    NPC& Room::getNpcById(const model::ID &id) {
         auto it = std::find_if(
             this->npcs.begin(),
             this->npcs.end(),
@@ -84,6 +85,23 @@ namespace model {
             throw std::runtime_error("No NPC with specified ID for Room::getNpc");
         }
 
+    }
+
+    NPC& Room::getNpcByKeyword(const std::string &param) {
+        auto keyword = boost::algorithm::to_lower_copy(param);
+
+        auto it = std::find_if(
+                this->npcs.begin(),
+                this->npcs.end(),
+                [&keyword](const auto &npc) {
+                    return npc.containsKeyword(keyword);
+                });
+
+        if (it != npcs.end()) {
+            return *it;
+        }
+
+        throw std::runtime_error("No NPC matching keyword");
     }
 
     std::vector<Object> Room::getObjects() const {

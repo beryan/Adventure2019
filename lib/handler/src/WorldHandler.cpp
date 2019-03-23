@@ -17,8 +17,8 @@ namespace handler {
     WorldHandler::WorldHandler() {
         //create temporary world
         this->world = World();
-//        this->world.createStub();
-        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+        this->world.createStub();
+        //this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
         resetAreas();
     }
 

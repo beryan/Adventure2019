@@ -4,19 +4,22 @@
 
 #include "CombatHandler.h"
 #include <iostream>
+#include <sstream>
 
 using handler::CombatHandler;
 
 namespace handler {
-    CombatHandler::CombatHandler() :
-        active_combat{},
-        logic(active_combat),
+    CombatHandler::CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler) :
+        combatInstances{},
+        logic(combatInstances),
+        accountHandler(accountHandler),
+        worldHandler(worldHandler),
         RNG(std::random_device{}()){}
 
 
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         if (logic.canEnterCombat(attacker.getId(), defender.getId())) {
-            active_combat.emplace_back(CombatState{attacker.getId(), defender.getId()});
+            combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
         }
     }
 
@@ -24,12 +27,12 @@ namespace handler {
     void CombatHandler::exitCombat(const Character &attacker, const Character &defender) {
         if (logic.canExitCombat(attacker.getId(), defender.getId())) {
             auto it = std::find(
-                    active_combat.begin(),
-                    active_combat.end(),
-                    CombatState{attacker.getId(), defender.getId()});
+                    combatInstances.begin(),
+                    combatInstances.end(),
+                    CombatInstance{attacker.getId(), defender.getId()});
 
-            if (it != active_combat.end()) {
-                active_combat.erase(it);
+            if (it != combatInstances.end()) {
+                combatInstances.erase(it);
             }
         }
     }
@@ -38,15 +41,15 @@ namespace handler {
     void CombatHandler::exitCombat(const Character &character) {
         auto characterId = character.getId();
         auto combat_it = std::find_if(
-                active_combat.begin(),
-                active_combat.end(),
+                combatInstances.begin(),
+                combatInstances.end(),
                 [&characterId](const auto &combatState) {
                     return (combatState.attackerID == characterId || combatState.defenderID == characterId);
                 }
         );
 
         if (logic.canExitCombat(combat_it->attackerID, combat_it->defenderID)) {
-            active_combat.erase(combat_it);
+            combatInstances.erase(combat_it);
         }
     }
 
@@ -68,12 +71,177 @@ namespace handler {
         }
     }
 
+    std::string CombatHandler::attack(const Connection &client, const std::string &targetName) {
+        std::ostringstream message;
 
-    void CombatHandler::heal(const Character &healer, Character &target) {
-        if (logic.canHealTarget(healer.getId(), target.getId())) {
-            int newHealth = target.getHealth() + BASE_HEAL;
-            target.setHealth(std::min(newHealth, logic::DEFAULT_MAX_HEALTH));
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        auto &room = this->worldHandler.findRoom(roomId);
+
+        try {
+            // try getting npc with targetName, throws exception if not found.
+            auto &npc = room.getNpcByKeyword(targetName);
+
+            auto player = this->accountHandler.getPlayerByClient(client);
+
+            bool playerInCombat = this->isInCombat(*player);
+            bool npcInCombat = this->isInCombat(npc);
+            bool npcInCombatWithPlayer = this->areInCombat(*player, npc);
+
+            if (npcInCombat && !npcInCombatWithPlayer) {
+                message << targetName<< " is already engaged in combat with someone else!\n";
+                return message.str();
+            }
+
+            if (playerInCombat && !npcInCombatWithPlayer) {
+                message << "You are already engaged in combat with someone else!\n";
+                return message.str();
+            }
+
+            if (!npcInCombat) {
+                this->enterCombat(*player, npc);
+            }
+
+            auto npcHpBefore = npc.getHealth();
+            this->attack(*player, npc);
+            auto npcHpAfter = npc.getHealth();
+
+            message << "\n"
+                    << "You inflict " << (npcHpBefore - npcHpAfter)
+                    << " HP worth of damage to " << npc.getShortDescription()
+                    << " (" << npcHpAfter << " HP remaining)\n";
+
+
+            if (npc.getHealth() == 0) {
+                message << "You won the battle!\n";
+                this->exitCombat(*player, npc);
+                player->setHealth(Character::STARTING_HEALTH);
+                npc.setHealth(Character::STARTING_HEALTH);
+
+                return message.str();
+            }
+
+            auto playerHpBefore = player->getHealth();
+            this->attack(npc, *player);
+            auto playerHpAfter = player->getHealth();
+
+            message << npc.getShortDescription() << " inflicts "
+                    << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                    << playerHpAfter << " HP remaining)\n";
+
+            if (player->getHealth() == 0) {
+                message << "You lost the battle.\n";
+                this->exitCombat(*player, npc);
+                player->setHealth(Character::STARTING_HEALTH);
+                npc.setHealth(Character::STARTING_HEALTH);
+            }
+
+            auto combat_it = std::find_if(
+                    combatInstances.begin(),
+                    combatInstances.end(),
+                    [&player](const auto &combatState) {
+                        return (combatState.attackerID == player->getId());
+                    }
+            );
+            combat_it->endRound();
+
+            return message.str();
+
+        } catch (const std::runtime_error &e) {
+            message << "There is no one here with the name of " << targetName << "\n";
+            return message.str();
         }
+    }
+
+
+    std::string CombatHandler::flee(const Connection &client) {
+        std::ostringstream message;
+
+        auto player = this->accountHandler.getPlayerByClient(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
+
+        if (!this->isInCombat(*player)) {
+            message << "You are in no danger to flee from.\n";
+            return message.str();
+        }
+
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        auto doors = this->worldHandler.findRoom(roomId).getDoors();
+
+        // Corner case where room has no doors
+        if (doors.empty()) {
+            // Player has halved chance of fleeing successfully
+            std::bernoulli_distribution fleeChance{BASE_FLEE_CHANCE / 2};
+
+            if (fleeChance(this->RNG)) {
+                this->exitCombat(*player);
+                message << "You successfully flee from combat.\n";
+
+            } else {
+                auto opponentId = this->getOpponentId(*player);
+                auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
+
+                auto playerHpBefore = player->getHealth();
+                this->attack(npc, *player);
+                auto playerHpAfter = player->getHealth();
+
+                message << "You attempt to flee from combat, but fail. ("
+                            << (BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
+
+                message << npc.getShortDescription() << " inflicts "
+                            << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                            << playerHpAfter << " HP remaining)\n";
+
+                if (player->getHealth() == 0) {
+                    message << "You lost the battle.\n";
+                    this->exitCombat(*player, npc);
+                    player->setHealth(Character::STARTING_HEALTH);
+                    npc.setHealth(Character::STARTING_HEALTH);
+                }
+            }
+
+            return message.str();
+        }
+
+        // Player has chance of fleeing to a random direction successfully
+        std::bernoulli_distribution fleeChance(BASE_FLEE_CHANCE * doors.size());
+
+        if (fleeChance(this->RNG)) {
+            std::uniform_int_distribution<unsigned long> pickDoor(0, (doors.size() - 1));
+
+            auto door = doors.at(pickDoor(this->RNG));
+            auto direction = door.dir;
+            auto destinationId = door.leadsTo;
+
+            this->worldHandler.movePlayer(playerId, roomId, destinationId);
+            this->accountHandler.setRoomIdByClient(client, destinationId);
+
+            this->exitCombat(*player);
+            message << "You successfully flee to the " << direction << ".\n";
+
+        } else {
+            auto opponentId = this->getOpponentId(*player);
+            auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
+
+            auto playerHpBefore = player->getHealth();
+            this->attack(npc, *player);
+            auto playerHpAfter = player->getHealth();
+
+            message << "You attempt to flee, but fail. ("
+                        << (BASE_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
+
+            message << npc.getShortDescription() << " inflicts "
+                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                        << playerHpAfter << " HP remaining)\n";
+
+            if (player->getHealth() == 0) {
+                message << "You lost the battle.\n";
+                this->exitCombat(*player, npc);
+                player->setHealth(Character::STARTING_HEALTH);
+                npc.setHealth(Character::STARTING_HEALTH);
+            }
+        }
+
+        return message.str();
     }
 
 
@@ -93,28 +261,28 @@ namespace handler {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
-            this->active_combat.begin(),
-            this->active_combat.end(),
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
             [&characterId](const auto &combatState) {
                 return (combatState.attackerID == characterId || combatState.defenderID == characterId);
             }
         );
 
-        return combat_it != this->active_combat.end();
+        return combat_it != this->combatInstances.end();
     };
 
     model::ID CombatHandler::getOpponentId(const Character &character) {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
-                this->active_combat.begin(),
-                this->active_combat.end(),
+                this->combatInstances.begin(),
+                this->combatInstances.end(),
                 [&characterId](const auto &combatState) {
                     return (combatState.attackerID == characterId || combatState.defenderID == characterId);
                 }
         );
 
-        if (combat_it == this->active_combat.end()) {
+        if (combat_it == this->combatInstances.end()) {
             return 0;
         }
 
@@ -126,7 +294,43 @@ namespace handler {
         }
     }
 
-    std::mt19937& CombatHandler::generateRandom() {
-        return this->RNG;
+
+    void CombatHandler::processCycle(std::deque<Message> &messages) {
+        std::vector<Player*> defeatedPlayers;
+
+        for (auto &combatInstance : this->combatInstances) {
+            if (combatInstance.roundCyclesRemaining > 0) {
+                combatInstance.decrement();
+
+            } else {
+                auto client = this->accountHandler.getClientByPlayerId(combatInstance.attackerID);
+                auto player = this->accountHandler.getPlayerByClient(client);
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
+
+                auto playerHpBefore = player->getHealth();
+                this->attack(npc, *player);
+                auto playerHpAfter = player->getHealth();
+
+                std::ostringstream message;
+                message << npc.getShortDescription() << " inflicts "
+                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
+                        << playerHpAfter << " HP remaining)\n";
+
+                if (player->getHealth() == 0) {
+                    message << "You lost the battle.\n";
+                    defeatedPlayers.push_back(player);
+                    player->setHealth(Character::STARTING_HEALTH);
+                    npc.setHealth(Character::STARTING_HEALTH);
+                }
+
+                messages.push_back({client, message.str()});
+                combatInstance.endRound();
+            }
+        }
+
+        for (const auto &defeatedPlayer : defeatedPlayers) {
+            this->exitCombat(*defeatedPlayer);
+        }
     }
 }

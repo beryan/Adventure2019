@@ -6,10 +6,10 @@
 #define COMBATLOGIC_H
 
 #include "Character.h"
-#include "CombatState.h"
+#include "CombatInstance.h"
 
 using model::Character;
-using model::CombatState;
+using model::CombatInstance;
 
 namespace logic {
     constexpr int DEFAULT_MAX_HEALTH = 100;
@@ -17,9 +17,9 @@ namespace logic {
 
     class CombatLogic {
     private:
-        std::vector<CombatState> &states;
+        std::vector<CombatInstance> &states;
     public:
-        explicit CombatLogic(std::vector<CombatState> &states);
+        explicit CombatLogic(std::vector<CombatInstance> &states);
 
         /**
          * @param combat state to be checked in active_combats

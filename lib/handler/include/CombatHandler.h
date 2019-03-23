@@ -6,32 +6,37 @@
 #define COMBATHANDLER_H
 
 #include <random>
+
+#include "Server.h"
 #include "CombatLogic.h"
 #include "Character.h"
+#include "AccountHandler.h"
+#include "WorldHandler.h"
 
 using logic::CombatLogic;
 using model::Character;
+using networking::Message;
 
 namespace handler {
     class CombatHandler {
     private:
-        std::vector<CombatState> active_combat;
-
+        std::vector<CombatInstance> combatInstances;
         CombatLogic logic;
+
+        AccountHandler& accountHandler;
+        WorldHandler& worldHandler;
 
         std::mt19937 RNG;
 
         constexpr static int BASE_MIN_DAMAGE = 10;
         constexpr static int BASE_MAX_DAMAGE = 20;
-        constexpr static int BASE_HEAL = 5;
+        constexpr static float BASE_FLEE_CHANCE = 0.2f;
 
         constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
         constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
 
     public:
-        CombatHandler();
-
-        constexpr static float BASE_FLEE_CHANCE = 0.2f;
+        CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
 
         /**
          *
@@ -60,13 +65,8 @@ namespace handler {
          * @param defender is the perosn being dealt the damage
          */
         void attack(const Character &attacker, Character &defender);
-
-        /**
-         *
-         * @param healer that will use their ability to heal someone
-         * @param target is the person being healed
-         */
-        void heal(const Character &healer, Character &target);
+        std::string attack(const Connection &client, const std::string &targetName);
+        std::string flee(const Connection &client);
 
         /**
          *
@@ -85,7 +85,8 @@ namespace handler {
 
         model::ID getOpponentId(const Character &character);
 
-        std::mt19937& generateRandom();
+        void processCycle(std::deque<Message> &messages);
+
     };
 }
 
