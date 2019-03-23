@@ -18,14 +18,17 @@ using Player = model::Player;
 using Reset = model::Reset;
 using Room = model::Room;
 
-const std::string AREA = "AREA";
-const std::string ROOMS = "ROOMS";
-const std::string RESETS = "RESETS";
-const std::string NPCS = "NPCS";
-const std::string OBJECTS = "OBJECTS";
-const std::string HELPS = "HELPS";
-const std::string SHOPS = "SHOPS";
-const std::string USERS = "USERS";
+constexpr auto AREA = "AREA";
+constexpr auto ROOMS = "ROOMS";
+constexpr auto RESETS = "RESETS";
+constexpr auto SAVERESETS = "SAVERESETS";
+constexpr auto NPCS = "NPCS";
+constexpr auto OBJECTS = "OBJECTS";
+constexpr auto HELPS = "HELPS";
+constexpr auto SHOPS = "SHOPS";
+constexpr auto USERS = "USERS";
+
+typedef std::pair<model::ID, model::ID> IdPair;
 
 namespace DataManager {
 
@@ -52,6 +55,11 @@ namespace DataManager {
             area.setResets(t.at(RESETS).get<std::vector<Reset>>());
             area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
             area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
+
+            // save files contain a separate set of Resets
+            if(t.find(SAVERESETS) != t.end()) {
+                area.setSaveResets(t.at(SAVERESETS).get<std::vector<Reset>>());
+            }
 
             return area;
         }
@@ -89,6 +97,53 @@ namespace DataManager {
                 areas.push_back(parseAreaJson(it.value()));
             }
             return areas;
+        }
+
+
+        std::vector<Reset> createSaveResets(Area a){
+            std::vector<Reset> saveResets;
+            std::multimap<IdPair, model::ID> npcMap;
+
+            for(Room& r : a.getRooms()){
+                for(auto& n : r.getNpcs()){
+                    npcMap.insert({{n.getId(), r.getId()} , r.getId()});
+                }
+
+                model::ID roomId = r.getId();
+                for(auto& o : r.getObjects()){
+                    Reset r{"object", o.getId(), roomId};
+                    saveResets.push_back(r);
+                };
+            }
+
+            for(auto it = npcMap.cbegin(); it != npcMap.cend(); it = npcMap.upper_bound(it->first)) {
+                int limit = npcMap.count(it->first);
+                Reset r{"npc", it->first.first, limit, it->first.second};
+                saveResets.push_back(r);
+            };
+
+            return saveResets;
+        }
+
+        void writeWorldToJson(World w){
+            json areas;
+
+            for(auto& a : w.getAreas()) {
+                json area = json{{AREA, a}};
+
+                area.push_back({ROOMS, a.getRooms()});
+                area.push_back({NPCS, a.getNpcs()});
+                area.push_back({OBJECTS, a.getObjects()});
+                area.push_back({RESETS, a.getResets()});
+                area.push_back({SAVERESETS, createSaveResets(a)});
+
+                areas.push_back(area);
+            }
+            std::ofstream saveFile(SAVE_FILE_PATH);
+            if (!saveFile.is_open()) {
+                throw std::runtime_error("Could not open save file");
+            }
+            saveFile << std::setw(4) << areas << std::endl;
         }
 
     } // anonymous namespace
@@ -140,5 +195,12 @@ namespace DataManager {
 
         outFile << std::setw(2) << j;
     }
+
+    void writeWorldToFile(World& world, FileType type) {
+        if(type == DataManager::JSON) {
+            writeWorldToJson(world);
+        }
+    }
+
 } // DataManager namespace
 
