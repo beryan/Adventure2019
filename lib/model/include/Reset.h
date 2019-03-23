@@ -24,7 +24,7 @@ namespace model {
         std::string action;
         model::ID id;
         int limit;
-        int room;
+        model::ID room;
         int slot;
 
         friend std::ostream& operator<<(std::ostream& os, const Reset& r);
@@ -32,18 +32,20 @@ namespace model {
     public:
       	//constructors
       	Reset();
-        Reset(std::string action, model::ID id, int limit, int room, int slot);
+        Reset(std::string action, model::ID id, model::ID room);
+        Reset(std::string action, model::ID id, int limit, model::ID room);
+        Reset(std::string action, model::ID id, int limit, model::ID room, int slot);
 
         //getters and setters
         std::string getAction() const;
         model::ID getId() const;
         int getLimit() const;
-        int getRoom() const;
+        model::ID getRoom() const;
         int getSlot() const;
         void setAction(const std::string &action);
         void setId(const model::ID &id);
         void setLimit(int limit);
-        void setRoom(int room);
+        void setRoom(model::ID room);
         void setSlot(int slot);
     };
 
@@ -54,7 +56,7 @@ namespace model {
             r.setLimit(j.at("limit").get<int>());
         }
         if(j.find("room") != j.end()) {
-            r.setRoom(j.at("room").get<int>());
+            r.setRoom(j.at("room").get<model::ID>());
         }
         if(j.find("slot") != j.end()){
             r.setSlot(j.at("slot").get<int>());
