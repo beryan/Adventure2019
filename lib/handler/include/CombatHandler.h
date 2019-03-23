@@ -8,12 +8,12 @@
 #include <random>
 
 #include "Server.h"
-#include "CombatLogic.h"
+#include "CombatInstance.h"
 #include "Character.h"
 #include "AccountHandler.h"
 #include "WorldHandler.h"
 
-using logic::CombatLogic;
+using model::CombatInstance;
 using model::Character;
 using networking::Message;
 
@@ -21,8 +21,6 @@ namespace handler {
     class CombatHandler {
     private:
         std::vector<CombatInstance> combatInstances;
-        CombatLogic logic;
-
         AccountHandler& accountHandler;
         WorldHandler& worldHandler;
 
@@ -35,8 +33,11 @@ namespace handler {
         constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
         constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
 
-    public:
-        CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
+        /**
+         *
+         * @param defender is the perosn being dealt the damage
+         */
+        void inflictDamage(Character &defender);
 
         /**
          *
@@ -59,31 +60,28 @@ namespace handler {
          */
         void exitCombat(const Character &character);
 
-        /**
-         *
-         * @param attacker is the person dealing damage
-         * @param defender is the perosn being dealt the damage
-         */
-        void attack(const Character &attacker, Character &defender);
+    public:
+        CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
+
         std::string attack(const Connection &client, const std::string &targetName);
         std::string flee(const Connection &client);
 
         /**
-         *
+         * @param character to be evaluated
+         * @return True if character is in an active combat state, or False otherwise
+         */
+        bool isInCombat(const Character &character);
+
+        /**
          * @param attacker that is attacking the target
          * @param defender that is taking the damage
          * @return True if there is an active combat state with both characters, or False otherwise
          */
         bool areInCombat(const Character &attacker, const Character &defender);
 
-        /**
-         *
-         * @param character to be evaluated
-         * @return True if character is in an active combat state, or False otherwise
-         */
-        bool isInCombat(const Character &character);
 
         model::ID getOpponentId(const Character &character);
+
 
         void processCycle(std::deque<Message> &messages);
 

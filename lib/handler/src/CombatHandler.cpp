@@ -11,29 +11,24 @@ using handler::CombatHandler;
 namespace handler {
     CombatHandler::CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler) :
         combatInstances{},
-        logic(combatInstances),
         accountHandler(accountHandler),
         worldHandler(worldHandler),
         RNG(std::random_device{}()){}
 
 
     void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
-        if (logic.canEnterCombat(attacker.getId(), defender.getId())) {
-            combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
-        }
+        combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
     }
 
 
     void CombatHandler::exitCombat(const Character &attacker, const Character &defender) {
-        if (logic.canExitCombat(attacker.getId(), defender.getId())) {
-            auto it = std::find(
-                    combatInstances.begin(),
-                    combatInstances.end(),
-                    CombatInstance{attacker.getId(), defender.getId()});
+        auto it = std::find(
+                combatInstances.begin(),
+                combatInstances.end(),
+                CombatInstance{attacker.getId(), defender.getId()});
 
-            if (it != combatInstances.end()) {
-                combatInstances.erase(it);
-            }
+        if (it != combatInstances.end()) {
+            combatInstances.erase(it);
         }
     }
 
@@ -48,27 +43,23 @@ namespace handler {
                 }
         );
 
-        if (logic.canExitCombat(combat_it->attackerID, combat_it->defenderID)) {
-            combatInstances.erase(combat_it);
-        }
+        combatInstances.erase(combat_it);
     }
 
 
-    void CombatHandler::attack(const Character &attacker, Character &defender) {
-        if (logic.canAttackTarget(attacker.getId(), defender.getId())) {
-            std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
-            std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
+    void CombatHandler::inflictDamage(Character &defender) {
+        std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
+        std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
 
-            auto damage = damageRoll(this->RNG);
+        auto damage = damageRoll(this->RNG);
 
-            if (criticalProc(this->RNG)) {
-                damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
-            }
-
-            int newHealth = defender.getHealth() - damage;
-
-            defender.setHealth(std::max(newHealth, logic::DEFAULT_MIN_HEALTH));
+        if (criticalProc(this->RNG)) {
+            damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
         }
+
+        int newHealth = defender.getHealth() - damage;
+
+        defender.setHealth(std::max(newHealth, 0));
     }
 
     std::string CombatHandler::attack(const Connection &client, const std::string &targetName) {
@@ -102,7 +93,7 @@ namespace handler {
             }
 
             auto npcHpBefore = npc.getHealth();
-            this->attack(*player, npc);
+            this->inflictDamage(npc);
             auto npcHpAfter = npc.getHealth();
 
             message << "\n"
@@ -121,7 +112,7 @@ namespace handler {
             }
 
             auto playerHpBefore = player->getHealth();
-            this->attack(npc, *player);
+            this->inflictDamage(*player);
             auto playerHpAfter = player->getHealth();
 
             message << npc.getShortDescription() << " inflicts "
@@ -142,6 +133,7 @@ namespace handler {
                         return (combatState.attackerID == player->getId());
                     }
             );
+
             combat_it->endRound();
 
             return message.str();
@@ -181,7 +173,7 @@ namespace handler {
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
 
                 auto playerHpBefore = player->getHealth();
-                this->attack(npc, *player);
+                this->inflictDamage(*player);
                 auto playerHpAfter = player->getHealth();
 
                 message << "You attempt to flee from combat, but fail. ("
@@ -223,7 +215,7 @@ namespace handler {
             auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
 
             auto playerHpBefore = player->getHealth();
-            this->attack(npc, *player);
+            this->inflictDamage(*player);
             auto playerHpAfter = player->getHealth();
 
             message << "You attempt to flee, but fail. ("
@@ -246,14 +238,16 @@ namespace handler {
 
 
     bool CombatHandler::areInCombat(const Character &attacker, const Character &defender) {
-        bool result = false;
+        auto attackerId = attacker.getId();
+        auto defenderId = defender.getId();
 
-        // Can enter combat returns false if the combat state exists
-        if (!logic.canEnterCombat(attacker.getId(), defender.getId())) {
-            result = true;
-        }
+        auto combat_it = std::find(
+                this->combatInstances.begin(),
+                this->combatInstances.end(),
+                CombatInstance{attackerId, defenderId}
+        );
 
-        return result;
+        return combat_it != this->combatInstances.end();
     }
 
 
@@ -277,8 +271,8 @@ namespace handler {
         auto combat_it = std::find_if(
                 this->combatInstances.begin(),
                 this->combatInstances.end(),
-                [&characterId](const auto &combatState) {
-                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+                [&characterId](const auto &combatInstance) {
+                    return (combatInstance.attackerID == characterId || combatInstance.defenderID == characterId);
                 }
         );
 
@@ -309,7 +303,7 @@ namespace handler {
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
 
                 auto playerHpBefore = player->getHealth();
-                this->attack(npc, *player);
+                this->inflictDamage(*player);
                 auto playerHpAfter = player->getHealth();
 
                 std::ostringstream message;

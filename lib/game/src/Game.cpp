@@ -459,13 +459,30 @@ namespace game {
                 auto room = this->worldHandler.findRoom(this->accountHandler.getRoomIdByClient(client));
                 auto npcs = room.getNpcs();
 
-                if (containsKeyword(npcs, param)) {
-                    auto npc = getItemByKeyword(npcs, param);
-                    for (const auto &str : npc.getLongDescription()) {
-                        tempMessage << str << std::endl;
-                    }
-                } else {
+                if (!containsKeyword(npcs, param)) {
                     tempMessage << "Invalid keyword.\n";
+                    break;
+                }
+
+                auto player = this->accountHandler.getPlayerByClient(client);
+                auto npc = getItemByKeyword(npcs, param);
+
+                if (this->combatHandler.isInCombat(*player)) {
+                    tempMessage << "Less talking, more fighting.\n";
+                    break;
+                }
+
+                if (this->combatHandler.isInCombat(npc) && !this->combatHandler.areInCombat(*player, npc)) {
+                    auto otherPlayerId = this->combatHandler.getOpponentId(npc);
+                    auto otherPlayerName = this->accountHandler.getUsernameByPlayerId(otherPlayerId);
+
+                    tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << "\n";
+                    break;
+
+                }
+
+                for (const auto &str : npc.getLongDescription()) {
+                    tempMessage << str << std::endl;
                 }
 
                 break;

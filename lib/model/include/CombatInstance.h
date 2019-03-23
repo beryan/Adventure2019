@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-03-12.
 //
 
-#ifndef COMBATSTATE_H
-#define COMBATSTATE_H
+#ifndef COMBATINSTANCE_H
+#define COMBATINSTANCE_H
 
 namespace model {
     constexpr unsigned int CYCLES_PER_ROUND = 5;
@@ -34,4 +34,4 @@ namespace model {
     };
 }
 
-#endif //COMBATSTATE_H
+#endif //COMBATINSTANCE_H
