@@ -28,8 +28,8 @@ namespace game {
     class CommandExecutor {
     public:
         CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
-                        MagicHandler &magicHandler,
-                        WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser);
+                        MagicHandler &magicHandler, WorldHandler &worldHandler, AliasManager &aliasManager,
+                        CommandParser &commandParser);
 
         /**
          * Executes a command
@@ -38,8 +38,8 @@ namespace game {
          * @param params parameters for the command
          * @return messages for client
          */
-        std::vector<Message> executeCommand(const Connection &client, const Command &command,
-                                            const std::vector<std::string> &params);
+        std::vector<Message>
+        executeCommand(const Connection &client, const Command &command, const std::vector<std::string> &params);
 
         /**
          *  Update game state to not include connections that are no longer in game.
@@ -55,54 +55,51 @@ namespace game {
         AliasManager aliasManager;
         CommandParser commandParser;
 
-        std::string executeAliasCommand(const Connection &client, const std::vector<std::string> &params);
+        std::string alias(const Connection &client, const std::vector<std::string> &params);
+
+        std::string help();
+
+        std::vector<Message> say(const Connection &client, std::string &message);
+
+        std::string logout(const Connection &client);
+
+        std::vector<Message> chat(const Connection &client, std::string message);
+
+        std::string look(const Connection &client);
+
+        std::string examine(const Connection &client, std::string &keyword);
+
+        std::string exits(const Connection &client);
+
+        std::string move(const Connection &client, const std::string &dir);
+
+        std::vector<Message> cast(const Connection &client, const std::string &spell);
+
+        std::string spells();
+
+        std::string talk(const Connection &client, std::string &keyword);
+
+        std::string take(const Connection &client, const std::string &keyword);
+
+        std::string drop(const Connection &client, const std::string &keyword);
+
+        std::string wear(const Connection &client, const std::string &keyword);
+
+        std::string remove(const Connection &client, const std::string &keyword);
+
+        std::string inventory(const Connection &client);
+
+        std::string equipment(const Connection &client);
+
+        std::string debug();
+
+        std::vector<Message> give(const Connection &client, const std::string &username, const std::string &keyword);
 
         template<typename T>
-        bool
-        containsKeyword(const std::vector<T> &objects, const std::string &keyword);
+        bool containsKeyword(const std::vector<T> &objects, const std::string &keyword);
 
         template<typename T>
-        T
-        getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
-
-        std::string executeHelpCommand();
-
-        std::vector<Message> executeSayCommand(const Connection &client, std::string &message);
-
-        std::string executeLogoutCommand(const Connection &client);
-
-        std::vector<Message> executeChatCommand(const Connection &client, std::basic_string<char> &message);
-
-        std::string executeLookCommand(const Connection &client);
-
-        std::string executeExamineCommand(const Connection &client, std::string &keyword);
-
-        std::string executeExitsCommand(const Connection &client);
-
-        std::string executeMoveCommand(const Connection &client, const std::string &dir);
-
-        std::vector<Message> executeCastCommand(const Connection &client, const std::string &spell);
-
-        std::string executeSpellsCommand();
-
-        std::string executeTalkCommand(const Connection &client, std::string &keyword);
-
-        std::string executeTakeCommand(const Connection &client, const std::string &keyword);
-
-        std::string executeDropCommand(const Connection &client, const std::string &keyword);
-
-        std::string executeWearCommand(const Connection &client, const std::string &keyword);
-
-        std::string executeRemoveCommand(const Connection &client, const std::string &keyword);
-
-        Inventory &executeInventoryCommand(const Connection &client);
-
-        Equipment &executeEquipmentCommand(const Connection &client);
-
-        World executeDebugCommand();
-
-        std::vector<Message>
-        executeGiveCommand(const Connection &client, const std::string &username, const std::string &keyword);
+        T getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
     };
 }
 

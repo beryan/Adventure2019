@@ -30,127 +30,126 @@ CommandExecutor::CommandExecutor(ConnectionHandler &connectionHandler, AccountHa
           aliasManager(aliasManager),
           commandParser(commandParser) {}
 
-std::vector<Message> CommandExecutor::executeCommand(const Connection &client, const game::Command &command,
+std::vector<Message> CommandExecutor::executeCommand(const Connection &client, const Command &command,
                                                      const std::vector<std::string> &params) {
     std::vector<Message> messages = {};
     std::ostringstream tempMessage;
 
     switch (command) {
         case Command::Logout: {
-            tempMessage << executeLogoutCommand(client);
+            tempMessage << logout(client);
             break;
         }
 
         case Command::Help:
-            tempMessage << executeHelpCommand();
+            tempMessage << help();
             break;
 
         case Command::Say: {
             auto message = params[0];
-            return executeSayCommand(client, message);
+            return say(client, message);
         }
 
         case Command::Chat: {
             auto message = params[0];
-            return executeChatCommand(client, message);
+            return chat(client, message);
         }
 
         case Command::Look: {
             if (params.empty()) {
-                tempMessage << executeLookCommand(client);
+                tempMessage << look(client);
                 break;
             }
         }
 
         case Command::Examine: {
             auto keyword = params[0];
-            tempMessage << executeExamineCommand(client, keyword);
+            tempMessage << examine(client, keyword);
             break;
         }
 
         case Command::Exits: {
-            tempMessage << executeExitsCommand(client);
+            tempMessage << exits(client);
             break;
         }
 
         case Command::Move: {
             auto dir = boost::algorithm::to_lower_copy(params[0]);
-            tempMessage << executeMoveCommand(client, dir);
+            tempMessage << move(client, dir);
             break;
         }
 
         case Command::Cast: {
             auto spell = params[0];
-            return executeCastCommand(client, spell);
+            return cast(client, spell);
         }
 
         case Command::Spells: {
-            tempMessage << executeSpellsCommand();
+            tempMessage << spells();
             break;
         }
 
         case Command::Talk: {
             auto keyword = params[0];
-            tempMessage << executeTalkCommand(client, keyword);
+            tempMessage << talk(client, keyword);
             break;
         }
 
         case Command::Take: {
             auto keyword = params[0];
-            tempMessage << executeTakeCommand(client, keyword);
+            tempMessage << take(client, keyword);
             break;
         }
 
         case Command::Drop: {
             auto keyword = params[0];
-            tempMessage << executeDropCommand(client, keyword);
+            tempMessage << drop(client, keyword);
             break;
         }
 
         case Command::Wear: {
             auto keyword = params[0];
-            tempMessage << executeWearCommand(client, keyword);
+            tempMessage << wear(client, keyword);
             break;
         }
 
         case Command::Remove: {
             auto keyword = params[0];
-            tempMessage << executeRemoveCommand(client, keyword);
+            tempMessage << remove(client, keyword);
             break;
         }
 
         case Command::Give: {
             auto username = params[0];
             auto keyword = params[1];
-
-            return executeGiveCommand(client, username, keyword);
-
-            break;
+            return give(client, username, keyword);
         }
 
         case Command::Inventory: {
-            tempMessage << executeInventoryCommand(client);
+            tempMessage << inventory(client);
             break;
         }
 
         case Command::Equipment: {
-            tempMessage << executeEquipmentCommand(client);
+            tempMessage << equipment(client);
             break;
         }
 
         case Command::Debug: {
-            tempMessage << executeDebugCommand();
+            tempMessage << debug();
             break;
         }
 
         case Command::Alias: {
-            tempMessage << executeAliasCommand(client, params);
+            tempMessage << alias(client, params);
+            break;
         }
 
-        default:
+        default: {
             tempMessage << "\nEnter " << "\"" << this->commandParser.getStringForCommand(Command::Help)
                         << "\" for a full list of commands\n";
             break;
+        }
     }
 
     messages.push_back({client, tempMessage.str()});
@@ -158,19 +157,25 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
     return messages;
 }
 
-World CommandExecutor::executeDebugCommand() {
-    return worldHandler.getWorld();
+std::string CommandExecutor::debug() {
+    std::ostringstream output;
+    output << worldHandler.getWorld();
+    return output.str();
 }
 
-Equipment &CommandExecutor::executeEquipmentCommand(const Connection &client) {
-    return accountHandler.getPlayerByClient(client)->getEquipment();
+std::string CommandExecutor::equipment(const Connection &client) {
+    std::ostringstream output;
+    output << accountHandler.getPlayerByClient(client)->getEquipment();
+    return output.str();
 }
 
-Inventory &CommandExecutor::executeInventoryCommand(const Connection &client) {
-    return accountHandler.getPlayerByClient(client)->getInventory();
+std::string CommandExecutor::inventory(const Connection &client) {
+    std::ostringstream output;
+    output << accountHandler.getPlayerByClient(client)->getInventory();
+    return output.str();
 }
 
-std::string CommandExecutor::executeRemoveCommand(const Connection &client, const std::string &keyword) {
+std::string CommandExecutor::remove(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
     auto objects = player->getEquipment().getVectorEquipment();
@@ -184,7 +189,7 @@ std::string CommandExecutor::executeRemoveCommand(const Connection &client, cons
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeWearCommand(const Connection &client, const std::string &keyword) {
+std::string CommandExecutor::wear(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
     auto objects = player->getInventory().getVectorInventory();
@@ -201,7 +206,7 @@ std::string CommandExecutor::executeWearCommand(const Connection &client, const 
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeDropCommand(const Connection &client, const std::string &keyword) {
+std::string CommandExecutor::drop(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
     auto objects = player->getInventory().getVectorInventory();
@@ -221,7 +226,7 @@ std::string CommandExecutor::executeDropCommand(const Connection &client, const 
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeTakeCommand(const Connection &client, const std::string &keyword) {
+std::string CommandExecutor::take(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto roomId = accountHandler.getRoomIdByClient(client);
     Room &room = worldHandler.findRoom(roomId);
@@ -239,7 +244,7 @@ std::string CommandExecutor::executeTakeCommand(const Connection &client, const 
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeTalkCommand(const Connection &client, std::string &keyword) {
+std::string CommandExecutor::talk(const Connection &client, std::string &keyword) {
     std::ostringstream tempMessage;
     auto room = worldHandler.findRoom(accountHandler.getRoomIdByClient(client));
     auto npcs = room.getNpcs();
@@ -255,15 +260,15 @@ std::string CommandExecutor::executeTalkCommand(const Connection &client, std::s
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeSpellsCommand() {
+std::string CommandExecutor::spells() {
     return magicHandler.getSpells();
 }
 
-std::vector<Message> CommandExecutor::executeCastCommand(const Connection &client, const std::string &spell) {
+std::vector<Message> CommandExecutor::cast(const Connection &client, const std::string &spell) {
     return magicHandler.castSpell(client, spell);
 }
 
-std::string CommandExecutor::executeMoveCommand(const Connection &client, const std::string &dir) {
+std::string CommandExecutor::move(const Connection &client, const std::string &dir) {
     std::ostringstream tempMessage;
     auto roomId = accountHandler.getRoomIdByClient(client);
 
@@ -279,7 +284,7 @@ std::string CommandExecutor::executeMoveCommand(const Connection &client, const 
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeExamineCommand(const Connection &client, std::string &keyword) {
+std::string CommandExecutor::examine(const Connection &client, std::string &keyword) {
     std::ostringstream tempMessage;
     auto room = worldHandler.findRoom(accountHandler.getRoomIdByClient(client));
     auto objects = room.getObjects();
@@ -308,7 +313,7 @@ std::string CommandExecutor::executeExamineCommand(const Connection &client, std
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeLookCommand(const Connection &client) {
+std::string CommandExecutor::look(const Connection &client) {
     std::ostringstream tempMessage;
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto room = worldHandler.findRoom(roomId);
@@ -320,7 +325,7 @@ std::string CommandExecutor::executeLookCommand(const Connection &client) {
     return tempMessage.str();
 }
 
-std::vector<Message> CommandExecutor::executeChatCommand(const Connection &client, std::string &message) {
+std::vector<Message> CommandExecutor::chat(const Connection &client, std::string message) {
     std::vector<Message> messages = {};
     if (magicHandler.isConfused(client)) {
         magicHandler.confuseSpeech(message);
@@ -337,20 +342,20 @@ std::vector<Message> CommandExecutor::executeChatCommand(const Connection &clien
     return messages;
 }
 
-std::string CommandExecutor::executeExitsCommand(const Connection &client) {
+std::string CommandExecutor::exits(const Connection &client) {
     std::ostringstream tempMessage;
     auto roomID = this->accountHandler.getRoomIdByClient(client);
     tempMessage << "\n" << this->worldHandler.findRoom(roomID).doorsToString();
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeLogoutCommand(const Connection &client) {
+std::string CommandExecutor::logout(const Connection &client) {
     magicHandler.handleLogout(client);
     removeClientFromGame(client);
     return accountHandler.logoutClient(client);
 }
 
-std::vector<Message> CommandExecutor::executeSayCommand(const Connection &client, std::string &message) {
+std::vector<Message> CommandExecutor::say(const Connection &client, std::string &message) {
     std::vector<Message> messages = {};
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto playerIds = worldHandler.findRoom(roomId).getPlayersInRoom();
@@ -371,7 +376,7 @@ std::vector<Message> CommandExecutor::executeSayCommand(const Connection &client
     return messages;
 }
 
-std::string CommandExecutor::executeHelpCommand() {
+std::string CommandExecutor::help() {
     std::ostringstream tempMessage;
     tempMessage << "\n"
                 << "********\n"
@@ -429,7 +434,7 @@ std::string CommandExecutor::executeHelpCommand() {
     return tempMessage.str();
 }
 
-std::string CommandExecutor::executeAliasCommand(const Connection &client, const std::vector<std::string> &params) {
+std::string CommandExecutor::alias(const Connection &client, const std::vector<std::string> &params) {
     std::ostringstream res;
     try {
         std::string username = this->accountHandler.getUsernameByClient(client);
@@ -560,8 +565,8 @@ CommandExecutor::removeClientFromGame(Connection client) {
     this->worldHandler.removePlayer(roomId, playerId);
 }
 
-std::vector<Message> game::CommandExecutor::executeGiveCommand(const Connection &client, const std::string &username,
-                                                               const std::string &keyword) {
+std::vector<Message> CommandExecutor::give(const Connection &client, const std::string &username,
+                                                 const std::string &keyword) {
     std::vector<Message> messages = {};
     auto roomId = this->accountHandler.getRoomIdByClient(client);
     auto receiverClient = this->accountHandler.getClientByUsername(username);
