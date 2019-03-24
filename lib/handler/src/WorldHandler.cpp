@@ -162,7 +162,7 @@ namespace handler {
     WorldHandler::createObject(const std::string &parameters) {
         //ocreate [anum] [id] [short description]
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool validFormat = (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
         if (validFormat) {
@@ -183,7 +183,7 @@ namespace handler {
     WorldHandler::createNpc(const std::string &parameters) {
         //ncreate [anum] [id] [short description]
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool validFormat = (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
         if (validFormat) {
@@ -204,7 +204,7 @@ namespace handler {
     WorldHandler::createObjectReset(const model::ID &roomId, const std::string &parameters) {
         //oreset [id]
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool validFormat = (arguments.size() == 1 && isNum(arguments.at(0)));
         bool canCreate = false;
         if (validFormat) {
@@ -226,7 +226,7 @@ namespace handler {
     WorldHandler::createNpcReset(const model::ID &roomId, const std::string &parameters) {
         //nreset [id] [amount]
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool validFormat = (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
         if (validFormat) {
@@ -251,7 +251,7 @@ namespace handler {
         //aedit [field] [values]
         bool success = false;
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 1) {
             std::string field = arguments.at(0);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
@@ -269,7 +269,7 @@ namespace handler {
         //redit [field] [values]
         bool success = false;
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 1) {
             std::string field = arguments.at(0);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
@@ -281,11 +281,15 @@ namespace handler {
                 room.setDesc({value});
                 success = true;
             } else if (field == "door") {
-                //redit door [direction] [roomId]
+                //redit door [direction] [roomId] [description]
                 std::string dir = arguments.at(1);
-                if (!room.isValidDirection(dir) && arguments.size() == 3 && isNum(arguments.at(2))) {
+                if (!room.isValidDirection(dir) && arguments.size() >= 3 && isNum(arguments.at(2))) {
                     int leadsTo = std::stoi(arguments.at(2));
                     model::Door door = model::Door{dir, leadsTo};
+                    if (arguments.size() > 3) {
+                        std::string desc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+3, arguments.end()), " ");
+                        door.desc = {desc};
+                    }
                     room.addDoor(door);
                     success = true;
                 }
@@ -299,7 +303,7 @@ namespace handler {
         //oedit [id] [field] [values]
         bool success = false;
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);
@@ -333,7 +337,7 @@ namespace handler {
         //nedit [id] [field] [values]
         bool success = false;
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);
@@ -363,7 +367,7 @@ namespace handler {
         //reset [anum]
         bool success = false;
         std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of(" "));
+        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() == 1 && isNum(arguments.at(0))) {
             unsigned int index = std::stoi(arguments.at(0)) - 1;
             if (index < this->world.getAreas().size()) {
