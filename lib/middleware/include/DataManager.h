@@ -22,5 +22,6 @@ namespace DataManager {
     std::vector<Area> ParseWorldFile(const std::string& filePath);
     void writeJson(json j, std::string filePath);
     void saveRegisteredUser(Player p);
+    std::vector<Player> loadRegisteredPlayers();
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H

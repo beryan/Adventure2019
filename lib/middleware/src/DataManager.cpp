@@ -114,6 +114,11 @@ namespace DataManager {
             usersFile << std::setw(4) << users << std::endl;
         }
 
+
+        std::vector<Player> parseRegisteredUsers(json j){
+            return j.at(USERS).get<std::vector<Player>>();
+        }
+
     } // anonymous namespace
 
     bool has_extension(const std::string &filePath, const std::string &extension) {
@@ -167,5 +172,23 @@ namespace DataManager {
     void saveRegisteredUser(Player p){
         saveUserToJson(p);
     }
+
+    std::vector<Player> loadRegisteredPlayers(){
+        std::vector<Player> players;
+        if(boost::filesystem::exists(REGISTERED_USERS_PATH)) {
+            std::ifstream inFile(REGISTERED_USERS_PATH);
+
+            if (!inFile.is_open()) {
+                throw std::runtime_error("Could not load registered users");
+            }
+
+            json j = json::parse(inFile);
+
+            players = parseRegisteredUsers(j);
+        }
+
+        return players;
+    }
+
 } // DataManager namespace
 

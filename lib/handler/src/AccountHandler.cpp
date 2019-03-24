@@ -6,6 +6,7 @@
 #include <sstream>
 
 #include "AccountHandler.h"
+#include "DataManager.h"
 #include "Server.h"
 
 using handler::AccountHandler;
@@ -31,6 +32,8 @@ namespace handler {
         this->loginUsernameInput = {};
 
         this->bootedClients = {};
+
+        loadRegisteredUsers();
     }
 
 
@@ -381,5 +384,18 @@ namespace handler {
         }
 
         return players;
+    }
+
+    void AccountHandler::loadRegisteredUsers(){
+        std::vector<Player> players = DataManager::loadRegisteredPlayers();
+
+        for(auto& p : players){
+            auto playerId = this->nextId++;
+            p.setId(playerId);
+            this->allPlayers.emplace(playerId, p);
+            this->usernameToPlayer.emplace(p.getUsername(), &this->allPlayers.at(playerId));
+        }
+
+        std::cout << "registered users have been loaded" << std::endl;
     }
 }
