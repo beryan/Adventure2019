@@ -7,6 +7,7 @@
 #include <boost/algorithm/string/join.hpp>
 #include <boost/algorithm/string/trim.hpp>
 #include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/case_conv.hpp>
 
 using handler::WorldHandler;
 using json = nlohmann::json;
@@ -282,7 +283,7 @@ namespace handler {
                 success = true;
             } else if (field == "extra" && arguments.size() >= 3) {
                 //redit extra [keyword] [description]
-                std::string keyword = arguments.at(1);
+                std::string keyword = boost::algorithm::to_lower_copy(arguments.at(1));
                 std::string desc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
                 room.addExtra({{keyword},{desc}});
                 success = true;
@@ -324,7 +325,11 @@ namespace handler {
                     object->setLongDescription({value});
                     success = true;
                 } else if (field == "keywords") {
-                    object->setKeywords(std::vector<std::string>(arguments.begin() + 2, arguments.end()));
+                    std::vector<std::string> keywords = std::vector<std::string>(arguments.begin()+2, arguments.end());
+                    for (auto &keyword : keywords) {
+                        keyword = boost::algorithm::to_lower_copy(keyword);
+                    }
+                    object->setKeywords(keywords);
                     success = true;
                 } else if (field == "slot") {
                     auto slot = model::getSlotFromString(value);
@@ -361,7 +366,11 @@ namespace handler {
                     npc->setDescription({value});
                     success = true;
                 } else if (field == "keywords") {
-                    npc->setKeywords(std::vector<std::string>(arguments.begin() + 2, arguments.end()));
+                    std::vector<std::string> keywords = std::vector<std::string>(arguments.begin()+2, arguments.end());
+                    for (auto &keyword : keywords) {
+                        keyword = boost::algorithm::to_lower_copy(keyword);
+                    }
+                    npc->setKeywords(keywords);
                     success = true;
                 }
             }
