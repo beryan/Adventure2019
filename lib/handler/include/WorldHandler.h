@@ -23,6 +23,9 @@ namespace handler {
         World
         getWorld() const;
 
+        void
+        setWorld(World &world);
+
         /**
          *  Finds room based on room id
          */

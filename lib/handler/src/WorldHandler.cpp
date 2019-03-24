@@ -27,6 +27,11 @@ namespace handler {
         return world;
     }
 
+    void
+    WorldHandler::setWorld(World &world) {
+        this->world = world;
+    }
+
     Room&
     WorldHandler::findRoom(const model::ID &roomId) {
         for (Area &area : this->world.getAreas()) {

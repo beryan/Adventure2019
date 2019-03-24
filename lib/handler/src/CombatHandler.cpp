@@ -65,6 +65,11 @@ namespace handler {
     std::string CombatHandler::attack(const Connection &client, const std::string &targetName) {
         std::ostringstream message;
 
+        if (targetName.empty()) {
+            message << "You need to specify the name of the person (NPC) to attack.\n";
+            return message.str();
+        }
+
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         auto &room = this->worldHandler.findRoom(roomId);
 
@@ -79,7 +84,7 @@ namespace handler {
             bool npcInCombatWithPlayer = this->areInCombat(*player, npc);
 
             if (npcInCombat && !npcInCombatWithPlayer) {
-                message << targetName<< " is already engaged in combat with someone else!\n";
+                message << targetName << " is already engaged in combat with someone else!\n";
                 return message.str();
             }
 
@@ -139,7 +144,7 @@ namespace handler {
             return message.str();
 
         } catch (const std::runtime_error &e) {
-            message << "There is no one here with the name of " << targetName << "\n";
+            message << "There is no one here (NPC) with the name " << targetName << "\n";
             return message.str();
         }
     }
@@ -176,7 +181,7 @@ namespace handler {
                 this->inflictDamage(*player);
                 auto playerHpAfter = player->getHealth();
 
-                message << "You attempt to flee from combat, but fail. ("
+                message << "You attempt to flee, but fail. ("
                             << (BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
 
                 message << npc.getShortDescription() << " inflicts "
