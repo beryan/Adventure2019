@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <boost/filesystem.hpp>
 
 using json = nlohmann::json;
 using Door = model::Door;
@@ -91,6 +92,28 @@ namespace DataManager {
             return areas;
         }
 
+        void saveUserToJson(Player& p){
+
+            std::vector<Player> players;
+
+            if(boost::filesystem::exists(REGISTERED_USERS_PATH)){
+                std::ifstream inFile(REGISTERED_USERS_PATH);
+                json t = json::parse(inFile);
+                players = t.at(USERS).get<std::vector<Player>>();
+            }
+
+            players.push_back(p);
+
+            json users = json{{USERS, players}};
+
+            std::ofstream usersFile(REGISTERED_USERS_PATH);
+
+            if(!usersFile.is_open()){
+                throw std::runtime_error("Could not open users file");
+            }
+            usersFile << std::setw(4) << users << std::endl;
+        }
+
     } // anonymous namespace
 
     bool has_extension(const std::string &filePath, const std::string &extension) {
@@ -139,6 +162,10 @@ namespace DataManager {
         }
 
         outFile << std::setw(2) << j;
+    }
+
+    void saveRegisteredUser(Player p){
+        saveUserToJson(p);
     }
 } // DataManager namespace
 
