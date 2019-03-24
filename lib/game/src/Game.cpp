@@ -89,6 +89,7 @@ namespace game {
             }
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
+                this->combatHandler.handleLogout(disconnectedClient);
                 this->magicHandler.handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
                 this->accountHandler.logoutClient(disconnectedClient);

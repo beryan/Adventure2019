@@ -16,16 +16,18 @@ namespace handler {
         RNG(std::random_device{}()){}
 
 
-    void CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
+    void
+    CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
     }
 
 
-    void CombatHandler::exitCombat(const Character &attacker, const Character &defender) {
+    void
+    CombatHandler::exitCombat(const Character &character1, const Character &character2) {
         auto it = std::find(
                 combatInstances.begin(),
                 combatInstances.end(),
-                CombatInstance{attacker.getId(), defender.getId()});
+                CombatInstance{character1.getId(), character2.getId()});
 
         if (it != combatInstances.end()) {
             combatInstances.erase(it);
@@ -33,7 +35,8 @@ namespace handler {
     }
 
 
-    void CombatHandler::exitCombat(const Character &character) {
+    void
+    CombatHandler::exitCombat(const Character &character) {
         auto characterId = character.getId();
         auto combat_it = std::find_if(
                 combatInstances.begin(),
@@ -47,22 +50,111 @@ namespace handler {
     }
 
 
-    void CombatHandler::inflictDamage(Character &defender) {
-        std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
-        std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
+    bool
+    CombatHandler::rollMiss() {
+        std::bernoulli_distribution missProc(BASE_MISS_CHANCE);
 
-        auto damage = damageRoll(this->RNG);
-
-        if (criticalProc(this->RNG)) {
-            damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
-        }
-
-        int newHealth = defender.getHealth() - damage;
-
-        defender.setHealth(std::max(newHealth, 0));
+        return missProc(this->RNG);
     }
 
-    std::string CombatHandler::attack(const Connection &client, const std::string &targetName) {
+
+    bool
+    CombatHandler::rollDodge() {
+        std::bernoulli_distribution dodgeProc(BASE_DODGE_CHANCE);
+
+        return dodgeProc(this->RNG);
+    }
+
+
+    int
+    CombatHandler::rollDamage() {
+        std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
+
+        return damageRoll(this->RNG);
+    }
+
+
+    bool
+    CombatHandler::rollCritical() {
+        std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
+
+        return criticalProc(this->RNG);
+    }
+
+
+    std::string
+    CombatHandler::inflictDamage(NPC &npc) {
+        std::ostringstream message;
+
+        if (this->rollMiss()) {
+            message << "You miss your attack on " << npc.getShortDescription() << "!\n";
+            return message.str();
+        }
+
+        if (this->rollDodge()) {
+            message << npc.getShortDescription() << " dodges your attack!\n";
+            return message.str();
+        }
+
+        auto damage = this->rollDamage();
+
+        if (this->rollCritical()) {
+            damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
+            message << "You strike a critical hit, inflicting ";
+        } else {
+            message << "You inflict ";
+        }
+
+        int newHealth = std::max(npc.getHealth() - damage, 0);
+        npc.setHealth(newHealth);
+
+        message << damage << " HP worth of damage to "
+                << npc.getShortDescription() << " (" << npc.getHealth() << " HP remaining)\n";
+
+        return message.str();
+    }
+
+
+    std::string
+    CombatHandler::inflictDamage(Player &player) {
+        std::ostringstream message;
+        auto client = this->accountHandler.getClientByPlayerId(player.getId());
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        auto npcId = this->getOpponentId(player);
+        auto npc = this->worldHandler.findRoom(roomId).getNpcById(npcId);
+        auto npcName = npc.getShortDescription();
+
+        if (this->rollMiss()) {
+            message << npcName << " misses their attack on you!\n";
+            return message.str();
+        }
+
+        if (this->rollDodge()) {
+            message << "You dodge " << npcName << "'s attack!\n";
+            return message.str();
+        }
+
+        auto damage = this->rollDamage();
+
+        if (this->rollCritical()) {
+            damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
+            message << npcName << " strikes a critical hit, inflicting ";
+        } else {
+            message << npcName << " inflicts ";
+        }
+
+        int newHealth = std::max(player.getHealth() - damage, 0);
+        player.setHealth(newHealth);
+
+        message << damage  << " HP worth of damage on you ("
+                << player.getHealth() << " HP remaining)\n";
+
+        return message.str();
+    }
+
+
+    std::string
+    CombatHandler::attack(const Connection &client, const std::string &targetName) {
         std::ostringstream message;
 
         if (targetName.empty()) {
@@ -95,17 +187,10 @@ namespace handler {
 
             if (!npcInCombat) {
                 this->enterCombat(*player, npc);
+                message << "\nYou engage in combat with " << npc.getShortDescription() << "!\n";
             }
 
-            auto npcHpBefore = npc.getHealth();
-            this->inflictDamage(npc);
-            auto npcHpAfter = npc.getHealth();
-
-            message << "\n"
-                    << "You inflict " << (npcHpBefore - npcHpAfter)
-                    << " HP worth of damage to " << npc.getShortDescription()
-                    << " (" << npcHpAfter << " HP remaining)\n";
-
+            message << "\n" << this->inflictDamage(npc);
 
             if (npc.getHealth() == 0) {
                 message << "You won the battle!\n";
@@ -116,13 +201,7 @@ namespace handler {
                 return message.str();
             }
 
-            auto playerHpBefore = player->getHealth();
-            this->inflictDamage(*player);
-            auto playerHpAfter = player->getHealth();
-
-            message << npc.getShortDescription() << " inflicts "
-                    << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
-                    << playerHpAfter << " HP remaining)\n";
+            message << this->inflictDamage(*player);
 
             if (player->getHealth() == 0) {
                 message << "You lost the battle.\n";
@@ -150,7 +229,8 @@ namespace handler {
     }
 
 
-    std::string CombatHandler::flee(const Connection &client) {
+    std::string
+    CombatHandler::flee(const Connection &client) {
         std::ostringstream message;
 
         auto player = this->accountHandler.getPlayerByClient(client);
@@ -177,16 +257,11 @@ namespace handler {
                 auto opponentId = this->getOpponentId(*player);
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
 
-                auto playerHpBefore = player->getHealth();
-                this->inflictDamage(*player);
-                auto playerHpAfter = player->getHealth();
 
                 message << "You attempt to flee, but fail. ("
                             << (BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
 
-                message << npc.getShortDescription() << " inflicts "
-                            << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
-                            << playerHpAfter << " HP remaining)\n";
+                message << this->inflictDamage(*player);
 
                 if (player->getHealth() == 0) {
                     message << "You lost the battle.\n";
@@ -242,7 +317,8 @@ namespace handler {
     }
 
 
-    bool CombatHandler::areInCombat(const Character &attacker, const Character &defender) {
+    bool
+    CombatHandler::areInCombat(const Character &attacker, const Character &defender) {
         auto attackerId = attacker.getId();
         auto defenderId = defender.getId();
 
@@ -256,7 +332,8 @@ namespace handler {
     }
 
 
-    bool CombatHandler::isInCombat(const Character &character) {
+    bool
+    CombatHandler::isInCombat(const Character &character) {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
@@ -270,7 +347,9 @@ namespace handler {
         return combat_it != this->combatInstances.end();
     };
 
-    model::ID CombatHandler::getOpponentId(const Character &character) {
+
+    model::ID
+    CombatHandler::getOpponentId(const Character &character) {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
@@ -294,7 +373,20 @@ namespace handler {
     }
 
 
-    void CombatHandler::processCycle(std::deque<Message> &messages) {
+    void
+    CombatHandler::handleLogout(const Connection &client) {
+        auto player = this->accountHandler.getPlayerByClient(client);
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        auto npcId = this->getOpponentId(*player);
+        auto &npc = this->worldHandler.findRoom(roomId).getNpcById(npcId);
+
+        this->exitCombat(*player);
+        npc.setHealth(Character::STARTING_HEALTH);
+    }
+
+
+    void
+    CombatHandler::processCycle(std::deque<Message> &messages) {
         std::vector<Player*> defeatedPlayers;
 
         for (auto &combatInstance : this->combatInstances) {
@@ -307,14 +399,8 @@ namespace handler {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
 
-                auto playerHpBefore = player->getHealth();
-                this->inflictDamage(*player);
-                auto playerHpAfter = player->getHealth();
-
                 std::ostringstream message;
-                message << npc.getShortDescription() << " inflicts "
-                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
-                        << playerHpAfter << " HP remaining)\n";
+                message << "\n" << this->inflictDamage(*player);
 
                 if (player->getHealth() == 0) {
                     message << "You lost the battle.\n";

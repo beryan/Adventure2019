@@ -30,60 +30,136 @@ namespace handler {
         constexpr static int BASE_MAX_DAMAGE = 20;
         constexpr static float BASE_FLEE_CHANCE = 0.2f;
 
+        constexpr static float BASE_MISS_CHANCE = 0.05f;
+        constexpr static float BASE_DODGE_CHANCE = 0.1f;
         constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
         constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
 
-        /**
-         *
-         * @param defender is the perosn being dealt the damage
-         */
-        void inflictDamage(Character &defender);
 
         /**
-         *
-         * @param attacker that will enter Combat
-         * @param defender that will enter Combat
+         *  Returns true if miss occurs
          */
-        void enterCombat(const Character &attacker, const Character &defender);
+        bool
+        rollMiss();
 
         /**
-         * The arguments are attacker and defender for name consistency sake,
-         * it doesn't matter in which order the Characters are passed in
-         * @param attacker: First character that is part of the Combat
-         * @param defender: Second character that is part of the Combat
+         *  Returns true if dodge occurs
          */
-        void exitCombat(const Character &attacker, const Character &defender);
+        bool
+        rollDodge();
+
+        /**
+         *  Returns a damage value between a defined range
+         */
+        int
+        rollDamage();
+
+        /**
+         *  Returns true if a critical strike occurs
+         */
+        bool
+        rollCritical();
+
+        /**
+         *  Methods for applying an attack result to the npc or player's health.
+         *  Performs chance rolls for misses, dodges, damage, and critical strikes.
+         *  Returns a message based on the result.
+         * @param npc: NPC that is being attacked
+         */
+        std::string
+        inflictDamage(NPC &npc);
+
+        /**
+         * @param player: player that is being attacked
+         */
+        std::string
+        inflictDamage(Player &player);
+
+        /**
+         * @param attacker: character that will enter Combat with defender
+         * @param defender character that will enter Combat with attacker
+         */
+        void
+        enterCombat(const Character &attacker, const Character &defender);
+
+        /**
+         * Disengages two characters from combat where they are both involved in
+         * @param character1: character that is in combat with character2
+         * @param character2: character that is in combat with character1
+         */
+        void
+        exitCombat(const Character &character1, const Character &character2);
 
         /**
          * Erases a combat state involving character
          * @param character: character that is in combat
          */
-        void exitCombat(const Character &character);
+        void
+        exitCombat(const Character &character);
 
     public:
         CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
 
-        std::string attack(const Connection &client, const std::string &targetName);
-        std::string flee(const Connection &client);
+        /**
+         * Causes the client's player to enter combat with an NPC if not already in combat.
+         * Executes an attack on the targetted NPC, followed by a retaliation, then ends the round.
+         * Also includes a win or loss message if either is achieved.
+         * @param client that is performing the action
+         * @param targetName: the keyword to specify the target in the room
+         * @return string containing the attack result
+         */
+        std::string
+        attack(const Connection &client, const std::string &targetName);
 
         /**
+         * Causes the client's player to attempt to escape combat by fleeing to a random connected room.
+         * The player can escape combat without changing rooms if there are no connected rooms.
+         * @param client that is performing the action
+         * @return string containing the flee result
+         */
+        std::string
+        flee(const Connection &client);
+
+        /**
+         * Used for checking if a character is currently in combat
          * @param character to be evaluated
-         * @return True if character is in an active combat state, or False otherwise
+         * @return true if character is in an active combat state, otherwise false
          */
-        bool isInCombat(const Character &character);
+        bool
+        isInCombat(const Character &character);
 
         /**
-         * @param attacker that is attacking the target
-         * @param defender that is taking the damage
-         * @return True if there is an active combat state with both characters, or False otherwise
+         * @param attacker: character that is in combat with the defender
+         * @param defender: character that is in combat with the attacker
+         * @return true if there is an active combat state with both characters, otherwise false
          */
-        bool areInCombat(const Character &attacker, const Character &defender);
+        bool
+        areInCombat(const Character &attacker, const Character &defender);
 
 
-        model::ID getOpponentId(const Character &character);
+        /**
+         * Used for getting the ID of the opponent of the character in a combat instance
+         * @param character to be evaluated
+         * @return ID of the opposing NPC or Player
+         */
+        model::ID
+        getOpponentId(const Character &character);
 
+        /**
+         * Used for performing the correct actions if a client disconnects from the game
+         * while they are in combat.
+         * @param client that has disconnected from the game
+         */
+        void
+        handleLogout(const Connection &client);
 
-        void processCycle(std::deque<Message> &messages);
+        /**
+         * Decrements the cycle counter of the round in each combat instance and returns
+         * combat-related messages when appropriate.
+         * @param messages deque from the game class
+         */
+        void
+        processCycle(std::deque<Message> &messages);
 
     };
 }
