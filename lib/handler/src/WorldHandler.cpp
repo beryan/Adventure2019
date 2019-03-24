@@ -280,6 +280,12 @@ namespace handler {
             } else if (field == "desc") {
                 room.setDesc({value});
                 success = true;
+            } else if (field == "extra" && arguments.size() >= 3) {
+                //redit extra [keyword] [description]
+                std::string keyword = arguments.at(1);
+                std::string desc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
+                room.addExtra({{keyword},{desc}});
+                success = true;
             } else if (field == "door") {
                 //redit door [direction] [roomId] [description]
                 std::string dir = arguments.at(1);
