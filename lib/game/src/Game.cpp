@@ -501,7 +501,7 @@ namespace game {
 
             case Command::Take: {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
-                Room room = this->worldHandler.findRoom(roomId);
+                auto &room = this->worldHandler.findRoom(roomId);
                 auto objects = room.getObjects();
 
                 if (containsKeyword(objects, param)) {

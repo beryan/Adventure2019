@@ -267,9 +267,9 @@ namespace handler {
                 auto opponentId = this->getOpponentId(*player);
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
 
-
-                message << "You attempt to flee, but fail. ("
-                            << (BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
+                message << "\n"
+                        << "You attempt to flee, but fail. ("
+                        << (BASE_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
 
                 message << this->inflictDamage(*player);
 
@@ -304,16 +304,11 @@ namespace handler {
             auto opponentId = this->getOpponentId(*player);
             auto &npc = this->worldHandler.findRoom(roomId).getNpcById(opponentId);
 
-            auto playerHpBefore = player->getHealth();
-            this->inflictDamage(*player);
-            auto playerHpAfter = player->getHealth();
+            message << "\n"
+                    << "You attempt to flee, but fail. ("
+                    << (BASE_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
 
-            message << "You attempt to flee, but fail. ("
-                        << (BASE_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
-
-            message << npc.getShortDescription() << " inflicts "
-                        << (playerHpBefore - playerHpAfter) << " HP worth of damage on you ("
-                        << playerHpAfter << " HP remaining)\n";
+            message << this->inflictDamage(*player);
 
             if (player->getHealth() == 0) {
                 message << "You lost the battle.\n";
