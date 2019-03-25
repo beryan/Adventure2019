@@ -29,6 +29,7 @@
 
 #include <cstdio>
 #include "gtest/gtest.h"
+#include "boost/filesystem.hpp"
 
 #ifdef ARDUINO
 void setup() {
@@ -42,6 +43,19 @@ void loop() { RUN_ALL_TESTS(); }
 GTEST_API_ int main(int argc, char **argv) {
   printf("Running main() from %s\n", __FILE__);
   testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+
+  boost::filesystem::path users{"../adventure2019/lib/data/users.json"};
+  boost::filesystem::path usersCopy{"lib/data/usersCopy.json"};
+  boost::filesystem::path testUsers{"lib/data/testUsers.json"};
+
+
+  boost::filesystem::copy_file(users, usersCopy, boost::filesystem::copy_option::overwrite_if_exists);
+  boost::filesystem::copy_file(testUsers, users, boost::filesystem::copy_option::overwrite_if_exists);
+
+  auto result = RUN_ALL_TESTS();
+
+  boost::filesystem::copy_file(usersCopy, users, boost::filesystem::copy_option::overwrite_if_exists);
+
+  return result;
 }
 #endif
