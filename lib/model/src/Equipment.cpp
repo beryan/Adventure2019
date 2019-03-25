@@ -125,7 +125,7 @@ namespace model {
         float dodgeValue = 0;
 
         if (this->isSlotOccupied(Slot::Back)) {
-            dodgeValue += FEET_DODGE_VALUE;
+            dodgeValue += BACK_DODGE_VALUE;
         }
 
         if (this->isSlotOccupied(Slot::Feet)) {
