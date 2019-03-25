@@ -26,15 +26,11 @@ namespace handler {
 
         std::mt19937 RNG;
 
-        constexpr static int BASE_MIN_DAMAGE = 10;
-        constexpr static int BASE_MAX_DAMAGE = 20;
         constexpr static float BASE_FLEE_CHANCE = 0.2f;
-
         constexpr static float BASE_MISS_CHANCE = 0.05f;
         constexpr static float BASE_DODGE_CHANCE = 0.1f;
         constexpr static float BASE_CRITICAL_CHANCE = 0.07f;
         constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
-
 
         /**
          *  Returns true if miss occurs
@@ -98,6 +94,9 @@ namespace handler {
         exitCombat(const Character &character);
 
     public:
+        constexpr static int BASE_MIN_DAMAGE = 10;
+        constexpr static int BASE_MAX_DAMAGE = 20;
+
         CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
 
         /**
@@ -144,6 +143,12 @@ namespace handler {
          */
         model::ID
         getOpponentId(const Character &character);
+
+        int
+        getEquipmentOffence(Player &player);
+
+        int
+        getEquipmentDefence(Player &player);
 
         /**
          * Used for performing the correct actions if a client disconnects from the game

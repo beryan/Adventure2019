@@ -82,9 +82,60 @@ namespace handler {
     }
 
 
+    int
+    CombatHandler::getEquipmentOffence(Player &player) {
+        int offenceValue = 0;
+
+        if (player.getEquipment().isSlotOccupied(Slot::Weapon)) {
+            offenceValue += 5;
+        }
+
+        return offenceValue;
+    }
+
+
+    int
+    CombatHandler::getEquipmentDefence(Player &player) {
+        int defenceValue = 0;
+
+        const auto equipment = player.getEquipment().getVectorEquipment();
+        for (const auto &gear : equipment) {
+            switch (gear.getSlot()) {
+                case Slot::Head:
+                    defenceValue += 2;
+                    break;
+
+                case Slot::Shoulders:
+                    defenceValue += 2;
+                    break;
+
+                case Slot::Chest:
+                    defenceValue += 3;
+                    break;
+
+                case Slot::Hands:
+                    defenceValue += 1;
+                    break;
+
+                case Slot::Legs:
+                    defenceValue += 2;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        return defenceValue;
+    }
+
+
     std::string
     CombatHandler::inflictDamage(NPC &npc) {
         std::ostringstream message;
+        auto playerId = this->getOpponentId(npc);
+        auto client = this->accountHandler.getClientByPlayerId(playerId);
+        auto player = this->accountHandler.getPlayerByClient(client);
 
         if (this->rollMiss()) {
             message << "You miss your attack on " << npc.getShortDescription() << "!\n";
@@ -104,6 +155,8 @@ namespace handler {
         } else {
             message << "You inflict ";
         }
+
+        damage += this->getEquipmentOffence(*player);
 
         int newHealth = std::max(npc.getHealth() - damage, 0);
         npc.setHealth(newHealth);
@@ -135,6 +188,7 @@ namespace handler {
         }
 
         auto damage = this->rollDamage();
+        damage -= this->getEquipmentDefence(player);
 
         if (this->rollCritical()) {
             damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);

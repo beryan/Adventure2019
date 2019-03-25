@@ -270,7 +270,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Wear) << " [keyword] (equips item from your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Remove) << " [keyword] (unequips item to your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Give) << " [username] [keyword] (gives item to username)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Status) << " (displays your health and current status ailments)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Status) << " (displays your health, combat attributes, and current status ailments)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Inventory) << " (displays your inventory)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
@@ -613,6 +613,14 @@ namespace game {
                             << "Status:\n"
                             << "-------\n"
                             << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+
+                auto offenceValue = this->combatHandler.getEquipmentOffence(*player);
+                auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
+                auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
+                tempMessage << "Attack: " << minDamage << "-" << maxDamage << " HP\n";
+
+                auto defenceValue = this->combatHandler.getEquipmentDefence(*player);
+                tempMessage << "Armour: " << defenceValue << "\n";
 
                 auto isBodySwapped = this->magicHandler.isBodySwapped(client);
                 auto isConfused = this->magicHandler.isConfused(client);
