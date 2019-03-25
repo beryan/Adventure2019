@@ -59,74 +59,26 @@ namespace handler {
 
 
     bool
-    CombatHandler::rollDodge() {
-        std::bernoulli_distribution dodgeProc(BASE_DODGE_CHANCE);
+    CombatHandler::rollDodge(const float &modifier) {
+        std::bernoulli_distribution dodgeProc(BASE_DODGE_CHANCE + modifier);
 
         return dodgeProc(this->RNG);
     }
 
 
     int
-    CombatHandler::rollDamage() {
-        std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE, BASE_MAX_DAMAGE);
+    CombatHandler::rollDamage(const int &modifier) {
+        std::uniform_int_distribution damageRoll(BASE_MIN_DAMAGE + modifier, BASE_MAX_DAMAGE + modifier);
 
         return damageRoll(this->RNG);
     }
 
 
     bool
-    CombatHandler::rollCritical() {
-        std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE);
+    CombatHandler::rollCritical(const float &modifier) {
+        std::bernoulli_distribution criticalProc(BASE_CRITICAL_CHANCE + modifier);
 
         return criticalProc(this->RNG);
-    }
-
-
-    int
-    CombatHandler::getEquipmentOffence(Player &player) {
-        int offenceValue = 0;
-
-        if (player.getEquipment().isSlotOccupied(Slot::Weapon)) {
-            offenceValue += 5;
-        }
-
-        return offenceValue;
-    }
-
-
-    int
-    CombatHandler::getEquipmentDefence(Player &player) {
-        int defenceValue = 0;
-
-        const auto equipment = player.getEquipment().getVectorEquipment();
-        for (const auto &gear : equipment) {
-            switch (gear.getSlot()) {
-                case Slot::Head:
-                    defenceValue += 2;
-                    break;
-
-                case Slot::Shoulders:
-                    defenceValue += 2;
-                    break;
-
-                case Slot::Chest:
-                    defenceValue += 3;
-                    break;
-
-                case Slot::Hands:
-                    defenceValue += 1;
-                    break;
-
-                case Slot::Legs:
-                    defenceValue += 2;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        return defenceValue;
     }
 
 
@@ -142,26 +94,29 @@ namespace handler {
             return message.str();
         }
 
-        if (this->rollDodge()) {
+        auto dodgeValue = player->getEquipment().getDodgeValue();
+        if (this->rollDodge(dodgeValue)) {
             message << npc.getShortDescription() << " dodges your attack!\n";
             return message.str();
         }
 
-        auto damage = this->rollDamage();
+        auto offenceValue = player->getEquipment().getOffenceValue();
+        auto damage = this->rollDamage(offenceValue);
 
-        if (this->rollCritical()) {
+        auto criticalValue = player->getEquipment().getCriticalValue();
+        if (this->rollCritical(criticalValue)) {
             damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
             message << "You strike a critical hit, inflicting ";
         } else {
             message << "You inflict ";
         }
 
-        damage += this->getEquipmentOffence(*player);
 
+        int oldHealth = npc.getHealth();
         int newHealth = std::max(npc.getHealth() - damage, 0);
         npc.setHealth(newHealth);
 
-        message << damage << " HP worth of damage to "
+        message << (oldHealth - newHealth) << " HP worth of damage to "
                 << npc.getShortDescription() << " (" << npc.getHealth() << " HP remaining)\n";
 
         return message.str();
@@ -188,7 +143,7 @@ namespace handler {
         }
 
         auto damage = this->rollDamage();
-        damage -= this->getEquipmentDefence(player);
+        damage -= player.getEquipment().getDefenceValue();
 
         if (this->rollCritical()) {
             damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
@@ -197,10 +152,11 @@ namespace handler {
             message << npcName << " inflicts ";
         }
 
+        int oldHealth = player.getHealth();
         int newHealth = std::max(player.getHealth() - damage, 0);
         player.setHealth(newHealth);
 
-        message << damage  << " HP worth of damage on you ("
+        message << (oldHealth - newHealth) << " HP worth of damage on you ("
                 << player.getHealth() << " HP remaining)\n";
 
         return message.str();
@@ -407,11 +363,11 @@ namespace handler {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
-                this->combatInstances.begin(),
-                this->combatInstances.end(),
-                [&characterId](const auto &combatInstance) {
-                    return (combatInstance.attackerID == characterId || combatInstance.defenderID == characterId);
-                }
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
+            [&characterId](const auto &combatInstance) {
+                return (combatInstance.attackerID == characterId || combatInstance.defenderID == characterId);
+            }
         );
 
         if (combat_it == this->combatInstances.end()) {

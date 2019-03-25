@@ -614,12 +614,12 @@ namespace game {
                             << "-------\n"
                             << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
 
-                auto offenceValue = this->combatHandler.getEquipmentOffence(*player);
+                auto offenceValue = player->getEquipment().getOffenceValue();
                 auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
                 auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
-                tempMessage << "Attack: " << minDamage << "-" << maxDamage << " HP\n";
+                tempMessage << "Attack: " << minDamage << "-" << maxDamage << "\n";
 
-                auto defenceValue = this->combatHandler.getEquipmentDefence(*player);
+                auto defenceValue = player->getEquipment().getDefenceValue();
                 tempMessage << "Armour: " << defenceValue << "\n";
 
                 auto isBodySwapped = this->magicHandler.isBodySwapped(client);

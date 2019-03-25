@@ -42,19 +42,19 @@ namespace handler {
          *  Returns true if dodge occurs
          */
         bool
-        rollDodge();
+        rollDodge(const float &modifier = 0);
 
         /**
          *  Returns a damage value between a defined range
          */
         int
-        rollDamage();
+        rollDamage(const int &modifier = 0);
 
         /**
          *  Returns true if a critical strike occurs
          */
         bool
-        rollCritical();
+        rollCritical(const float &modifier = 0);
 
         /**
          *  Methods for applying an attack result to the npc or player's health.
@@ -96,6 +96,7 @@ namespace handler {
     public:
         constexpr static int BASE_MIN_DAMAGE = 10;
         constexpr static int BASE_MAX_DAMAGE = 20;
+
 
         CombatHandler(AccountHandler &accountHandler, WorldHandler &worldHandler);
 
@@ -144,11 +145,6 @@ namespace handler {
         model::ID
         getOpponentId(const Character &character);
 
-        int
-        getEquipmentOffence(Player &player);
-
-        int
-        getEquipmentDefence(Player &player);
 
         /**
          * Used for performing the correct actions if a client disconnects from the game

@@ -13,6 +13,20 @@ using model::Slot;
 namespace model {
     class Equipment {
     private:
+        constexpr static int WEAPON_OFFENCE_VALUE = 5;
+
+        constexpr static int HEAD_ARMOUR_VALUE = 2;
+        constexpr static int SHOULDERS_ARMOUR_VALUE = 1;
+        constexpr static int CHEST_ARMOUR_VALUE = 3;
+        constexpr static int HANDS_ARMOUR_VALUE = 1;
+        constexpr static int LEGS_ARMOUR_VALUE = 2;
+
+        constexpr static float WEAPON_CRITICAL_VALUE = 0.02f;
+        constexpr static float BACK_CRITICAL_VALUE= 0.03f;
+
+        constexpr static float BACK_DODGE_VALUE = 0.02f;
+        constexpr static float FEET_DODGE_VALUE = 0.03f;
+
         /**
          * int: Numbers indicate which slot the item is in
          * Object: Item that is equipped
@@ -78,6 +92,14 @@ namespace model {
          * @return Returns true if the Equipment is empty
          */
         bool isEquipmentEmpty();
+
+        int getOffenceValue();
+
+        int getDefenceValue();
+
+        float getCriticalValue();
+
+        float getDodgeValue();
     };
 }
 

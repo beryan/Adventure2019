@@ -101,7 +101,6 @@ namespace {
      *  8.  Can flee to random room while in combat
      *  9.  Can flee in room with no doors while in combat
      *  10. Can get opponent ID
-     *  11. Can win combat.
      *  12. Combat rounds end after a number of game cycles
      */
 
@@ -151,32 +150,17 @@ namespace {
 
     TEST_F(CombatHandlerTestSuite, canAttackNpcWithKeywordWhileNeitherAreInCombat) {
         auto player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto playerStartHealth = player->getHealth();
-
         auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
-        auto npcStartHealth = npc.getHealth();
 
         ASSERT_FALSE(combatHandler.isInCombat(*player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
         ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
 
-        auto result = combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-
-        std::ostringstream expected;
-        expected << "\n"
-                 << "You inflict " << (npcStartHealth - npc.getHealth())
-                 << " HP worth of damage to " << npc.getShortDescription()
-                 << " (" << npc.getHealth() << " HP remaining)\n";
-
-        expected << npc.getShortDescription() << " inflicts "
-                 << (playerStartHealth - player->getHealth()) << " HP worth of damage on you ("
-                 << player->getHealth() << " HP remaining)\n";
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(*player));
         ASSERT_TRUE(combatHandler.isInCombat(npc));
-
         EXPECT_TRUE(combatHandler.areInCombat(*player, npc));
-        EXPECT_EQ(expected.str(), result);
     }
 
 
@@ -189,25 +173,12 @@ namespace {
         ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-        auto npcStartHealth = npc.getHealth();
-        auto playerStartHealth = player->getHealth();
-        auto result = combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-
-        std::ostringstream expected;
-        expected << "\n"
-                 << "You inflict " << (npcStartHealth - npc.getHealth())
-                 << " HP worth of damage to " << npc.getShortDescription()
-                 << " (" << npc.getHealth() << " HP remaining)\n";
-
-        expected << npc.getShortDescription() << " inflicts "
-                 << (playerStartHealth - player->getHealth()) << " HP worth of damage on you ("
-                 << player->getHealth() << " HP remaining)\n";
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(*player));
         ASSERT_TRUE(combatHandler.isInCombat(npc));
 
         EXPECT_TRUE(combatHandler.areInCombat(*player, npc));
-        EXPECT_EQ(expected.str(), result);
     }
 
 
@@ -286,66 +257,35 @@ namespace {
         ASSERT_FALSE(combatHandler.isInCombat(npc));
         ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
 
-        std::string result;
-
         bool succesfullyEscaped = false;
-        const int maximumTries = 10;
+        const int maximumTries = 100;
         int tries = 0;
         while (!succesfullyEscaped) {
             ASSERT_LT(tries, maximumTries);
             ASSERT_FALSE(combatHandler.isInCombat(*player));
+
             combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+
             ASSERT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
             ASSERT_TRUE(combatHandler.isInCombat(*player));
             ASSERT_TRUE(combatHandler.isInCombat(npc));
             ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
 
             while (combatHandler.isInCombat(*player)) {
-                auto playerStartHealth = player->getHealth();
-                result = combatHandler.flee(CLIENT_A);
-                std::ostringstream expected1;
-                expected1 << "You attempt to flee, but fail. ("
-                          << (EXPECTED_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
+                auto result = combatHandler.flee(CLIENT_A);
 
-                expected1 << npc.getShortDescription() << " inflicts "
-                          << (playerStartHealth - player->getHealth()) << " HP worth of damage on you ("
-                          << player->getHealth() << " HP remaining)\n";
-
-                std::ostringstream expected2;
-                expected2 << "You attempt to flee, but fail. ("
-                          << (EXPECTED_FLEE_CHANCE * doors.size() * 100) << "% chance of success)\n";
-
-                expected2 << npc.getShortDescription() << " inflicts "
-                          << playerStartHealth << " HP worth of damage on you ("
-                          << 0 << " HP remaining)\n";
-
-                expected2 << "You lost the battle.\n";
-
-                std::ostringstream expected3;
-                expected3 << "You successfully flee to the " << TEST_ROOM_1_EXIT << ".\n";
-
-
-                bool message1Match = (expected1.str() == result);
-                bool message2Match = (expected2.str() == result);
-
-                if (message1Match) {
-                    ASSERT_EQ(expected1.str(), result);
-
-                } else if (message2Match) {
-                    ASSERT_EQ(expected2.str(), result);
-
-                } else {
-                    ASSERT_EQ(expected3.str(), result);
-                    EXPECT_EQ(TEST_ROOM_2_ID, accountHandler.getRoomIdByClient(CLIENT_A));
+                if (!combatHandler.isInCombat(*player) && (result.find("successfully") != std::string::npos)) {
                     succesfullyEscaped = true;
                 }
             }
-
             ++tries;
         }
 
+        ASSERT_TRUE(succesfullyEscaped);
         ASSERT_FALSE(combatHandler.isInCombat(*player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
+
+        EXPECT_EQ(TEST_ROOM_2_ID, accountHandler.getRoomIdByClient(CLIENT_A));
         EXPECT_FALSE(combatHandler.areInCombat(*player, npc));
     }
 
@@ -355,12 +295,12 @@ namespace {
         World newWorld{};
         Room room = {TEST_ROOM_1_ID, "Test room 1", {"Test room 1 description"}};
         room.addNPC({
-                            NPC_A_ID,
-                            {NPC_A_KEYWORD},
-                            {"Long description."},
-                            "Test NPC 1",
-                            {"Interaction text."}
-                    });
+            NPC_A_ID,
+            {NPC_A_KEYWORD},
+            {"Long description."},
+            "Test NPC 1",
+            {"Interaction text."}
+        });
 
         Area area = Area("Testing area");
         area.addRoom(room);
@@ -375,10 +315,8 @@ namespace {
         ASSERT_FALSE(combatHandler.isInCombat(npc));
         ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
 
-        std::string result;
-
         bool succesfullyEscaped = false;
-        const int maximumTries = 10;
+        const int maximumTries = 100;
         int tries = 0;
         while (!succesfullyEscaped) {
             ASSERT_LT(tries, maximumTries);
@@ -390,41 +328,8 @@ namespace {
             ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
 
             while (combatHandler.isInCombat(*player)) {
-                auto playerStartHealth = player->getHealth();
-                result = combatHandler.flee(CLIENT_A);
-                std::ostringstream expected1;
-                expected1 << "You attempt to flee, but fail. ("
-                          << (EXPECTED_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
-
-                expected1 << npc.getShortDescription() << " inflicts "
-                          << (playerStartHealth - player->getHealth()) << " HP worth of damage on you ("
-                          << player->getHealth() << " HP remaining)\n";
-
-                std::ostringstream expected2;
-                expected2 << "You attempt to flee, but fail. ("
-                          << (EXPECTED_FLEE_CHANCE / 2 * 100) << "% chance of success)\n";
-
-                expected2 << npc.getShortDescription() << " inflicts "
-                          << playerStartHealth << " HP worth of damage on you ("
-                          << 0 << " HP remaining)\n";
-
-                expected2 << "You lost the battle.\n";
-
-                std::ostringstream expected3;
-                expected3 << "You successfully flee from combat.\n";
-
-                bool message1Match = (expected1.str() == result);
-                bool message2Match = (expected2.str() == result);
-
-                if (message1Match) {
-                    ASSERT_EQ(expected1.str(), result);
-
-                } else if (message2Match) {
-                    ASSERT_EQ(expected2.str(), result);
-
-                } else {
-                    ASSERT_EQ(expected3.str(), result);
-                    EXPECT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
+                auto result = combatHandler.flee(CLIENT_A);
+                if (!combatHandler.isInCombat(*player) && (result.find("successfully") != std::string::npos)) {
                     succesfullyEscaped = true;
                 }
             }
@@ -432,9 +337,12 @@ namespace {
             ++tries;
         }
 
+        ASSERT_TRUE(succesfullyEscaped);
         ASSERT_FALSE(combatHandler.isInCombat(*player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
+
         EXPECT_FALSE(combatHandler.areInCombat(*player, npc));
+        EXPECT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
     }
 
 
@@ -454,34 +362,6 @@ namespace {
 
         EXPECT_EQ(NPC_A_ID, combatHandler.getOpponentId(*player));
         EXPECT_EQ(player->getId(), combatHandler.getOpponentId(npc));
-    }
-
-
-    TEST_F(CombatHandlerTestSuite, canWinCombat) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
-
-        ASSERT_FALSE(combatHandler.isInCombat(*player));
-        ASSERT_FALSE(combatHandler.isInCombat(npc));
-        ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
-
-        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-
-        ASSERT_TRUE(combatHandler.isInCombat(*player));
-        ASSERT_TRUE(combatHandler.isInCombat(npc));
-        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
-
-        npc.setHealth(1);
-        auto result = combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-        std::ostringstream expected;
-        expected << "\n"
-                 << "You inflict " << 1
-                 << " HP worth of damage to " << npc.getShortDescription()
-                 << " (" << 0 << " HP remaining)\n";
-
-        expected << "You won the battle!\n";
-
-        EXPECT_EQ(expected.str(), result);
     }
 
 
