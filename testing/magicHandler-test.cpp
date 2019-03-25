@@ -37,17 +37,16 @@ namespace {
         MagicHandler magicHandler = MagicHandler{accountHandler};
 
         virtual void SetUp() override {
-            // Register client A
-            accountHandler.processRegistration(CLIENT_A);
-            accountHandler.processRegistration(CLIENT_A, USERNAME_A);
-            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
-            // Register client B
-            accountHandler.processRegistration(CLIENT_B);
-            accountHandler.processRegistration(CLIENT_B, USERNAME_B);
-            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
-            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
+            // Login client A
+            accountHandler.processLogin(CLIENT_A);
+            accountHandler.processLogin(CLIENT_A, USERNAME_A);
+            accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+
+            // Login client B
+            accountHandler.processLogin(CLIENT_B);
+            accountHandler.processLogin(CLIENT_B, USERNAME_B);
+            accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
         }
     };
 
@@ -369,11 +368,10 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastBodySwapOnWhileOtherPlayerIsSwapped) {
-        // Register client C
-        accountHandler.processRegistration(CLIENT_C);
-        accountHandler.processRegistration(CLIENT_C, USERNAME_C);
-        accountHandler.processRegistration(CLIENT_C, VALID_PASSWORD_STRING);
-        accountHandler.processRegistration(CLIENT_C, VALID_PASSWORD_STRING);
+        // Login client C
+        accountHandler.processLogin(CLIENT_C);
+        accountHandler.processLogin(CLIENT_C, USERNAME_C);
+        accountHandler.processLogin(CLIENT_C, VALID_PASSWORD_STRING);
 
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_C));

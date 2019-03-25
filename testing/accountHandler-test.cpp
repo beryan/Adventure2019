@@ -73,14 +73,12 @@ TEST(AccountHandlerTestSuite, canPreventLongUsername) {
 
 TEST(AccountHandlerTestSuite, canUseValidUsername) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "TestUsername";
 
     accountHandler.processRegistration(CLIENT_A);
-    auto result = accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    auto result = accountHandler.processRegistration(CLIENT_A, TestUsername);
 
-    std::ostringstream expected;
-    expected << VALID_PASSWORD_STRING << "\n"
-             << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
-             << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
+
 
     EXPECT_EQ(expected.str(), result);
 }
@@ -140,11 +138,12 @@ TEST(AccountHandlerTestSuite, canDetectNonMatchingPassword) {
 
 TEST(AccountHandlerTestSuite, canRegisterSuccessfully) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "canRegister";
 
     accountHandler.processRegistration(CLIENT_A);
     ASSERT_TRUE(accountHandler.isRegistering(CLIENT_A));
 
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, TestUsername);
     ASSERT_TRUE(accountHandler.isRegistering(CLIENT_A));
 
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
@@ -181,9 +180,10 @@ TEST(AccountHandlerTestSuite, canClearRegisterStateOnFail) {
 
 TEST(AccountHandlerTestSuite, isLoggedInAfterRegister) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "isLoggedInAfter";
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, TestUsername);
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
@@ -193,17 +193,18 @@ TEST(AccountHandlerTestSuite, isLoggedInAfterRegister) {
 
 TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "TakenUsername";
 
     accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processRegistration(CLIENT_A, TestUsername);
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
 
     accountHandler.processRegistration(CLIENT_B);
-    auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
+    auto result = accountHandler.processRegistration(CLIENT_B, TestUsername);
 
     std::ostringstream expected;
-    expected << "The username \"" << VALID_PASSWORD_STRING
+    expected << "The username \"" << static_cast<std::string>(TestUsername)
              << "\" has already been taken, please use a different username.\n";
 
     EXPECT_EQ(expected.str(), result);
@@ -211,14 +212,15 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnUsernameEntry) {
 
 TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "TakenUsername2";
 
     // Start registration process
     accountHandler.processRegistration(CLIENT_A);
     accountHandler.processRegistration(CLIENT_B);
 
-    // Enter usernames
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
+    // Enters usernames
+    accountHandler.processRegistration(CLIENT_A, TestUsername);
+    accountHandler.processRegistration(CLIENT_B, TestUsername);
 
     // Enter passwords
     accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
@@ -229,7 +231,7 @@ TEST(AccountHandlerTestSuite, canDetectUsernameTakenOnPasswordReEntry) {
     auto result = accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
 
     std::ostringstream expected;
-    expected << "The username \"" << VALID_PASSWORD_STRING
+    expected << "The username \"" << static_cast<std::string>(TestUsername)
              << "\" has already been taken, please use a different username.\n";
 
     EXPECT_EQ(expected.str(), result);
@@ -264,9 +266,10 @@ TEST(AccountHandlerTestSuite, canStartLogin) {
 
 TEST(AccountHandlerTestSuite, canDetectFailedLogin) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "FailedLogin";
 
     accountHandler.processLogin(CLIENT_A);
-    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_A, TestUsername);
     auto result = accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     std::ostringstream expected;
@@ -277,17 +280,12 @@ TEST(AccountHandlerTestSuite, canDetectFailedLogin) {
 
 TEST(AccountHandlerTestSuite, canLogInSuccessfully) {
     AccountHandler accountHandler{};
-
-    accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.logoutClient(CLIENT_A);
+    std::string TestUsername = "canLogin";
 
     accountHandler.processLogin(CLIENT_A);
     ASSERT_TRUE(accountHandler.isLoggingIn(CLIENT_A));
 
-    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_A, TestUsername);
     ASSERT_TRUE(accountHandler.isLoggingIn(CLIENT_A));
 
     accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
@@ -298,13 +296,7 @@ TEST(AccountHandlerTestSuite, canLogInSuccessfully) {
 
 TEST(AccountHandlerTestSuite, LoginStateClearsOnFail) {
     AccountHandler accountHandler{};
-
-    // Create an account, then logout
-    accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.logoutClient(CLIENT_A);
+    std::string TestUsername = "ClearsOnFail";
 
     // Attempt to login with incorrect username
     accountHandler.processLogin(CLIENT_A);
@@ -313,7 +305,7 @@ TEST(AccountHandlerTestSuite, LoginStateClearsOnFail) {
 
     // Login with correct username and password
     accountHandler.processLogin(CLIENT_A);
-    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_A, TestUsername);
     accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     // Login should be successful (stored username state cleared on failure)
@@ -323,14 +315,14 @@ TEST(AccountHandlerTestSuite, LoginStateClearsOnFail) {
 
 TEST(AccountHandlerTestSuite, canLogoutClientOnOtherClientLogin) {
     AccountHandler accountHandler{};
+    std::string TestUsername = "canLogoutClient";
 
-    accountHandler.processRegistration(CLIENT_A);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_A);
+    accountHandler.processLogin(CLIENT_A, TestUsername);
+    accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
 
     accountHandler.processLogin(CLIENT_B);
-    accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT_B, TestUsername);
     accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
     std::deque<Message> results = {};
     accountHandler.notifyBootedClients(results);
