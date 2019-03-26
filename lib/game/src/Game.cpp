@@ -28,8 +28,8 @@ namespace game {
     Game::Game(ConnectionHandler &connectionHandler) :
             connectionHandler(connectionHandler),
             magicHandler(this->accountHandler),
-            commandExecutor(connectionHandler, accountHandler, magicHandler, worldHandler, aliasManager,
-                            commandParser) {};
+            commandExecutor(connectionHandler, accountHandler, magicHandler, worldHandler, aliasManager, commandParser),
+            running(true) {};
 
     void
     Game::handleConnects(std::deque<Message> &messages) {
@@ -107,7 +107,8 @@ namespace game {
                 continue;
             }
 
-            std::string commandString =  boost::algorithm::to_lower_copy(incomingInput.substr(0, incomingInput.find(' ')));
+            std::string commandString = boost::algorithm::to_lower_copy(
+                    incomingInput.substr(0, incomingInput.find(' ')));
             std::string username = this->accountHandler.getUsernameByClient(client);
             Command command = this->aliasManager.getCommandForUser(commandString, username);
 

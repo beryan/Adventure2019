@@ -53,7 +53,7 @@ namespace game {
         CommandParser commandParser;
         CommandExecutor commandExecutor;
 
-        bool running = true;
+        bool running;
 
         /**
          *  Calls handler class methods that manage newly connected clients. Empties new client IDs from the associated
