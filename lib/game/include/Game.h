@@ -108,6 +108,12 @@ namespace game {
         addClientToGame(Connection client);
 
         /**
+         *  Update game state to not include connections that are no longer in game.
+         */
+        std::string
+        removeClientFromGame(Connection client);
+
+        /**
          *  Checks if parameters are incorrect format for in game command.
          */
         bool

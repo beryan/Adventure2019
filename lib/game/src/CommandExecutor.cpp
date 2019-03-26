@@ -37,11 +37,6 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
     std::ostringstream tempMessage;
 
     switch (command) {
-        case Command::Logout: {
-            tempMessage << logout(client);
-            break;
-        }
-
         case Command::Help:
             tempMessage << help();
             break;
@@ -424,12 +419,6 @@ std::string CommandExecutor::exits(const Connection &client) {
     return tempMessage.str();
 }
 
-std::string CommandExecutor::logout(const Connection &client) {
-    magicHandler.handleLogout(client);
-    removeClientFromGame(client);
-    return accountHandler.logoutClient(client);
-}
-
 std::vector<Message> CommandExecutor::say(const Connection &client, std::string &message) {
     std::vector<Message> messages = {};
     auto roomId = accountHandler.getRoomIdByClient(client);
@@ -631,13 +620,6 @@ CommandExecutor::getItemByKeyword(const std::vector<T> &objects, const std::stri
         item = *it;
     }
     return item;
-}
-
-void
-CommandExecutor::removeClientFromGame(Connection client) {
-    auto playerId = this->accountHandler.getPlayerIdByClient(client);
-    auto roomId = this->accountHandler.getRoomIdByClient(client);
-    this->worldHandler.removePlayer(roomId, playerId);
 }
 
 std::vector<Message> CommandExecutor::give(const Connection &client, const std::string &username,

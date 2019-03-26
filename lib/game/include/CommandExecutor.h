@@ -41,11 +41,6 @@ namespace game {
         std::vector<Message>
         executeCommand(const Connection &client, const Command &command, const std::vector<std::string> &params);
 
-        /**
-         *  Update game state to not include connections that are no longer in game.
-         */
-        void removeClientFromGame(Connection client);
-
     private:
         ConnectionHandler &connectionHandler;
         PlayerHandler playerHandler;

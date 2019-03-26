@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
+#include <vector>
 
 using game::Game;
 
@@ -63,9 +64,7 @@ namespace game {
             }
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
-                this->magicHandler.handleLogout(disconnectedClient);
-                this->commandExecutor.removeClientFromGame(disconnectedClient);
-                this->accountHandler.logoutClient(disconnectedClient);
+                this->removeClientFromGame(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
         }
@@ -207,6 +206,11 @@ namespace game {
 
     std::vector<Message>
     Game::executeInGameAction(const Connection &client, const Command &command, const std::string &param) {
+        if (command == Command::Logout) {
+            std::string msg = this->removeClientFromGame(client);
+            return std::vector<Message>{{client, msg}};
+        }
+
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
 
@@ -240,6 +244,15 @@ namespace game {
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.addPlayer(roomId, playerId);
+    }
+
+    std::string
+    Game::removeClientFromGame(Connection client) {
+        magicHandler.handleLogout(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        this->worldHandler.removePlayer(roomId, playerId);
+        return accountHandler.logoutClient(client);
     }
 
     bool
