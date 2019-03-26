@@ -11,12 +11,10 @@ using networking::Connection;
 
 class ConnectionHandler {
 public:
-    ConnectionHandler() = default;
-
     ConnectionHandler(std::vector<Connection> &clients,
                       std::vector<Connection> &newClients,
                       std::vector<Connection> &disconnectedClients,
-                      std::function<void(Connection)> disconnect);
+                      std::function<void(const Connection &)> disconnect);
 
     std::vector<Connection> &getClients();
 
@@ -24,13 +22,13 @@ public:
 
     std::vector<Connection> &getDisconnectedClients();
 
-    void disconnectClient(Connection client);
+    void disconnectClient(const Connection &client);
 
 private:
     std::vector<Connection> &clients;
     std::vector<Connection> &newClients;
     std::vector<Connection> &disconnectedClients;
-    std::function<void(Connection action)> disconnectFn;
+    std::function<void(const Connection &client)> disconnectFn;
 };
 
 

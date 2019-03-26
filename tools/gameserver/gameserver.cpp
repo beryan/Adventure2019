@@ -69,7 +69,7 @@ main(int argc, char *argv[]) {
     unsigned short port = (unsigned short) std::stoi(argv[1]);
     Server server{port, getHTTPMessage(argv[2]), onConnect, onDisconnect};
 
-    std::function<void(Connection)> disconnectClient = [&server](Connection connection) {
+    auto disconnectClient = [&server](const Connection &connection) {
         server.disconnect(connection);
     };
 

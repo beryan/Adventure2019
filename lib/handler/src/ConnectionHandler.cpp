@@ -9,7 +9,7 @@
 ConnectionHandler::ConnectionHandler(std::vector<Connection> &clients,
                                      std::vector<Connection> &newClients,
                                      std::vector<Connection> &disconnectedClients,
-                                     std::function<void(Connection)> disconnectFn)
+                                     std::function<void(const Connection &)> disconnectFn)
         : clients(clients),
           newClients(newClients),
           disconnectedClients(disconnectedClients),
@@ -27,6 +27,6 @@ std::vector<Connection> &ConnectionHandler::getDisconnectedClients() {
     return this->disconnectedClients;
 }
 
-void ConnectionHandler::disconnectClient(Connection client) {
+void ConnectionHandler::disconnectClient(const Connection &client) {
     this->disconnectFn(client);
 }
