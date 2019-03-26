@@ -267,7 +267,8 @@ namespace game {
                                    || command == Command::Take
                                    || command == Command::Drop
                                    || command == Command::Wear
-                                   || command == Command::Remove);
+                                   || command == Command::Remove
+                                   || command == Command::Chat);
 
         return (wrongFormat || (isCommandWithParam && parameters.empty()));
     }

@@ -52,12 +52,6 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Tell: {
-            if (params.size() < 2) {
-                std::string errorMsg = "Incorrect number of parameters for Tell";
-                messages.push_back({client, errorMsg});
-                return messages;
-            }
-
             auto username = params[0];
             auto messageRange = std::vector<std::string>(params.begin() + 1, params.end());
             std::string message = boost::algorithm::join(messageRange, " ");
