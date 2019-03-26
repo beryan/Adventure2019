@@ -395,7 +395,7 @@ std::string CommandExecutor::look(const Connection &client) {
     return tempMessage.str();
 }
 
-std::vector<Message> CommandExecutor::chat(const Connection &client, std::string message) {
+std::vector<Message> CommandExecutor::chat(const Connection &client, std::string &message) {
     std::vector<Message> messages = {};
     if (magicHandler.isConfused(client)) {
         magicHandler.confuseSpeech(message);

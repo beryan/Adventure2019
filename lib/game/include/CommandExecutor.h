@@ -58,7 +58,7 @@ namespace game {
 
         std::string logout(const Connection &client);
 
-        std::vector<Message> chat(const Connection &client, std::string message);
+        std::vector<Message> chat(const Connection &client, std::string &message);
 
         std::string look(const Connection &client);
 
