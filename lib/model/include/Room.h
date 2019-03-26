@@ -14,11 +14,11 @@
 #include <vector>
 #include "NPC.h"
 #include "Player.h"
-#include "ExtraObjectInfo.h"
+#include "ExtraInfo.h"
 
 using model::NPC;
 using model::Object;
-using model::ExtraObjectInfo;
+using model::ExtraInfo;
 
 namespace model {
 
@@ -39,7 +39,7 @@ namespace model {
         std::vector<NPC> npcs;
         std::vector<Object> objects;
         std::vector<model::ID> playersInRoom;
-        std::vector<ExtraObjectInfo> extras;
+        std::vector<ExtraInfo> extras;
 
         friend std::ostream& operator<<(std::ostream& os, const Door& rhs);
         friend std::ostream& operator<<(std::ostream& os, const Room& rhs);
@@ -58,7 +58,7 @@ namespace model {
         std::vector<NPC> getNpcs() const;
         std::vector<Object> getObjects() const;
         std::vector<model::ID> getPlayersInRoom() const;
-        std::vector<ExtraObjectInfo> getExtras() const;
+        std::vector<ExtraInfo> getExtras() const;
         void setId(const model::ID &id);
         void setName(const std::string &name);
         void setDesc(const std::vector<std::string> &desc);
@@ -66,12 +66,13 @@ namespace model {
         void setNpcs(const std::vector<NPC> &npcs);
         void setObjects(const std::vector<Object> &objects);
         void setPlayersInRoom(const std::vector<model::ID> &playersInRoom);
+        void setExtras(const std::vector<ExtraInfo> &extras);
 
         void addDoor(const Door &door);
         void addNPC(const NPC &npc);
         void addObject(const Object &object);
         void addPlayerToRoom(const model::ID &playerId);
-        void addExtra(const ExtraObjectInfo &extra);
+        void addExtra(const ExtraInfo &extra);
 
         void removeObject(const model::ID &objectId);
         void removePlayerFromRoom(const model::ID &playerId);
@@ -102,6 +103,7 @@ namespace model {
         r.setName(j.at("name").get<std::string>());
         r.setDesc(j.at("desc").get<std::vector<std::string>>());
         r.setDoors(j.at("doors").get<std::vector<Door>>());
+        r.setExtras((j.at("extended_descriptions").get<std::vector<ExtraInfo>>()));
     }
 }
 
