@@ -296,6 +296,7 @@ namespace handler {
         if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             player = this->usernameToPlayer.at(this->getUsernameByClient(client));
         }
+        assert(player != nullptr && "AccountHandler could not find player by client!");
         return player;
     }
 

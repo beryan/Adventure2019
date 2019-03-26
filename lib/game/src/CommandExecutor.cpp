@@ -71,7 +71,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Look: {
-            if (params.empty()) {
+            if (params.empty() || params[0].empty()) {
                 tempMessage << look(client);
             } else {
                 auto keyword = params[0];

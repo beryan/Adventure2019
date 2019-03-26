@@ -44,19 +44,17 @@ namespace game {
     private:
         ConnectionHandler &connectionHandler;
         PlayerHandler playerHandler;
-        AccountHandler accountHandler;
-        MagicHandler magicHandler;
-        WorldHandler worldHandler;
-        AliasManager aliasManager;
-        CommandParser commandParser;
+        AccountHandler &accountHandler;
+        MagicHandler &magicHandler;
+        WorldHandler &worldHandler;
+        AliasManager &aliasManager;
+        CommandParser &commandParser;
 
         std::string alias(const Connection &client, const std::vector<std::string> &params);
 
         std::string help();
 
         std::vector<Message> say(const Connection &client, std::string &message);
-
-        std::string logout(const Connection &client);
 
         std::vector<Message> chat(const Connection &client, std::string &message);
 
