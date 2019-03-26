@@ -78,8 +78,12 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         case Command::Look: {
             if (params.empty()) {
                 tempMessage << look(client);
-                break;
+            } else {
+                auto keyword = params[0];
+                tempMessage << examine(client, keyword);
             }
+
+            break;
         }
 
         case Command::Examine: {
