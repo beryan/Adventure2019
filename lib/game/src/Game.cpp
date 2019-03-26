@@ -7,6 +7,7 @@
 #include <map>
 #include <sstream>
 #include <iostream>
+#include <boost/algorithm/string.hpp>
 
 using game::Game;
 
@@ -32,6 +33,17 @@ trimWhitespace(const std::string &string) {
 }
 
 namespace game {
+    // move these when refactoring out commands
+    constexpr auto ALIAS_LIST = "list";
+    constexpr auto ALIAS_SET = "set";
+    constexpr auto ALIAS_SET_GLOBAL = "set-global";
+    constexpr auto ALIAS_CLEAR = "clear";
+    constexpr auto ALIAS_CLEAR_GLOBAL = "clear-global";
+    constexpr auto ALIAS_HELP = "help";
+    constexpr auto ALIAS_SET_NUM_PARAMS = 3;
+    constexpr auto ALIAS_CLEAR_NUM_PARAMS = 2;
+    constexpr auto ALIAS_LIST_NUM_PARAMS = 1;
+
     Game::Game(std::vector<Connection> &clients,
                std::vector<Connection> &newClients,
                std::vector<Connection> &disconnectedClients,
@@ -159,7 +171,6 @@ namespace game {
 
             if (!this->accountHandler.isLoggedIn(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
-
             } else {
                 if (this->isInvalidFormat(command, parameters)) {
                     tempMessage << "Invalid format for command \"" << commandString << "\".\n";
@@ -215,13 +226,15 @@ namespace game {
         return {client, tempMessage.str()};
     }
 
-
     std::vector<Message>
     Game::executeInGameAction(const Connection &client,
                               const Command &command,
                               const std::string &param) {
         std::vector<Message> messages = {};
         std::ostringstream tempMessage;
+
+        std::vector<std::string> params;
+        boost::split(params, param, boost::is_any_of("\t "));
 
         switch (command) {
             case Command::Logout: {
@@ -257,6 +270,8 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Equipment) << " (displays your equipment)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Spells) << " (displays available magic spells)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Cast) << " [spell] [target] (casts a spell on a target)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Alias) << " (aliases a command. Type \""
+                                    <<  this->commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Logout) << " (logs you out of the game)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Quit) << " (disconnects you from the game server)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Shutdown) << " (shuts down the game server)\n";
@@ -562,6 +577,109 @@ namespace game {
 
             case Command::Debug: {
                 tempMessage << this->worldHandler.getWorld();
+                break;
+            }
+
+            case Command::Alias: {
+                try {
+                    std::string username = this->accountHandler.getUsernameByClient(client);
+                    if (params.empty()) {
+                        tempMessage << "\nIncorrect number of parameters for alias command\n";
+                        break;
+                    }
+                    std::string aliasOption = params[0];
+
+                    if (aliasOption == ALIAS_LIST) {
+                        if (params.size() != ALIAS_LIST_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias list command\n";
+                            break;
+                        }
+                        auto aliases = this->aliasManager.getAliasesForUser(username);
+                        auto globalAliases = this->aliasManager.getGlobalAliases();
+
+                        tempMessage << "\nUser Aliases: \n";
+                        if (aliases.empty()) {
+                            tempMessage << "\tno user aliases set\n";
+                        }
+                        for (const auto &alias: aliases) {
+                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
+                        }
+
+                        tempMessage << "Global Aliases: \n";
+                        for (const auto &alias: globalAliases) {
+                            tempMessage << "\t" << alias.first << " -> " << alias.second << std::endl;
+                        }
+                        if (globalAliases.empty()) {
+                            tempMessage << "\tno global aliases set\n";
+                        }
+                    } else if (aliasOption == ALIAS_SET || aliasOption == ALIAS_SET_GLOBAL) {
+                        if (params.size() != ALIAS_SET_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias set command\n";
+                            break;
+                        }
+
+                        std::string command_to_alias_str = params[1];
+                        Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
+
+                        if (command_to_alias == Command::InvalidCommand) {
+                            tempMessage << "\nAlias could not be set: " << command_to_alias_str << " is not the name of a command\n";
+                            break;
+                        }
+
+                        std::string alias = params[2];
+
+                        if (!this->aliasManager.isValidAlias(alias)) {
+                            tempMessage << "\nAlias could not be set: " << alias << " is the name of a default command\n";
+                            break;
+                        }
+
+                        if ((aliasOption == ALIAS_SET &&
+                             this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
+                            (aliasOption == ALIAS_SET_GLOBAL &&
+                             this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
+                            tempMessage << "\nAlias set successfully\n";
+                        } else {
+                            tempMessage << "\nAlias could not be set: an alias has already been set for the specified command\n";
+                        }
+                    } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
+                        if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+                            tempMessage << "\nIncorrect number of parameters for alias clear command\n";
+                            break;
+                        }
+                        std::string command_to_clear_str = params[1];
+                        Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
+
+                        if (command_to_clear == Command::InvalidCommand) {
+                            tempMessage << "\nAlias could not be cleared: " << command_to_clear_str << " is not the name of a command\n";
+                            break;
+                        }
+
+                        if (aliasOption == ALIAS_CLEAR) {
+                            this->aliasManager.clearUserAlias(command_to_clear, username);
+                        } else {
+                            this->aliasManager.clearGlobalAlias(command_to_clear);
+                        }
+
+                        tempMessage << "\nAlias cleared successfully\n";
+
+                    } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
+                        tempMessage << "\nAlias Commands:\n"
+                                    << "---------------\n"
+                                    << "  - alias list (lists all aliases)\n"
+                                    << "  - alias set [command] [alias] (sets an alias for a command)\n"
+                                    << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
+                                    << "  - alias clear [command] (clears an alias for a command)\n"
+                                    << "  - alias clear-global [command] (clears a global alias for a command)\n";
+                    } else {
+                        tempMessage << aliasOption << " is not a valid option for "
+                                    << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
+                    }
+                } catch (std::exception &e) {
+                    tempMessage << "\n error parsing " << this->commandParser.getStringForCommand(Command::Alias)
+                            << " command!\n";
+                    std::cout << e.what();
+                }
+
                 break;
             }
 

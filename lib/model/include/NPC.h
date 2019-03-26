@@ -58,6 +58,7 @@ namespace model {
         static constexpr int MAX_KEYWORDS = 8;
 
     private:
+
         std::vector<std::string> keywords;
 
         std::vector<std::string> description;

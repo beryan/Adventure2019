@@ -52,7 +52,8 @@ namespace game {
                 {"talk",      Command::Talk},
                 {"tell",      Command::Tell},
                 {"wear",      Command::Wear},
-                {"yell",      Command::Yell}
+                {"yell",      Command::Yell},
+                {"alias",     Command::Alias}
         };
     };
 }
