@@ -98,6 +98,10 @@ namespace game {
 
         template<typename T>
         T getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
+
+        std::vector<Message> yell(const Connection &client, std::string &message);
+
+        std::vector<Message> tell(const Connection &client, const std::string &username, std::string &message);
     };
 }
 

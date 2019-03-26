@@ -5,6 +5,7 @@
 #include <CommandExecutor.h>
 #include <iostream>
 #include <boost/algorithm/string/case_conv.hpp>
+#include <boost/algorithm/string/join.hpp>
 
 using game::CommandExecutor;
 using model::NPC;
@@ -46,12 +47,31 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             break;
 
         case Command::Say: {
-            auto message = params[0];
+            auto message = boost::algorithm::join(params, " ");
             return say(client, message);
         }
 
+        case Command::Yell: {
+            auto message = boost::algorithm::join(params, " ");
+            return yell(client, message);
+        }
+
+        case Command::Tell: {
+            if (params.size() < 2) {
+                std::string errorMsg = "Incorrect number of parameters for Tell";
+                messages.push_back({client, errorMsg});
+                return messages;
+            }
+
+            auto username = params[0];
+            auto messageRange = std::vector<std::string>(params.begin() + 1, params.end());
+            std::string message = boost::algorithm::join(messageRange, " ");
+
+            return tell(client, username, message);
+        }
+
         case Command::Chat: {
-            auto message = params[0];
+            std::string message = boost::algorithm::join(params, " ");
             return chat(client, message);
         }
 
@@ -80,7 +100,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Cast: {
-            auto spellName = params.size() >= 1 ? params[0] : "";
+            auto spellName = !params.empty() ? params[0] : "";
             auto targetName = params.size() >= 2 ? params[1] : "";
             return magicHandler.castSpell(client, spellName, targetName);
         }
@@ -154,6 +174,60 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
     }
 
     messages.push_back({client, tempMessage.str()});
+
+    return messages;
+}
+
+std::vector<Message>
+CommandExecutor::tell(const Connection &client, const std::string &username, std::string &message) {
+    std::vector<Message> messages;
+
+    if (this->magicHandler.isConfused(client)) {
+        this->magicHandler.confuseSpeech(message);
+    }
+
+    for (auto connection: connectionHandler.getClients()) {
+        auto receiver = this->accountHandler.getUsernameByClient(connection);
+
+        if (receiver == username) {
+            auto sender = this->accountHandler.getUsernameByClient(client);
+
+            std::ostringstream toMessage;
+            std::ostringstream fromMessage;
+
+            toMessage << "To " << receiver << "> " << message << "\n";
+            fromMessage << "From " + sender + "> " << message << "\n";;
+
+            messages.push_back({client, toMessage.str()});
+            messages.push_back({connection, fromMessage.str()});
+
+            return messages;
+        }
+    }
+
+    std::ostringstream tempMessage;
+    tempMessage << "Unable to find online user \"" << username << "\".\n";
+    messages.push_back({client, tempMessage.str()});
+    return messages;
+}
+
+std::vector<Message> CommandExecutor::yell(const Connection &client, std::string &message) {
+    std::vector<Message> messages;
+    auto roomId = accountHandler.getRoomIdByClient(client);
+    auto playerIds = worldHandler.getNearbyPlayerIds(roomId);
+
+    for (const auto &playerId : playerIds) {
+        auto connection = accountHandler.getClientByPlayerId(playerId);
+
+        if (magicHandler.isConfused(client)) {
+            magicHandler.confuseSpeech(message);
+        }
+
+        std::ostringstream sayMessage;
+        sayMessage << accountHandler.getUsernameByClient(client) << " yells> " << message << "\n";
+
+        messages.push_back({connection, sayMessage.str()});
+    }
 
     return messages;
 }
