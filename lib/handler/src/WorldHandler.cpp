@@ -19,9 +19,9 @@ namespace handler {
     WorldHandler::WorldHandler() {
         //create temporary world
         this->world = World();
-        this->world.createStub();
-        //this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
-        resetAreas();
+        //this->world.createStub();
+        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+        reset();
     }
 
     World
@@ -373,7 +373,7 @@ namespace handler {
         resetHandler.resetArea(area);
     }
 
-    void WorldHandler::resetAreas() {
+    void WorldHandler::reset() {
         for (Area& area : this->world.getAreas()) {
             resetHandler.resetArea(area);
         }

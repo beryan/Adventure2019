@@ -132,7 +132,7 @@ namespace handler {
         resetArea(const model::ID &roomId);
 
         void
-        resetAreas();
+        reset();
 
     private:
         World world;

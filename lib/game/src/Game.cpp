@@ -10,21 +10,6 @@
 
 using game::Game;
 
-std::string
-trimWhitespace(const std::string &string) {
-    std::string whitespace = " \t";
-    auto start = string.find_first_not_of(whitespace);
-
-    if (start == std::string::npos) {
-        return "";
-    }
-
-    auto end = string.find_last_not_of(whitespace);
-    auto size = end - start + 1;
-
-    return string.substr(start, size);
-}
-
 namespace game {
     Game::Game(ConnectionHandler &connectionHandler) :
             connectionHandler(connectionHandler),
@@ -76,7 +61,7 @@ namespace game {
     Game::handleIncoming(const std::deque<Message> &incoming, std::deque<Message> &messages) {
         for (const auto &input : incoming) {
             auto client = input.connection;
-            auto incomingInput = trimWhitespace(input.text);
+            auto incomingInput = boost::algorithm::trim_copy(input.text);
             std::ostringstream tempMessage;
 
             if (this->accountHandler.isLoggingIn(client)) {
@@ -120,7 +105,7 @@ namespace game {
             std::string parameters;
 
             if (incomingInput.find(' ') != std::string::npos) {
-                parameters = trimWhitespace(incomingInput.substr(incomingInput.find(' ') + 1));
+                parameters = boost::algorithm::trim_copy(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
             switch (command) {

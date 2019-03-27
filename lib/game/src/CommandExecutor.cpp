@@ -149,28 +149,6 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             break;
         }
 
-        case Command::Goto: {
-            auto param = params[0];
-            if (std::all_of(param.begin(), param.end(), ::isdigit)) {
-                int destinationId = std::stoi(param);
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                if (destinationId == roomId) {
-                    tempMessage << "You are already in room " << param << ".\n";
-                } else if (this->worldHandler.roomExists(destinationId)) {
-                    auto playerId = this->accountHandler.getPlayerIdByClient(client);
-                    this->worldHandler.movePlayer(playerId, roomId, destinationId);
-                    this->accountHandler.setRoomIdByClient(client, destinationId);
-                    tempMessage << "You are now in room " << param << ".\n";
-                } else {
-                    tempMessage << "That room does not exist.\n";
-                }
-            } else {
-                tempMessage << "Invalid room id.\n";
-            }
-
-            break;
-        }
-
         case Command::Build: {
             tempMessage << "\nWorld Building Commands:\n"
                         << "------------------------\n"
@@ -215,7 +193,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Acreate: {
-            std::string name = boost::algorithm::join(params, " ");
+            auto name = boost::algorithm::join(params, " ");
             if (this->worldHandler.createArea(name)) {
                 tempMessage << "Area successfully created.\n";
             } else {
@@ -326,9 +304,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Rlist: {
-            auto param = params[0];
-            if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-                unsigned int index = std::stoi(param) - 1;
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                unsigned int index = std::stoi(params[0]) - 1;
                 if (index < this->worldHandler.getWorld().getAreas().size()) {
                     tempMessage << "\nRoom List\n";
                     tempMessage << "---------\n";
@@ -347,9 +324,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Olist: {
-            auto param = params[0];
-            if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-                unsigned int index = std::stoi(param) - 1;
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                unsigned int index = std::stoi(params[0]) - 1;
                 if (index < this->worldHandler.getWorld().getAreas().size()) {
                     tempMessage << "\nObject List\n";
                     tempMessage << "-----------\n";
@@ -368,9 +344,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Nlist: {
-            auto param = params[0];
-            if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-                unsigned int index = std::stoi(param) - 1;
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                unsigned int index = std::stoi(params[0]) - 1;
                 if (index < this->worldHandler.getWorld().getAreas().size()) {
                     tempMessage << "\nNPC List\n";
                     tempMessage << "--------\n";
@@ -389,8 +364,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Ashow: {
-            auto param = params[0];
-            if (param.empty()) {
+            if (params[0].empty()) {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 tempMessage << this->worldHandler.findArea(roomId);
             } else {
@@ -400,8 +374,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Rshow: {
-            auto param = params[0];
-            if (param.empty()) {
+            if (params[0].empty()) {
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 tempMessage << this->worldHandler.findRoom(roomId).toString();
             } else {
@@ -411,9 +384,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Oshow: {
-            auto param = params[0];
-            if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-                int id = std::stoi(param);
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                int id = std::stoi(params[0]);
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto &area = this->worldHandler.findArea(roomId);
                 if (area.objectExists(id)) {
@@ -429,9 +401,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Nshow: {
-            auto param = params[0];
-            if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-                int id = std::stoi(param);
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                int id = std::stoi(params[0]);
                 auto roomId = this->accountHandler.getRoomIdByClient(client);
                 auto &area = this->worldHandler.findArea(roomId);
                 if (area.npcExists(id)) {
@@ -443,6 +414,27 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             } else {
                 tempMessage << "Invalid format.\n";
             }
+            break;
+        }
+
+        case Command::Goto: {
+            if (!params[0].empty() && std::all_of(params[0].begin(), params[0].end(), ::isdigit)) {
+                int destinationId = std::stoi(params[0]);
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (destinationId == roomId) {
+                    tempMessage << "You are already in room " << destinationId << ".\n";
+                } else if (this->worldHandler.roomExists(destinationId)) {
+                    auto playerId = this->accountHandler.getPlayerIdByClient(client);
+                    this->worldHandler.movePlayer(playerId, roomId, destinationId);
+                    this->accountHandler.setRoomIdByClient(client, destinationId);
+                    tempMessage << "You are now in room " << destinationId << ".\n";
+                } else {
+                    tempMessage << "That room does not exist.\n";
+                }
+            } else {
+                tempMessage << "Invalid room id.\n";
+            }
+
             break;
         }
 
