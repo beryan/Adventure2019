@@ -82,7 +82,6 @@ namespace {
         EXPECT_EQ(Command::Tell, commandParser.parseCommand(TELL));
         EXPECT_EQ(Command::Wear, commandParser.parseCommand(WEAR));
         EXPECT_EQ(Command::Yell, commandParser.parseCommand(YELL));
-        EXPECT_EQ(Command::Alias, commandParser.parseCommand(ALIAS));
 
         EXPECT_EQ(Command::Acreate, commandParser.parseCommand(ACREATE));
         EXPECT_EQ(Command::Rcreate, commandParser.parseCommand(RCREATE));
@@ -130,7 +129,6 @@ namespace {
         EXPECT_EQ(TELL, commandParser.getStringForCommand(Command::Tell));
         EXPECT_EQ(WEAR, commandParser.getStringForCommand(Command::Wear));
         EXPECT_EQ(YELL, commandParser.getStringForCommand(Command::Yell));
-        EXPECT_EQ(ALIAS, commandParser.getStringForCommand(Command::Alias));
 
         EXPECT_EQ(ACREATE, commandParser.getStringForCommand(Command::Acreate));
         EXPECT_EQ(RCREATE, commandParser.getStringForCommand(Command::Rcreate));

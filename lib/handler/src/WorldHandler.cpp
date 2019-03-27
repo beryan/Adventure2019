@@ -140,10 +140,8 @@ namespace handler {
     }
 
     bool
-    WorldHandler::createRoom(const std::string &parameters) {
+    WorldHandler::createRoom(const std::vector<std::string> &arguments) {
         //rcreate [anum] [id] [name]
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "), boost::token_compress_on);
         bool canCreate = false;
         if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
             unsigned int index = std::stoi(arguments.at(0)) - 1;
@@ -159,10 +157,8 @@ namespace handler {
     }
 
     bool
-    WorldHandler::createObject(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::createObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ocreate [id] [short description]
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool canCreate = false;
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
@@ -178,10 +174,8 @@ namespace handler {
     }
 
     bool
-    WorldHandler::createNpc(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::createNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ncreate [id] [short description]
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool canCreate = false;
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
@@ -197,10 +191,8 @@ namespace handler {
     }
 
     bool
-    WorldHandler::createObjectReset(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::createObjectReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oreset [id]
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool canCreate = false;
         if (arguments.size() == 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
@@ -218,10 +210,8 @@ namespace handler {
     }
 
     bool
-    WorldHandler::createNpcReset(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::createNpcReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nreset [id] [amount]
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         bool canCreate = false;
         if (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
             unsigned int id = std::stoi(arguments.at(0));
@@ -241,11 +231,9 @@ namespace handler {
     }
 
     bool
-    WorldHandler::editArea(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::editArea(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //aedit [field] [values]
         bool success = false;
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 1) {
             std::string field = arguments.at(0);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
@@ -259,11 +247,9 @@ namespace handler {
     }
 
     bool
-    WorldHandler::editRoom(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::editRoom(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //redit [field] [values]
         bool success = false;
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 1) {
             std::string field = arguments.at(0);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
@@ -299,11 +285,9 @@ namespace handler {
     }
 
     bool
-    WorldHandler::editObject(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::editObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oedit [id] [field] [values]
         bool success = false;
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);
@@ -337,11 +321,9 @@ namespace handler {
     }
 
     bool
-    WorldHandler::editNpc(const model::ID &roomId, const std::string &parameters) {
+    WorldHandler::editNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nedit [id] [field] [values]
         bool success = false;
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);

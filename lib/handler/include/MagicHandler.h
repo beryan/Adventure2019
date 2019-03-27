@@ -25,7 +25,7 @@ namespace handler {
     template<typename SeqT>
     struct PigLatinFormatter {
         template<typename ReplaceT>
-        SeqT operator()(const ReplaceT& Replace) const {
+        SeqT operator()(const ReplaceT &Replace) const {
             std::ostringstream result;
             std::string word(Replace.begin(), Replace.end());
 
@@ -67,7 +67,7 @@ namespace handler {
      */
     class MagicHandler {
     private:
-        AccountHandler* accountHandler;
+        AccountHandler *accountHandler;
         std::vector<SpellInstance> bodySwapInstances;
         std::vector<SpellInstance> confuseInstances;
 
@@ -78,21 +78,21 @@ namespace handler {
         };
 
         std::map<std::string, Spell> spellMap = {
-            {BODY_SWAP_SPELL_NAME, Spell::BodySwap},
-            {DECOY_SPELL_NAME, Spell::Decoy},
-            {CONFUSE_SPELL_NAME, Spell::Confuse},
+                {BODY_SWAP_SPELL_NAME, Spell::BodySwap},
+                {DECOY_SPELL_NAME,     Spell::Decoy},
+                {CONFUSE_SPELL_NAME,   Spell::Confuse},
         };
 
         /**
          *  Switches the bodies of the casting player and the target player.
          */
-        std::vector <Message>
+        std::vector<Message>
         bodySwap(const Connection &client, const std::string &targetName);
 
         /**
          *  [Not yet implemented] Creates a decoy in combat so the player can flee
          */
-        std::vector <Message>
+        std::vector<Message>
         decoy(const Connection &client);
 
         /**
@@ -145,7 +145,7 @@ namespace handler {
          *  Casts a spell if the spell name is valid
          */
         std::vector<Message>
-        castSpell(const Connection &client, const std::string &param);
+        castSpell(const Connection &client, const std::string &spellName, const std::string &targetName);
 
         /**
          *  Returns true if the client's Player is under the effects of the Body Swap spell

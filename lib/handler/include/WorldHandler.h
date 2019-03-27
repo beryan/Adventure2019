@@ -99,31 +99,31 @@ namespace handler {
         createArea(const std::string &parameters);
 
         bool
-        createRoom(const std::string &parameters);
+        createRoom(const std::vector<std::string> &arguments);
 
         bool
-        createObject(const model::ID &roomId, const std::string &parameters);
+        createObject(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        createNpc(const model::ID &roomId, const std::string &parameters);
+        createNpc(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        createObjectReset(const model::ID &roomId, const std::string &parameters);
+        createObjectReset(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        createNpcReset(const model::ID &roomId, const std::string &parameters);
+        createNpcReset(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        editArea(const model::ID &roomId, const std::string &parameters);
+        editArea(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        editRoom(const model::ID &roomId, const std::string &parameters);
+        editRoom(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        editObject(const model::ID &roomId, const std::string &parameters);
+        editObject(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         bool
-        editNpc(const model::ID &roomId, const std::string &parameters);
+        editNpc(const model::ID &roomId, const std::vector<std::string> &arguments);
 
         void
         clear(const model::ID &roomId);
