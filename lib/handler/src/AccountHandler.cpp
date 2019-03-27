@@ -281,7 +281,7 @@ namespace handler {
 
     model::ID
     AccountHandler::getPlayerIdByClient(const Connection &client) {
-        model::ID result = -1;
+        model::ID result = INVALID_ID;
         auto it = this->activeClientToId.find(client);
         if (it != this->activeClientToId.end()) {
             result = it->second;
@@ -303,7 +303,7 @@ namespace handler {
 
     model::ID
     AccountHandler::getRoomIdByClient(const Connection &client) {
-        model::ID result = -1;
+        model::ID result = INVALID_ID;
         if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
             result = this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
         }
@@ -322,7 +322,7 @@ namespace handler {
     Connection
     AccountHandler::getClientByPlayerId(const model::ID &playerId) {
         if (!this->activeIdToClient.count(playerId)) {
-            return {0};
+            return {INVALID_ID};
         }
 
         return this->activeIdToClient.at(playerId);

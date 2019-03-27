@@ -355,22 +355,37 @@ std::string CommandExecutor::examine(const Connection &client, std::string &keyw
     auto npcs = room.getNpcs();
     auto extras = room.getExtras();
 
+    auto assumedClient = this->accountHandler.getClientByUsername(keyword);
+    if (assumedClient.id != AccountHandler::INVALID_ID) {
+        auto playerRoom = this->accountHandler.getRoomIdByClient(client);
+        auto examinedPlayerRoom = this->accountHandler.getRoomIdByClient(assumedClient);
 
-    if (containsKeyword(objects, keyword)) {
+        if (playerRoom == examinedPlayerRoom) {
+            auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
+            tempMessage << examinedPlayer->getDescription();
+        }
+
+    } else if (containsKeyword(objects, keyword)) {
         auto obj = getItemByKeyword(objects, keyword);
+
         for (const auto &str : obj.getLongDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(npcs, keyword)) {
         auto npc = getItemByKeyword(npcs, keyword);
+
         for (const auto &str : npc.getDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(extras, keyword)) {
         auto extra = getItemByKeyword(extras, keyword);
+
         for (const auto &str : extra.getExtraDescriptions()) {
             tempMessage << str << std::endl;
         }
+
     } else {
         tempMessage << "Invalid keyword.\n";
     }

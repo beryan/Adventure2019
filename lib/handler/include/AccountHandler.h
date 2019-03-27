@@ -46,7 +46,7 @@ namespace handler {
     public:
         AccountHandler();
 
-        static const model::ID INVALID_PLAYER_ID = 0;
+        static const model::ID INVALID_ID = 0;
 
         /**
          *  Checks if a player is logged in (exists in the activeClientToId map)
