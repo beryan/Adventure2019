@@ -11,9 +11,9 @@ using game::CommandParser;
 
 namespace {
     const auto ALIAS = "alias";
+    const auto BUILD = "build";
     const auto CAST = "cast";
     const auto CHAT = "chat";
-    const auto BUILD = "build";
     const auto DROP = "drop";
     const auto EQUIPMENT = "equipment";
     const auto EXAMINE = "examine";
@@ -52,14 +52,15 @@ namespace {
     const auto OLIST = "olist";
     const auto NLIST = "nlist";
     const auto GOTO = "goto";
+    const auto CLEAR = "clear";
     const auto RESET = "reset";
 
     TEST(CommandParserTestSuite, canGetCommandsFromStrings) {
         CommandParser commandParser;
         EXPECT_EQ(Command::Alias, commandParser.parseCommand(ALIAS));
+        EXPECT_EQ(Command::Build, commandParser.parseCommand(BUILD));
         EXPECT_EQ(Command::Cast, commandParser.parseCommand(CAST));
         EXPECT_EQ(Command::Chat, commandParser.parseCommand(CHAT));
-        EXPECT_EQ(Command::Build, commandParser.parseCommand(BUILD));
         EXPECT_EQ(Command::Drop, commandParser.parseCommand(DROP));
         EXPECT_EQ(Command::Equipment, commandParser.parseCommand(EQUIPMENT));
         EXPECT_EQ(Command::Examine, commandParser.parseCommand(EXAMINE));
@@ -98,15 +99,16 @@ namespace {
         EXPECT_EQ(Command::Olist, commandParser.parseCommand(OLIST));
         EXPECT_EQ(Command::Nlist, commandParser.parseCommand(NLIST));
         EXPECT_EQ(Command::Goto, commandParser.parseCommand(GOTO));
+        EXPECT_EQ(Command::Clear, commandParser.parseCommand(CLEAR));
         EXPECT_EQ(Command::Reset, commandParser.parseCommand(RESET));
     }
 
     TEST(CommandParserTestSuite, canGetStringsFromCommands) {
         CommandParser commandParser;
         EXPECT_EQ(ALIAS, commandParser.getStringForCommand(Command::Alias));
+        EXPECT_EQ(BUILD, commandParser.getStringForCommand(Command::Build));
         EXPECT_EQ(CAST, commandParser.getStringForCommand(Command::Cast));
         EXPECT_EQ(CHAT, commandParser.getStringForCommand(Command::Chat));
-        EXPECT_EQ(BUILD, commandParser.getStringForCommand(Command::Build));
         EXPECT_EQ(DROP, commandParser.getStringForCommand(Command::Drop));
         EXPECT_EQ(EQUIPMENT, commandParser.getStringForCommand(Command::Equipment));
         EXPECT_EQ(EXAMINE, commandParser.getStringForCommand(Command::Examine));
@@ -145,6 +147,7 @@ namespace {
         EXPECT_EQ(OLIST, commandParser.getStringForCommand(Command::Olist));
         EXPECT_EQ(NLIST, commandParser.getStringForCommand(Command::Nlist));
         EXPECT_EQ(GOTO, commandParser.getStringForCommand(Command::Goto));
+        EXPECT_EQ(CLEAR, commandParser.getStringForCommand(Command::Clear));
         EXPECT_EQ(RESET, commandParser.getStringForCommand(Command::Reset));
     }
 

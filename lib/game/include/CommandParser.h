@@ -29,9 +29,9 @@ namespace game {
     private:
         std::unordered_map<std::string, Command> commands = {
                 {"alias",     Command::Alias},
+                {"build",     Command::Build},
                 {"cast",      Command::Cast},
                 {"chat",      Command::Chat},
-                {"build",     Command::Build},
                 {"drop",      Command::Drop},
                 {"equipment", Command::Equipment},
                 {"examine",   Command::Examine},
