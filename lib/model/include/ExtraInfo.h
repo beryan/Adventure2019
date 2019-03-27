@@ -2,28 +2,31 @@
 // Created by Waswa Olunga on 2019-01-31.
 //
 
-#ifndef EXTRAOBJECTINFO_H
-#define EXTRAOBJECTINFO_H
+#ifndef EXTRAINFO_H
+#define EXTRAINFO_H
 
 #include <string>
 #include <vector>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
 
     /**
-     *  @struct ExtraObjectInfo
+     *  @struct ExtraInfo
      *
      *  @brief A struct describing the extra information an object can have.
      *
-     *  The ExtraObjectInfo contains extra object info
+     *  The ExtraInfo contains extra object info
      *  including keywords and description
      */
 
-    struct ExtraObjectInfo {
+    struct ExtraInfo {
     public:
-        ExtraObjectInfo();
+        ExtraInfo();
 
-        ExtraObjectInfo(
+        ExtraInfo(
                 std::vector<std::string> extraKeywords,
                 std::vector<std::string> extraDescriptions
         );
@@ -34,21 +37,29 @@ namespace model {
 
         std::vector<std::string> getExtraDescriptions() const;
 
-        void setExtraDescriptions(std::vector<std::string> extraDescriptions);
-
         bool containsKeyword(const std::string &keyword) const;
 
-        bool operator==(const ExtraObjectInfo &other) const;
+        void setExtraDescriptions(std::vector<std::string> extraDescriptions);
 
-        ExtraObjectInfo& operator=(const ExtraObjectInfo &other);
+        bool operator==(const ExtraInfo &other) const;
 
-        bool operator!=(const ExtraObjectInfo &other) const;
+        ExtraInfo& operator=(const ExtraInfo &other);
+
+        bool operator!=(const ExtraInfo &other) const;
 
     private:
         std::vector<std::string> extraKeywords;
 
         std::vector<std::string> extraDescriptions;
     };
+
+
+    inline void from_json(const json &j, ExtraInfo &e) {
+        e.setExtraDescriptions(j.at("desc").get<std::vector<std::string>>());
+        e.setExtraKeywords(j.at("keywords").get<std::vector<std::string>>());
+    }
+
+
 }
 
-#endif //EXTRAOBJECTINFO_H
+#endif //EXTRAINFO_H

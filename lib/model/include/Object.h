@@ -6,9 +6,11 @@
 #define OBJECT_H
 
 #include "Types.h"
-#include "ExtraObjectInfo.h"
+#include "ExtraInfo.h"
+#include "Slot.h"
 #include "json.hpp"
 
+using model::Slot;
 using json = nlohmann::json;
 
 namespace model {
@@ -21,11 +23,6 @@ namespace model {
      *  an object that is part of the inventory of a player
      *  or an object that is part of a room.
      */
-
-    // Count returns the length of the Slots
-    enum Slot {
-        Head, Shoulders, Back, Chest, Hands, Legs, Feet, Weapon, Misc, Count
-    };
 
     class Object {
     public:
@@ -45,7 +42,7 @@ namespace model {
                 std::vector<std::string> longDescription,
                 std::vector<std::string> keywords,
                 Slot slot,
-                ExtraObjectInfo extraObjectInfo
+                std::vector<ExtraInfo> extraObjectInfo
         );
 
         model::ID getId() const;
@@ -68,9 +65,9 @@ namespace model {
 
         void setSlot(Slot slot);
 
-        ExtraObjectInfo getExtraObjectInfo() const;
+        std::vector<ExtraInfo> getExtraObjectInfo() const;
 
-        void setExtraObjectInfo(ExtraObjectInfo extraObjectInfo);
+        void setExtraObjectInfo(std::vector<ExtraInfo> extraObjectInfo);
 
         bool canBeEquipped() const;
 
@@ -97,7 +94,7 @@ namespace model {
 
         Slot slot;
 
-        ExtraObjectInfo extraObjectInfo;
+        std::vector<ExtraInfo> extraObjectInfo;
 
         friend std::ostream&operator<<(std::ostream& os, const Object& obj);
     };

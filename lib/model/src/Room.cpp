@@ -76,7 +76,7 @@ namespace model {
         return this->playersInRoom;
     }
 
-    std::vector<ExtraObjectInfo> Room::getExtras() const {
+    std::vector<ExtraInfo> Room::getExtras() const {
         return this->extras;
     }
 
@@ -108,6 +108,10 @@ namespace model {
         this->playersInRoom = playersInRoom;
     }
 
+    void Room::setExtras(const std::vector<ExtraInfo> &extras) {
+        this->extras = extras;
+    }
+
     void Room::addDoor(const Door &door) {
         this->doors.push_back(door);
     }
@@ -127,7 +131,7 @@ namespace model {
         }
     }
 
-    void Room::addExtra(const ExtraObjectInfo &extra) {
+    void Room::addExtra(const ExtraInfo &extra) {
         this->extras.push_back(extra);
     }
 
@@ -161,6 +165,17 @@ namespace model {
         }
         return ids;
     }
+
+    int Room::countNpcById(const model::ID& npcID) const {
+        return std::count_if(this->npcs.begin(), this->npcs.end(),
+                          [npcID](const NPC & npc) -> bool { return npc.getId() == npcID ; });
+    }
+
+    int Room::countObjectById(const model::ID& objectID) const {
+        return std::count_if(this->objects.begin(), this->objects.end(),
+                          [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
+    }
+
 
     bool Room::operator==(const Room& Room) const {
         return this->id == Room.getId();

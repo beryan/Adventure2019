@@ -9,7 +9,7 @@ using model::Equipment;
 namespace model {
     Equipment::Equipment() {}
 
-    std::unordered_map<int, Object> Equipment::getMappedEquipment() {
+    std::unordered_map<Slot, Object> Equipment::getMappedEquipment() {
         return this->equipment;
     }
 
@@ -27,12 +27,12 @@ namespace model {
     void Equipment::mapEquipment(const std::vector<Object> &items) {
         this->equipment.clear();
         for (Object item : items) {
-            this->equipment.insert(std::pair<int, Object>(item.getSlot(), item));
+            this->equipment.insert(std::pair<Slot, Object>(item.getSlot(), item));
         }
     }
 
     void Equipment::equipItem(const Object &object) {
-        this->equipment.insert(std::pair<int, Object>(object.getSlot(), object));
+        this->equipment.insert(std::pair<Slot, Object>(object.getSlot(), object));
     }
 
     Object Equipment::unequipItem(const Object &item) {
@@ -41,14 +41,14 @@ namespace model {
             temp = unequipSlot(item.getSlot());
         }
 
-        return std::move(temp);
+        return temp;
     }
 
     Object Equipment::unequipSlot(const Slot &slot) {
         Object temp = std::move(this->equipment.at(slot));
         this->equipment.erase(slot);
 
-        return std::move(temp);
+        return temp;
     }
 
     bool Equipment::isSlotOccupied(const Slot &slot) {

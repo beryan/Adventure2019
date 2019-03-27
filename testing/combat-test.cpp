@@ -2,8 +2,8 @@
 // Created by jnhkm on 2019-03-11.
 //
 
-#include "lib/gtest/gtest.h"
-#include "lib/gmock/gmock.h"
+#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 #include <stdlib.h>
 #include "CombatHandler.h"
 #include "Player.h"

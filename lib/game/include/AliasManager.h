@@ -22,14 +22,14 @@ namespace game {
     public:
         AliasManager() : filePath(COMMANDS_FILE_PATH) {};
 
-        explicit AliasManager(std::string filePath) : filePath(std::move(filePath)) {};
+        explicit AliasManager(std::string_view filePath) : filePath(filePath) {};
 
         /**
          * Sets an alias for a command that all users can use
          * @param command command to alias
          * @param alias alias for the command
          */
-        void setGlobalAlias(const Command &command, std::string_view alias);
+        bool setGlobalAlias(const Command &command, std::string_view alias);
 
         /**
          * Deletes a global alias for a command
@@ -38,12 +38,20 @@ namespace game {
         void clearGlobalAlias(const Command &command);
 
         /**
+         * Checks if an alias is valid, i.e. doesn't match a default command.
+         * e.g. and alias "say" or "yell" is invalid.
+         * @param alias
+         * @return true if valid, false otherwise
+         */
+        bool isValidAlias(const std::string &alias);
+
+        /**
          * Sets an alias for a command for a particular user
          * @param command command to alias
          * @param alias alias for the command
          * @param username user to set the alias for
          */
-        void setUserAlias(const Command &command, std::string_view alias, std::string_view username);
+        bool setUserAlias(const Command &command, std::string_view alias, std::string_view username);
 
         /**
          * Deletes an alias for a user
@@ -59,6 +67,20 @@ namespace game {
          * @return Command from commandStr, InvalidCommand if no matching command
          */
         Command getCommandForUser(std::string_view commandStr, std::string_view username);
+
+        /**
+         * Get a map of aliases for a user
+         * @param username user to get aliases for
+         * @return map of aliases
+         */
+        std::unordered_map<std::string, std::string> getAliasesForUser(std::string_view username);
+
+        /**
+         * Get a map of global aliases
+         * @return map of global aliases
+         */
+        std::unordered_map<std::string, std::string> getGlobalAliases();
+
 
     private:
         std::string filePath;

@@ -22,8 +22,8 @@ namespace model {
 
     Player::Player(model::ID id, std::string_view username, std::string_view password) :
         Character(id),
-        username(std::move(username)),
-        password(std::move(password)),
+        username(username),
+        password(password),
         inventory({}),
         equipment({}),
         currRoomID(STARTING_LOCATION)
@@ -31,8 +31,8 @@ namespace model {
 
     Player::Player(model::ID id, std::string_view username, std::string_view password, const model::ID &roomID) :
         Character(id),
-        username(std::move(username)),
-        password(std::move(password)),
+        username(username),
+        password(password),
         inventory({}),
         equipment({}),
         currRoomID(roomID)
@@ -43,7 +43,7 @@ namespace model {
     }
 
     void Player::setUsername(std::string_view username) {
-        this->username = std::move(username);
+        this->username = username;
     }
 
     std::string Player::getPassword() const {
@@ -51,7 +51,7 @@ namespace model {
     }
 
     void Player::setPassword(std::string_view password) {
-        this->password = std::move(password);
+        this->password = password;
     }
 
     Avatar Player::getAvatar() const {
