@@ -609,7 +609,7 @@ namespace game {
                             << " [anum] [id] [name] (creates room in specified area)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Ocreate)
                             << "/" << this->commandParser.getStringForCommand(Command::Ncreate)
-                            << " [anum] [id] [short description] (creates object/npc in specified area)\n"
+                            << " [id] [short description] (creates object/npc in current area)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Aedit)
                             << " [field] [values] (modifies current area)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Redit)
@@ -626,11 +626,20 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Rlist)
                             << "/" << this->commandParser.getStringForCommand(Command::Olist)
                             << "/" << this->commandParser.getStringForCommand(Command::Nlist)
-                            << " [areaId] (lists rooms/objects/npcs of area)\n"
+                            << " [anum] (lists rooms/objects/npcs of specified area)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Ashow)
+                            << " (shows current area name and resets)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Rshow)
+                            << " (shows current room state)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Oshow)
+                            << "/" << this->commandParser.getStringForCommand(Command::Nshow)
+                            << " [id] (shows state of object/npc in current area)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Goto)
                             << " [id] (moves you to room with id)\n"
+                            << "  - " << this->commandParser.getStringForCommand(Command::Clear)
+                            << " (clears current room data including associated resets)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Reset)
-                            << " [anum] (triggers world reset or area reset if specified)\n";
+                            << " (resets current area with changes)\n";
                 break;
             }
 
@@ -653,7 +662,8 @@ namespace game {
             }
 
             case Command::Ocreate: {
-                if (this->worldHandler.createObject(param)) {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createObject(roomId, param)) {
                     tempMessage << "Object successfully created.\n";
                 } else {
                     tempMessage << "Failed to create object.\n";
@@ -662,7 +672,8 @@ namespace game {
             }
 
             case Command::Ncreate: {
-                if (this->worldHandler.createNpc(param)) {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createNpc(roomId, param)) {
                     tempMessage << "NPC successfully created.\n";
                 } else {
                     tempMessage << "Failed to create NPC.\n";
@@ -802,17 +813,71 @@ namespace game {
                 break;
             }
 
-            case Command::Reset: {
+            case Command::Ashow: {
                 if (param.empty()) {
-                    this->worldHandler.resetAreas();
-                    tempMessage << "World reset.\n";
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findArea(roomId);
                 } else {
-                    if (this->worldHandler.resetArea(param)) {
-                        tempMessage << "Area reset.\n";
-                    } else {
-                        tempMessage << "Failed to reset area.\n";
-                    }
+                    tempMessage << "Invalid format.\n";
                 }
+                break;
+            }
+
+            case Command::Rshow: {
+                if (param.empty()) {
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findRoom(roomId).toString();
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Oshow: {
+                if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    int id = std::stoi(param);
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    auto &area = this->worldHandler.findArea(roomId);
+                    if (area.objectExists(id)) {
+                        auto obj = area.findObjectById(id);
+                        tempMessage << *obj;
+                    } else {
+                        tempMessage << "Invalid id.\n";
+                    }
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Nshow: {
+                if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+                    int id = std::stoi(param);
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    auto &area = this->worldHandler.findArea(roomId);
+                    if (area.npcExists(id)) {
+                        auto npc = area.findNpcById(id);
+                        tempMessage << *npc;
+                    } else {
+                        tempMessage << "Invalid id.\n";
+                    }
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
+                break;
+            }
+
+            case Command::Clear: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                this->worldHandler.clear(roomId);
+                tempMessage << "Room cleared.\n";
+                break;
+            }
+
+            case Command::Reset: {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                this->worldHandler.resetArea(roomId);
+                tempMessage << "Area reset.\n";
                 break;
             }
 

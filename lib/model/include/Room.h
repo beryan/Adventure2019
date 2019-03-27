@@ -67,6 +67,7 @@ namespace model {
         void setNpcs(const std::vector<NPC> &npcs);
         void setObjects(const std::vector<Object> &objects);
         void setPlayersInRoom(const std::vector<model::ID> &playersInRoom);
+        void setExtras(const std::vector<ExtraObjectInfo> &extras);
 
         void addDoor(const Door &door);
         void addNPC(const NPC &npc);
@@ -86,6 +87,7 @@ namespace model {
 
         std::string descToString() const;
         std::string doorsToString() const;
+        std::string toString() const;
 
         bool operator==(const Room& room) const;
 

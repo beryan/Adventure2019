@@ -66,17 +66,4 @@ namespace model {
         area1.addReset({"object",1003,-1,1003,-1});
         this->addArea(area1);
     }
-
-    //print world
-    std::ostream& operator<<(std::ostream& os, const World& rhs) {
-        int count = 1;
-        os << "\nWorld state:\n";
-        os << "------------\n";
-        for (const auto &area : rhs.areas) {
-            os << count << ". " << area;
-            count++;
-        }
-
-        return os;
-    }
 }

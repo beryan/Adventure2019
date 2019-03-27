@@ -144,9 +144,8 @@ namespace handler {
         //rcreate [anum] [id] [name]
         std::vector<std::string> arguments;
         boost::split(arguments, parameters, boost::is_any_of("\t "), boost::token_compress_on);
-        bool validFormat = (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
-        if (validFormat) {
+        if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
             unsigned int index = std::stoi(arguments.at(0)) - 1;
             unsigned int roomId = std::stoi(arguments.at(1));
             canCreate = (index < this->world.getAreas().size() && !roomExists(roomId));
@@ -156,49 +155,45 @@ namespace handler {
                 this->world.getAreas().at(index).addRoom(room);
             }
         }
-        return (validFormat && canCreate);
+        return canCreate;
     }
 
     bool
-    WorldHandler::createObject(const std::string &parameters) {
-        //ocreate [anum] [id] [short description]
+    WorldHandler::createObject(const model::ID &roomId, const std::string &parameters) {
+        //ocreate [id] [short description]
         std::vector<std::string> arguments;
         boost::split(arguments, parameters, boost::is_any_of("\t "));
-        bool validFormat = (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
-        if (validFormat) {
-            unsigned int index = std::stoi(arguments.at(0)) - 1;
-            unsigned int id = std::stoi(arguments.at(1));
-            auto areas = this->world.getAreas();
-            canCreate = (index < areas.size() && !(areas.at(index).objectExists(id)));
+        if (arguments.size() > 1 && isNum(arguments.at(0))) {
+            unsigned int id = std::stoi(arguments.at(0));
+            auto &area = findArea(roomId);
+            canCreate = !area.objectExists(id);
             if (canCreate) {
-                std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
+                std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto object = Object(id, shortDesc);
-                this->world.getAreas().at(index).addObject(object);
+                area.addObject(object);
             }
         }
-        return (validFormat && canCreate);
+        return canCreate;
     }
 
     bool
-    WorldHandler::createNpc(const std::string &parameters) {
-        //ncreate [anum] [id] [short description]
+    WorldHandler::createNpc(const model::ID &roomId, const std::string &parameters) {
+        //ncreate [id] [short description]
         std::vector<std::string> arguments;
         boost::split(arguments, parameters, boost::is_any_of("\t "));
-        bool validFormat = (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
-        if (validFormat) {
-            unsigned int index = std::stoi(arguments.at(0)) - 1;
-            unsigned int id = std::stoi(arguments.at(1));
-            auto areas = this->world.getAreas();
-            canCreate = (index < areas.size() && !(areas.at(index).npcExists(id)));
+        if (arguments.size() > 1 && isNum(arguments.at(0))) {
+            unsigned int id = std::stoi(arguments.at(0));
+            auto &area = findArea(roomId);
+            canCreate = !area.npcExists(id);
             if (canCreate) {
                 std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
                 auto npc = NPC(id, shortDesc);
-                this->world.getAreas().at(index).addNpc(npc);
+                area.addNpc(npc);
             }
         }
-        return (validFormat && canCreate);
+        return canCreate;
     }
 
     bool
@@ -206,12 +201,11 @@ namespace handler {
         //oreset [id]
         std::vector<std::string> arguments;
         boost::split(arguments, parameters, boost::is_any_of("\t "));
-        bool validFormat = (arguments.size() == 1 && isNum(arguments.at(0)));
         bool canCreate = false;
-        if (validFormat) {
+        if (arguments.size() == 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = area.objectExists(id);
+            canCreate = !area.objectExists(id);
             if (canCreate) {
                 Reset reset = Reset();
                 reset.setAction("object");
@@ -220,7 +214,7 @@ namespace handler {
                 area.addReset(reset);
             }
         }
-        return (validFormat && canCreate);
+        return canCreate;
     }
 
     bool
@@ -228,9 +222,8 @@ namespace handler {
         //nreset [id] [amount]
         std::vector<std::string> arguments;
         boost::split(arguments, parameters, boost::is_any_of("\t "));
-        bool validFormat = (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)));
         bool canCreate = false;
-        if (validFormat) {
+        if (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
             unsigned int id = std::stoi(arguments.at(0));
             unsigned int amount = std::stoi(arguments.at(1));
             auto &area = findArea(roomId);
@@ -244,7 +237,7 @@ namespace handler {
                 area.addReset(reset);
             }
         }
-        return (validFormat && canCreate);
+        return canCreate;
     }
 
     bool
@@ -289,7 +282,7 @@ namespace handler {
                 success = true;
             } else if (field == "door") {
                 //redit door [direction] [roomId] [description]
-                std::string dir = arguments.at(1);
+                std::string dir = boost::algorithm::to_lower_copy(arguments.at(1));
                 if (!room.isValidDirection(dir) && arguments.size() >= 3 && isNum(arguments.at(2))) {
                     int leadsTo = std::stoi(arguments.at(2));
                     model::Door door = model::Door{dir, leadsTo};
@@ -378,20 +371,24 @@ namespace handler {
         return success;
     }
 
-    bool WorldHandler::resetArea(const std::string &parameters) {
-        //reset [anum]
-        bool success = false;
-        std::vector<std::string> arguments;
-        boost::split(arguments, parameters, boost::is_any_of("\t "));
-        if (arguments.size() == 1 && isNum(arguments.at(0))) {
-            unsigned int index = std::stoi(arguments.at(0)) - 1;
-            if (index < this->world.getAreas().size()) {
-                auto &area = this->world.getAreas().at(index);
-                resetHandler.resetArea(area);
-                success = true;
-            }
+    void WorldHandler::clear(const model::ID &roomId) {
+        auto &area = findArea(roomId);
+        area.removeResets(roomId);
+        auto &room = findRoom(roomId);
+        room.setDesc({});
+        room.setDoors({});
+        room.setExtras({});
+        room.setObjects({});
+        room.setNpcs({});
+    }
+
+    void WorldHandler::resetArea(const model::ID &roomId) {
+        auto &area = findArea(roomId);
+        for (auto &room : area.getRooms()) {
+            room.setObjects({});
+            room.setNpcs({});
         }
-        return success;
+        resetHandler.resetArea(area);
     }
 
     void WorldHandler::resetAreas() {

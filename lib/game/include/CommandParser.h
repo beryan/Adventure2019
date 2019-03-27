@@ -69,7 +69,12 @@ namespace game {
                 {"rlist",     Command::Rlist},
                 {"olist",     Command::Olist},
                 {"nlist",     Command::Nlist},
+                {"ashow",     Command::Ashow},
+                {"rshow",     Command::Rshow},
+                {"oshow",     Command::Oshow},
+                {"nshow",     Command::Nshow},
                 {"goto",      Command::Goto},
+                {"clear",     Command::Clear},
                 {"reset",     Command::Reset}
         };
     };

@@ -102,10 +102,10 @@ namespace handler {
         createRoom(const std::string &parameters);
 
         bool
-        createObject(const std::string &parameters);
+        createObject(const model::ID &roomId, const std::string &parameters);
 
         bool
-        createNpc(const std::string &parameters);
+        createNpc(const model::ID &roomId, const std::string &parameters);
 
         bool
         createObjectReset(const model::ID &roomId, const std::string &parameters);
@@ -125,8 +125,11 @@ namespace handler {
         bool
         editNpc(const model::ID &roomId, const std::string &parameters);
 
-        bool
-        resetArea(const std::string &parameters);
+        void
+        clear(const model::ID &roomId);
+
+        void
+        resetArea(const model::ID &roomId);
 
         void
         resetAreas();

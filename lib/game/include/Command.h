@@ -47,7 +47,12 @@ namespace game {
         Rlist,
         Olist,
         Nlist,
+        Ashow,
+        Rshow,
+        Oshow,
+        Nshow,
         Goto,
+        Clear,
         Reset,
         InvalidCommand
     };

@@ -111,20 +111,25 @@ namespace model {
         return findObjectById(objectId) != this->objects.end();
     }
 
+    void Area::removeResets(const model::ID &roomId) {
+        auto forRoom = [roomId](const Reset &reset) {return reset.getRoom() == roomId;};
+        resets.erase(std::remove_if(resets.begin(), resets.end(), forRoom), resets.end());
+    }
+
+
     bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }
 
     //print area
     std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << area.name << ":\n";
-
-        if (area.rooms.size()) {
-            for (const auto &room : area.rooms) {
-                os << "- " << room.getId() << ". " << room.getName() << std::endl;
-            }
+        os << "\nCurrent Area\n";
+        os << "------------\n";
+        os << "Name: [" << area.name << "]\n";
+        os << "Resets: \n";
+        for (const auto &reset : area.resets) {
+            os << reset;
         }
-
         return os;
     }
 

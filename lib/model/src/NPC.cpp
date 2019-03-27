@@ -5,6 +5,8 @@
 #include "NPC.h"
 #include "json.hpp"
 #include <iostream>
+#include <sstream>
+#include <boost/algorithm/string/join.hpp>
 
 using json = nlohmann::json;
 
@@ -90,12 +92,21 @@ namespace model {
     }
 
     bool NPC::containsKeyword(const std::string &keyword) const {
-        return (std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end());
+        return std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end();
     }
 
-    //print object
+    //print npc
     std::ostream& operator<<(std::ostream& os, const NPC& npc) {
-        os << "- " << npc.shortDescription << std::endl;
+        os << "\nNPC State\n";
+        os << "---------\n";
+        os << "Id: [" << npc.getId() << "]\n";
+        auto keywords = boost::algorithm::join(npc.keywords, ", ");
+        os << "Keywords: [" << keywords << "]\n";
+        os << "Short: [" << npc.shortDescription << "]\n";
+        auto longDesc = boost::algorithm::join(npc.longDescription, "\n");
+        os << "Long: [" << longDesc << "]\n";
+        auto desc = boost::algorithm::join(npc.description, "\n");
+        os << "Desc: [" << desc << "]\n";
         return os;
     }
 }

@@ -60,6 +60,7 @@ namespace model {
 
         bool npcExists(const model::ID &npcId);
         bool objectExists(const model::ID &objectId);
+        void removeResets(const model::ID &roomId);
 
         bool operator==(const Area& area) const;
     };
