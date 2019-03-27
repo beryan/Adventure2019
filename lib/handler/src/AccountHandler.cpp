@@ -24,8 +24,8 @@ namespace handler {
         this->activeClientToId = {};
 
         this->clientRegisterStage = {};
-        this->regUsernameInput = {};
-        this->regPasswordInput = {};
+        this->registerUsernameInput = {};
+        this->registerPasswordInput = {};
 
         this->clientLoginStage= {};
         this->loginUsernameInput = {};
@@ -77,7 +77,7 @@ namespace handler {
                     return "The username \"" + input + "\" has already been taken, please use a different username.\n";
                 }
 
-                this->regUsernameInput.emplace(client, input);
+                this->registerUsernameInput.emplace(client, input);
 
                 this->clientRegisterStage.at(client) = RegisterStage::Password;
 
@@ -100,7 +100,7 @@ namespace handler {
                     return "The password you entered is too long. Registration process cancelled.\n";
                 }
 
-                this->regPasswordInput.emplace(client, input);
+                this->registerPasswordInput.emplace(client, input);
                 this->clientRegisterStage.at(client) = RegisterStage::ConfirmPassword;
 
                 return "Re-enter your password\n";
@@ -109,15 +109,15 @@ namespace handler {
             case RegisterStage::ConfirmPassword: {
                 this->clientRegisterStage.erase(client);
 
-                if (this->regPasswordInput.at(client) != input) {
+                if (this->registerPasswordInput.at(client) != input) {
                     this->exitRegistration(client);
                     return "The passwords you entered do not match. Registration process cancelled.\n";
                 }
 
-                auto inputUsername = this->regUsernameInput.at(client);
-                auto inputPassword = this->regPasswordInput.at(client);
-                this->regUsernameInput.erase(client);
-                this->regPasswordInput.erase(client);
+                auto inputUsername = this->registerUsernameInput.at(client);
+                auto inputPassword = this->registerPasswordInput.at(client);
+                this->registerUsernameInput.erase(client);
+                this->registerPasswordInput.erase(client);
 
                 if (this->usernameToPlayer.count(inputUsername)) {
                     return "The username \"" + inputUsername +
@@ -145,8 +145,8 @@ namespace handler {
     void
     AccountHandler::exitRegistration(const Connection &client) {
         this->clientRegisterStage.erase(client);
-        this->regUsernameInput.erase(client);
-        this->regPasswordInput.erase(client);
+        this->registerUsernameInput.erase(client);
+        this->registerPasswordInput.erase(client);
     }
 
 
