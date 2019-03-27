@@ -32,31 +32,23 @@ namespace handler {
 
 
     std::vector<Message>
-    MagicHandler::castSpell(const Connection &client, const std::string &param) {
-        std::vector<std::string> arguments;
-        boost::algorithm::split(arguments, param, boost::is_any_of(" "), boost::token_compress_on);
-
-        auto spellName = boost::algorithm::to_lower_copy(arguments.at(0));
+    MagicHandler::castSpell(const Connection &client, const std::string &spellName, const std::string& targetName) {
+        std::string spellNameLower = boost::algorithm::to_lower_copy(spellName);
         if (spellName.empty()) {
             return {{client, "You need to specify the name of the spell to be cast.\n"}};
         }
 
-        std::string targetName;
-        if (arguments.size() > 1) {
-            targetName = arguments.at(1);
-        }
-
         std::vector<Message> responses;
-        bool isValidSpellName = static_cast<bool>(this->spellMap.count(spellName));
+        bool isValidSpellName = static_cast<bool>(this->spellMap.count(spellNameLower));
 
         if (!isValidSpellName) {
             std::ostringstream responseMessage;
-            responseMessage << "There are no spells with the name of \"" << arguments.at(0) << "\"\n";
+            responseMessage << "There are no spells with the name of \"" << spellName << "\"\n";
 
             return {{client, responseMessage.str()}};
         }
 
-        auto spell = this->spellMap.at(spellName);
+        auto spell = this->spellMap.at(spellNameLower);
         switch (spell) {
             case (Spell::BodySwap):
                 responses = this->bodySwap(client, targetName);
