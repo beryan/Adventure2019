@@ -81,6 +81,7 @@ namespace model {
     };
 
     inline void from_json(const json &j, Player &p) {
+        p.setId(j.at("id").get<model::ID>());
         p.setUsername(j.at("username").get<std::string>());
         p.setPassword(j.at("password").get<std::string>());
     }
