@@ -82,8 +82,6 @@ namespace game {
 
         std::string equipment(const Connection &client);
 
-        std::string debug();
-
         std::vector<Message> give(const Connection &client, const std::string &username, const std::string &keyword);
 
         template<typename T>

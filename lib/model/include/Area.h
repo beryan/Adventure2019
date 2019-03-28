@@ -50,13 +50,17 @@ namespace model {
         void setResets(const std::vector<Reset> &resets);
 
         void addRoom(const Room &room);
-        void addNPC(const NPC &npc);
+        void addNpc(const NPC &npc);
         void addObject(const Object &object);
         void addReset(const Reset &reset);
 
         std::vector<Room>::iterator findRoomById(model::ID roomID);
         std::vector<NPC>::iterator findNpcById(model::ID npcID);
         std::vector<Object>::iterator findObjectById(model::ID objectID);
+
+        bool npcExists(const model::ID &npcId);
+        bool objectExists(const model::ID &objectId);
+        void removeResets(const model::ID &roomId);
 
         bool operator==(const Area& area) const;
     };

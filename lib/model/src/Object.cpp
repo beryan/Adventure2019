@@ -2,14 +2,27 @@
 // Created by Waswa Olunga on 2019-01-18.
 //
 
+#include "Object.h"
 #include <iostream>
-#include <Object.h>
+#include <sstream>
+#include <boost/algorithm/string/join.hpp>
 
 namespace model {
 
     Object::Object() :
             id(Object::DEFAULT_ID),
             shortDescription({}),
+            longDescription({}),
+            keywords({}),
+            slot(Slot::Misc),
+            extraObjectInfo({}) {}
+
+    Object::Object(
+            model::ID id,
+            std::string shortDescription
+    ) :
+            id(id),
+            shortDescription(std::move(shortDescription)),
             longDescription({}),
             keywords({}),
             slot(Slot::Misc),
@@ -98,7 +111,7 @@ namespace model {
     }
 
     bool Object::containsKeyword(const std::string &keyword) const {
-        return (std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end());
+        return std::find(this->keywords.begin(), this->keywords.end(), keyword) != this->keywords.end();
     }
 
     bool Object::operator==(const Object &object) const {
@@ -120,8 +133,17 @@ namespace model {
         return *this;
     }
 
+    //print object
     std::ostream&operator<<(std::ostream& os, const Object& obj) {
-        os << obj.id << ". " << obj.shortDescription << std::endl;
+        os << "\nObject State\n";
+        os << "------------\n";
+        os << "Id: [" << obj.id << "]\n";
+        auto keywords = boost::algorithm::join(obj.keywords, ", ");
+        os << "Keywords: [" << keywords << "]\n";
+        os << "Short: [" << obj.shortDescription << "]\n";
+        auto longDesc = boost::algorithm::join(obj.longDescription, "\n");
+        os << "Long: [" << longDesc << "]\n";
+        os << "Slot: [" << model::getStringFromSlot(obj.slot) << "]\n";
         return os;
     }
 }

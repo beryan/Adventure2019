@@ -76,7 +76,7 @@ namespace model {
         this->rooms.push_back(room);
     }
 
-    void Area::addNPC(const NPC &npc) {
+    void Area::addNpc(const NPC &npc) {
         this->npcs.push_back(npc);
     }
 
@@ -103,20 +103,33 @@ namespace model {
                             [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
     }
 
+    bool Area::npcExists(const model::ID &npcId) {
+        return findNpcById(npcId) != this->npcs.end();
+    }
+
+    bool Area::objectExists(const model::ID &objectId) {
+        return findObjectById(objectId) != this->objects.end();
+    }
+
+    void Area::removeResets(const model::ID &roomId) {
+        auto forRoom = [roomId](const Reset &reset) {return reset.getRoom() == roomId;};
+        resets.erase(std::remove_if(resets.begin(), resets.end(), forRoom), resets.end());
+    }
+
+
     bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
     }
 
-    //print object
+    //print area
     std::ostream& operator<<(std::ostream& os, const Area& area) {
-        os << "Area: " << area.name << std::endl;
-
-        if (area.rooms.size()) {
-            for (const auto &room : area.rooms) {
-                os << room;
-            }
+        os << "\nCurrent Area\n";
+        os << "------------\n";
+        os << "Name: [" << area.name << "]\n";
+        os << "Resets: \n";
+        for (const auto &reset : area.resets) {
+            os << reset;
         }
-
         return os;
     }
 
