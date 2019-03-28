@@ -13,10 +13,133 @@ namespace handler {
     AvatarHandler::AvatarHandler(AccountHandler &accountHandler):
         accountHandler(accountHandler){}
 
+
+    std::string
+    AvatarHandler::processGender(const Connection &client, const std::string &input) {
+        model::Gender selectedGender;
+        std::ostringstream message;
+
+        if (input == "m" || input == "male") {
+            selectedGender = model::Gender::Male;
+
+        } else if (input == "f" || input == "female") {
+            selectedGender = model::Gender::Female;
+
+        } else {
+            message << "Invalid input, please try again.\n"
+                    << "Enter the gender of your character: [Male/Female]\n";
+            return message.str();
+        }
+
+        this->avatarsInCreation.at(client).gender = selectedGender;
+        this->creatingClients.at(client) = AvatarCreationStage::Race;
+
+        message << Avatar::genderToStringMap.at(selectedGender) << "\n"
+                << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
+        return message.str();
+    }
+
+
+    std::string
+    AvatarHandler::processRace(const Connection &client, const std::string &input) {
+        std::ostringstream message;
+        if (!static_cast<bool>(Avatar::stringToRaceMap.count(input))) {
+            message << "Invalid input, please try again.\n"
+                    << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
+            return message.str();
+        }
+
+        auto selectedRace = Avatar::stringToRaceMap.at(input);
+
+        this->avatarsInCreation.at(client).race = selectedRace;
+        this->creatingClients.at(client) = AvatarCreationStage::Trait1;
+
+        message << Avatar::raceToStringMap.at(selectedRace) << "\n"
+                << "Enter a trait of your character:\n";
+
+        return message.str();
+    }
+
+    std::string
+    AvatarHandler::processFirstTrait(const Connection &client, const std::string &input) {
+        std::ostringstream message;
+
+        if (input.empty()) {
+            message << "Invalid input, please try again.\n"
+                    << "Enter a trait of your character:\n";
+            return message.str();
+        }
+
+        this->avatarsInCreation.at(client).trait1 = input;
+        this->creatingClients.at(client) = AvatarCreationStage::Trait2;
+
+        message << input << "\n"
+                << "Enter a second trait of your character:\n";
+        return message.str();
+    }
+
+    std::string
+    AvatarHandler::processSecondTrait(const Connection &client, const std::string &input) {
+        std::ostringstream message;
+
+        if (input.empty()) {
+            message << "Invalid input, please try again.\n"
+                    << "Enter a second trait of your character:\n";
+            return message.str();
+        }
+
+        this->avatarsInCreation.at(client).trait2 = input;
+        this->creatingClients.at(client) = AvatarCreationStage::Confirm;
+
+        auto avatar = this->avatarsInCreation.at(client);
+        message << input << "\n"
+                << "\n"
+                << "Gender: "  << Avatar::genderToStringMap.at(avatar.gender) << "\n"
+                << "Race: "    << Avatar::raceToStringMap.at(avatar.race) << "\n"
+                << "Trait 1: " << avatar.trait1 << "\n"
+                << "Trait 2: " << avatar.trait2 << "\n"
+                << "Is the above description of your character correct? [Yes/No]\n";
+        return message.str();
+    }
+
+
+    std::string
+    AvatarHandler::processConfirm(const Connection &client, const std::string &input) {
+        std::ostringstream message;
+        if (input == "y" || input == "yes") {
+            auto avatar = this->avatarsInCreation.at(client);
+            auto player = this->accountHandler.getPlayerByClient(client);
+            player->setAvatar(avatar);
+            this->exitCreation(client);
+
+            message << input << "\n"
+                    << "Your character has been successfully created!\n";
+
+        } else if (input == "n" || input == "no") {
+            this->creatingClients.at(client) = AvatarCreationStage::Gender;
+            message << input << "\n"
+                    << "Enter the gender of your character: [Male/Female]\n";
+
+        } else {
+            auto avatar = this->avatarsInCreation.at(client);
+            message << "Invalid input, please try again.\n"
+                    << "\n"
+                    << "Gender: "  << Avatar::genderToStringMap.at(avatar.gender) << "\n"
+                    << "Race: "    << Avatar::raceToStringMap.at(avatar.race) << "\n"
+                    << "Trait 1: " << avatar.trait1 << "\n"
+                    << "Trait 2: " << avatar.trait2 << "\n"
+                    << "Is the above description of your character correct? [Yes/No]\n";
+        }
+
+        return message.str();
+    }
+
+
     bool
-    AvatarHandler::isCreatingAvatar(const Connection &client) {
+    AvatarHandler::isCreatingAvatar(const Connection &client) const {
         return static_cast<bool>(this->creatingClients.count(client));
     }
+
 
     std::string
     AvatarHandler::processCreation(const Connection &client, const std::string &input) {
@@ -39,111 +162,27 @@ namespace handler {
 
         switch (creationStage) {
             case AvatarCreationStage::Gender: {
-                model::Gender selectedGender;
-
-                if (lowercaseInput == "m" || lowercaseInput == "male") {
-
-                    selectedGender = model::Gender::Male;
-
-                } else if (lowercaseInput == "f" || lowercaseInput == "female") {
-                    selectedGender = model::Gender::Female;
-
-                } else {
-                    response << "Invalid input, please try again.\n"
-                             << "Enter the gender of your character: [Male/Female]\n";
-                    break;
-                }
-
-                this->avatarsInCreation.at(client).gender = selectedGender;
-                this->creatingClients.at(client) = AvatarCreationStage::Race;
-
-                response << Avatar::genderToStringMap.at(selectedGender) << "\n"
-                        << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
+                response << this->processGender(client, lowercaseInput);
                 break;
             }
 
             case AvatarCreationStage::Race: {
-                if (!static_cast<bool>(Avatar::stringToRaceMap.count(lowercaseInput))) {
-                    response << "Invalid input, please try again.\n"
-                             << "Enter the race of your character: [Human/Dwarf/Elf/Orc]\n";
-                    break;
-                }
-
-                auto selectedRace = Avatar::stringToRaceMap.at(lowercaseInput);
-
-
-                this->avatarsInCreation.at(client).race = selectedRace;
-                this->creatingClients.at(client) = AvatarCreationStage::Trait1;
-
-                response << Avatar::raceToStringMap.at(selectedRace) << "\n"
-                         << "Enter a trait of your character:\n";
+                response << this->processRace(client, lowercaseInput);
                 break;
             }
 
             case AvatarCreationStage::Trait1: {
-                if (lowercaseInput.empty()) {
-                    response << "Invalid input, please try again.\n"
-                             << "Enter a trait of your character:\n";
-                    break;
-                }
-
-                this->avatarsInCreation.at(client).trait1 = lowercaseInput;
-                this->creatingClients.at(client) = AvatarCreationStage::Trait2;
-
-                response << lowercaseInput << "\n"
-                         << "Enter a second trait of your character:\n";
+                response << this->processFirstTrait(client, lowercaseInput);
                 break;
             }
 
             case AvatarCreationStage::Trait2: {
-                if (lowercaseInput.empty()) {
-                    response << "Invalid input, please try again.\n"
-                             << "Enter a second trait of your character:\n";
-                    break;
-                }
-
-                this->avatarsInCreation.at(client).trait2 = lowercaseInput;
-                this->creatingClients.at(client) = AvatarCreationStage::Confirm;
-
-                auto avatar = this->avatarsInCreation.at(client);
-                response << lowercaseInput << "\n"
-                         << "\n"
-                         << "Gender: "  << Avatar::genderToStringMap.at(avatar.gender) << "\n"
-                         << "Race: "    << Avatar::raceToStringMap.at(avatar.race) << "\n"
-                         << "Trait 1: " << avatar.trait1 << "\n"
-                         << "Trait 2: " << avatar.trait2 << "\n"
-                         << "Is the above description of your character correct? [Yes/No]\n";
-
+                response << this->processSecondTrait(client, lowercaseInput);
                 break;
             }
 
-
             case AvatarCreationStage::Confirm: {
-                if (lowercaseInput == "y" || lowercaseInput == "yes") {
-                    auto avatar = this->avatarsInCreation.at(client);
-                    auto player = this->accountHandler.getPlayerByClient(client);
-                    player->setAvatar(avatar);
-                    this->exitCreation(client);
-
-                    response << input << "\n"
-                             << "Your character has been successfully created!\n";
-
-                } else if (lowercaseInput == "n" || lowercaseInput == "no") {
-                    this->creatingClients.at(client) = AvatarCreationStage::Gender;
-                    response << input << "\n"
-                             << "Enter the gender of your character: [Male/Female]\n";
-
-                } else {
-                    auto avatar = this->avatarsInCreation.at(client);
-                    response << "Invalid input, please try again.\n"
-                             << "\n"
-                             << "Gender: "  << Avatar::genderToStringMap.at(avatar.gender) << "\n"
-                             << "Race: "    << Avatar::raceToStringMap.at(avatar.race) << "\n"
-                             << "Trait 1: " << avatar.trait1 << "\n"
-                             << "Trait 2: " << avatar.trait2 << "\n"
-                             << "Is the above description of your character correct? [Yes/No]\n";
-                }
-
+                response << this->processConfirm(client, lowercaseInput);
                 break;
             }
 

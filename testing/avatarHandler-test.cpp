@@ -203,7 +203,7 @@ TEST(AvatarHandlerTestSuite, canConfirmAvatarCreation) {
         avatarHandler.processCreation(CLIENT, "MUSCULAR");
         auto result = avatarHandler.processCreation(CLIENT, input);
         std::ostringstream expect;
-        expect << input << "\n";
+        expect << boost::algorithm::to_lower_copy(input) << "\n";
         expect << "Your character has been successfully created!\n";
 
         ASSERT_EQ(expect.str(), result);
@@ -227,7 +227,7 @@ TEST(AvatarHandlerTestSuite, canRestartCreationOnNoToConfirm) {
         avatarHandler.processCreation(CLIENT, "MUSCULAR");
         auto result = avatarHandler.processCreation(CLIENT, input);
         std::ostringstream expect;
-        expect << input << "\n"
+        expect << boost::algorithm::to_lower_copy(input) << "\n"
                << "Enter the gender of your character: [Male/Female]\n";
 
         ASSERT_EQ(expect.str(), result);

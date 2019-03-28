@@ -25,11 +25,26 @@ namespace handler {
         std::map<Connection, AvatarCreationStage> creatingClients;
         std::map<Connection, Avatar> avatarsInCreation;
 
+        std::string
+        processGender(const Connection &client, const std::string &input);
+
+        std::string
+        processRace(const Connection &client, const std::string &input);
+
+        std::string
+        processFirstTrait(const Connection &client, const std::string &input);
+
+        std::string
+        processSecondTrait(const Connection &client, const std::string &input);
+
+        std::string
+        processConfirm(const Connection &client, const std::string &input);
+
     public:
         AvatarHandler(AccountHandler &accountHandler);
 
         bool
-        isCreatingAvatar(const Connection &client);
+        isCreatingAvatar(const Connection &client) const;
 
         std::string
         processCreation(const Connection &client, const std::string &input = "");
