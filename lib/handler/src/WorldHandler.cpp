@@ -182,7 +182,7 @@ namespace handler {
             auto &area = findArea(roomId);
             canCreate = !area.npcExists(id);
             if (canCreate) {
-                std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
+                std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto npc = NPC(id, shortDesc);
                 area.addNpc(npc);
             }
@@ -197,7 +197,7 @@ namespace handler {
         if (arguments.size() == 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = !area.objectExists(id);
+            canCreate = area.objectExists(id);
             if (canCreate) {
                 Reset reset = Reset();
                 reset.setAction("object");
@@ -381,7 +381,7 @@ namespace handler {
 
     bool
     WorldHandler::isNum(const std::string &str) {
-        return std::all_of(str.begin(), str.end(), ::isdigit);
+        return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
     }
 
 }
