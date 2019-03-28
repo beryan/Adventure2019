@@ -64,18 +64,18 @@ namespace model {
         auto equipment = this->equipment.getVectorEquipment();
         std::string genderPronoun;
 
-        if (avatar.gender == "male") {
+        if (avatar.gender == model::Gender::Male) {
             genderPronoun = "He";
 
-        } else if (avatar.gender == "female") {
+        } else if (avatar.gender == model::Gender::Female) {
             genderPronoun = "She";
         }
 
         description << this->getUsername() << " is a "
                      << avatar.trait1 << ", "
                      << avatar.trait2 << " "
-                     << avatar.gender << " "
-                     << avatar.race;
+                     << Avatar::genderToStringMap.at(avatar.gender) << " "
+                     << Avatar::raceToStringMap.at(avatar.race);
 
         if (!equipment.empty()) {
             description << ". " << genderPronoun << " is equipped with " << equipment.at(0).getShortDescription();
