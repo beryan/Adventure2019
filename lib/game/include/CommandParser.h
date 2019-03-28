@@ -28,10 +28,11 @@ namespace game {
 
     private:
         std::unordered_map<std::string, Command> commands = {
+                {"alias",     Command::Alias},
                 {"attack",    Command::Attack},
+                {"build",     Command::Build},
                 {"cast",      Command::Cast},
                 {"chat",      Command::Chat},
-                {"debug",     Command::Debug},
                 {"drop",      Command::Drop},
                 {"equipment", Command::Equipment},
                 {"examine",   Command::Examine},
@@ -56,7 +57,28 @@ namespace game {
                 {"tell",      Command::Tell},
                 {"wear",      Command::Wear},
                 {"yell",      Command::Yell},
-                {"alias",     Command::Alias}
+
+                {"acreate",   Command::Acreate},
+                {"rcreate",   Command::Rcreate},
+                {"ocreate",   Command::Ocreate},
+                {"ncreate",   Command::Ncreate},
+                {"aedit",     Command::Aedit},
+                {"redit",     Command::Redit},
+                {"oedit",     Command::Oedit},
+                {"nedit",     Command::Nedit},
+                {"oreset",    Command::Oreset},
+                {"nreset",    Command::Nreset},
+                {"alist",     Command::Alist},
+                {"rlist",     Command::Rlist},
+                {"olist",     Command::Olist},
+                {"nlist",     Command::Nlist},
+                {"ashow",     Command::Ashow},
+                {"rshow",     Command::Rshow},
+                {"oshow",     Command::Oshow},
+                {"nshow",     Command::Nshow},
+                {"goto",      Command::Goto},
+                {"clear",     Command::Clear},
+                {"reset",     Command::Reset}
         };
     };
 }

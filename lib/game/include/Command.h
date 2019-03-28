@@ -7,9 +7,9 @@
 namespace game {
     enum class Command {
         Attack,
+        Build,
         Cast,
         Chat,
-        Debug,
         Drop,
         Equipment,
         Examine,
@@ -35,6 +35,28 @@ namespace game {
         Wear,
         Yell,
         Alias,
+
+        Acreate,
+        Rcreate,
+        Ocreate,
+        Ncreate,
+        Aedit,
+        Redit,
+        Oedit,
+        Nedit,
+        Oreset,
+        Nreset,
+        Alist,
+        Rlist,
+        Olist,
+        Nlist,
+        Ashow,
+        Rshow,
+        Oshow,
+        Nshow,
+        Goto,
+        Clear,
+        Reset,
         InvalidCommand
     };
 }

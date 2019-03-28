@@ -16,8 +16,6 @@ namespace model{
     private:
         std::vector<Area> areas;
 
-        friend std::ostream& operator<<(std::ostream& os, const World& rhs);
-
     public:
         //constructors
         World();

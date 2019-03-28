@@ -140,7 +140,9 @@ namespace model {
             os << "\nEquipment:\n";
             os << "----------\n";
             for (const auto &kv : rhs.equipment) {
-                os << kv.first << ". [" << kv.second.getShortDescription() << "]";
+                auto slot = model::getStringFromSlot(kv.first);
+                slot[0] = toupper(slot[0]);
+                os << slot << ": [" << kv.second.getShortDescription() << "]";
 
                 switch (kv.second.getSlot()) {
                     case Slot::Weapon:
