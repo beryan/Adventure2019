@@ -69,7 +69,9 @@ namespace model {
             os << "\nEquipment:\n";
             os << "----------\n";
             for (const auto &kv : rhs.equipment) {
-                os << kv.first << ". [" << kv.second.getShortDescription() << "]\n";
+                auto slot = model::getStringFromSlot(kv.first);
+                slot[0] = toupper(slot[0]);
+                os << slot << ": [" << kv.second.getShortDescription() << "]\n";
             }
         } else {
             os << "Nothing equipped!\n";

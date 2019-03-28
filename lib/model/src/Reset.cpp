@@ -72,8 +72,13 @@ namespace model {
         this->slot = slot;
     }
 
+    //print reset
     std::ostream& operator<<(std::ostream& os, const Reset& r) {
-        os << r.getAction() << " " << r.getId() << std::endl;
+        os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
+        if (r.action == "npc") {
+            os << " x" << r.limit;
+        }
+        os << std::endl;
         return os;
     }
 

@@ -11,6 +11,7 @@
 #include <iostream>
 #include <sstream>
 #include <algorithm>
+#include <boost/algorithm/string/join.hpp>
 
 using model::Room;
 
@@ -24,7 +25,19 @@ namespace model {
           doors({}),
           npcs({}),
           objects({}),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
+          { }
+
+    Room::Room(model::ID id, std::string name)
+        : id(id),
+          name(std::move(name)),
+          desc({}),
+          doors({}),
+          npcs({}),
+          objects({}),
+          playersInRoom({}),
+          extras({})
           { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc)
@@ -34,7 +47,8 @@ namespace model {
           doors({}),
           npcs({}),
           objects({}),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
           { }
 
     Room::Room(model::ID id, std::string name, std::vector<std::string> desc, std::vector<Door> doors, std::vector<NPC> npcs, std::vector<Object> objects)
@@ -44,7 +58,8 @@ namespace model {
           doors(std::move(doors)),
           npcs(std::move(npcs)),
           objects(std::move(objects)),
-          playersInRoom({})
+          playersInRoom({}),
+          extras({})
           { }
 
     //getters and setters
@@ -183,7 +198,7 @@ namespace model {
 
     //print door
     std::ostream& operator<<(std::ostream& os, const Door& rhs) {
-        os << rhs.dir;
+        os << "- " << rhs.dir;
 
         if (!rhs.desc.empty()) {
             os << ". ";
@@ -210,7 +225,7 @@ namespace model {
     std::string Room::doorsToString() const {
         std::ostringstream os;
         if(!this->doors.empty()) {
-            os << "[Exits]" << std::endl;
+            os << "Exits:" << std::endl;
             for (const auto &door : this->doors) {
                 os << door;
             }
@@ -218,25 +233,51 @@ namespace model {
         return os.str();
     }
 
+    std::string Room::toString() const {
+        std::ostringstream os;
+        os << "\nCurrent Room\n";
+        os << "------------\n";
+        os << "Id: [" << this->id << "]\n";
+        os << "Name: [" << this->name << "]\n";
+        auto desc = boost::algorithm::join(this->desc, "\n");
+        os << "Desc: [" << desc << "]\n";
+        for (const auto &door : this->doors) {
+            os << "Door:\n";
+            os << "- Direction: [" << door.dir << "]\n";
+            os << "- Destination: [" << door.leadsTo << "]\n";
+            auto doorDesc = boost::algorithm::join(door.desc, "\n");
+            os << "- Description: [" << doorDesc << "]\n";
+        }
+        for (const auto &extra : this->extras) {
+            os << "Extra:\n";
+            auto keywords = boost::algorithm::join(extra.getExtraKeywords(), ", ");
+            os << "- Keywords: [" << keywords << "]" << std::endl;
+            auto extraDesc = boost::algorithm::join(extra.getExtraDescriptions(), "\n");
+            os << "- Description: [" << extraDesc << "]" << std::endl;
+        }
+        return os.str();
+    }
+
     //print room
     std::ostream& operator<<(std::ostream& os, const Room& room) {
-        os << "\n" << room.id << ". " << room.name << "\n";
+        os << "\n" << room.name << "\n";
+        os << std::string(room.name.length(), '-') << std::endl;
 
         os << room.descToString();
 
         os << room.doorsToString();
 
         if(!room.objects.empty()) {
-            os << "[Objects]" << std::endl;
+            os << "Objects:" << std::endl;
             for (const auto &obj : room.objects) {
-                os << obj;
+                os << "- " << obj.getShortDescription() << std::endl;
             }
         }
 
         if(!room.npcs.empty()) {
-            os << "[NPCS]" << std::endl;
+            os << "NPCS:" << std::endl;
             for (const auto &npc : room.npcs) {
-                os << npc;
+                os << "- " << npc.getShortDescription() << std::endl;
             }
         }
 

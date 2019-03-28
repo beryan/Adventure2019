@@ -29,6 +29,11 @@ namespace model {
 
         NPC(
             model::ID id,
+            std::string shortDescription
+        );
+
+        NPC(
+            model::ID id,
             std::vector<std::string> keywords,
             std::vector<std::string> description,
             std::string shortDescription,
@@ -58,7 +63,6 @@ namespace model {
         static constexpr int MAX_KEYWORDS = 8;
 
     private:
-
         std::vector<std::string> keywords;
 
         std::vector<std::string> description;
