@@ -34,13 +34,13 @@ namespace DataManager {
 
     namespace {
 
-        Area parseAreaJson(json t) {
+        Area parseAreaJson(json inputJson) {
 
-            bool checkFormat = (t.find(AREA) != t.end() && t.find(ROOMS) != t.end() && t.find(RESETS) != t.end() &&
-                                t.find(NPCS) != t.end() && t.find(OBJECTS) != t.end());
+            bool checkFormat = (inputJson.find(AREA) != inputJson.end() && inputJson.find(ROOMS) != inputJson.end() && inputJson.find(RESETS) != inputJson.end() &&
+                    inputJson.find(NPCS) != inputJson.end() && inputJson.find(OBJECTS) != inputJson.end());
 
-            bool checkFields = (t.at(AREA) != nullptr && t.at(ROOMS) != nullptr && t.at(RESETS) != nullptr &&
-                                t.at(NPCS) != nullptr && t.at(OBJECTS) != nullptr);
+            bool checkFields = (inputJson.at(AREA) != nullptr && inputJson.at(ROOMS) != nullptr && inputJson.at(RESETS) != nullptr &&
+                    inputJson.at(NPCS) != nullptr && inputJson.at(OBJECTS) != nullptr);
 
             if( !checkFormat ){
                 throw std::runtime_error("Incorrect format of load file.");
@@ -50,15 +50,15 @@ namespace DataManager {
                 throw std::runtime_error("JSON file contains null field(s)");
             }
 
-            Area area = t.at(AREA).get<Area>();
-            area.setRooms(t.at(ROOMS).get<std::vector<Room>>());
-            area.setResets(t.at(RESETS).get<std::vector<Reset>>());
-            area.setNpcs(t.at(NPCS).get<std::vector<NPC>>());
-            area.setObjects(t.at(OBJECTS).get<std::vector<Object>>());
+            Area area = inputJson.at(AREA).get<Area>();
+            area.setRooms(inputJson.at(ROOMS).get<std::vector<Room>>());
+            area.setResets(inputJson.at(RESETS).get<std::vector<Reset>>());
+            area.setNpcs(inputJson.at(NPCS).get<std::vector<NPC>>());
+            area.setObjects(inputJson.at(OBJECTS).get<std::vector<Object>>());
 
             // save files contain a separate set of Resets
-            if(t.find(SAVERESETS) != t.end()) {
-                area.setSaveResets(t.at(SAVERESETS).get<std::vector<Reset>>());
+            if(inputJson.find(SAVERESETS) != inputJson.end()) {
+                area.setSaveResets(inputJson.at(SAVERESETS).get<std::vector<Reset>>());
             }
 
             return area;
@@ -100,50 +100,50 @@ namespace DataManager {
         }
 
 
-        std::vector<Reset> createSaveResets(Area a){
+        std::vector<Reset> createSaveResets(Area area){
             std::vector<Reset> saveResets;
             std::multimap<IdPair, model::ID> npcMap;
 
-            for(Room& r : a.getRooms()){
-                for(auto& n : r.getNpcs()){
-                    npcMap.insert({{n.getId(), r.getId()} , r.getId()});
+            for(Room& room : area.getRooms()){
+                for(auto& n : room.getNpcs()){
+                    npcMap.insert({{n.getId(), room.getId()} , room.getId()});
                 }
 
-                model::ID roomId = r.getId();
-                for(auto& o : r.getObjects()){
-                    Reset r{"object", o.getId(), roomId};
-                    saveResets.push_back(r);
+                model::ID roomId = room.getId();
+                for(auto& o : room.getObjects()){
+                    Reset room{"object", o.getId(), roomId};
+                    saveResets.push_back(room);
                 };
             }
 
             for(auto it = npcMap.cbegin(); it != npcMap.cend(); it = npcMap.upper_bound(it->first)) {
                 int limit = npcMap.count(it->first);
-                Reset r{"npc", it->first.first, limit, it->first.second};
-                saveResets.push_back(r);
+                Reset room{"npc", it->first.first, limit, it->first.second};
+                saveResets.push_back(room);
             };
 
             return saveResets;
         }
 
-        void writeWorldToJson(World w){
-            json areas;
+        void writeWorldToJson(World world){
+            json jsonAreas;
 
-            for(auto& a : w.getAreas()) {
-                json area = json{{AREA, a}};
+            for(auto& area : world.getAreas()) {
+                json jsonArea = json{{AREA, area}};
 
-                area.push_back({ROOMS, a.getRooms()});
-                area.push_back({NPCS, a.getNpcs()});
-                area.push_back({OBJECTS, a.getObjects()});
-                area.push_back({RESETS, a.getResets()});
-                area.push_back({SAVERESETS, createSaveResets(a)});
+                jsonArea.push_back({ROOMS, area.getRooms()});
+                jsonArea.push_back({NPCS, area.getNpcs()});
+                jsonArea.push_back({OBJECTS, area.getObjects()});
+                jsonArea.push_back({RESETS, area.getResets()});
+                jsonArea.push_back({SAVERESETS, createSaveResets(area)});
 
-                areas.push_back(area);
+                jsonAreas.push_back(jsonArea);
             }
             std::ofstream saveFile(SAVE_FILE_PATH);
             if (!saveFile.is_open()) {
                 throw std::runtime_error("Could not open save file");
             }
-            saveFile << std::setw(4) << areas << std::endl;
+            saveFile << std::setw(4) << jsonAreas << std::endl;
         }
 
     } // anonymous namespace
@@ -157,7 +157,7 @@ namespace DataManager {
     };
 
     Area ParseDataFile(const std::string& filePath){
-        Area a;
+        Area area;
         if(has_extension(filePath, JSON_EXTENSION)){
             std::ifstream inFile(filePath);
 
@@ -166,9 +166,9 @@ namespace DataManager {
             }
 
             json j = json::parse(inFile);
-            a = parseAreaJson(j);
+            area = parseAreaJson(j);
         }
-        return a;
+        return area;
     }
 
     std::vector<Player> ParseUsersFile(const std::string& filePath){
