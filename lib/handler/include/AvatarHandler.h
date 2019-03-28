@@ -21,7 +21,7 @@ namespace handler {
     private:
         enum class AvatarCreationStage{Gender, Race, Trait1, Trait2, Confirm};
 
-        AccountHandler* accountHandler;
+        AccountHandler& accountHandler;
         std::map<Connection, AvatarCreationStage> creatingClients;
         std::map<Connection, Avatar> avatarsInCreation;
 

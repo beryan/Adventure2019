@@ -10,9 +10,8 @@
 using handler::AvatarHandler;
 
 namespace handler {
-    AvatarHandler::AvatarHandler(AccountHandler &accountHandler) {
-        this->accountHandler = &accountHandler;
-    }
+    AvatarHandler::AvatarHandler(AccountHandler &accountHandler):
+        accountHandler(accountHandler){}
 
     bool
     AvatarHandler::isCreatingAvatar(const Connection &client) {
@@ -119,7 +118,7 @@ namespace handler {
             case AvatarCreationStage::Confirm: {
                 if (lowercaseInput == "y" || lowercaseInput == "yes") {
                     auto avatar = this->avatarsInCreation.at(client);
-                    auto player = this->accountHandler->getPlayerByClient(client);
+                    auto player = this->accountHandler.getPlayerByClient(client);
                     player->setAvatar(avatar);
                     this->exitCreation(client);
 
