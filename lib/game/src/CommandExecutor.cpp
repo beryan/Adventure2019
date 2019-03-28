@@ -659,6 +659,9 @@ std::string CommandExecutor::examine(const Connection &client, std::string &keyw
         if (playerRoom == examinedPlayerRoom) {
             auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
             tempMessage << examinedPlayer->getDescription();
+
+        } else {
+            tempMessage << "Invalid keyword.\n";
         }
 
     } else if (containsKeyword(objects, keyword)) {
