@@ -122,7 +122,8 @@ namespace model {
                 {"id", r.getId()},
                 {"name", r.getName()},
                 {"desc", r.getDesc()},
-                {"doors", r.getDoors()}
+                {"doors", r.getDoors()},
+                {"extended_descriptions", r.getExtras()}
         };
     }
 
