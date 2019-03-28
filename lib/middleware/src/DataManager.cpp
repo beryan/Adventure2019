@@ -24,8 +24,6 @@ constexpr auto RESETS = "RESETS";
 constexpr auto SAVERESETS = "SAVERESETS";
 constexpr auto NPCS = "NPCS";
 constexpr auto OBJECTS = "OBJECTS";
-constexpr auto HELPS = "HELPS";
-constexpr auto SHOPS = "SHOPS";
 constexpr auto USERS = "USERS";
 
 typedef std::pair<model::ID, model::ID> IdPair;
