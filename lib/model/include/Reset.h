@@ -16,6 +16,8 @@
 
 using json = nlohmann::json;
 
+constexpr model::ID INVALID_ID = -1;
+
 namespace model {
 
     class Reset {

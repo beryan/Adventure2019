@@ -91,7 +91,7 @@ namespace model {
     //print reset
     std::ostream& operator<<(std::ostream& os, const Reset& r) {
         os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
-        if (r.action == "npc") {
+        if (r.action == "npc" && r.limit != INVALID_ID) {
             os << " x" << r.limit;
         }
         os << std::endl;
