@@ -128,9 +128,9 @@ namespace handler {
                 }
 
                 auto playerId = this->nextId++;
-                Player p{playerId, inputUsername, inputPassword};
-                this->allPlayers.emplace(playerId, Player(playerId, inputUsername, inputPassword));
-                DataManager::saveRegisteredUser(p);
+                Player player{playerId, inputUsername, inputPassword};
+                this->allPlayers.emplace(playerId, player);
+                DataManager::saveRegisteredUser(player);
                 this->usernameToPlayer.emplace(inputUsername, &this->allPlayers.at(playerId));
 
                 this->activeClientToId.emplace(client, playerId);

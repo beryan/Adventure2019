@@ -44,7 +44,7 @@ GTEST_API_ int main(int argc, char **argv) {
   printf("Running main() from %s\n", __FILE__);
   testing::InitGoogleTest(&argc, argv);
 
-  boost::filesystem::path users{"../adventure2019/lib/data/users.json"};
+  boost::filesystem::path users{"lib/data/users.json"};
   boost::filesystem::path usersCopy{"lib/data/usersCopy.json"};
   boost::filesystem::path testUsers{"lib/data/testUsers.json"};
 

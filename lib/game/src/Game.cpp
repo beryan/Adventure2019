@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "DataManager.h"
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
@@ -151,6 +152,7 @@ namespace game {
                 }
 
                 case Command::Shutdown: {
+                    DataManager::moveUsersFileToSrcDir();
                     std::cout << "Shutting down.\n";
                     this->shutdown();
                     return;
