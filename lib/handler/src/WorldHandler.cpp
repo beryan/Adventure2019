@@ -26,7 +26,7 @@ namespace handler {
         // load save file if it exists, otherwise load a default area file
         if ( boost::filesystem::exists( LOAD_FILE_PATH ) ) {
             std::cout << "Loaded save file" << std::endl;
-            auto savedAreas = DataManager::ParseWorldFile(SAVE_FILE_PATH);
+            auto savedAreas = DataManager::ParseWorldFile(LOAD_FILE_PATH);
             for(Area& a : savedAreas){
                 resetHandler.loadSavedResets(a);
             }
@@ -37,8 +37,6 @@ namespace handler {
             this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
             reset();
         }
-
-        DataManager::writeWorldToFile(this->world, DataManager::JSON);
     }
 
     World

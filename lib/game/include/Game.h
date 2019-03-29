@@ -15,6 +15,7 @@
 #include "PlayerHandler.h"
 #include "CommandParser.h"
 #include "CommandExecutor.h"
+#include "DataManager.h"
 
 #include <functional>
 #include <deque>

@@ -14,7 +14,7 @@ using model::World;
 using model::Player;
 
 constexpr auto JSON_EXTENSION = ".json";
-constexpr auto SAVE_FILE_PATH = "../adventure2019/lib/data/saveFile.json";
+constexpr auto SAVE_FILE_PATH = "lib/data/saveFile.json";
 
 
 namespace DataManager {

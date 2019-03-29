@@ -9,6 +9,7 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <boost/filesystem.hpp>
 
 using json = nlohmann::json;
 using Door = model::Door;
@@ -197,6 +198,12 @@ namespace DataManager {
     void writeWorldToFile(World& world, FileType type) {
         if(type == DataManager::JSON) {
             writeWorldToJson(world);
+
+            //copy users.json to adventure/
+            boost::filesystem::path adventureDir{"../adventure2019/lib/data/saveFile.json"};
+            boost::filesystem::path buildDir{SAVE_FILE_PATH};
+            boost::filesystem::copy_file(buildDir, adventureDir, boost::filesystem::copy_option::overwrite_if_exists);
+
         }
     }
 
