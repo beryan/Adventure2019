@@ -34,8 +34,8 @@ namespace handler {
         std::map<model::ID, Connection> activeIdToClient;
         std::map<Connection, model::ID> activeClientToId;
 
-        std::map<Connection, std::string> regUsernameInput;
-        std::map<Connection, std::string> regPasswordInput;
+        std::map<Connection, std::string> registerUsernameInput;
+        std::map<Connection, std::string> registerPasswordInput;
         std::map<Connection, RegisterStage> clientRegisterStage;
 
         std::map<Connection, std::string> loginUsernameInput;
@@ -46,7 +46,7 @@ namespace handler {
     public:
         AccountHandler();
 
-        static const model::ID INVALID_PLAYER_ID = 0;
+        static const model::ID INVALID_ID = 0;
 
         /**
          *  Checks if a player is logged in (exists in the activeClientToId map)

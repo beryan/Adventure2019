@@ -8,10 +8,12 @@
 #include <vector>
 #include <array>
 #include <map>
+#include "Avatar.h"
 #include "Character.h"
 #include "Inventory.h"
 #include "Equipment.h"
 
+using model::Avatar;
 using model::Inventory;
 using model::Equipment;
 
@@ -41,9 +43,11 @@ namespace model {
 
         void setPassword(std::string_view password);
 
-        std::string getAvatar() const;
+        Avatar getAvatar() const;
 
-        void setAvatar(std::string_view avatar);
+        std::string getDescription() const;
+
+        void setAvatar(Avatar avatar);
 
         bool operator==(const Player& player) const;
 
@@ -66,7 +70,7 @@ namespace model {
 
         std::string password;
 
-        std::string avatar;
+        Avatar avatar;
 
         Inventory inventory;
 
