@@ -22,9 +22,8 @@ constexpr auto ALIAS_CLEAR_NUM_PARAMS = 2;
 constexpr auto ALIAS_LIST_NUM_PARAMS = 1;
 
 CommandExecutor::CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
-                                 MagicHandler &magicHandler, CombatHandler &combatHandler,
-                                 WorldHandler &worldHandler, AliasManager &aliasManager,
-                                 CommandParser &commandParser)
+                                 AvatarHandler &avatarHandler, MagicHandler &magicHandler, CombatHandler &combatHandler,
+                                 WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser)
         : connectionHandler(connectionHandler),
           accountHandler(accountHandler),
           magicHandler(magicHandler),
@@ -728,21 +727,40 @@ std::string CommandExecutor::examine(const Connection &client, std::string &keyw
     auto npcs = room.getNpcs();
     auto extras = room.getExtras();
 
-    if (containsKeyword(objects, keyword)) {
+    auto assumedClient = this->accountHandler.getClientByUsername(keyword);
+    if (assumedClient.id != AccountHandler::INVALID_ID) {
+        auto playerRoom = this->accountHandler.getRoomIdByClient(client);
+        auto examinedPlayerRoom = this->accountHandler.getRoomIdByClient(assumedClient);
+
+        if (playerRoom == examinedPlayerRoom) {
+            auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
+            tempMessage << examinedPlayer->getDescription();
+
+        } else {
+            tempMessage << "Invalid keyword.\n";
+        }
+
+    } else if (containsKeyword(objects, keyword)) {
         auto obj = getItemByKeyword(objects, keyword);
+
         for (const auto &str : obj.getLongDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(npcs, keyword)) {
         auto npc = getItemByKeyword(npcs, keyword);
+
         for (const auto &str : npc.getDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(extras, keyword)) {
         auto extra = getItemByKeyword(extras, keyword);
+
         for (const auto &str : extra.getExtraDescriptions()) {
             tempMessage << str << std::endl;
         }
+
     } else {
         tempMessage << "Invalid keyword.\n";
     }

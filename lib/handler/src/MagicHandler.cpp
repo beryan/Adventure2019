@@ -93,7 +93,7 @@ namespace handler {
         std::ostringstream targetMessage;
 
         auto targetClient = this->accountHandler->getClientByUsername(targetName);
-        if (targetClient.id == AccountHandler::INVALID_PLAYER_ID) {
+        if (targetClient.id == AccountHandler::INVALID_ID) {
             casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
         }
@@ -157,7 +157,7 @@ namespace handler {
         std::ostringstream targetMessage;
 
         auto targetClient = this->accountHandler->getClientByUsername(targetName);
-        if (targetClient.id == AccountHandler::INVALID_PLAYER_ID) {
+        if (targetClient.id == AccountHandler::INVALID_ID) {
             casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
         }
