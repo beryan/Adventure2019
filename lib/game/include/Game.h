@@ -15,6 +15,7 @@
 #include "AliasManager.h"
 #include "PlayerHandler.h"
 #include "CommandParser.h"
+#include "CombatHandler.h"
 #include "CommandExecutor.h"
 
 #include <functional>
@@ -28,6 +29,7 @@ using handler::AccountHandler;
 using handler::WorldHandler;
 using handler::PlayerHandler;
 using handler::MagicHandler;
+using handler::CombatHandler;
 using handler::AvatarHandler;
 using game::Command;
 using game::AliasManager;
@@ -54,6 +56,7 @@ namespace game {
         WorldHandler worldHandler;
         AliasManager aliasManager;
         CommandParser commandParser;
+        CombatHandler combatHandler;
         CommandExecutor commandExecutor;
 
         bool running;
