@@ -5,11 +5,11 @@
 #include "lib/gtest/gtest.h"
 #include "lib/gmock/gmock.h"
 #include "MagicHandler.h"
-#include "AccountHandler.h"
+#include "WorldHandler.h"
 #include "Server.h"
 
 using handler::MagicHandler;
-using handler::AccountHandler;
+using handler::WorldHandler;
 using networking::Connection;
 
 
@@ -34,7 +34,9 @@ namespace {
     class MagicHandlerTestSuite : public ::testing::Test {
     protected:
         AccountHandler accountHandler;
-        MagicHandler magicHandler = MagicHandler{accountHandler};
+        WorldHandler worldHandler;
+        CombatHandler combatHandler{accountHandler, worldHandler};
+        MagicHandler magicHandler = MagicHandler{accountHandler, combatHandler};
 
         virtual void SetUp() override {
             // Register client A

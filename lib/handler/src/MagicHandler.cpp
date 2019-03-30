@@ -14,8 +14,9 @@
 using handler::MagicHandler;
 
 namespace handler {
-    MagicHandler::MagicHandler(AccountHandler &accountHandler) :
-        accountHandler(&accountHandler){}
+    MagicHandler::MagicHandler(AccountHandler &accountHandler, CombatHandler &combatHandler) :
+        accountHandler(accountHandler),
+        combatHandler(combatHandler){}
 
 
     std::string MagicHandler::getSpells() {
@@ -82,9 +83,9 @@ namespace handler {
             return {{client, "You need to specify the name of the person to cast " + std::string(BODY_SWAP_SPELL_NAME) + " on.\n"}};
         }
 
-        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
-        auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
-        auto casterUsername = this->accountHandler->getUsernameByClient(client);
+        auto casterPlayerId = this->accountHandler.getPlayerIdByClient(client);
+        auto casterRoomId = this->accountHandler.getRoomIdByClient(client);
+        auto casterUsername = this->accountHandler.getUsernameByClient(client);
         if (casterUsername == targetName) {
             return {{client, "You can't cast " + std::string(BODY_SWAP_SPELL_NAME) + " on yourself!\n"}};
         }
@@ -92,13 +93,13 @@ namespace handler {
         std::ostringstream casterMessage;
         std::ostringstream targetMessage;
 
-        auto targetClient = this->accountHandler->getClientByUsername(targetName);
+        auto targetClient = this->accountHandler.getClientByUsername(targetName);
         if (targetClient.id == AccountHandler::INVALID_ID) {
             casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
         }
 
-        auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
+        auto targetRoomId = this->accountHandler.getRoomIdByClient(targetClient);
         if (targetRoomId != casterRoomId) {
             casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
@@ -109,8 +110,8 @@ namespace handler {
             return {{client, casterMessage.str()}};
         }
 
-        auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
-        this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+        auto targetPlayerId = this->accountHandler.getPlayerIdByClient(targetClient);
+        this->accountHandler.swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
         this->bodySwapInstances.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
         casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
@@ -126,8 +127,18 @@ namespace handler {
     std::vector<Message>
     MagicHandler::decoy(const Connection &client) {
         std::vector<Message> responses;
+        std::ostringstream message;
+        auto player = this->accountHandler.getPlayerByClient(client);
 
-        responses.push_back({client, "You do not yet know how to cast the Decoy spell.\n"});
+        if (!this->combatHandler.isInCombat(*player)) {
+            message << "You can only cast " << DECOY_SPELL_NAME << " while in combat.\n";
+            return {{client, message.str()}};
+        }
+
+        message << "You create a decoy of yourself and flee from combat.\n";
+        responses.push_back({client, message.str()});
+
+        this->combatHandler.replaceWithDummy(*player);
 
         return responses;
     }
@@ -136,48 +147,53 @@ namespace handler {
     std::vector<Message>
     MagicHandler::confuse(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
+        std::ostringstream message;
 
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast " + std::string(CONFUSE_SPELL_NAME) + " on.\n"}};
+            message << "You need to specify the name of the person to cast " << CONFUSE_SPELL_NAME << " on.\n";
+            return {{client, message.str()}};
         }
 
-        auto casterPlayerId = this->accountHandler->getPlayerIdByClient(client);
-        auto casterRoomId = this->accountHandler->getRoomIdByClient(client);
-        auto casterUsername = this->accountHandler->getUsernameByClient(client);
+        auto casterPlayerId = this->accountHandler.getPlayerIdByClient(client);
+        auto casterRoomId = this->accountHandler.getRoomIdByClient(client);
+        auto casterUsername = this->accountHandler.getUsernameByClient(client);
         if (casterUsername == targetName) {
             if (this->isConfused(client)) {
-                return {{client, "You are already under the effects of the " + std::string(CONFUSE_SPELL_NAME) + " spell!\n"}};
+                message << "You are already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
+                return {{client, message.str()}};
             }
 
             this->confuseInstances.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
-            return {{client, "You cast " + std::string(CONFUSE_SPELL_NAME) + " on yourself.\n"}};
+
+            message << "You cast " << CONFUSE_SPELL_NAME << " on yourself.\n";
+            return {{client, message.str()}};
         }
 
         std::ostringstream casterMessage;
         std::ostringstream targetMessage;
 
-        auto targetClient = this->accountHandler->getClientByUsername(targetName);
+        auto targetClient = this->accountHandler.getClientByUsername(targetName);
         if (targetClient.id == AccountHandler::INVALID_ID) {
             casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
         }
 
-        auto targetPlayerId = this->accountHandler->getPlayerIdByClient(targetClient);
-        auto targetRoomId = this->accountHandler->getRoomIdByClient(targetClient);
+        auto targetPlayerId = this->accountHandler.getPlayerIdByClient(targetClient);
+        auto targetRoomId = this->accountHandler.getRoomIdByClient(targetClient);
         if (casterRoomId != targetRoomId) {
             casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
             return {{client, casterMessage.str()}};
         }
 
         if (isConfused(targetClient)) {
-            casterMessage << targetName << " is already under the effects of the " + std::string(CONFUSE_SPELL_NAME) + " spell!\n";
+            casterMessage << targetName << " is already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
             return {{client, casterMessage.str()}};
         }
 
         this->confuseInstances.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
         casterMessage << "You cast " + std::string(CONFUSE_SPELL_NAME) + " on " << targetName << "\n";
-        targetMessage << casterUsername << " casts " + std::string(CONFUSE_SPELL_NAME) + " on you!" << "\n";
+        targetMessage << casterUsername << " casts " << CONFUSE_SPELL_NAME << " on you!" << "\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
@@ -200,7 +216,7 @@ namespace handler {
             auto casterPlayerId= it_swap->casterPlayerId;
             auto targetPlayerId = it_swap->targetPlayerId;
 
-            this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+            this->accountHandler.swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
             this->bodySwapInstances.erase(it_swap);
         }
     }
@@ -235,14 +251,15 @@ namespace handler {
                 auto casterPlayerId = swapInstance->casterPlayerId;
                 auto targetPlayerId = swapInstance->targetPlayerId;
 
-                this->accountHandler->swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
+                this->accountHandler.swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
 
-                auto casterClient = this->accountHandler->getClientByPlayerId(casterPlayerId);
-                auto targetClient = this->accountHandler->getClientByPlayerId(targetPlayerId);
+                auto casterClient = this->accountHandler.getClientByPlayerId(casterPlayerId);
+                auto targetClient = this->accountHandler.getClientByPlayerId(targetPlayerId);
 
-                std::string message = "The effects of " + std::string(BODY_SWAP_SPELL_NAME) + " have worn off and you return to your original body.\n";
-                messages.push_back({casterClient, message});
-                messages.push_back({targetClient, message});
+                std::ostringstream message;
+                message << "The effects of " << BODY_SWAP_SPELL_NAME << " have worn off and you return to your original body.\n";
+                messages.push_back({casterClient, message.str()});
+                messages.push_back({targetClient, message.str()});
 
                 this->bodySwapInstances.erase(swapInstance);
             }
@@ -260,7 +277,7 @@ namespace handler {
                 ++confuseInstance;
 
             } else {
-                auto targetClient = this->accountHandler->getClientByPlayerId(confuseInstance->targetPlayerId);
+                auto targetClient = this->accountHandler.getClientByPlayerId(confuseInstance->targetPlayerId);
 
                 std::string message = "The effects of " + std::string(CONFUSE_SPELL_NAME) + " have worn off and your speech returns to normal.\n";
                 messages.push_back({targetClient, message});
@@ -273,7 +290,7 @@ namespace handler {
 
     bool
     MagicHandler::isBodySwapped(const Connection &client) {
-        auto playerId = this->accountHandler->getPlayerIdByClient(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
 
         auto it_swap = std::find_if(
             this->bodySwapInstances.begin(),
@@ -289,7 +306,7 @@ namespace handler {
 
     bool
     MagicHandler::isConfused(const Connection &client) {
-        auto playerId = this->accountHandler->getPlayerIdByClient(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
 
         auto it_confuse = std::find_if(
             this->confuseInstances.begin(),
@@ -315,7 +332,7 @@ namespace handler {
 
     void
     MagicHandler::handleLogout(const Connection &client) {
-        auto playerId = this->accountHandler->getPlayerIdByClient(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
 
         if (this->isBodySwapped(client)) {
             this->removeBodySwap(playerId);

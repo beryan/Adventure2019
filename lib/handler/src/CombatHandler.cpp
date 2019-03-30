@@ -5,6 +5,7 @@
 #include "CombatHandler.h"
 #include <iostream>
 #include <sstream>
+#include <boost/algorithm/string.hpp>
 
 using handler::CombatHandler;
 
@@ -87,39 +88,51 @@ namespace handler {
         std::ostringstream message;
         auto playerId = this->getOpponentId(npc);
         auto client = this->accountHandler.getClientByPlayerId(playerId);
-        auto player = this->accountHandler.getPlayerByClient(client);
 
-        if (this->rollMiss()) {
-            message << "You miss your attack on " << npc.getShortDescription() << "!\n";
+        if (client.id != AccountHandler::INVALID_ID) {
+            auto player = this->accountHandler.getPlayerByClient(client);
+
+            if (this->rollMiss()) {
+                message << "You miss your attack on " << npc.getShortDescription() << "!\n";
+                return message.str();
+            }
+
+            auto dodgeValue = player->getEquipment().getDodgeValue();
+            if (this->rollDodge(dodgeValue)) {
+                message << npc.getShortDescription() << " dodges your attack!\n";
+                return message.str();
+            }
+
+            auto offenceValue = player->getEquipment().getOffenceValue();
+            auto damage = this->rollDamage(offenceValue);
+
+            auto criticalValue = player->getEquipment().getCriticalValue();
+            if (this->rollCritical(criticalValue)) {
+                damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
+                message << "You strike a critical hit, inflicting ";
+            } else {
+                message << "You inflict ";
+            }
+
+
+            int oldHealth = npc.getHealth();
+            int newHealth = std::max(npc.getHealth() - damage, 0);
+            npc.setHealth(newHealth);
+
+            message << (oldHealth - newHealth) << " HP worth of damage to "
+                    << npc.getShortDescription() << " (" << npc.getHealth() << " HP remaining)\n";
+
             return message.str();
-        }
 
-        auto dodgeValue = player->getEquipment().getDodgeValue();
-        if (this->rollDodge(dodgeValue)) {
-            message << npc.getShortDescription() << " dodges your attack!\n";
-            return message.str();
-        }
-
-        auto offenceValue = player->getEquipment().getOffenceValue();
-        auto damage = this->rollDamage(offenceValue);
-
-        auto criticalValue = player->getEquipment().getCriticalValue();
-        if (this->rollCritical(criticalValue)) {
-            damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
-            message << "You strike a critical hit, inflicting ";
         } else {
-            message << "You inflict ";
+            // Case in which the NPC being damaged is a decoy
+            auto damage = this->rollDamage();
+
+            int newHealth = std::max(npc.getHealth() - damage, 0);
+            npc.setHealth(newHealth);
+
+            return "";
         }
-
-
-        int oldHealth = npc.getHealth();
-        int newHealth = std::max(npc.getHealth() - damage, 0);
-        npc.setHealth(newHealth);
-
-        message << (oldHealth - newHealth) << " HP worth of damage to "
-                << npc.getShortDescription() << " (" << npc.getHealth() << " HP remaining)\n";
-
-        return message.str();
     }
 
 
@@ -389,6 +402,31 @@ namespace handler {
 
 
     void
+    CombatHandler::replaceWithDummy(const Player &player) {
+        auto characterId = player.getId();
+        // Negative playerID for decoy
+        model::ID id = -player.getId();
+        std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername()),};
+        std::vector<std::string> description = {"Upon closer inspection, you realize this is just a decoy version of " +
+                                                player.getUsername() + "."};
+        std::string shortDescription = "'" + player.getUsername() + "'";
+
+        NPC dummy{id, keywords, description, shortDescription, {}};
+
+        auto client = this->accountHandler.getClientByPlayerId(characterId);
+        auto roomId = this->accountHandler.getRoomIdByClient(client);
+        this->worldHandler.findRoom(roomId).addNPC(dummy);
+
+        for (auto &combatInstance : this->combatInstances) {
+            if (combatInstance.attackerID == characterId) {
+                combatInstance.attackerID = id;
+                break;
+            };
+        }
+    };
+
+
+    void
     CombatHandler::handleLogout(const Connection &client) {
         auto player = this->accountHandler.getPlayerByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
@@ -402,7 +440,7 @@ namespace handler {
 
     void
     CombatHandler::processCycle(std::deque<Message> &messages) {
-        std::vector<Player*> defeatedPlayers;
+        std::vector<Character> defeatedCharacters;
 
         for (auto &combatInstance : this->combatInstances) {
             if (combatInstance.roundCyclesRemaining > 0) {
@@ -410,27 +448,76 @@ namespace handler {
 
             } else {
                 auto client = this->accountHandler.getClientByPlayerId(combatInstance.attackerID);
-                auto player = this->accountHandler.getPlayerByClient(client);
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
 
-                std::ostringstream message;
-                message << "\n" << this->inflictDamage(*player);
+                if (client.id != AccountHandler::INVALID_ID) {
+                    auto player = this->accountHandler.getPlayerByClient(client);
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
 
-                if (player->getHealth() == 0) {
-                    message << "You lost the battle.\n";
-                    defeatedPlayers.push_back(player);
-                    player->setHealth(Character::STARTING_HEALTH);
-                    npc.setHealth(Character::STARTING_HEALTH);
+                    std::ostringstream message;
+                    message << "\n" << this->inflictDamage(*player);
+
+                    if (player->getHealth() == 0) {
+                        message << "You lost the battle.\n";
+                        defeatedCharacters.push_back(*player);
+                        player->setHealth(Character::STARTING_HEALTH);
+                        npc.setHealth(Character::STARTING_HEALTH);
+                    }
+
+                    messages.push_back({client, message.str()});
+                    combatInstance.endRound();
+
+                } else {
+                    model::ID roomId = 0;
+                    // attacker was replaced by dummy
+                    auto areas = this->worldHandler.getWorld().getAreas();
+
+                    for (auto &area : areas) {
+
+                        auto rooms = area.getRooms();
+                        for (auto &room : rooms) {
+
+                            auto npcs = room.getNpcs();
+                            for (auto &npc : npcs) {
+                                if (npc.getId() == combatInstance.attackerID) {
+                                    roomId = room.getId();
+                                }
+                            }
+                        }
+                    }
+
+                    if (roomId == 0) {
+                        return;
+                    }
+
+                    auto &dummy = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.attackerID);
+                    auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
+
+                    std::ostringstream message;
+                    this->inflictDamage(dummy);
+
+                    if (dummy.getHealth() == 0) {
+                        // Delete dummy
+                        defeatedCharacters.push_back(dummy);
+                        auto &npcs = this->worldHandler.findRoom(roomId).getNpcs();
+                        auto npc_it = std::find_if(
+                                npcs.begin(),
+                                npcs.end(),
+                                [&dummy](const auto &npc) {
+                                    return npc.getId() == dummy.getId();
+                                });
+                        npcs.erase(npc_it);
+                        npc.setHealth(Character::STARTING_HEALTH);
+                    }
+
+                    combatInstance.endRound();
+
                 }
-
-                messages.push_back({client, message.str()});
-                combatInstance.endRound();
             }
         }
 
-        for (const auto &defeatedPlayer : defeatedPlayers) {
-            this->exitCombat(*defeatedPlayer);
+        for (const auto &defeatedCharacter : defeatedCharacters) {
+            this->exitCombat(defeatedCharacter);
         }
     }
 }

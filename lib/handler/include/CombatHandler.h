@@ -147,6 +147,14 @@ namespace handler {
 
 
         /**
+         * Replaces the character in a combat instance with a dummy NPC
+         * @param character to be replaced
+         */
+        void
+        replaceWithDummy(const Player &player);
+
+
+        /**
          * Used for performing the correct actions if a client disconnects from the game
          * while they are in combat.
          * @param client that has disconnected from the game

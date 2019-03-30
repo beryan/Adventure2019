@@ -2,9 +2,11 @@
 #define MAGICHANDLER_H
 
 #include "AccountHandler.h"
+#include "CombatHandler.h"
 #include <sstream>
 
 using handler::AccountHandler;
+using handler::CombatHandler;
 using model::Player;
 using model::ID;
 
@@ -67,7 +69,8 @@ namespace handler {
      */
     class MagicHandler {
     private:
-        AccountHandler *accountHandler;
+        AccountHandler& accountHandler;
+        CombatHandler& combatHandler;
         std::vector<SpellInstance> bodySwapInstances;
         std::vector<SpellInstance> confuseInstances;
 
@@ -133,7 +136,7 @@ namespace handler {
          *  Constructs a MagicHandler instance with a pointer to the
          *  AccountHandler instance used by the Game class.
          */
-        explicit MagicHandler(AccountHandler &accountHandler);
+        MagicHandler(AccountHandler &accountHandler, CombatHandler &combatHandler);
 
         /**
          *  Returns a formatted string describing available spells.
