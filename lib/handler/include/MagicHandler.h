@@ -95,7 +95,7 @@ namespace handler {
         bodySwap(const Connection &client, const std::string &targetName);
 
         /**
-         *  [Not yet implemented] Creates a decoy in combat so the player can flee
+         *  Creates a decoy and removes client's player from combat.
          */
         std::vector<Message>
         decoy(const Connection &client);

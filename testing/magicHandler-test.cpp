@@ -28,7 +28,6 @@ constexpr model::ID TEST_ROOM_ID = 1000;
 constexpr model::ID NPC_ID = 100;
 constexpr auto NPC_KEYWORD = "test";
 
-
 constexpr auto CONFUSE_SPELL_NAME = "confuse";
 constexpr auto BODY_SWAP_SPELL_NAME = "swap";
 constexpr auto DECOY_SPELL_NAME = "decoy";
@@ -36,6 +35,8 @@ constexpr auto HEAL_SPELL_NAME = "heal";
 
 constexpr unsigned int CONFUSE_DURATION = 50;
 constexpr unsigned int BODY_SWAP_DURATION = 50;
+
+constexpr auto CYCLES_PER_COMBAT_ROUND = 5;
 
 
 namespace {
@@ -104,7 +105,9 @@ namespace {
      * 21. A player cannot cast Heal while in combat
      * 22. A player caanot cast Heal on target while in combat
      * 23. A player cannot cast Heal while target is in combat
-     * 24. Can get spells list
+     * 24. A player cannot cast Decoy while not in combat
+     * 25. A player can cast Decoy while in combat
+     * 26. Can get spells list
      */
 
 
@@ -638,6 +641,66 @@ namespace {
         EXPECT_LT(healthAfter, Character::STARTING_HEALTH);
         EXPECT_EQ(expected.str(), result.text);
     }
+
+
+    TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileNotInCombat) {
+        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+
+        ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD));
+        ASSERT_FALSE(combatHandler.isInCombat(*player));
+
+        auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_KEYWORD);
+
+        ASSERT_EQ(1u, results.size());
+
+        auto result = results.front();
+
+        std::ostringstream expected;
+        expected << "You can only cast " << DECOY_SPELL_NAME << " while in combat.\n";
+
+        EXPECT_EQ(CLIENT_A.id, result.connection.id);
+        EXPECT_EQ(expected.str(), result.text);
+    }
+
+
+    TEST_F(MagicHandlerTestSuite, canCastDecoyWhileInCombat) {
+        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
+
+        ASSERT_FALSE(combatHandler.isInCombat(*player));
+        ASSERT_FALSE(combatHandler.isInCombat(npc));
+
+        combatHandler.attack(CLIENT_A, NPC_KEYWORD);
+
+        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
+
+        auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
+
+        ASSERT_EQ(1u, results.size());
+
+        auto result = results.front();
+        auto &decoyNpc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(USERNAME_A);
+
+        std::ostringstream expected;
+        expected << "You create a decoy of yourself and flee from combat.\n";
+
+        EXPECT_EQ(CLIENT_A.id, result.connection.id);
+        EXPECT_EQ(expected.str(), result.text);
+        EXPECT_FALSE(combatHandler.isInCombat(*player));
+
+        EXPECT_TRUE(combatHandler.isInCombat(decoyNpc));
+
+        const unsigned int roundsToWait = 10u;
+        const unsigned int cyclesToWait = roundsToWait * CYCLES_PER_COMBAT_ROUND;
+        std::deque<Message> messages;
+        for (unsigned int i = 0u; i < cyclesToWait; ++i) {
+            combatHandler.processCycle(messages);
+        }
+
+        ASSERT_ANY_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(USERNAME_A));
+        EXPECT_FALSE(combatHandler.isInCombat(npc));
+    }
+
 
     TEST_F(MagicHandlerTestSuite, canGetSpellList) {
         auto result = magicHandler.getSpells();

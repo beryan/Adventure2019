@@ -151,10 +151,10 @@ namespace handler {
             return {{client, message.str()}};
         }
 
+        this->combatHandler.replaceWithDecoy(*player);
+
         message << "You create a decoy of yourself and flee from combat.\n";
         responses.push_back({client, message.str()});
-
-        this->combatHandler.replaceWithDummy(*player);
 
         return responses;
     }

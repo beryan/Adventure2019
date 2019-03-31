@@ -151,7 +151,7 @@ namespace handler {
          * @param character to be replaced
          */
         void
-        replaceWithDummy(const Player &player);
+        replaceWithDecoy(const Player &player);
 
 
         /**

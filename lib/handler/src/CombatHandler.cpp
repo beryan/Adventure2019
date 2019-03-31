@@ -402,24 +402,23 @@ namespace handler {
 
 
     void
-    CombatHandler::replaceWithDummy(const Player &player) {
+    CombatHandler::replaceWithDecoy(const Player &player) {
         auto characterId = player.getId();
-        // Negative playerID for decoy
-        model::ID id = -player.getId();
-        std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername()),};
+        model::ID decoyId = -player.getId();
+        std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername())};
         std::vector<std::string> description = {"Upon closer inspection, you realize this is just a decoy version of " +
                                                 player.getUsername() + "."};
         std::string shortDescription = "'" + player.getUsername() + "'";
 
-        NPC dummy{id, keywords, description, shortDescription, {}};
+        NPC decoy{decoyId, keywords, description, shortDescription, {}};
 
         auto client = this->accountHandler.getClientByPlayerId(characterId);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
-        this->worldHandler.findRoom(roomId).addNPC(dummy);
+        this->worldHandler.findRoom(roomId).addNPC(decoy);
 
         for (auto &combatInstance : this->combatInstances) {
             if (combatInstance.attackerID == characterId) {
-                combatInstance.attackerID = id;
+                combatInstance.attackerID = decoyId;
                 break;
             };
         }
