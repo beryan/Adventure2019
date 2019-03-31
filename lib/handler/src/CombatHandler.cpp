@@ -333,6 +333,16 @@ namespace handler {
 
             message << this->inflictDamage(*player);
 
+            auto combat_it = std::find_if(
+                    combatInstances.begin(),
+                    combatInstances.end(),
+                    [&player](const auto &combatState) {
+                        return (combatState.attackerID == player->getId());
+                    }
+            );
+
+            combat_it->endRound();
+
             if (player->getHealth() == 0) {
                 message << "You lost the battle.\n";
                 this->exitCombat(*player, npc);
