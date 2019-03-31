@@ -438,12 +438,15 @@ namespace handler {
     void
     CombatHandler::handleLogout(const Connection &client) {
         auto player = this->accountHandler.getPlayerByClient(client);
-        auto roomId = this->accountHandler.getRoomIdByClient(client);
-        auto npcId = this->getOpponentId(*player);
-        auto &npc = this->worldHandler.findRoom(roomId).getNpcById(npcId);
 
-        this->exitCombat(*player);
-        npc.setHealth(Character::STARTING_HEALTH);
+        if (this->isInCombat(*player)) {
+            auto roomId = this->accountHandler.getRoomIdByClient(client);
+            auto npcId = this->getOpponentId(*player);
+            auto &npc = this->worldHandler.findRoom(roomId).getNpcById(npcId);
+
+            this->exitCombat(*player);
+            npc.setHealth(Character::STARTING_HEALTH);
+        }
     }
 
 

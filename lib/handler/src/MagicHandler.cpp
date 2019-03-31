@@ -35,7 +35,7 @@ namespace handler {
                << " (creates a decoy of yourself in combat to escape)\n"
 
                << "  - " << HEAL_SPELL_NAME
-               << " (fully restores target player's health. Cannot be used if caster or target is in combat)\n";
+               << " (fully restores target player's health. Can not be used if caster or target is in combat)\n";
 
         return spells.str();
     }
