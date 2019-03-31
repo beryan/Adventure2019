@@ -25,8 +25,17 @@ namespace handler {
         spells << "\n"
                << "Spells:\n"
                << "-------\n"
-               << "  - " << CONFUSE_SPELL_NAME << " (causes the target to temporarily speak in Pig Latin)\n"
-               << "  - " << BODY_SWAP_SPELL_NAME << " (causes the caster to switch bodies with the target temporarily)\n";
+               << "  - " << CONFUSE_SPELL_NAME
+               << " (causes the target player to temporarily speak in Pig Latin)\n"
+
+               << "  - " << BODY_SWAP_SPELL_NAME
+               << " (causes the caster to switch bodies with the target player temporarily)\n"
+
+               << "  - " << DECOY_SPELL_NAME
+               << " (creates a decoy of yourself in combat to escape)\n"
+
+               << "  - " << HEAL_SPELL_NAME
+               << " (fully restores target player's health. Cannot be used if caster or target is in combat)\n";
 
         return spells.str();
     }
@@ -44,7 +53,7 @@ namespace handler {
 
         if (!isValidSpellName) {
             std::ostringstream responseMessage;
-            responseMessage << "There are no spells with the name of \"" << spellName << "\"\n";
+            responseMessage << "There are no spells with the name of \"" << spellName << "\".\n";
 
             return {{client, responseMessage.str()}};
         }
@@ -63,6 +72,10 @@ namespace handler {
                 responses = this->confuse(client, targetName);
                 break;
 
+            case (Spell::Heal):
+                responses = this->heal(client, targetName);
+                break;
+
             default:
                 break;
         }
@@ -74,39 +87,40 @@ namespace handler {
     std::vector<Message>
     MagicHandler::bodySwap(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
+        std::ostringstream casterMessage;
 
         if (this->isBodySwapped(client)) {
-            return {{client, "You can't cast " + std::string(BODY_SWAP_SPELL_NAME) + " while already under the effects of the spell!\n"}};
+            casterMessage << "You can't cast " << BODY_SWAP_SPELL_NAME << " while already under the effects of the spell!\n";
+            return {{client, casterMessage.str()}};
         }
 
         if (targetName.empty()) {
-            return {{client, "You need to specify the name of the person to cast " + std::string(BODY_SWAP_SPELL_NAME) + " on.\n"}};
+            casterMessage << "You need to specify the name of the person to cast " << BODY_SWAP_SPELL_NAME << " on.\n";
+            return {{client, casterMessage.str()}};
         }
 
         auto casterPlayerId = this->accountHandler.getPlayerIdByClient(client);
         auto casterRoomId = this->accountHandler.getRoomIdByClient(client);
         auto casterUsername = this->accountHandler.getUsernameByClient(client);
         if (casterUsername == targetName) {
-            return {{client, "You can't cast " + std::string(BODY_SWAP_SPELL_NAME) + " on yourself!\n"}};
+            casterMessage << "You can't cast " << BODY_SWAP_SPELL_NAME << " on yourself!\n";
+            return {{client, casterMessage.str()}};
         }
-
-        std::ostringstream casterMessage;
-        std::ostringstream targetMessage;
 
         auto targetClient = this->accountHandler.getClientByUsername(targetName);
         if (targetClient.id == AccountHandler::INVALID_ID) {
-            casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
+            casterMessage << "There is no one here with the name \"" << targetName << "\".\n";
             return {{client, casterMessage.str()}};
         }
 
         auto targetRoomId = this->accountHandler.getRoomIdByClient(targetClient);
         if (targetRoomId != casterRoomId) {
-            casterMessage << "There is no one here with the name \"" << targetName << "\"\n";
+            casterMessage << "There is no one here with the name \"" << targetName << "\".\n";
             return {{client, casterMessage.str()}};
         }
 
         if (this->isBodySwapped(targetClient)) {
-            casterMessage << targetName << " is already under the effects of the " + std::string(BODY_SWAP_SPELL_NAME) + " spell!\n";
+            casterMessage << targetName << " is already under the effects of the " << BODY_SWAP_SPELL_NAME << " spell!\n";
             return {{client, casterMessage.str()}};
         }
 
@@ -114,8 +128,10 @@ namespace handler {
         this->accountHandler.swapPlayerClientsByPlayerId(casterPlayerId, targetPlayerId);
         this->bodySwapInstances.push_back({casterPlayerId, targetPlayerId, BODY_SWAP_DURATION});
 
-        casterMessage << "You have successfully swapped bodies with " << targetName << "\n";
-        targetMessage << casterUsername << " casts " + std::string(BODY_SWAP_SPELL_NAME) + " on you!\n";
+        casterMessage << "You have successfully swapped bodies with " << targetName << ".\n";
+
+        std::ostringstream targetMessage;
+        targetMessage << casterUsername << " casts " << BODY_SWAP_SPELL_NAME << " on you!\n";
 
         responses.push_back({targetClient, targetMessage.str()});
         responses.push_back({client, casterMessage.str()});
@@ -147,11 +163,11 @@ namespace handler {
     std::vector<Message>
     MagicHandler::confuse(const Connection &client, const std::string &targetName) {
         std::vector<Message> responses;
-        std::ostringstream message;
+        std::ostringstream casterMessage;
 
         if (targetName.empty()) {
-            message << "You need to specify the name of the person to cast " << CONFUSE_SPELL_NAME << " on.\n";
-            return {{client, message.str()}};
+            casterMessage << "You need to specify the name of the person to cast " << CONFUSE_SPELL_NAME << " on.\n";
+            return {{client, casterMessage.str()}};
         }
 
         auto casterPlayerId = this->accountHandler.getPlayerIdByClient(client);
@@ -159,29 +175,26 @@ namespace handler {
         auto casterUsername = this->accountHandler.getUsernameByClient(client);
         if (casterUsername == targetName) {
             if (this->isConfused(client)) {
-                message << "You are already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
-                return {{client, message.str()}};
+                casterMessage << "You are already under the effects of the " << CONFUSE_SPELL_NAME << " spell!\n";
+                return {{client, casterMessage.str()}};
             }
 
             this->confuseInstances.push_back({casterPlayerId, casterPlayerId, CONFUSE_DURATION});
 
-            message << "You cast " << CONFUSE_SPELL_NAME << " on yourself.\n";
-            return {{client, message.str()}};
+            casterMessage << "You cast " << CONFUSE_SPELL_NAME << " on yourself.\n";
+            return {{client, casterMessage.str()}};
         }
-
-        std::ostringstream casterMessage;
-        std::ostringstream targetMessage;
 
         auto targetClient = this->accountHandler.getClientByUsername(targetName);
         if (targetClient.id == AccountHandler::INVALID_ID) {
-            casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
+            casterMessage << "There is no player here with the name \"" << targetName << "\".\n";
             return {{client, casterMessage.str()}};
         }
 
         auto targetPlayerId = this->accountHandler.getPlayerIdByClient(targetClient);
         auto targetRoomId = this->accountHandler.getRoomIdByClient(targetClient);
         if (casterRoomId != targetRoomId) {
-            casterMessage << "There is no player here with the name \"" << targetName << "\"\n";
+            casterMessage << "There is no player here with the name \"" << targetName << "\".\n";
             return {{client, casterMessage.str()}};
         }
 
@@ -192,13 +205,70 @@ namespace handler {
 
         this->confuseInstances.push_back({casterPlayerId, targetPlayerId, CONFUSE_DURATION});
 
-        casterMessage << "You cast " + std::string(CONFUSE_SPELL_NAME) + " on " << targetName << "\n";
+        casterMessage << "You cast " << CONFUSE_SPELL_NAME << " on " << targetName << ".\n";
+
+        std::ostringstream targetMessage;
         targetMessage << casterUsername << " casts " << CONFUSE_SPELL_NAME << " on you!" << "\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
 
         return responses;
+    }
+
+
+    std::vector<Message>
+    MagicHandler::heal(const Connection &client, const std::string &targetName) {
+        std::vector<Message> responses;
+        std::ostringstream casterMessage;
+
+        auto player = accountHandler.getPlayerByClient(client);
+        auto casterUsername = this->accountHandler.getUsernameByClient(client);
+
+        if (combatHandler.isInCombat(*player)) {
+            casterMessage << "You can't cast " << HEAL_SPELL_NAME << " while in combat.\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        if (targetName.empty() || (casterUsername == targetName)) {
+            // Heal self
+            player->setHealth(Character::STARTING_HEALTH);
+
+            casterMessage << "You cast " << HEAL_SPELL_NAME << " on yourself.\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        auto targetClient = this->accountHandler.getClientByUsername(targetName);
+        if (targetClient.id == AccountHandler::INVALID_ID) {
+            casterMessage << "There is no player here with the name \"" << targetName << "\".\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        auto targetRoomId = this->accountHandler.getRoomIdByClient(targetClient);
+        auto casterRoomId = this->accountHandler.getRoomIdByClient(client);
+        if (casterRoomId != targetRoomId) {
+            casterMessage << "There is no player here with the name \"" << targetName << "\".\n";
+            return {{client, casterMessage.str()}};
+        }
+
+        auto targetPlayer = this->accountHandler.getPlayerByClient(targetClient);
+        if (combatHandler.isInCombat(*player)) {
+            casterMessage << "You can't cast " << HEAL_SPELL_NAME << " on "
+                          << targetPlayer->getUsername() << " while they are in combat.\n";
+        }
+
+        targetPlayer->setHealth(Character::STARTING_HEALTH);
+
+        casterMessage << "You cast " << HEAL_SPELL_NAME << " on " << targetName << ".\n";
+
+        std::ostringstream targetMessage;
+        targetMessage << casterUsername << " casts " << HEAL_SPELL_NAME << " on you!" << ".\n";
+
+        responses.push_back({client, casterMessage.str()});
+        responses.push_back({targetClient, targetMessage.str()});
+
+        return responses;
+
     }
 
 
@@ -279,8 +349,9 @@ namespace handler {
             } else {
                 auto targetClient = this->accountHandler.getClientByPlayerId(confuseInstance->targetPlayerId);
 
-                std::string message = "The effects of " + std::string(CONFUSE_SPELL_NAME) + " have worn off and your speech returns to normal.\n";
-                messages.push_back({targetClient, message});
+                std::ostringstream message;
+                message << "The effects of " << CONFUSE_SPELL_NAME << " have worn off and your speech returns to normal.\n";
+                messages.push_back({targetClient, message.str()});
 
                 this->confuseInstances.erase(confuseInstance);
             }

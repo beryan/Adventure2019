@@ -25,6 +25,8 @@ constexpr auto VALID_PASSWORD_STRING = "Valid Pass";
 
 constexpr auto CONFUSE_SPELL_NAME = "confuse";
 constexpr auto BODY_SWAP_SPELL_NAME = "swap";
+constexpr auto DECOY_SPELL_NAME = "decoy";
+constexpr auto HEAL_SPELL_NAME = "heal";
 
 constexpr unsigned int CONFUSE_DURATION = 50;
 constexpr unsigned int BODY_SWAP_DURATION = 50;
@@ -101,7 +103,7 @@ namespace {
         auto result = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "There are no spells with the name of \"" << spellName << "\"\n";
+        casterExpected << "There are no spells with the name of \"" << spellName << "\".\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected.str(), result.text);
@@ -141,7 +143,7 @@ namespace {
         auto targetResult = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You cast " << CONFUSE_SPELL_NAME << " on " << USERNAME_B << "\n";
+        casterExpected << "You cast " << CONFUSE_SPELL_NAME << " on " << USERNAME_B << ".\n";
 
         std::ostringstream targetExpected;
         targetExpected << USERNAME_A << " casts " << CONFUSE_SPELL_NAME << " on you!" << "\n";
@@ -170,7 +172,7 @@ namespace {
         auto result = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "There is no player here with the name \"" << USERNAME_B << "\"\n";
+        casterExpected << "There is no player here with the name \"" << USERNAME_B << "\".\n";
 
         EXPECT_FALSE(magicHandler.isConfused(CLIENT_A));
         EXPECT_FALSE(magicHandler.isConfused(CLIENT_B));
@@ -295,7 +297,7 @@ namespace {
         auto casterResult = results.back();
 
         std::ostringstream casterExpected;
-        casterExpected << "You have successfully swapped bodies with " << USERNAME_B << "\n";
+        casterExpected << "You have successfully swapped bodies with " << USERNAME_B << ".\n";
 
         std::ostringstream targetExpected;
         targetExpected << USERNAME_A << " casts " << BODY_SWAP_SPELL_NAME << " on you!\n";
@@ -326,7 +328,7 @@ namespace {
         auto result = results.front();
 
         std::ostringstream casterExpected;
-        casterExpected << "There is no one here with the name \"" << USERNAME_B << "\"\n";
+        casterExpected << "There is no one here with the name \"" << USERNAME_B << "\".\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(casterExpected.str(), result.text);
@@ -458,9 +460,17 @@ namespace {
         expected << "\n"
                  << "Spells:\n"
                  << "-------\n"
-                 << "  - " << CONFUSE_SPELL_NAME << " (causes the target to temporarily speak in Pig Latin)\n"
+                 << "  - " << CONFUSE_SPELL_NAME
+                 << " (causes the target player to temporarily speak in Pig Latin)\n"
+
                  << "  - " << BODY_SWAP_SPELL_NAME
-                 << " (causes the caster to switch bodies with the target temporarily)\n";
+                 << " (causes the caster to switch bodies with the target player temporarily)\n"
+
+                 << "  - " << DECOY_SPELL_NAME
+                 << " (creates a decoy of yourself in combat to escape)\n"
+
+                 << "  - " << HEAL_SPELL_NAME
+                 << " (fully restores target player's health. Cannot be used if caster or target is in combat)\n";
 
         EXPECT_EQ(expected.str(), result);
     }

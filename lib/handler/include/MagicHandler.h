@@ -54,9 +54,9 @@ namespace handler {
     constexpr auto CONFUSE_SPELL_NAME = "confuse";
     constexpr auto BODY_SWAP_SPELL_NAME = "swap";
     constexpr auto DECOY_SPELL_NAME = "decoy";
+    constexpr auto HEAL_SPELL_NAME = "heal";
     constexpr unsigned int BODY_SWAP_DURATION = 50;
     constexpr unsigned int CONFUSE_DURATION = 50;
-
 
     /**
      *  @class MagicHandler
@@ -76,14 +76,16 @@ namespace handler {
 
         enum class Spell {
             BodySwap,
+            Confuse,
             Decoy,
-            Confuse
+            Heal
         };
 
         std::map<std::string, Spell> spellMap = {
                 {BODY_SWAP_SPELL_NAME, Spell::BodySwap},
-                {DECOY_SPELL_NAME,     Spell::Decoy},
                 {CONFUSE_SPELL_NAME,   Spell::Confuse},
+                {DECOY_SPELL_NAME,     Spell::Decoy},
+                {HEAL_SPELL_NAME,      Spell::Heal},
         };
 
         /**
@@ -104,6 +106,13 @@ namespace handler {
          */
         std::vector<Message>
         confuse(const Connection &client, const std::string &targetName);
+
+        /**
+         *  Fully restores the target player's health. Can only be used when target is out of combat.
+         */
+        std::vector<Message>
+        heal(const Connection &client, const std::string &targetName);
+
 
         /**
          *  Removes a body swap SpellInstance containing the specified player ID as the target or caster and reverts
