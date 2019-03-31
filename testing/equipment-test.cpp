@@ -8,6 +8,11 @@
 using model::Equipment;
 using model::Slot;
 
+constexpr int EXPECTED_FULL_OFFENCE_VALUE = 5;
+constexpr int EXPECTED_FULL_ARMOUR_VALUE = 9;
+constexpr double EXPECTED_FULL_CRITICAL_VALUE = 0.05;
+constexpr double EXPECTED_FULL_DODGE_VALUE = 0.05;
+
 namespace {
     class EquipmentTestSuite : public ::testing::Test {
     protected:
@@ -77,5 +82,64 @@ namespace {
 
         EXPECT_FALSE(equipment.isSlotOccupied(obj.getSlot()));
         EXPECT_FALSE(equipment.isItemEquipped(obj));
+    }
+
+    TEST_F(EquipmentTestSuite, canGetOffenceValue) {
+        Object weapon{};
+        weapon.setSlot(Slot::Weapon);
+
+        equipment.equipItem(weapon);
+
+        ASSERT_TRUE(equipment.isSlotOccupied(weapon.getSlot()));
+        ASSERT_TRUE(equipment.isItemEquipped(weapon));
+        EXPECT_EQ(EXPECTED_FULL_OFFENCE_VALUE, equipment.getOffenceValue());
+    }
+
+    TEST_F(EquipmentTestSuite, canGetDefenceValue) {
+        std::vector<Slot> slots = {Slot::Head, Slot::Shoulders, Slot::Chest, Slot::Hands, Slot::Legs};
+
+        for (const auto &slot : slots) {
+            Object gear{};
+            gear.setSlot(slot);
+            equipment.equipItem(gear);
+            ASSERT_TRUE(equipment.isSlotOccupied(gear.getSlot()));
+            ASSERT_TRUE(equipment.isItemEquipped(gear));
+        }
+
+        EXPECT_EQ(EXPECTED_FULL_ARMOUR_VALUE, equipment.getDefenceValue());
+    }
+
+    TEST_F(EquipmentTestSuite, canGetCriticalValue) {
+        std::vector<Slot> slots = {Slot::Weapon, Slot::Back};
+
+        for (const auto &slot : slots) {
+            Object gear{};
+            gear.setSlot(slot);
+            equipment.equipItem(gear);
+            ASSERT_TRUE(equipment.isSlotOccupied(gear.getSlot()));
+            ASSERT_TRUE(equipment.isItemEquipped(gear));
+        }
+
+        auto expected = static_cast<int>(EXPECTED_FULL_CRITICAL_VALUE * 100);
+        auto result = static_cast<int>(equipment.getCriticalValue() * 100);
+
+        EXPECT_EQ(expected, result);
+    }
+
+    TEST_F(EquipmentTestSuite, canGetDodgeValue) {
+        std::vector<Slot> slots = {Slot::Feet, Slot::Back};
+
+        for (const auto &slot : slots) {
+            Object gear{};
+            gear.setSlot(slot);
+            equipment.equipItem(gear);
+            ASSERT_TRUE(equipment.isSlotOccupied(gear.getSlot()));
+            ASSERT_TRUE(equipment.isItemEquipped(gear));
+        }
+
+        auto expected = static_cast<int>(EXPECTED_FULL_DODGE_VALUE * 100);
+        auto result = static_cast<int>(equipment.getDodgeValue() * 100);
+
+        EXPECT_EQ(expected, result);
     }
 }

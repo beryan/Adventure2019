@@ -4,6 +4,7 @@
 
 #include "Player.h"
 #include <algorithm>
+#include <sstream>
 
 using model::Object;
 
@@ -53,12 +54,50 @@ namespace model {
         this->password = password;
     }
 
-    std::string Player::getAvatar() const {
+    Avatar Player::getAvatar() const {
         return this->avatar;
     }
 
-    void Player::setAvatar(std::string_view avatar) {
-        this->avatar = avatar;
+    std::string Player::getDescription() const {
+        std::ostringstream description;
+        auto avatar = this->getAvatar();
+        auto equipment = this->equipment.getVectorEquipment();
+        std::string genderPronoun;
+
+        if (avatar.gender == model::Gender::Male) {
+            genderPronoun = "He";
+
+        } else if (avatar.gender == model::Gender::Female) {
+            genderPronoun = "She";
+        }
+
+        description << this->getUsername() << " is a "
+                     << avatar.trait1 << ", "
+                     << avatar.trait2 << " "
+                     << Avatar::genderToStringMap.at(avatar.gender) << " "
+                     << Avatar::raceToStringMap.at(avatar.race);
+
+        if (!equipment.empty()) {
+            description << ". " << genderPronoun << " is equipped with " << equipment.at(0).getShortDescription();
+
+            for (unsigned int i = 1; i < equipment.size(); ++i) {
+                if (i == (equipment.size() - 1)) {
+                    description << " and ";
+
+                } else {
+                    description << ", ";
+                }
+
+                description << equipment.at(i).getShortDescription();
+            }
+        }
+
+        description << ".\n";
+        return description.str();
+    }
+
+    void Player::setAvatar(Avatar avatar) {
+        this->avatar = std::move(avatar);
     }
 
     model::ID Player::getCurrRoomID() {

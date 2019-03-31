@@ -12,7 +12,9 @@
 #include "Server.h"
 #include "PlayerHandler.h"
 #include "AccountHandler.h"
+#include "AvatarHandler.h"
 #include "MagicHandler.h"
+#include "CombatHandler.h"
 #include "WorldHandler.h"
 #include "AliasManager.h"
 #include "CommandParser.h"
@@ -20,7 +22,9 @@
 using networking::Message;
 using handler::PlayerHandler;
 using handler::AccountHandler;
+using handler::AvatarHandler;
 using handler::MagicHandler;
+using handler::CombatHandler;
 using handler::WorldHandler;
 using networking::Connection;
 
@@ -28,8 +32,8 @@ namespace game {
     class CommandExecutor {
     public:
         CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
-                        MagicHandler &magicHandler, WorldHandler &worldHandler, AliasManager &aliasManager,
-                        CommandParser &commandParser);
+                        AvatarHandler &avatarHandler, MagicHandler &magicHandler, CombatHandler &combatHandler,
+                        WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser);
 
         /**
          * Executes a command
@@ -46,6 +50,7 @@ namespace game {
         PlayerHandler playerHandler;
         AccountHandler &accountHandler;
         MagicHandler &magicHandler;
+        CombatHandler &combatHandler;
         WorldHandler &worldHandler;
         AliasManager &aliasManager;
         CommandParser &commandParser;
@@ -77,6 +82,8 @@ namespace game {
         std::string wear(const Connection &client, const std::string &keyword);
 
         std::string remove(const Connection &client, const std::string &keyword);
+
+        std::string status(const Connection &client);
 
         std::string inventory(const Connection &client);
 

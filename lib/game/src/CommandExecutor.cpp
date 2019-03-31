@@ -22,11 +22,12 @@ constexpr auto ALIAS_CLEAR_NUM_PARAMS = 2;
 constexpr auto ALIAS_LIST_NUM_PARAMS = 1;
 
 CommandExecutor::CommandExecutor(ConnectionHandler &connectionHandler, AccountHandler &accountHandler,
-                                 MagicHandler &magicHandler, WorldHandler &worldHandler, AliasManager &aliasManager,
-                                 CommandParser &commandParser)
+                                 AvatarHandler &avatarHandler, MagicHandler &magicHandler, CombatHandler &combatHandler,
+                                 WorldHandler &worldHandler, AliasManager &aliasManager, CommandParser &commandParser)
         : connectionHandler(connectionHandler),
           accountHandler(accountHandler),
           magicHandler(magicHandler),
+          combatHandler(combatHandler),
           worldHandler(worldHandler),
           aliasManager(aliasManager),
           commandParser(commandParser) {}
@@ -109,6 +110,16 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             break;
         }
 
+        case Command::Attack: {
+            tempMessage << combatHandler.attack(client, params[0]);
+            break;
+        }
+
+        case Command::Flee: {
+            tempMessage << combatHandler.flee(client);
+            break;
+        }
+
         case Command::Take: {
             auto keyword = params[0];
             tempMessage << take(client, keyword);
@@ -137,6 +148,38 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             auto username = params[0];
             auto keyword = params[1];
             return give(client, username, keyword);
+        }
+
+        case Command::Status: {
+            auto player = this->accountHandler.getPlayerByClient(client);
+
+            tempMessage << "\n"
+                        << "Status:\n"
+                        << "-------\n"
+                        << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+
+            auto offenceValue = player->getEquipment().getOffenceValue();
+            auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
+            auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
+            tempMessage << "Attack: " << minDamage << "-" << maxDamage << "\n";
+
+            auto defenceValue = player->getEquipment().getDefenceValue();
+            tempMessage << "Armour: " << defenceValue << "\n";
+
+            auto isBodySwapped = this->magicHandler.isBodySwapped(client);
+            auto isConfused = this->magicHandler.isConfused(client);
+
+            if (isBodySwapped) {
+                tempMessage << "Body Swapped (This is not your body. How uncomfortable.)\n";
+            }
+
+            if (isConfused) {
+                tempMessage << "Confused (No matter how hard you try, everything you say comes out all funny.)\n";
+            }
+
+            tempMessage << "\n";
+
+            break;
         }
 
         case Command::Inventory: {
@@ -507,12 +550,12 @@ std::vector<Message> CommandExecutor::yell(const Connection &client, std::string
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto playerIds = worldHandler.getNearbyPlayerIds(roomId);
 
+    if (magicHandler.isConfused(client)) {
+        magicHandler.confuseSpeech(message);
+    }
+
     for (const auto &playerId : playerIds) {
         auto connection = accountHandler.getClientByPlayerId(playerId);
-
-        if (magicHandler.isConfused(client)) {
-            magicHandler.confuseSpeech(message);
-        }
 
         std::ostringstream sayMessage;
         sayMessage << accountHandler.getUsernameByClient(client) << " yells> " << message << "\n";
@@ -521,6 +564,39 @@ std::vector<Message> CommandExecutor::yell(const Connection &client, std::string
     }
 
     return messages;
+}
+
+std::string CommandExecutor::status(const Connection &client) {
+    std::ostringstream output;
+    auto player = accountHandler.getPlayerByClient(client);
+
+    output << "\n"
+           << "Status:\n"
+           << "-------\n"
+           << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+
+    auto offenceValue = player->getEquipment().getOffenceValue();
+    auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
+    auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
+    output << "Attack: " << minDamage << "-" << maxDamage << "\n";
+
+    auto defenceValue = player->getEquipment().getDefenceValue();
+    output << "Armour: " << defenceValue << "\n";
+
+    auto isBodySwapped = magicHandler.isBodySwapped(client);
+    auto isConfused = magicHandler.isConfused(client);
+
+    if (isBodySwapped) {
+        output << "Body Swapped (This is not your body. How uncomfortable.)\n";
+    }
+
+    if (isConfused) {
+        output << "Confused (No matter how hard you try, everything you say comes out all funny.)\n";
+    }
+
+    output << "\n";
+
+    return output.str();
 }
 
 std::string CommandExecutor::equipment(const Connection &client) {
@@ -651,21 +727,40 @@ std::string CommandExecutor::examine(const Connection &client, std::string &keyw
     auto npcs = room.getNpcs();
     auto extras = room.getExtras();
 
-    if (containsKeyword(objects, keyword)) {
+    auto assumedClient = this->accountHandler.getClientByUsername(keyword);
+    if (assumedClient.id != AccountHandler::INVALID_ID) {
+        auto playerRoom = this->accountHandler.getRoomIdByClient(client);
+        auto examinedPlayerRoom = this->accountHandler.getRoomIdByClient(assumedClient);
+
+        if (playerRoom == examinedPlayerRoom) {
+            auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
+            tempMessage << examinedPlayer->getDescription();
+
+        } else {
+            tempMessage << "Invalid keyword.\n";
+        }
+
+    } else if (containsKeyword(objects, keyword)) {
         auto obj = getItemByKeyword(objects, keyword);
+
         for (const auto &str : obj.getLongDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(npcs, keyword)) {
         auto npc = getItemByKeyword(npcs, keyword);
+
         for (const auto &str : npc.getDescription()) {
             tempMessage << str << std::endl;
         }
+
     } else if (containsKeyword(extras, keyword)) {
         auto extra = getItemByKeyword(extras, keyword);
+
         for (const auto &str : extra.getExtraDescriptions()) {
             tempMessage << str << std::endl;
         }
+
     } else {
         tempMessage << "Invalid keyword.\n";
     }
@@ -712,12 +807,12 @@ std::vector<Message> CommandExecutor::say(const Connection &client, std::string 
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto playerIds = worldHandler.findRoom(roomId).getPlayersInRoom();
 
+    if (magicHandler.isConfused(client)) {
+        magicHandler.confuseSpeech(message);
+    }
+
     for (const auto &playerId : playerIds) {
         auto connection = accountHandler.getClientByPlayerId(playerId);
-
-        if (magicHandler.isConfused(client)) {
-            magicHandler.confuseSpeech(message);
-        }
 
         std::ostringstream sayMessage;
         sayMessage << accountHandler.getUsernameByClient(client) << " says> " << message << "\n";
@@ -756,6 +851,10 @@ std::string CommandExecutor::help() {
                 << " [keyword] (examines something or someone)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Talk)
                 << " [keyword] (interacts with NPC)\n"
+                << "  - " << commandParser.getStringForCommand(Command::Attack)
+                << " [keyword] (attack an NPC)\n"
+                << "  - " << commandParser.getStringForCommand(Command::Flee)
+                << " (attempt to escape from combat, moving to a random direction)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Take)
                 << " [keyword] (places item in your inventory)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Drop)
@@ -766,6 +865,8 @@ std::string CommandExecutor::help() {
                 << " [keyword] (unequips item to your inventory)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Give)
                 << " [username] [keyword] (gives item to username)\n"
+                << "  - " << commandParser.getStringForCommand(Command::Status)
+                << " (displays your health, combat attributes, and current status ailments)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Inventory)
                 << " (displays your inventory)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Equipment)

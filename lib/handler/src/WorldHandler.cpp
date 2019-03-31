@@ -21,9 +21,10 @@ constexpr auto LOAD_FILE_PATH = "lib/data/saveFile.json";
 namespace handler {
 
     WorldHandler::WorldHandler() {
+        //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
-
         // load save file if it exists, otherwise load a default area file
+
         if ( boost::filesystem::exists( LOAD_FILE_PATH ) ) {
             std::cout << "Loaded save file" << std::endl;
             auto savedAreas = DataManager::ParseWorldFile(LOAD_FILE_PATH);
@@ -37,11 +38,17 @@ namespace handler {
             this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
             reset();
         }
+
     }
 
     World
     WorldHandler::getWorld() const {
         return world;
+    }
+
+    void
+    WorldHandler::setWorld(World &world) {
+        this->world = world;
     }
 
     bool
