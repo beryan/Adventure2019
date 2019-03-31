@@ -208,7 +208,7 @@ namespace handler {
         casterMessage << "You cast " << CONFUSE_SPELL_NAME << " on " << targetName << ".\n";
 
         std::ostringstream targetMessage;
-        targetMessage << casterUsername << " casts " << CONFUSE_SPELL_NAME << " on you!" << "\n";
+        targetMessage << casterUsername << " casts " << CONFUSE_SPELL_NAME << " on you!\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
@@ -231,7 +231,6 @@ namespace handler {
         }
 
         if (targetName.empty() || (casterUsername == targetName)) {
-            // Heal self
             player->setHealth(Character::STARTING_HEALTH);
 
             casterMessage << "You cast " << HEAL_SPELL_NAME << " on yourself.\n";
@@ -252,9 +251,10 @@ namespace handler {
         }
 
         auto targetPlayer = this->accountHandler.getPlayerByClient(targetClient);
-        if (combatHandler.isInCombat(*player)) {
+        if (combatHandler.isInCombat(*targetPlayer)) {
             casterMessage << "You can't cast " << HEAL_SPELL_NAME << " on "
                           << targetPlayer->getUsername() << " while they are in combat.\n";
+            return {{client, casterMessage.str()}};
         }
 
         targetPlayer->setHealth(Character::STARTING_HEALTH);
@@ -262,13 +262,12 @@ namespace handler {
         casterMessage << "You cast " << HEAL_SPELL_NAME << " on " << targetName << ".\n";
 
         std::ostringstream targetMessage;
-        targetMessage << casterUsername << " casts " << HEAL_SPELL_NAME << " on you!" << ".\n";
+        targetMessage << casterUsername << " casts " << HEAL_SPELL_NAME << " on you!\n";
 
         responses.push_back({client, casterMessage.str()});
         responses.push_back({targetClient, targetMessage.str()});
 
         return responses;
-
     }
 
 

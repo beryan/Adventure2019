@@ -157,7 +157,7 @@ namespace handler {
          *  Casts a spell if the spell name is valid
          */
         std::vector<Message>
-        castSpell(const Connection &client, const std::string &spellName, const std::string &targetName);
+        castSpell(const Connection &client, const std::string &spellName, const std::string &targetName = "");
 
         /**
          *  Returns true if the client's Player is under the effects of the Body Swap spell
