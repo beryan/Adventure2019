@@ -78,6 +78,10 @@ TEST(AccountHandlerTestSuite, canUseValidUsername) {
     accountHandler.processRegistration(CLIENT_A);
     auto result = accountHandler.processRegistration(CLIENT_A, TestUsername);
 
+    std::ostringstream expected;
+    expected << static_cast<std::string>(TestUsername) << "\n"
+             << "Enter your password (minimum of " << EXPECTED_MIN_PASSWORD_LENGTH << " characters,"
+             << " maximum of " << EXPECTED_MAX_USERNAME_AND_PASSWORD_LENGTH << " characters)\n";
 
 
     EXPECT_EQ(expected.str(), result);
