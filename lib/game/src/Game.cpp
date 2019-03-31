@@ -71,7 +71,7 @@ namespace game {
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
+                    tempMessage << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -84,7 +84,7 @@ namespace game {
                 if (this->accountHandler.isLoggedIn(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomID).descToString();
+                    tempMessage << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 

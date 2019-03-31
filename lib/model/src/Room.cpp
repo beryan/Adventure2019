@@ -1,11 +1,6 @@
-/*
-* Room.cpp
-*
-* Class Description: A class designed to represent a room.
-*
-* Created on: January 18, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-18.
+//
 
 #include "Room.h"
 #include <iostream>
@@ -151,7 +146,7 @@ namespace model {
     }
 
     void Room::removeObject(const model::ID &objectId) {
-        auto equal = [objectId](const Object &obj) {return obj.getId() == objectId;};
+        auto equal = [&objectId](const Object &obj) {return obj.getId() == objectId;};
         objects.erase(std::remove_if(objects.begin(), objects.end(), equal));
     }
 
@@ -183,56 +178,46 @@ namespace model {
 
     int Room::countNpcById(const model::ID& npcID) const {
         return std::count_if(this->npcs.begin(), this->npcs.end(),
-                          [npcID](const NPC & npc) -> bool { return npc.getId() == npcID ; });
+                          [&npcID](const NPC & npc) {return npc.getId() == npcID;});
     }
 
     int Room::countObjectById(const model::ID& objectID) const {
         return std::count_if(this->objects.begin(), this->objects.end(),
-                          [objectID](const Object & object) -> bool { return object.getId() == objectID ; });
+                          [&objectID](const Object & object) {return object.getId() == objectID;});
     }
-
 
     bool Room::operator==(const Room& Room) const {
         return this->id == Room.getId();
     }
 
-    //print door
-    std::ostream& operator<<(std::ostream& os, const Door& rhs) {
-        os << "- " << rhs.dir;
-
-        if (!rhs.desc.empty()) {
-            os << ". ";
-            for (const auto &s : rhs.desc) {
-                os << s << std::endl;
-            }
-        } else {
-            os << std::endl;
-        }
-
-        return os;
-    }
-
     std::string Room::descToString() const {
         std::ostringstream os;
         if (!this->desc.empty()) {
-            for (const auto &s : this->desc) {
-                os << s << std::endl;
-            }
+            os << std::endl << boost::algorithm::join(this->desc, "\n") << std::endl;
         }
         return os.str();
+    }
+
+    //print door
+    std::ostream& operator<<(std::ostream& os, const Door& rhs) {
+        os << "- " << rhs.dir;
+        if (!rhs.desc.empty()) {
+            os << ". ";
+            os << boost::algorithm::join(rhs.desc, "\n");
+        } else {
+            os << std::endl;
+        }
+        return os;
     }
 
     std::string Room::doorsToString() const {
         std::ostringstream os;
-        if(!this->doors.empty()) {
-            os << "Exits:" << std::endl;
-            for (const auto &door : this->doors) {
-                os << door;
-            }
-        }
+        os << "\nExits:\n";
+        std::for_each(this->doors.begin(), this->doors.end(), [&os](const auto &d) {os << d;});
         return os.str();
     }
 
+    //room state
     std::string Room::toString() const {
         std::ostringstream os;
         os << "\nCurrent Room\n";
@@ -260,22 +245,27 @@ namespace model {
 
     //print room
     std::ostream& operator<<(std::ostream& os, const Room& room) {
-        os << "\n" << room.name << "\n";
+        os << std::endl << room.name << std::endl;
         os << std::string(room.name.length(), '-') << std::endl;
 
-        os << room.descToString();
+        if(!room.desc.empty()) {
+            os << boost::algorithm::join(room.desc, "\n") << std::endl;
+        }
 
-        os << room.doorsToString();
+        if(!room.doors.empty()) {
+            os << "Exits:\n";
+            std::for_each(room.doors.begin(), room.doors.end(), [&os](const auto &d) {os << d;});
+        }
 
         if(!room.objects.empty()) {
-            os << "Objects:" << std::endl;
+            os << "Objects:\n";
             for (const auto &obj : room.objects) {
                 os << "- " << obj.getShortDescription() << std::endl;
             }
         }
 
         if(!room.npcs.empty()) {
-            os << "NPCS:" << std::endl;
+            os << "NPCS:\n";
             for (const auto &npc : room.npcs) {
                 os << "- " << npc.getShortDescription() << std::endl;
             }

@@ -429,10 +429,10 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
                     this->accountHandler.setRoomIdByClient(client, destinationId);
                     tempMessage << "You are now in room " << destinationId << ".\n";
                 } else {
-                    tempMessage << "That room does not exist.\n";
+                    tempMessage << "Invalid id.\n";
                 }
             } else {
-                tempMessage << "Invalid room id.\n";
+                tempMessage << "Invalid format.\n";
             }
 
             break;
@@ -634,7 +634,7 @@ std::string CommandExecutor::move(const Connection &client, const std::string &d
             auto playerId = accountHandler.getPlayerIdByClient(client);
             worldHandler.movePlayer(playerId, roomId, destinationId);
             accountHandler.setRoomIdByClient(client, destinationId);
-            tempMessage << "\n" << worldHandler.findRoom(destinationId).descToString();
+            tempMessage << worldHandler.findRoom(destinationId).descToString();
         } else {
             tempMessage << "You tried to move to a room that does not exist!\n";
         }
@@ -703,7 +703,7 @@ std::vector<Message> CommandExecutor::chat(const Connection &client, std::string
 std::string CommandExecutor::exits(const Connection &client) {
     std::ostringstream tempMessage;
     auto roomID = this->accountHandler.getRoomIdByClient(client);
-    tempMessage << "\n" << this->worldHandler.findRoom(roomID).doorsToString();
+    tempMessage << this->worldHandler.findRoom(roomID).doorsToString();
     return tempMessage.str();
 }
 

@@ -1,11 +1,6 @@
-/*
-* Reset.h
-*
-* Class Description: A class designed to represent reset information.
-*
-* Created on: January 21, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-21.
+//
 
 #ifndef RESET_H
 #define RESET_H
@@ -17,7 +12,14 @@
 using json = nlohmann::json;
 
 namespace model {
-
+    /**
+    *  @class Reset
+    *
+    *  @brief A class designed to represent reset information.
+    *
+    *  The Reset class contains all information needed to reset
+    *  objects and npcs into rooms
+    */
     class Reset {
 
     private:

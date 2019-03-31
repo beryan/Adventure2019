@@ -1,11 +1,6 @@
-/*
-* Reset.cpp
-*
-* Class Description: A class designed to represent reset information.
-*
-* Created on: January 21, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-21.
+//
 
 #include "Reset.h"
 #include <iostream>
