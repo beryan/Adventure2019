@@ -4,8 +4,3 @@ configure_file(shire.json ${CMAKE_CURRENT_BINARY_DIR}/shire.json COPYONLY)
 configure_file(mirkwood.json ${CMAKE_CURRENT_BINARY_DIR}/mirkwood.json COPYONLY)
 configure_file(properties.json ${CMAKE_CURRENT_BINARY_DIR}/properties.json COPYONLY)
 configure_file(commands.json ${CMAKE_CURRENT_BINARY_DIR}/commands.json COPYONLY)
-
-set(SaveFile "${CMAKE_CURRENT_SOURCE_DIR}/saveFile.json")
-if(EXISTS ${SaveFile})
-    configure_file(saveFile.json ${CMAKE_CURRENT_BINARY_DIR}/saveFile.json COPYONLY)
-endif()
