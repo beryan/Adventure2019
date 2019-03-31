@@ -152,7 +152,6 @@ namespace game {
                 }
 
                 case Command::Shutdown: {
-                    DataManager::moveUsersFileToSrcDir();
                     std::cout << "Shutting down.\n";
                     this->shutdown();
                     return;

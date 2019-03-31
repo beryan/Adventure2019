@@ -189,15 +189,5 @@ namespace DataManager {
 
         return players;
     }
-
-    void moveUsersFileToSrcDir(){
-        //copy users.json to adventure/
-        if(boost::filesystem::exists(REGISTERED_USERS_PATH)) {
-            boost::filesystem::path adventureDir{"../adventure2019/lib/data/users.json"};
-            boost::filesystem::path buildDir{REGISTERED_USERS_PATH};
-            boost::filesystem::copy_file(buildDir, adventureDir, boost::filesystem::copy_option::overwrite_if_exists);
-        }
-    }
-
 } // DataManager namespace
 

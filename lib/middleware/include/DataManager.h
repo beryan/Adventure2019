@@ -15,7 +15,6 @@ using model::Player;
 
 constexpr auto JSON_EXTENSION = ".json";
 constexpr auto REGISTERED_USERS_PATH = "lib/data/users.json";
-//constexpr auto REGISTERED_USERS_PATH = "../adventure2019/lib/data/users.json";
 
 namespace DataManager {
     Area ParseDataFile(const std::string& filePath);
@@ -24,6 +23,5 @@ namespace DataManager {
     void writeJson(json j, std::string filePath);
     void saveRegisteredUser(Player p);
     std::vector<Player> loadRegisteredPlayers();
-    void moveUsersFileToSrcDir();
 }
 #endif //WEBSOCKETNETWORKING_FILEPARSER_H
