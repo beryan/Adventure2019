@@ -104,8 +104,8 @@ namespace DataManager {
             std::multimap<IdPair, model::ID> npcMap;
 
             for(Room& room : area.getRooms()){
-                for(auto& n : room.getNpcs()){
-                    npcMap.insert({{n.getId(), room.getId()} , room.getId()});
+                for(auto& npc : room.getNpcs()){
+                    npcMap.insert({{npc.getId(), room.getId()} , room.getId()});
                 }
 
                 model::ID roomId = room.getId();
