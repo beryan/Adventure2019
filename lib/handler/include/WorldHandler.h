@@ -29,6 +29,8 @@ namespace handler {
 
         World getWorld() const;
 
+        void setWorld(const World &world);
+
         /**
          *  Determines if room exists based on room id
          */

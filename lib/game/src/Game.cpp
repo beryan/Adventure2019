@@ -13,8 +13,11 @@ using game::Game;
 namespace game {
     Game::Game(ConnectionHandler &connectionHandler) :
             connectionHandler(connectionHandler),
+            avatarHandler(this->accountHandler),
             magicHandler(this->accountHandler),
-            commandExecutor(connectionHandler, accountHandler, magicHandler, worldHandler, aliasManager, commandParser),
+            combatHandler(this->accountHandler, this->worldHandler),
+            commandExecutor(connectionHandler, accountHandler, avatarHandler, magicHandler, combatHandler,
+                            worldHandler, aliasManager, commandParser),
             running(true) {};
 
     void
@@ -49,8 +52,15 @@ namespace game {
             }
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
+                this->combatHandler.handleLogout(disconnectedClient);
+                this->magicHandler.handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
+            }
+
+            if (this->avatarHandler.isCreatingAvatar(disconnectedClient)) {
+                this->avatarHandler.exitCreation(disconnectedClient);
+                std::cout << disconnectedClient.id << " has been removed from avatar creation due to disconnect\n";
             }
         }
 
@@ -69,6 +79,16 @@ namespace game {
                 messages.push_back({client, this->accountHandler.processLogin(client, username)});
 
                 if (this->accountHandler.isLoggedIn(client)) {
+                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client)->getAvatar().isDefined();
+                    if (!hasCreatedAvatar) {
+                        messages.push_back({
+                            client,
+                            this->avatarHandler.processCreation(client)
+                        });
+
+                        continue;
+                    }
+
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
                     tempMessage << this->worldHandler.findRoom(roomID).descToString();
@@ -82,6 +102,22 @@ namespace game {
                 std::string result = this->accountHandler.processRegistration(client, username);
                 messages.push_back({client, result});
                 if (this->accountHandler.isLoggedIn(client)) {
+                    messages.push_back({
+                        client,
+                        this->avatarHandler.processCreation(client)
+                    });
+                }
+
+                continue;
+
+            } else if (this->avatarHandler.isCreatingAvatar(client)) {
+                messages.push_back({
+                    client,
+                    this->avatarHandler.processCreation(client, incomingInput.substr(0, incomingInput.find(' ')))
+                });
+
+                // Add player to game after finishing avatar creation
+                if (!this->avatarHandler.isCreatingAvatar(client)) {
                     this->addClientToGame(client);
                     auto roomID = this->accountHandler.getRoomIdByClient(client);
                     tempMessage << this->worldHandler.findRoom(roomID).descToString();
@@ -124,7 +160,7 @@ namespace game {
                     break;
             }
 
-            if (!this->accountHandler.isLoggedIn(client)) {
+            if (!this->accountHandler.isLoggedIn(client) && !this->avatarHandler.isCreatingAvatar(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
             } else {
                 if (this->isInvalidFormat(command, parameters)) {
@@ -206,6 +242,7 @@ namespace game {
     Game::handleOutgoing(std::deque<Message> &messages) {
         this->accountHandler.notifyBootedClients(messages);
         this->magicHandler.processCycle(messages);
+        this->combatHandler.processCycle(messages);
     }
 
     std::deque<Message>

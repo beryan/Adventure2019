@@ -8,10 +8,12 @@
 #include <vector>
 #include <array>
 #include <map>
+#include "Avatar.h"
 #include "Character.h"
 #include "Inventory.h"
 #include "Equipment.h"
 
+using model::Avatar;
 using model::Inventory;
 using model::Equipment;
 
@@ -41,9 +43,11 @@ namespace model {
 
         void setPassword(std::string_view password);
 
-        std::string getAvatar() const;
+        Avatar getAvatar() const;
 
-        void setAvatar(std::string_view avatar);
+        std::string getDescription() const;
+
+        void setAvatar(Avatar avatar);
 
         bool operator==(const Player& player) const;
 
@@ -59,6 +63,7 @@ namespace model {
 
         void setCurrRoomID(const model::ID &id);
 
+        //static constexpr model::ID STARTING_LOCATION = 1000;
         static constexpr model::ID STARTING_LOCATION = 8800;
 
     private:
@@ -66,7 +71,7 @@ namespace model {
 
         std::string password;
 
-        std::string avatar;
+        Avatar avatar;
 
         Inventory inventory;
 

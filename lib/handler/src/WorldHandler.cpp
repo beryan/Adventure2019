@@ -18,6 +18,7 @@ namespace handler {
 
     WorldHandler::WorldHandler() {
         //create temporary world
+        //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
         //this->world.createStub();
         this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
@@ -26,6 +27,10 @@ namespace handler {
 
     World WorldHandler::getWorld() const {
         return world;
+    }
+
+    void WorldHandler::setWorld(const World &world) {
+        this->world = world;
     }
 
     bool WorldHandler::roomExists(const model::ID &roomId) {
