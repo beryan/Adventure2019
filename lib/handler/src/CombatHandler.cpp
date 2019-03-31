@@ -413,6 +413,10 @@ namespace handler {
 
     void
     CombatHandler::replaceWithDecoy(const Player &player) {
+        if (!isInCombat(player)) {
+            return;
+        }
+
         auto characterId = player.getId();
         model::ID decoyId = -player.getId();
         std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername())};

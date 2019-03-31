@@ -679,7 +679,6 @@ namespace {
         ASSERT_EQ(1u, results.size());
 
         auto result = results.front();
-        auto &decoyNpc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(USERNAME_A);
 
         std::ostringstream expected;
         expected << "You create a decoy of yourself and flee from combat.\n";
@@ -687,18 +686,6 @@ namespace {
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
         EXPECT_FALSE(combatHandler.isInCombat(*player));
-
-        EXPECT_TRUE(combatHandler.isInCombat(decoyNpc));
-
-        const unsigned int roundsToWait = 10u;
-        const unsigned int cyclesToWait = roundsToWait * CYCLES_PER_COMBAT_ROUND;
-        std::deque<Message> messages;
-        for (unsigned int i = 0u; i < cyclesToWait; ++i) {
-            combatHandler.processCycle(messages);
-        }
-
-        ASSERT_ANY_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(USERNAME_A));
-        EXPECT_FALSE(combatHandler.isInCombat(npc));
     }
 
 
@@ -718,7 +705,7 @@ namespace {
                  << " (creates a decoy of yourself in combat to escape)\n"
 
                  << "  - " << HEAL_SPELL_NAME
-                 << " (fully restores target player's health. Cannot be used if caster or target is in combat)\n";
+                 << " (fully restores target player's health. Can not be used if caster or target is in combat)\n";
 
         EXPECT_EQ(expected.str(), result);
     }
