@@ -69,11 +69,13 @@ namespace model {
 
     //print reset
     std::ostream& operator<<(std::ostream& os, const Reset& r) {
-        os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
-        if (r.action == "npc") {
-            os << " x" << r.limit;
+        if (r.action == "object" || r.action == "npc") {
+            os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
+            if (r.action == "npc") {
+                os << " x[" << r.limit << "]";
+            }
+            os << std::endl;
         }
-        os << std::endl;
         return os;
     }
 
