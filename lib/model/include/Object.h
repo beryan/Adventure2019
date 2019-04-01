@@ -112,6 +112,15 @@ namespace model {
         o.setSlot(model::Misc);
     }
 
+    inline void to_json(json &j, const Object &o) {
+        j = {{"id",        o.getId()},
+             {"shortdesc", o.getShortDescription()},
+             {"keywords",  o.getKeywords()},
+             {"longdesc",  o.getLongDescription()}
+                // TODO: add "extra" field
+        };
+    }
+
 }
 
 #endif //OBJECT_H

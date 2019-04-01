@@ -28,6 +28,7 @@ namespace model {
         std::vector<NPC> npcs;
         std::vector<Object> objects;
         std::vector<Reset> resets;
+        std::vector<Reset> saveResets;
 
         friend std::ostream& operator<<(std::ostream& os, const Area& rhs);
 
@@ -43,11 +44,13 @@ namespace model {
         std::vector<NPC> getNpcs() const;
         std::vector<Object> getObjects() const;
         std::vector<Reset> getResets() const;
+        std::vector<Reset> getSaveResets() const;
         void setName(const std::string &name);
         void setRooms(const std::vector<Room> &rooms);
         void setNpcs(const std::vector<NPC> &npcs);
         void setObjects(const std::vector<Object> &objects);
         void setResets(const std::vector<Reset> &resets);
+        void setSaveResets(const std::vector<Reset> &saveResets);
 
         void addRoom(const Room &room);
         void addNpc(const NPC &npc);
@@ -68,6 +71,10 @@ namespace model {
 	inline void from_json(const json &j, Area &a) {
 		a.setName(j.at("name").get<std::string>());
 	}
+
+    inline void to_json(json &j, const Area &a) {
+        j = { {"name", a.getName()} };
+    }
 
 }
 
