@@ -23,7 +23,23 @@ namespace model {
         slot(-1)
         { }
 
-    Reset::Reset(std::string action, model::ID id, int limit, int room, int slot)
+    Reset::Reset(std::string action, model::ID id, model::ID room)
+            : action(std::move(action)),
+              id(id),
+              limit(-1),
+              room(room),
+              slot(-1)
+    { }
+
+    Reset::Reset(std::string action, model::ID id, int limit, model::ID room)
+            : action(std::move(action)),
+              id(id),
+              limit(limit),
+              room(room),
+              slot(-1)
+    { }
+
+    Reset::Reset(std::string action, model::ID id, int limit, model::ID room, int slot)
         : action(std::move(action)),
         id(id),
         limit(limit),
@@ -44,7 +60,7 @@ namespace model {
         return limit;
     }
 
-    int Reset::getRoom() const {
+    model::ID Reset::getRoom() const {
         return room;
     }
 
@@ -75,7 +91,7 @@ namespace model {
     //print reset
     std::ostream& operator<<(std::ostream& os, const Reset& r) {
         os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
-        if (r.action == "npc") {
+        if (r.action == "npc" && r.limit != INVALID_ID) {
             os << " x" << r.limit;
         }
         os << std::endl;

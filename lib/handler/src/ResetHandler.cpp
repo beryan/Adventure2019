@@ -11,13 +11,13 @@ namespace handler {
     ResetHandler::ResetHandler() {}
 
     void ResetHandler::addNpcsToRooms(Area& area){
-        for(const Reset &r : area.getResets()) {
-            if(r.getAction() == NPC_ACTION) {
-                auto room = area.findRoomById(r.getRoom());
-                auto npc = area.findNpcById(r.getId());
+        for(const Reset &reset : area.getResets()) {
+            if(reset.getAction() == NPC_ACTION) {
+                auto room = area.findRoomById(reset.getRoom());
+                auto npc = area.findNpcById(reset.getId());
 
                 if(room != area.getRooms().end() && npc != area.getNpcs().end()) {
-                    while(logic.canAddNpcToRoom(r, *room)){
+                    while(logic.canAddNpcToRoom(reset, *room)){
                         room->addNPC(*npc);
                     }
                 }
@@ -27,23 +27,47 @@ namespace handler {
     }
 
     void ResetHandler::addObjectsToRooms(Area& area){
-        for(Reset r : area.getResets()) {
-            if(r.getAction() == OBJECT_ACTION) {
-                auto room = area.findRoomById(r.getRoom());
-                auto object = area.findObjectById(r.getId());
+        for(Reset reset : area.getResets()) {
+            if(reset.getAction() == OBJECT_ACTION) {
+                auto room = area.findRoomById(reset.getRoom());
+                auto object = area.findObjectById(reset.getId());
 
                 bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
 
-                if(roomAndObjectFound && logic.canAddObjectToRoom(r, *room)){
+                if(roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)){
                         room->addObject(*object);
                 }
             }
         }
     }
 
+    void ResetHandler::loadSavedResets(Area& area){
+        for(const Reset &reset : area.getSaveResets()) {
+            if(reset.getAction() == NPC_ACTION) {
+                auto room = area.findRoomById(reset.getRoom());
+                auto npc = area.findNpcById(reset.getId());
+
+                if(room != area.getRooms().end() && npc != area.getNpcs().end()) {
+                    while(logic.canAddNpcToRoom(reset, *room)){
+                        room->addNPC(*npc);
+                    }
+                }
+            }else if(reset.getAction() == OBJECT_ACTION) {
+                auto room = area.findRoomById(reset.getRoom());
+                auto object = area.findObjectById(reset.getId());
+
+                bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
+
+                if(roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)){
+                    room->addObject(*object);
+                }
+            }
+        }
+    }
 
     void ResetHandler::resetArea(Area& area){
         addNpcsToRooms(area);
         addObjectsToRooms(area);
     }
+
 }

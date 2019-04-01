@@ -2468,6 +2468,49 @@
       "id": 2,
       "room": 8867,
       "state": "locked"
+    },
+    {
+      "action": "npc",
+      "id": 8805,
+      "limit": 3,
+      "room": 8800
+    },
+    {
+      "action": "object",
+      "id": 8803,
+      "room": 8800
+    },
+    {
+      "action": "npc",
+      "id": 8809,
+      "limit": 6,
+      "room": 8801
+    },
+    {
+      "action": "npc",
+      "id": 8810,
+      "limit": 3,
+      "room": 8855
+    },
+    {
+      "action": "object",
+      "id": 8806,
+      "room": 8801
+    },
+    {
+      "action": "object",
+      "id": 8802,
+      "room": 8801
+    },
+    {
+      "action": "object",
+      "id": 8813,
+      "room": 8855
+    },
+    {
+      "action": "object",
+      "id": 8809,
+      "room": 8855
     }
   ],
   "SHOPS": []
