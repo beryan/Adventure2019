@@ -379,6 +379,7 @@ namespace handler {
     void WorldHandler::processResets() {
         if (resetHandler.isTimeToReset()) {
             this->reset();
+            this->resetHandler.resetTimer();
 
         } else {
             resetHandler.decrementTimer();

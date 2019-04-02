@@ -13,12 +13,14 @@ using model::Area;
 
 constexpr auto NPC_ACTION = "npc";
 constexpr auto OBJECT_ACTION = "object";
+constexpr int DEFAULT_RESET_INTERVAL = 30;
 
 namespace handler {
     class ResetHandler {
     private:
         ResetLogic logic{};
-        int cyclesUntilReset = 30;
+        int resetInterval;
+        int cyclesUntilReset;
 
     public:
         ResetHandler();
@@ -31,11 +33,11 @@ namespace handler {
 
         void resetArea(Area& area);
 
-        void setResetInterval(int numberOfCycles);
-
         bool isTimeToReset();
 
         void decrementTimer();
+
+        void resetTimer();
     };
 }
 #endif //RESETHANDLER_H
