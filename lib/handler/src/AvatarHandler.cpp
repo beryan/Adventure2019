@@ -112,7 +112,6 @@ namespace handler {
             auto player = this->accountHandler.getPlayerByClient(client);
             player->setAvatar(avatar);
             this->exitCreation(client);
-            DataManager::saveRegisteredUser(*player);
 
             message << input << "\n"
                     << "Your character has been successfully created!\n";

@@ -113,6 +113,17 @@ namespace model {
          */
         float getDodgeValue();
     };
+
+    inline void to_json(json& j, const Equipment &e) {
+            j = {
+                    {"objects", e.getVectorEquipment()}
+            };
+    }
+
+    inline void from_json(const json &j, Equipment &e) {
+            e.mapEquipment(j.at("objects").get<std::vector<Object>>());
+    }
+
 }
 
 

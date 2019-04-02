@@ -30,7 +30,7 @@ namespace model {
         /**
          * @return The immutable vector form of Inventory
          */
-        std::vector<Object> getVectorInventory();
+        std::vector<Object> getVectorInventory() const;
 
         /**
          * Maps a list of items into the Inventory
@@ -65,6 +65,16 @@ namespace model {
          */
         bool isInventoryEmpty();
     };
+
+    inline void to_json(json& j, const Inventory &i) {
+            j = {
+                    {"objects", i.getVectorInventory()}
+            };
+    }
+
+    inline void from_json(const json &j, Inventory &i) {
+            i.mapInventory(j.at("objects").get<std::vector<Object>>());
+    }
 }
 
 

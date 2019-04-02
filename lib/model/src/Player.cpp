@@ -112,9 +112,26 @@ namespace model {
         return this->inventory;
     }
 
+    Inventory Player::getInventoryConst() const{
+        return this->inventory;
+    }
+
+    void Player::setInventory(Inventory inventory){
+        this->inventory = inventory;
+    }
+
     Equipment &Player::getEquipment() {
         return this->equipment;
     }
+
+    Equipment Player::getEquipmentConst() const{
+        return this->equipment;
+    }
+
+    void Player::setEquipment(Equipment equipment){
+        this->equipment = equipment;
+    }
+
 
     bool Player::operator==(const model::Player &player) const {
         return this->getId() == player.getId();

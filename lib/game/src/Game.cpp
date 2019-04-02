@@ -156,6 +156,10 @@ namespace game {
                     DataManager::writeWorldToFile(world, DataManager::JSON);
                     std::cout << "Shutting down.\n";
                     this->shutdown();
+
+                    auto players = this->accountHandler.getAllPlayers();
+                    DataManager::saveRegisteredUsers(players);
+
                     return;
                 }
 

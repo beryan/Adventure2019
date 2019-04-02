@@ -397,4 +397,8 @@ namespace handler {
 
         std::cout << "registered users have been loaded" << std::endl;
     }
-}
+
+    std::map<model::ID, Player> AccountHandler::getAllPlayers() const {
+        return this->allPlayers;
+    }
+};

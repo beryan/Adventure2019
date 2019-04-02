@@ -54,8 +54,12 @@ namespace model {
         /************ Inventory ************/
 
         Inventory &getInventory();
+        Inventory getInventoryConst() const;
+        void setInventory(Inventory inventory);
 
         Equipment &getEquipment();
+        Equipment getEquipmentConst() const;
+        void setEquipment(Equipment equipment);
 
         /************ ROOM ************/
 
@@ -87,6 +91,12 @@ namespace model {
         if(j.find("avatar") != j.end()) {
             p.setAvatar(j.at("avatar").get<Avatar>());
         }
+        if(j.find("equipment") != j.end()) {
+            p.setEquipment(j.at("equipment").get<Equipment>());
+        }
+        if(j.find("inventory") != j.end()) {
+            p.setInventory(j.at("inventory").get<Inventory>());
+        }
     }
 
     inline void to_json(json& j, const Player &p){
@@ -95,13 +105,17 @@ namespace model {
                     {"id", p.getId()},
                     {"username", p.getUsername()},
                     {"password", p.getPassword()},
-                    {"avatar", p.getAvatar()}
+                    {"avatar", p.getAvatar()},
+                    {"equipment", p.getEquipmentConst()},
+                    {"inventory", p.getInventoryConst()}
             };
         }else {
             j = {
                     {"id", p.getId()},
                     {"username", p.getUsername()},
-                    {"password", p.getPassword()}
+                    {"password", p.getPassword()},
+                    {"equipment", p.getEquipmentConst()},
+                    {"inventory", p.getInventoryConst()}
             };
         }
     }
