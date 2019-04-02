@@ -55,6 +55,7 @@ namespace handler {
             auto it = std::find_if(rooms.begin(), rooms.end(), [&roomId](const Room &room) {return room.getId() == roomId;});
             if (it != rooms.end()) {
                 found = true;
+                break;
             }
         }
         return found;
