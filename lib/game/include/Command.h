@@ -8,6 +8,7 @@ namespace game {
     enum class Command {
         Attack,
         Build,
+        Builder,
         Cast,
         Chat,
         Drop,

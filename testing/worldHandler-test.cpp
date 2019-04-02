@@ -43,7 +43,6 @@ namespace {
             area.addNpc({npcId, {"keyword"}, {"desc"}, "short", {"long"}});
             area.addReset({"object",objectId,-1,roomId,-1});
 
-            worldHandler = {};
             worldHandler.setWorld({{area}});
         }
     };

@@ -26,8 +26,6 @@ namespace model{
         void setAreas(const std::vector<Area> &areas);
 
         void addArea(const Area &area);
-
-        void createStub();
     };
 }
 

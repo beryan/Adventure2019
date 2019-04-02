@@ -98,7 +98,6 @@ namespace DataManager {
             return areas;
         }
 
-
         std::vector<Reset> createSaveResets(Area area){
             std::vector<Reset> saveResets;
             std::multimap<IdPair, model::ID> npcMap;
@@ -167,7 +166,6 @@ namespace DataManager {
             usersFile << std::setw(4) << users << std::endl;
         }
 
-
         std::vector<Player> parseRegisteredUsers(json j){
             return j.at(USERS).get<std::vector<Player>>();
         }
@@ -227,7 +225,6 @@ namespace DataManager {
             writeWorldToJson(world);
         }
     }
-
 
     void saveRegisteredUser(Player p){
         saveUserToJson(p);

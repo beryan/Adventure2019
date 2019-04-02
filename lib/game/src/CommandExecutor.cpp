@@ -163,6 +163,11 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
             break;
         }
 
+        case Command::Builder: {
+            tempMessage << builder(params[0]);
+            break;
+        }
+
         case Command::Acreate: {
             auto name = boost::algorithm::join(params, " ");
             if (this->worldHandler.createArea(name)) {
@@ -397,6 +402,8 @@ std::string CommandExecutor::help() {
                 << " (displays your health, combat attributes, and current status ailments)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Build)
                 << " (displays available world building commands)\n"
+                << "  - " << this->commandParser.getStringForCommand(Command::Builder)
+                << " [username] (toggles build command access for username)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Alias)
                 << " (aliases a command. Type \""
                 << commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
@@ -577,10 +584,10 @@ std::string CommandExecutor::move(const Connection &client, const std::string &d
             accountHandler.setRoomIdByClient(client, destinationId);
             tempMessage << worldHandler.findRoom(destinationId).descToString();
         } else {
-            tempMessage << "You tried to move to a room that does not exist!\n";
+            tempMessage << "You can't move that way!\n";
         }
     } else {
-        tempMessage << "You can't move that way!\n";
+        tempMessage << "Invalid direction!\n";
     }
     return tempMessage.str();
 }
@@ -882,6 +889,29 @@ std::string CommandExecutor::build() {
                 << " (clears current room data including associated resets)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Reset)
                 << " (resets current area with changes)\n";
+    return tempMessage.str();
+}
+
+std::string CommandExecutor::builder(const std::string &username) {
+    std::ostringstream tempMessage;
+    for (auto connection: connectionHandler.getClients()) {
+        auto name = this->accountHandler.getUsernameByClient(connection);
+        if (username == name) {
+            auto player = this->accountHandler.getPlayerByClient(connection);
+            auto role = player->getRole();
+            if (role == model::Role::Default) {
+                player->setRole(model::Role::Builder);
+                tempMessage << "Access to build commands has been given to " << username << ".\n";
+            } else if (role == model::Role::Builder) {
+                player->setRole(model::Role::Default);
+                tempMessage << "Access to build commands has been taken from " << username << ".\n";
+            } else {
+                tempMessage << "This command does not work on admin users.\n";
+            }
+            return tempMessage.str();
+        }
+    }
+    tempMessage << "Unable to find online user \"" << username << "\".\n";
     return tempMessage.str();
 }
 

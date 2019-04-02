@@ -78,6 +78,7 @@ namespace game {
         std::string alias(const Connection &client, const std::vector<std::string> &params);
 
         std::string build();
+        std::string builder(const std::string &username);
         std::string alist();
         std::string rlist(const std::string &param);
         std::string olist(const std::string &param);

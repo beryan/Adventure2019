@@ -132,16 +132,18 @@ namespace game {
                     incomingInput.substr(0, incomingInput.find(' ')));
             std::string username = this->accountHandler.getUsernameByClient(client);
             Command command = this->aliasManager.getCommandForUser(commandString, username);
+            std::string parameters;
 
-            if (command == Command::InvalidCommand) {
+            std::vector<std::string> dir = {"north", "south", "east", "west", "northeast", "southeast",
+                                            "northwest", "southwest", "up", "down"};
+            if (std::find(dir.begin(), dir.end(), commandString) != dir.end()) {
+                command = Command::Move;
+                parameters = commandString;
+            } else if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 messages.push_back({client, tempMessage.str()});
                 continue;
-            }
-
-            std::string parameters;
-
-            if (incomingInput.find(' ') != std::string::npos) {
+            } else if (incomingInput.find(' ') != std::string::npos) {
                 parameters = boost::algorithm::trim_copy(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
@@ -167,10 +169,17 @@ namespace game {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
             } else {
                 if (this->isInvalidFormat(command, parameters)) {
-                    tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+                    tempMessage << "Invalid format for command \""
+                                << this->commandParser.getStringForCommand(command) << "\".\n";
+                    messages.push_back({client, tempMessage.str()});
+                    continue;
+                } else if (this->isInvalidRole(command, this->accountHandler.getPlayerByClient(client)->getRole())) {
+                    tempMessage << "You don't have access to \""
+                                << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
                     continue;
                 }
+
                 auto responseList = this->executeInGameAction(client, command, parameters);
 
                 for (auto &response : responseList) {
@@ -268,6 +277,15 @@ namespace game {
     Game::addClientToGame(Connection client) {
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
+
+        if (!this->worldHandler.roomExists(roomId)) {
+            assert(!this->worldHandler.getWorld().getAreas().empty());
+            auto firstArea = this->worldHandler.getWorld().getAreas().at(0);
+            assert(!firstArea.getRooms().empty());
+            roomId = firstArea.getRooms().at(0).getId();
+            accountHandler.setRoomIdByClient(client, roomId);
+        }
+
         this->worldHandler.addPlayer(roomId, playerId);
     }
 
@@ -286,6 +304,7 @@ namespace game {
                             && parameters.find(' ') == std::string::npos);
         bool isCommandWithParam = (command == Command::Say
                                    || command == Command::Yell
+                                   || command == Command::Chat
                                    || command == Command::Move
                                    || command == Command::Examine
                                    || command == Command::Talk
@@ -293,8 +312,36 @@ namespace game {
                                    || command == Command::Drop
                                    || command == Command::Wear
                                    || command == Command::Remove
-                                   || command == Command::Chat);
+                                   || command == Command::Builder);
         return (wrongFormat || (isCommandWithParam && parameters.empty()));
+    }
+
+    bool
+    Game::isInvalidRole(const Command &command, const model::Role &role) {
+        bool builder = (command == Command::Build
+                        || command == Command::Acreate
+                        || command == Command::Rcreate
+                        || command == Command::Ocreate
+                        || command == Command::Ncreate
+                        || command == Command::Aedit
+                        || command == Command::Redit
+                        || command == Command::Oedit
+                        || command == Command::Nedit
+                        || command == Command::Oreset
+                        || command == Command::Nreset
+                        || command == Command::Alist
+                        || command == Command::Rlist
+                        || command == Command::Olist
+                        || command == Command::Nlist
+                        || command == Command::Ashow
+                        || command == Command::Rshow
+                        || command == Command::Oshow
+                        || command == Command::Nshow
+                        || command == Command::Goto
+                        || command == Command::Clear
+                        || command == Command::Reset);
+
+        return (builder && role == model::Role::Default);
     }
 
     std::deque<Message>
