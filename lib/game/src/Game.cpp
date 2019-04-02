@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "DataManager.h"
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>

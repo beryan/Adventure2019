@@ -24,7 +24,7 @@ using handler::AvatarHandler;
  */
 
 constexpr Connection CLIENT = {100};
-constexpr auto VALID_PASSWORD_STRING = "Valid Input";
+constexpr auto VALID_PASSWORD_STRING = "Valid Pass";
 
 
 TEST(AvatarHandlerTestSuite, canStartAvatarCreation) {
@@ -184,10 +184,9 @@ TEST(AvatarHandlerTestSuite, canAcceptSecondTraitInput) {
 TEST(AvatarHandlerTestSuite, canConfirmAvatarCreation) {
     std::vector<std::string> validInput = {"y", "yes", "Y", "Yes", "YES"};
     AccountHandler accountHandler{};
-    accountHandler.processRegistration(CLIENT);
-    accountHandler.processRegistration(CLIENT, "Able");
-    accountHandler.processRegistration(CLIENT, VALID_PASSWORD_STRING);
-    accountHandler.processRegistration(CLIENT, VALID_PASSWORD_STRING);
+    accountHandler.processLogin(CLIENT);
+    accountHandler.processLogin(CLIENT, "Able");
+    accountHandler.processLogin(CLIENT, VALID_PASSWORD_STRING);
 
     AvatarHandler avatarHandler{accountHandler};
 

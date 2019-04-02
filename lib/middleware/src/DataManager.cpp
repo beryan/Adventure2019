@@ -145,6 +145,33 @@ namespace DataManager {
             saveFile << std::setw(4) << jsonAreas << std::endl;
         }
 
+        void saveUserToJson(Player& p){
+
+            std::vector<Player> players;
+
+            if(boost::filesystem::exists(REGISTERED_USERS_PATH)){
+                std::ifstream inFile(REGISTERED_USERS_PATH);
+                json t = json::parse(inFile);
+                players = t.at(USERS).get<std::vector<Player>>();
+            }
+
+            players.push_back(p);
+
+            json users = json{{USERS, players}};
+
+            std::ofstream usersFile(REGISTERED_USERS_PATH);
+
+            if(!usersFile.is_open()){
+                throw std::runtime_error("Could not open users file");
+            }
+            usersFile << std::setw(4) << users << std::endl;
+        }
+
+
+        std::vector<Player> parseRegisteredUsers(json j){
+            return j.at(USERS).get<std::vector<Player>>();
+        }
+
     } // anonymous namespace
 
     bool has_extension(const std::string &filePath, const std::string &extension) {
@@ -201,5 +228,26 @@ namespace DataManager {
         }
     }
 
+
+    void saveRegisteredUser(Player p){
+        saveUserToJson(p);
+    }
+
+    std::vector<Player> loadRegisteredPlayers(){
+        std::vector<Player> players;
+        if(boost::filesystem::exists(REGISTERED_USERS_PATH)) {
+            std::ifstream inFile(REGISTERED_USERS_PATH);
+
+            if (!inFile.is_open()) {
+                throw std::runtime_error("Could not load registered users");
+            }
+
+            json j = json::parse(inFile);
+
+            players = parseRegisteredUsers(j);
+        }
+
+        return players;
+    }
 } // DataManager namespace
 

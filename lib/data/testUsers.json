@@ -1,0 +1,39 @@
+{
+  "USERS": [
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Able"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Baker"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Charlie"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "TakenUsername"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "canLogin"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "canLogoutClient"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "ClearsOnFail"
+    }
+  ]
+}
