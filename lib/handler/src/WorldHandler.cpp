@@ -376,6 +376,15 @@ namespace handler {
         }
     }
 
+    void WorldHandler::processResets() {
+        if (resetHandler.isTimeToReset()) {
+            this->reset();
+
+        } else {
+            resetHandler.decrementTimer();
+        }
+    }
+
     bool WorldHandler::isNum(const std::string &str) const {
         return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
     }

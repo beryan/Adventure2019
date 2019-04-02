@@ -18,6 +18,8 @@ namespace handler {
     class ResetHandler {
     private:
         ResetLogic logic{};
+        int cyclesUntilReset = 30;
+
     public:
         ResetHandler();
 
@@ -28,6 +30,12 @@ namespace handler {
         void loadSavedResets(Area& area);
 
         void resetArea(Area& area);
+
+        void setResetInterval(int numberOfCycles);
+
+        bool isTimeToReset();
+
+        void decrementTimer();
     };
 }
 #endif //RESETHANDLER_H

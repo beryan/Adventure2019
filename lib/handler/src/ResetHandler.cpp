@@ -70,4 +70,16 @@ namespace handler {
         addObjectsToRooms(area);
     }
 
+    void ResetHandler::setResetInterval(int numberOfCycles) {
+        this->cyclesUntilReset = numberOfCycles;
+    }
+
+    bool ResetHandler::isTimeToReset() {
+        return this->cyclesUntilReset <= 0;
+    }
+
+    void ResetHandler::decrementTimer() {
+        --this->cyclesUntilReset;
+    }
+
 }
