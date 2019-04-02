@@ -1,11 +1,6 @@
-/*
-* Reset.cpp
-*
-* Class Description: A class designed to represent reset information.
-*
-* Created on: January 21, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-21.
+//
 
 #include "Reset.h"
 #include <iostream>
@@ -90,12 +85,13 @@ namespace model {
 
     //print reset
     std::ostream& operator<<(std::ostream& os, const Reset& r) {
-        os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
-        if (r.action == "npc" && r.limit != INVALID_ID) {
-            os << " x" << r.limit;
+        if (r.action == "object" || r.action == "npc") {
+            os << "- " << r.action << " [" << r.id << "] in room [" << r.room << "]";
+            if (r.action == "npc") {
+                os << " x[" << r.limit << "]";
+            }
+            os << std::endl;
         }
-        os << std::endl;
         return os;
     }
-
 }

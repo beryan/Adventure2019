@@ -91,54 +91,46 @@ namespace handler {
         /**
          *  Switches the bodies of the casting player and the target player.
          */
-        std::vector<Message>
-        bodySwap(const Connection &client, const std::string &targetName);
+        std::vector<Message> bodySwap(const Connection &client, const std::string &targetName);
 
         /**
          *  Creates a decoy and removes client's player from combat.
          */
-        std::vector<Message>
-        decoy(const Connection &client);
+        std::vector<Message> decoy(const Connection &client);
 
         /**
          *  Places target player under the effects of the Confuse spell, which causes
          *  the target player's next chat messages to be in Pig Latin.
          */
-        std::vector<Message>
-        confuse(const Connection &client, const std::string &targetName);
+        std::vector<Message> confuse(const Connection &client, const std::string &targetName);
 
         /**
          *  Fully restores the target player's health. Can only be used when target is out of combat.
          */
-        std::vector<Message>
-        heal(const Connection &client, const std::string &targetName);
+        std::vector<Message> heal(const Connection &client, const std::string &targetName);
 
 
         /**
          *  Removes a body swap SpellInstance containing the specified player ID as the target or caster and reverts
          *  the swap between player clients.
          */
-        void
-        removeBodySwap(const model::ID &playerId);
+        void removeBodySwap(const model::ID &playerId);
 
         /**
          *  Removes a confuse SpellInstance containing the specified player ID as the target
          */
-        void
-        removeConfuse(const model::ID &playerId);
+        void removeConfuse(const model::ID &playerId);
 
         /**
          *  Decrements the remaining duration of Confuse spell instances, erasing them if expired.
          */
-        void
-        processConfuseInstancesCycle(std::deque<Message> &messages);
+        void processConfuseInstancesCycle(std::deque<Message> &messages);
 
         /**
          *  Decrements the remaining duration of Body Swap spell instances, reverting the swap and
          *  erasing them if expired.
          */
-        void
-        processBodySwapInstancesCycle(std::deque<Message> &messages);
+        void processBodySwapInstancesCycle(std::deque<Message> &messages);
 
     public:
         /**
@@ -150,46 +142,40 @@ namespace handler {
         /**
          *  Returns a formatted string describing available spells.
          */
-        std::string
-        getSpells();
+        std::string getSpells();
 
         /**
          *  Casts a spell if the spell name is valid
          */
-        std::vector<Message>
-        castSpell(const Connection &client, const std::string &spellName, const std::string &targetName = "");
+        std::vector<Message> castSpell(const Connection &client, const std::string &spellName, const std::string &targetName = "");
 
         /**
          *  Returns true if the client's Player is under the effects of the Body Swap spell
          */
-        bool
-        isBodySwapped(const Connection &client);
+        bool isBodySwapped(const Connection &client);
 
         /**
          *  Returns true if the client's Player is under the effects of the Confuse spell
          */
-        bool
-        isConfused(const Connection &client);
+        bool isConfused(const Connection &client);
 
         /**
          *  Converts a string into Pig Latin
          */
-        void
-        confuseSpeech(std::string &message);
+        void confuseSpeech(std::string &message);
 
         /**
          *  Handles the active spells affecting the logged out Player.
          */
-        void
-        handleLogout(const Connection &client);
+        void handleLogout(const Connection &client);
 
         /**
          *  Decrements the remaining duration of active spells and removing their
          *  effects on expiration. Creates Messages to notify players when spells
          *  have expired.
          */
-        void
-        processCycle(std::deque<Message> &messages);
+        void processCycle(std::deque<Message> &messages);
+
     };
 }
 

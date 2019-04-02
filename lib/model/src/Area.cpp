@@ -1,11 +1,6 @@
-/*
-* Area.cpp
-*
-* Class Description: A class designed to represent an area.
-*
-* Created on: January 20, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-20.
+//
 
 #include "Area.h"
 #include <iostream>
@@ -123,7 +118,6 @@ namespace model {
         auto forRoom = [roomId](const Reset &reset) {return reset.getRoom() == roomId;};
         resets.erase(std::remove_if(resets.begin(), resets.end(), forRoom), resets.end());
     }
-
 
     bool Area::operator==(const Area& area) const {
         return this->name == area.getName();
