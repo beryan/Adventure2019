@@ -44,18 +44,16 @@ namespace {
         World world;
 
         virtual void SetUp() override {
-            // Register client A
-            accountHandler.processRegistration(CLIENT_A);
-            accountHandler.processRegistration(CLIENT_A, USERNAME_A);
-            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
-            accountHandler.processRegistration(CLIENT_A, VALID_PASSWORD_STRING);
+            // Login client A
+            accountHandler.processLogin(CLIENT_A);
+            accountHandler.processLogin(CLIENT_A, USERNAME_A);
+            accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
             accountHandler.setRoomIdByClient(CLIENT_A, TEST_ROOM_1_ID);
 
-            // Register client B
-            accountHandler.processRegistration(CLIENT_B);
-            accountHandler.processRegistration(CLIENT_B, USERNAME_B);
-            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
-            accountHandler.processRegistration(CLIENT_B, VALID_PASSWORD_STRING);
+            // Login client B
+            accountHandler.processLogin(CLIENT_B);
+            accountHandler.processLogin(CLIENT_B, USERNAME_B);
+            accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
             accountHandler.setRoomIdByClient(CLIENT_B, TEST_ROOM_1_ID);
 
             // Construct World

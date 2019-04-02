@@ -550,12 +550,12 @@ std::vector<Message> CommandExecutor::yell(const Connection &client, std::string
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto playerIds = worldHandler.getNearbyPlayerIds(roomId);
 
+    if (magicHandler.isConfused(client)) {
+        magicHandler.confuseSpeech(message);
+    }
+
     for (const auto &playerId : playerIds) {
         auto connection = accountHandler.getClientByPlayerId(playerId);
-
-        if (magicHandler.isConfused(client)) {
-            magicHandler.confuseSpeech(message);
-        }
 
         std::ostringstream sayMessage;
         sayMessage << accountHandler.getUsernameByClient(client) << " yells> " << message << "\n";
@@ -828,12 +828,12 @@ std::vector<Message> CommandExecutor::say(const Connection &client, std::string 
     auto roomId = accountHandler.getRoomIdByClient(client);
     auto playerIds = worldHandler.findRoom(roomId).getPlayersInRoom();
 
+    if (magicHandler.isConfused(client)) {
+        magicHandler.confuseSpeech(message);
+    }
+
     for (const auto &playerId : playerIds) {
         auto connection = accountHandler.getClientByPlayerId(playerId);
-
-        if (magicHandler.isConfused(client)) {
-            magicHandler.confuseSpeech(message);
-        }
 
         std::ostringstream sayMessage;
         sayMessage << accountHandler.getUsernameByClient(client) << " says> " << message << "\n";

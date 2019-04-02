@@ -25,6 +25,8 @@ namespace handler {
 
         void addObjectsToRooms(Area& area);
 
+        void loadSavedResets(Area& area);
+
         void resetArea(Area& area);
     };
 }

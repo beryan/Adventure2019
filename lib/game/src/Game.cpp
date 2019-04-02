@@ -3,6 +3,7 @@
 //
 
 #include "Game.h"
+#include "DataManager.h"
 
 #include <iostream>
 #include <boost/algorithm/string.hpp>
@@ -151,6 +152,8 @@ namespace game {
                 }
 
                 case Command::Shutdown: {
+                    World world = this->worldHandler.getWorld();
+                    DataManager::writeWorldToFile(world, DataManager::JSON);
                     std::cout << "Shutting down.\n";
                     this->shutdown();
                     return;
