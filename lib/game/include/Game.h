@@ -101,7 +101,6 @@ namespace game {
         void
         handleOutgoing(std::deque<Message> &messages);
 
-
         /**
          *  Combines Messages such that all clients will receive one Message per game cycle.
          */

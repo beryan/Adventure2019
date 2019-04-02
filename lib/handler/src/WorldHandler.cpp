@@ -23,36 +23,32 @@ namespace handler {
     WorldHandler::WorldHandler() {
         //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
-        // load save file if it exists, otherwise load a default area file
 
-        if ( boost::filesystem::exists( LOAD_FILE_PATH ) ) {
+        // load save file if it exists, otherwise load a default area file
+        if (boost::filesystem::exists( LOAD_FILE_PATH )) {
             std::cout << "Loaded save file" << std::endl;
             auto savedAreas = DataManager::ParseWorldFile(LOAD_FILE_PATH);
-            for(Area& a : savedAreas){
-                resetHandler.loadSavedResets(a);
+            for(Area& area: savedAreas) {
+                resetHandler.loadSavedResets(area);
             }
             this->world.setAreas(savedAreas);
 
-        }else{
+        } else {
             std::cout << "Loaded default area file" << std::endl;
             this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
             reset();
         }
-
     }
 
-    World
-    WorldHandler::getWorld() const {
+    World WorldHandler::getWorld() const {
         return world;
     }
 
-    void
-    WorldHandler::setWorld(World &world) {
+    void WorldHandler::setWorld(const World &world) {
         this->world = world;
     }
 
-    bool
-    WorldHandler::roomExists(const model::ID &roomId) {
+    bool WorldHandler::roomExists(const model::ID &roomId) {
         bool found = false;
         for (Area &area : this->world.getAreas()) {
             std::vector<Room>& rooms = area.getRooms();
@@ -64,8 +60,7 @@ namespace handler {
         return found;
     }
 
-    Room&
-    WorldHandler::findRoom(const model::ID &roomId) {
+    Room& WorldHandler::findRoom(const model::ID &roomId) {
         for (Area &area : this->world.getAreas()) {
             std::vector<Room>& rooms = area.getRooms();
             auto it = std::find_if(rooms.begin(), rooms.end(), [&roomId](const Room &room) {return room.getId() == roomId;});
@@ -76,8 +71,7 @@ namespace handler {
         throw std::runtime_error("Error: tried to find room that does not exist");
     }
 
-    Area&
-    WorldHandler::findArea(const model::ID &roomId) {
+    Area& WorldHandler::findArea(const model::ID &roomId) {
         for (Area &area : this->world.getAreas()) {
             std::vector<Room>& rooms = area.getRooms();
             auto it = std::find_if(rooms.begin(), rooms.end(), [&roomId](const Room &room) {return room.getId() == roomId;});
@@ -88,58 +82,49 @@ namespace handler {
         throw std::runtime_error("Error: tried to find area that does not exist");
     }
 
-    bool
-    WorldHandler::isValidDirection(const model::ID &roomId, const std::string &dir) {
+    bool WorldHandler::isValidDirection(const model::ID &roomId, const std::string &dir) {
         Room& room = findRoom(roomId);
         return room.isValidDirection(dir);
     }
 
-    model::ID
-    WorldHandler::getDestination(const model::ID &roomId, const std::string &dir) {
+    model::ID WorldHandler::getDestination(const model::ID &roomId, const std::string &dir) {
         Room& room = findRoom(roomId);
         return room.getDestination(dir);
     }
 
-    void
-    WorldHandler::addPlayer(const model::ID &roomId, const model::ID &playerId) {
+    void WorldHandler::addPlayer(const model::ID &roomId, const model::ID &playerId) {
         Room& room = findRoom(roomId);
         room.addPlayerToRoom(playerId);
     }
 
-    void
-    WorldHandler::removePlayer(const model::ID &roomId, const model::ID &playerId) {
+    void WorldHandler::removePlayer(const model::ID &roomId, const model::ID &playerId) {
         Room& room = findRoom(roomId);
         room.removePlayerFromRoom(playerId);
     }
 
-    void
-    WorldHandler::movePlayer(const model::ID &playerId, const model::ID &sourceId, const model::ID &destinationId) {
+    void WorldHandler::movePlayer(const model::ID &playerId, const model::ID &sourceId, const model::ID &destinationId) {
         removePlayer(sourceId, playerId);
         addPlayer(destinationId, playerId);
     }
 
-    void
-    WorldHandler::addItem(const model::ID &roomId, const Object &item) {
+    void WorldHandler::addItem(const model::ID &roomId, const Object &item) {
         Room& room = findRoom(roomId);
         room.addObject(item);
     }
 
-    void
-    WorldHandler::removeItem(const model::ID &roomId, const model::ID &objectId) {
+    void WorldHandler::removeItem(const model::ID &roomId, const model::ID &objectId) {
         Room& room = findRoom(roomId);
         room.removeObject(objectId);
     }
 
-    bool
-    WorldHandler::canGive(const model::ID &roomId, const model::ID &playerId) {
+    bool WorldHandler::canGive(const model::ID &roomId, const model::ID &playerId) {
         Room& room = findRoom(roomId);
         auto players = room.getPlayersInRoom();
         auto it = std::find(players.begin(), players.end(), playerId);
         return (it != players.end());
     }
 
-    std::vector<model::ID>
-    WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
+    std::vector<model::ID> WorldHandler::getNearbyPlayerIds(const model::ID &roomId) {
         Room room = findRoom(roomId);
         std::vector<model::ID> playerIds = room.getPlayersInRoom();
         auto nearbyRoomIds = room.getNearbyRoomIds();
@@ -151,8 +136,7 @@ namespace handler {
         return playerIds;
     }
 
-    bool
-    WorldHandler::createArea(const std::string &name) {
+    bool WorldHandler::createArea(const std::string &name) {
         //acreate [name]
         if (!name.empty()) {
             auto area = Area(name);
@@ -161,8 +145,7 @@ namespace handler {
         return !name.empty();
     }
 
-    bool
-    WorldHandler::createRoom(const std::vector<std::string> &arguments) {
+    bool WorldHandler::createRoom(const std::vector<std::string> &arguments) {
         //rcreate [anum] [id] [name]
         bool canCreate = false;
         if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
@@ -178,8 +161,7 @@ namespace handler {
         return canCreate;
     }
 
-    bool
-    WorldHandler::createObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::createObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ocreate [id] [short description]
         bool canCreate = false;
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
@@ -195,8 +177,7 @@ namespace handler {
         return canCreate;
     }
 
-    bool
-    WorldHandler::createNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::createNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ncreate [id] [short description]
         bool canCreate = false;
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
@@ -212,8 +193,7 @@ namespace handler {
         return canCreate;
     }
 
-    bool
-    WorldHandler::createObjectReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::createObjectReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oreset [id]
         bool canCreate = false;
         if (arguments.size() == 1 && isNum(arguments.at(0))) {
@@ -231,8 +211,7 @@ namespace handler {
         return canCreate;
     }
 
-    bool
-    WorldHandler::createNpcReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::createNpcReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nreset [id] [amount]
         bool canCreate = false;
         if (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
@@ -252,8 +231,7 @@ namespace handler {
         return canCreate;
     }
 
-    bool
-    WorldHandler::editArea(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::editArea(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //aedit [field] [values]
         bool success = false;
         if (arguments.size() > 1) {
@@ -268,8 +246,7 @@ namespace handler {
         return success;
     }
 
-    bool
-    WorldHandler::editRoom(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::editRoom(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //redit [field] [values]
         bool success = false;
         if (arguments.size() > 1) {
@@ -306,8 +283,7 @@ namespace handler {
         return success;
     }
 
-    bool
-    WorldHandler::editObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::editObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oedit [id] [field] [values]
         bool success = false;
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
@@ -342,8 +318,7 @@ namespace handler {
         return success;
     }
 
-    bool
-    WorldHandler::editNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
+    bool WorldHandler::editNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nedit [id] [field] [values]
         bool success = false;
         if (arguments.size() > 2 && isNum(arguments.at(0))) {
@@ -401,8 +376,7 @@ namespace handler {
         }
     }
 
-    bool
-    WorldHandler::isNum(const std::string &str) {
+    bool WorldHandler::isNum(const std::string &str) const {
         return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
     }
 

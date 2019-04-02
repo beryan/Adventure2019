@@ -91,8 +91,8 @@ namespace game {
                     }
 
                     this->addClientToGame(client);
-                    auto roomId = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomId).descToString();
+                    auto roomID = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
@@ -120,8 +120,8 @@ namespace game {
                 // Add player to game after finishing avatar creation
                 if (!this->avatarHandler.isCreatingAvatar(client)) {
                     this->addClientToGame(client);
-                    auto roomId = this->accountHandler.getRoomIdByClient(client);
-                    tempMessage << "\n" << this->worldHandler.findRoom(roomId).descToString();
+                    auto roomID = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findRoom(roomID).descToString();
                     messages.push_back({client, tempMessage.str()});
                 }
 
