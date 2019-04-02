@@ -3,10 +3,12 @@
 //
 
 #include "WorldHandler.h"
+#include "PropertiesManager.h"
 #include "gtest/gtest.h"
 #include "Character.h"
 
 using handler::WorldHandler;
+using handler::PropertiesManager;
 
 namespace {
     class WorldHandlerTestSuite : public ::testing::Test {
@@ -398,6 +400,20 @@ namespace {
     TEST_F(WorldHandlerTestSuite, canReset) {
         EXPECT_FALSE(worldHandler.findRoom(roomId).getObjects().size());
         worldHandler.reset();
+        EXPECT_TRUE(worldHandler.findRoom(roomId).getObjects().size());
+    }
+
+    TEST_F(WorldHandlerTestSuite, canResetAfterInterval) {
+        ASSERT_FALSE(worldHandler.findRoom(roomId).getObjects().size());
+
+        int resetInterval = DEFAULT_RESET_INTERVAL;
+        PropertiesManager::getProperty(PropertiesManager::RESET_INTERVAL_PROPERTY_NAME, resetInterval);
+
+        for (int i = 0; i <= resetInterval; ++i) {
+            ASSERT_FALSE(worldHandler.findRoom(roomId).getObjects().size());
+            worldHandler.processResets();
+        }
+
         EXPECT_TRUE(worldHandler.findRoom(roomId).getObjects().size());
     }
 }
