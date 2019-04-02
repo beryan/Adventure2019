@@ -33,7 +33,7 @@ constexpr model::ID NPC_B_ID = 200;
 constexpr auto NPC_A_KEYWORD = "alpha";
 constexpr auto NPC_B_KEYWORD = "bravo";
 
-constexpr auto EXPECTED_ROUND_CYCLES = 5;
+constexpr auto EXPECTED_ROUND_CYCLES = 7;
 
 namespace {
     class CombatHandlerTestSuite : public ::testing::Test {
@@ -137,7 +137,7 @@ namespace {
         auto result = combatHandler.attack(CLIENT_A, invalidKeyword);
 
         std::ostringstream expected;
-        expected << "There is no one here (NPC) with the name " << invalidKeyword << "\n";
+        expected << "Invalid keyword.\n";
 
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
@@ -249,8 +249,9 @@ namespace {
 
     TEST_F(CombatHandlerTestSuite, canFleeWhileInCombat) {
         auto player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
-        auto doors = worldHandler.findRoom(TEST_ROOM_1_ID).getDoors();
+        auto &room = worldHandler.findRoom(TEST_ROOM_1_ID);
+        auto &npc = room.getNpcByKeyword(NPC_A_KEYWORD);
+        auto doors = room.getDoors();
 
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
@@ -275,6 +276,10 @@ namespace {
 
                 if (!combatHandler.isInCombat(player) && (result.find("successfully") != std::string::npos)) {
                     succesfullyEscaped = true;
+
+                } else if (!combatHandler.isInCombat(player)) {
+                    player.setCurrRoomID(TEST_ROOM_1_ID);
+                    room.addPlayerToRoom(player.getId());
                 }
             }
             ++tries;
@@ -292,8 +297,8 @@ namespace {
     TEST_F(CombatHandlerTestSuite, canFleeWhileInCombatWithNoDoors) {
         // Construct World
         World newWorld{};
-        Room room = {TEST_ROOM_1_ID, "Test room 1", {"Test room 1 description"}};
-        room.addNPC({
+        Room createdRoom = {TEST_ROOM_1_ID, "Test room 1", {"Test room 1 description"}};
+        createdRoom.addNPC({
             NPC_A_ID,
             {NPC_A_KEYWORD},
             {"Long description."},
@@ -302,13 +307,15 @@ namespace {
         });
 
         Area area = Area("Testing area");
-        area.addRoom(room);
+        area.addRoom(createdRoom);
         newWorld.addArea(area);
         worldHandler.setWorld(newWorld);
 
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
-        auto doors = worldHandler.findRoom(TEST_ROOM_1_ID).getDoors();
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &room = worldHandler.findRoom(TEST_ROOM_1_ID);
+        room.addPlayerToRoom(player.getId());
+        auto npc = room.getNpcByKeyword(NPC_A_KEYWORD);
+        auto doors = room.getDoors();
 
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
@@ -330,6 +337,10 @@ namespace {
                 auto result = combatHandler.flee(CLIENT_A);
                 if (!combatHandler.isInCombat(player) && (result.find("successfully") != std::string::npos)) {
                     succesfullyEscaped = true;
+
+                } else if (!combatHandler.isInCombat(player)) {
+                    player.setCurrRoomID(TEST_ROOM_1_ID);
+                    room.addPlayerToRoom(player.getId());
                 }
             }
 

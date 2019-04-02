@@ -33,6 +33,25 @@ namespace handler {
         constexpr static float BASE_CRITICAL_DAMAGE_MULTIPLIER = 2.5f;
 
         /**
+         * @param attacker: character that will enter Combat with defender
+         * @param defender character that will enter Combat with attacker
+         */
+        void enterCombat(const Character &attacker, const Character &defender);
+
+        /**
+         * Disengages two characters from combat where they are both involved in
+         * @param character1: character that is in combat with character2
+         * @param character2: character that is in combat with character1
+         */
+        void exitCombat(const Character &character1, const Character &character2);
+
+        /**
+         * Erases a combat state involving character
+         * @param character: character that is in combat
+         */
+        void exitCombat(const Character &character);
+
+        /**
          *  Returns true if miss occurs
          */
         bool rollMiss();
@@ -65,24 +84,8 @@ namespace handler {
          */
         std::string inflictDamage(Player &player);
 
-        /**
-         * @param attacker: character that will enter Combat with defender
-         * @param defender character that will enter Combat with attacker
-         */
-        void enterCombat(const Character &attacker, const Character &defender);
-
-        /**
-         * Disengages two characters from combat where they are both involved in
-         * @param character1: character that is in combat with character2
-         * @param character2: character that is in combat with character1
-         */
-        void exitCombat(const Character &character1, const Character &character2);
-
-        /**
-         * Erases a combat state involving character
-         * @param character: character that is in combat
-         */
-        void exitCombat(const Character &character);
+        std::string loseEvent(Player &player, NPC &npc);
+        std::string winEvent(Player &player, NPC &npc);
 
     public:
         constexpr static int BASE_MIN_DAMAGE = 10;
