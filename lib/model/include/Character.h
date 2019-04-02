@@ -37,6 +37,20 @@ namespace model {
         void setHealth(int health);
 
         static constexpr int STARTING_HEALTH = 100;
+
+
+        static const inline std::map<model::Role, std::string> roleToStringMap = {
+                {Role::Admin, "admin"},
+                {Role::Builder, "builder"},
+                {Role::Default, "default"}
+        };
+
+        static const inline std::map<std::string, model::Role> stringToRoleMap = {
+                {"admin", Role::Admin},
+                {"builder", Role::Builder},
+                {"default", Role::Default}
+        };
+
     private:
 
         model::ID id;
