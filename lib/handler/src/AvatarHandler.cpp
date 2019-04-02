@@ -6,6 +6,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include "Player.h"
 #include "AvatarHandler.h"
+#include "DataManager.h"
 
 using handler::AvatarHandler;
 
@@ -111,6 +112,7 @@ namespace handler {
             auto player = this->accountHandler.getPlayerByClient(client);
             player->setAvatar(avatar);
             this->exitCreation(client);
+            DataManager::saveRegisteredUser(*player);
 
             message << input << "\n"
                     << "Your character has been successfully created!\n";

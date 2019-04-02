@@ -155,6 +155,13 @@ namespace DataManager {
                 players = t.at(USERS).get<std::vector<Player>>();
             }
 
+            auto it = std::find_if(players.begin(), players.end(),
+                                   [&p](const Player &player) {return player.getId() == p.getId();});
+
+            if(it->getId() == p.getId()) {
+                players.erase(it);
+            }
+
             players.push_back(p);
 
             json users = json{{USERS, players}};

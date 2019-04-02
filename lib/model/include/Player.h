@@ -84,14 +84,26 @@ namespace model {
         p.setId(j.at("id").get<model::ID>());
         p.setUsername(j.at("username").get<std::string>());
         p.setPassword(j.at("password").get<std::string>());
+        if(j.find("avatar") != j.end()) {
+            p.setAvatar(j.at("avatar").get<Avatar>());
+        }
     }
 
     inline void to_json(json& j, const Player &p){
-        j = {
-                {"id", p.getId()},
-                {"username", p.getUsername()},
-                {"password", p.getPassword()}
-        };
+        if(p.getAvatar().isDefined()){
+            j = {
+                    {"id", p.getId()},
+                    {"username", p.getUsername()},
+                    {"password", p.getPassword()},
+                    {"avatar", p.getAvatar()}
+            };
+        }else {
+            j = {
+                    {"id", p.getId()},
+                    {"username", p.getUsername()},
+                    {"password", p.getPassword()}
+            };
+        }
     }
 }
 
