@@ -30,7 +30,7 @@ namespace handler {
 
         model::ID nextId;
         std::map<model::ID, Player> allPlayers;
-        std::map<std::string, Player*> usernameToPlayer;
+        std::map<std::string, Player&> usernameToPlayer;
         std::map<model::ID, Connection> activeIdToClient;
         std::map<Connection, model::ID> activeClientToId;
 
@@ -107,7 +107,7 @@ namespace handler {
         /**
          *  Returns a pointer to a Player given a client ID.
          */
-        Player* getPlayerByClient(const Connection &client);
+        Player& getPlayerByClient(const Connection &client);
 
         /**
          *  Returns the room ID of a Player given a client ID.

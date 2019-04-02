@@ -131,7 +131,7 @@ namespace handler {
                 Player player{playerId, inputUsername, inputPassword};
                 this->allPlayers.emplace(playerId, player);
                 DataManager::saveRegisteredUser(player);
-                this->usernameToPlayer.emplace(inputUsername, &this->allPlayers.at(playerId));
+                this->usernameToPlayer.emplace(inputUsername, this->allPlayers.at(playerId));
 
                 this->activeClientToId.emplace(client, playerId);
                 this->activeIdToClient.emplace(playerId, client);
@@ -201,14 +201,14 @@ namespace handler {
                     return failMessage;
                 }
 
-                auto passwordMatches = (this->usernameToPlayer.at(inputUsername)->getPassword() == input);
+                auto passwordMatches = (this->usernameToPlayer.at(inputUsername).getPassword() == input);
 
                 if (!passwordMatches) {
                     this->exitLogin(client);
                     return failMessage;
                 }
 
-                auto playerId = this->usernameToPlayer.at(inputUsername)->getId();
+                auto playerId = this->usernameToPlayer.at(inputUsername).getId();
                 auto isOnline = static_cast<bool> (this->activeIdToClient.count(playerId));
 
                 if (isOnline) {
@@ -277,11 +277,11 @@ namespace handler {
 
         auto player = this->usernameToPlayer.at(username);
 
-        if (!this->activeIdToClient.count(player->getId())) {
+        if (!this->activeIdToClient.count(player.getId())) {
             return {0};
         }
 
-        return this->activeIdToClient.at(player->getId());
+        return this->activeIdToClient.at(player.getId());
     }
 
     model::ID
@@ -295,14 +295,12 @@ namespace handler {
     }
 
 
-    Player*
+    Player&
     AccountHandler::getPlayerByClient(const Connection &client) {
-        Player* player = nullptr;
         if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
-            player = this->usernameToPlayer.at(this->getUsernameByClient(client));
+            return this->usernameToPlayer.at(this->getUsernameByClient(client));
         }
-        assert(player != nullptr && "AccountHandler could not find player by client!");
-        return player;
+        throw std::runtime_error("Error: getPlayerByClient() could not find player with provided Connection object");
     }
 
 
@@ -310,7 +308,7 @@ namespace handler {
     AccountHandler::getRoomIdByClient(const Connection &client) {
         model::ID result = INVALID_ID;
         if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
-            result = this->usernameToPlayer.at(this->getUsernameByClient(client))->getCurrRoomID();
+            result = this->usernameToPlayer.at(this->getUsernameByClient(client)).getCurrRoomID();
         }
         return result;
     }
@@ -319,7 +317,7 @@ namespace handler {
     void
     AccountHandler::setRoomIdByClient(const Connection &client, const model::ID &roomID) {
         if (this->usernameToPlayer.count(this->getUsernameByClient(client))) {
-            this->usernameToPlayer.at(this->getUsernameByClient(client))->setCurrRoomID(roomID);
+            this->usernameToPlayer.at(this->getUsernameByClient(client)).setCurrRoomID(roomID);
         }
     }
 
@@ -381,7 +379,7 @@ namespace handler {
             auto playerId = this->nextId++;
             p.setId(playerId);
             this->allPlayers.emplace(playerId, p);
-            this->usernameToPlayer.emplace(p.getUsername(), &this->allPlayers.at(playerId));
+            this->usernameToPlayer.emplace(p.getUsername(), this->allPlayers.at(playerId));
         }
 
         std::cout << "registered users have been loaded" << std::endl;

@@ -144,14 +144,14 @@ namespace handler {
     MagicHandler::decoy(const Connection &client) {
         std::vector<Message> responses;
         std::ostringstream message;
-        auto player = this->accountHandler.getPlayerByClient(client);
+        auto &player = this->accountHandler.getPlayerByClient(client);
 
-        if (!this->combatHandler.isInCombat(*player)) {
+        if (!this->combatHandler.isInCombat(player)) {
             message << "You can only cast " << DECOY_SPELL_NAME << " while in combat.\n";
             return {{client, message.str()}};
         }
 
-        this->combatHandler.replaceWithDecoy(*player);
+        this->combatHandler.replaceWithDecoy(player);
 
         message << "You create a decoy of yourself and flee from combat.\n";
         responses.push_back({client, message.str()});
@@ -222,16 +222,16 @@ namespace handler {
         std::vector<Message> responses;
         std::ostringstream casterMessage;
 
-        auto player = accountHandler.getPlayerByClient(client);
+        auto &player = accountHandler.getPlayerByClient(client);
         auto casterUsername = this->accountHandler.getUsernameByClient(client);
 
-        if (combatHandler.isInCombat(*player)) {
+        if (combatHandler.isInCombat(player)) {
             casterMessage << "You can't cast " << HEAL_SPELL_NAME << " while in combat.\n";
             return {{client, casterMessage.str()}};
         }
 
         if (targetName.empty() || (casterUsername == targetName)) {
-            player->setHealth(Character::STARTING_HEALTH);
+            player.setHealth(Character::STARTING_HEALTH);
 
             casterMessage << "You cast " << HEAL_SPELL_NAME << " on yourself.\n";
             return {{client, casterMessage.str()}};
@@ -250,14 +250,14 @@ namespace handler {
             return {{client, casterMessage.str()}};
         }
 
-        auto targetPlayer = this->accountHandler.getPlayerByClient(targetClient);
-        if (combatHandler.isInCombat(*targetPlayer)) {
+        auto &targetPlayer = this->accountHandler.getPlayerByClient(targetClient);
+        if (combatHandler.isInCombat(targetPlayer)) {
             casterMessage << "You can't cast " << HEAL_SPELL_NAME << " on "
-                          << targetPlayer->getUsername() << " while they are in combat.\n";
+                          << targetPlayer.getUsername() << " while they are in combat.\n";
             return {{client, casterMessage.str()}};
         }
 
-        targetPlayer->setHealth(Character::STARTING_HEALTH);
+        targetPlayer.setHealth(Character::STARTING_HEALTH);
 
         casterMessage << "You cast " << HEAL_SPELL_NAME << " on " << targetName << ".\n";
 
