@@ -101,25 +101,23 @@ namespace model {
     }
 
     inline void to_json(json& j, const Player &p){
+        j = {
+                {"id", p.getId()},
+                {"username", p.getUsername()},
+                {"password", p.getPassword()},
+                {"role", Character::roleToStringMap.at(p.getRole())}
+        };
+
         if(p.getAvatar().isDefined()){
-            j = {
-                    {"id", p.getId()},
-                    {"username", p.getUsername()},
-                    {"password", p.getPassword()},
-                    {"role", Character::roleToStringMap.at(p.getRole())},
-                    {"avatar", p.getAvatar()},
-                    {"equipment", p.getEquipmentConst()},
-                    {"inventory", p.getInventoryConst()}
-            };
-        }else {
-            j = {
-                    {"id", p.getId()},
-                    {"username", p.getUsername()},
-                    {"password", p.getPassword()},
-                    {"role", Character::roleToStringMap.at(p.getRole())},
-                    {"equipment", p.getEquipmentConst()},
-                    {"inventory", p.getInventoryConst()}
-            };
+            j.push_back({"avatar", p.getAvatar()});
+        };
+
+        if(p.getEquipmentConst().getVectorEquipment().size() > 0){
+            j.push_back({"equipment", p.getEquipmentConst()});
+        }
+
+        if(p.getInventoryConst().getVectorInventory().size() > 0){
+            j.push_back({"inventory", p.getInventoryConst()});
         }
     }
 }
