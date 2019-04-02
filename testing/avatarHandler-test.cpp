@@ -191,9 +191,9 @@ TEST(AvatarHandlerTestSuite, canConfirmAvatarCreation) {
     AvatarHandler avatarHandler{accountHandler};
 
     for (const auto &input : validInput) {
-        auto player = accountHandler.getPlayerByClient(CLIENT);
-        player->setAvatar(Avatar{});
-        ASSERT_FALSE(player->getAvatar().isDefined());
+        auto &player = accountHandler.getPlayerByClient(CLIENT);
+        player.setAvatar(Avatar{});
+        ASSERT_FALSE(player.getAvatar().isDefined());
 
         avatarHandler.processCreation(CLIENT);
         avatarHandler.processCreation(CLIENT, "m");
@@ -207,7 +207,7 @@ TEST(AvatarHandlerTestSuite, canConfirmAvatarCreation) {
 
         ASSERT_EQ(expect.str(), result);
         ASSERT_FALSE(avatarHandler.isCreatingAvatar(CLIENT));
-        ASSERT_TRUE(player->getAvatar().isDefined());
+        ASSERT_TRUE(player.getAvatar().isDefined());
     }
 }
 

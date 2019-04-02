@@ -80,7 +80,7 @@ namespace game {
                 messages.push_back({client, this->accountHandler.processLogin(client, username)});
 
                 if (this->accountHandler.isLoggedIn(client)) {
-                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client)->getAvatar().isDefined();
+                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client).getAvatar().isDefined();
                     if (!hasCreatedAvatar) {
                         messages.push_back({
                             client,

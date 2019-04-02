@@ -474,10 +474,10 @@ namespace {
 
     TEST_F(MagicHandlerTestSuite, canCastHealOnSelf) {
         std::string targetName = USERNAME_A;
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
 
         // With own username as target parameter
-        player->setHealth(1);
+        player.setHealth(1);
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, targetName);
 
         ASSERT_EQ(1u, results.size());
@@ -488,11 +488,11 @@ namespace {
         casterExpected << "You cast " << HEAL_SPELL_NAME << " on yourself.\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
-        EXPECT_EQ(Character::STARTING_HEALTH, player->getHealth());
+        EXPECT_EQ(Character::STARTING_HEALTH, player.getHealth());
         EXPECT_EQ(casterExpected.str(), result.text);
 
         // With no username provided in target parameter
-        player->setHealth(1);
+        player.setHealth(1);
         results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME);
 
         ASSERT_EQ(1u, results.size());
@@ -500,7 +500,7 @@ namespace {
         result = results.back();
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
-        EXPECT_EQ(Character::STARTING_HEALTH, player->getHealth());
+        EXPECT_EQ(Character::STARTING_HEALTH, player.getHealth());
         EXPECT_EQ(casterExpected.str(), result.text);
     }
 
@@ -509,8 +509,8 @@ namespace {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
         std::string targetName = USERNAME_B;
-        auto targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
-        targetPlayer->setHealth(1);
+        auto &targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
+        targetPlayer.setHealth(1);
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, targetName);
 
         ASSERT_EQ(2u, results.size());
@@ -528,7 +528,7 @@ namespace {
         EXPECT_EQ(casterExpected.str(), casterResult.text);
 
         EXPECT_EQ(CLIENT_B.id, targetResult.connection.id);
-        EXPECT_EQ(Character::STARTING_HEALTH, targetPlayer->getHealth());
+        EXPECT_EQ(Character::STARTING_HEALTH, targetPlayer.getHealth());
         EXPECT_EQ(targetExpected.str(), targetResult.text);
     }
 
@@ -538,9 +538,9 @@ namespace {
         ASSERT_NE(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
         std::string targetName = USERNAME_B;
-        auto targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
+        auto &targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
 
-        targetPlayer->setHealth(1);
+        targetPlayer.setHealth(1);
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, targetName);
 
         ASSERT_EQ(1u, results.size());
@@ -551,23 +551,23 @@ namespace {
         casterExpected << "There is no player here with the name \"" << USERNAME_B << "\".\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
-        EXPECT_EQ(1, targetPlayer->getHealth());
+        EXPECT_EQ(1, targetPlayer.getHealth());
         EXPECT_EQ(casterExpected.str(), result.text);
     }
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastHealOnSelfWhileInCombat) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(*player));
-        ASSERT_EQ(Character::STARTING_HEALTH, player->getHealth());
+        ASSERT_FALSE(combatHandler.isInCombat(player));
+        ASSERT_EQ(Character::STARTING_HEALTH, player.getHealth());
 
-        player->setHealth(90);
+        player.setHealth(90);
         combatHandler.attack(CLIENT_A, NPC_KEYWORD);
-        auto healthAfter = player->getHealth();
+        auto healthAfter = player.getHealth();
 
-        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME);
 
@@ -585,16 +585,16 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastHealOnOtherPlayerWhileInCombat) {
-        auto fightingPlayer = accountHandler.getPlayerByClient(CLIENT_A);
-        auto targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
+        auto &fightingPlayer = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_EQ(Character::STARTING_HEALTH, targetPlayer->getHealth());
-        targetPlayer->setHealth(90);
-        auto healthAfter = targetPlayer->getHealth();
+        ASSERT_EQ(Character::STARTING_HEALTH, targetPlayer.getHealth());
+        targetPlayer.setHealth(90);
+        auto healthAfter = targetPlayer.getHealth();
 
         combatHandler.attack(CLIENT_A, NPC_KEYWORD);
-        ASSERT_TRUE(combatHandler.areInCombat(*fightingPlayer, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, USERNAME_B);
 
@@ -614,16 +614,16 @@ namespace {
     TEST_F(MagicHandlerTestSuite, cannotCastHealOnPlayerInCombat) {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
-        auto fightingPlayer = accountHandler.getPlayerByClient(CLIENT_B);
+        auto &fightingPlayer = accountHandler.getPlayerByClient(CLIENT_B);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_EQ(Character::STARTING_HEALTH, fightingPlayer->getHealth());
+        ASSERT_EQ(Character::STARTING_HEALTH, fightingPlayer.getHealth());
 
-        fightingPlayer->setHealth(90);
+        fightingPlayer.setHealth(90);
         combatHandler.attack(CLIENT_B, NPC_KEYWORD);
-        auto healthAfter = fightingPlayer->getHealth();
+        auto healthAfter = fightingPlayer.getHealth();
 
-        ASSERT_TRUE(combatHandler.areInCombat(*fightingPlayer, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, USERNAME_B);
 
@@ -642,10 +642,10 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileNotInCombat) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
 
         ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD));
-        ASSERT_FALSE(combatHandler.isInCombat(*player));
+        ASSERT_FALSE(combatHandler.isInCombat(player));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_KEYWORD);
 
@@ -662,15 +662,15 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canCastDecoyWhileInCombat) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(*player));
+        ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
 
         combatHandler.attack(CLIENT_A, NPC_KEYWORD);
 
-        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
 
@@ -683,7 +683,7 @@ namespace {
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
-        EXPECT_FALSE(combatHandler.isInCombat(*player));
+        EXPECT_FALSE(combatHandler.isInCombat(player));
     }
 
 

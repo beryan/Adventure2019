@@ -108,8 +108,8 @@ namespace handler {
         std::ostringstream message;
         if (input == "y" || input == "yes") {
             auto avatar = this->avatarsInCreation.at(client);
-            auto player = this->accountHandler.getPlayerByClient(client);
-            player->setAvatar(avatar);
+            auto &player = this->accountHandler.getPlayerByClient(client);
+            player.setAvatar(avatar);
             this->exitCreation(client);
 
             message << input << "\n"
