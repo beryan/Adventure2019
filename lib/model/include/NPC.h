@@ -81,6 +81,17 @@ namespace model {
         n.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
         n.setShortDescription(j.at("shortdesc").get<std::string>());
     }
+
+    inline void to_json(json &j, const NPC &n) {
+        j = {
+                {"description", n.getDescription()},
+                {"keywords", n.getKeywords()},
+                {"id", n.getId()},
+                {"longdesc", n.getLongDescription()},
+                {"shortdesc", n.getShortDescription()}
+        };
+    }
+
 }
 
 #endif //NPC_H

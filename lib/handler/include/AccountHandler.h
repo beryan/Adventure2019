@@ -160,6 +160,9 @@ namespace handler {
 
         static std::vector<Player>
         parseJsonUsers(json);
+
+        void
+        loadRegisteredUsers();
     };
 }
 

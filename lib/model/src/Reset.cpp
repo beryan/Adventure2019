@@ -18,7 +18,23 @@ namespace model {
         slot(-1)
         { }
 
-    Reset::Reset(std::string action, model::ID id, int limit, int room, int slot)
+    Reset::Reset(std::string action, model::ID id, model::ID room)
+            : action(std::move(action)),
+              id(id),
+              limit(-1),
+              room(room),
+              slot(-1)
+    { }
+
+    Reset::Reset(std::string action, model::ID id, int limit, model::ID room)
+            : action(std::move(action)),
+              id(id),
+              limit(limit),
+              room(room),
+              slot(-1)
+    { }
+
+    Reset::Reset(std::string action, model::ID id, int limit, model::ID room, int slot)
         : action(std::move(action)),
         id(id),
         limit(limit),
@@ -39,7 +55,7 @@ namespace model {
         return limit;
     }
 
-    int Reset::getRoom() const {
+    model::ID Reset::getRoom() const {
         return room;
     }
 
@@ -78,5 +94,4 @@ namespace model {
         }
         return os;
     }
-
 }
