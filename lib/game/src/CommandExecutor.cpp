@@ -598,7 +598,7 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
     auto npc = getItemByKeyword(npcs, keyword);
 
     if (this->combatHandler.isInCombat(*player)) {
-        tempMessage << "You are too busy fighting to talk!.\n";
+        tempMessage << "You are too busy fighting to talk!\n";
         return tempMessage.str();
     }
 
@@ -610,7 +610,7 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
             otherPlayerName = room.getNpcById(otherPlayerId).getShortDescription();
         }
 
-        tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << "\n";
+        tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << ".\n";
         return tempMessage.str();
     }
 
