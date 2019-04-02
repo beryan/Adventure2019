@@ -13,7 +13,7 @@ namespace handler {
     ResetHandler::ResetHandler() {
         int resetIntervalProperty = DEFAULT_RESET_INTERVAL;
         PropertiesManager::getProperty(PropertiesManager::RESET_INTERVAL_PROPERTY_NAME, resetIntervalProperty);
-        resetInterval = resetIntervalProperty;
+        resetInterval = static_cast<unsigned int>(resetIntervalProperty);
         cyclesUntilReset = resetInterval;
     }
 
@@ -78,11 +78,13 @@ namespace handler {
     }
 
     bool ResetHandler::isTimeToReset() {
-        return this->cyclesUntilReset <= 0;
+        return this->cyclesUntilReset == 0;
     }
 
     void ResetHandler::decrementTimer() {
-        --this->cyclesUntilReset;
+        if (this->cyclesUntilReset > 0) {
+            --this->cyclesUntilReset;
+        }
     }
 
     void ResetHandler::resetTimer() {
