@@ -59,6 +59,12 @@ namespace model {
         e.setExtraKeywords(j.at("keywords").get<std::vector<std::string>>());
     }
 
+    inline void to_json(json &j, const ExtraInfo &e) {
+        j = {
+                {"desc", e.getExtraDescriptions()},
+                {"keywords", e.getExtraKeywords()}
+        };
+    }
 
 }
 

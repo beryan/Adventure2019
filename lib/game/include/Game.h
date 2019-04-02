@@ -17,6 +17,7 @@
 #include "CommandParser.h"
 #include "CombatHandler.h"
 #include "CommandExecutor.h"
+#include "DataManager.h"
 
 #include <functional>
 #include <deque>

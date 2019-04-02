@@ -47,6 +47,10 @@ namespace model {
         return resets;
     }
 
+    std::vector<Reset> Area::getSaveResets() const {
+        return saveResets;
+    }
+
     void Area::setName(const std::string &name) {
         this->name = name;
     }
@@ -65,6 +69,10 @@ namespace model {
 
     void Area::setResets(const std::vector<Reset> &resets) {
         this->resets = resets;
+    }
+
+    void Area::setSaveResets(const std::vector<Reset> &saveResets) {
+        this->saveResets = saveResets;
     }
 
     void Area::addRoom(const Room &room) {

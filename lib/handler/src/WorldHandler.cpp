@@ -2,6 +2,9 @@
 // Created by arehal on 1/18/19.
 //
 
+#include <iostream>
+#include <boost/filesystem.hpp>
+
 #include "WorldHandler.h"
 #include "DataManager.h"
 #include <boost/algorithm/string/join.hpp>
@@ -12,17 +15,29 @@
 using handler::WorldHandler;
 using json = nlohmann::json;
 
-const std::string DATA_JSON_PATH = "lib/data/mirkwood.json";
+constexpr auto DATA_JSON_PATH = "lib/data/mirkwood.json";
+constexpr auto LOAD_FILE_PATH = "lib/data/saveFile.json";
 
 namespace handler {
 
     WorldHandler::WorldHandler() {
-        //create temporary world
         //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
-        //this->world.createStub();
-        this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
-        reset();
+
+        // load save file if it exists, otherwise load a default area file
+        if (boost::filesystem::exists( LOAD_FILE_PATH )) {
+            std::cout << "Loaded save file" << std::endl;
+            auto savedAreas = DataManager::ParseWorldFile(LOAD_FILE_PATH);
+            for(Area& area: savedAreas) {
+                resetHandler.loadSavedResets(area);
+            }
+            this->world.setAreas(savedAreas);
+
+        } else {
+            std::cout << "Loaded default area file" << std::endl;
+            this->world.addArea(DataManager::ParseDataFile(DATA_JSON_PATH));
+            reset();
+        }
     }
 
     World WorldHandler::getWorld() const {

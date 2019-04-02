@@ -63,7 +63,6 @@ namespace model {
 
         void setCurrRoomID(const model::ID &id);
 
-        //static constexpr model::ID STARTING_LOCATION = 1000;
         static constexpr model::ID STARTING_LOCATION = 8800;
 
     private:
@@ -81,8 +80,17 @@ namespace model {
     };
 
     inline void from_json(const json &j, Player &p) {
+        p.setId(j.at("id").get<model::ID>());
         p.setUsername(j.at("username").get<std::string>());
         p.setPassword(j.at("password").get<std::string>());
+    }
+
+    inline void to_json(json& j, const Player &p){
+        j = {
+                {"id", p.getId()},
+                {"username", p.getUsername()},
+                {"password", p.getPassword()}
+        };
     }
 }
 
