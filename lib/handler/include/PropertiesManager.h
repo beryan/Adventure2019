@@ -13,7 +13,7 @@
 #include <vector>
 
 using json = nlohmann::json;
-const std::string PROPERTIES_PATH = "lib/data/properties.json";
+constexpr auto PROPERTIES_PATH = "lib/data/properties.json";
 
 namespace handler {
     class PropertiesManager {

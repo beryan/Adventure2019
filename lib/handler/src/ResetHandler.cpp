@@ -35,7 +35,7 @@ namespace handler {
 
     void ResetHandler::addObjectsToRooms(Area& area){
         for (const auto &reset : area.getResets()) {
-            if(reset.getAction() == OBJECT_ACTION) {
+            if (reset.getAction() == OBJECT_ACTION) {
                 auto room = area.findRoomById(reset.getRoom());
                 auto object = area.findObjectById(reset.getId());
 
