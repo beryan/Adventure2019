@@ -6,8 +6,10 @@
 #define CHARACTER_H
 
 #include "Object.h"
+#include "Role.h"
 #include <string_view>
 
+using model::Role;
 namespace model {
     /**
     *  @struct Character
@@ -17,9 +19,6 @@ namespace model {
     *  The Character struct contains all necessary information
     *  that must be contained in a character object in the application.
     */
-
-    enum Role { Admin, Builder, Default };
-
     struct Character {
     public:
         explicit Character(model::ID id);
