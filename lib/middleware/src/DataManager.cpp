@@ -235,8 +235,8 @@ namespace DataManager {
         }
     }
 
-    void saveRegisteredUsers(std::map<model::ID, Player> players){
-        for(auto& player : players) {
+    void saveRegisteredUsers(const std::map<model::ID, Player>& players){
+        for(const auto& player : players) {
             saveUserToJson(player.second);
         }
     }
