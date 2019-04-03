@@ -4,7 +4,7 @@
     "id": 1,
     "username": "bob",
     "password": "bobpassword",
-    "role": "default"
+    "role": "admin"
   },
   {
     "id": 2,
