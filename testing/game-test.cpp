@@ -91,21 +91,6 @@ TEST(GameTestSuite, canCallDisconnectCommand) {
 
     unsigned int expectedDisconnectedClientsSize = 0;
 
-    EXPECT_EQ(true, isDisconnected);
+    EXPECT_TRUE(isDisconnected);
     EXPECT_EQ(expectedDisconnectedClientsSize, disconnectedClients.size());
-}
-
-TEST(GameTestSuite, canCallShutdownCommand) {
-    std::vector<Connection> clients{CLIENT_A};
-    std::vector<Connection> newClients;
-    std::vector<Connection> disconnectedClients;
-    std::function<void(Connection)> disconnect = [](Connection) {};
-
-    ConnectionHandler connectionHandler(clients, newClients, disconnectedClients, disconnect);
-    Game game{connectionHandler};
-    std::deque<Message> userInput{{CLIENT_A, SHUTDOWN_COMMAND}};
-
-    game.processCycle(userInput);
-
-    EXPECT_FALSE(game.isRunning());
 }

@@ -119,18 +119,6 @@ namespace game {
         std::string
         removeClientFromGame(Connection client);
 
-        /**
-         *  Checks if parameters are in incorrect format for in-game commands.
-         */
-        bool
-        isInvalidFormat(const Command &command, const std::string &parameters);
-
-        /**
-         *  Checks if player role is incorrect for in-game commands.
-         */
-        bool
-        isInvalidRole(const Command &command, const model::Role &role);
-
     public:
         /**
          *  Constructs a Game instance with references to connected clients, new client IDs, and disconnected client IDs.

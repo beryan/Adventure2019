@@ -4,6 +4,9 @@
 
 #ifndef COMMAND_H
 #define COMMAND_H
+
+#include "Character.h"
+
 namespace game {
     enum class Command {
         Attack,
@@ -60,6 +63,33 @@ namespace game {
         Reset,
         InvalidCommand
     };
+
+    static std::vector<Command> param = {Command::Say, Command::Yell, Command::Chat,
+                                  Command::Move, Command::Examine, Command::Talk,
+                                  Command::Take, Command::Drop, Command::Wear,
+                                  Command::Remove, Command::Builder};
+
+    static std::vector<Command> build = {Command::Build, Command::Acreate, Command::Rcreate,
+                                  Command::Ocreate, Command::Ncreate, Command::Aedit,
+                                  Command::Redit, Command::Oedit, Command::Nedit,
+                                  Command::Oreset, Command::Nreset, Command::Alist,
+                                  Command::Rlist, Command::Olist, Command::Nlist,
+                                  Command::Ashow, Command::Rshow, Command::Oshow,
+                                  Command::Nshow, Command::Goto, Command::Clear,
+                                  Command::Reset};
+
+    static std::vector<Command> admin = {Command::Builder, Command::Shutdown};
+
+    /**
+     *  Checks if parameters are incorrect for in-game commands.
+     */
+    bool isInvalidRole(const Command &command, const model::Role &role);
+
+    /**
+     *  Checks if player role is incorrect for in-game commands.
+     */
+    bool isInvalidFormat(const Command &command, const std::string &parameters);
+
 }
 
 #endif //COMMAND_H
