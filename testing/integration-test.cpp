@@ -34,6 +34,33 @@ namespace {
             messages.push_back(message);
             return game.processCycle(messages);
         };
+
+
+        struct User {
+            std::string username = "stephen";
+            std::string password = "asdf";
+            std::string gender = "male";
+            std::string race = "human";
+            std::string trait_1 = "cool";
+            std::string trait_2 = "awesome";
+            std::string confirmation = "yes";
+        };
+
+        User registerUser(Connection connection) {
+            User user;
+
+            sendMessage({connection, parser.getStringForCommand(Command::Register)});
+            sendMessage({connection, user.username});
+            sendMessage({connection, user.password});
+            sendMessage({connection, user.password});
+            sendMessage({connection, user.gender});
+            sendMessage({connection, user.race});
+            sendMessage({connection, user.trait_1});
+            sendMessage({connection, user.trait_2});
+            sendMessage({connection, user.confirmation});
+
+            return user;
+        }
     };
 
     TEST_F(IntegrationTestSuite, canRegisterUser) {
@@ -41,32 +68,41 @@ namespace {
         Connection connection = {connectionID};
         clients.push_back(connection);
 
-        std::string username = "stephen";
-        std::string password = "asdf";
-        std::string gender = "male";
-        std::string race = "human";
-        std::string trait_1 = "cool";
-        std::string trait_2 = "awesome";
-        std::string confirmation = "yes";
+        User user = registerUser(connection);
 
-        sendMessage({connection, parser.getStringForCommand(Command::Register)});
-        sendMessage({connection, username});
-        sendMessage({connection, password});
-        sendMessage({connection, password});
-        sendMessage({connection, gender});
-        sendMessage({connection, race});
-        sendMessage({connection, trait_1});
-        sendMessage({connection, trait_2});
-        sendMessage({connection, confirmation});
-
-        std::string lookCommand = parser.getStringForCommand(Command::Look) + " " + username;
+        std::string lookCommand = parser.getStringForCommand(Command::Look) + " " + user.username;
         const auto &output = sendMessage({connection, lookCommand});
         const Message &lastMessage = output.back();
 
         EXPECT_EQ(connection, lastMessage.connection);
 
         std::ostringstream expectedMessage;
-        expectedMessage << username << " is a " << trait_1 << ", " << trait_2 << " " << gender << " " << race << ".\n";
+        expectedMessage << user.username << " is a " << user.trait_1 << ", " << user.trait_2 << " " << user.gender
+                        << " " << user.race << ".\n";
+        EXPECT_EQ(expectedMessage.str(), lastMessage.text);
+    }
+
+    TEST_F(IntegrationTestSuite, canLoginUser) {
+        uintptr_t connectionID = 1;
+        Connection connection = {connectionID};
+        clients.push_back(connection);
+
+        User user = registerUser(connection);
+
+        sendMessage({connection, parser.getStringForCommand(Command::Logout)});
+        sendMessage({connection, parser.getStringForCommand(Command::Login)});
+        sendMessage({connection, user.username});
+        sendMessage({connection, user.password});
+
+        std::string lookCommand = parser.getStringForCommand(Command::Look) + " " + user.username;
+        const auto &output = sendMessage({connection, lookCommand});
+        const Message &lastMessage = output.back();
+
+        EXPECT_EQ(connection, lastMessage.connection);
+
+        std::ostringstream expectedMessage;
+        expectedMessage << user.username << " is a " << user.trait_1 << ", " << user.trait_2 << " " << user.gender
+                        << " " << user.race << ".\n";
         EXPECT_EQ(expectedMessage.str(), lastMessage.text);
     }
 }
