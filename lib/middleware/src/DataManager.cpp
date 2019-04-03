@@ -88,11 +88,11 @@ namespace DataManager {
                 throw std::runtime_error("Could not open file: " + filePath);
             }
 
-            json j = json::parse(inFile);
+            json inputJson = json::parse(inFile);
 
             std::vector<Area> areas;
 
-            for (auto it = j.begin(); it != j.end(); ++it) {
+            for (auto it = inputJson.begin(); it != inputJson.end(); ++it) {
                 areas.push_back(parseAreaJson(it.value()));
             }
             return areas;
@@ -109,8 +109,8 @@ namespace DataManager {
                 }
 
                 model::ID roomId = room.getId();
-                for(auto& o : room.getObjects()){
-                    Reset room{"object", o.getId(), roomId};
+                for(auto& object : room.getObjects()){
+                    Reset room{"object", object.getId(), roomId};
                     saveResets.push_back(room);
                 };
             }
@@ -145,24 +145,24 @@ namespace DataManager {
             saveFile << std::setw(4) << jsonAreas << std::endl;
         }
 
-        void saveUserToJson(Player& p){
+        void saveUserToJson(Player& player){
 
             std::vector<Player> players;
 
             if(boost::filesystem::exists(REGISTERED_USERS_PATH)){
                 std::ifstream inFile(REGISTERED_USERS_PATH);
-                json t = json::parse(inFile);
-                players = t.at(USERS).get<std::vector<Player>>();
+                json inputJson = json::parse(inFile);
+                players = inputJson.at(USERS).get<std::vector<Player>>();
             }
 
             auto it = std::find_if(players.begin(), players.end(),
-                                   [&p](const Player &player) {return player.getId() == p.getId();});
+                                   [&player](const Player &player2) {return player2.getId() == player.getId();});
 
-            if(it->getId() == p.getId()) {
+            if(it->getId() == player.getId()) {
                 players.erase(it);
             }
 
-            players.push_back(p);
+            players.push_back(player);
 
             json users = json{{USERS, players}};
 
@@ -198,8 +198,8 @@ namespace DataManager {
                 throw std::runtime_error("Could not open file: " + filePath);
             }
 
-            json j = json::parse(inFile);
-            area = parseAreaJson(j);
+            json inputJson = json::parse(inFile);
+            area = parseAreaJson(inputJson);
         }
         return area;
     }
@@ -250,9 +250,9 @@ namespace DataManager {
                 throw std::runtime_error("Could not load registered users");
             }
 
-            json j = json::parse(inFile);
+            json inputJson = json::parse(inFile);
 
-            players = parseRegisteredUsers(j);
+            players = parseRegisteredUsers(inputJson);
         }
 
         return players;

@@ -47,29 +47,29 @@ namespace model {
         }
     };
 
-    inline void from_json(const json &j, Avatar &a) {
-        std::string gender = j.at("gender").get<std::string>();
-        std::string race = j.at("race").get<std::string>();
+    inline void from_json(const json &avatarJson, Avatar &avatar) {
+        std::string gender = avatarJson.at("gender").get<std::string>();
+        std::string race = avatarJson.at("race").get<std::string>();
 
         if (gender == "m" || gender == "male") {
-            a.gender = model::Gender::Male;
+            avatar.gender = model::Gender::Male;
 
         } else if (gender == "f" || gender == "female") {
-            a.gender = model::Gender::Female;
+            avatar.gender = model::Gender::Female;
 
         }
 
-        a.race = Avatar::stringToRaceMap.at(race);
-        a.trait1 = j.at("trait1").get<std::string>();
-        a.trait2 = j.at("trait2").get<std::string>();
+        avatar.race = Avatar::stringToRaceMap.at(race);
+        avatar.trait1 = avatarJson.at("trait1").get<std::string>();
+        avatar.trait2 = avatarJson.at("trait2").get<std::string>();
     }
 
-    inline void to_json(json& j, const Avatar &a){
-        j = {
-                {"gender", Avatar::genderToStringMap.at(a.gender)},
-                {"race", Avatar::raceToStringMap.at(a.race)},
-                {"trait1", a.trait1},
-                {"trait2", a.trait2}
+    inline void to_json(json& avatarJson, const Avatar &avatar){
+        avatarJson = {
+                {"gender", Avatar::genderToStringMap.at(avatar.gender)},
+                {"race", Avatar::raceToStringMap.at(avatar.race)},
+                {"trait1", avatar.trait1},
+                {"trait2", avatar.trait2}
         };
     }
 }
