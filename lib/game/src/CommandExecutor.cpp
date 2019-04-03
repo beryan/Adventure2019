@@ -145,12 +145,12 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Inventory: {
-            tempMessage << accountHandler.getPlayerByClient(client)->getInventory();
+            tempMessage << accountHandler.getPlayerByClient(client)->getMutableInventory();
             break;
         }
 
         case Command::Equipment: {
-            tempMessage << accountHandler.getPlayerByClient(client)->getEquipment();
+            tempMessage << accountHandler.getPlayerByClient(client)->getMutableEquipment();
             break;
         }
 
@@ -631,8 +631,8 @@ std::string CommandExecutor::take(const Connection &client, const std::string &k
 std::string CommandExecutor::drop(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getInventory().getVectorInventory();
-    auto equip = player->getEquipment().getVectorEquipment();
+    auto objects = player->getMutableInventory().getVectorInventory();
+    auto equip = player->getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (containsKeyword(objects, keyword)) {
@@ -650,7 +650,7 @@ std::string CommandExecutor::drop(const Connection &client, const std::string &k
 std::string CommandExecutor::wear(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getInventory().getVectorInventory();
+    auto objects = player->getMutableInventory().getVectorInventory();
 
     if (containsKeyword(objects, keyword)) {
         if (playerHandler.equipItem(*player, getItemByKeyword(objects, keyword))) {
@@ -667,7 +667,7 @@ std::string CommandExecutor::wear(const Connection &client, const std::string &k
 std::string CommandExecutor::remove(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getEquipment().getVectorEquipment();
+    auto objects = player->getMutableEquipment().getVectorEquipment();
 
     if (containsKeyword(objects, keyword)) {
         playerHandler.unequipItem(*player, getItemByKeyword(objects, keyword));
@@ -687,8 +687,8 @@ std::vector<Message> CommandExecutor::give(const Connection &client, const std::
 
     auto sender = this->accountHandler.getPlayerByClient(client);
     auto senderName = this->accountHandler.getUsernameByClient(client);
-    auto objects = sender->getInventory().getVectorInventory();
-    auto equip = sender->getEquipment().getVectorEquipment();
+    auto objects = sender->getMutableInventory().getVectorInventory();
+    auto equip = sender->getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (!this->worldHandler.canGive(roomId, receiverId) || username == senderName) {
@@ -726,12 +726,12 @@ std::string CommandExecutor::status(const Connection &client) {
            << "-------\n"
            << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
 
-    auto offenceValue = player->getEquipment().getOffenceValue();
+    auto offenceValue = player->getMutableEquipment().getOffenceValue();
     auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
     auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
     output << "Attack: " << minDamage << "-" << maxDamage << "\n";
 
-    auto defenceValue = player->getEquipment().getDefenceValue();
+    auto defenceValue = player->getMutableEquipment().getDefenceValue();
     output << "Armour: " << defenceValue << "\n";
 
     auto isBodySwapped = magicHandler.isBodySwapped(client);

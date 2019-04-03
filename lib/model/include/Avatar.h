@@ -6,6 +6,9 @@
 #define AVATAR_H
 
 #include <string>
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 namespace model {
     enum class Gender{Male, Female, Unset};
@@ -43,6 +46,32 @@ namespace model {
                      this->trait2.empty());
         }
     };
+
+    inline void from_json(const json &avatarJson, Avatar &avatar) {
+        std::string gender = avatarJson.at("gender").get<std::string>();
+        std::string race = avatarJson.at("race").get<std::string>();
+
+        if (gender == "m" || gender == "male") {
+            avatar.gender = model::Gender::Male;
+
+        } else if (gender == "f" || gender == "female") {
+            avatar.gender = model::Gender::Female;
+
+        }
+
+        avatar.race = Avatar::stringToRaceMap.at(race);
+        avatar.trait1 = avatarJson.at("trait1").get<std::string>();
+        avatar.trait2 = avatarJson.at("trait2").get<std::string>();
+    }
+
+    inline void to_json(json& avatarJson, const Avatar &avatar){
+        avatarJson = {
+                {"gender", Avatar::genderToStringMap.at(avatar.gender)},
+                {"race", Avatar::raceToStringMap.at(avatar.race)},
+                {"trait1", avatar.trait1},
+                {"trait2", avatar.trait2}
+        };
+    }
 }
 
 #endif //AVATAR_H

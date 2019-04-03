@@ -167,6 +167,10 @@ namespace game {
                     if (command == Command::Shutdown) {
                         World world = this->worldHandler.getWorld();
                         DataManager::writeWorldToFile(world, DataManager::JSON);
+                        
+                        auto players = this->accountHandler.getAllPlayers();
+                        DataManager::saveRegisteredUsers(players);
+
                         std::cout << "Shutting down.\n";
                         this->shutdown();
                         return;
