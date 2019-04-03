@@ -32,7 +32,7 @@ namespace {
 
         handler.pickupItem(player, item);
 
-        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+        EXPECT_TRUE(player.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canDropItemAndPickItUp) {
@@ -41,11 +41,11 @@ namespace {
         handler.pickupItem(player, item);
         handler.dropItem(player, item);
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
 
         handler.pickupItem(player, item);
 
-        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+        EXPECT_TRUE(player.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canDropItemFromInventory) {
@@ -54,7 +54,7 @@ namespace {
         handler.pickupItem(player, item);
         handler.dropItem(player, item);
 
-        EXPECT_FALSE(player.getInventory().isItemInInventory(item));
+        EXPECT_FALSE(player.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canPickupItemFromRoomInventory) {
@@ -70,7 +70,7 @@ namespace {
 
         ASSERT_FALSE(inventory.isItemInInventory(item));
         EXPECT_EQ(expected_size, inventory.getVectorInventory().size());
-        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+        EXPECT_TRUE(player.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canEquipTwoDifferentSlotItemsFromInventory) {
@@ -83,11 +83,11 @@ namespace {
         handler.equipItem(player, item);
         handler.equipItem(player, item2);
 
-        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
-        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getMutableEquipment().isSlotOccupied(item.getSlot()));
 
-        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
-        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
+        EXPECT_TRUE(player.getMutableEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getMutableEquipment().isSlotOccupied(item2.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsEmpty) {
@@ -96,8 +96,8 @@ namespace {
         handler.pickupItem(player, item);
         handler.equipItem(player, item);
 
-        EXPECT_TRUE(player.getEquipment().isItemEquipped(item));
-        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_TRUE(player.getMutableEquipment().isSlotOccupied(item.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canEquipItemFromInventoryWhenSlotIsOccupied) {
@@ -111,8 +111,8 @@ namespace {
         handler.pickupItem(player, item2);
         handler.equipItem(player, item2);
 
-        EXPECT_TRUE(player.getEquipment().isItemEquipped(item2));
-        EXPECT_TRUE(player.getEquipment().isSlotOccupied(item2.getSlot()));
+        EXPECT_TRUE(player.getMutableEquipment().isItemEquipped(item2));
+        EXPECT_TRUE(player.getMutableEquipment().isSlotOccupied(item2.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, cannotEquipFromOutsideOfInventory) {
@@ -120,8 +120,8 @@ namespace {
 
         handler.equipItem(player, item);
 
-        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getMutableEquipment().isSlotOccupied(item.getSlot()));
     }
 
     TEST_F(PlayerTestSuite, canDropEquippedItem) {
@@ -132,8 +132,8 @@ namespace {
 
         Object droppedItem = handler.dropItem(player, item);
 
-        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getMutableEquipment().isSlotOccupied(item.getSlot()));
         EXPECT_TRUE(droppedItem == item);
     }
 
@@ -145,9 +145,9 @@ namespace {
 
         handler.unequipItem(player, item);
 
-        EXPECT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_FALSE(player.getEquipment().isSlotOccupied(item.getSlot()));
-        EXPECT_TRUE(player.getInventory().isItemInInventory(item));
+        EXPECT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_FALSE(player.getMutableEquipment().isSlotOccupied(item.getSlot()));
+        EXPECT_TRUE(player.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canReturnCollectionOfItems) {
@@ -157,7 +157,7 @@ namespace {
             handler.pickupItem(player, item);
         }
 
-        std::vector<Object> items = player.getInventory().getVectorInventory();
+        std::vector<Object> items = player.getMutableInventory().getVectorInventory();
 
         ASSERT_EQ(items.size(), itemsToCreate);
         for (Object object : items) {
@@ -182,13 +182,13 @@ namespace {
 
         Object item{12345, "janga", {}, {}, Slot::Head};
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
 
         handler.giveItem(player, receiver, item);
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
-        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_FALSE(receiver.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_FALSE(receiver.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInInventory) {
@@ -197,13 +197,13 @@ namespace {
         Object item{12345, "janga", {}, {}, Slot::Head};
         handler.pickupItem(player, item);
 
-        ASSERT_TRUE(player.getInventory().isItemInInventory(item));
+        ASSERT_TRUE(player.getMutableInventory().isItemInInventory(item));
 
         handler.giveItem(player, receiver, item);
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
-        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getMutableInventory().isItemInInventory(item));
     }
 
     TEST_F(PlayerTestSuite, canGiveItemToDifferentPlayerWhenObjectInEquipment) {
@@ -213,13 +213,13 @@ namespace {
         handler.pickupItem(player, item);
         handler.equipItem(player, item);
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
-        ASSERT_TRUE(player.getEquipment().isItemEquipped(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
+        ASSERT_TRUE(player.getMutableEquipment().isItemEquipped(item));
 
         handler.giveItem(player, receiver, item);
 
-        ASSERT_FALSE(player.getInventory().isItemInInventory(item));
-        ASSERT_FALSE(player.getEquipment().isItemEquipped(item));
-        EXPECT_TRUE(receiver.getInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableInventory().isItemInInventory(item));
+        ASSERT_FALSE(player.getMutableEquipment().isItemEquipped(item));
+        EXPECT_TRUE(receiver.getMutableInventory().isItemInInventory(item));
     }
 }

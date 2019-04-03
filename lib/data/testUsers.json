@@ -3,37 +3,44 @@
     {
       "id": 0,
       "password": "Valid Pass",
-      "username": "Able"
+      "username": "Able",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Pass",
-      "username": "Baker"
+      "username": "Baker",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Pass",
-      "username": "Charlie"
+      "username": "Charlie",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Pass",
-      "username": "TakenUsername"
+      "username": "TakenUsername",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Input",
-      "username": "canLogin"
+      "username": "canLogin",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Input",
-      "username": "canLogoutClient"
+      "username": "canLogoutClient",
+      "role": "default"
     },
     {
       "id": 0,
       "password": "Valid Input",
-      "username": "ClearsOnFail"
+      "username": "ClearsOnFail",
+      "role": "default"
     }
   ]
 }

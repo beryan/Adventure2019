@@ -97,16 +97,16 @@ namespace handler {
                 return message.str();
             }
 
-            auto dodgeValue = player->getEquipment().getDodgeValue();
+            auto dodgeValue = player->getMutableEquipment().getDodgeValue();
             if (this->rollDodge(dodgeValue)) {
                 message << npc.getShortDescription() << " dodges your attack!\n";
                 return message.str();
             }
 
-            auto offenceValue = player->getEquipment().getOffenceValue();
+            auto offenceValue = player->getMutableEquipment().getOffenceValue();
             auto damage = this->rollDamage(offenceValue);
 
-            auto criticalValue = player->getEquipment().getCriticalValue();
+            auto criticalValue = player->getMutableEquipment().getCriticalValue();
             if (this->rollCritical(criticalValue)) {
                 damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);
                 message << "You strike a critical hit, inflicting ";
@@ -156,7 +156,7 @@ namespace handler {
         }
 
         auto damage = this->rollDamage();
-        damage -= player.getEquipment().getDefenceValue();
+        damage -= player.getMutableEquipment().getDefenceValue();
 
         if (this->rollCritical()) {
             damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);

@@ -3,21 +3,28 @@
 //
 
 #include "ResetHandler.h"
+#include "PropertiesManager.h"
 #include <iostream>
 
 using handler::ResetHandler;
+using handler::PropertiesManager;
 
 namespace handler {
-    ResetHandler::ResetHandler() {}
+    ResetHandler::ResetHandler() {
+        int resetIntervalProperty = DEFAULT_RESET_INTERVAL;
+        PropertiesManager::getProperty(PropertiesManager::RESET_INTERVAL_PROPERTY_NAME, resetIntervalProperty);
+        resetInterval = static_cast<unsigned int>(resetIntervalProperty);
+        cyclesUntilReset = resetInterval;
+    }
 
     void ResetHandler::addNpcsToRooms(Area& area){
-        for(const Reset &reset : area.getResets()) {
-            if(reset.getAction() == NPC_ACTION) {
+        for (const auto &reset : area.getResets()) {
+            if (reset.getAction() == NPC_ACTION) {
                 auto room = area.findRoomById(reset.getRoom());
                 auto npc = area.findNpcById(reset.getId());
 
-                if(room != area.getRooms().end() && npc != area.getNpcs().end()) {
-                    while(logic.canAddNpcToRoom(reset, *room)){
+                if (room != area.getRooms().end() && npc != area.getNpcs().end()) {
+                    if (logic.canAddNpcToRoom(reset, *room)) {
                         room->addNPC(*npc);
                     }
                 }
@@ -27,14 +34,14 @@ namespace handler {
     }
 
     void ResetHandler::addObjectsToRooms(Area& area){
-        for(Reset reset : area.getResets()) {
-            if(reset.getAction() == OBJECT_ACTION) {
+        for (const auto &reset : area.getResets()) {
+            if (reset.getAction() == OBJECT_ACTION) {
                 auto room = area.findRoomById(reset.getRoom());
                 auto object = area.findObjectById(reset.getId());
 
                 bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
 
-                if(roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)){
+                if (roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)) {
                         room->addObject(*object);
                 }
             }
@@ -42,23 +49,23 @@ namespace handler {
     }
 
     void ResetHandler::loadSavedResets(Area& area){
-        for(const Reset &reset : area.getSaveResets()) {
-            if(reset.getAction() == NPC_ACTION) {
+        for (const auto &reset : area.getSaveResets()) {
+            if (reset.getAction() == NPC_ACTION) {
                 auto room = area.findRoomById(reset.getRoom());
                 auto npc = area.findNpcById(reset.getId());
 
-                if(room != area.getRooms().end() && npc != area.getNpcs().end()) {
-                    while(logic.canAddNpcToRoom(reset, *room)){
+                if (room != area.getRooms().end() && npc != area.getNpcs().end()) {
+                    while (logic.canAddNpcToRoom(reset, *room)) {
                         room->addNPC(*npc);
                     }
                 }
-            }else if(reset.getAction() == OBJECT_ACTION) {
+            } else if (reset.getAction() == OBJECT_ACTION) {
                 auto room = area.findRoomById(reset.getRoom());
                 auto object = area.findObjectById(reset.getId());
 
                 bool roomAndObjectFound = (room != area.getRooms().end() && object != area.getObjects().end());
 
-                if(roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)){
+                if (roomAndObjectFound && logic.canAddObjectToRoom(reset, *room)) {
                     room->addObject(*object);
                 }
             }
@@ -68,6 +75,20 @@ namespace handler {
     void ResetHandler::resetArea(Area& area){
         addNpcsToRooms(area);
         addObjectsToRooms(area);
+    }
+
+    bool ResetHandler::isTimeToReset() {
+        return this->cyclesUntilReset == 0;
+    }
+
+    void ResetHandler::decrementTimer() {
+        if (this->cyclesUntilReset > 0) {
+            --this->cyclesUntilReset;
+        }
+    }
+
+    void ResetHandler::resetTimer() {
+        this->cyclesUntilReset = this->resetInterval;
     }
 
 }

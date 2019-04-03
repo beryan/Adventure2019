@@ -31,6 +31,7 @@ namespace game {
                 {"alias",     Command::Alias},
                 {"attack",    Command::Attack},
                 {"build",     Command::Build},
+                {"builder",   Command::Builder},
                 {"cast",      Command::Cast},
                 {"chat",      Command::Chat},
                 {"drop",      Command::Drop},

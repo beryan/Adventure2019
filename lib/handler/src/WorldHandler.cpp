@@ -21,7 +21,6 @@ constexpr auto LOAD_FILE_PATH = "lib/data/saveFile.json";
 namespace handler {
 
     WorldHandler::WorldHandler() {
-        //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
 
         // load save file if it exists, otherwise load a default area file
@@ -368,12 +367,23 @@ namespace handler {
             room.setObjects({});
             room.setNpcs({});
         }
-        resetHandler.resetArea(area);
+
+        this->resetHandler.resetArea(area);
     }
 
     void WorldHandler::reset() {
         for (Area& area : this->world.getAreas()) {
-            resetHandler.resetArea(area);
+            this->resetHandler.resetArea(area);
+        }
+    }
+
+    void WorldHandler::processResets() {
+        if (resetHandler.isTimeToReset()) {
+            this->reset();
+            this->resetHandler.resetTimer();
+
+        } else {
+            this->resetHandler.decrementTimer();
         }
     }
 
