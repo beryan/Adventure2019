@@ -140,7 +140,7 @@ Command AliasManager::getCommandForUser(std::string_view commandStr, std::string
 std::unordered_map<std::string, std::string> AliasManager::getAliasesForUser(std::string_view username) {
     std::unordered_map<std::string, std::string> aliases;
 
-    std::ifstream ifs(COMMANDS_FILE_PATH);
+    std::ifstream ifs(this->filePath);
 
     if (!ifs.is_open()) {
         throw std::runtime_error("Could not open commands file");
@@ -151,7 +151,6 @@ std::unordered_map<std::string, std::string> AliasManager::getAliasesForUser(std
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         aliases = username_iterator->get<std::unordered_map<std::string, std::string>>();
-
     }
 
     return aliases;
