@@ -145,12 +145,12 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Inventory: {
-            tempMessage << accountHandler.getPlayerByClient(client)->getMutableInventory();
+            tempMessage << accountHandler.getPlayerByClient(client).getMutableInventory();
             break;
         }
 
         case Command::Equipment: {
-            tempMessage << accountHandler.getPlayerByClient(client)->getMutableEquipment();
+            tempMessage << accountHandler.getPlayerByClient(client).getMutableEquipment();
             break;
         }
 
@@ -534,7 +534,7 @@ std::string CommandExecutor::examine(const Connection &client, const std::string
 
         if (playerRoom == examinedPlayerRoom) {
             auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
-            tempMessage << examinedPlayer->getDescription();
+            tempMessage << examinedPlayer.getDescription();
 
         } else {
             tempMessage << "Invalid keyword.\n";
@@ -606,12 +606,12 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
     auto player = this->accountHandler.getPlayerByClient(client);
     auto npc = getItemByKeyword(npcs, keyword);
 
-    if (this->combatHandler.isInCombat(*player)) {
-        tempMessage << "You are too busy fighting to talk!\n";
+    if (this->combatHandler.isInCombat(player)) {
+        tempMessage << "You are too busy fighting to talk!.\n";
         return tempMessage.str();
     }
 
-    if (this->combatHandler.isInCombat(npc) && !this->combatHandler.areInCombat(*player, npc)) {
+    if (this->combatHandler.isInCombat(npc) && !this->combatHandler.areInCombat(player, npc)) {
         auto otherPlayerId = this->combatHandler.getOpponentId(npc);
         auto otherPlayerName = this->accountHandler.getUsernameByPlayerId(otherPlayerId);
         if (otherPlayerName.empty()) {
@@ -639,9 +639,9 @@ std::string CommandExecutor::take(const Connection &client, const std::string &k
 
     if (containsKeyword(objects, keyword)) {
         auto item = getItemByKeyword(objects, keyword);
-        auto player = accountHandler.getPlayerByClient(client);
+        auto &player = accountHandler.getPlayerByClient(client);
         worldHandler.removeItem(roomId, item.getId());
-        playerHandler.pickupItem(*player, item);
+        playerHandler.pickupItem(player, item);
         tempMessage << "Item taken successfully.\n";
     } else {
         tempMessage << "Invalid keyword.\n";
@@ -651,15 +651,15 @@ std::string CommandExecutor::take(const Connection &client, const std::string &k
 
 std::string CommandExecutor::drop(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
-    auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getMutableInventory().getVectorInventory();
-    auto equip = player->getMutableEquipment().getVectorEquipment();
+    auto &player = accountHandler.getPlayerByClient(client);
+    auto objects = player.getMutableInventory().getVectorInventory();
+    auto equip = player.getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (containsKeyword(objects, keyword)) {
         auto item = getItemByKeyword(objects, keyword);
         auto roomId = accountHandler.getRoomIdByClient(client);
-        playerHandler.dropItem(*player, item);
+        playerHandler.dropItem(player, item);
         worldHandler.addItem(roomId, item);
         tempMessage << "Item dropped successfully.\n";
     } else {
@@ -671,11 +671,11 @@ std::string CommandExecutor::drop(const Connection &client, const std::string &k
 
 std::string CommandExecutor::wear(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
-    auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getMutableInventory().getVectorInventory();
+    auto &player = accountHandler.getPlayerByClient(client);
+    auto objects = player.getMutableInventory().getVectorInventory();
 
     if (containsKeyword(objects, keyword)) {
-        if (playerHandler.equipItem(*player, getItemByKeyword(objects, keyword))) {
+        if (playerHandler.equipItem(player, getItemByKeyword(objects, keyword))) {
             tempMessage << "Item equipped successfully.\n";
         } else {
             tempMessage << "That item cannot be equipped!\n";
@@ -688,11 +688,11 @@ std::string CommandExecutor::wear(const Connection &client, const std::string &k
 
 std::string CommandExecutor::remove(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
-    auto player = accountHandler.getPlayerByClient(client);
-    auto objects = player->getMutableEquipment().getVectorEquipment();
+    auto &player = accountHandler.getPlayerByClient(client);
+    auto objects = player.getMutableEquipment().getVectorEquipment();
 
     if (containsKeyword(objects, keyword)) {
-        playerHandler.unequipItem(*player, getItemByKeyword(objects, keyword));
+        playerHandler.unequipItem(player, getItemByKeyword(objects, keyword));
         tempMessage << "Item unequipped successfully.\n";
     } else {
         tempMessage << "Invalid keyword.\n";
@@ -707,19 +707,19 @@ std::vector<Message> CommandExecutor::give(const Connection &client, const std::
     auto receiverClient = this->accountHandler.getClientByUsername(username);
     auto receiverId = this->accountHandler.getPlayerIdByClient(receiverClient);
 
-    auto sender = this->accountHandler.getPlayerByClient(client);
+    auto &sender = this->accountHandler.getPlayerByClient(client);
     auto senderName = this->accountHandler.getUsernameByClient(client);
-    auto objects = sender->getMutableInventory().getVectorInventory();
-    auto equip = sender->getMutableEquipment().getVectorEquipment();
+    auto objects = sender.getMutableInventory().getVectorInventory();
+    auto equip = sender.getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (!this->worldHandler.canGive(roomId, receiverId) || username == senderName) {
         std::string message = "Invalid username.\n";
         messages.push_back({client, message});
     } else if (containsKeyword(objects, keyword)) {
-        auto receiver = this->accountHandler.getPlayerByClient(receiverClient);
+        auto &receiver = this->accountHandler.getPlayerByClient(receiverClient);
         auto object = getItemByKeyword(objects, keyword);
-        this->playerHandler.giveItem(*sender, *receiver, object);
+        this->playerHandler.giveItem(sender, receiver, object);
 
         std::ostringstream senderMessage;
         std::ostringstream receiverMessage;
@@ -746,14 +746,14 @@ std::string CommandExecutor::status(const Connection &client) {
     output << "\n"
            << "Status:\n"
            << "-------\n"
-           << "HP: " << player->getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+           << "HP: " << player.getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
 
-    auto offenceValue = player->getMutableEquipment().getOffenceValue();
+    auto offenceValue = player.getMutableEquipment().getOffenceValue();
     auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
     auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
     output << "Attack: " << minDamage << "-" << maxDamage << "\n";
 
-    auto defenceValue = player->getMutableEquipment().getDefenceValue();
+    auto defenceValue = player.getMutableEquipment().getDefenceValue();
     output << "Armour: " << defenceValue << "\n";
 
     auto isBodySwapped = magicHandler.isBodySwapped(client);
@@ -872,7 +872,7 @@ std::string CommandExecutor::aliasSetGlobal(const Connection &client, const std:
         return "\nIncorrect number of parameters for alias set-global command\n";
     }
 
-    if (accountHandler.getPlayerByClient(client)->getRole() != model::Role::Admin) {
+    if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
         return "\nYou do not have permission to set global aliases\n";
     }
 
@@ -931,7 +931,7 @@ std::string CommandExecutor::aliasClearGlobal(const Connection &client, const st
         return "\nIncorrect number of parameters for alias clear command\n";
     }
 
-    if (accountHandler.getPlayerByClient(client)->getRole() != model::Role::Admin) {
+    if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
         return "\nYou do not have permission to clear global aliases\n";
     }
 
@@ -1013,12 +1013,12 @@ std::string CommandExecutor::builder(const std::string &username) {
         auto name = this->accountHandler.getUsernameByClient(connection);
         if (username == name) {
             auto player = this->accountHandler.getPlayerByClient(connection);
-            auto role = player->getRole();
+            auto role = player.getRole();
             if (role == model::Role::Default) {
-                player->setRole(model::Role::Builder);
+                player.setRole(model::Role::Builder);
                 tempMessage << "Access to build commands has been given to " << username << ".\n";
             } else if (role == model::Role::Builder) {
-                player->setRole(model::Role::Default);
+                player.setRole(model::Role::Default);
                 tempMessage << "Access to build commands has been taken from " << username << ".\n";
             } else {
                 tempMessage << "This command does not work on admin users.\n";
@@ -1046,7 +1046,7 @@ std::string CommandExecutor::alist() {
 std::string CommandExecutor::rlist(const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-        unsigned int index = std::stoi(param) - 1;
+        auto index = static_cast<unsigned int>(std::stoi(param) - 1);
         if (index < this->worldHandler.getWorld().getAreas().size()) {
             tempMessage << "\nRoom List\n";
             tempMessage << "---------\n";
@@ -1067,7 +1067,7 @@ std::string CommandExecutor::rlist(const std::string &param) {
 std::string CommandExecutor::olist(const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-        unsigned int index = std::stoi(param) - 1;
+        auto index = static_cast<unsigned int>(std::stoi(param) - 1);
         if (index < this->worldHandler.getWorld().getAreas().size()) {
             tempMessage << "\nObject List\n";
             tempMessage << "-----------\n";
@@ -1088,7 +1088,7 @@ std::string CommandExecutor::olist(const std::string &param) {
 std::string CommandExecutor::nlist(const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
-        unsigned int index = std::stoi(param) - 1;
+        auto index = static_cast<unsigned int>(std::stoi(param) - 1);
         if (index < this->worldHandler.getWorld().getAreas().size()) {
             tempMessage << "\nNPC List\n";
             tempMessage << "--------\n";
