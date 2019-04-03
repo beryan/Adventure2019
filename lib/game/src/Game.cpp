@@ -250,6 +250,7 @@ namespace game {
         this->accountHandler.notifyBootedClients(messages);
         this->magicHandler.processCycle(messages);
         this->combatHandler.processCycle(messages);
+        this->worldHandler.processResets();
     }
 
     std::deque<Message>

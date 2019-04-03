@@ -13,11 +13,13 @@
 #include <vector>
 
 using json = nlohmann::json;
-const std::string PROPERTIES_PATH = "lib/data/properties.json";
+constexpr auto PROPERTIES_PATH = "lib/data/properties.json";
 
-namespace game {
+namespace handler {
     class PropertiesManager {
     public:
+        constexpr static auto RESET_INTERVAL_PROPERTY_NAME = "reset_interval";
+
         /**
          *
          * @tparam T type of object to look for

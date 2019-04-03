@@ -1,5 +1,6 @@
 {
   "test_string_property": "my test string",
   "test_int_property": 420,
-  "test_bool_property": true
+  "test_bool_property": true,
+  "reset_interval": 25
 }

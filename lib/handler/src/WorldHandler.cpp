@@ -367,12 +367,23 @@ namespace handler {
             room.setObjects({});
             room.setNpcs({});
         }
-        resetHandler.resetArea(area);
+
+        this->resetHandler.resetArea(area);
     }
 
     void WorldHandler::reset() {
         for (Area& area : this->world.getAreas()) {
-            resetHandler.resetArea(area);
+            this->resetHandler.resetArea(area);
+        }
+    }
+
+    void WorldHandler::processResets() {
+        if (resetHandler.isTimeToReset()) {
+            this->reset();
+            this->resetHandler.resetTimer();
+
+        } else {
+            this->resetHandler.decrementTimer();
         }
     }
 
