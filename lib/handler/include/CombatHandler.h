@@ -35,26 +35,22 @@ namespace handler {
         /**
          *  Returns true if miss occurs
          */
-        bool
-        rollMiss();
+        bool rollMiss();
 
         /**
          *  Returns true if dodge occurs
          */
-        bool
-        rollDodge(const float &modifier = 0);
+        bool rollDodge(const float &modifier = 0);
 
         /**
          *  Returns a damage value between a defined range
          */
-        int
-        rollDamage(const int &modifier = 0);
+        int rollDamage(const int &modifier = 0);
 
         /**
          *  Returns true if a critical strike occurs
          */
-        bool
-        rollCritical(const float &modifier = 0);
+        bool rollCritical(const float &modifier = 0);
 
         /**
          *  Methods for applying an attack result to the npc or player's health.
@@ -62,36 +58,31 @@ namespace handler {
          *  Returns a message based on the result.
          * @param npc: NPC that is being attacked
          */
-        std::string
-        inflictDamage(NPC &npc);
+        std::string inflictDamage(NPC &npc);
 
         /**
          * @param player: player that is being attacked
          */
-        std::string
-        inflictDamage(Player &player);
+        std::string inflictDamage(Player &player);
 
         /**
          * @param attacker: character that will enter Combat with defender
          * @param defender character that will enter Combat with attacker
          */
-        void
-        enterCombat(const Character &attacker, const Character &defender);
+        void enterCombat(const Character &attacker, const Character &defender);
 
         /**
          * Disengages two characters from combat where they are both involved in
          * @param character1: character that is in combat with character2
          * @param character2: character that is in combat with character1
          */
-        void
-        exitCombat(const Character &character1, const Character &character2);
+        void exitCombat(const Character &character1, const Character &character2);
 
         /**
          * Erases a combat state involving character
          * @param character: character that is in combat
          */
-        void
-        exitCombat(const Character &character);
+        void exitCombat(const Character &character);
 
     public:
         constexpr static int BASE_MIN_DAMAGE = 10;
@@ -108,8 +99,7 @@ namespace handler {
          * @param targetName: the keyword to specify the target in the room
          * @return string containing the attack result
          */
-        std::string
-        attack(const Connection &client, const std::string &targetName);
+        std::string attack(const Connection &client, const std::string &targetName);
 
         /**
          * Causes the client's player to attempt to escape combat by fleeing to a random connected room.
@@ -117,24 +107,21 @@ namespace handler {
          * @param client that is performing the action
          * @return string containing the flee result
          */
-        std::string
-        flee(const Connection &client);
+        std::string flee(const Connection &client);
 
         /**
          * Used for checking if a character is currently in combat
          * @param character to be evaluated
          * @return true if character is in an active combat state, otherwise false
          */
-        bool
-        isInCombat(const Character &character);
+        bool isInCombat(const Character &character);
 
         /**
          * @param attacker: character that is in combat with the defender
          * @param defender: character that is in combat with the attacker
          * @return true if there is an active combat state with both characters, otherwise false
          */
-        bool
-        areInCombat(const Character &attacker, const Character &defender);
+        bool areInCombat(const Character &attacker, const Character &defender);
 
 
         /**
@@ -142,8 +129,14 @@ namespace handler {
          * @param character to be evaluated
          * @return ID of the opposing NPC or Player
          */
-        model::ID
-        getOpponentId(const Character &character);
+        model::ID getOpponentId(const Character &character);
+
+
+        /**
+         * Replaces the character in a combat instance with a dummy NPC
+         * @param character to be replaced
+         */
+        void replaceWithDecoy(const Player &player);
 
 
         /**
@@ -151,16 +144,14 @@ namespace handler {
          * while they are in combat.
          * @param client that has disconnected from the game
          */
-        void
-        handleLogout(const Connection &client);
+        void handleLogout(const Connection &client);
 
         /**
          * Decrements the cycle counter of the round in each combat instance and returns
          * combat-related messages when appropriate.
          * @param messages deque from the game class
          */
-        void
-        processCycle(std::deque<Message> &messages);
+        void processCycle(std::deque<Message> &messages);
 
     };
 }

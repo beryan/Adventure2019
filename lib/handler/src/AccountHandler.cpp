@@ -373,18 +373,6 @@ namespace handler {
                   << "\n";
     }
 
-    std::vector<Player>
-    AccountHandler::parseJsonUsers(json users) {
-        std::vector<Player> players;
-
-        for (json::iterator it = users.begin(); it != users.end(); ++it) {
-            Player p (it.value().at("id"), it.value().at("username"), "");
-            players.push_back(p);
-        }
-
-        return players;
-    }
-
     void AccountHandler::loadRegisteredUsers(){
         std::vector<Player> players = DataManager::loadRegisteredPlayers();
 

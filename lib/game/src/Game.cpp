@@ -15,7 +15,7 @@ namespace game {
     Game::Game(ConnectionHandler &connectionHandler) :
             connectionHandler(connectionHandler),
             avatarHandler(this->accountHandler),
-            magicHandler(this->accountHandler),
+            magicHandler(this->accountHandler,this->combatHandler),
             combatHandler(this->accountHandler, this->worldHandler),
             commandExecutor(connectionHandler, accountHandler, avatarHandler, magicHandler, combatHandler,
                             worldHandler, aliasManager, commandParser),

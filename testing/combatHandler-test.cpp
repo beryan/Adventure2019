@@ -33,7 +33,6 @@ constexpr model::ID NPC_B_ID = 200;
 constexpr auto NPC_A_KEYWORD = "alpha";
 constexpr auto NPC_B_KEYWORD = "bravo";
 
-constexpr auto EXPECTED_FLEE_CHANCE = 0.2f;
 constexpr auto EXPECTED_ROUND_CYCLES = 5;
 
 namespace {
@@ -45,17 +44,15 @@ namespace {
         World world;
 
         virtual void SetUp() override {
-            // Register client A
+            // Login client A
             accountHandler.processLogin(CLIENT_A);
             accountHandler.processLogin(CLIENT_A, USERNAME_A);
             accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
-            accountHandler.processLogin(CLIENT_A, VALID_PASSWORD_STRING);
             accountHandler.setRoomIdByClient(CLIENT_A, TEST_ROOM_1_ID);
 
-            // Register client B
+            // Login client B
             accountHandler.processLogin(CLIENT_B);
             accountHandler.processLogin(CLIENT_B, USERNAME_B);
-            accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
             accountHandler.processLogin(CLIENT_B, VALID_PASSWORD_STRING);
             accountHandler.setRoomIdByClient(CLIENT_B, TEST_ROOM_1_ID);
 
@@ -101,7 +98,9 @@ namespace {
      *  8.  Can flee to random room while in combat
      *  9.  Can flee in room with no doors while in combat
      *  10. Can get opponent ID
-     *  12. Combat rounds end after a number of game cycles
+     *  11. Can replace player with decoy in combat
+     *  12. Can remove player from combat on client logout
+     *  13. Combat rounds end after a number of game cycles
      */
 
 
@@ -362,6 +361,49 @@ namespace {
 
         EXPECT_EQ(NPC_A_ID, combatHandler.getOpponentId(*player));
         EXPECT_EQ(player->getId(), combatHandler.getOpponentId(npc));
+    }
+
+
+    TEST_F(CombatHandlerTestSuite, canReplacePlayerWithDecoy) {
+        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
+
+        ASSERT_FALSE(combatHandler.isInCombat(*player));
+        ASSERT_FALSE(combatHandler.isInCombat(npc));
+        ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
+
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+
+        ASSERT_TRUE(combatHandler.isInCombat(*player));
+        ASSERT_TRUE(combatHandler.isInCombat(npc));
+        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
+
+        combatHandler.replaceWithDecoy(*player);
+        EXPECT_NO_THROW(worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(USERNAME_A));
+        EXPECT_FALSE(combatHandler.isInCombat(*player));
+    }
+
+
+    TEST_F(CombatHandlerTestSuite, canRemoveCombatInstanceOnClientLogout) {
+        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
+
+        ASSERT_FALSE(combatHandler.isInCombat(*player));
+        ASSERT_FALSE(combatHandler.isInCombat(npc));
+        ASSERT_FALSE(combatHandler.areInCombat(*player, npc));
+
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+
+        ASSERT_TRUE(combatHandler.isInCombat(*player));
+        ASSERT_TRUE(combatHandler.isInCombat(npc));
+        ASSERT_TRUE(combatHandler.areInCombat(*player, npc));
+
+        combatHandler.handleLogout(CLIENT_A);
+
+        EXPECT_FALSE(combatHandler.isInCombat(*player));
+        EXPECT_FALSE(combatHandler.isInCombat(npc));
+        EXPECT_FALSE(combatHandler.areInCombat(*player, npc));
+        EXPECT_NO_THROW(combatHandler.handleLogout(CLIENT_B));
     }
 
 

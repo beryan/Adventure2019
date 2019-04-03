@@ -599,14 +599,35 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
     auto room = worldHandler.findRoom(accountHandler.getRoomIdByClient(client));
     auto npcs = room.getNpcs();
 
-    if (containsKeyword(npcs, keyword)) {
-        auto npc = getItemByKeyword(npcs, keyword);
-        for (const auto &str : npc.getLongDescription()) {
-            tempMessage << str << std::endl;
-        }
-    } else {
+    if (!containsKeyword(npcs, keyword)) {
         tempMessage << "Invalid keyword.\n";
     }
+
+    auto player = this->accountHandler.getPlayerByClient(client);
+    auto npc = getItemByKeyword(npcs, keyword);
+
+    if (this->combatHandler.isInCombat(*player)) {
+        tempMessage << "You are too busy fighting to talk!\n";
+        return tempMessage.str();
+    }
+
+    if (this->combatHandler.isInCombat(npc) && !this->combatHandler.areInCombat(*player, npc)) {
+        auto otherPlayerId = this->combatHandler.getOpponentId(npc);
+        auto otherPlayerName = this->accountHandler.getUsernameByPlayerId(otherPlayerId);
+        if (otherPlayerName.empty()) {
+            // Decoy npc;
+            otherPlayerName = room.getNpcById(otherPlayerId).getShortDescription();
+        }
+
+        tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << ".\n";
+        return tempMessage.str();
+    }
+
+
+    for (const auto &str : npc.getLongDescription()) {
+        tempMessage << str << std::endl;
+    }
+
     return tempMessage.str();
 }
 
@@ -645,6 +666,7 @@ std::string CommandExecutor::drop(const Connection &client, const std::string &k
         tempMessage << "Invalid keyword.\n";
     }
     return tempMessage.str();
+
 }
 
 std::string CommandExecutor::wear(const Connection &client, const std::string &keyword) {
