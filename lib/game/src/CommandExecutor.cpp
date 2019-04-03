@@ -6,6 +6,7 @@
 #include <iostream>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include "Character.h"
 
 using game::CommandExecutor;
 using model::NPC;
@@ -451,7 +452,8 @@ std::vector<Message> CommandExecutor::yell(const Connection &client, std::string
     return messages;
 }
 
-std::vector<Message> CommandExecutor::tell(const Connection &client, const std::string &username, std::string &message) {
+std::vector<Message>
+CommandExecutor::tell(const Connection &client, const std::string &username, std::string &message) {
     std::vector<Message> messages;
 
     if (this->magicHandler.isConfused(client)) {
@@ -740,104 +742,195 @@ std::string CommandExecutor::status(const Connection &client) {
 }
 
 std::string CommandExecutor::alias(const Connection &client, const std::vector<std::string> &params) {
-    std::ostringstream res;
-    try {
-        std::string username = this->accountHandler.getUsernameByClient(client);
-        if (params.empty()) {
-            return "\nIncorrect number of parameters for alias command\n";
-        }
-        std::string aliasOption = params[0];
-
-        if (aliasOption == ALIAS_LIST) {
-            if (params.size() != ALIAS_LIST_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias list command\n";
-            }
-            auto aliases = this->aliasManager.getAliasesForUser(username);
-            auto globalAliases = this->aliasManager.getGlobalAliases();
-
-            res << "\nUser Aliases: \n";
-            if (aliases.empty()) {
-                res << "\tno user aliases set\n";
-            }
-            for (const auto &alias: aliases) {
-                res << "\t" << alias.first << " -> " << alias.second << std::endl;
-            }
-
-            res << "Global Aliases: \n";
-            for (const auto &alias: globalAliases) {
-                res << "\t" << alias.first << " -> " << alias.second << std::endl;
-            }
-            if (globalAliases.empty()) {
-                res << "\tno global aliases set\n";
-            }
-        } else if (aliasOption == ALIAS_SET || aliasOption == ALIAS_SET_GLOBAL) {
-            if (params.size() != ALIAS_SET_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias set command\n";
-            }
-
-            std::string command_to_alias_str = params[1];
-            Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
-
-            if (command_to_alias == Command::InvalidCommand) {
-                res << "\nAlias could not be set: " << command_to_alias_str
-                    << " is not the name of a command\n";
-                res.str();
-            }
-
-            std::string alias = params[2];
-
-            if (!this->aliasManager.isValidAlias(alias)) {
-                res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
-                res.str();
-            }
-
-            if ((aliasOption == ALIAS_SET &&
-                 this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
-                (aliasOption == ALIAS_SET_GLOBAL &&
-                 this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
-                res << "\nAlias set successfully\n";
-            } else {
-                res << "\nAlias could not be set: an alias has already been set for the specified command\n";
-            }
-        } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
-            if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias clear command\n";
-            }
-            std::string command_to_clear_str = params[1];
-            Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
-
-            if (command_to_clear == Command::InvalidCommand) {
-                res << "\nAlias could not be cleared: " << command_to_clear_str
-                    << " is not the name of a command\n";
-                res.str();
-            }
-
-            if (aliasOption == ALIAS_CLEAR) {
-                this->aliasManager.clearUserAlias(command_to_clear, username);
-            } else {
-                this->aliasManager.clearGlobalAlias(command_to_clear);
-            }
-
-            res << "\nAlias cleared successfully\n";
-
-        } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
-            res << "\nAlias Commands:\n"
-                << "---------------\n"
-                << "  - alias list (lists all aliases)\n"
-                << "  - alias set [command] [alias] (sets an alias for a command)\n"
-                << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
-                << "  - alias clear [command] (clears an alias for a command)\n"
-                << "  - alias clear-global [command] (clears a global alias for a command)\n";
-        } else {
-            res << aliasOption << " is not a valid option for "
-                << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
-        }
-    } catch (std::exception &e) {
-        res << "\n error parsing " << this->commandParser.getStringForCommand(Command::Alias)
-            << " command!\n";
-        std::cout << e.what();
+    if (params.empty()) {
+        return "\nIncorrect number of parameters for alias command\n";
     }
 
+    std::ostringstream res;
+
+    std::string aliasOption = params[0];
+
+    if (aliasOption == ALIAS_LIST) {
+        res << aliasList(client, params);
+    } else if (aliasOption == ALIAS_SET) {
+        res << aliasSet(client, params);
+    } else if (aliasOption == ALIAS_SET_GLOBAL) {
+        res << aliasSetGlobal(client, params);
+    } else if (aliasOption == ALIAS_CLEAR) {
+        res << aliasClear(client, params);
+    } else if (aliasOption == ALIAS_CLEAR_GLOBAL) {
+        res << aliasClearGlobal(client, params);
+    } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
+        res << aliasHelp();
+    } else {
+        res << aliasOption << " is not a valid option for "
+            << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasList(const Connection &client, const std::vector<std::string> &params) {
+    std::string username = this->accountHandler.getUsernameByClient(client);
+
+    if (params.size() != ALIAS_LIST_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias list command\n";
+    }
+
+    std::ostringstream res;
+
+    auto aliases = this->aliasManager.getAliasesForUser(username);
+    auto globalAliases = this->aliasManager.getGlobalAliases();
+
+    res << "\nUser Aliases: \n";
+
+    if (aliases.empty()) {
+        res << "\tno user aliases set\n";
+    }
+
+    for (const auto &alias: aliases) {
+        res << "\t" << alias.first << " -> " << alias.second << std::endl;
+    }
+
+    res << "Global Aliases: \n";
+
+    for (const auto &alias: globalAliases) {
+        res << "\t" << alias.first << " -> " << alias.second << std::endl;
+    }
+
+    if (globalAliases.empty()) {
+        res << "\tno global aliases set\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasSet(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_SET_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias set command\n";
+    }
+
+    std::ostringstream res;
+
+    std::string username = this->accountHandler.getUsernameByClient(client);
+    std::string command_to_alias_str = params[1];
+    Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
+
+    if (command_to_alias == Command::InvalidCommand) {
+        res << "\nAlias could not be set: " << command_to_alias_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string alias = params[2];
+
+    if (!this->aliasManager.isValidAlias(alias)) {
+        res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
+        return res.str();
+    }
+
+    if (this->aliasManager.setUserAlias(command_to_alias, alias, username)) {
+        res << "\nAlias set successfully\n";
+    } else {
+        res << "\nAlias could not be set: an alias has already been set for the specified command\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasSetGlobal(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_SET_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias set-global command\n";
+    }
+
+    if (accountHandler.getPlayerByClient(client)->getRole() != model::Role::Admin) {
+        return "\nYou do not have permission to set global aliases\n";
+    }
+
+    std::ostringstream res;
+
+    std::string command_to_alias_str = params[1];
+    Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
+
+    if (command_to_alias == Command::InvalidCommand) {
+        res << "\nAlias could not be set: " << command_to_alias_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string alias = params[2];
+
+    if (!this->aliasManager.isValidAlias(alias)) {
+        res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
+        return res.str();
+    }
+
+    if (this->aliasManager.setGlobalAlias(command_to_alias, alias)) {
+        res << "\nAlias set successfully\n";
+    } else {
+        res << "\nAlias could not be set: an alias has already been set for the specified command\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasClear(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias clear command\n";
+    }
+
+    std::ostringstream res;
+
+    std::string command_to_clear_str = params[1];
+    Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
+
+    if (command_to_clear == Command::InvalidCommand) {
+        res << "\nAlias could not be cleared: " << command_to_clear_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string username = accountHandler.getUsernameByClient(client);
+    this->aliasManager.clearUserAlias(command_to_clear, username);
+
+    res << "\nAlias cleared successfully\n";
+    return res.str();
+}
+
+std::string CommandExecutor::aliasClearGlobal(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias clear command\n";
+    }
+
+    if (accountHandler.getPlayerByClient(client)->getRole() != model::Role::Admin) {
+        return "\nYou do not have permission to clear global aliases\n";
+    }
+
+    std::string command_to_clear_str = params[1];
+    Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
+    std::ostringstream res;
+
+    if (command_to_clear == Command::InvalidCommand) {
+        res << "\nAlias could not be cleared: " << command_to_clear_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    this->aliasManager.clearGlobalAlias(command_to_clear);
+
+    res << "\nAlias cleared successfully\n";
+    return res.str();
+}
+
+std::string CommandExecutor::aliasHelp() {
+    std::ostringstream res;
+    res << "\nAlias Commands:\n"
+        << "---------------\n"
+        << "  - alias list (lists all aliases)\n"
+        << "  - alias set [command] [alias] (sets an alias for a command)\n"
+        << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
+        << "  - alias clear [command] (clears an alias for a command)\n"
+        << "  - alias clear-global [command] (clears a global alias for a command)\n";
     return res.str();
 }
 

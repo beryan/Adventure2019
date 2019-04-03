@@ -76,6 +76,12 @@ namespace game {
 
         std::string status(const Connection &client);
         std::string alias(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasList(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasSet(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasSetGlobal(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasClear(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasClearGlobal(const Connection &client, const std::vector<std::string> &params);
+        std::string aliasHelp();
 
         std::string build();
         std::string alist();
