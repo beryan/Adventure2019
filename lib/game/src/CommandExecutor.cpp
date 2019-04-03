@@ -894,7 +894,7 @@ std::string CommandExecutor::build() {
 
 std::string CommandExecutor::builder(const std::string &username) {
     std::ostringstream tempMessage;
-    for (auto connection: connectionHandler.getClients()) {
+    for (const auto &connection: connectionHandler.getClients()) {
         auto name = this->accountHandler.getUsernameByClient(connection);
         if (username == name) {
             auto player = this->accountHandler.getPlayerByClient(connection);

@@ -174,7 +174,7 @@ namespace game {
 
                     auto responseList = this->executeInGameAction(client, command, parameters);
 
-                    for (auto &response : responseList) {
+                    for (const auto &response : responseList) {
                         messages.push_back(response);
                     }
                 }
