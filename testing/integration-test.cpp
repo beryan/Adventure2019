@@ -59,7 +59,8 @@ namespace {
         sendMessage({connection, trait_2});
         sendMessage({connection, confirmation});
 
-        const auto &output = sendMessage({connection, parser.getStringForCommand(Command::Look) + " " + username});
+        std::string lookCommand = parser.getStringForCommand(Command::Look) + " " + username;
+        const auto &output = sendMessage({connection, lookCommand});
         const Message &lastMessage = output.back();
 
         EXPECT_EQ(connection, lastMessage.connection);
