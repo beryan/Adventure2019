@@ -53,9 +53,13 @@ namespace model {
 
         /************ Inventory ************/
 
-        Inventory &getInventory();
+        Inventory &getMutableInventory();
+        Inventory getImmutableInventory() const;
+        void setInventory(const Inventory &inventory);
 
-        Equipment &getEquipment();
+        Equipment &getMutableEquipment();
+        Equipment getImmutableEquipment() const;
+        void setEquipment(const Equipment &equipment);
 
         /************ ROOM ************/
 
@@ -83,14 +87,37 @@ namespace model {
         p.setId(j.at("id").get<model::ID>());
         p.setUsername(j.at("username").get<std::string>());
         p.setPassword(j.at("password").get<std::string>());
+        p.setRole(Character::stringToRoleMap.at(j.at("role").get<std::string>()));
+        if(j.find("avatar") != j.end()) {
+            p.setAvatar(j.at("avatar").get<Avatar>());
+        }
+        if(j.find("equipment") != j.end()) {
+            p.setEquipment(j.at("equipment").get<Equipment>());
+        }
+        if(j.find("inventory") != j.end()) {
+            p.setInventory(j.at("inventory").get<Inventory>());
+        }
     }
 
     inline void to_json(json& j, const Player &p){
         j = {
                 {"id", p.getId()},
                 {"username", p.getUsername()},
-                {"password", p.getPassword()}
+                {"password", p.getPassword()},
+                {"role", Character::roleToStringMap.at(p.getRole())}
         };
+
+        if(p.getAvatar().isDefined()){
+            j.push_back({"avatar", p.getAvatar()});
+        };
+
+        if(p.getImmutableEquipment().getVectorEquipment().size() > 0){
+            j.push_back({"equipment", p.getImmutableEquipment()});
+        }
+
+        if(p.getImmutableInventory().getVectorInventory().size() > 0){
+            j.push_back({"inventory", p.getImmutableInventory()});
+        }
     }
 }
 

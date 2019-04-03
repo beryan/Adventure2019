@@ -6,6 +6,7 @@
 #include <iostream>
 #include <boost/algorithm/string/case_conv.hpp>
 #include <boost/algorithm/string/join.hpp>
+#include "Character.h"
 
 using game::CommandExecutor;
 using model::NPC;
@@ -144,12 +145,12 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Inventory: {
-            tempMessage << accountHandler.getPlayerByClient(client).getInventory();
+            tempMessage << accountHandler.getPlayerByClient(client).getMutableInventory();
             break;
         }
 
         case Command::Equipment: {
-            tempMessage << accountHandler.getPlayerByClient(client).getEquipment();
+            tempMessage << accountHandler.getPlayerByClient(client).getMutableEquipment();
             break;
         }
 
@@ -160,6 +161,11 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
 
         case Command::Build: {
             tempMessage << build();
+            break;
+        }
+
+        case Command::Builder: {
+            tempMessage << builder(params[0]);
             break;
         }
 
@@ -397,6 +403,8 @@ std::string CommandExecutor::help() {
                 << " (displays your health, combat attributes, and current status ailments)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Build)
                 << " (displays available world building commands)\n"
+                << "  - " << this->commandParser.getStringForCommand(Command::Builder)
+                << " [username] (toggles build command access for username)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Alias)
                 << " (aliases a command. Type \""
                 << commandParser.getStringForCommand(Command::Alias) << " help\" for details)\n"
@@ -451,7 +459,8 @@ std::vector<Message> CommandExecutor::yell(const Connection &client, std::string
     return messages;
 }
 
-std::vector<Message> CommandExecutor::tell(const Connection &client, const std::string &username, std::string &message) {
+std::vector<Message>
+CommandExecutor::tell(const Connection &client, const std::string &username, std::string &message) {
     std::vector<Message> messages;
 
     if (this->magicHandler.isConfused(client)) {
@@ -577,10 +586,10 @@ std::string CommandExecutor::move(const Connection &client, const std::string &d
             accountHandler.setRoomIdByClient(client, destinationId);
             tempMessage << worldHandler.findRoom(destinationId).descToString();
         } else {
-            tempMessage << "You tried to move to a room that does not exist!\n";
+            tempMessage << "You can't move that way!\n";
         }
     } else {
-        tempMessage << "You can't move that way!\n";
+        tempMessage << "Invalid direction!\n";
     }
     return tempMessage.str();
 }
@@ -610,7 +619,7 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
             otherPlayerName = room.getNpcById(otherPlayerId).getShortDescription();
         }
 
-        tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << "\n";
+        tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << ".\n";
         return tempMessage.str();
     }
 
@@ -643,8 +652,8 @@ std::string CommandExecutor::take(const Connection &client, const std::string &k
 std::string CommandExecutor::drop(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto &player = accountHandler.getPlayerByClient(client);
-    auto objects = player.getInventory().getVectorInventory();
-    auto equip = player.getEquipment().getVectorEquipment();
+    auto objects = player.getMutableInventory().getVectorInventory();
+    auto equip = player.getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (containsKeyword(objects, keyword)) {
@@ -663,7 +672,7 @@ std::string CommandExecutor::drop(const Connection &client, const std::string &k
 std::string CommandExecutor::wear(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto &player = accountHandler.getPlayerByClient(client);
-    auto objects = player.getInventory().getVectorInventory();
+    auto objects = player.getMutableInventory().getVectorInventory();
 
     if (containsKeyword(objects, keyword)) {
         if (playerHandler.equipItem(player, getItemByKeyword(objects, keyword))) {
@@ -680,7 +689,7 @@ std::string CommandExecutor::wear(const Connection &client, const std::string &k
 std::string CommandExecutor::remove(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto &player = accountHandler.getPlayerByClient(client);
-    auto objects = player.getEquipment().getVectorEquipment();
+    auto objects = player.getMutableEquipment().getVectorEquipment();
 
     if (containsKeyword(objects, keyword)) {
         playerHandler.unequipItem(player, getItemByKeyword(objects, keyword));
@@ -700,8 +709,8 @@ std::vector<Message> CommandExecutor::give(const Connection &client, const std::
 
     auto &sender = this->accountHandler.getPlayerByClient(client);
     auto senderName = this->accountHandler.getUsernameByClient(client);
-    auto objects = sender.getInventory().getVectorInventory();
-    auto equip = sender.getEquipment().getVectorEquipment();
+    auto objects = sender.getMutableInventory().getVectorInventory();
+    auto equip = sender.getMutableEquipment().getVectorEquipment();
     objects.insert(objects.end(), equip.begin(), equip.end());
 
     if (!this->worldHandler.canGive(roomId, receiverId) || username == senderName) {
@@ -739,12 +748,12 @@ std::string CommandExecutor::status(const Connection &client) {
            << "-------\n"
            << "HP: " << player.getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
 
-    auto offenceValue = player.getEquipment().getOffenceValue();
+    auto offenceValue = player.getMutableEquipment().getOffenceValue();
     auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
     auto maxDamage = CombatHandler::BASE_MAX_DAMAGE + offenceValue;
     output << "Attack: " << minDamage << "-" << maxDamage << "\n";
 
-    auto defenceValue = player.getEquipment().getDefenceValue();
+    auto defenceValue = player.getMutableEquipment().getDefenceValue();
     output << "Armour: " << defenceValue << "\n";
 
     auto isBodySwapped = magicHandler.isBodySwapped(client);
@@ -762,104 +771,195 @@ std::string CommandExecutor::status(const Connection &client) {
 }
 
 std::string CommandExecutor::alias(const Connection &client, const std::vector<std::string> &params) {
-    std::ostringstream res;
-    try {
-        std::string username = this->accountHandler.getUsernameByClient(client);
-        if (params.empty()) {
-            return "\nIncorrect number of parameters for alias command\n";
-        }
-        std::string aliasOption = params[0];
-
-        if (aliasOption == ALIAS_LIST) {
-            if (params.size() != ALIAS_LIST_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias list command\n";
-            }
-            auto aliases = this->aliasManager.getAliasesForUser(username);
-            auto globalAliases = this->aliasManager.getGlobalAliases();
-
-            res << "\nUser Aliases: \n";
-            if (aliases.empty()) {
-                res << "\tno user aliases set\n";
-            }
-            for (const auto &alias: aliases) {
-                res << "\t" << alias.first << " -> " << alias.second << std::endl;
-            }
-
-            res << "Global Aliases: \n";
-            for (const auto &alias: globalAliases) {
-                res << "\t" << alias.first << " -> " << alias.second << std::endl;
-            }
-            if (globalAliases.empty()) {
-                res << "\tno global aliases set\n";
-            }
-        } else if (aliasOption == ALIAS_SET || aliasOption == ALIAS_SET_GLOBAL) {
-            if (params.size() != ALIAS_SET_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias set command\n";
-            }
-
-            std::string command_to_alias_str = params[1];
-            Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
-
-            if (command_to_alias == Command::InvalidCommand) {
-                res << "\nAlias could not be set: " << command_to_alias_str
-                    << " is not the name of a command\n";
-                res.str();
-            }
-
-            std::string alias = params[2];
-
-            if (!this->aliasManager.isValidAlias(alias)) {
-                res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
-                res.str();
-            }
-
-            if ((aliasOption == ALIAS_SET &&
-                 this->aliasManager.setUserAlias(command_to_alias, alias, username)) ||
-                (aliasOption == ALIAS_SET_GLOBAL &&
-                 this->aliasManager.setGlobalAlias(command_to_alias, alias))) {
-                res << "\nAlias set successfully\n";
-            } else {
-                res << "\nAlias could not be set: an alias has already been set for the specified command\n";
-            }
-        } else if (aliasOption == ALIAS_CLEAR || aliasOption == ALIAS_CLEAR_GLOBAL) {
-            if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
-                return "\nIncorrect number of parameters for alias clear command\n";
-            }
-            std::string command_to_clear_str = params[1];
-            Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
-
-            if (command_to_clear == Command::InvalidCommand) {
-                res << "\nAlias could not be cleared: " << command_to_clear_str
-                    << " is not the name of a command\n";
-                res.str();
-            }
-
-            if (aliasOption == ALIAS_CLEAR) {
-                this->aliasManager.clearUserAlias(command_to_clear, username);
-            } else {
-                this->aliasManager.clearGlobalAlias(command_to_clear);
-            }
-
-            res << "\nAlias cleared successfully\n";
-
-        } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
-            res << "\nAlias Commands:\n"
-                << "---------------\n"
-                << "  - alias list (lists all aliases)\n"
-                << "  - alias set [command] [alias] (sets an alias for a command)\n"
-                << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
-                << "  - alias clear [command] (clears an alias for a command)\n"
-                << "  - alias clear-global [command] (clears a global alias for a command)\n";
-        } else {
-            res << aliasOption << " is not a valid option for "
-                << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
-        }
-    } catch (std::exception &e) {
-        res << "\n error parsing " << this->commandParser.getStringForCommand(Command::Alias)
-            << " command!\n";
-        std::cout << e.what();
+    if (params.empty()) {
+        return "\nIncorrect number of parameters for alias command\n";
     }
 
+    std::ostringstream res;
+
+    std::string aliasOption = params[0];
+
+    if (aliasOption == ALIAS_LIST) {
+        res << aliasList(client, params);
+    } else if (aliasOption == ALIAS_SET) {
+        res << aliasSet(client, params);
+    } else if (aliasOption == ALIAS_SET_GLOBAL) {
+        res << aliasSetGlobal(client, params);
+    } else if (aliasOption == ALIAS_CLEAR) {
+        res << aliasClear(client, params);
+    } else if (aliasOption == ALIAS_CLEAR_GLOBAL) {
+        res << aliasClearGlobal(client, params);
+    } else if (aliasOption.empty() || aliasOption == ALIAS_HELP) {
+        res << aliasHelp();
+    } else {
+        res << aliasOption << " is not a valid option for "
+            << this->commandParser.getStringForCommand(Command::Alias) << std::endl;
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasList(const Connection &client, const std::vector<std::string> &params) {
+    std::string username = this->accountHandler.getUsernameByClient(client);
+
+    if (params.size() != ALIAS_LIST_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias list command\n";
+    }
+
+    std::ostringstream res;
+
+    auto aliases = this->aliasManager.getAliasesForUser(username);
+    auto globalAliases = this->aliasManager.getGlobalAliases();
+
+    res << "\nUser Aliases: \n";
+
+    if (aliases.empty()) {
+        res << "\tno user aliases set\n";
+    }
+
+    for (const auto &alias: aliases) {
+        res << "\t" << alias.first << " -> " << alias.second << std::endl;
+    }
+
+    res << "Global Aliases: \n";
+
+    for (const auto &alias: globalAliases) {
+        res << "\t" << alias.first << " -> " << alias.second << std::endl;
+    }
+
+    if (globalAliases.empty()) {
+        res << "\tno global aliases set\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasSet(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_SET_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias set command\n";
+    }
+
+    std::ostringstream res;
+
+    std::string username = this->accountHandler.getUsernameByClient(client);
+    std::string command_to_alias_str = params[1];
+    Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
+
+    if (command_to_alias == Command::InvalidCommand) {
+        res << "\nAlias could not be set: " << command_to_alias_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string alias = params[2];
+
+    if (!this->aliasManager.isValidAlias(alias)) {
+        res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
+        return res.str();
+    }
+
+    if (this->aliasManager.setUserAlias(command_to_alias, alias, username)) {
+        res << "\nAlias set successfully\n";
+    } else {
+        res << "\nAlias could not be set: an alias has already been set for the specified command\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasSetGlobal(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_SET_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias set-global command\n";
+    }
+
+    if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
+        return "\nYou do not have permission to set global aliases\n";
+    }
+
+    std::ostringstream res;
+
+    std::string command_to_alias_str = params[1];
+    Command command_to_alias = this->commandParser.parseCommand(command_to_alias_str);
+
+    if (command_to_alias == Command::InvalidCommand) {
+        res << "\nAlias could not be set: " << command_to_alias_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string alias = params[2];
+
+    if (!this->aliasManager.isValidAlias(alias)) {
+        res << "\nAlias could not be set: " << alias << " is the name of a default command\n";
+        return res.str();
+    }
+
+    if (this->aliasManager.setGlobalAlias(command_to_alias, alias)) {
+        res << "\nAlias set successfully\n";
+    } else {
+        res << "\nAlias could not be set: an alias has already been set for the specified command\n";
+    }
+
+    return res.str();
+}
+
+std::string CommandExecutor::aliasClear(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias clear command\n";
+    }
+
+    std::ostringstream res;
+
+    std::string command_to_clear_str = params[1];
+    Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
+
+    if (command_to_clear == Command::InvalidCommand) {
+        res << "\nAlias could not be cleared: " << command_to_clear_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    std::string username = accountHandler.getUsernameByClient(client);
+    this->aliasManager.clearUserAlias(command_to_clear, username);
+
+    res << "\nAlias cleared successfully\n";
+    return res.str();
+}
+
+std::string CommandExecutor::aliasClearGlobal(const Connection &client, const std::vector<std::string> &params) {
+    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias clear command\n";
+    }
+
+    if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
+        return "\nYou do not have permission to clear global aliases\n";
+    }
+
+    std::string command_to_clear_str = params[1];
+    Command command_to_clear = this->commandParser.parseCommand(command_to_clear_str);
+    std::ostringstream res;
+
+    if (command_to_clear == Command::InvalidCommand) {
+        res << "\nAlias could not be cleared: " << command_to_clear_str
+            << " is not the name of a command\n";
+        return res.str();
+    }
+
+    this->aliasManager.clearGlobalAlias(command_to_clear);
+
+    res << "\nAlias cleared successfully\n";
+    return res.str();
+}
+
+std::string CommandExecutor::aliasHelp() {
+    std::ostringstream res;
+    res << "\nAlias Commands:\n"
+        << "---------------\n"
+        << "  - alias list (lists all aliases)\n"
+        << "  - alias set [command] [alias] (sets an alias for a command)\n"
+        << "  - alias set-global [command] [alias] (sets an alias that will be available to all users)\n"
+        << "  - alias clear [command] (clears an alias for a command)\n"
+        << "  - alias clear-global [command] (clears a global alias for a command)\n";
     return res.str();
 }
 
@@ -904,6 +1004,29 @@ std::string CommandExecutor::build() {
                 << " (clears current room data including associated resets)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Reset)
                 << " (resets current area with changes)\n";
+    return tempMessage.str();
+}
+
+std::string CommandExecutor::builder(const std::string &username) {
+    std::ostringstream tempMessage;
+    for (const auto &connection: connectionHandler.getClients()) {
+        auto name = this->accountHandler.getUsernameByClient(connection);
+        if (username == name) {
+            auto player = this->accountHandler.getPlayerByClient(connection);
+            auto role = player.getRole();
+            if (role == model::Role::Default) {
+                player.setRole(model::Role::Builder);
+                tempMessage << "Access to build commands has been given to " << username << ".\n";
+            } else if (role == model::Role::Builder) {
+                player.setRole(model::Role::Default);
+                tempMessage << "Access to build commands has been taken from " << username << ".\n";
+            } else {
+                tempMessage << "This command does not work on admin users.\n";
+            }
+            return tempMessage.str();
+        }
+    }
+    tempMessage << "Unable to find online user \"" << username << "\".\n";
     return tempMessage.str();
 }
 

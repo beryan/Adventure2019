@@ -132,49 +132,55 @@ namespace game {
                     incomingInput.substr(0, incomingInput.find(' ')));
             std::string username = this->accountHandler.getUsernameByClient(client);
             Command command = this->aliasManager.getCommandForUser(commandString, username);
+            std::string parameters;
 
-            if (command == Command::InvalidCommand) {
+            std::vector<std::string> dir = {"north", "south", "east", "west", "northeast", "southeast",
+                                            "northwest", "southwest", "up", "down"};
+            if (std::find(dir.begin(), dir.end(), commandString) != dir.end()) {
+                command = Command::Move;
+                parameters = commandString;
+            } else if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 messages.push_back({client, tempMessage.str()});
                 continue;
-            }
-
-            std::string parameters;
-
-            if (incomingInput.find(' ') != std::string::npos) {
+            } else if (incomingInput.find(' ') != std::string::npos) {
                 parameters = boost::algorithm::trim_copy(incomingInput.substr(incomingInput.find(' ') + 1));
             }
 
-            switch (command) {
-                case Command::Quit: {
-                    this->connectionHandler.disconnectClient(input.connection);
-                    continue;
-                }
-
-                case Command::Shutdown: {
-                    World world = this->worldHandler.getWorld();
-                    DataManager::writeWorldToFile(world, DataManager::JSON);
-                    std::cout << "Shutting down.\n";
-                    this->shutdown();
-                    return;
-                }
-
-                default:
-                    break;
+            if (command == Command::Quit) {
+                this->connectionHandler.disconnectClient(input.connection);
+                continue;
             }
 
             if (!this->accountHandler.isLoggedIn(client) && !this->avatarHandler.isCreatingAvatar(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
             } else {
-                if (this->isInvalidFormat(command, parameters)) {
-                    tempMessage << "Invalid format for command \"" << commandString << "\".\n";
+                if (game::isInvalidFormat(command, parameters)) {
+                    tempMessage << "Invalid format for command \""
+                                << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
-                    continue;
-                }
-                auto responseList = this->executeInGameAction(client, command, parameters);
+                } else if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
+                    tempMessage << "You don't have access to \""
+                                << this->commandParser.getStringForCommand(command) << "\".\n";
+                    messages.push_back({client, tempMessage.str()});
+                } else {
+                    if (command == Command::Shutdown) {
+                        World world = this->worldHandler.getWorld();
+                        DataManager::writeWorldToFile(world, DataManager::JSON);
+                        
+                        auto players = this->accountHandler.getAllPlayers();
+                        DataManager::saveRegisteredUsers(players);
 
-                for (auto &response : responseList) {
-                    messages.push_back(response);
+                        std::cout << "Shutting down.\n";
+                        this->shutdown();
+                        return;
+                    }
+
+                    auto responseList = this->executeInGameAction(client, command, parameters);
+
+                    for (const auto &response : responseList) {
+                        messages.push_back(response);
+                    }
                 }
             }
         }
@@ -209,9 +215,7 @@ namespace game {
                             << "  - " << this->commandParser.getStringForCommand(Command::Login)
                             << " (login to an existing account)\n"
                             << "  - " << this->commandParser.getStringForCommand(Command::Quit)
-                            << " (disconnects you from the game server)\n"
-                            << "  - " << this->commandParser.getStringForCommand(Command::Shutdown)
-                            << " (shuts down the game server)\n";
+                            << " (disconnects you from the game server)\n";
                 break;
 
             default:
@@ -246,6 +250,7 @@ namespace game {
         this->accountHandler.notifyBootedClients(messages);
         this->magicHandler.processCycle(messages);
         this->combatHandler.processCycle(messages);
+        this->worldHandler.processResets();
     }
 
     std::deque<Message>
@@ -268,6 +273,15 @@ namespace game {
     Game::addClientToGame(Connection client) {
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
+
+        if (!this->worldHandler.roomExists(roomId)) {
+            assert(!this->worldHandler.getWorld().getAreas().empty());
+            auto firstArea = this->worldHandler.getWorld().getAreas().at(0);
+            assert(!firstArea.getRooms().empty());
+            roomId = firstArea.getRooms().at(0).getId();
+            accountHandler.setRoomIdByClient(client, roomId);
+        }
+
         this->worldHandler.addPlayer(roomId, playerId);
     }
 
@@ -278,23 +292,6 @@ namespace game {
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.removePlayer(roomId, playerId);
         return accountHandler.logoutClient(client);
-    }
-
-    bool
-    Game::isInvalidFormat(const Command &command, const std::string &parameters) {
-        bool wrongFormat = ((command == Command::Tell || command == Command::Give)
-                            && parameters.find(' ') == std::string::npos);
-        bool isCommandWithParam = (command == Command::Say
-                                   || command == Command::Yell
-                                   || command == Command::Move
-                                   || command == Command::Examine
-                                   || command == Command::Talk
-                                   || command == Command::Take
-                                   || command == Command::Drop
-                                   || command == Command::Wear
-                                   || command == Command::Remove
-                                   || command == Command::Chat);
-        return (wrongFormat || (isCommandWithParam && parameters.empty()));
     }
 
     std::deque<Message>

@@ -130,7 +130,6 @@ namespace handler {
                 auto playerId = this->nextId++;
                 Player player{playerId, inputUsername, inputPassword};
                 this->allPlayers.emplace(playerId, player);
-                DataManager::saveRegisteredUser(player);
                 this->usernameToPlayer.emplace(inputUsername, this->allPlayers.at(playerId));
 
                 this->activeClientToId.emplace(client, playerId);
@@ -384,4 +383,8 @@ namespace handler {
 
         std::cout << "registered users have been loaded" << std::endl;
     }
-}
+
+    std::map<model::ID, Player> AccountHandler::getAllPlayers() const {
+        return this->allPlayers;
+    }
+};

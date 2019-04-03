@@ -13,7 +13,7 @@ namespace model {
         return this->inventory;
     }
 
-    std::vector<Object> Inventory::getVectorInventory(){
+    std::vector<Object> Inventory::getVectorInventory() const{
         std::vector<Object> container;
         container.reserve(this->inventory.size());
 

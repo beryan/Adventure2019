@@ -6,8 +6,10 @@
 #define CHARACTER_H
 
 #include "Object.h"
+#include "Role.h"
 #include <string_view>
 
+using model::Role;
 namespace model {
     /**
     *  @struct Character
@@ -17,9 +19,6 @@ namespace model {
     *  The Character struct contains all necessary information
     *  that must be contained in a character object in the application.
     */
-
-    enum Role { Admin, Builder, Default };
-
     struct Character {
     public:
         explicit Character(model::ID id);
@@ -37,6 +36,20 @@ namespace model {
         void setHealth(int health);
 
         static constexpr int STARTING_HEALTH = 100;
+
+
+        static const inline std::map<model::Role, std::string> roleToStringMap = {
+                {Role::Admin, "admin"},
+                {Role::Builder, "builder"},
+                {Role::Default, "default"}
+        };
+
+        static const inline std::map<std::string, model::Role> stringToRoleMap = {
+                {"admin", Role::Admin},
+                {"builder", Role::Builder},
+                {"default", Role::Default}
+        };
+
     private:
 
         model::ID id;

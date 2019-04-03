@@ -6,6 +6,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 #include "Player.h"
 #include "AvatarHandler.h"
+#include "DataManager.h"
 
 using handler::AvatarHandler;
 
