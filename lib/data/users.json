@@ -1,16 +1,46 @@
 {
-"USERS": [
-  {
-    "id": 1,
-    "username": "bob",
-    "password": "bobpassword",
-    "role": "default"
-  },
-  {
-    "id": 2,
-    "username": "tom",
-    "password": "tompassword",
-    "role": "default"
-  }
-]
+  "USERS": [
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Able",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Baker",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "Charlie",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Pass",
+      "username": "TakenUsername",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "canLogin",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "canLogoutClient",
+      "role": "default"
+    },
+    {
+      "id": 0,
+      "password": "Valid Input",
+      "username": "ClearsOnFail",
+      "role": "default"
+    }
+  ]
 }
