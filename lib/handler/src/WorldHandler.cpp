@@ -21,7 +21,6 @@ constexpr auto LOAD_FILE_PATH = "lib/data/saveFile.json";
 namespace handler {
 
     WorldHandler::WorldHandler() {
-        //be sure to check STARTING_LOCATION in Player.h
         this->world = World();
 
         // load save file if it exists, otherwise load a default area file
