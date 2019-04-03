@@ -143,7 +143,9 @@ namespace model {
         os << "Short: [" << obj.shortDescription << "]\n";
         auto longDesc = boost::algorithm::join(obj.longDescription, "\n");
         os << "Long: [" << longDesc << "]\n";
-        os << "Slot: [" << model::getStringFromSlot(obj.slot) << "]\n";
+        if (obj.slot != model::Slot::Misc) {
+            os << "Slot: [" << model::getStringFromSlot(obj.slot) << "]\n";
+        }
         return os;
     }
 }

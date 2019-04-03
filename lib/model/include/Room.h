@@ -1,11 +1,6 @@
-/*
-* Room.h
-*
-* Class Description: A class designed to represent a room.
-*
-* Created on: January 18, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-18.
+//
 
 #ifndef ROOM_H
 #define ROOM_H
@@ -21,7 +16,14 @@ using model::Object;
 using model::ExtraInfo;
 
 namespace model {
-
+    /**
+    *  @struct Door
+    *
+    *  @brief A struct designed to represent a door.
+    *
+    *  The Door class contains all door information needed for the game
+    *  including direction, destination, and description
+    */
     struct Door {
         std::string dir; //direction
         model::ID leadsTo; //id of room door leads to
@@ -29,6 +31,14 @@ namespace model {
         std::vector<std::string> keywords;
     };
 
+    /**
+    *  @class Room
+    *
+    *  @brief A class designed to represent a room.
+    *
+    *  The Room class contains all room information needed for the game
+    *  including id, name, description, doors, npcs, objects, players, and extras
+    */
     class Room {
 
     private:

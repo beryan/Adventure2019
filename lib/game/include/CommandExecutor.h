@@ -2,8 +2,8 @@
 // Created by Stephen Wanhella on 3/14/2019.
 //
 
-#ifndef WEBSOCKETNETWORKING_COMMANDEXECUTOR_H
-#define WEBSOCKETNETWORKING_COMMANDEXECUTOR_H
+#ifndef COMMANDEXECUTOR_H
+#define COMMANDEXECUTOR_H
 
 #include <string>
 #include <vector>
@@ -55,52 +55,43 @@ namespace game {
         AliasManager &aliasManager;
         CommandParser &commandParser;
 
-        std::string alias(const Connection &client, const std::vector<std::string> &params);
-
         std::string help();
 
         std::vector<Message> say(const Connection &client, std::string &message);
-
+        std::vector<Message> yell(const Connection &client, std::string &message);
+        std::vector<Message> tell(const Connection &client, const std::string &username, std::string &message);
         std::vector<Message> chat(const Connection &client, std::string &message);
 
         std::string look(const Connection &client);
-
-        std::string examine(const Connection &client, std::string &keyword);
-
+        std::string examine(const Connection &client, const std::string &keyword);
         std::string exits(const Connection &client);
-
         std::string move(const Connection &client, const std::string &dir);
 
-        std::string spells();
-
-        std::string talk(const Connection &client, std::string &keyword);
-
+        std::string talk(const Connection &client, const std::string &keyword);
         std::string take(const Connection &client, const std::string &keyword);
-
         std::string drop(const Connection &client, const std::string &keyword);
-
         std::string wear(const Connection &client, const std::string &keyword);
-
         std::string remove(const Connection &client, const std::string &keyword);
+        std::vector<Message> give(const Connection &client, const std::string &username, const std::string &keyword);
 
         std::string status(const Connection &client);
+        std::string alias(const Connection &client, const std::vector<std::string> &params);
 
-        std::string inventory(const Connection &client);
-
-        std::string equipment(const Connection &client);
-
-        std::vector<Message> give(const Connection &client, const std::string &username, const std::string &keyword);
+        std::string build();
+        std::string alist();
+        std::string rlist(const std::string &param);
+        std::string olist(const std::string &param);
+        std::string nlist(const std::string &param);
+        std::string oshow(const Connection &client, const std::string &param);
+        std::string nshow(const Connection &client, const std::string &param);
+        std::string go(const Connection &client, const std::string &param);
 
         template<typename T>
         bool containsKeyword(const std::vector<T> &objects, const std::string &keyword);
 
         template<typename T>
         T getItemByKeyword(const std::vector<T> &objects, const std::string &keyword);
-
-        std::vector<Message> yell(const Connection &client, std::string &message);
-
-        std::vector<Message> tell(const Connection &client, const std::string &username, std::string &message);
     };
 }
 
-#endif //WEBSOCKETNETWORKING_COMMANDEXECUTOR_H
+#endif //COMMANDEXECUTOR_H

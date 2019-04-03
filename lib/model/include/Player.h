@@ -67,7 +67,6 @@ namespace model {
 
         void setCurrRoomID(const model::ID &id);
 
-//        static constexpr model::ID STARTING_LOCATION = 1000;
         static constexpr model::ID STARTING_LOCATION = 8800;
 
     private:

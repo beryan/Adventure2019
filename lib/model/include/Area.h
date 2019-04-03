@@ -1,11 +1,6 @@
-/*
-* Area.h
-*
-* Class Description: A class designed to represent an area.
-*
-* Created on: January 20, 2019
-* Author: Brittany Ryan, 301217765
-*/
+//
+// Created by Brittany Ryan on 2019-01-20.
+//
 
 #ifndef AREA_H
 #define AREA_H
@@ -19,7 +14,14 @@ using model::Room;
 using model::Reset;
 
 namespace model {
-
+    /**
+    *  @class Area
+    *
+    *  @brief A class designed to represent an area.
+    *
+    *  The Area class contains all area information needed for the game
+    *  including name, rooms, objects, npcs, and resets
+    */
     class Area {
 
     private:
