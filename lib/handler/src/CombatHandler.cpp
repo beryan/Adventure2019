@@ -3,7 +3,6 @@
 //
 
 #include "CombatHandler.h"
-#include <iostream>
 #include <sstream>
 #include <boost/algorithm/string.hpp>
 
@@ -20,34 +19,6 @@ namespace handler {
     void
     CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
         combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
-    }
-
-
-    void
-    CombatHandler::exitCombat(const Character &character1, const Character &character2) {
-        auto it = std::find(
-                combatInstances.begin(),
-                combatInstances.end(),
-                CombatInstance{character1.getId(), character2.getId()});
-
-        if (it != combatInstances.end()) {
-            combatInstances.erase(it);
-        }
-    }
-
-
-    void
-    CombatHandler::exitCombat(const Character &character) {
-        auto characterId = character.getId();
-        auto combat_it = std::find_if(
-                combatInstances.begin(),
-                combatInstances.end(),
-                [&characterId](const auto &combatState) {
-                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
-                }
-        );
-
-        combatInstances.erase(combat_it);
     }
 
 
@@ -200,16 +171,27 @@ namespace handler {
     std::string
     CombatHandler::loseEvent(Player &player, NPC& npc) {
         std::ostringstream message;
-        message << "You have fallen in battle.\n"
-                << "You reawaken at where you began.\n";
         this->exitCombat(player, npc);
 
         npc.setHealth(Character::STARTING_HEALTH);
         player.setHealth(Character::STARTING_HEALTH);
-        auto &room = this->worldHandler.findRoom(player.getCurrRoomID());
-        room.removePlayerFromRoom(player.getId());
-        player.setCurrRoomID(Player::STARTING_LOCATION);
-        room.addPlayerToRoom(player.getId());
+
+        auto startRoomId = Player::STARTING_LOCATION;
+        // Check if starting room actually exists, pick first room in first area otherwise
+        if (!this->worldHandler.roomExists(Player::STARTING_LOCATION)) {
+            assert(!this->worldHandler.getWorld().getAreas().empty());
+            auto firstArea = this->worldHandler.getWorld().getAreas().at(0);
+            assert(!firstArea.getRooms().empty());
+            startRoomId = firstArea.getRooms().at(0).getId();
+        }
+
+        auto currentRoomId = player.getCurrRoomID();
+        auto startRoom = this->worldHandler.findRoom(startRoomId);
+        this->worldHandler.movePlayer(player.getId(), currentRoomId, startRoomId);
+        player.setCurrRoomID(startRoomId);
+
+        message << "You have fallen in battle.\n"
+                << "You reawaken at where you began.\n";
 
         return message.str();
     }
@@ -256,12 +238,14 @@ namespace handler {
 
             if (npc.getHealth() == 0) {
                 message << this->winEvent(player, npc);
+                return message.str();
             }
 
             message << this->inflictDamage(player);
 
             if (player.getHealth() == 0) {
                 message << this->loseEvent(player, npc);
+                return message.str();
             }
 
             auto combat_it = std::find_if(
@@ -317,6 +301,11 @@ namespace handler {
 
                 message << this->inflictDamage(player);
 
+                if (player.getHealth() == 0) {
+                    message << this->loseEvent(player, npc);
+                    return message.str();
+                }
+
                 auto combat_it = std::find_if(
                         combatInstances.begin(),
                         combatInstances.end(),
@@ -326,10 +315,6 @@ namespace handler {
                 );
 
                 combat_it->endRound();
-
-                if (player.getHealth() == 0) {
-                    message << this->loseEvent(player, npc);
-                }
             }
 
             return message.str();
@@ -361,6 +346,11 @@ namespace handler {
 
             message << this->inflictDamage(player);
 
+            if (player.getHealth() == 0) {
+                message << this->loseEvent(player, npc);
+                return message.str();
+            }
+
             auto combat_it = std::find_if(
                     combatInstances.begin(),
                     combatInstances.end(),
@@ -370,14 +360,26 @@ namespace handler {
             );
 
             combat_it->endRound();
-
-            if (player.getHealth() == 0) {
-                message << this->loseEvent(player, npc);
-            }
         }
 
         return message.str();
     }
+
+
+    bool
+    CombatHandler::isInCombat(const Character &character) {
+        auto characterId = character.getId();
+
+        auto combat_it = std::find_if(
+                this->combatInstances.begin(),
+                this->combatInstances.end(),
+                [&characterId](const auto &combatState) {
+                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+                }
+        );
+
+        return combat_it != this->combatInstances.end();
+    };
 
 
     bool
@@ -395,20 +397,34 @@ namespace handler {
     }
 
 
-    bool
-    CombatHandler::isInCombat(const Character &character) {
-        auto characterId = character.getId();
+    void
+    CombatHandler::exitCombat(const Character &character1, const Character &character2) {
+        auto it = std::find(
+                combatInstances.begin(),
+                combatInstances.end(),
+                CombatInstance{character1.getId(), character2.getId()});
 
+        if (it != combatInstances.end()) {
+            combatInstances.erase(it);
+        }
+    }
+
+
+    void
+    CombatHandler::exitCombat(const Character &character) {
+        auto characterId = character.getId();
         auto combat_it = std::find_if(
-            this->combatInstances.begin(),
-            this->combatInstances.end(),
-            [&characterId](const auto &combatState) {
-                return (combatState.attackerID == characterId || combatState.defenderID == characterId);
-            }
+                combatInstances.begin(),
+                combatInstances.end(),
+                [&characterId](const auto &combatState) {
+                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+                }
         );
 
-        return combat_it != this->combatInstances.end();
-    };
+        combatInstances.erase(combat_it);
+    }
+
+
 
 
     model::ID
@@ -524,8 +540,9 @@ namespace handler {
                         }
                     }
 
+                    // dummy does not exist anywhere, process next combat instance
                     if (roomId == 0) {
-                        return;
+                        continue;
                     }
 
                     auto &dummy = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.attackerID);

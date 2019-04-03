@@ -39,19 +39,6 @@ namespace handler {
         void enterCombat(const Character &attacker, const Character &defender);
 
         /**
-         * Disengages two characters from combat where they are both involved in
-         * @param character1: character that is in combat with character2
-         * @param character2: character that is in combat with character1
-         */
-        void exitCombat(const Character &character1, const Character &character2);
-
-        /**
-         * Erases a combat state involving character
-         * @param character: character that is in combat
-         */
-        void exitCombat(const Character &character);
-
-        /**
          *  Returns true if miss occurs
          */
         bool rollMiss();
@@ -138,6 +125,20 @@ namespace handler {
          * @return true if there is an active combat state with both characters, otherwise false
          */
         bool areInCombat(const Character &attacker, const Character &defender);
+
+        /**
+         * Disengages two characters from combat where they are both involved in
+         * @param character1: character that is in combat with character2
+         * @param character2: character that is in combat with character1
+         */
+        void exitCombat(const Character &character1, const Character &character2);
+
+        /**
+         * Erases a combat state involving character
+         * @param character: character that is in combat
+         */
+        void exitCombat(const Character &character);
+
 
 
         /**

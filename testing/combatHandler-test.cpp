@@ -101,6 +101,7 @@ namespace {
      *  11. Can replace player with decoy in combat
      *  12. Can remove player from combat on client logout
      *  13. Combat rounds end after a number of game cycles
+     *  14. Can exit combat
      */
 
 
@@ -438,5 +439,39 @@ namespace {
         }
 
         ASSERT_EQ(1u, messages.size());
+    }
+
+
+    TEST_F(CombatHandlerTestSuite, canExitCombat) {
+        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
+
+        ASSERT_FALSE(combatHandler.isInCombat(player));
+        ASSERT_FALSE(combatHandler.isInCombat(npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+
+        ASSERT_TRUE(combatHandler.isInCombat(player));
+        ASSERT_TRUE(combatHandler.isInCombat(npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+
+        combatHandler.exitCombat(player);
+
+        EXPECT_FALSE(combatHandler.isInCombat(player));
+        EXPECT_FALSE(combatHandler.isInCombat(npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+
+        ASSERT_TRUE(combatHandler.isInCombat(player));
+        ASSERT_TRUE(combatHandler.isInCombat(npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+
+        combatHandler.exitCombat(player, npc);
+
+        EXPECT_FALSE(combatHandler.isInCombat(player));
+        EXPECT_FALSE(combatHandler.isInCombat(npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
     }
 }
