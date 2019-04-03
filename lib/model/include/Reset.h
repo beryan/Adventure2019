@@ -9,7 +9,7 @@
 #include "Types.h"
 #include "json.hpp"
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 constexpr model::ID INVALID_ID = -1;
 
@@ -53,38 +53,38 @@ namespace model {
         void setSlot(int slot);
     };
 
-    inline void from_json(const json &j, Reset &r) {
-        r.setId(j.at("id").get<model::ID>());
-        r.setAction(j.at("action").get<std::string>());
-        if(j.find("limit") != j.end()) {
-            r.setLimit(j.at("limit").get<int>());
+    inline void from_json(const Json &json, Reset &reset) {
+        reset.setId(json.at("id").get<model::ID>());
+        reset.setAction(json.at("action").get<std::string>());
+        if(json.find("limit") != json.end()) {
+            reset.setLimit(json.at("limit").get<int>());
         }
-        if(j.find("room") != j.end()) {
-            r.setRoom(j.at("room").get<model::ID>());
+        if(json.find("room") != json.end()) {
+            reset.setRoom(json.at("room").get<model::ID>());
         }
-        if(j.find("slot") != j.end()){
-            r.setSlot(j.at("slot").get<int>());
+        if(json.find("slot") != json.end()){
+            reset.setSlot(json.at("slot").get<int>());
         }
 
     }
 
-    inline void to_json(json &j, const Reset &r) {
+    inline void to_json(Json &json, const Reset &reset) {
 
-        j = {
-                {"id", r.getId()},
-                {"action", r.getAction()}
+        json = {
+                {"id", reset.getId()},
+                {"action", reset.getAction()}
         };
 
-        if(r.getLimit() != -1) {
-            j.push_back({"limit", r.getLimit()});
+        if(reset.getLimit() != -1) {
+            json.push_back({"limit", reset.getLimit()});
         }
 
-        if(r.getRoom() != -1) {
-            j.push_back({"room", r.getRoom()});
+        if(reset.getRoom() != -1) {
+            json.push_back({"room", reset.getRoom()});
         }
 
-        if (r.getSlot() != -1){
-            j.push_back({"slot", r.getSlot()});
+        if (reset.getSlot() != -1){
+            json.push_back({"slot", reset.getSlot()});
         }
     }
 

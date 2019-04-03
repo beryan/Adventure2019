@@ -11,7 +11,7 @@
 #include <iomanip>
 #include <boost/filesystem.hpp>
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 using Door = model::Door;
 using NPC = model::NPC;
 using Object = model::Object;
@@ -33,7 +33,7 @@ namespace DataManager {
 
     namespace {
 
-        Area parseAreaJson(json inputJson) {
+        Area parseAreaJson(Json inputJson) {
 
             bool checkFormat = (inputJson.find(AREA) != inputJson.end() && inputJson.find(ROOMS) != inputJson.end() && inputJson.find(RESETS) != inputJson.end() &&
                     inputJson.find(NPCS) != inputJson.end() && inputJson.find(OBJECTS) != inputJson.end());
@@ -51,9 +51,33 @@ namespace DataManager {
 
             Area area = inputJson.at(AREA).get<Area>();
             area.setRooms(inputJson.at(ROOMS).get<std::vector<Room>>());
-            area.setResets(inputJson.at(RESETS).get<std::vector<Reset>>());
+
+            auto resets = inputJson.at(RESETS).get<std::vector<Reset>>();
+            auto objects = inputJson.at(OBJECTS).get<std::vector<Object>>();
+
+            // Set correct slots for sample JSON equippable objects
+            for (const auto &reset : resets) {
+                if (reset.getAction() == "equip") {
+                    auto objectId = reset.getId();
+
+                    auto object_it = std::find_if(
+                            objects.begin(),
+                            objects.end(),
+                            [&objectId](const auto &object) {
+                                return object.getId() == objectId;
+                            });
+
+                    if (object_it != objects.end()) {
+                        auto slot = model::getSlotFromJsonInt(reset.getSlot());
+                        auto index = std::distance(objects.begin(), object_it);
+                        objects.at(index).setSlot(slot);
+                    }
+                }
+            }
+
+            area.setResets(resets);
+            area.setObjects(objects);
             area.setNpcs(inputJson.at(NPCS).get<std::vector<NPC>>());
-            area.setObjects(inputJson.at(OBJECTS).get<std::vector<Object>>());
 
             // save files contain a separate set of Resets
             if(inputJson.find(SAVERESETS) != inputJson.end()) {
@@ -70,7 +94,7 @@ namespace DataManager {
                 throw std::runtime_error("Could not open file: " + filePath);
             }
 
-            json usersJson = json::parse(inFile);
+            Json usersJson = Json::parse(inFile);
 
             std::vector<Player> players;
 
@@ -88,7 +112,7 @@ namespace DataManager {
                 throw std::runtime_error("Could not open file: " + filePath);
             }
 
-            json inputJson = json::parse(inFile);
+            Json inputJson = Json::parse(inFile);
 
             std::vector<Area> areas;
 
@@ -124,10 +148,10 @@ namespace DataManager {
         }
 
         void writeWorldToJson(World world){
-            json jsonAreas;
+            Json jsonAreas;
 
             for(auto& area : world.getAreas()) {
-                json jsonArea = json{{AREA, area}};
+                Json jsonArea{{AREA, area}};
 
                 jsonArea.push_back({ROOMS, area.getRooms()});
                 jsonArea.push_back({NPCS, area.getNpcs()});
@@ -150,7 +174,7 @@ namespace DataManager {
 
             if(boost::filesystem::exists(REGISTERED_USERS_PATH)){
                 std::ifstream inFile(REGISTERED_USERS_PATH);
-                json inputJson = json::parse(inFile);
+                Json inputJson = Json::parse(inFile);
                 players = inputJson.at(USERS).get<std::vector<Player>>();
             }
 
@@ -163,7 +187,7 @@ namespace DataManager {
 
             players.push_back(player);
 
-            json users = json{{USERS, players}};
+            Json users = Json{{USERS, players}};
 
             std::ofstream usersFile(REGISTERED_USERS_PATH);
 
@@ -173,8 +197,8 @@ namespace DataManager {
             usersFile << std::setw(4) << users << std::endl;
         }
 
-        std::vector<Player> parseRegisteredUsers(json j){
-            return j.at(USERS).get<std::vector<Player>>();
+        std::vector<Player> parseRegisteredUsers(Json json){
+            return json.at(USERS).get<std::vector<Player>>();
         }
 
     } // anonymous namespace
@@ -196,7 +220,7 @@ namespace DataManager {
                 throw std::runtime_error("Could not open file: " + filePath);
             }
 
-            json inputJson = json::parse(inFile);
+            Json inputJson = Json::parse(inFile);
             area = parseAreaJson(inputJson);
         }
         return area;
@@ -218,7 +242,7 @@ namespace DataManager {
         return areas;
     }
 
-    void writeJson(json j, std::string filePath) {
+    void writeJson(Json j, std::string filePath) {
         std::ofstream outFile(filePath);
         if (!outFile.is_open()) {
             throw std::runtime_error("Could not open file: " + filePath);
@@ -248,7 +272,7 @@ namespace DataManager {
                 throw std::runtime_error("Could not load registered users");
             }
 
-            json inputJson = json::parse(inFile);
+            Json inputJson = Json::parse(inFile);
 
             players = parseRegisteredUsers(inputJson);
         }

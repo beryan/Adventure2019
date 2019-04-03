@@ -13,7 +13,7 @@
 #include <deque>
 #include <unordered_set>
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 using networking::Connection;
 using networking::Message;
 using model::Player;

@@ -157,6 +157,7 @@ namespace handler {
 
         auto damage = this->rollDamage();
         damage -= player.getMutableEquipment().getDefenceValue();
+        damage = std::max(damage, 0);
 
         if (this->rollCritical()) {
             damage = static_cast<int>(static_cast<float>(damage) * BASE_CRITICAL_DAMAGE_MULTIPLIER);

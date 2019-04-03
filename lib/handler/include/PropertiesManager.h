@@ -12,7 +12,7 @@
 #include <iostream>
 #include <vector>
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 constexpr auto PROPERTIES_PATH = "lib/data/properties.json";
 
 namespace handler {
@@ -31,11 +31,11 @@ namespace handler {
         static bool getProperty(std::string propertyName, T &result) {
             std::ifstream ifs(PROPERTIES_PATH);
 
-            json t = json::parse(ifs);
+            Json json = Json::parse(ifs);
 
             bool wasFound = false;
-            auto iterator = t.find(propertyName);
-            if (iterator != t.end()) {
+            auto iterator = json.find(propertyName);
+            if (iterator != json.end()) {
                 result = iterator->get<T>();
                 wasFound = true;
             }

@@ -83,40 +83,40 @@ namespace model {
         model::ID currRoomID;
     };
 
-    inline void from_json(const json &j, Player &p) {
-        p.setId(j.at("id").get<model::ID>());
-        p.setUsername(j.at("username").get<std::string>());
-        p.setPassword(j.at("password").get<std::string>());
-        p.setRole(Character::stringToRoleMap.at(j.at("role").get<std::string>()));
-        if(j.find("avatar") != j.end()) {
-            p.setAvatar(j.at("avatar").get<Avatar>());
+    inline void from_json(const Json &json, Player &player) {
+        player.setId(json.at("id").get<model::ID>());
+        player.setUsername(json.at("username").get<std::string>());
+        player.setPassword(json.at("password").get<std::string>());
+        player.setRole(Character::stringToRoleMap.at(json.at("role").get<std::string>()));
+        if(json.find("avatar") != json.end()) {
+            player.setAvatar(json.at("avatar").get<Avatar>());
         }
-        if(j.find("equipment") != j.end()) {
-            p.setEquipment(j.at("equipment").get<Equipment>());
+        if(json.find("equipment") != json.end()) {
+            player.setEquipment(json.at("equipment").get<Equipment>());
         }
-        if(j.find("inventory") != j.end()) {
-            p.setInventory(j.at("inventory").get<Inventory>());
+        if(json.find("inventory") != json.end()) {
+            player.setInventory(json.at("inventory").get<Inventory>());
         }
     }
 
-    inline void to_json(json& j, const Player &p){
-        j = {
-                {"id", p.getId()},
-                {"username", p.getUsername()},
-                {"password", p.getPassword()},
-                {"role", Character::roleToStringMap.at(p.getRole())}
+    inline void to_json(Json& json, const Player &player){
+        json = {
+                {"id", player.getId()},
+                {"username", player.getUsername()},
+                {"password", player.getPassword()},
+                {"role", Character::roleToStringMap.at(player.getRole())}
         };
 
-        if(p.getAvatar().isDefined()){
-            j.push_back({"avatar", p.getAvatar()});
+        if(player.getAvatar().isDefined()){
+            json.push_back({"avatar", player.getAvatar()});
         };
 
-        if(p.getImmutableEquipment().getVectorEquipment().size() > 0){
-            j.push_back({"equipment", p.getImmutableEquipment()});
+        if(player.getImmutableEquipment().getVectorEquipment().size() > 0){
+            json.push_back({"equipment", player.getImmutableEquipment()});
         }
 
-        if(p.getImmutableInventory().getVectorInventory().size() > 0){
-            j.push_back({"inventory", p.getImmutableInventory()});
+        if(player.getImmutableInventory().getVectorInventory().size() > 0){
+            json.push_back({"inventory", player.getImmutableInventory()});
         }
     }
 }

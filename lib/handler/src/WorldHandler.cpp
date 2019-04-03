@@ -13,7 +13,7 @@
 #include <boost/algorithm/string/case_conv.hpp>
 
 using handler::WorldHandler;
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 constexpr auto DATA_JSON_PATH = "lib/data/mirkwood.json";
 constexpr auto LOAD_FILE_PATH = "lib/data/saveFile.json";
