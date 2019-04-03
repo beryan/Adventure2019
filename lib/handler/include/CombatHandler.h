@@ -84,8 +84,21 @@ namespace handler {
          */
         std::string inflictDamage(Player &player);
 
-        std::string loseEvent(Player &player, NPC &npc);
+        /**
+         * Performs defined operations when a player has won a battle.
+         * Returns a message pertaining to the client's victory
+         * @param player in combat that has won the battle
+         * @param npc in combat that has lost the battle
+         */
         std::string winEvent(Player &player, NPC &npc);
+
+        /**
+         * Performs defined operations when a player has lost a battle
+         * Returns a message pertaining to the client's defeat
+         * @param player in combat that has lost the battle
+         * @param npc in combat that has won the battle
+         */
+        std::string loseEvent(Player &player, NPC &npc);
 
     public:
         constexpr static int BASE_MIN_DAMAGE = 10;

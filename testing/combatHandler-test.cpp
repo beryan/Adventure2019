@@ -247,25 +247,25 @@ namespace {
         EXPECT_EQ(expected.str(), result);
     }
 
+
     TEST_F(CombatHandlerTestSuite, canFleeWhileInCombat) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
         auto &room = worldHandler.findRoom(TEST_ROOM_1_ID);
-        auto &npc = room.getNpcByKeyword(NPC_A_KEYWORD);
+        room.addPlayerToRoom(player.getId());
+        auto npc = room.getNpcByKeyword(NPC_A_KEYWORD);
         auto doors = room.getDoors();
 
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
         ASSERT_FALSE(combatHandler.areInCombat(player, npc));
 
-        bool succesfullyEscaped = false;
-        const int maximumTries = 100;
+        bool successfullyEscaped = false;
+        const int maximumTries = 10;
         int tries = 0;
-        while (!succesfullyEscaped) {
+        while (!successfullyEscaped) {
             ASSERT_LT(tries, maximumTries);
             ASSERT_FALSE(combatHandler.isInCombat(player));
-
             combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-
             ASSERT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
             ASSERT_TRUE(combatHandler.isInCombat(player));
             ASSERT_TRUE(combatHandler.isInCombat(npc));
@@ -273,24 +273,24 @@ namespace {
 
             while (combatHandler.isInCombat(player)) {
                 auto result = combatHandler.flee(CLIENT_A);
-
                 if (!combatHandler.isInCombat(player) && (result.find("successfully") != std::string::npos)) {
-                    succesfullyEscaped = true;
+                    successfullyEscaped = true;
 
                 } else if (!combatHandler.isInCombat(player)) {
                     player.setCurrRoomID(TEST_ROOM_1_ID);
                     room.addPlayerToRoom(player.getId());
                 }
             }
+
             ++tries;
         }
 
-        ASSERT_TRUE(succesfullyEscaped);
+        ASSERT_TRUE(successfullyEscaped);
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
 
-        EXPECT_EQ(TEST_ROOM_2_ID, accountHandler.getRoomIdByClient(CLIENT_A));
         EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_EQ(TEST_ROOM_2_ID, accountHandler.getRoomIdByClient(CLIENT_A));
     }
 
 
@@ -321,10 +321,10 @@ namespace {
         ASSERT_FALSE(combatHandler.isInCombat(npc));
         ASSERT_FALSE(combatHandler.areInCombat(player, npc));
 
-        bool succesfullyEscaped = false;
-        const int maximumTries = 100;
+        bool successfullyEscaped = false;
+        const int maximumTries = 10;
         int tries = 0;
-        while (!succesfullyEscaped) {
+        while (!successfullyEscaped) {
             ASSERT_LT(tries, maximumTries);
             ASSERT_FALSE(combatHandler.isInCombat(player));
             combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
@@ -336,7 +336,7 @@ namespace {
             while (combatHandler.isInCombat(player)) {
                 auto result = combatHandler.flee(CLIENT_A);
                 if (!combatHandler.isInCombat(player) && (result.find("successfully") != std::string::npos)) {
-                    succesfullyEscaped = true;
+                    successfullyEscaped = true;
 
                 } else if (!combatHandler.isInCombat(player)) {
                     player.setCurrRoomID(TEST_ROOM_1_ID);
@@ -347,7 +347,7 @@ namespace {
             ++tries;
         }
 
-        ASSERT_TRUE(succesfullyEscaped);
+        ASSERT_TRUE(successfullyEscaped);
         ASSERT_FALSE(combatHandler.isInCombat(player));
         ASSERT_FALSE(combatHandler.isInCombat(npc));
 

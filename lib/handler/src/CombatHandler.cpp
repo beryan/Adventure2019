@@ -209,6 +209,7 @@ namespace handler {
         auto &room = this->worldHandler.findRoom(player.getCurrRoomID());
         room.removePlayerFromRoom(player.getId());
         player.setCurrRoomID(Player::STARTING_LOCATION);
+        room.addPlayerToRoom(player.getId());
 
         return message.str();
     }
