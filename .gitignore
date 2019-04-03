@@ -71,3 +71,6 @@ fabric.properties
 .idea/caches/build_file_checksums.ser
 codeStyleConfig.xml
 .idea/deployment.xml
+
+lib/data/saveFile.json
+lib/data/usersCopy.json

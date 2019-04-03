@@ -157,6 +157,11 @@ namespace handler {
          */
         void reset();
 
+        /**
+         *  Resets world areas after a configured amount of game cycles
+         */
+        void processResets();
+
     private:
         World world;
         ResetHandler resetHandler;

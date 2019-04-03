@@ -163,6 +163,9 @@ namespace handler {
 
         void
         loadRegisteredUsers();
+
+        std::map<model::ID, Player> getAllPlayers() const;
+
     };
 }
 
