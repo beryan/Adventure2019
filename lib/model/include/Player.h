@@ -53,13 +53,13 @@ namespace model {
 
         /************ Inventory ************/
 
-        Inventory &getInventory();
-        Inventory getInventoryConst() const;
-        void setInventory(Inventory inventory);
+        Inventory &getMutableInventory();
+        Inventory getImmutableInventory() const;
+        void setInventory(const Inventory &inventory);
 
-        Equipment &getEquipment();
-        Equipment getEquipmentConst() const;
-        void setEquipment(Equipment equipment);
+        Equipment &getMutableEquipment();
+        Equipment getImmutableEquipment() const;
+        void setEquipment(const Equipment &equipment);
 
         /************ ROOM ************/
 
@@ -112,12 +112,12 @@ namespace model {
             j.push_back({"avatar", p.getAvatar()});
         };
 
-        if(p.getEquipmentConst().getVectorEquipment().size() > 0){
-            j.push_back({"equipment", p.getEquipmentConst()});
+        if(p.getImmutableEquipment().getVectorEquipment().size() > 0){
+            j.push_back({"equipment", p.getImmutableEquipment()});
         }
 
-        if(p.getInventoryConst().getVectorInventory().size() > 0){
-            j.push_back({"inventory", p.getInventoryConst()});
+        if(p.getImmutableInventory().getVectorInventory().size() > 0){
+            j.push_back({"inventory", p.getImmutableInventory()});
         }
     }
 }

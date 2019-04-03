@@ -11,41 +11,41 @@ namespace handler {
 
     bool PlayerHandler::equipItem(Player &player, const Object &item) {
         bool success = false;
-        if (logic.canEquipItem(player.getInventory(), item)) {
-            if (player.getEquipment().isSlotOccupied(item.getSlot())) {
-                auto prevItem = player.getEquipment().unequipSlot(item.getSlot());
-                player.getInventory().addItemToInventory(prevItem);
+        if (logic.canEquipItem(player.getMutableInventory(), item)) {
+            if (player.getMutableEquipment().isSlotOccupied(item.getSlot())) {
+                auto prevItem = player.getMutableEquipment().unequipSlot(item.getSlot());
+                player.getMutableInventory().addItemToInventory(prevItem);
             }
-            player.getEquipment().equipItem(player.getInventory().removeItemFromInventory(item));
+            player.getMutableEquipment().equipItem(player.getMutableInventory().removeItemFromInventory(item));
             success = true;
         }
         return success;
     }
 
     void PlayerHandler::unequipItem(Player &player, const Object &item) {
-        if (player.getEquipment().isItemEquipped(item)) {
-            player.getInventory().addItemToInventory(player.getEquipment().unequipItem(item));
+        if (player.getMutableEquipment().isItemEquipped(item)) {
+            player.getMutableInventory().addItemToInventory(player.getMutableEquipment().unequipItem(item));
         }
     }
 
     void PlayerHandler::pickupItem(Player &player, const Object &item) {
-        player.getInventory().addItemToInventory(item);
+        player.getMutableInventory().addItemToInventory(item);
     }
 
     void PlayerHandler::giveItem(Player &giver, Player &receiver, const Object &item) {
-        if (giver.getInventory().isItemInInventory(item) || giver.getEquipment().isItemEquipped(item)) {
-            receiver.getInventory().addItemToInventory(dropItem(giver, item));
+        if (giver.getMutableInventory().isItemInInventory(item) || giver.getMutableEquipment().isItemEquipped(item)) {
+            receiver.getMutableInventory().addItemToInventory(dropItem(giver, item));
         }
     }
 
     Object PlayerHandler::dropItem(Player &player, const Object &item) {
         Object temp_item;
 
-        if (player.getInventory().isItemInInventory(item)) {
-            temp_item = player.getInventory().removeItemFromInventory(item);
+        if (player.getMutableInventory().isItemInInventory(item)) {
+            temp_item = player.getMutableInventory().removeItemFromInventory(item);
         }
-        else if (player.getEquipment().isItemEquipped(item)) {
-            temp_item = player.getEquipment().unequipItem(item);
+        else if (player.getMutableEquipment().isItemEquipped(item)) {
+            temp_item = player.getMutableEquipment().unequipItem(item);
         }
 
         return temp_item;

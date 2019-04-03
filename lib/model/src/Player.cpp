@@ -108,27 +108,27 @@ namespace model {
         this->currRoomID = id;
     }
 
-    Inventory &Player::getInventory() {
+    Inventory &Player::getMutableInventory() {
         return this->inventory;
     }
 
-    Inventory Player::getInventoryConst() const{
+    Inventory Player::getImmutableInventory() const{
         return this->inventory;
     }
 
-    void Player::setInventory(Inventory inventory){
+    void Player::setInventory(const Inventory &inventory){
         this->inventory = inventory;
     }
 
-    Equipment &Player::getEquipment() {
+    Equipment &Player::getMutableEquipment() {
         return this->equipment;
     }
 
-    Equipment Player::getEquipmentConst() const{
+    Equipment Player::getImmutableEquipment() const{
         return this->equipment;
     }
 
-    void Player::setEquipment(Equipment equipment){
+    void Player::setEquipment(const Equipment &equipment){
         this->equipment = equipment;
     }
 
