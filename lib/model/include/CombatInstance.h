@@ -6,7 +6,7 @@
 #define COMBATINSTANCE_H
 
 namespace model {
-    constexpr unsigned int CYCLES_PER_ROUND = 5;
+    constexpr unsigned int CYCLES_PER_ROUND = 7;
 
     struct CombatInstance {
         int attackerID;

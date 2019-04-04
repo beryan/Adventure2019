@@ -139,10 +139,12 @@ namespace game {
             if (std::find(dir.begin(), dir.end(), commandString) != dir.end()) {
                 command = Command::Move;
                 parameters = commandString;
+
             } else if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 messages.push_back({client, tempMessage.str()});
                 continue;
+
             } else if (incomingInput.find(' ') != std::string::npos) {
                 parameters = boost::algorithm::trim_copy(incomingInput.substr(incomingInput.find(' ') + 1));
             }

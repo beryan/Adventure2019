@@ -576,21 +576,29 @@ std::string CommandExecutor::exits(const Connection &client) {
 
 std::string CommandExecutor::move(const Connection &client, const std::string &dir) {
     std::ostringstream tempMessage;
+    auto &player = this->accountHandler.getPlayerByClient(client);
     auto roomId = accountHandler.getRoomIdByClient(client);
 
-    if (worldHandler.isValidDirection(roomId, dir)) {
+    if (this->combatHandler.isInCombat(player)) {
+        tempMessage << "You can't expect to just stroll out of here with someone attacking you!"
+                    << " Perhaps you should flee instead.\n";
+
+    } else if (worldHandler.isValidDirection(roomId, dir)) {
         auto destinationId = worldHandler.getDestination(roomId, dir);
+
         if (this->worldHandler.roomExists(destinationId)) {
-            auto playerId = accountHandler.getPlayerIdByClient(client);
-            worldHandler.movePlayer(playerId, roomId, destinationId);
+            worldHandler.movePlayer(player.getId(), roomId, destinationId);
             accountHandler.setRoomIdByClient(client, destinationId);
             tempMessage << worldHandler.findRoom(destinationId).descToString();
+
         } else {
             tempMessage << "You can't move that way!\n";
         }
+
     } else {
         tempMessage << "Invalid direction!\n";
     }
+
     return tempMessage.str();
 }
 
@@ -607,7 +615,7 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
     auto npc = getItemByKeyword(npcs, keyword);
 
     if (this->combatHandler.isInCombat(player)) {
-        tempMessage << "You are too busy fighting to talk!.\n";
+        tempMessage << "You are too busy fighting to talk!\n";
         return tempMessage.str();
     }
 
@@ -1149,17 +1157,26 @@ std::string CommandExecutor::go(const Connection &client, const std::string &par
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         if (destinationId == roomId) {
             tempMessage << "You are already in room " << destinationId << ".\n";
+
         } else if (this->worldHandler.roomExists(destinationId)) {
-            auto playerId = this->accountHandler.getPlayerIdByClient(client);
-            this->worldHandler.movePlayer(playerId, roomId, destinationId);
+            auto &player = this->accountHandler.getPlayerByClient(client);
+            this->worldHandler.movePlayer(player.getId(), roomId, destinationId);
             this->accountHandler.setRoomIdByClient(client, destinationId);
+            if (this->combatHandler.isInCombat(player)) {
+                this->combatHandler.exitCombat(player);
+                tempMessage << "You exit out of combat.\n";
+            }
+
             tempMessage << "You are now in room " << destinationId << ".\n";
+
         } else {
             tempMessage << "Invalid id.\n";
         }
+
     } else {
         tempMessage << "Invalid format.\n";
     }
+
     return tempMessage.str();
 }
 

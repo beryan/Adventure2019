@@ -14,6 +14,7 @@
 
 using Json = nlohmann::json;
 constexpr auto PROPERTIES_PATH = "lib/data/properties.json";
+constexpr auto TEST_PROPERTIES_PATH = "lib/data/testProperties.json";
 
 namespace handler {
     class PropertiesManager {
@@ -28,8 +29,16 @@ namespace handler {
          * @return true if the item exists and was stored in result, false otherwise
          */
         template<class T>
-        static bool getProperty(std::string propertyName, T &result) {
-            std::ifstream ifs(PROPERTIES_PATH);
+        static bool getProperty(std::string propertyName, T &result, bool testMode = false) {
+            std::ifstream ifs;
+
+            if (testMode) {
+                ifs = std::ifstream(TEST_PROPERTIES_PATH);
+
+            } else {
+                ifs = std::ifstream(PROPERTIES_PATH);
+            }
+
 
             Json json = Json::parse(ifs);
 
