@@ -5,6 +5,9 @@
 #ifndef PROPERTIESMANAGER_H
 #define PROPERTIESMANAGER_H
 
+#ifndef TEST_MODE
+#define TEST_MODE false
+#endif
 
 #include <fstream>
 #include <iterator>
@@ -29,10 +32,10 @@ namespace handler {
          * @return true if the item exists and was stored in result, false otherwise
          */
         template<class T>
-        static bool getProperty(std::string propertyName, T &result, bool testMode = false) {
+        static bool getProperty(std::string propertyName, T &result) {
             std::ifstream ifs;
 
-            if (testMode) {
+            if (TEST_MODE) {
                 ifs = std::ifstream(TEST_PROPERTIES_PATH);
 
             } else {

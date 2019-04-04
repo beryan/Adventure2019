@@ -7,6 +7,8 @@ include_directories(
 
 file(GLOB SOURCES "*.cpp")
 
+add_definitions(-DTEST_MODE=true)
+
 add_executable(runAllTests
         lib/gtest_main.cc
         lib/gmock-gtest-all.cc
