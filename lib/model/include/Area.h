@@ -70,14 +70,13 @@ namespace model {
         bool operator==(const Area& area) const;
     };
 
-	inline void from_json(const Json &json, Area &area) {
+    inline void from_json(const Json &json, Area &area) {
         area.setName(json.at("name").get<std::string>());
-	}
+    }
 
     inline void to_json(Json &json, const Area &area) {
         json = {{"name", area.getName()}};
     }
-
 }
 
 #endif //AREA_H
