@@ -34,9 +34,9 @@ namespace handler {
 
         /**
          * @param attacker: character that will enter Combat with defender
-         * @param defender: character that will enter Combat with attacker
+         * @param defender: NPC that will enter Combat with attacker
          */
-        void enterCombat(const Character &attacker, const Character &defender);
+        void enterCombat(const Character &attacker, const NPC &defender);
 
         /**
          * @return: true if miss occurs, otherwise false
@@ -118,13 +118,6 @@ namespace handler {
 
         /**
          * Used for checking if a character is currently in combat
-         * @param character to be evaluated
-         * @return true if character is in an active combat state, otherwise false
-         */
-        bool isInCombat(const Character &character);
-
-        /**
-         * Used for checking if a character is currently in combat
          * @param ID of character to be evaluated
          * @return true if character is in an active combat state, otherwise false
          */
@@ -135,36 +128,36 @@ namespace handler {
          * @param defender: character that is in combat with the attacker
          * @return true if there is an active combat state with both characters, otherwise false
          */
-        bool areInCombat(const Character &attacker, const Character &defender);
+        bool areInCombat(const Character &attacker, const NPC &defender);
 
         /**
          * Disengages two characters from combat where they are both involved in
-         * @param character1: character that is in combat with character2
-         * @param character2: character that is in combat with character1
+         * @param character: character that is in combat with character2
+         * @param npc: character that is in combat with character1
          */
-        void exitCombat(const Character &character1, const Character &character2);
+        void exitCombat(const Character &character, const NPC &npc);
 
         /**
          * Erases a combat state involving character
          * @param character: character that is in combat
          */
-        void exitCombat(const Character &character);
-
-
+        void exitCombat(const Player &player);
+        void exitCombat(const NPC &npc);
 
         /**
          * Used for getting the ID of the opponent of the character in a combat instance
          * @param character: Character to be evaluated
          * @return ID of the opposing NPC or Player
          */
-        model::ID getOpponentId(const Character &character);
-
+        model::ID getOpponentId(const Player &player);
+        model::ID getOpponentId(const NPC &npc);
 
         /**
          * Replaces the Player in a combat instance with a decoy NPC
          * @param player: Player to be replaced by a decoy
          */
         void replaceWithDecoy(const Player &player);
+
 
         /**
          * Removes a Player's active decoy NPC if any exists

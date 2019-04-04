@@ -67,7 +67,7 @@ namespace model {
         std::vector<std::string> getDesc() const;
         std::vector<Door> getDoors() const;
         std::vector<NPC>& getNpcs();
-        NPC& getNpcById(const model::ID &id);
+        NPC& getNpcByUniqueId(const model::ID &id);
         NPC& getNpcByKeyword(const std::string &param);
         std::vector<Object> getObjects() const;
         std::vector<model::ID> getPlayersInRoom() const;

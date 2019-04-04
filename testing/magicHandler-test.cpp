@@ -560,7 +560,7 @@ namespace {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(player));
+        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_EQ(Character::STARTING_HEALTH, player.getHealth());
 
         player.setHealth(90);
@@ -645,7 +645,7 @@ namespace {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
 
         ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD));
-        ASSERT_FALSE(combatHandler.isInCombat(player));
+        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_KEYWORD);
 
@@ -665,8 +665,8 @@ namespace {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(player));
-        ASSERT_FALSE(combatHandler.isInCombat(npc));
+        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_KEYWORD);
 
@@ -683,7 +683,7 @@ namespace {
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
-        EXPECT_FALSE(combatHandler.isInCombat(player));
+        EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
     }
 
 

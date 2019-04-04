@@ -79,12 +79,12 @@ namespace model {
         return this->npcs;
     }
 
-    NPC& Room::getNpcById(const model::ID &id) {
+    NPC& Room::getNpcByUniqueId(const model::ID &id) {
         auto it = std::find_if(
             this->npcs.begin(),
             this->npcs.end(),
             [&id](const auto &npc) {
-                return npc.getId() == id;
+                return npc.getUniqueId() == id;
             }
         );
 

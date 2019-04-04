@@ -62,6 +62,14 @@ namespace model {
         return this->keywords;
     }
 
+    model::ID NPC::getUniqueId() const {
+        return this->uniqueId;
+    }
+
+    void NPC::setUniqueId(model::ID id) {
+        this->uniqueId = id;
+    }
+
     void NPC::setKeywords(std::vector<std::string> keywords) {
 
         if (keywords.size() > NPC::MAX_KEYWORDS) {

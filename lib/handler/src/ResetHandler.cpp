@@ -5,6 +5,7 @@
 #include "ResetHandler.h"
 #include "PropertiesManager.h"
 #include <iostream>
+#include <sstream>
 
 using handler::ResetHandler;
 using handler::PropertiesManager;
@@ -25,7 +26,21 @@ namespace handler {
 
                 if (room != area.getRooms().end() && npc != area.getNpcs().end()) {
                     if (logic.canAddNpcToRoom(reset, *room)) {
-                        room->addNPC(*npc);
+                        NPC newNpc{
+                            npc->getId(),
+                            npc->getKeywords(),
+                            npc->getDescription(),
+                            npc->getShortDescription(),
+                            npc->getLongDescription()
+                        };
+
+                        auto count = room->countNpcById(reset.getId());
+                        std::ostringstream uniqueIdString;
+                        uniqueIdString << std::to_string(count)
+                                       << std::to_string(npc->getId())
+                                       << std::to_string(room->getId());
+                        newNpc.setUniqueId(std::stoi(uniqueIdString.str()));
+                        room->addNPC(newNpc);
                     }
                 }
 
@@ -56,7 +71,21 @@ namespace handler {
 
                 if (room != area.getRooms().end() && npc != area.getNpcs().end()) {
                     while (logic.canAddNpcToRoom(reset, *room)) {
-                        room->addNPC(*npc);
+                        NPC newNpc{
+                            npc->getId(),
+                            npc->getKeywords(),
+                            npc->getDescription(),
+                            npc->getShortDescription(),
+                            npc->getLongDescription()
+                        };
+
+                        auto count = room->countNpcById(reset.getId());
+                        std::ostringstream uniqueIdString;
+                        uniqueIdString << std::to_string(count)
+                                       << std::to_string(npc->getId())
+                                       << std::to_string(room->getId());
+                        newNpc.setUniqueId(std::stoi(uniqueIdString.str()));
+                        room->addNPC(newNpc);
                     }
                 }
             } else if (reset.getAction() == OBJECT_ACTION) {

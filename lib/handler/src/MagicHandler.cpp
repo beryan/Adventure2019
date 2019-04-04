@@ -146,7 +146,7 @@ namespace handler {
         std::ostringstream message;
         auto &player = this->accountHandler.getPlayerByClient(client);
 
-        if (!this->combatHandler.isInCombat(player)) {
+        if (!this->combatHandler.isInCombat(player.getId())) {
             message << "You can only cast " << DECOY_SPELL_NAME << " while in combat.\n";
             return {{client, message.str()}};
         }
@@ -226,7 +226,7 @@ namespace handler {
         auto &player = accountHandler.getPlayerByClient(client);
         auto casterUsername = this->accountHandler.getUsernameByClient(client);
 
-        if (combatHandler.isInCombat(player)) {
+        if (combatHandler.isInCombat(player.getId())) {
             casterMessage << "You can't cast " << HEAL_SPELL_NAME << " while in combat.\n";
             return {{client, casterMessage.str()}};
         }
@@ -252,7 +252,7 @@ namespace handler {
         }
 
         auto &targetPlayer = this->accountHandler.getPlayerByClient(targetClient);
-        if (combatHandler.isInCombat(targetPlayer)) {
+        if (combatHandler.isInCombat(targetPlayer.getId())) {
             casterMessage << "You can't cast " << HEAL_SPELL_NAME << " on "
                           << targetPlayer.getUsername() << " while they are in combat.\n";
             return {{client, casterMessage.str()}};

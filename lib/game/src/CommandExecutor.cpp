@@ -333,7 +333,7 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
                 auto playerClient = this->accountHandler.getClientByPlayerId(playerId);
                 auto player = this->accountHandler.getPlayerByClient(playerClient);
 
-                if (this->combatHandler.isInCombat(player)) {
+                if (this->combatHandler.isInCombat(player.getId())) {
                     this->combatHandler.exitCombat(player);
                 }
             }
@@ -592,7 +592,7 @@ std::string CommandExecutor::move(const Connection &client, const std::string &d
     auto &player = this->accountHandler.getPlayerByClient(client);
     auto roomId = accountHandler.getRoomIdByClient(client);
 
-    if (this->combatHandler.isInCombat(player)) {
+    if (this->combatHandler.isInCombat(player.getId())) {
         tempMessage << "You can't expect to just stroll out of here with someone attacking you!"
                     << " Perhaps you should flee instead.\n";
 
@@ -627,17 +627,17 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
     auto &player = this->accountHandler.getPlayerByClient(client);
     auto npc = getItemByKeyword(npcs, keyword);
 
-    if (this->combatHandler.isInCombat(player)) {
+    if (this->combatHandler.isInCombat(player.getId())) {
         tempMessage << "You are too busy fighting to talk!\n";
         return tempMessage.str();
     }
 
-    if (this->combatHandler.isInCombat(npc) && !this->combatHandler.areInCombat(player, npc)) {
+    if (this->combatHandler.isInCombat(npc.getUniqueId()) && !this->combatHandler.areInCombat(player, npc)) {
         auto otherPlayerId = this->combatHandler.getOpponentId(npc);
         auto otherPlayerName = this->accountHandler.getUsernameByPlayerId(otherPlayerId);
         if (otherPlayerName.empty()) {
             // Decoy npc;
-            otherPlayerName = room.getNpcById(otherPlayerId).getShortDescription();
+            otherPlayerName = room.getNpcByUniqueId(otherPlayerId).getShortDescription();
         }
 
         tempMessage << npc.getShortDescription() << " is busy fighting " << otherPlayerName << ".\n";
@@ -1175,7 +1175,7 @@ std::string CommandExecutor::go(const Connection &client, const std::string &par
             auto &player = this->accountHandler.getPlayerByClient(client);
             this->worldHandler.movePlayer(player.getId(), roomId, destinationId);
             this->accountHandler.setRoomIdByClient(client, destinationId);
-            if (this->combatHandler.isInCombat(player)) {
+            if (this->combatHandler.isInCombat(player.getId())) {
                 this->combatHandler.exitCombat(player);
                 tempMessage << "You exit out of combat.\n";
             }
