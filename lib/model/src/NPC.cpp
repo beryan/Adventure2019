@@ -8,7 +8,7 @@
 #include <sstream>
 #include <boost/algorithm/string/join.hpp>
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 namespace model {
 

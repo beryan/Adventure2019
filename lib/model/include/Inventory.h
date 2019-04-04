@@ -66,14 +66,14 @@ namespace model {
         bool isInventoryEmpty();
     };
 
-    inline void to_json(json& inventoryJson, const Inventory &inventory) {
-            inventoryJson = {
-                    {"objects", inventory.getVectorInventory()}
-            };
+    inline void to_json(Json& inventoryJson, const Inventory &inventory) {
+        inventoryJson = {
+                {"objects", inventory.getVectorInventory()}
+        };
     }
 
-    inline void from_json(const json &inventoryJson, Inventory &inventory) {
-            inventory.mapInventory(inventoryJson.at("objects").get<std::vector<Object>>());
+    inline void from_json(const Json &inventoryJson, Inventory &inventory) {
+        inventory.mapInventory(inventoryJson.at("objects").get<std::vector<Object>>());
     }
 }
 

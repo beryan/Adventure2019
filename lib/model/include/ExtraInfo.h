@@ -9,7 +9,7 @@
 #include <vector>
 #include "json.hpp"
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 namespace model {
 
@@ -54,15 +54,15 @@ namespace model {
     };
 
 
-    inline void from_json(const json &j, ExtraInfo &e) {
-        e.setExtraDescriptions(j.at("desc").get<std::vector<std::string>>());
-        e.setExtraKeywords(j.at("keywords").get<std::vector<std::string>>());
+    inline void from_json(const Json &json, ExtraInfo &extraInfo) {
+        extraInfo.setExtraDescriptions(json.at("desc").get<std::vector<std::string>>());
+        extraInfo.setExtraKeywords(json.at("keywords").get<std::vector<std::string>>());
     }
 
-    inline void to_json(json &j, const ExtraInfo &e) {
-        j = {
-                {"desc", e.getExtraDescriptions()},
-                {"keywords", e.getExtraKeywords()}
+    inline void to_json(Json &json, const ExtraInfo &extraInfo) {
+        json = {
+                {"desc", extraInfo.getExtraDescriptions()},
+                {"keywords", extraInfo.getExtraKeywords()}
         };
     }
 

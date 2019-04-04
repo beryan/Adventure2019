@@ -105,37 +105,37 @@ namespace model {
 
     };
 
-    inline void from_json(const json &j, Door &d) {
-        j.at("dir").get_to(d.dir);
-        j.at("to").get_to(d.leadsTo);
-        j.at("desc").get_to(d.desc);
-        j.at("keywords").get_to(d.keywords);
+    inline void from_json(const Json &json, Door &door) {
+        json.at("dir").get_to(door.dir);
+        json.at("to").get_to(door.leadsTo);
+        json.at("desc").get_to(door.desc);
+        json.at("keywords").get_to(door.keywords);
     }
 
-    inline void to_json(json &j, const Door &d) {
-        j = {
-                {"dir", d.dir},
-                {"to", d.leadsTo},
-                {"desc", d.desc},
-                {"keywords", d.keywords}
+    inline void to_json(Json &json, const Door &door) {
+        json = {
+                {"dir", door.dir},
+                {"to", door.leadsTo},
+                {"desc", door.desc},
+                {"keywords", door.keywords}
         };
     }
 
-    inline void from_json(const json &j, Room &r) {
-        r.setId(j.at("id").get<model::ID>());
-        r.setName(j.at("name").get<std::string>());
-        r.setDesc(j.at("desc").get<std::vector<std::string>>());
-        r.setDoors(j.at("doors").get<std::vector<Door>>());
-        r.setExtras((j.at("extended_descriptions").get<std::vector<ExtraInfo>>()));
+    inline void from_json(const Json &json, Room &room) {
+        room.setId(json.at("id").get<model::ID>());
+        room.setName(json.at("name").get<std::string>());
+        room.setDesc(json.at("desc").get<std::vector<std::string>>());
+        room.setDoors(json.at("doors").get<std::vector<Door>>());
+        room.setExtras((json.at("extended_descriptions").get<std::vector<ExtraInfo>>()));
     }
 
-    inline void to_json(json &j, const Room &r) {
-        j = {
-                {"id", r.getId()},
-                {"name", r.getName()},
-                {"desc", r.getDesc()},
-                {"doors", r.getDoors()},
-                {"extended_descriptions", r.getExtras()}
+    inline void to_json(Json &json, const Room &room) {
+        json = {
+                {"id", room.getId()},
+                {"name", room.getName()},
+                {"desc", room.getDesc()},
+                {"doors", room.getDoors()},
+                {"extended_descriptions", room.getExtras()}
         };
     }
 

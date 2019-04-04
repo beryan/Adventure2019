@@ -10,7 +10,7 @@
 #include "Server.h"
 
 using handler::AccountHandler;
-using json = nlohmann::json;
+using Json = nlohmann::json;
 using networking::Connection;
 
 namespace handler {
