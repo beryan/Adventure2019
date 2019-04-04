@@ -326,12 +326,15 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         case Command::Clear: {
             auto roomId = this->accountHandler.getRoomIdByClient(client);
             auto &room = this->worldHandler.findRoom(roomId);
-            auto &npcs = room.getNpcs();
+            auto players = room.getPlayersInRoom();
 
-            // Disengage all npcs in room from combat
-            for (const auto &npc : npcs) {
-                if (this->combatHandler.isInCombat(npc)) {
-                    this->combatHandler.exitCombat(npc);
+            // Disengage all players in room from combat
+            for (const auto &playerId : players) {
+                auto playerClient = this->accountHandler.getClientByPlayerId(playerId);
+                auto player = this->accountHandler.getPlayerByClient(playerClient);
+
+                if (this->combatHandler.isInCombat(player)) {
+                    this->combatHandler.exitCombat(player);
                 }
             }
 

@@ -281,7 +281,7 @@ namespace game {
             auto firstArea = this->worldHandler.getWorld().getAreas().at(0);
             assert(!firstArea.getRooms().empty());
             roomId = firstArea.getRooms().at(0).getId();
-            accountHandler.setRoomIdByClient(client, roomId);
+            this->accountHandler.setRoomIdByClient(client, roomId);
         }
 
         this->worldHandler.addPlayer(roomId, playerId);
@@ -289,11 +289,11 @@ namespace game {
 
     std::string
     Game::removeClientFromGame(Connection client) {
-        magicHandler.handleLogout(client);
+        this->magicHandler.handleLogout(client);
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.removePlayer(roomId, playerId);
-        return accountHandler.logoutClient(client);
+        return this->accountHandler.logoutClient(client);
     }
 
     std::deque<Message>
