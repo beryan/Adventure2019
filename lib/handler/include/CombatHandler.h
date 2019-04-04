@@ -124,6 +124,13 @@ namespace handler {
         bool isInCombat(const Character &character);
 
         /**
+         * Used for checking if a character is currently in combat
+         * @param ID of character to be evaluated
+         * @return true if character is in an active combat state, otherwise false
+         */
+        bool isInCombat(model::ID id);
+
+        /**
          * @param attacker: character that is in combat with the defender
          * @param defender: character that is in combat with the attacker
          * @return true if there is an active combat state with both characters, otherwise false
@@ -147,17 +154,23 @@ namespace handler {
 
         /**
          * Used for getting the ID of the opponent of the character in a combat instance
-         * @param character to be evaluated
+         * @param character: Character to be evaluated
          * @return ID of the opposing NPC or Player
          */
         model::ID getOpponentId(const Character &character);
 
 
         /**
-         * Replaces the character in a combat instance with a dummy NPC
-         * @param character to be replaced
+         * Replaces the Player in a combat instance with a decoy NPC
+         * @param player: Player to be replaced by a decoy
          */
         void replaceWithDecoy(const Player &player);
+
+        /**
+         * Removes a Player's active decoy NPC if any exists
+         * @param player: Player that may have an active decoy
+         */
+        void removeActiveDecoy(const Player &player);
 
 
         /**

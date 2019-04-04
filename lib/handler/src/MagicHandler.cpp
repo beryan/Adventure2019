@@ -151,6 +151,7 @@ namespace handler {
             return {{client, message.str()}};
         }
 
+        this->combatHandler.removeActiveDecoy(player);
         this->combatHandler.replaceWithDecoy(player);
 
         message << "You create a decoy of yourself and flee from combat.\n";

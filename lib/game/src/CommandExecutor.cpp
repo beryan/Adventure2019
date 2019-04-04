@@ -549,11 +549,11 @@ std::string CommandExecutor::examine(const Connection &client, const std::string
             auto examinedPlayer = this->accountHandler.getPlayerByClient(assumedClient);
             tempMessage << examinedPlayer.getDescription();
 
-        } else {
-            tempMessage << "Invalid keyword.\n";
+            return tempMessage.str();
         }
+    }
 
-    } else if (containsKeyword(objects, keyword)) {
+    if (containsKeyword(objects, keyword)) {
         auto obj = getItemByKeyword(objects, keyword);
 
         for (const auto &str : obj.getLongDescription()) {

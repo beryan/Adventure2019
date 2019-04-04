@@ -389,6 +389,20 @@ namespace handler {
 
 
     bool
+    CombatHandler::isInCombat(model::ID id) {
+        auto combat_it = std::find_if(
+                this->combatInstances.begin(),
+                this->combatInstances.end(),
+                [&id](const auto &combatState) {
+                    return (combatState.attackerID == id || combatState.defenderID == id);
+                }
+        );
+
+        return combat_it != this->combatInstances.end();
+    };
+
+
+    bool
     CombatHandler::areInCombat(const Character &attacker, const Character &defender) {
         auto attackerId = attacker.getId();
         auto defenderId = defender.getId();
@@ -487,6 +501,55 @@ namespace handler {
 
 
     void
+    CombatHandler::removeActiveDecoy(const Player &player) {
+        model::ID decoyId = -player.getId();
+        if (!isInCombat(decoyId)) {
+            return;
+        }
+
+        auto combat_it = std::find_if(
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
+            [&decoyId](const auto &combatState) {
+                return (combatState.attackerID == decoyId);
+            });
+
+        if (combat_it != this->combatInstances.end()) {
+            this->combatInstances.erase(combat_it);
+
+            model::ID decoyRoomId;
+            // find and remove decoy in world
+            auto areas = this->worldHandler.getWorld().getAreas();
+            for (auto &area : areas) {
+                auto &rooms = area.getRooms();
+                for (auto &room : rooms) {
+                    auto &npcs = room.getNpcs();
+                    for (auto &npc : npcs) {
+                        if (npc.getId() == decoyId) {
+                            decoyRoomId = room.getId();
+                        }
+                    }
+                }
+            }
+
+            auto &decoyRoom = this->worldHandler.findRoom(decoyRoomId);
+            auto &npcs = decoyRoom.getNpcs();
+
+            auto npc_it = std::find_if(
+                    npcs.begin(),
+                    npcs.end(),
+                    [&decoyId](const auto &npc) {
+                        return (npc.getId() == decoyId);
+                    });
+
+            if (npc_it != npcs.end()){
+                npcs.erase(npc_it);
+            }
+        }
+    };
+
+
+    void
     CombatHandler::handleLogout(const Connection &client) {
         auto &player = this->accountHandler.getPlayerByClient(client);
 
@@ -546,26 +609,26 @@ namespace handler {
                         }
                     }
 
-                    // dummy does not exist anywhere, process next combat instance
+                    // decoy does not exist anywhere, process next combat instance
                     if (roomId == 0) {
                         continue;
                     }
 
-                    auto &dummy = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.attackerID);
+                    auto &decoy= this->worldHandler.findRoom(roomId).getNpcById(combatInstance.attackerID);
                     auto &npc = this->worldHandler.findRoom(roomId).getNpcById(combatInstance.defenderID);
 
                     std::ostringstream message;
-                    this->inflictDamage(dummy);
+                    this->inflictDamage(decoy);
 
-                    if (dummy.getHealth() == 0) {
-                        // Delete dummy
-                        defeatedCharacters.push_back(dummy);
+                    if (decoy.getHealth() == 0) {
+                        // Delete decoy
+                        defeatedCharacters.push_back(decoy);
                         auto &npcs = this->worldHandler.findRoom(roomId).getNpcs();
                         auto npc_it = std::find_if(
                             npcs.begin(),
                             npcs.end(),
-                            [&dummy](const auto &roomNpc) {
-                                return roomNpc.getId() == dummy.getId();
+                            [&decoy](const auto &roomNpc) {
+                                return roomNpc.getId() == decoy.getId();
                             });
                         npcs.erase(npc_it);
                         npc.setHealth(Character::STARTING_HEALTH);
