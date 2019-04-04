@@ -611,7 +611,7 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
         tempMessage << "Invalid keyword.\n";
     }
 
-    auto player = this->accountHandler.getPlayerByClient(client);
+    auto &player = this->accountHandler.getPlayerByClient(client);
     auto npc = getItemByKeyword(npcs, keyword);
 
     if (this->combatHandler.isInCombat(player)) {
@@ -749,7 +749,7 @@ std::vector<Message> CommandExecutor::give(const Connection &client, const std::
 
 std::string CommandExecutor::status(const Connection &client) {
     std::ostringstream output;
-    auto player = accountHandler.getPlayerByClient(client);
+    auto &player = accountHandler.getPlayerByClient(client);
 
     output << "\n"
            << "Status:\n"
@@ -1020,7 +1020,7 @@ std::string CommandExecutor::builder(const std::string &username) {
     for (const auto &connection: connectionHandler.getClients()) {
         auto name = this->accountHandler.getUsernameByClient(connection);
         if (username == name) {
-            auto player = this->accountHandler.getPlayerByClient(connection);
+            auto &player = this->accountHandler.getPlayerByClient(connection);
             auto role = player.getRole();
             if (role == model::Role::Default) {
                 player.setRole(model::Role::Builder);
