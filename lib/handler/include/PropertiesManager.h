@@ -5,8 +5,8 @@
 #ifndef PROPERTIESMANAGER_H
 #define PROPERTIESMANAGER_H
 
-#ifndef testMode
-#define testMode false
+#ifndef TEST_MODE
+#define TEST_MODE false
 #endif
 
 #include <fstream>
@@ -35,7 +35,7 @@ namespace handler {
         static bool getProperty(std::string propertyName, T &result) {
             std::ifstream ifs;
 
-            if (testMode) {
+            if (TEST_MODE) {
                 ifs = std::ifstream(TEST_PROPERTIES_PATH);
 
             } else {
