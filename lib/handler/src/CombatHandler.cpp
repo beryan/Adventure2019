@@ -18,7 +18,7 @@ namespace handler {
 
     void
     CombatHandler::enterCombat(const Character &attacker, const Character &defender) {
-        combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
+        this->combatInstances.emplace_back(CombatInstance{attacker.getId(), defender.getId()});
     }
 
 
@@ -157,11 +157,11 @@ namespace handler {
         auto &room = this->worldHandler.findRoom(player.getCurrRoomID());
         auto &npcs = room.getNpcs();
         auto npc_it = std::find_if(
-                npcs.begin(),
-                npcs.end(),
-                [&npc](const auto &roomNpc) {
-                    return (roomNpc.getId() == npc.getId());
-                });
+            npcs.begin(),
+            npcs.end(),
+            [&npc](const auto &roomNpc) {
+                return (roomNpc.getId() == npc.getId());
+            });
         npcs.erase(npc_it);
 
         return message.str();
@@ -190,8 +190,7 @@ namespace handler {
         this->worldHandler.movePlayer(player.getId(), currentRoomId, startRoomId);
         player.setCurrRoomID(startRoomId);
 
-        message << "You have fallen in battle.\n"
-                << "You reawaken at where you began.\n";
+        message << "You have fallen in battle and respawned.\n";
 
         return message.str();
     }
@@ -249,14 +248,16 @@ namespace handler {
             }
 
             auto combat_it = std::find_if(
-                    combatInstances.begin(),
-                    combatInstances.end(),
-                    [&player](const auto &combatState) {
-                        return (combatState.attackerID == player.getId());
-                    }
+                this->combatInstances.begin(),
+                this->combatInstances.end(),
+                [&player](const auto &combatState) {
+                    return (combatState.attackerID == player.getId());
+                }
             );
 
-            combat_it->endRound();
+            if (combat_it != this->combatInstances.end()) {
+                combat_it->endRound();
+            }
 
             return message.str();
 
@@ -307,14 +308,16 @@ namespace handler {
                 }
 
                 auto combat_it = std::find_if(
-                        combatInstances.begin(),
-                        combatInstances.end(),
-                        [&player](const auto &combatState) {
-                            return (combatState.attackerID == player.getId());
-                        }
+                    this->combatInstances.begin(),
+                    this->combatInstances.end(),
+                    [&player](const auto &combatState) {
+                        return (combatState.attackerID == player.getId());
+                    }
                 );
 
-                combat_it->endRound();
+                if (combat_it != this->combatInstances.end()) {
+                    combat_it->endRound();
+                }
             }
 
             return message.str();
@@ -352,14 +355,16 @@ namespace handler {
             }
 
             auto combat_it = std::find_if(
-                    combatInstances.begin(),
-                    combatInstances.end(),
-                    [&player](const auto &combatState) {
-                        return (combatState.attackerID == player.getId());
-                    }
+                combatInstances.begin(),
+                combatInstances.end(),
+                [&player](const auto &combatState) {
+                    return (combatState.attackerID == player.getId());
+                }
             );
 
-            combat_it->endRound();
+            if (combat_it != this->combatInstances.end()) {
+                combat_it->endRound();
+            }
         }
 
         return message.str();
@@ -371,11 +376,11 @@ namespace handler {
         auto characterId = character.getId();
 
         auto combat_it = std::find_if(
-                this->combatInstances.begin(),
-                this->combatInstances.end(),
-                [&characterId](const auto &combatState) {
-                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
-                }
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
+            [&characterId](const auto &combatState) {
+                return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+            }
         );
 
         return combat_it != this->combatInstances.end();
@@ -400,9 +405,9 @@ namespace handler {
     void
     CombatHandler::exitCombat(const Character &character1, const Character &character2) {
         auto it = std::find(
-                combatInstances.begin(),
-                combatInstances.end(),
-                CombatInstance{character1.getId(), character2.getId()});
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
+            CombatInstance{character1.getId(), character2.getId()});
 
         if (it != combatInstances.end()) {
             combatInstances.erase(it);
@@ -414,17 +419,17 @@ namespace handler {
     CombatHandler::exitCombat(const Character &character) {
         auto characterId = character.getId();
         auto combat_it = std::find_if(
-                combatInstances.begin(),
-                combatInstances.end(),
-                [&characterId](const auto &combatState) {
-                    return (combatState.attackerID == characterId || combatState.defenderID == characterId);
-                }
+            this->combatInstances.begin(),
+            this->combatInstances.end(),
+            [&characterId](const auto &combatState) {
+                return (combatState.attackerID == characterId || combatState.defenderID == characterId);
+            }
         );
 
-        combatInstances.erase(combat_it);
+        if (combat_it != combatInstances.end()) {
+            combatInstances.erase(combat_it);
+        }
     }
-
-
 
 
     model::ID
@@ -556,11 +561,11 @@ namespace handler {
                         defeatedCharacters.push_back(dummy);
                         auto &npcs = this->worldHandler.findRoom(roomId).getNpcs();
                         auto npc_it = std::find_if(
-                                npcs.begin(),
-                                npcs.end(),
-                                [&dummy](const auto &roomNpc) {
-                                    return roomNpc.getId() == dummy.getId();
-                                });
+                            npcs.begin(),
+                            npcs.end(),
+                            [&dummy](const auto &roomNpc) {
+                                return roomNpc.getId() == dummy.getId();
+                            });
                         npcs.erase(npc_it);
                         npc.setHealth(Character::STARTING_HEALTH);
                     }

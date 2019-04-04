@@ -34,56 +34,60 @@ namespace handler {
 
         /**
          * @param attacker: character that will enter Combat with defender
-         * @param defender character that will enter Combat with attacker
+         * @param defender: character that will enter Combat with attacker
          */
         void enterCombat(const Character &attacker, const Character &defender);
 
         /**
-         *  Returns true if miss occurs
+         * @return: true if miss occurs, otherwise false
          */
         bool rollMiss();
 
         /**
-         *  Returns true if dodge occurs
+         * @param modifier: floating point value of increase or decrease in probability of dodging
+         * @return: true if dodge occurs, otherwise false
          */
         bool rollDodge(const float &modifier = 0);
 
         /**
-         *  Returns a damage value between a defined range
+         * @param modifier: integer value of increase or decrease in minimum and maximum damage
+         * @return integer value of the damage between the defined range
          */
         int rollDamage(const int &modifier = 0);
 
         /**
-         *  Returns true if a critical strike occurs
+         * @param modifier: floating point value of increase or decrease in probability of inflicting a critical strike
+         * @return true if a critical strike occurs, false otherwise
          */
         bool rollCritical(const float &modifier = 0);
 
         /**
-         *  Methods for applying an attack result to the npc or player's health.
-         *  Performs chance rolls for misses, dodges, damage, and critical strikes.
-         *  Returns a message based on the result.
+         * Methods for applying an attack result to the npc or player's health.
+         * Performs chance rolls for misses, dodges, damage, and critical strikes.
          * @param npc: NPC that is being attacked
+         * @return string containing the attack result
          */
         std::string inflictDamage(NPC &npc);
 
         /**
-         * @param player: player that is being attacked
+         * @param player: Player that is being attacked
+         * @return string containing the attack result
          */
         std::string inflictDamage(Player &player);
 
         /**
          * Performs defined operations when a player has won a battle.
-         * Returns a message pertaining to the client's victory
-         * @param player in combat that has won the battle
-         * @param npc in combat that has lost the battle
+         * @param player: Player in combat that has won the battle
+         * @param npc: NPC in combat that has lost the battle
+         * @return string containing the winning message
          */
         std::string winEvent(Player &player, NPC &npc);
 
         /**
          * Performs defined operations when a player has lost a battle
-         * Returns a message pertaining to the client's defeat
-         * @param player in combat that has lost the battle
-         * @param npc in combat that has won the battle
+         * @param player: Player in combat that has lost the battle
+         * @param npc: NPC in combat that has won the battle
+         * @return string containing the losing message
          */
         std::string loseEvent(Player &player, NPC &npc);
 
@@ -98,7 +102,7 @@ namespace handler {
          * Causes the client's player to enter combat with an NPC if not already in combat.
          * Executes an attack on the targetted NPC, followed by a retaliation, then ends the round.
          * Also includes a win or loss message if either is achieved.
-         * @param client that is performing the action
+         * @param client: Connection that is performing the action
          * @param targetName: the keyword to specify the target in the room
          * @return string containing the attack result
          */
@@ -107,7 +111,7 @@ namespace handler {
         /**
          * Causes the client's player to attempt to escape combat by fleeing to a random connected room.
          * The player can escape combat without changing rooms if there are no connected rooms.
-         * @param client that is performing the action
+         * @param client: Connection that is performing the action
          * @return string containing the flee result
          */
         std::string flee(const Connection &client);
