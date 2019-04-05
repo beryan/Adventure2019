@@ -587,7 +587,7 @@ namespace {
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
         auto healthAfter = player.getHealth();
 
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME);
 
@@ -614,7 +614,7 @@ namespace {
         auto healthAfter = targetPlayer.getHealth();
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer.getId(), npc.getUniqueId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, USERNAME_B);
 
@@ -643,7 +643,7 @@ namespace {
         combatHandler.attack(CLIENT_B, NPC_A_KEYWORD);
         auto healthAfter = fightingPlayer.getHealth();
 
-        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer.getId(), npc.getUniqueId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, USERNAME_B);
 
@@ -662,10 +662,10 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileNotInCombat) {
-        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto playerId = accountHandler.getPlayerIdByClient(CLIENT_A);
 
         ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD));
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(playerId));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_A_KEYWORD);
 
@@ -682,15 +682,15 @@ namespace {
 
 
     TEST_F(MagicHandlerTestSuite, canCastDecoyWhileInCombat) {
-        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto playerId = accountHandler.getPlayerIdByClient(CLIENT_A);
         auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(playerId));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(playerId, npc.getUniqueId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
 
@@ -703,26 +703,26 @@ namespace {
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
-        EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
+        EXPECT_FALSE(combatHandler.isInCombat(playerId));
     }
 
 
     TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileDecoyAlreadyExists) {
-        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npcA = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
-        auto &npcB = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_B_KEYWORD);
+        auto playerId = accountHandler.getPlayerIdByClient(CLIENT_A);
+        auto npcA = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
+        auto npcB = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_B_KEYWORD);
 
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(playerId));
         ASSERT_FALSE(combatHandler.isInCombat(npcA.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-        ASSERT_TRUE(combatHandler.areInCombat(player, npcA));
+        ASSERT_TRUE(combatHandler.areInCombat(playerId, npcA.getUniqueId()));
 
         magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(playerId));
 
         combatHandler.attack(CLIENT_A, NPC_B_KEYWORD);
-        ASSERT_TRUE(combatHandler.areInCombat(player, npcB));
+        ASSERT_TRUE(combatHandler.areInCombat(playerId, npcB.getUniqueId()));
 
         auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
         ASSERT_EQ(1u, results.size());
@@ -732,7 +732,7 @@ namespace {
         std::ostringstream expected;
         expected << "You can only have one active decoy at a time!\n";
 
-        ASSERT_TRUE(combatHandler.areInCombat(player, npcB));
+        ASSERT_TRUE(combatHandler.areInCombat(playerId, npcB.getUniqueId()));
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
     }

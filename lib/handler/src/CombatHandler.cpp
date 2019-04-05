@@ -57,7 +57,7 @@ namespace handler {
     std::string
     CombatHandler::inflictDamage(NPC &npc) {
         std::ostringstream message;
-        auto playerId = this->getOpponentId(npc);
+        auto playerId = this->getOpponentId(npc.getUniqueId());
         auto client = this->accountHandler.getClientByPlayerId(playerId);
 
         if (client.id != AccountHandler::INVALID_ID) {
@@ -112,7 +112,7 @@ namespace handler {
         std::ostringstream message;
         auto client = this->accountHandler.getClientByPlayerId(player.getId());
         auto roomId = this->accountHandler.getRoomIdByClient(client);
-        auto npcId = this->getOpponentId(player);
+        auto npcId = this->getOpponentId(player.getId());
         auto npc = this->worldHandler.findRoom(roomId).getNpcByUniqueId(npcId);
         auto npcName = npc.getShortDescription();
 
@@ -212,12 +212,11 @@ namespace handler {
         try {
             // try getting npc with targetName, throws exception if not found.
             auto &npc = room.getNpcByKeyword(targetName);
-
             auto &player = this->accountHandler.getPlayerByClient(client);
 
             bool playerInCombat = this->isInCombat(player.getId());
             bool npcInCombat = this->isInCombat(npc.getUniqueId());
-            bool npcInCombatWithPlayer = this->areInCombat(player, npc);
+            bool npcInCombatWithPlayer = this->areInCombat(player.getId(), npc.getUniqueId());
 
             if (npcInCombat && !npcInCombatWithPlayer) {
                 message << targetName << " is already engaged in combat with someone else!\n";
@@ -276,7 +275,7 @@ namespace handler {
         auto &player = this->accountHandler.getPlayerByClient(client);
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
 
-        if (!this->isInCombat(player.getId())) {
+        if (!this->isInCombat(playerId)) {
             message << "You are in no danger to flee from.\n";
             return message.str();
         }
@@ -290,11 +289,11 @@ namespace handler {
             std::bernoulli_distribution fleeChance{BASE_FLEE_CHANCE / 2};
 
             if (fleeChance(this->RNG)) {
-                this->exitCombat(player);
+                this->exitCombat(playerId);
                 message << "You successfully flee from combat.\n";
 
             } else {
-                auto opponentId = this->getOpponentId(player);
+                auto opponentId = this->getOpponentId(playerId);
                 auto &npc = this->worldHandler.findRoom(roomId).getNpcByUniqueId(opponentId);
 
                 message << "\n"
@@ -337,11 +336,11 @@ namespace handler {
             this->worldHandler.movePlayer(playerId, roomId, destinationId);
             this->accountHandler.setRoomIdByClient(client, destinationId);
 
-            this->exitCombat(player);
+            this->exitCombat(playerId);
             message << "You successfully flee to the " << direction << ".\n";
 
         } else {
-            auto opponentId = this->getOpponentId(player);
+            auto opponentId = this->getOpponentId(playerId);
             auto &npc = this->worldHandler.findRoom(roomId).getNpcByUniqueId(opponentId);
 
             message << "\n"
@@ -373,7 +372,7 @@ namespace handler {
 
 
     bool
-    CombatHandler::isInCombat(model::ID id) {
+    CombatHandler::isInCombat(const model::ID &id) {
         auto combat_it = std::find_if(
             this->combatInstances.begin(),
             this->combatInstances.end(),
@@ -387,14 +386,11 @@ namespace handler {
 
 
     bool
-    CombatHandler::areInCombat(const Character &attacker, const NPC &defender) {
-        auto attackerId = attacker.getId();
-        auto defenderId = defender.getUniqueId();
-
+    CombatHandler::areInCombat(const model::ID &combatantId1, const model::ID &combatantId2) {
         auto combat_it = std::find(
                 this->combatInstances.begin(),
                 this->combatInstances.end(),
-                CombatInstance{attackerId, defenderId}
+                CombatInstance{combatantId1, combatantId2}
         );
 
         return combat_it != this->combatInstances.end();
@@ -415,13 +411,12 @@ namespace handler {
 
 
     void
-    CombatHandler::exitCombat(const Player &player) {
-        auto playerId = player.getId();
+    CombatHandler::exitCombat(const model::ID &id) {
         auto combat_it = std::find_if(
             this->combatInstances.begin(),
             this->combatInstances.end(),
-            [&playerId](const auto &combatState) {
-                return (combatState.attackerID == playerId);
+            [&id](const auto &combatState) {
+                return (combatState.attackerID == id || combatState.defenderID == id);
             }
         );
 
@@ -431,63 +426,20 @@ namespace handler {
     }
 
 
-    void
-    CombatHandler::exitCombat(const NPC &npc) {
-        auto npcUniqueId= npc.getUniqueId();
-        auto combat_it = std::find_if(
-                this->combatInstances.begin(),
-                this->combatInstances.end(),
-                [&npcUniqueId](const auto &combatState) {
-                    return (combatState.attackerID == npcUniqueId || combatState.defenderID == npcUniqueId);
-                }
-        );
-
-        if (combat_it != combatInstances.end()) {
-            combatInstances.erase(combat_it);
-        }
-    }
-
-
     model::ID
-    CombatHandler::getOpponentId(const Player &player) {
-        auto playerId = player.getId();
-
+    CombatHandler::getOpponentId(const model::ID &id) {
         auto combat_it = std::find_if(
             this->combatInstances.begin(),
             this->combatInstances.end(),
-            [&playerId](const auto &combatInstance) {
-                return (combatInstance.attackerID == playerId);
+            [&id](const auto &combatInstance) {
+                return (combatInstance.attackerID == id || combatInstance.defenderID == id);
             }
         );
 
         if (combat_it == this->combatInstances.end()) {
             return 0;
-
-        } else  {
+        } else if (combat_it->attackerID == id) {
             return combat_it->defenderID;
-        }
-    }
-
-
-    model::ID
-    CombatHandler::getOpponentId(const NPC &npc) {
-        auto npcUniqueId = npc.getUniqueId();
-
-        auto combat_it = std::find_if(
-                this->combatInstances.begin(),
-                this->combatInstances.end(),
-                [&npcUniqueId](const auto &combatInstance) {
-                    return (combatInstance.attackerID == npcUniqueId || combatInstance.defenderID == npcUniqueId);
-                }
-        );
-
-        if (combat_it == this->combatInstances.end()) {
-            return 0;
-        }
-
-        if (combat_it->attackerID == npcUniqueId) {
-            return combat_it->defenderID;
-
         } else {
             return combat_it->attackerID;
         }
@@ -500,22 +452,22 @@ namespace handler {
             return;
         }
 
-        auto characterId = player.getId();
+        auto playerId = player.getId();
         model::ID decoyId = -player.getId();
         std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername())};
-        std::vector<std::string> description = {"Upon closer inspection, you realize this is just a decoy version of " +
+        std::vector<std::string> description = {"Upon closer inspection, you realize this is just conjured decoy of " +
                                                 player.getUsername() + "."};
         std::string shortDescription = "'" + player.getUsername() + "'";
 
         NPC decoy{decoyId, keywords, description, shortDescription, {}};
         decoy.setUniqueId(decoyId);
 
-        auto client = this->accountHandler.getClientByPlayerId(characterId);
+        auto client = this->accountHandler.getClientByPlayerId(playerId);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.findRoom(roomId).addNPC(decoy);
 
         for (auto &combatInstance : this->combatInstances) {
-            if (combatInstance.attackerID == characterId) {
+            if (combatInstance.attackerID == playerId) {
                 combatInstance.attackerID = decoyId;
                 break;
             };
@@ -525,14 +477,14 @@ namespace handler {
 
     void
     CombatHandler::handleLogout(const Connection &client) {
-        auto &player = this->accountHandler.getPlayerByClient(client);
+        auto playerId = this->accountHandler.getPlayerIdByClient(client);
 
-        if (this->isInCombat(player.getId())) {
+        if (this->isInCombat(playerId)) {
             auto roomId = this->accountHandler.getRoomIdByClient(client);
-            auto npcId = this->getOpponentId(player);
+            auto npcId = this->getOpponentId(playerId);
             auto &npc = this->worldHandler.findRoom(roomId).getNpcByUniqueId(npcId);
 
-            this->exitCombat(player);
+            this->exitCombat(playerId);
             npc.setHealth(Character::STARTING_HEALTH);
         }
     }
@@ -594,7 +546,7 @@ namespace handler {
 
                     if (decoy.getHealth() == 0) {
                         // Delete decoy
-                        this->exitCombat(decoy);
+                        this->exitCombat(decoy.getId());
 
                         auto &npcs = this->worldHandler.findRoom(roomId).getNpcs();
                         auto npc_it = std::find_if(

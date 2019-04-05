@@ -39,13 +39,13 @@ namespace handler {
         void enterCombat(const Character &attacker, const NPC &defender);
 
         /**
-         * @return: true if miss occurs, otherwise false
+         * @return true if miss occurs, otherwise false
          */
         bool rollMiss();
 
         /**
          * @param modifier: floating point value of increase or decrease in probability of dodging
-         * @return: true if dodge occurs, otherwise false
+         * @return true if dodge occurs, otherwise false
          */
         bool rollDodge(const float &modifier = 0);
 
@@ -118,17 +118,17 @@ namespace handler {
 
         /**
          * Used for checking if a character is currently in combat
-         * @param ID of character to be evaluated
+         * @param id: player ID or NPC unique ID to be evaluated
          * @return true if character is in an active combat state, otherwise false
          */
-        bool isInCombat(model::ID id);
+        bool isInCombat(const model::ID &id);
 
         /**
-         * @param attacker: character that is in combat with the defender
-         * @param defender: character that is in combat with the attacker
+         * @param combatantId1: character ID that is in combat with combatantId2
+         * @param combatantId2: character ID that is in combat with combatantId1
          * @return true if there is an active combat state with both characters, otherwise false
          */
-        bool areInCombat(const Character &attacker, const NPC &defender);
+        bool areInCombat(const model::ID &combatantId1, const model::ID &combatantId2);
 
         /**
          * Disengages two characters from combat where they are both involved in
@@ -141,16 +141,14 @@ namespace handler {
          * Erases a combat state involving character
          * @param character: character that is in combat
          */
-        void exitCombat(const Player &player);
-        void exitCombat(const NPC &npc);
+        void exitCombat(const model::ID &id);
 
         /**
          * Used for getting the ID of the opponent of the character in a combat instance
          * @param character: Character to be evaluated
          * @return ID of the opposing NPC or Player
          */
-        model::ID getOpponentId(const Player &player);
-        model::ID getOpponentId(const NPC &npc);
+        model::ID getOpponentId(const model::ID &id);
 
         /**
          * Replaces the Player in a combat instance with a decoy NPC
@@ -162,14 +160,14 @@ namespace handler {
         /**
          * Used for performing the correct actions if a client disconnects from the game
          * while they are in combat.
-         * @param client that has disconnected from the game
+         * @param client: Connection that has disconnected from the game
          */
         void handleLogout(const Connection &client);
 
         /**
          * Decrements the cycle counter of the round in each combat instance and returns
          * combat-related messages when appropriate.
-         * @param messages deque from the game class
+         * @param messages: A message deque in which messages will be added to
          */
         void processCycle(std::deque<Message> &messages);
 

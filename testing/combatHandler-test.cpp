@@ -58,25 +58,25 @@ namespace {
 
             // Construct World
             Room room1 = {TEST_ROOM_1_ID, "Test room 1", {"Test room 1 description"}};
+            std::string uniqueIdA = std::to_string(NPC_A_ID) + std::to_string(TEST_ROOM_1_ID);
             NPC npcA {
                 NPC_A_ID,
+                std::stoi(uniqueIdA),
                 {NPC_A_KEYWORD},
                 {"Long description."},
                 "Test NPC 1",
                 {"Interaction text."}
             };
-            std::string uniqueIdA = std::to_string(NPC_A_ID) + std::to_string(TEST_ROOM_1_ID);
-            npcA.setUniqueId(std::stoi(uniqueIdA));
 
+            std::string uniqueIdB = std::to_string(NPC_B_ID) + std::to_string(TEST_ROOM_1_ID);
             NPC npcB {
                 NPC_B_ID,
+                std::stoi(uniqueIdB),
                 {NPC_B_KEYWORD},
                 {"Long description."},
                 "Test NPC 1",
                 {"Interaction text."}
             };
-            std::string uniqueIdB = std::to_string(NPC_B_ID) + std::to_string(TEST_ROOM_1_ID);
-            npcB.setUniqueId(std::stoi(uniqueIdB));
 
             room1.addNPC(npcA);
             room1.addNPC(npcB);
@@ -119,7 +119,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         auto result = combatHandler.attack(CLIENT_A, "");
 
@@ -128,8 +128,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
         EXPECT_EQ(expected.str(), result);
     }
 
@@ -140,7 +139,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         std::string invalidKeyword = "invalidKeyword";
         auto result = combatHandler.attack(CLIENT_A, invalidKeyword);
@@ -150,8 +149,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
         EXPECT_EQ(expected.str(), result);
     }
 
@@ -162,13 +160,13 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        EXPECT_TRUE(combatHandler.areInCombat(player, npc));
+        EXPECT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
     }
 
 
@@ -178,7 +176,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
@@ -186,7 +184,7 @@ namespace {
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
 
-        EXPECT_TRUE(combatHandler.areInCombat(player, npc));
+        EXPECT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
     }
 
 
@@ -196,13 +194,13 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         auto result = combatHandler.attack(CLIENT_A, NPC_B_KEYWORD);
 
@@ -220,13 +218,13 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(playerB.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(playerB, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(playerB.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_B, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(playerB.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(playerB, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(playerB.getId(), npc.getUniqueId()));
 
         auto result = combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
@@ -235,7 +233,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(playerA.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        EXPECT_FALSE(combatHandler.areInCombat(playerA, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(playerA.getId(), npc.getUniqueId()));
         EXPECT_EQ(expected.str(), result);
     }
 
@@ -246,7 +244,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         auto result = combatHandler.flee(CLIENT_A);
 
@@ -266,7 +264,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         bool successfullyEscaped = false;
         const int maximumTries = 10;
@@ -278,7 +276,7 @@ namespace {
             ASSERT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
             ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
             ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-            ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+            ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
             while (combatHandler.isInCombat(player.getId())) {
                 auto result = combatHandler.flee(CLIENT_A);
@@ -298,7 +296,7 @@ namespace {
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
 
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
         EXPECT_EQ(TEST_ROOM_2_ID, accountHandler.getRoomIdByClient(CLIENT_A));
     }
 
@@ -328,7 +326,7 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         bool successfullyEscaped = false;
         const int maximumTries = 10;
@@ -340,7 +338,7 @@ namespace {
             ASSERT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
             ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
             ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-            ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+            ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
             while (combatHandler.isInCombat(player.getId())) {
                 auto result = combatHandler.flee(CLIENT_A);
@@ -360,7 +358,7 @@ namespace {
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
 
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
         EXPECT_EQ(TEST_ROOM_1_ID, accountHandler.getRoomIdByClient(CLIENT_A));
     }
 
@@ -371,16 +369,16 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
-        EXPECT_EQ(npc.getUniqueId(), combatHandler.getOpponentId(player));
-        EXPECT_EQ(player.getId(), combatHandler.getOpponentId(npc));
+        EXPECT_EQ(npc.getUniqueId(), combatHandler.getOpponentId(player.getId()));
+        EXPECT_EQ(player.getId(), combatHandler.getOpponentId(npc.getUniqueId()));
     }
 
 
@@ -390,13 +388,13 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.replaceWithDecoy(player);
         EXPECT_NO_THROW(worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(USERNAME_A));
@@ -410,19 +408,19 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.handleLogout(CLIENT_A);
 
         EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
         EXPECT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
         EXPECT_NO_THROW(combatHandler.handleLogout(CLIENT_B));
     }
 
@@ -433,13 +431,13 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         std::deque<Message> messages;
         for (int i = 0; i <= EXPECTED_ROUND_CYCLES; ++i) {
@@ -456,30 +454,30 @@ namespace {
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
+        ASSERT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
-        combatHandler.exitCombat(player);
+        combatHandler.exitCombat(player.getId());
 
         EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
         EXPECT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
         ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
+        ASSERT_TRUE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
 
         combatHandler.exitCombat(player, npc);
 
         EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
         EXPECT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        EXPECT_FALSE(combatHandler.areInCombat(player, npc));
+        EXPECT_FALSE(combatHandler.areInCombat(player.getId(), npc.getUniqueId()));
     }
 }

@@ -24,6 +24,9 @@ namespace handler {
         unsigned int resetInterval;
         unsigned int cyclesUntilReset;
 
+        int getAvailableNpcIndex(model::ID id, Room &room);
+        NPC createUniqueNpc(const NPC &npc, Room &room);
+
     public:
         ResetHandler();
 

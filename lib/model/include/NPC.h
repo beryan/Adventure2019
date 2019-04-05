@@ -40,6 +40,15 @@ namespace model {
             std::vector<std::string> longDescription
         );
 
+        NPC(
+            model::ID id,
+            model::ID uniqueId,
+            std::vector<std::string> keywords,
+            std::vector<std::string> description,
+            std::string shortDescription,
+            std::vector<std::string> longDescription
+        );
+
         model::ID getUniqueId() const;
 
         void setUniqueId(model::ID id);

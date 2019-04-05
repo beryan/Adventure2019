@@ -330,11 +330,8 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
 
             // Disengage all players in room from combat
             for (const auto &playerId : players) {
-                auto playerClient = this->accountHandler.getClientByPlayerId(playerId);
-                auto player = this->accountHandler.getPlayerByClient(playerClient);
-
-                if (this->combatHandler.isInCombat(player.getId())) {
-                    this->combatHandler.exitCombat(player);
+                if (this->combatHandler.isInCombat(playerId)) {
+                    this->combatHandler.exitCombat(playerId);
                 }
             }
 
@@ -401,7 +398,7 @@ std::string CommandExecutor::help() {
                 << "  - " << commandParser.getStringForCommand(Command::Talk)
                 << " [keyword] (interacts with NPC)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Attack)
-                << " [keyword] (attack an NPC)\n"
+                << " [keyword] (attack an NPC. Suffix a number to the keyword to target specific NPCs with the same name)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Flee)
                 << " (attempt to escape from combat, moving in a random direction)\n"
                 << "  - " << commandParser.getStringForCommand(Command::Spells)
@@ -632,8 +629,10 @@ std::string CommandExecutor::talk(const Connection &client, const std::string &k
         return tempMessage.str();
     }
 
-    if (this->combatHandler.isInCombat(npc.getUniqueId()) && !this->combatHandler.areInCombat(player, npc)) {
-        auto otherPlayerId = this->combatHandler.getOpponentId(npc);
+    bool npcInCombat = this->combatHandler.isInCombat(npc.getUniqueId());
+    bool inCombatWithPlayer = this->combatHandler.areInCombat(player.getId(), npc.getUniqueId());
+    if (npcInCombat && !inCombatWithPlayer) {
+        auto otherPlayerId = this->combatHandler.getOpponentId(npc.getUniqueId());
         auto otherPlayerName = this->accountHandler.getUsernameByPlayerId(otherPlayerId);
         if (otherPlayerName.empty()) {
             // Decoy npc;
@@ -1008,7 +1007,7 @@ std::string CommandExecutor::build() {
                 << " [id] (creates object reset for current room)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Nreset)
                 << " [id] [amount] (creates NPC reset for current room. amount cannot exceed "
-                << MAX_NPC_OF_TYPE_COUNT << " for a single [id])\n"
+                << MAX_NPC_OF_TYPE_COUNT << " for a single id)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Alist)
                 << " (lists world areas)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Rlist)
@@ -1175,11 +1174,11 @@ std::string CommandExecutor::go(const Connection &client, const std::string &par
             tempMessage << "You are already in room " << destinationId << ".\n";
 
         } else if (this->worldHandler.roomExists(destinationId)) {
-            auto &player = this->accountHandler.getPlayerByClient(client);
-            this->worldHandler.movePlayer(player.getId(), roomId, destinationId);
+            auto playerId = this->accountHandler.getPlayerIdByClient(client);
+            this->worldHandler.movePlayer(playerId, roomId, destinationId);
             this->accountHandler.setRoomIdByClient(client, destinationId);
-            if (this->combatHandler.isInCombat(player.getId())) {
-                this->combatHandler.exitCombat(player);
+            if (this->combatHandler.isInCombat(playerId)) {
+                this->combatHandler.exitCombat(playerId);
                 tempMessage << "You exit out of combat.\n";
             }
 
