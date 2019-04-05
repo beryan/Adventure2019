@@ -53,8 +53,6 @@ namespace game {
             }
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
-                this->combatHandler.handleLogout(disconnectedClient);
-                this->magicHandler.handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
@@ -289,6 +287,7 @@ namespace game {
 
     std::string
     Game::removeClientFromGame(Connection client) {
+        this->combatHandler.handleLogout(client);
         this->magicHandler.handleLogout(client);
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
