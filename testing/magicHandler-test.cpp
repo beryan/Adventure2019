@@ -25,8 +25,10 @@ constexpr auto VALID_PASSWORD_STRING = "Valid Pass";
 
 constexpr model::ID TEST_ROOM_ID = 1000;
 
-constexpr model::ID NPC_ID = 100;
-constexpr auto NPC_KEYWORD = "test";
+constexpr model::ID NPC_A_ID = 100;
+constexpr model::ID NPC_B_ID = 200;
+constexpr auto NPC_A_KEYWORD = "atest";
+constexpr auto NPC_B_KEYWORD = "btest";
 
 constexpr auto CONFUSE_SPELL_NAME = "confuse";
 constexpr auto BODY_SWAP_SPELL_NAME = "swap";
@@ -63,13 +65,30 @@ namespace {
 
             // Construct World
             Room room = {TEST_ROOM_ID, "Test room 1", {"Test room 1 description"}};
-            room.addNPC({
-                NPC_ID,
-                {NPC_KEYWORD},
+            NPC npcA{
+                NPC_A_ID,
+                {NPC_A_KEYWORD},
                 {"Long description."},
                 "Test NPC 1",
                 {"Interaction text."}
-            });
+            };
+            std::ostringstream uniqueIdA;
+            uniqueIdA << "1" << std::to_string(NPC_A_ID) << std::to_string(TEST_ROOM_ID);
+            npcA.setUniqueId(std::stoi(uniqueIdA.str()));
+
+            NPC npcB{
+                NPC_B_ID,
+                {NPC_B_KEYWORD},
+                {"Long description."},
+                "Test NPC 1",
+                {"Interaction text."}
+            };
+            std::ostringstream uniqueIdB;
+            uniqueIdB << "1" << std::to_string(NPC_B_ID) << std::to_string(TEST_ROOM_ID);
+            npcB.setUniqueId(std::stoi(uniqueIdB.str()));
+
+            room.addNPC(npcA);
+            room.addNPC(npcB);
 
             Area area = Area("Testing area");
             area.addRoom(room);
@@ -105,7 +124,8 @@ namespace {
      * 23. A player cannot cast Heal while target is in combat
      * 24. A player cannot cast Decoy while not in combat
      * 25. A player can cast Decoy while in combat
-     * 26. Can get spells list
+     * 26. A player cannot cast Decoy if they already have an active decoy
+     * 27. Can get spells list
      */
 
 
@@ -558,13 +578,13 @@ namespace {
 
     TEST_F(MagicHandlerTestSuite, cannotCastHealOnSelfWhileInCombat) {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_EQ(Character::STARTING_HEALTH, player.getHealth());
 
         player.setHealth(90);
-        combatHandler.attack(CLIENT_A, NPC_KEYWORD);
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
         auto healthAfter = player.getHealth();
 
         ASSERT_TRUE(combatHandler.areInCombat(player, npc));
@@ -587,13 +607,13 @@ namespace {
     TEST_F(MagicHandlerTestSuite, cannotCastHealOnOtherPlayerWhileInCombat) {
         auto &fightingPlayer = accountHandler.getPlayerByClient(CLIENT_A);
         auto &targetPlayer = accountHandler.getPlayerByClient(CLIENT_B);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
 
         ASSERT_EQ(Character::STARTING_HEALTH, targetPlayer.getHealth());
         targetPlayer.setHealth(90);
         auto healthAfter = targetPlayer.getHealth();
 
-        combatHandler.attack(CLIENT_A, NPC_KEYWORD);
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
         ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
 
         auto results = magicHandler.castSpell(CLIENT_A, HEAL_SPELL_NAME, USERNAME_B);
@@ -615,12 +635,12 @@ namespace {
         ASSERT_EQ(accountHandler.getRoomIdByClient(CLIENT_A), accountHandler.getRoomIdByClient(CLIENT_B));
 
         auto &fightingPlayer = accountHandler.getPlayerByClient(CLIENT_B);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
 
         ASSERT_EQ(Character::STARTING_HEALTH, fightingPlayer.getHealth());
 
         fightingPlayer.setHealth(90);
-        combatHandler.attack(CLIENT_B, NPC_KEYWORD);
+        combatHandler.attack(CLIENT_B, NPC_A_KEYWORD);
         auto healthAfter = fightingPlayer.getHealth();
 
         ASSERT_TRUE(combatHandler.areInCombat(fightingPlayer, npc));
@@ -644,10 +664,10 @@ namespace {
     TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileNotInCombat) {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
 
-        ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD));
+        ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD));
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
 
-        auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_KEYWORD);
+        auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME, NPC_A_KEYWORD);
 
         ASSERT_EQ(1u, results.size());
 
@@ -663,12 +683,12 @@ namespace {
 
     TEST_F(MagicHandlerTestSuite, canCastDecoyWhileInCombat) {
         auto &player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_KEYWORD);
+        auto &npc = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
 
         ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
         ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
 
-        combatHandler.attack(CLIENT_A, NPC_KEYWORD);
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
 
         ASSERT_TRUE(combatHandler.areInCombat(player, npc));
 
@@ -684,6 +704,37 @@ namespace {
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);
         EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
+    }
+
+
+    TEST_F(MagicHandlerTestSuite, cannotCastDecoyWhileDecoyAlreadyExists) {
+        auto &player = accountHandler.getPlayerByClient(CLIENT_A);
+        auto &npcA = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_A_KEYWORD);
+        auto &npcB = worldHandler.findRoom(TEST_ROOM_ID).getNpcByKeyword(NPC_B_KEYWORD);
+
+        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+        ASSERT_FALSE(combatHandler.isInCombat(npcA.getUniqueId()));
+
+        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
+        ASSERT_TRUE(combatHandler.areInCombat(player, npcA));
+
+        magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
+        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
+
+        combatHandler.attack(CLIENT_A, NPC_B_KEYWORD);
+        ASSERT_TRUE(combatHandler.areInCombat(player, npcB));
+
+        auto results = magicHandler.castSpell(CLIENT_A, DECOY_SPELL_NAME);
+        ASSERT_EQ(1u, results.size());
+
+        auto result = results.front();
+
+        std::ostringstream expected;
+        expected << "You can only have one active decoy at a time!\n";
+
+        ASSERT_TRUE(combatHandler.areInCombat(player, npcB));
+        EXPECT_EQ(CLIENT_A.id, result.connection.id);
+        EXPECT_EQ(expected.str(), result.text);
     }
 
 

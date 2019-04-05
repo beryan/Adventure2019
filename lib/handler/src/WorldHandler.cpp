@@ -151,7 +151,9 @@ namespace handler {
         if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
             unsigned int index = std::stoi(arguments.at(0)) - 1;
             unsigned int roomId = std::stoi(arguments.at(1));
-            canCreate = (index < this->world.getAreas().size() && !roomExists(roomId));
+            canCreate = (index < this->world.getAreas().size() &&
+                         !roomExists(roomId) &&
+                         arguments.at(1).size() <= MAX_ID_DIGITS);
             if (canCreate) {
                 std::string name = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
                 auto room = Room(roomId, name);
@@ -183,7 +185,7 @@ namespace handler {
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = !area.npcExists(id);
+            canCreate = !area.npcExists(id) && (arguments.at(0).size() <= MAX_ID_DIGITS);
             if (canCreate) {
                 std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto npc = NPC(id, shortDesc);
@@ -218,7 +220,7 @@ namespace handler {
             unsigned int id = std::stoi(arguments.at(0));
             unsigned int amount = std::stoi(arguments.at(1));
             auto &area = findArea(roomId);
-            canCreate = area.npcExists(id);
+            canCreate = area.npcExists(id) && (amount <= MAX_NPC_OF_TYPE_COUNT);
             if (canCreate) {
                 Reset reset = Reset();
                 reset.setAction("npc");

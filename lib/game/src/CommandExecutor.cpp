@@ -991,10 +991,12 @@ std::string CommandExecutor::build() {
                 << "  - " << this->commandParser.getStringForCommand(Command::Acreate)
                 << " [name] (creates an area with specified name)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Rcreate)
-                << " [anum] [id] [name] (creates room in specified area)\n"
+                << " [anum] [id] [name] (creates room in specified area. id cannot exceed "
+                << MAX_ID_DIGITS << " digits)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Ocreate)
                 << "/" << this->commandParser.getStringForCommand(Command::Ncreate)
-                << " [id] [short description] (creates object/npc in current area)\n"
+                << " [id] [short description] (creates object/npc in current area. npc id cannot exceed "
+                << MAX_ID_DIGITS << " digits)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Aedit)
                 << " [field] [values] (modifies current area)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Redit)
@@ -1005,7 +1007,8 @@ std::string CommandExecutor::build() {
                 << "  - " << this->commandParser.getStringForCommand(Command::Oreset)
                 << " [id] (creates object reset for current room)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Nreset)
-                << " [id] [amount] (creates NPC reset for current room)\n"
+                << " [id] [amount] (creates NPC reset for current room. amount cannot exceed "
+                << MAX_NPC_OF_TYPE_COUNT << " for a single [id])\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Alist)
                 << " (lists world areas)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Rlist)

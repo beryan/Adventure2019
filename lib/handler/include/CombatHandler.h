@@ -160,13 +160,6 @@ namespace handler {
 
 
         /**
-         * Removes a Player's active decoy NPC if any exists
-         * @param player: Player that may have an active decoy
-         */
-        void removeActiveDecoy(const Player &player);
-
-
-        /**
          * Used for performing the correct actions if a client disconnects from the game
          * while they are in combat.
          * @param client that has disconnected from the game

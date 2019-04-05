@@ -198,6 +198,9 @@ namespace {
         auto takenId = worldHandler.createRoom({"1", std::to_string(roomId), "name"});
         EXPECT_FALSE(takenId);
 
+        auto tooManyDigits = worldHandler.createRoom({"1", std::to_string(12345), "name"});
+        EXPECT_FALSE(tooManyDigits);
+
         auto result = worldHandler.createRoom({"1", std::to_string(newRoomId), "name"});
         EXPECT_TRUE(result);
         EXPECT_TRUE(worldHandler.roomExists(newRoomId));
@@ -237,6 +240,9 @@ namespace {
         auto takenId = worldHandler.createNpc(roomId, {std::to_string(npcId), desc});
         EXPECT_FALSE(takenId);
 
+        auto tooManyDigits = worldHandler.createNpc(roomId, {std::to_string(12345), desc});
+        EXPECT_FALSE(tooManyDigits);
+
         auto result = worldHandler.createNpc(roomId, {std::to_string(newNpcId), desc});
         auto area = worldHandler.findArea(roomId);
         EXPECT_TRUE(result);
@@ -267,6 +273,9 @@ namespace {
 
         auto badId = worldHandler.createNpcReset(roomId, {"1234", "1"});
         EXPECT_FALSE(badId);
+
+        auto badAmount = worldHandler.createNpcReset(roomId, {"1234", std::to_string(MAX_NPC_OF_TYPE_COUNT + 1)});
+        EXPECT_FALSE(badAmount);
 
         auto result = worldHandler.createNpcReset(roomId, {std::to_string(npcId), "1"});
         EXPECT_TRUE(result);

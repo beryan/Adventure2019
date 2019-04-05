@@ -107,10 +107,9 @@ namespace {
      *  9.  Can flee in room with no doors while in combat
      *  10. Can get opponent ID
      *  11. Can replace player with decoy in combat
-     *  12. Can remove active decoy in combat
-     *  13. Can remove player from combat on client logout
-     *  14. Combat rounds end after a number of game cycles
-     *  15. Can exit combat
+     *  12. Can remove player from combat on client logout
+     *  13. Combat rounds end after a number of game cycles
+     *  14. Can exit combat
      */
 
 
@@ -402,29 +401,6 @@ namespace {
         combatHandler.replaceWithDecoy(player);
         EXPECT_NO_THROW(worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(USERNAME_A));
         EXPECT_FALSE(combatHandler.isInCombat(player.getId()));
-    }
-
-
-    TEST_F(CombatHandlerTestSuite, canRemoveActiveDecoy) {
-        auto player = accountHandler.getPlayerByClient(CLIENT_A);
-        auto &npc = worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(NPC_A_KEYWORD);
-
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
-        ASSERT_FALSE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_FALSE(combatHandler.areInCombat(player, npc));
-
-        combatHandler.attack(CLIENT_A, NPC_A_KEYWORD);
-
-        ASSERT_TRUE(combatHandler.isInCombat(player.getId()));
-        ASSERT_TRUE(combatHandler.isInCombat(npc.getUniqueId()));
-        ASSERT_TRUE(combatHandler.areInCombat(player, npc));
-
-        combatHandler.replaceWithDecoy(player);
-        ASSERT_NO_THROW(worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(USERNAME_A));
-        ASSERT_FALSE(combatHandler.isInCombat(player.getId()));
-
-        combatHandler.removeActiveDecoy(player);
-        EXPECT_THROW(worldHandler.findRoom(TEST_ROOM_1_ID).getNpcByKeyword(USERNAME_A), std::runtime_error);
     }
 
 

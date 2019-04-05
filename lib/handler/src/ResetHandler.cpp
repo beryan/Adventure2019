@@ -34,7 +34,7 @@ namespace handler {
                             npc->getLongDescription()
                         };
 
-                        auto count = room->countNpcById(reset.getId());
+                        auto count = room->countNpcById(reset.getId()) + 1;
                         std::ostringstream uniqueIdString;
                         uniqueIdString << std::to_string(count)
                                        << std::to_string(npc->getId())
@@ -79,7 +79,7 @@ namespace handler {
                             npc->getLongDescription()
                         };
 
-                        auto count = room->countNpcById(reset.getId());
+                        auto count = room->countNpcById(reset.getId()) + 1;
                         std::ostringstream uniqueIdString;
                         uniqueIdString << std::to_string(count)
                                        << std::to_string(npc->getId())

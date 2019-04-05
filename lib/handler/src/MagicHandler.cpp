@@ -151,7 +151,11 @@ namespace handler {
             return {{client, message.str()}};
         }
 
-        this->combatHandler.removeActiveDecoy(player);
+        if (this->combatHandler.isInCombat(-player.getId())) {
+            message << "You can only have one active decoy at a time!\n";
+            return {{client, message.str()}};
+        }
+
         this->combatHandler.replaceWithDecoy(player);
 
         message << "You create a decoy of yourself and flee from combat.\n";

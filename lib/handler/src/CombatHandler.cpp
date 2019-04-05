@@ -524,52 +524,6 @@ namespace handler {
 
 
     void
-    CombatHandler::removeActiveDecoy(const Player &player) {
-        model::ID decoyId = -player.getId();
-
-        auto combat_it = std::find_if(
-            this->combatInstances.begin(),
-            this->combatInstances.end(),
-            [&decoyId](const auto &combatState) {
-                return (combatState.attackerID == decoyId);
-            });
-
-        if (combat_it != this->combatInstances.end()) {
-            this->combatInstances.erase(combat_it);
-
-            model::ID decoyRoomId;
-            // find and remove decoy in world
-            auto areas = this->worldHandler.getWorld().getAreas();
-            for (auto &area : areas) {
-                auto &rooms = area.getRooms();
-                for (auto &room : rooms) {
-                    auto &npcs = room.getNpcs();
-                    for (auto &npc : npcs) {
-                        if (npc.getId() == decoyId) {
-                            decoyRoomId = room.getId();
-                        }
-                    }
-                }
-            }
-
-            auto &decoyRoom = this->worldHandler.findRoom(decoyRoomId);
-            auto &npcs = decoyRoom.getNpcs();
-
-            auto npc_it = std::find_if(
-                    npcs.begin(),
-                    npcs.end(),
-                    [&decoyId](const auto &npc) {
-                        return (npc.getId() == decoyId);
-                    });
-
-            if (npc_it != npcs.end()){
-                npcs.erase(npc_it);
-            }
-        }
-    };
-
-
-    void
     CombatHandler::handleLogout(const Connection &client) {
         auto &player = this->accountHandler.getPlayerByClient(client);
 
