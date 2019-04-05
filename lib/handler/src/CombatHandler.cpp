@@ -152,7 +152,7 @@ namespace handler {
     CombatHandler::winEvent(Player &player, NPC &npc) {
         std::ostringstream message;
         message << "You won the battle!\n";
-        this->exitCombat(player, npc);
+        this->exitCombat(player.getId(), npc.getUniqueId());
 
         // Remove NPC from room
         auto &room = this->worldHandler.findRoom(player.getCurrRoomID());
@@ -172,7 +172,7 @@ namespace handler {
     std::string
     CombatHandler::loseEvent(Player &player, NPC& npc) {
         std::ostringstream message;
-        this->exitCombat(player, npc);
+        this->exitCombat(player.getId(), npc.getUniqueId());
 
         npc.setHealth(Character::STARTING_HEALTH);
         player.setHealth(Character::STARTING_HEALTH);
@@ -398,11 +398,11 @@ namespace handler {
 
 
     void
-    CombatHandler::exitCombat(const Character &character, const NPC &npc) {
+    CombatHandler::exitCombat(const model::ID &combatantId1, const model::ID &combatantId2) {
         auto it = std::find(
             this->combatInstances.begin(),
             this->combatInstances.end(),
-            CombatInstance{character.getId(), npc.getUniqueId()});
+            CombatInstance{combatantId1, combatantId2});
 
         if (it != combatInstances.end()) {
             combatInstances.erase(it);

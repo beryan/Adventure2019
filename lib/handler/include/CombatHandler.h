@@ -124,6 +124,7 @@ namespace handler {
         bool isInCombat(const model::ID &id);
 
         /**
+         * Used for checking if two characters are currently in combat with each other
          * @param combatantId1: character ID that is in combat with combatantId2
          * @param combatantId2: character ID that is in combat with combatantId1
          * @return true if there is an active combat state with both characters, otherwise false
@@ -131,14 +132,14 @@ namespace handler {
         bool areInCombat(const model::ID &combatantId1, const model::ID &combatantId2);
 
         /**
-         * Disengages two characters from combat where they are both involved in
-         * @param character: character that is in combat with character2
-         * @param npc: character that is in combat with character1
+         * Removes a combat instance in which two characters are involved in
+         * @param combatantId1: character ID that is in combat with combatantId2
+         * @param combatantId2: character ID that is in combat with combatantId1
          */
-        void exitCombat(const Character &character, const NPC &npc);
+        void exitCombat(const model::ID &combatantId1, const model::ID &combatantId2);
 
         /**
-         * Erases a combat state involving character
+         * Removes a combat instance involving character
          * @param character: character that is in combat
          */
         void exitCombat(const model::ID &id);
