@@ -90,6 +90,11 @@ namespace game {
      */
     bool isInvalidFormat(const Command &command, const std::string &parameters);
 
+    /**
+     *  Checks if a command requires a role to execute.
+     */
+    bool isRoleCommand(const Command &command);
+
 }
 
 #endif //COMMAND_H

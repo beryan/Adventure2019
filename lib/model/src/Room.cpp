@@ -75,16 +75,20 @@ namespace model {
         return this->doors;
     }
 
-    std::vector<NPC>& Room::getNpcs() {
+    std::vector<NPC>& Room::getMutableNpcs() {
         return this->npcs;
     }
 
-    NPC& Room::getNpcById(const model::ID &id) {
+    std::vector<NPC> Room::getImmutableNpcs() const {
+        return this->npcs;
+    }
+
+    NPC& Room::getNpcByUniqueId(const model::ID &id) {
         auto it = std::find_if(
             this->npcs.begin(),
             this->npcs.end(),
             [&id](const auto &npc) {
-                return npc.getId() == id;
+                return npc.getUniqueId() == id;
             }
         );
 

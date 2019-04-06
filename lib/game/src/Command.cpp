@@ -21,4 +21,11 @@ namespace game {
         bool isParamCommand = std::find(param.begin(), param.end(), command) != param.end();
         return (wrongFormat || (isParamCommand && parameters.empty()));
     }
+
+    bool isRoleCommand(const Command &command) {
+        bool isBuildCommand = std::find(build.begin(), build.end(), command) != build.end();
+        bool isAdminCommand = std::find(admin.begin(), admin.end(), command) != admin.end();
+
+        return isBuildCommand || isAdminCommand;
+    };
 }

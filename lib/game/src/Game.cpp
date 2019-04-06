@@ -53,8 +53,6 @@ namespace game {
             }
 
             if (this->accountHandler.isLoggedIn(disconnectedClient)) {
-                this->combatHandler.handleLogout(disconnectedClient);
-                this->magicHandler.handleLogout(disconnectedClient);
                 this->removeClientFromGame(disconnectedClient);
                 std::cout << disconnectedClient.id << " has been logged out of the game due to disconnect\n";
             }
@@ -157,14 +155,19 @@ namespace game {
             if (!this->accountHandler.isLoggedIn(client) && !this->avatarHandler.isCreatingAvatar(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
             } else {
-                if (game::isInvalidFormat(command, parameters)) {
-                    tempMessage << "Invalid format for command \""
-                                << this->commandParser.getStringForCommand(command) << "\".\n";
-                    messages.push_back({client, tempMessage.str()});
-                } else if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
+                if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
                     tempMessage << "You don't have access to \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
+                } else if (game::isInvalidFormat(command, parameters)) {
+                    tempMessage << "Invalid format for command \""
+                                << this->commandParser.getStringForCommand(command) << "\".\n";
+                    messages.push_back({client, tempMessage.str()});
+                } else if (game::isRoleCommand(command) && this->magicHandler.isBodySwapped(client)) {
+                    tempMessage << "You don't have access to \""
+                                << this->commandParser.getStringForCommand(command) << "\" while body swapped.\n";
+                    messages.push_back({client, tempMessage.str()});
+
                 } else {
                     if (command == Command::Shutdown) {
                         World world = this->worldHandler.getWorld();
@@ -244,7 +247,11 @@ namespace game {
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
 
-        return this->commandExecutor.executeCommand(client, command, params);
+        try {
+            return this->commandExecutor.executeCommand(client, command, params);
+        } catch (const std::out_of_range &exception) {
+            return {{client,"Failed to execute command!"}};
+        }
     }
 
     void
@@ -281,7 +288,7 @@ namespace game {
             auto firstArea = this->worldHandler.getWorld().getAreas().at(0);
             assert(!firstArea.getRooms().empty());
             roomId = firstArea.getRooms().at(0).getId();
-            accountHandler.setRoomIdByClient(client, roomId);
+            this->accountHandler.setRoomIdByClient(client, roomId);
         }
 
         this->worldHandler.addPlayer(roomId, playerId);
@@ -289,11 +296,12 @@ namespace game {
 
     std::string
     Game::removeClientFromGame(Connection client) {
-        magicHandler.handleLogout(client);
+        this->combatHandler.handleLogout(client);
+        this->magicHandler.handleLogout(client);
         auto playerId = this->accountHandler.getPlayerIdByClient(client);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         this->worldHandler.removePlayer(roomId, playerId);
-        return accountHandler.logoutClient(client);
+        return this->accountHandler.logoutClient(client);
     }
 
     std::deque<Message>

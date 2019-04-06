@@ -170,6 +170,11 @@ namespace handler {
          *  Checks if string is a number
          */
         bool isNum(const std::string &str) const;
+
+        /**
+         *  Checks if ID as string has an appropriate length
+         */
+        bool isValidIdString(const std::string &str) const;
     };
 }
 

@@ -50,6 +50,22 @@ namespace model {
         longDescription(std::move(longDescription))
         {}
 
+    NPC::NPC(
+        model::ID id,
+        model::ID uniqueId,
+        std::vector<std::string> keywords,
+        std::vector<std::string>description,
+        std::string shortDescription,
+        std::vector<std::string> longDescription
+    ) :
+        Character(id),
+        uniqueId(uniqueId),
+        keywords(std::move(keywords)),
+        description(std::move(description)),
+        shortDescription(std::move(shortDescription)),
+        longDescription(std::move(longDescription))
+        {}
+
     std::vector<std::string> NPC::getDescription() const {
         return this->description;
     }
@@ -60,6 +76,14 @@ namespace model {
 
     std::vector<std::string> NPC::getKeywords() const {
         return this->keywords;
+    }
+
+    model::ID NPC::getUniqueId() const {
+        return this->uniqueId;
+    }
+
+    void NPC::setUniqueId(model::ID id) {
+        this->uniqueId = id;
     }
 
     void NPC::setKeywords(std::vector<std::string> keywords) {
