@@ -33,7 +33,7 @@ namespace handler {
 
         for (unsigned int index = 0; index <= npcs.size(); ++index) {
             if (!currentIndices.count(index + 1)) {
-                return index;
+                return index + 1;
             }
         }
 
