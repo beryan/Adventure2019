@@ -381,7 +381,7 @@ namespace handler {
             this->usernameToPlayer.emplace(p.getUsername(), this->allPlayers.at(playerId));
         }
 
-        std::cout << "registered users have been loaded" << std::endl;
+        std::cout << "Loaded registered users" << std::endl;
     }
 
     std::map<model::ID, Player> AccountHandler::getAllPlayers() const {
