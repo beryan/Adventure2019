@@ -155,16 +155,21 @@ namespace game {
             if (!this->accountHandler.isLoggedIn(client) && !this->avatarHandler.isCreatingAvatar(client)) {
                 messages.push_back(this->executeMenuAction(client, command, parameters));
             } else {
-                if (game::isInvalidFormat(command, parameters)) {
-                    tempMessage << "Invalid format for command \""
+                if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
+                    tempMessage << "You don't have access to \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
-                } else if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
-                    tempMessage << "You don't have access to \""
+                } else if (game::isInvalidFormat(command, parameters)) {
+                    tempMessage << "Invalid format for command \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
                 } else {
                     if (command == Command::Shutdown) {
+                        if (this->magicHandler.isBodySwapped(client)) {
+                            tempMessage << "You cannot use this command while body swapped.\n";
+                            messages.push_back({client, tempMessage.str()});
+                            continue;
+                        }
                         World world = this->worldHandler.getWorld();
                         DataManager::writeWorldToFile(world, DataManager::JSON);
                         

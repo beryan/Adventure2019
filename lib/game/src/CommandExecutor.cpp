@@ -160,190 +160,282 @@ std::vector<Message> CommandExecutor::executeCommand(const Connection &client, c
         }
 
         case Command::Build: {
-            tempMessage << build();
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << build();
+            }
             break;
         }
 
         case Command::Builder: {
-            tempMessage << builder(params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << builder(params[0]);
+            }
             break;
         }
 
         case Command::Acreate: {
-            auto name = boost::algorithm::join(params, " ");
-            if (this->worldHandler.createArea(name)) {
-                tempMessage << "Area successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create area.\n";
+                auto name = boost::algorithm::join(params, " ");
+                if (this->worldHandler.createArea(name)) {
+                    tempMessage << "Area successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create area.\n";
+                }
             }
             break;
         }
 
         case Command::Rcreate: {
-            if (this->worldHandler.createRoom(params)) {
-                tempMessage << "Room successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create room.\n";
+                if (this->worldHandler.createRoom(params)) {
+                    tempMessage << "Room successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create room.\n";
+                }
             }
             break;
         }
 
         case Command::Ocreate: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.createObject(roomId, params)) {
-                tempMessage << "Object successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create object.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createObject(roomId, params)) {
+                    tempMessage << "Object successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create object.\n";
+                }
             }
             break;
         }
 
         case Command::Ncreate: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.createNpc(roomId, params)) {
-                tempMessage << "NPC successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create NPC.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createNpc(roomId, params)) {
+                    tempMessage << "NPC successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create NPC.\n";
+                }
             }
             break;
         }
 
         case Command::Aedit: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.editArea(roomId, params)) {
-                tempMessage << "Area successfully edited.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to edit Area.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editArea(roomId, params)) {
+                    tempMessage << "Area successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Area.\n";
+                }
             }
             break;
         }
 
         case Command::Redit: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.editRoom(roomId, params)) {
-                tempMessage << "Room successfully edited.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to edit Room.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editRoom(roomId, params)) {
+                    tempMessage << "Room successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Room.\n";
+                }
             }
             break;
         }
 
         case Command::Oedit: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.editObject(roomId, params)) {
-                tempMessage << "Object successfully edited.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to edit Object.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editObject(roomId, params)) {
+                    tempMessage << "Object successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit Object.\n";
+                }
             }
             break;
         }
 
         case Command::Nedit: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.editNpc(roomId, params)) {
-                tempMessage << "NPC successfully edited.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to edit NPC.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.editNpc(roomId, params)) {
+                    tempMessage << "NPC successfully edited.\n";
+                } else {
+                    tempMessage << "Failed to edit NPC.\n";
+                }
             }
             break;
         }
 
         case Command::Oreset: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.createObjectReset(roomId, params)) {
-                tempMessage << "Reset successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create reset.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createObjectReset(roomId, params)) {
+                    tempMessage << "Reset successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create reset.\n";
+                }
             }
             break;
         }
 
         case Command::Nreset: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            if (this->worldHandler.createNpcReset(roomId, params)) {
-                tempMessage << "Reset successfully created.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Failed to create reset.\n";
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                if (this->worldHandler.createNpcReset(roomId, params)) {
+                    tempMessage << "Reset successfully created.\n";
+                } else {
+                    tempMessage << "Failed to create reset.\n";
+                }
             }
             break;
         }
 
         case Command::Alist: {
-            tempMessage << alist();
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << alist();
+            }
             break;
         }
 
         case Command::Rlist: {
-            tempMessage << rlist(params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << rlist(params[0]);
+            }
             break;
         }
 
         case Command::Olist: {
-            tempMessage << olist(params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << olist(params[0]);
+            }
             break;
         }
 
         case Command::Nlist: {
-            tempMessage << nlist(params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << nlist(params[0]);
+            }
             break;
         }
 
         case Command::Ashow: {
-            if (params[0].empty()) {
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                tempMessage << this->worldHandler.findArea(roomId);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Invalid format.\n";
+                if (params[0].empty()) {
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findArea(roomId);
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
             }
             break;
         }
 
         case Command::Rshow: {
-            if (params[0].empty()) {
-                auto roomId = this->accountHandler.getRoomIdByClient(client);
-                tempMessage << this->worldHandler.findRoom(roomId).toString();
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
             } else {
-                tempMessage << "Invalid format.\n";
+                if (params[0].empty()) {
+                    auto roomId = this->accountHandler.getRoomIdByClient(client);
+                    tempMessage << this->worldHandler.findRoom(roomId).toString();
+                } else {
+                    tempMessage << "Invalid format.\n";
+                }
             }
             break;
         }
 
         case Command::Oshow: {
-            tempMessage << oshow(client, params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << oshow(client, params[0]);
+            }
             break;
         }
 
         case Command::Nshow: {
-            tempMessage << nshow(client, params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << nshow(client, params[0]);
+            }
             break;
         }
 
         case Command::Goto: {
-            tempMessage << go(client, params[0]);
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                tempMessage << go(client, params[0]);
+            }
             break;
         }
 
         case Command::Clear: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            auto &room = this->worldHandler.findRoom(roomId);
-            auto players = room.getPlayersInRoom();
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                auto &room = this->worldHandler.findRoom(roomId);
+                auto players = room.getPlayersInRoom();
 
-            // Disengage all players in room from combat
-            for (const auto &playerId : players) {
-                if (this->combatHandler.isInCombat(playerId)) {
-                    this->combatHandler.exitCombat(playerId);
+                // Disengage all players in room from combat
+                for (const auto &playerId : players) {
+                    if (this->combatHandler.isInCombat(playerId)) {
+                        this->combatHandler.exitCombat(playerId);
+                    }
                 }
-            }
 
-            this->worldHandler.clear(roomId);
-            tempMessage << "Room cleared.\n";
+                this->worldHandler.clear(roomId);
+                tempMessage << "Room cleared.\n";
+            }
             break;
         }
 
         case Command::Reset: {
-            auto roomId = this->accountHandler.getRoomIdByClient(client);
-            this->worldHandler.resetArea(roomId);
-            tempMessage << "Area reset.\n";
+            if (this->magicHandler.isBodySwapped(client)) {
+                tempMessage << "You cannot use this command while body swapped.\n";
+            } else {
+                auto roomId = this->accountHandler.getRoomIdByClient(client);
+                this->worldHandler.resetArea(roomId);
+                tempMessage << "Area reset.\n";
+            }
             break;
         }
 
@@ -766,7 +858,20 @@ std::string CommandExecutor::status(const Connection &client) {
     output << "\n"
            << "Status:\n"
            << "-------\n"
-           << "HP: " << player.getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
+           << "Username: " << player.getUsername() << "\n";
+    if (!this->magicHandler.isBodySwapped(client)) {
+        switch (player.getRole()) {
+            case Role::Admin:
+                output << "Role: Admin\n";
+                break;
+            case Role::Builder:
+                output << "Role: Builder\n";
+                break;
+            default:
+                break;
+        }
+    }
+    output << "HP: " << player.getHealth() << "/" << model::Character::STARTING_HEALTH << "\n";
 
     auto offenceValue = player.getMutableEquipment().getOffenceValue();
     auto minDamage = CombatHandler::BASE_MIN_DAMAGE + offenceValue;
@@ -888,12 +993,16 @@ std::string CommandExecutor::aliasSet(const Connection &client, const std::vecto
 }
 
 std::string CommandExecutor::aliasSetGlobal(const Connection &client, const std::vector<std::string> &params) {
-    if (params.size() != ALIAS_SET_NUM_PARAMS) {
-        return "\nIncorrect number of parameters for alias set-global command\n";
+    if (this->magicHandler.isBodySwapped(client)) {
+        return "\nYou cannot set global aliases while body swapped\n";
     }
 
-    if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
+    if (this->accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
         return "\nYou do not have permission to set global aliases\n";
+    }
+
+    if (params.size() != ALIAS_SET_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias set-global command\n";
     }
 
     std::ostringstream res;
@@ -947,12 +1056,16 @@ std::string CommandExecutor::aliasClear(const Connection &client, const std::vec
 }
 
 std::string CommandExecutor::aliasClearGlobal(const Connection &client, const std::vector<std::string> &params) {
-    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
-        return "\nIncorrect number of parameters for alias clear command\n";
+    if (this->magicHandler.isBodySwapped(client)) {
+        return "\nYou cannot clear global aliases while body swapped\n";
     }
 
     if (accountHandler.getPlayerByClient(client).getRole() != model::Role::Admin) {
         return "\nYou do not have permission to clear global aliases\n";
+    }
+
+    if (params.size() != ALIAS_CLEAR_NUM_PARAMS) {
+        return "\nIncorrect number of parameters for alias clear command\n";
     }
 
     std::string command_to_clear_str = params[1];

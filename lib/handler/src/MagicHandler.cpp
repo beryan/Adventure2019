@@ -158,7 +158,7 @@ namespace handler {
 
         this->combatHandler.replaceWithDecoy(player);
 
-        message << "You create a decoy of yourself and flee from combat.\n";
+        message << "You create a decoy of yourself and escape from combat.\n";
         responses.push_back({client, message.str()});
 
         return responses;
