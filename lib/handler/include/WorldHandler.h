@@ -10,7 +10,7 @@
 #include "ResetHandler.h"
 #include "json.hpp"
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 using handler::ResetHandler;
 using model::World;
 using model::Room;

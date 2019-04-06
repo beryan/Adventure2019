@@ -5,6 +5,9 @@
 #ifndef PROPERTIESMANAGER_H
 #define PROPERTIESMANAGER_H
 
+#ifndef TEST_MODE
+#define TEST_MODE false
+#endif
 
 #include <fstream>
 #include <iterator>
@@ -12,8 +15,9 @@
 #include <iostream>
 #include <vector>
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 constexpr auto PROPERTIES_PATH = "lib/data/properties.json";
+constexpr auto TEST_PROPERTIES_PATH = "lib/data/testProperties.json";
 
 namespace handler {
     class PropertiesManager {
@@ -29,13 +33,21 @@ namespace handler {
          */
         template<class T>
         static bool getProperty(std::string propertyName, T &result) {
-            std::ifstream ifs(PROPERTIES_PATH);
+            std::ifstream ifs;
 
-            json t = json::parse(ifs);
+            if (TEST_MODE) {
+                ifs = std::ifstream(TEST_PROPERTIES_PATH);
+
+            } else {
+                ifs = std::ifstream(PROPERTIES_PATH);
+            }
+
+
+            Json json = Json::parse(ifs);
 
             bool wasFound = false;
-            auto iterator = t.find(propertyName);
-            if (iterator != t.end()) {
+            auto iterator = json.find(propertyName);
+            if (iterator != json.end()) {
                 result = iterator->get<T>();
                 wasFound = true;
             }

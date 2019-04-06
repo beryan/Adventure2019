@@ -24,6 +24,8 @@ namespace model {
     Slot getSlotFromString(std::string slot);
 
     std::string getStringFromSlot(const Slot &slot);
+
+    Slot getSlotFromJsonInt(int slot);
 }
 
 

@@ -11,7 +11,7 @@
 #include "json.hpp"
 
 using model::Slot;
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 namespace model {
     /**
@@ -104,20 +104,27 @@ namespace model {
         friend std::ostream&operator<<(std::ostream& os, const Object& obj);
     };
 
-    inline void from_json(const json &j, Object &o) {
-        o.setId(j.at("id").get<model::ID>());
-        o.setShortDescription(j.at("shortdesc").get<std::string>());
-        o.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
-        o.setKeywords(j.at("keywords").get<std::vector<std::string>>());
-        o.setSlot(model::Misc);
+    inline void from_json(const Json &json, Object &object) {
+        object.setId(json.at("id").get<model::ID>());
+        object.setShortDescription(json.at("shortdesc").get<std::string>());
+        object.setLongDescription(json.at("longdesc").get<std::vector<std::string>>());
+        object.setKeywords(json.at("keywords").get<std::vector<std::string>>());
+
+        if (json.count("slot")) {
+            Slot slot;
+            auto slotString = json.at("slot").get<std::string>();
+            slot = model::getSlotFromString(slotString);
+            object.setSlot(slot);
+        }
     }
 
-    inline void to_json(json &j, const Object &o) {
-        j = {{"id",        o.getId()},
-             {"shortdesc", o.getShortDescription()},
-             {"keywords",  o.getKeywords()},
-             {"longdesc",  o.getLongDescription()}
-                // TODO: add "extra" field
+    inline void to_json(Json &json, const Object &object) {
+        json = {
+                {"id",        object.getId()},
+                {"shortdesc", object.getShortDescription()},
+                {"keywords",  object.getKeywords()},
+                {"longdesc",  object.getLongDescription()},
+                {"slot",  model::getStringFromSlot(object.getSlot())}
         };
     }
 

@@ -15,7 +15,7 @@ namespace game {
     Game::Game(ConnectionHandler &connectionHandler) :
             connectionHandler(connectionHandler),
             avatarHandler(this->accountHandler),
-            magicHandler(this->accountHandler),
+            magicHandler(this->accountHandler,this->combatHandler),
             combatHandler(this->accountHandler, this->worldHandler),
             commandExecutor(connectionHandler, accountHandler, avatarHandler, magicHandler, combatHandler,
                             worldHandler, aliasManager, commandParser),
@@ -80,7 +80,7 @@ namespace game {
                 messages.push_back({client, this->accountHandler.processLogin(client, username)});
 
                 if (this->accountHandler.isLoggedIn(client)) {
-                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client)->getAvatar().isDefined();
+                    bool hasCreatedAvatar = this->accountHandler.getPlayerByClient(client).getAvatar().isDefined();
                     if (!hasCreatedAvatar) {
                         messages.push_back({
                             client,
@@ -139,10 +139,12 @@ namespace game {
             if (std::find(dir.begin(), dir.end(), commandString) != dir.end()) {
                 command = Command::Move;
                 parameters = commandString;
+
             } else if (command == Command::InvalidCommand) {
                 tempMessage << "The word \"" << commandString << "\" is not a valid command.\n";
                 messages.push_back({client, tempMessage.str()});
                 continue;
+
             } else if (incomingInput.find(' ') != std::string::npos) {
                 parameters = boost::algorithm::trim_copy(incomingInput.substr(incomingInput.find(' ') + 1));
             }
@@ -159,7 +161,7 @@ namespace game {
                     tempMessage << "Invalid format for command \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
-                } else if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client)->getRole())) {
+                } else if (game::isInvalidRole(command, this->accountHandler.getPlayerByClient(client).getRole())) {
                     tempMessage << "You don't have access to \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});

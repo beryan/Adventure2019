@@ -24,7 +24,7 @@ namespace DataManager {
     Area ParseDataFile(const std::string& filePath);
     std::vector<Player> ParseUsersFile(const std::string& filePath);
     std::vector<Area> ParseWorldFile(const std::string& filePath);
-    void writeJson(json j, std::string filePath);
+    void writeJson(Json json, std::string filePath);
     void writeWorldToFile(World& world, FileType type);
     void saveRegisteredUsers(const std::map<model::ID, Player>& players);
     std::vector<Player> loadRegisteredPlayers();

@@ -45,4 +45,35 @@ namespace model {
 
         return result;
     }
+
+    Slot getSlotFromJsonInt(int slot) {
+        switch (slot) {
+            case 0:
+                return Slot::Weapon;
+
+            case 1:
+                return Slot::Misc;
+
+            case 3:
+                return Slot::Back;
+
+            case 5:
+                return Slot::Chest;
+
+            case 6:
+                return Slot::Head;
+
+            case 8:
+                return Slot::Feet;
+
+            case 12:
+                return Slot::Back;
+
+            case 16:
+                return Slot::Weapon;
+
+            default:
+                return Slot::Misc;
+        }
+    }
 }

@@ -27,7 +27,7 @@ bool AliasManager::findAliasedCommand(std::string_view commandStr, std::string_v
         throw std::runtime_error("Could not open commands file");
     }
 
-    json commands_json = json::parse(ifs);
+    Json commands_json = Json::parse(ifs);
 
     bool wasFound = false;
     auto username_iterator = commands_json.find(username);
@@ -68,7 +68,7 @@ bool AliasManager::setUserAlias(const Command &command, std::string_view alias, 
     }
 
     CommandParser commandParser;
-    json commands_json = json::parse(inFile);
+    Json commands_json = Json::parse(inFile);
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
         std::string commandStr = commandParser.getStringForCommand(command);
@@ -78,7 +78,7 @@ bool AliasManager::setUserAlias(const Command &command, std::string_view alias, 
                                                return alias_pair.first == alias || alias_pair.second == commandStr;
                                            });
         if (alias_iterator == user_aliases.end()) {
-            json newAlias = {{alias, commandStr}};
+            Json newAlias = {{alias, commandStr}};
             username_iterator->update(newAlias);
         } else {
             didSetAlias = false;
@@ -102,7 +102,7 @@ void AliasManager::clearUserAlias(const Command &command, std::string_view usern
         throw std::runtime_error("Could not open commands file");
     }
 
-    json commands_json = json::parse(inFile);
+    Json commands_json = Json::parse(inFile);
 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {
@@ -113,8 +113,8 @@ void AliasManager::clearUserAlias(const Command &command, std::string_view usern
         });
         if (it != user_aliases.end()) {
             user_aliases.erase(it);
-            json j(user_aliases);
-            *username_iterator = j;
+            Json json(user_aliases);
+            *username_iterator = json;
         }
 
         if (username_iterator->empty()) {
@@ -146,7 +146,7 @@ std::unordered_map<std::string, std::string> AliasManager::getAliasesForUser(std
         throw std::runtime_error("Could not open commands file");
     }
 
-    json commands_json = json::parse(ifs);
+    Json commands_json = Json::parse(ifs);
 
     auto username_iterator = commands_json.find(username);
     if (username_iterator != commands_json.end()) {

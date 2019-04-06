@@ -9,7 +9,7 @@
 #include "Character.h"
 #include "json.hpp"
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 namespace model {
     /**
@@ -74,21 +74,21 @@ namespace model {
         friend std::ostream& operator<<(std::ostream& os, const NPC& npc);
     };
 
-    inline void from_json(const json &j, NPC &n) {
-        n.setId(j.at("id").get<model::ID>());
-        n.setKeywords(j.at("keywords").get<std::vector<std::string>>());
-        n.setDescription(j.at("description").get<std::vector<std::string>>());
-        n.setLongDescription(j.at("longdesc").get<std::vector<std::string>>());
-        n.setShortDescription(j.at("shortdesc").get<std::string>());
+    inline void from_json(const Json &json, NPC &npc) {
+        npc.setId(json.at("id").get<model::ID>());
+        npc.setKeywords(json.at("keywords").get<std::vector<std::string>>());
+        npc.setDescription(json.at("description").get<std::vector<std::string>>());
+        npc.setLongDescription(json.at("longdesc").get<std::vector<std::string>>());
+        npc.setShortDescription(json.at("shortdesc").get<std::string>());
     }
 
-    inline void to_json(json &j, const NPC &n) {
-        j = {
-                {"description", n.getDescription()},
-                {"keywords", n.getKeywords()},
-                {"id", n.getId()},
-                {"longdesc", n.getLongDescription()},
-                {"shortdesc", n.getShortDescription()}
+    inline void to_json(Json &json, const NPC &npc) {
+        json = {
+                {"description", npc.getDescription()},
+                {"keywords", npc.getKeywords()},
+                {"id", npc.getId()},
+                {"longdesc", npc.getLongDescription()},
+                {"shortdesc", npc.getShortDescription()}
         };
     }
 

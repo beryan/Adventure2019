@@ -8,7 +8,7 @@
 #include <string>
 #include "json.hpp"
 
-using json = nlohmann::json;
+using Json = nlohmann::json;
 
 namespace model {
     enum class Gender{Male, Female, Unset};
@@ -47,7 +47,7 @@ namespace model {
         }
     };
 
-    inline void from_json(const json &avatarJson, Avatar &avatar) {
+    inline void from_json(const Json &avatarJson, Avatar &avatar) {
         std::string gender = avatarJson.at("gender").get<std::string>();
         std::string race = avatarJson.at("race").get<std::string>();
 
@@ -64,7 +64,7 @@ namespace model {
         avatar.trait2 = avatarJson.at("trait2").get<std::string>();
     }
 
-    inline void to_json(json& avatarJson, const Avatar &avatar){
+    inline void to_json(Json& avatarJson, const Avatar &avatar){
         avatarJson = {
                 {"gender", Avatar::genderToStringMap.at(avatar.gender)},
                 {"race", Avatar::raceToStringMap.at(avatar.race)},
