@@ -524,8 +524,8 @@ namespace handler {
                         auto rooms = area.getRooms();
                         for (auto &room : rooms) {
 
-                            auto npcs = room.getMutableNpcs();
-                            for (auto &npc : npcs) {
+                            auto npcs = room.getImmutableNpcs();
+                            for (const auto &npc : npcs) {
                                 if (npc.getId() == combatInstance.attackerID) {
                                     roomId = room.getId();
                                 }

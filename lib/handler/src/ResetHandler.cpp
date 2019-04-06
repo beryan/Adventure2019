@@ -18,7 +18,7 @@ namespace handler {
         cyclesUntilReset = resetInterval;
     }
 
-    int ResetHandler::getAvailableNpcIndex(model::ID id, const Room &room) {
+    int ResetHandler::getAvailableNpcIndex(const model::ID &id, const Room &room) {
         auto npcs = room.getImmutableNpcs();
         auto baseUniqueSize = (std::to_string(id) + std::to_string(room.getId())).size();
         std::unordered_set<int> currentIndices;
