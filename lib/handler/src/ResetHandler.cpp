@@ -31,8 +31,8 @@ namespace handler {
             }
         }
 
-        for (unsigned int index = 1; index <= npcs.size() + 1; ++index) {
-            if (!currentIndices.count(index)) {
+        for (unsigned int index = 0; index <= npcs.size(); ++index) {
+            if (!currentIndices.count(index + 1)) {
                 return index;
             }
         }
