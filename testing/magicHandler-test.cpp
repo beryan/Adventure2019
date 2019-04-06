@@ -699,7 +699,7 @@ namespace {
         auto result = results.front();
 
         std::ostringstream expected;
-        expected << "You create a decoy of yourself and flee from combat.\n";
+        expected << "You create a decoy of yourself and escape from combat.\n";
 
         EXPECT_EQ(CLIENT_A.id, result.connection.id);
         EXPECT_EQ(expected.str(), result.text);

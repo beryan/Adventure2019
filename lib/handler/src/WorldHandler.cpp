@@ -149,11 +149,6 @@ namespace handler {
         //rcreate [anum] [id] [name]
         bool canCreate = false;
         if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)) && isValidIdString(arguments.at(1))) {
-            try {
-                std::stoi(arguments.at(0));
-            } catch (const std::out_of_range &exception) {
-                return false;
-            }
             unsigned int index = std::stoi(arguments.at(0)) - 1;
             unsigned int roomId = std::stoi(arguments.at(1));
             canCreate = (index < this->world.getAreas().size() && !roomExists(roomId));

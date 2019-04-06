@@ -163,13 +163,13 @@ namespace game {
                     tempMessage << "Invalid format for command \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
+                } else if (game::isRoleCommand(command)) {
+                    tempMessage << "You don't have access to \""
+                                << this->commandParser.getStringForCommand(command) << "\" while body swapped.\n";
+                    messages.push_back({client, tempMessage.str()});
+
                 } else {
                     if (command == Command::Shutdown) {
-                        if (this->magicHandler.isBodySwapped(client)) {
-                            tempMessage << "You cannot use this command while body swapped.\n";
-                            messages.push_back({client, tempMessage.str()});
-                            continue;
-                        }
                         World world = this->worldHandler.getWorld();
                         DataManager::writeWorldToFile(world, DataManager::JSON);
                         
@@ -247,7 +247,11 @@ namespace game {
         std::vector<std::string> params;
         boost::split(params, param, boost::is_any_of("\t "));
 
-        return this->commandExecutor.executeCommand(client, command, params);
+        try {
+            return this->commandExecutor.executeCommand(client, command, params);
+        } catch (const std::out_of_range &exception) {
+            return {{client,"Failed to execute command!"}};
+        }
     }
 
     void
