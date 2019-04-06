@@ -148,12 +148,15 @@ namespace handler {
     bool WorldHandler::createRoom(const std::vector<std::string> &arguments) {
         //rcreate [anum] [id] [name]
         bool canCreate = false;
-        if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
+        if (arguments.size() > 2 && isNum(arguments.at(0)) && isNum(arguments.at(1)) && isValidIdString(arguments.at(1))) {
+            try {
+                std::stoi(arguments.at(0));
+            } catch (const std::out_of_range &exception) {
+                return false;
+            }
             unsigned int index = std::stoi(arguments.at(0)) - 1;
             unsigned int roomId = std::stoi(arguments.at(1));
-            canCreate = (index < this->world.getAreas().size() &&
-                         !roomExists(roomId) &&
-                         arguments.at(1).size() <= MAX_ID_DIGITS);
+            canCreate = (index < this->world.getAreas().size() && !roomExists(roomId));
             if (canCreate) {
                 std::string name = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
                 auto room = Room(roomId, name);
@@ -166,10 +169,10 @@ namespace handler {
     bool WorldHandler::createObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ocreate [id] [short description]
         bool canCreate = false;
-        if (arguments.size() > 1 && isNum(arguments.at(0))) {
+        if (arguments.size() > 1 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = !area.objectExists(id) && (arguments.at(0).size() <= MAX_ID_DIGITS);
+            canCreate = !area.objectExists(id);
             if (canCreate) {
                 std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto object = Object(id, shortDesc);
@@ -182,10 +185,10 @@ namespace handler {
     bool WorldHandler::createNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //ncreate [id] [short description]
         bool canCreate = false;
-        if (arguments.size() > 1 && isNum(arguments.at(0))) {
+        if (arguments.size() > 1 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = !area.npcExists(id) && (arguments.at(0).size() <= MAX_ID_DIGITS);
+            canCreate = !area.npcExists(id);
             if (canCreate) {
                 std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto npc = NPC(id, shortDesc);
@@ -198,7 +201,7 @@ namespace handler {
     bool WorldHandler::createObjectReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oreset [id]
         bool canCreate = false;
-        if (arguments.size() == 1 && isNum(arguments.at(0))) {
+        if (arguments.size() == 1 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
             canCreate = area.objectExists(id);
@@ -216,11 +219,12 @@ namespace handler {
     bool WorldHandler::createNpcReset(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nreset [id] [amount]
         bool canCreate = false;
-        if (arguments.size() == 2 && isNum(arguments.at(0)) && isNum(arguments.at(1))) {
+        if (arguments.size() == 2 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0)) &&
+                isNum(arguments.at(1)) && arguments.at(1).size() <= MAX_NPC_OF_TYPE_COUNT) {
             unsigned int id = std::stoi(arguments.at(0));
             unsigned int amount = std::stoi(arguments.at(1));
             auto &area = findArea(roomId);
-            canCreate = area.npcExists(id) && (amount <= MAX_NPC_OF_TYPE_COUNT);
+            canCreate = area.npcExists(id);
             if (canCreate) {
                 Reset reset = Reset();
                 reset.setAction("npc");
@@ -288,7 +292,7 @@ namespace handler {
     bool WorldHandler::editObject(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //oedit [id] [field] [values]
         bool success = false;
-        if (arguments.size() > 2 && isNum(arguments.at(0))) {
+        if (arguments.size() > 2 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
@@ -323,7 +327,7 @@ namespace handler {
     bool WorldHandler::editNpc(const model::ID &roomId, const std::vector<std::string> &arguments) {
         //nedit [id] [field] [values]
         bool success = false;
-        if (arguments.size() > 2 && isNum(arguments.at(0))) {
+        if (arguments.size() > 2 && isNum(arguments.at(0)) && isValidIdString(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             std::string field = arguments.at(1);
             std::string value = boost::algorithm::join(std::vector<std::string>(arguments.begin()+2, arguments.end()), " ");
@@ -393,4 +397,7 @@ namespace handler {
         return !str.empty() && std::all_of(str.begin(), str.end(), ::isdigit);
     }
 
+    bool WorldHandler::isValidIdString(const std::string &str) const {
+        return str.size() <= MAX_ID_DIGITS;
+    }
 }

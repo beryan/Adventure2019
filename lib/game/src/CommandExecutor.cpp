@@ -1132,6 +1132,12 @@ std::string CommandExecutor::nlist(const std::string &param) {
 std::string CommandExecutor::oshow(const Connection &client, const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+        try {
+            std::stoi(param);
+        } catch (const std::out_of_range &exception) {
+            tempMessage << "Invalid id.\n";
+            return tempMessage.str();
+        }
         int id = std::stoi(param);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         auto &area = this->worldHandler.findArea(roomId);
@@ -1150,6 +1156,12 @@ std::string CommandExecutor::oshow(const Connection &client, const std::string &
 std::string CommandExecutor::nshow(const Connection &client, const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+        try {
+            std::stoi(param);
+        } catch (const std::out_of_range &exception) {
+            tempMessage << "Invalid id.\n";
+            return tempMessage.str();
+        }
         int id = std::stoi(param);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         auto &area = this->worldHandler.findArea(roomId);
@@ -1168,6 +1180,12 @@ std::string CommandExecutor::nshow(const Connection &client, const std::string &
 std::string CommandExecutor::go(const Connection &client, const std::string &param) {
     std::ostringstream tempMessage;
     if (!param.empty() && std::all_of(param.begin(), param.end(), ::isdigit)) {
+        try {
+            std::stoi(param);
+        } catch (const std::out_of_range &exception) {
+            tempMessage << "Invalid id.\n";
+            return tempMessage.str();
+        }
         int destinationId = std::stoi(param);
         auto roomId = this->accountHandler.getRoomIdByClient(client);
         if (destinationId == roomId) {
