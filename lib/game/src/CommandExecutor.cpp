@@ -534,7 +534,7 @@ std::string CommandExecutor::examine(const Connection &client, const std::string
     std::ostringstream tempMessage;
     auto room = worldHandler.findRoom(accountHandler.getRoomIdByClient(client));
     auto objects = room.getObjects();
-    auto npcs = room.getNpcs();
+    auto npcs = room.getImmutableNpcs();
     auto extras = room.getExtras();
 
     auto assumedClient = this->accountHandler.getClientByUsername(keyword);
@@ -615,7 +615,7 @@ std::string CommandExecutor::move(const Connection &client, const std::string &d
 std::string CommandExecutor::talk(const Connection &client, const std::string &keyword) {
     std::ostringstream tempMessage;
     auto room = worldHandler.findRoom(accountHandler.getRoomIdByClient(client));
-    auto npcs = room.getNpcs();
+    auto npcs = room.getImmutableNpcs();
 
     if (!containsKeyword(npcs, keyword)) {
         tempMessage << "Invalid keyword.\n";
@@ -990,11 +990,11 @@ std::string CommandExecutor::build() {
                 << "  - " << this->commandParser.getStringForCommand(Command::Acreate)
                 << " [name] (creates an area with specified name)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Rcreate)
-                << " [anum] [id] [name] (creates room in specified area. id cannot exceed "
+                << " [anum] [id] [name] (creates room in specified area, id cannot exceed "
                 << MAX_ID_DIGITS << " digits)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Ocreate)
                 << "/" << this->commandParser.getStringForCommand(Command::Ncreate)
-                << " [id] [short description] (creates object/npc in current area. npc id cannot exceed "
+                << " [id] [short description] (creates object/npc in current area, id cannot exceed "
                 << MAX_ID_DIGITS << " digits)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Aedit)
                 << " [field] [values] (modifies current area)\n"
@@ -1006,8 +1006,8 @@ std::string CommandExecutor::build() {
                 << "  - " << this->commandParser.getStringForCommand(Command::Oreset)
                 << " [id] (creates object reset for current room)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Nreset)
-                << " [id] [amount] (creates NPC reset for current room. amount cannot exceed "
-                << MAX_NPC_OF_TYPE_COUNT << " for a single id)\n"
+                << " [id] [amount] (creates NPC reset for current room, amount cannot exceed "
+                << MAX_NPC_OF_TYPE_COUNT << ")\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Alist)
                 << " (lists world areas)\n"
                 << "  - " << this->commandParser.getStringForCommand(Command::Rlist)

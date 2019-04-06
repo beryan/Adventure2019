@@ -219,6 +219,9 @@ namespace {
         auto takenId = worldHandler.createObject(roomId, {std::to_string(objectId), desc});
         EXPECT_FALSE(takenId);
 
+        auto tooManyDigits = worldHandler.createObject(roomId, {std::to_string(12345), desc});
+        EXPECT_FALSE(tooManyDigits);
+
         auto result = worldHandler.createObject(roomId, {std::to_string(newObjectId), desc});
         auto area = worldHandler.findArea(roomId);
         EXPECT_TRUE(result);

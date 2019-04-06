@@ -36,10 +36,10 @@ namespace {
 
     TEST(RoomTestSuite, canAddNPC) {
         Room room{};
-        size_t expected_size = room.getNpcs().size() + 1;
+        size_t expected_size = room.getMutableNpcs().size() + 1;
 
         room.addNPC(NPC{1});
-        EXPECT_EQ(expected_size, room.getNpcs().size());
+        EXPECT_EQ(expected_size, room.getMutableNpcs().size());
     }
 
     TEST(RoomTestSuite, canAddObject) {

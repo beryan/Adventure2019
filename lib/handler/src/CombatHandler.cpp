@@ -156,7 +156,7 @@ namespace handler {
 
         // Remove NPC from room
         auto &room = this->worldHandler.findRoom(player.getCurrRoomID());
-        auto &npcs = room.getNpcs();
+        auto &npcs = room.getMutableNpcs();
         auto npc_it = std::find_if(
             npcs.begin(),
             npcs.end(),
@@ -455,7 +455,7 @@ namespace handler {
         auto playerId = player.getId();
         model::ID decoyId = -player.getId();
         std::vector<std::string> keywords = {boost::algorithm::to_lower_copy(player.getUsername())};
-        std::vector<std::string> description = {"Upon closer inspection, you realize this is just conjured decoy of " +
+        std::vector<std::string> description = {"Upon closer inspection, you realize this is just a conjured decoy of " +
                                                 player.getUsername() + "."};
         std::string shortDescription = "'" + player.getUsername() + "'";
 
@@ -516,7 +516,7 @@ namespace handler {
 
                 } else {
                     model::ID roomId = 0;
-                    // attacker was replaced by dummy
+                    // attacker was replaced by decoy
                     auto areas = this->worldHandler.getWorld().getAreas();
 
                     for (auto &area : areas) {
@@ -524,7 +524,7 @@ namespace handler {
                         auto rooms = area.getRooms();
                         for (auto &room : rooms) {
 
-                            auto npcs = room.getNpcs();
+                            auto npcs = room.getMutableNpcs();
                             for (auto &npc : npcs) {
                                 if (npc.getId() == combatInstance.attackerID) {
                                     roomId = room.getId();
@@ -548,7 +548,7 @@ namespace handler {
                         // Delete decoy
                         this->exitCombat(decoy.getId());
 
-                        auto &npcs = this->worldHandler.findRoom(roomId).getNpcs();
+                        auto &npcs = this->worldHandler.findRoom(roomId).getMutableNpcs();
                         auto npc_it = std::find_if(
                             npcs.begin(),
                             npcs.end(),

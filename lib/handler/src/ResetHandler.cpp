@@ -18,8 +18,8 @@ namespace handler {
         cyclesUntilReset = resetInterval;
     }
 
-    int ResetHandler::getAvailableNpcIndex(model::ID id, Room &room) {
-        auto &npcs = room.getNpcs();
+    int ResetHandler::getAvailableNpcIndex(model::ID id, const Room &room) {
+        auto npcs = room.getImmutableNpcs();
         auto baseUniqueSize = (std::to_string(id) + std::to_string(room.getId())).size();
         std::unordered_set<int> currentIndices;
         for (const auto &npc : npcs) {
@@ -40,7 +40,7 @@ namespace handler {
         return 1;
     }
 
-    NPC ResetHandler::createUniqueNpc(const NPC &npc, Room &room) {
+    NPC ResetHandler::createUniqueNpc(const NPC &npc, const Room &room) {
         int index = this->getAvailableNpcIndex(npc.getId(), room);
 
         std::ostringstream uniqueIdString;

@@ -75,7 +75,11 @@ namespace model {
         return this->doors;
     }
 
-    std::vector<NPC>& Room::getNpcs() {
+    std::vector<NPC>& Room::getMutableNpcs() {
+        return this->npcs;
+    }
+
+    std::vector<NPC> Room::getImmutableNpcs() const {
         return this->npcs;
     }
 

@@ -169,7 +169,7 @@ namespace handler {
         if (arguments.size() > 1 && isNum(arguments.at(0))) {
             unsigned int id = std::stoi(arguments.at(0));
             auto &area = findArea(roomId);
-            canCreate = !area.objectExists(id);
+            canCreate = !area.objectExists(id) && (arguments.at(0).size() <= MAX_ID_DIGITS);
             if (canCreate) {
                 std::string shortDesc = boost::algorithm::join(std::vector<std::string>(arguments.begin()+1, arguments.end()), " ");
                 auto object = Object(id, shortDesc);
