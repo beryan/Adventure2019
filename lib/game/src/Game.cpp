@@ -163,7 +163,7 @@ namespace game {
                     tempMessage << "Invalid format for command \""
                                 << this->commandParser.getStringForCommand(command) << "\".\n";
                     messages.push_back({client, tempMessage.str()});
-                } else if (game::isRoleCommand(command)) {
+                } else if (game::isRoleCommand(command) && this->magicHandler.isBodySwapped(client)) {
                     tempMessage << "You don't have access to \""
                                 << this->commandParser.getStringForCommand(command) << "\" while body swapped.\n";
                     messages.push_back({client, tempMessage.str()});

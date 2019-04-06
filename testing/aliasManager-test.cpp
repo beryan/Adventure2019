@@ -159,4 +159,38 @@ namespace {
         EXPECT_FALSE(aliasManager.isValidAlias(invalidAlias));
         EXPECT_FALSE(aliasManager.isValidAlias(uppercaseInvalidAlias));
     }
+
+    TEST(AliasManagerTestSuite, canGetAliasesForUser) {
+        AliasManager aliasManager;
+        CommandParser commandParser;
+        std::string username = "TestUser_asldfkjasldfkjas";
+        auto command = Command::Help;
+
+        aliasManager.clearUserAlias(command, username);
+        auto aliases = aliasManager.getAliasesForUser(username);
+        EXPECT_TRUE(aliases.empty());
+
+        auto alias = "yeet";
+        aliasManager.setUserAlias(command, alias, username);
+        aliases = aliasManager.getAliasesForUser(username);
+        EXPECT_FALSE(aliases.empty());
+        aliasManager.clearUserAlias(command, username);
+    }
+
+    TEST(AliasManagerTestSuite, canGetAliasesForUserBadFilename) {
+        AliasManager aliasManager{"fake_file.json"};
+        std::string username = "stephen";
+        ASSERT_ANY_THROW(aliasManager.getAliasesForUser(username));
+    }
+
+    TEST(AliasManagerTestSuite, wontSetDuplicateAlias) {
+        AliasManager aliasManager;
+        std::string username = "stephen";
+        Command command = Command::Help;
+        std::string alias = "yeet";
+        aliasManager.clearUserAlias(command, username);
+        EXPECT_TRUE(aliasManager.setUserAlias(command, alias, username));
+        EXPECT_FALSE(aliasManager.setUserAlias(command, alias, username));
+        aliasManager.clearUserAlias(command, username);
+    }
 }
